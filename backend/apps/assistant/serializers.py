@@ -34,6 +34,15 @@ class ImageQueryRequestSerializer(serializers.Serializer):
     conversation_id = serializers.IntegerField(required=False, allow_null=True)
 
 
+class VoiceChatRequestSerializer(serializers.Serializer):
+    audio = serializers.FileField()
+    conversation_id = serializers.IntegerField(required=False, allow_null=True)
+    mode = serializers.ChoiceField(
+        choices=[("conversation", "Conversation")],
+        default="conversation",
+    )
+
+
 class ConversationDetailSerializer(serializers.ModelSerializer):
     messages = MessageSerializer(many=True, read_only=True)
 

@@ -7,6 +7,8 @@ from rest_framework.views import APIView
 
 from services.llm.factory import create_llm_router
 from services.llm.prompts import SYSTEM_PROMPTS
+from services.stt.groq_whisper import GroqWhisperProvider
+from services.tts.service import get_or_create_audio
 
 from .models import Conversation, Message
 from .serializers import (
@@ -206,6 +208,125 @@ class ImageQueryView(APIView):
         return Response({
             "image_query_id": image_query.id,
             "ai_response": llm_response.content,
+            "conversation_id": conversation.id,
+            "provider": llm_response.provider,
+            "tokens_used": llm_response.tokens_used,
+        })
+
+
+class VoiceChatView(APIView):
+    """Voice conversation: audio in -> STT -> LLM -> TTS -> audio out."""
+
+    permission_classes = (permissions.IsAuthenticated,)
+
+    def post(self, request):
+        from .serializers import VoiceChatRequestSerializer
+
+        serializer = VoiceChatRequestSerializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+
+        audio_file = serializer.validated_data["audio"]
+        conversation_id = serializer.validated_data.get("conversation_id")
+        mode = serializer.validated_data.get("mode", "conversation")
+
+        # 1. STT: transcribe user audio
+        try:
+            stt = GroqWhisperProvider()
+            stt_result = stt.transcribe(audio_file=audio_file, language="fr")
+        except Exception as exc:
+            logger.error("STT failed in voice chat: %s", exc)
+            return Response(
+                {"detail": "Speech recognition is temporarily unavailable."},
+                status=status.HTTP_503_SERVICE_UNAVAILABLE,
+            )
+
+        user_text = stt_result.transcription
+
+        # Resolve or create conversation
+        if conversation_id:
+            try:
+                conversation = Conversation.objects.get(
+                    pk=conversation_id, user=request.user,
+                )
+            except Conversation.DoesNotExist:
+                return Response(
+                    {"detail": "Conversation not found."},
+                    status=status.HTTP_404_NOT_FOUND,
+                )
+        else:
+            title = f"Voice: {user_text[:40]}..." if len(user_text) > 40 else f"Voice: {user_text}"
+            conversation = Conversation.objects.create(
+                user=request.user,
+                title=title,
+            )
+
+        # Save user message (transcribed text)
+        Message.objects.create(
+            conversation=conversation,
+            role="user",
+            content=user_text,
+        )
+
+        # Build message history
+        prior_messages = Message.objects.filter(
+            conversation=conversation,
+        ).order_by("created_at")
+        messages = [
+            {"role": msg.role, "content": msg.content}
+            for msg in prior_messages
+        ]
+
+        system_prompt = SYSTEM_PROMPTS.get(mode, SYSTEM_PROMPTS["conversation"])
+
+        # 2. LLM: generate response
+        try:
+            router = create_llm_router()
+            llm_response = router.generate(
+                messages=messages,
+                system_prompt=system_prompt,
+            )
+        except Exception as exc:
+            logger.error("LLM call failed in voice chat: %s", exc)
+            return Response(
+                {"detail": "AI service is temporarily unavailable."},
+                status=status.HTTP_503_SERVICE_UNAVAILABLE,
+            )
+
+        # Save assistant message
+        Message.objects.create(
+            conversation=conversation,
+            role="assistant",
+            content=llm_response.content,
+            provider=llm_response.provider,
+            tokens_used=llm_response.tokens_used,
+        )
+
+        # 3. TTS: generate audio of the response
+        try:
+            clip = get_or_create_audio(text=llm_response.content, language="fr")
+            audio_url = request.build_absolute_uri(clip.audio_file.url)
+        except Exception as exc:
+            logger.warning("TTS failed in voice chat: %s", exc)
+            audio_url = None
+
+        # Gamification: XP for voice conversation at 5+ exchanges
+        user_msg_count = Message.objects.filter(
+            conversation=conversation, role="user",
+        ).count()
+        if user_msg_count == 5:
+            from apps.gamification.services import award_xp, check_streak
+            award_xp(
+                request.user,
+                activity_type="ai_conversation",
+                xp_amount=15,
+                source_id=f"conversation_{conversation.id}",
+            )
+            check_streak(request.user)
+
+        return Response({
+            "transcription": user_text,
+            "ai_response_text": llm_response.content,
+            "ai_response_audio_url": audio_url,
             "conversation_id": conversation.id,
             "provider": llm_response.provider,
             "tokens_used": llm_response.tokens_used,

@@ -1,0 +1,41 @@
+import logging
+
+from telegram import Update
+from telegram.ext import ContextTypes
+
+from apps.content.models import Vocabulary
+
+logger = logging.getLogger(__name__)
+
+
+def get_random_vocabulary():
+    """Return a random Vocabulary item, or None if the table is empty."""
+    item = Vocabulary.objects.order_by("?").first()
+    return item
+
+
+async def word_command(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
+    """Handle the /word command — send a random vocabulary item."""
+    vocab = get_random_vocabulary()
+
+    if vocab is None:
+        await update.message.reply_text(
+            "No vocabulary items available yet. Check back later!"
+        )
+        return
+
+    parts = [
+        f"**{vocab.french}** — {vocab.english}",
+    ]
+    if vocab.pronunciation:
+        parts.append(f"Pronunciation: {vocab.pronunciation}")
+    if vocab.part_of_speech:
+        parts.append(f"Part of speech: {vocab.part_of_speech}")
+    if vocab.gender and vocab.gender != "a":
+        gender_map = {"m": "masculine", "f": "feminine", "n": "neutral"}
+        parts.append(f"Gender: {gender_map.get(vocab.gender, vocab.gender)}")
+    if vocab.example_sentence:
+        parts.append(f"\nExample: _{vocab.example_sentence}_")
+
+    message = "\n".join(parts)
+    await update.message.reply_text(message, parse_mode="Markdown")

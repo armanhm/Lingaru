@@ -18,7 +18,7 @@ export default function Topics() {
 
   useEffect(() => {
     getTopics()
-      .then((res) => setTopics(res.data))
+      .then((res) => setTopics(res.data.results || res.data))
       .catch((err) => setError(err.response?.data?.detail || "Failed to load topics."))
       .finally(() => setLoading(false));
   }, []);

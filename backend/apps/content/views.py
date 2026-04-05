@@ -1,9 +1,12 @@
 from rest_framework import generics, permissions
-from .models import Topic, Lesson
+from rest_framework.response import Response
+from rest_framework.views import APIView
+from .models import Topic, Lesson, Vocabulary
 from .serializers import (
     TopicListSerializer,
     TopicDetailSerializer,
     LessonDetailSerializer,
+    VocabularySerializer,
 )
 
 
@@ -17,6 +20,16 @@ class TopicDetailView(generics.RetrieveAPIView):
     queryset = Topic.objects.prefetch_related("lessons")
     serializer_class = TopicDetailSerializer
     permission_classes = (permissions.IsAuthenticated,)
+
+
+class RandomVocabularyView(APIView):
+    permission_classes = (permissions.IsAuthenticated,)
+
+    def get(self, request):
+        vocab = Vocabulary.objects.order_by("?").first()
+        if not vocab:
+            return Response({"detail": "No vocabulary available."}, status=404)
+        return Response(VocabularySerializer(vocab).data)
 
 
 class LessonDetailView(generics.RetrieveAPIView):

@@ -1,5 +1,10 @@
-from django.urls import path  # noqa: F401
+from django.urls import path
+from . import views
 
 app_name = "content"
 
-urlpatterns = []
+urlpatterns = [
+    path("topics/", views.TopicListView.as_view(), name="topic-list"),
+    path("topics/<int:pk>/", views.TopicDetailView.as_view(), name="topic-detail"),
+    path("lessons/<int:pk>/", views.LessonDetailView.as_view(), name="lesson-detail"),
+]

@@ -95,6 +95,16 @@ class QuizAnswerView(APIView):
             is_correct=is_correct,
         )
 
+        # Record mistake if wrong
+        if not is_correct:
+            from apps.progress.services import record_mistake
+            record_mistake(
+                user=request.user,
+                question=question,
+                user_answer=user_answer,
+                correct_answer=question.correct_answer,
+            )
+
         return Response(AnswerResultSerializer(answer).data)
 
 

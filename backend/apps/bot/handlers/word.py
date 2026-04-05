@@ -4,6 +4,7 @@ from telegram import Update
 from telegram.ext import ContextTypes
 
 from apps.content.models import Vocabulary
+from services.tts.service import get_or_create_audio
 
 logger = logging.getLogger(__name__)
 
@@ -39,3 +40,12 @@ async def word_command(update: Update, context: ContextTypes.DEFAULT_TYPE) -> No
 
     message = "\n".join(parts)
     await update.message.reply_text(message, parse_mode="Markdown")
+
+    # Send audio of the French word
+    try:
+        clip = get_or_create_audio(text=vocab.french, language="fr")
+        audio_path = clip.audio_file.path
+        with open(audio_path, "rb") as audio_file:
+            await update.message.reply_audio(audio=audio_file)
+    except Exception as exc:
+        logger.warning("Failed to send audio for /word: %s", exc)

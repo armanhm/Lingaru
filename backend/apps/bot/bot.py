@@ -9,6 +9,7 @@ from apps.bot.handlers.word import word_command
 from apps.bot.handlers.stats import stats_command
 from apps.bot.handlers.quiz import quiz_conversation_handler
 from apps.bot.handlers.chat import chat_conversation_handler
+from apps.bot.handlers.dictation import dictation_conversation_handler
 
 logger = logging.getLogger(__name__)
 
@@ -31,6 +32,7 @@ def create_bot_application():
     application.add_handler(CommandHandler("stats", stats_command))
     application.add_handler(quiz_conversation_handler())
     application.add_handler(chat_conversation_handler())
+    application.add_handler(dictation_conversation_handler())
 
     logger.info("Telegram bot application configured successfully.")
     return application

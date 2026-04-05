@@ -1,7 +1,9 @@
 import pytest
+from unittest.mock import AsyncMock, MagicMock, patch
+
 from django.contrib.auth import get_user_model
 from apps.content.models import Topic, Lesson, Vocabulary
-from apps.bot.handlers.word import get_random_vocabulary
+from apps.bot.handlers.word import get_random_vocabulary, word_command
 
 User = get_user_model()
 
@@ -46,3 +48,53 @@ class TestGetRandomVocabulary:
         assert hasattr(result, "english")
         assert hasattr(result, "pronunciation")
         assert hasattr(result, "example_sentence")
+
+
+@pytest.fixture
+def tg_update():
+    mock = AsyncMock()
+    mock.message = AsyncMock()
+    mock.message.reply_text = AsyncMock()
+    mock.message.reply_audio = AsyncMock()
+    return mock
+
+
+@pytest.fixture
+def tg_context():
+    return MagicMock()
+
+
+@pytest.mark.django_db
+class TestWordCommandAudio:
+    @pytest.mark.asyncio
+    @patch("apps.bot.handlers.word.get_or_create_audio")
+    @patch("apps.bot.handlers.word.get_random_vocabulary")
+    async def test_word_sends_audio(self, mock_get_vocab, mock_audio, tg_update, tg_context):
+        mock_vocab = MagicMock()
+        mock_vocab.french = "Bonjour"
+        mock_vocab.english = "Hello"
+        mock_vocab.pronunciation = ""
+        mock_vocab.part_of_speech = ""
+        mock_vocab.gender = "a"
+        mock_vocab.example_sentence = ""
+        mock_get_vocab.return_value = mock_vocab
+
+        mock_clip = MagicMock()
+        mock_clip.audio_file.path = "/tmp/test.mp3"
+        mock_audio.return_value = mock_clip
+
+        with patch("builtins.open", MagicMock()):
+            await word_command(tg_update, tg_context)
+
+        tg_update.message.reply_text.assert_called_once()
+        mock_audio.assert_called_once_with(text="Bonjour", language="fr")
+
+    @pytest.mark.asyncio
+    @patch("apps.bot.handlers.word.get_random_vocabulary")
+    async def test_word_no_vocab(self, mock_get_vocab, tg_update, tg_context):
+        mock_get_vocab.return_value = None
+
+        await word_command(tg_update, tg_context)
+
+        tg_update.message.reply_text.assert_called_once()
+        assert "No vocabulary" in tg_update.message.reply_text.call_args[0][0]

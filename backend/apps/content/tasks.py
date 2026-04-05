@@ -34,16 +34,18 @@ def _fetch_transcript(video_id: str) -> tuple[str, str]:
     transcript_en = ""
 
     try:
-        transcript_list = YouTubeTranscriptApi.list_transcripts(video_id)
+        api = YouTubeTranscriptApi()
+        transcript_list = api.list(video_id)
 
-        # Try French first (manual then auto-generated)
+        # Try French first (manual, then auto-generated)
+        fr_transcript = None
         try:
             fr_transcript = transcript_list.find_transcript(["fr"])
         except NoTranscriptFound:
             try:
                 fr_transcript = transcript_list.find_generated_transcript(["fr"])
             except NoTranscriptFound:
-                fr_transcript = None
+                pass
 
         if fr_transcript:
             segments = fr_transcript.fetch()

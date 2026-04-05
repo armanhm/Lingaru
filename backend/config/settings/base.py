@@ -31,6 +31,7 @@ INSTALLED_APPS = [
     "apps.media",
     "apps.discover",
     "apps.progress",
+    "apps.documents",
 ]
 
 MIDDLEWARE = [
@@ -145,6 +146,10 @@ TELEGRAM_BOT_TOKEN = config("TELEGRAM_BOT_TOKEN", default="")
 GEMINI_API_KEY = config("GEMINI_API_KEY", default="")
 GEMINI_MODEL = config("GEMINI_MODEL", default="gemini-2.0-flash")
 
+GEMINI_EMBEDDING_MODEL = config(
+    "GEMINI_EMBEDDING_MODEL", default="models/text-embedding-004",
+)
+
 GROQ_API_KEY = config("GROQ_API_KEY", default="")
 GROQ_MODEL = config("GROQ_MODEL", default="llama-3.3-70b-versatile")
 
@@ -155,3 +160,9 @@ CELERY_BEAT_SCHEDULE = {
         "schedule": 86400.0,  # every 24 hours (in seconds)
     },
 }
+
+# RAG settings
+RAG_CHUNK_SIZE = 2000
+RAG_CHUNK_OVERLAP = 200
+RAG_TOP_K = 5
+RAG_MIN_SIMILARITY = 0.3

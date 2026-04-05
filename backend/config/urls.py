@@ -13,6 +13,7 @@ urlpatterns = [
     path("api/media/", include("apps.media.urls")),
     path("api/discover/", include("apps.discover.urls")),
     path("api/progress/", include("apps.progress.urls")),
+    path("api/documents/", include("apps.documents.urls")),
 ]
 
 if settings.DEBUG:

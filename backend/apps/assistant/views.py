@@ -7,6 +7,7 @@ from rest_framework.views import APIView
 
 from services.llm.factory import create_llm_router
 from services.llm.prompts import SYSTEM_PROMPTS
+from services.rag.context import retrieve_context_for_query
 from services.stt.groq_whisper import GroqWhisperProvider
 from services.tts.service import get_or_create_audio
 
@@ -70,6 +71,22 @@ class ChatView(APIView):
         # Get system prompt for the mode
         system_prompt = SYSTEM_PROMPTS.get(mode, SYSTEM_PROMPTS["conversation"])
 
+        # RAG: retrieve relevant context for conversation mode
+        rag_used = False
+        if mode == "conversation":
+            try:
+                context = retrieve_context_for_query(
+                    user_id=request.user.id,
+                    query=user_message,
+                )
+                if context:
+                    system_prompt = SYSTEM_PROMPTS["rag_conversation"].format(
+                        context=context,
+                    )
+                    rag_used = True
+            except Exception as exc:
+                logger.warning("RAG retrieval failed, using standard prompt: %s", exc)
+
         # Call LLM
         try:
             router = create_llm_router()
@@ -113,6 +130,7 @@ class ChatView(APIView):
             "conversation_id": conversation.id,
             "provider": llm_response.provider,
             "tokens_used": llm_response.tokens_used,
+            "rag_used": rag_used,
         })
 
 

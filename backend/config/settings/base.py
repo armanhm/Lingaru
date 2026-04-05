@@ -29,6 +29,7 @@ INSTALLED_APPS = [
     "apps.assistant",
     "apps.gamification",
     "apps.media",
+    "apps.discover",
 ]
 
 MIDDLEWARE = [

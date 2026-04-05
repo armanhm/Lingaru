@@ -146,3 +146,11 @@ GEMINI_MODEL = config("GEMINI_MODEL", default="gemini-2.0-flash")
 
 GROQ_API_KEY = config("GROQ_API_KEY", default="")
 GROQ_MODEL = config("GROQ_MODEL", default="llama-3.3-70b-versatile")
+
+# Celery Beat schedule
+CELERY_BEAT_SCHEDULE = {
+    "generate-daily-discover-feed": {
+        "task": "discover.generate_daily_feed",
+        "schedule": 86400.0,  # every 24 hours (in seconds)
+    },
+}

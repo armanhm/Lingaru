@@ -7,11 +7,13 @@ from services.stt.groq_whisper import GroqWhisperProvider
 from services.stt.scoring import calculate_accuracy, generate_feedback
 from apps.gamification.services import award_xp, check_streak
 from .models import AudioClip, PronunciationAttempt
+from apps.content.models import Vocabulary
 from .serializers import (
     TTSRequestSerializer,
     AudioClipSerializer,
     PronunciationCheckSerializer,
     PronunciationResultSerializer,
+    DictationCheckRequestSerializer,
 )
 
 
@@ -76,3 +78,70 @@ class PronunciationCheckView(APIView):
             PronunciationResultSerializer(attempt).data,
             status=status.HTTP_200_OK,
         )
+
+
+class DictationStartView(APIView):
+    permission_classes = (permissions.IsAuthenticated,)
+
+    def get(self, request):
+        # Pick a random vocabulary item that has an example sentence
+        vocab = Vocabulary.objects.exclude(
+            example_sentence="",
+        ).order_by("?").first()
+
+        if vocab is None:
+            return Response(
+                {"detail": "No sentences available for dictation."},
+                status=status.HTTP_404_NOT_FOUND,
+            )
+
+        sentence = vocab.example_sentence
+        clip = get_or_create_audio(text=sentence, language="fr")
+
+        return Response({
+            "sentence_id": vocab.id,
+            "audio_clip": AudioClipSerializer(
+                clip, context={"request": request},
+            ).data,
+        })
+
+
+class DictationCheckView(APIView):
+    permission_classes = (permissions.IsAuthenticated,)
+
+    def post(self, request):
+        serializer = DictationCheckRequestSerializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+
+        clip_id = serializer.validated_data["audio_clip_id"]
+        user_text = serializer.validated_data["user_text"]
+
+        try:
+            clip = AudioClip.objects.get(pk=clip_id)
+        except AudioClip.DoesNotExist:
+            return Response(
+                {"detail": "Audio clip not found."},
+                status=status.HTTP_404_NOT_FOUND,
+            )
+
+        expected = clip.text_content
+        accuracy = calculate_accuracy(expected, user_text)
+        is_correct = accuracy >= 0.9
+        feedback = generate_feedback(accuracy, expected, user_text)
+
+        # Award XP for dictation
+        award_xp(
+            request.user,
+            activity_type="dictation",
+            xp_amount=15,
+            source_id=f"dictation_clip_{clip.id}",
+        )
+        check_streak(request.user)
+
+        return Response({
+            "correct": is_correct,
+            "expected": expected,
+            "user_text": user_text,
+            "accuracy": accuracy,
+            "feedback": feedback,
+        })

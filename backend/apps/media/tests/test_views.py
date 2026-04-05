@@ -4,6 +4,7 @@ from django.contrib.auth import get_user_model
 from django.core.files.uploadedfile import SimpleUploadedFile
 from rest_framework.test import APIClient
 from apps.media.models import AudioClip, PronunciationAttempt
+from apps.content.models import Topic, Lesson, Vocabulary
 
 User = get_user_model()
 
@@ -171,5 +172,114 @@ class TestPronunciationCheckView:
             "/api/media/pronunciation/check/",
             {"audio": audio, "expected_text": "Bonjour"},
             format="multipart",
+        )
+        assert response.status_code == 401
+
+
+@pytest.fixture
+def sample_vocab_with_sentence(db):
+    topic = Topic.objects.create(
+        name_fr="Test", name_en="Test",
+        description="", icon="", order=1, difficulty_level=1,
+    )
+    lesson = Lesson.objects.create(
+        topic=topic, type="vocab", title="Test Lesson",
+        content={}, order=1, difficulty=1,
+    )
+    return Vocabulary.objects.create(
+        lesson=lesson,
+        french="Bonjour",
+        english="Hello",
+        example_sentence="Bonjour, comment allez-vous?",
+    )
+
+
+@pytest.mark.django_db
+class TestDictationStartView:
+    @patch("apps.media.views.get_or_create_audio")
+    def test_start_dictation_success(
+        self, mock_get_audio, authenticated_client, sample_vocab_with_sentence,
+    ):
+        mock_clip = MagicMock(spec=AudioClip)
+        mock_clip.id = 1
+        mock_clip.text_content = "Bonjour, comment allez-vous?"
+        mock_clip.language = "fr"
+        mock_clip.provider = "gtts"
+        mock_clip.audio_file.url = "/media/audio/test.mp3"
+        mock_clip.audio_file.__bool__ = lambda self: True
+        mock_clip.created_at = "2026-04-05T10:00:00Z"
+        mock_get_audio.return_value = mock_clip
+
+        response = authenticated_client.get("/api/media/dictation/start/")
+
+        assert response.status_code == 200
+        assert "sentence_id" in response.data
+        assert "audio_clip" in response.data
+        assert "audio_url" in response.data["audio_clip"]
+
+    def test_start_dictation_no_sentences(self, authenticated_client):
+        response = authenticated_client.get("/api/media/dictation/start/")
+        assert response.status_code == 404
+
+    def test_start_dictation_unauthenticated(self, api_client):
+        response = api_client.get("/api/media/dictation/start/")
+        assert response.status_code == 401
+
+
+@pytest.mark.django_db
+class TestDictationCheckView:
+    @patch("apps.media.views.award_xp")
+    @patch("apps.media.views.check_streak")
+    def test_check_dictation_correct(self, mock_streak, mock_xp, authenticated_client):
+        clip = AudioClip.objects.create(
+            text_content="Bonjour le monde",
+            audio_file="audio/test.mp3",
+            language="fr",
+        )
+
+        response = authenticated_client.post(
+            "/api/media/dictation/check/",
+            {"audio_clip_id": clip.id, "user_text": "Bonjour le monde"},
+            format="json",
+        )
+
+        assert response.status_code == 200
+        assert response.data["correct"] is True
+        assert response.data["accuracy"] == 1.0
+        assert response.data["expected"] == "Bonjour le monde"
+        mock_xp.assert_called_once()
+
+    @patch("apps.media.views.award_xp")
+    @patch("apps.media.views.check_streak")
+    def test_check_dictation_incorrect(self, mock_streak, mock_xp, authenticated_client):
+        clip = AudioClip.objects.create(
+            text_content="Bonjour le monde",
+            audio_file="audio/test.mp3",
+            language="fr",
+        )
+
+        response = authenticated_client.post(
+            "/api/media/dictation/check/",
+            {"audio_clip_id": clip.id, "user_text": "Au revoir"},
+            format="json",
+        )
+
+        assert response.status_code == 200
+        assert response.data["correct"] is False
+        assert response.data["accuracy"] < 0.9
+
+    def test_check_dictation_missing_clip(self, authenticated_client):
+        response = authenticated_client.post(
+            "/api/media/dictation/check/",
+            {"audio_clip_id": 9999, "user_text": "test"},
+            format="json",
+        )
+        assert response.status_code == 404
+
+    def test_check_dictation_unauthenticated(self, api_client):
+        response = api_client.post(
+            "/api/media/dictation/check/",
+            {"audio_clip_id": 1, "user_text": "test"},
+            format="json",
         )
         assert response.status_code == 401

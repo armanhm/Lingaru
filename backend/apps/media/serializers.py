@@ -42,3 +42,22 @@ class PronunciationResultSerializer(serializers.ModelSerializer):
             "id", "expected_text", "transcription",
             "accuracy_score", "feedback", "created_at",
         )
+
+
+class DictationStartSerializer(serializers.Serializer):
+    """Response serializer for starting a dictation exercise."""
+    audio_clip = AudioClipSerializer()
+    sentence_id = serializers.IntegerField()
+
+
+class DictationCheckRequestSerializer(serializers.Serializer):
+    audio_clip_id = serializers.IntegerField()
+    user_text = serializers.CharField(max_length=2000)
+
+
+class DictationCheckResponseSerializer(serializers.Serializer):
+    correct = serializers.BooleanField()
+    expected = serializers.CharField()
+    user_text = serializers.CharField()
+    accuracy = serializers.FloatField()
+    feedback = serializers.CharField()

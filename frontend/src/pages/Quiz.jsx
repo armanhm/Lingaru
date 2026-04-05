@@ -1,6 +1,7 @@
 import { useEffect, useState, useCallback } from "react";
 import { useParams, useNavigate, Link } from "react-router-dom";
 import { startQuiz, submitAnswer, completeQuiz } from "../api/practice";
+import { useToast } from "../contexts/ToastContext";
 
 function ProgressBar({ current, total }) {
   const pct = total > 0 ? Math.round((current / total) * 100) : 0;
@@ -189,6 +190,7 @@ function ScoreSummary({ result, lessonId }) {
 export default function Quiz() {
   const { lessonId } = useParams();
   const navigate = useNavigate();
+  const { showToast } = useToast();
 
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -239,6 +241,8 @@ export default function Quiz() {
       try {
         const res = await completeQuiz(sessionId);
         setSummary(res.data);
+        const xp = res.data.xp_earned;
+        showToast(`Quiz completed!${xp ? ` +${xp} XP` : ""}`, "success");
       } catch (err) {
         setError(err.response?.data?.detail || "Failed to complete quiz.");
       }

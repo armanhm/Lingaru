@@ -1,7 +1,8 @@
 import { useState, useEffect, useRef } from "react";
 import { getDocuments, uploadDocument, deleteDocument } from "../api/documents";
+import { useToast } from "../contexts/ToastContext";
 
-function DocumentCard({ doc, onDelete }) {
+function DocumentCard({ doc, onDelete, showToast }) {
   const [deleting, setDeleting] = useState(false);
 
   const handleDelete = async () => {
@@ -10,8 +11,9 @@ function DocumentCard({ doc, onDelete }) {
     try {
       await deleteDocument(doc.id);
       onDelete(doc.id);
+      showToast("Document deleted!", "success");
     } catch {
-      alert("Failed to delete document.");
+      showToast("Failed to delete document.", "error");
     } finally {
       setDeleting(false);
     }
@@ -64,6 +66,7 @@ function DocumentCard({ doc, onDelete }) {
 }
 
 export default function Documents() {
+  const { showToast } = useToast();
   const [documents, setDocuments] = useState([]);
   const [loading, setLoading] = useState(true);
   const [uploading, setUploading] = useState(false);
@@ -102,6 +105,7 @@ export default function Documents() {
       setDocuments((prev) => [res.data, ...prev]);
       setTitle("");
       if (fileInputRef.current) fileInputRef.current.value = "";
+      showToast("Document uploaded!", "success");
     } catch (err) {
       setError(
         err.response?.data?.file?.[0] ||
@@ -175,7 +179,7 @@ export default function Documents() {
       ) : (
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
           {documents.map((doc) => (
-            <DocumentCard key={doc.id} doc={doc} onDelete={handleDelete} />
+            <DocumentCard key={doc.id} doc={doc} onDelete={handleDelete} showToast={showToast} />
           ))}
         </div>
       )}

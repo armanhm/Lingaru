@@ -1,8 +1,9 @@
 import pytest
 from unittest.mock import patch, MagicMock
 from django.contrib.auth import get_user_model
+from django.core.files.uploadedfile import SimpleUploadedFile
 from rest_framework.test import APIClient
-from apps.media.models import AudioClip
+from apps.media.models import AudioClip, PronunciationAttempt
 
 User = get_user_model()
 
@@ -93,5 +94,82 @@ class TestTTSView:
             "/api/media/tts/",
             {"text": "Bonjour"},
             format="json",
+        )
+        assert response.status_code == 401
+
+
+@pytest.mark.django_db
+class TestPronunciationCheckView:
+    @patch("apps.media.views.award_xp")
+    @patch("apps.media.views.check_streak")
+    @patch("apps.media.views.GroqWhisperProvider")
+    def test_pronunciation_check_success(
+        self, MockSTT, mock_streak, mock_xp, authenticated_client,
+    ):
+        mock_stt_instance = MagicMock()
+        mock_stt_instance.transcribe.return_value = MagicMock(
+            transcription="bonjour", provider="groq_whisper", language="fr",
+        )
+        MockSTT.return_value = mock_stt_instance
+
+        audio = SimpleUploadedFile(
+            "test.webm", b"fake audio data", content_type="audio/webm",
+        )
+
+        response = authenticated_client.post(
+            "/api/media/pronunciation/check/",
+            {"audio": audio, "expected_text": "Bonjour"},
+            format="multipart",
+        )
+
+        assert response.status_code == 200
+        assert response.data["transcription"] == "bonjour"
+        assert response.data["accuracy_score"] == 1.0
+        assert "feedback" in response.data
+        assert PronunciationAttempt.objects.count() == 1
+        mock_xp.assert_called_once()
+        mock_streak.assert_called_once()
+
+    @patch("apps.media.views.award_xp")
+    @patch("apps.media.views.check_streak")
+    @patch("apps.media.views.GroqWhisperProvider")
+    def test_pronunciation_partial_match(
+        self, MockSTT, mock_streak, mock_xp, authenticated_client,
+    ):
+        mock_stt_instance = MagicMock()
+        mock_stt_instance.transcribe.return_value = MagicMock(
+            transcription="bonjour monde", provider="groq_whisper", language="fr",
+        )
+        MockSTT.return_value = mock_stt_instance
+
+        audio = SimpleUploadedFile(
+            "test.webm", b"fake audio data", content_type="audio/webm",
+        )
+
+        response = authenticated_client.post(
+            "/api/media/pronunciation/check/",
+            {"audio": audio, "expected_text": "Bonjour le monde"},
+            format="multipart",
+        )
+
+        assert response.status_code == 200
+        assert 0.0 < response.data["accuracy_score"] < 1.0
+
+    def test_pronunciation_missing_audio_returns_400(self, authenticated_client):
+        response = authenticated_client.post(
+            "/api/media/pronunciation/check/",
+            {"expected_text": "Bonjour"},
+            format="multipart",
+        )
+        assert response.status_code == 400
+
+    def test_pronunciation_unauthenticated_returns_401(self, api_client):
+        audio = SimpleUploadedFile(
+            "test.webm", b"fake audio data", content_type="audio/webm",
+        )
+        response = api_client.post(
+            "/api/media/pronunciation/check/",
+            {"audio": audio, "expected_text": "Bonjour"},
+            format="multipart",
         )
         assert response.status_code == 401

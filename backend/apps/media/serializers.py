@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import AudioClip
+from .models import AudioClip, PronunciationAttempt
 
 
 class TTSRequestSerializer(serializers.Serializer):
@@ -27,3 +27,18 @@ class AudioClipSerializer(serializers.ModelSerializer):
         if obj.audio_file:
             return obj.audio_file.url
         return None
+
+
+class PronunciationCheckSerializer(serializers.Serializer):
+    audio = serializers.FileField()
+    expected_text = serializers.CharField(max_length=1000)
+    vocabulary_id = serializers.IntegerField(required=False, allow_null=True)
+
+
+class PronunciationResultSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = PronunciationAttempt
+        fields = (
+            "id", "expected_text", "transcription",
+            "accuracy_score", "feedback", "created_at",
+        )

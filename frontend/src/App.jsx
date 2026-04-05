@@ -8,6 +8,7 @@ import TopicDetail from "./pages/TopicDetail";
 import LessonDetail from "./pages/LessonDetail";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
+import Quiz from "./pages/Quiz";
 import NotFound from "./pages/NotFound";
 
 export default function App() {
@@ -28,6 +29,7 @@ export default function App() {
           <Route path="topics" element={<Topics />} />
           <Route path="topics/:id" element={<TopicDetail />} />
           <Route path="lesson/:id" element={<LessonDetail />} />
+          <Route path="practice/quiz/:lessonId" element={<Quiz />} />
         </Route>
         <Route path="*" element={<NotFound />} />
       </Routes>

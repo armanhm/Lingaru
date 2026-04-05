@@ -129,32 +129,46 @@ function ReadingSection({ texts }) {
   );
 }
 
-function QuestionsSection({ questions }) {
+function QuestionsSection({ questions, lessonId }) {
   if (!questions || questions.length === 0) return null;
 
   return (
     <div className="mb-8">
-      <h2 className="text-lg font-semibold text-gray-900 mb-4">
-        Questions Preview
-      </h2>
+      <div className="flex items-center justify-between mb-4">
+        <h2 className="text-lg font-semibold text-gray-900">
+          Practice Questions
+        </h2>
+        <Link
+          to={`/practice/quiz/${lessonId}`}
+          className="px-5 py-2.5 bg-primary-600 text-white font-semibold rounded-xl hover:bg-primary-700 transition-colors text-sm"
+        >
+          Start Quiz
+        </Link>
+      </div>
       <div className="bg-gray-50 rounded-lg border p-5">
         <p className="text-sm text-gray-500 mb-4">
-          Full quiz coming soon. Here is a preview of the questions in this lesson.
+          {questions.length} question{questions.length !== 1 ? "s" : ""} available.
+          Start the quiz to practice interactively.
         </p>
         <div className="space-y-3">
-          {questions.map((q, index) => (
+          {questions.slice(0, 3).map((q, index) => (
             <div key={q.id} className="flex gap-3 items-start">
               <span className="text-sm font-medium text-gray-400 mt-0.5">
                 {index + 1}.
               </span>
               <div>
-                <p className="text-sm text-gray-800">{q.question_text}</p>
+                <p className="text-sm text-gray-800">{q.prompt}</p>
                 <p className="text-xs text-gray-400 mt-0.5">
-                  Type: {q.question_type}
+                  Type: {q.type}
                 </p>
               </div>
             </div>
           ))}
+          {questions.length > 3 && (
+            <p className="text-xs text-gray-400 pl-7">
+              + {questions.length - 3} more question{questions.length - 3 !== 1 ? "s" : ""}
+            </p>
+          )}
         </div>
       </div>
     </div>
@@ -209,7 +223,7 @@ export default function LessonDetail() {
       <VocabSection items={lesson.vocabulary || lesson.vocab} />
       <GrammarSection rules={lesson.grammar_rules} />
       <ReadingSection texts={lesson.reading_texts} />
-      <QuestionsSection questions={lesson.questions} />
+      <QuestionsSection questions={lesson.questions} lessonId={id} />
     </div>
   );
 }

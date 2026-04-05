@@ -1,6 +1,8 @@
 import pytest
+from datetime import date
 from django.contrib.auth import get_user_model
 from apps.content.models import Topic, Lesson, Question
+from apps.gamification.models import Badge, UserBadge, UserStats
 from apps.practice.models import QuizSession
 from apps.bot.handlers.stats import get_user_stats
 
@@ -57,3 +59,45 @@ class TestGetUserStats:
         assert "total_correct" in stats
         assert "total_questions" in stats
         assert "username" in stats
+        assert "total_xp" in stats
+        assert "level_name" in stats
+        assert "current_streak" in stats
+        assert "longest_streak" in stats
+        assert "badges_count" in stats
+
+    def test_includes_gamification_data(self):
+        user = User.objects.create_user(
+            username="tguser", password="testpass123",
+        )
+        UserStats.objects.create(
+            user=user,
+            total_xp=500,
+            level=2,
+            current_streak=5,
+            longest_streak=10,
+            last_active_date=date(2026, 4, 4),
+        )
+        badge = Badge.objects.create(
+            name="First Quiz",
+            description="Complete your first quiz",
+            icon="trophy",
+            criteria_type="quizzes_completed",
+            criteria_value=1,
+        )
+        UserBadge.objects.create(user=user, badge=badge)
+
+        stats = get_user_stats(user)
+        assert stats["total_xp"] == 500
+        assert stats["level_name"] == "Apprenti"
+        assert stats["current_streak"] == 5
+        assert stats["longest_streak"] == 10
+        assert stats["badges_count"] == 1
+
+    def test_new_user_gets_defaults(self):
+        user = User.objects.create_user(
+            username="newuser2", password="testpass123",
+        )
+        stats = get_user_stats(user)
+        assert stats["total_xp"] == 0
+        assert stats["level_name"] == "Debutant"
+        assert stats["current_streak"] == 0

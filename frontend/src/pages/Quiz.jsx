@@ -1,6 +1,7 @@
 import { useEffect, useState, useCallback } from "react";
 import { useParams, useNavigate, Link } from "react-router-dom";
 import { startQuiz, submitAnswer, completeQuiz } from "../api/practice";
+import { completeLesson } from "../api/progress";
 import { useToast } from "../contexts/ToastContext";
 
 function ProgressBar({ current, total }) {
@@ -100,7 +101,7 @@ function FeedbackBanner({ result, onContinue }) {
       }`}
     >
       <div className="flex items-center gap-2 mb-2">
-        <span className="text-2xl">{result.is_correct ? "\u2705" : "\u274c"}</span>
+        <span className="text-2xl">{result.is_correct ? "✅" : "❌"}</span>
         <span
           className={`font-bold text-lg ${
             result.is_correct ? "text-green-800" : "text-red-800"
@@ -127,7 +128,54 @@ function FeedbackBanner({ result, onContinue }) {
   );
 }
 
-function ScoreSummary({ result, lessonId }) {
+function ReviewList({ answers }) {
+  const [open, setOpen] = useState(false);
+  if (!answers || answers.length === 0) return null;
+
+  return (
+    <div className="w-full max-w-lg">
+      <button
+        onClick={() => setOpen((v) => !v)}
+        className="text-sm text-primary-600 hover:text-primary-800 font-medium mb-3 flex items-center gap-1"
+      >
+        {open ? "▲" : "▼"} {open ? "Hide" : "Show"} answer review
+      </button>
+      {open && (
+        <div className="space-y-2 text-left">
+          {answers.map((a, i) => (
+            <div
+              key={i}
+              className={`rounded-lg border p-3 ${
+                a.is_correct
+                  ? "bg-green-50 border-green-200"
+                  : "bg-red-50 border-red-200"
+              }`}
+            >
+              <div className="flex items-start gap-2">
+                <span className="text-base mt-0.5">{a.is_correct ? "✅" : "❌"}</span>
+                <div className="flex-1 min-w-0">
+                  <p className="text-sm font-medium text-gray-800 truncate">
+                    {a.prompt}
+                  </p>
+                  <p className="text-xs text-gray-500 mt-0.5">
+                    Your answer: <span className={a.is_correct ? "text-green-700" : "text-red-700"}>{a.user_answer}</span>
+                  </p>
+                  {!a.is_correct && (
+                    <p className="text-xs text-gray-500">
+                      Correct: <span className="text-green-700 font-medium">{a.correct_answer}</span>
+                    </p>
+                  )}
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+      )}
+    </div>
+  );
+}
+
+function ScoreSummary({ result, lessonId, answers }) {
   const pct =
     result.total_questions > 0
       ? Math.round((result.score / result.total_questions) * 100)
@@ -150,12 +198,12 @@ function ScoreSummary({ result, lessonId }) {
 
   return (
     <div className="flex flex-col items-center justify-center py-12 animate-fade-in">
-      <div className="text-6xl mb-4">{pct === 100 ? "\ud83c\udf1f" : pct >= 60 ? "\ud83c\udf89" : "\ud83d\udcaa"}</div>
+      <div className="text-6xl mb-4">{pct === 100 ? "🌟" : pct >= 60 ? "🎉" : "💪"}</div>
       <h2 className={`text-3xl font-bold mb-2 ${gradeColor}`}>{grade}</h2>
       <p className="text-gray-600 text-lg mb-6">
         {result.lesson_title}
       </p>
-      <div className="bg-white rounded-2xl shadow-lg p-8 mb-8 text-center">
+      <div className="bg-white rounded-2xl shadow-lg p-8 mb-6 text-center">
         <p className="text-5xl font-bold text-gray-900 mb-2">
           {result.score}/{result.total_questions}
         </p>
@@ -168,13 +216,24 @@ function ScoreSummary({ result, lessonId }) {
         </div>
         <p className="text-sm text-gray-400 mt-2">{pct}%</p>
       </div>
-      <div className="flex gap-4">
+
+      <ReviewList answers={answers} />
+
+      <div className="flex flex-wrap gap-3 mt-6 justify-center">
         <Link
           to={`/lesson/${lessonId}`}
           className="px-6 py-3 border border-gray-300 rounded-xl font-medium text-gray-700 hover:bg-gray-50 transition-colors"
         >
           Back to Lesson
         </Link>
+        {result.next_lesson && (
+          <Link
+            to={`/lesson/${result.next_lesson.id}`}
+            className="px-6 py-3 bg-green-600 text-white font-semibold rounded-xl hover:bg-green-700 transition-colors"
+          >
+            Next Lesson →
+          </Link>
+        )}
         <Link
           to={`/practice/quiz/${lessonId}`}
           reloadDocument
@@ -200,6 +259,7 @@ export default function Quiz() {
   const [feedback, setFeedback] = useState(null);
   const [answeredCount, setAnsweredCount] = useState(0);
   const [summary, setSummary] = useState(null);
+  const [answers, setAnswers] = useState([]);
 
   useEffect(() => {
     startQuiz(lessonId)
@@ -225,6 +285,15 @@ export default function Quiz() {
         const res = await submitAnswer(sessionId, question.id, answer);
         setFeedback(res.data);
         setAnsweredCount((prev) => prev + 1);
+        setAnswers((prev) => [
+          ...prev,
+          {
+            prompt: question.prompt,
+            user_answer: answer,
+            correct_answer: res.data.correct_answer,
+            is_correct: res.data.is_correct,
+          },
+        ]);
       } catch (err) {
         setError(err.response?.data?.detail || "Failed to submit answer.");
       }
@@ -237,17 +306,33 @@ export default function Quiz() {
     if (currentIndex + 1 < questions.length) {
       setCurrentIndex((prev) => prev + 1);
     } else {
-      // All questions answered, complete the quiz
       try {
         const res = await completeQuiz(sessionId);
-        setSummary(res.data);
-        const xp = res.data.xp_earned;
-        showToast(`Quiz completed!${xp ? ` +${xp} XP` : ""}`, "success");
+        const quizData = res.data;
+        const score = quizData.score;
+        const total = quizData.total_questions;
+
+        // Mark lesson as complete and get next lesson info
+        let nextLesson = null;
+        try {
+          const completionRes = await completeLesson(lessonId, score, total);
+          nextLesson = completionRes.data.next_lesson;
+          const xp = completionRes.data.xp_earned;
+          if (xp > 0) {
+            showToast(`Lesson completed! +${xp} XP`, "success");
+          }
+        } catch {
+          // Non-fatal: quiz result still shows
+        }
+
+        setSummary({ ...quizData, next_lesson: nextLesson });
+        const xp = quizData.xp_earned;
+        if (xp) showToast(`Quiz completed! +${xp} XP`, "success");
       } catch (err) {
         setError(err.response?.data?.detail || "Failed to complete quiz.");
       }
     }
-  }, [currentIndex, questions.length, sessionId]);
+  }, [currentIndex, questions.length, sessionId, lessonId]);
 
   if (loading) {
     return (
@@ -276,7 +361,7 @@ export default function Quiz() {
   if (summary) {
     return (
       <div className="max-w-2xl mx-auto py-8 px-4">
-        <ScoreSummary result={summary} lessonId={lessonId} />
+        <ScoreSummary result={summary} lessonId={lessonId} answers={answers} />
       </div>
     );
   }

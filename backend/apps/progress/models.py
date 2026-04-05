@@ -79,3 +79,34 @@ class MistakeEntry(models.Model):
 
     def __str__(self):
         return f"Mistake: {self.user_answer} (correct: {self.correct_answer})"
+
+
+class LessonCompletion(models.Model):
+    """Records when a user completes a lesson (quiz passed)."""
+
+    user = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        on_delete=models.CASCADE,
+        related_name="lesson_completions",
+    )
+    lesson = models.ForeignKey(
+        "content.Lesson",
+        on_delete=models.CASCADE,
+        related_name="completions",
+    )
+    completed_at = models.DateTimeField(auto_now_add=True)
+    score = models.PositiveIntegerField(default=0)
+    total_questions = models.PositiveIntegerField(default=0)
+
+    class Meta:
+        db_table = "progress_lesson_completions"
+        constraints = [
+            models.UniqueConstraint(
+                fields=["user", "lesson"],
+                name="unique_lesson_completion_per_user",
+            ),
+        ]
+        ordering = ["-completed_at"]
+
+    def __str__(self):
+        return f"{self.user.username} completed {self.lesson.title}"

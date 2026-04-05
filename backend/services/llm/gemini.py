@@ -1,6 +1,7 @@
 import logging
 
-import google.generativeai as genai
+from google import genai
+from google.genai import types
 
 from .base import BaseProvider, LLMResponse
 
@@ -12,25 +13,24 @@ class GeminiProvider(BaseProvider):
 
     def __init__(self, api_key: str, model: str):
         super().__init__(api_key, model)
-        genai.configure(api_key=api_key)
+        self._client = genai.Client(api_key=api_key)
 
     def generate(
         self,
         messages: list[dict],
         system_prompt: str,
     ) -> LLMResponse:
-        model = genai.GenerativeModel(
-            self.model,
-            system_instruction=system_prompt,
-        )
-
         # Convert messages to Gemini's content format
         contents = []
         for msg in messages:
             role = "user" if msg["role"] == "user" else "model"
-            contents.append({"role": role, "parts": [msg["content"]]})
+            contents.append(types.Content(role=role, parts=[types.Part(text=msg["content"])]))
 
-        response = model.generate_content(contents)
+        response = self._client.models.generate_content(
+            model=self.model,
+            contents=contents,
+            config=types.GenerateContentConfig(system_instruction=system_prompt),
+        )
 
         tokens_used = 0
         if hasattr(response, "usage_metadata") and response.usage_metadata:
@@ -58,30 +58,21 @@ class GeminiProvider(BaseProvider):
         Uses Gemini's native multimodal input: sends the image as an inline
         blob alongside any user text.
         """
-        model = genai.GenerativeModel(
-            self.model,
-            system_instruction=system_prompt,
+        # Build content parts: image first, then the latest user text
+        image_part = types.Part(
+            inline_data=types.Blob(mime_type=image_mime_type, data=image_data)
         )
 
-        # Build content parts: image first, then the latest user text
-        image_part = {
-            "inline_data": {
-                "mime_type": image_mime_type,
-                "data": image_data,
-            }
-        }
-
-        # Combine: image + user question (if any)
-        user_text = ""
-        if messages:
-            user_text = messages[-1].get("content", "")
-
+        user_text = messages[-1].get("content", "") if messages else ""
+        parts = [image_part]
         if user_text:
-            contents = [image_part, user_text]
-        else:
-            contents = [image_part]
+            parts.append(types.Part(text=user_text))
 
-        response = model.generate_content(contents)
+        response = self._client.models.generate_content(
+            model=self.model,
+            contents=[types.Content(role="user", parts=parts)],
+            config=types.GenerateContentConfig(system_instruction=system_prompt),
+        )
 
         tokens_used = 0
         if hasattr(response, "usage_metadata") and response.usage_metadata:

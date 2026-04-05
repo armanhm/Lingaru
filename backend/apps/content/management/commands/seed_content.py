@@ -24,7 +24,7 @@ class Command(BaseCommand):
             name_fr="Salutations et presentations",
             name_en="Greetings & Introductions",
             description="Learn to greet people and introduce yourself in French.",
-            icon="hand-wave",
+            icon="👋",
             order=1,
             difficulty_level=1,
         )
@@ -211,7 +211,7 @@ class Command(BaseCommand):
             name_fr="Nourriture et restaurant",
             name_en="Food & Dining",
             description="Learn vocabulary and phrases for ordering food and dining out.",
-            icon="utensils",
+            icon="🍽️",
             order=2,
             difficulty_level=1,
         )

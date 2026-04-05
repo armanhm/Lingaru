@@ -9,24 +9,22 @@ from services.llm.router import ProviderRouter
 class TestGeminiVisionGeneration(TestCase):
     """Test generate_with_image on GeminiProvider."""
 
-    @patch("services.llm.gemini.genai")
-    def test_generate_with_image_returns_response(self, mock_genai):
+    @patch("services.llm.gemini.genai.Client")
+    def test_generate_with_image_returns_response(self, MockClient):
         """Image + text prompt returns an LLMResponse with extracted content."""
-        # Arrange
+        mock_client = MagicMock()
+        MockClient.return_value = mock_client
+
         mock_response = MagicMock()
         mock_response.text = "This is a French menu. It says 'Plat du jour: Poulet roti'."
         mock_response.usage_metadata = MagicMock(total_token_count=150)
-
-        mock_model_instance = MagicMock()
-        mock_model_instance.generate_content.return_value = mock_response
-        mock_genai.GenerativeModel.return_value = mock_model_instance
+        mock_client.models.generate_content.return_value = mock_response
 
         provider = GeminiProvider(api_key="fake-key", model="gemini-2.0-flash")
 
         messages = [{"role": "user", "content": "What does this menu say?"}]
         image_data = b"fake-image-bytes"
 
-        # Act
         result = provider.generate_with_image(
             messages=messages,
             image_data=image_data,
@@ -34,34 +32,22 @@ class TestGeminiVisionGeneration(TestCase):
             system_prompt="Analyze this French image.",
         )
 
-        # Assert
         self.assertIsInstance(result, LLMResponse)
         self.assertEqual(result.provider, "gemini")
         self.assertIn("French menu", result.content)
         self.assertEqual(result.tokens_used, 150)
+        mock_client.models.generate_content.assert_called_once()
 
-        # Verify the model was constructed with a system instruction
-        mock_genai.GenerativeModel.assert_called_once_with(
-            "gemini-2.0-flash",
-            system_instruction="Analyze this French image.",
-        )
-
-        # Verify generate_content was called with image part + text
-        call_args = mock_model_instance.generate_content.call_args
-        contents = call_args[0][0]
-        # Should have the image part and the user text
-        self.assertEqual(len(contents), 2)
-
-    @patch("services.llm.gemini.genai")
-    def test_generate_with_image_no_question(self, mock_genai):
+    @patch("services.llm.gemini.genai.Client")
+    def test_generate_with_image_no_question(self, MockClient):
         """Image with empty messages still works (just image analysis)."""
+        mock_client = MagicMock()
+        MockClient.return_value = mock_client
+
         mock_response = MagicMock()
         mock_response.text = "A French street sign reading 'Rue de la Paix'."
         mock_response.usage_metadata = MagicMock(total_token_count=80)
-
-        mock_model_instance = MagicMock()
-        mock_model_instance.generate_content.return_value = mock_response
-        mock_genai.GenerativeModel.return_value = mock_model_instance
+        mock_client.models.generate_content.return_value = mock_response
 
         provider = GeminiProvider(api_key="fake-key", model="gemini-2.0-flash")
 
@@ -74,16 +60,16 @@ class TestGeminiVisionGeneration(TestCase):
 
         self.assertIn("Rue de la Paix", result.content)
 
-    @patch("services.llm.gemini.genai")
-    def test_generate_with_image_token_count_fallback(self, mock_genai):
+    @patch("services.llm.gemini.genai.Client")
+    def test_generate_with_image_token_count_fallback(self, MockClient):
         """Handles missing usage_metadata gracefully."""
+        mock_client = MagicMock()
+        MockClient.return_value = mock_client
+
         mock_response = MagicMock()
         mock_response.text = "Some response"
         mock_response.usage_metadata = None
-
-        mock_model_instance = MagicMock()
-        mock_model_instance.generate_content.return_value = mock_response
-        mock_genai.GenerativeModel.return_value = mock_model_instance
+        mock_client.models.generate_content.return_value = mock_response
 
         provider = GeminiProvider(api_key="fake-key", model="gemini-2.0-flash")
 

@@ -17,3 +17,12 @@ export const getConjugationVerbs = () =>
 
 export const checkConjugation = (verb, tense, subject, answer) =>
   client.post("/progress/conjugation/check/", { verb, tense, subject, answer });
+
+export const completeLesson = (lessonId, score, totalQuestions) =>
+  client.post(`/progress/lessons/${lessonId}/complete/`, {
+    score,
+    total_questions: totalQuestions,
+  });
+
+export const getTopicProgress = (topicId) =>
+  client.get(`/progress/topics/${topicId}/`);

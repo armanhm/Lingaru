@@ -71,7 +71,7 @@ class Command(BaseCommand):
             name_fr=name_fr,
             name_en="Travel",
             description="Vocabulary and grammar for travelling in French-speaking countries.",
-            icon="plane",
+            icon="✈️",
             order=3,
             difficulty_level=2,
         )
@@ -242,7 +242,7 @@ class Command(BaseCommand):
             name_fr=name_fr,
             name_en="Work & Career",
             description="Talk about your job, the office, and professional life.",
-            icon="briefcase",
+            icon="💼",
             order=4,
             difficulty_level=2,
         )
@@ -431,7 +431,7 @@ class Command(BaseCommand):
             name_fr=name_fr,
             name_en="Health",
             description="Body parts, symptoms, and visiting the doctor.",
-            icon="heart-pulse",
+            icon="❤️",
             order=5,
             difficulty_level=2,
         )
@@ -603,7 +603,7 @@ class Command(BaseCommand):
             name_fr=name_fr,
             name_en="Hobbies & Leisure",
             description="Sports, music, arts, and how to talk about your free time.",
-            icon="palette",
+            icon="🎨",
             order=6,
             difficulty_level=1,
         )
@@ -790,7 +790,7 @@ class Command(BaseCommand):
             name_fr=name_fr,
             name_en="City & Directions",
             description="Navigate a French city: places, directions, and prepositions.",
-            icon="map-pin",
+            icon="📍",
             order=7,
             difficulty_level=2,
         )
@@ -961,7 +961,7 @@ class Command(BaseCommand):
             name_fr=name_fr,
             name_en="Shopping",
             description="Clothing, prices, colors, and shopping in France.",
-            icon="shopping-bag",
+            icon="🛍️",
             order=8,
             difficulty_level=1,
         )

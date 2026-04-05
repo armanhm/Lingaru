@@ -1,5 +1,5 @@
 import pytest
-from unittest.mock import AsyncMock, MagicMock, patch
+from unittest.mock import MagicMock, patch
 
 from services.llm.base import BaseProvider, LLMResponse
 from services.llm.gemini import GeminiProvider
@@ -26,16 +26,15 @@ class TestBaseProvider:
 
 
 class TestGeminiProvider:
-    @patch("services.llm.gemini.genai")
-    def test_generate_success(self, mock_genai):
-        # Set up the mock chain
-        mock_model = MagicMock()
-        mock_genai.GenerativeModel.return_value = mock_model
+    @patch("services.llm.gemini.genai.Client")
+    def test_generate_success(self, MockClient):
+        mock_client = MagicMock()
+        MockClient.return_value = mock_client
 
         mock_response = MagicMock()
         mock_response.text = "Bonjour, comment allez-vous?"
         mock_response.usage_metadata.total_token_count = 25
-        mock_model.generate_content.return_value = mock_response
+        mock_client.models.generate_content.return_value = mock_response
 
         provider = GeminiProvider(api_key="fake-key", model="gemini-2.0-flash")
         result = provider.generate(
@@ -46,13 +45,13 @@ class TestGeminiProvider:
         assert result.content == "Bonjour, comment allez-vous?"
         assert result.provider == "gemini"
         assert result.tokens_used == 25
-        mock_genai.configure.assert_called_once_with(api_key="fake-key")
+        MockClient.assert_called_once_with(api_key="fake-key")
 
-    @patch("services.llm.gemini.genai")
-    def test_generate_raises_on_api_error(self, mock_genai):
-        mock_model = MagicMock()
-        mock_genai.GenerativeModel.return_value = mock_model
-        mock_model.generate_content.side_effect = Exception("Rate limit exceeded")
+    @patch("services.llm.gemini.genai.Client")
+    def test_generate_raises_on_api_error(self, MockClient):
+        mock_client = MagicMock()
+        MockClient.return_value = mock_client
+        mock_client.models.generate_content.side_effect = Exception("Rate limit exceeded")
 
         provider = GeminiProvider(api_key="fake-key", model="gemini-2.0-flash")
         with pytest.raises(Exception, match="Rate limit exceeded"):

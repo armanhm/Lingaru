@@ -87,7 +87,7 @@ class Command(BaseCommand):
             defaults={
                 "name_en": "Conjugation",
                 "description": "French verb conjugation drills",
-                "icon": "pen",
+                "icon": "✏️",
                 "order": 100,
                 "difficulty_level": 2,
             },

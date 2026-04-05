@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import MistakeEntry, SRSCard
+from .models import LessonCompletion, MistakeEntry, SRSCard
 
 
 class SRSCardSerializer(serializers.ModelSerializer):
@@ -41,3 +41,10 @@ class MistakeMarkReviewedSerializer(serializers.Serializer):
     mistake_ids = serializers.ListField(
         child=serializers.IntegerField(), min_length=1, max_length=100,
     )
+
+
+class LessonCompletionSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = LessonCompletion
+        fields = ("id", "lesson", "completed_at", "score", "total_questions")
+        read_only_fields = fields

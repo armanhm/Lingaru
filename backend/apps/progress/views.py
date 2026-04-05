@@ -5,8 +5,9 @@ from rest_framework.views import APIView
 
 from apps.content.models import Question
 from apps.gamification.services import award_xp, check_streak
-from .models import MistakeEntry, SRSCard
+from .models import LessonCompletion, MistakeEntry, SRSCard
 from .serializers import (
+    LessonCompletionSerializer,
     MistakeEntrySerializer,
     MistakeMarkReviewedSerializer,
     SRSCardSerializer,
@@ -99,6 +100,87 @@ class MistakeMarkReviewedView(APIView):
         ).update(reviewed=True)
 
         return Response({"updated": updated})
+
+
+class LessonCompleteView(APIView):
+    """POST /api/progress/lessons/<lesson_id>/complete/ — mark a lesson as complete."""
+
+    permission_classes = (permissions.IsAuthenticated,)
+
+    def post(self, request, lesson_id):
+        from apps.content.models import Lesson
+
+        try:
+            lesson = Lesson.objects.get(pk=lesson_id)
+        except Lesson.DoesNotExist:
+            return Response({"detail": "Lesson not found."}, status=status.HTTP_404_NOT_FOUND)
+
+        score = request.data.get("score", 0)
+        total_questions = request.data.get("total_questions", 0)
+
+        completion, created = LessonCompletion.objects.get_or_create(
+            user=request.user,
+            lesson=lesson,
+            defaults={"score": score, "total_questions": total_questions},
+        )
+
+        if not created and score > completion.score:
+            completion.score = score
+            completion.total_questions = total_questions
+            completion.save(update_fields=["score", "total_questions"])
+
+        if created:
+            award_xp(
+                request.user,
+                activity_type="lesson_complete",
+                xp_amount=50,
+                source_id=f"lesson_{lesson_id}",
+            )
+            check_streak(request.user)
+
+        # Find the next lesson in the same topic
+        next_lesson = (
+            lesson.topic.lessons.filter(order__gt=lesson.order).order_by("order").first()
+        )
+
+        return Response({
+            "completed": True,
+            "first_time": created,
+            "xp_earned": 50 if created else 0,
+            "next_lesson": {
+                "id": next_lesson.id,
+                "title": next_lesson.title,
+                "type": next_lesson.type,
+            } if next_lesson else None,
+        })
+
+
+class TopicProgressView(APIView):
+    """GET /api/progress/topics/<topic_id>/ — lesson completion counts for a topic."""
+
+    permission_classes = (permissions.IsAuthenticated,)
+
+    def get(self, request, topic_id):
+        from apps.content.models import Topic
+
+        try:
+            topic = Topic.objects.prefetch_related("lessons").get(pk=topic_id)
+        except Topic.DoesNotExist:
+            return Response({"detail": "Topic not found."}, status=status.HTTP_404_NOT_FOUND)
+
+        lesson_ids = list(topic.lessons.values_list("id", flat=True))
+        completed_ids = set(
+            LessonCompletion.objects.filter(
+                user=request.user, lesson_id__in=lesson_ids
+            ).values_list("lesson_id", flat=True)
+        )
+
+        return Response({
+            "topic_id": topic_id,
+            "total_lessons": len(lesson_ids),
+            "completed_lessons": len(completed_ids),
+            "completed_lesson_ids": list(completed_ids),
+        })
 
 
 class ConjugationCheckView(APIView):

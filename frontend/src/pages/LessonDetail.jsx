@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { useParams, Link } from "react-router-dom";
 import { getLesson } from "../api/content";
+import AudioPlayButton from "../components/AudioPlayButton";
 
 function VocabSection({ items }) {
   if (!items || items.length === 0) return null;
@@ -11,14 +12,17 @@ function VocabSection({ items }) {
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
         {items.map((word) => (
           <div key={word.id} className="bg-white rounded-lg shadow p-4">
-            <div className="flex items-baseline justify-between mb-1">
-              <span className="text-lg font-semibold text-gray-900">
-                {word.french}
-                {word.gender && (
-                  <span className="text-xs text-gray-400 ml-1">
-                    ({word.gender})
-                  </span>
-                )}
+            <div className="flex items-center justify-between mb-1">
+              <span className="flex items-center gap-1">
+                <span className="text-lg font-semibold text-gray-900">
+                  {word.french}
+                  {word.gender && (
+                    <span className="text-xs text-gray-400 ml-1">
+                      ({word.gender})
+                    </span>
+                  )}
+                </span>
+                <AudioPlayButton text={word.french} />
               </span>
               <span className="text-sm text-primary-600">{word.english}</span>
             </div>
@@ -26,9 +30,12 @@ function VocabSection({ items }) {
               <p className="text-xs text-gray-400 mb-2">{word.pronunciation}</p>
             )}
             {word.example_sentence && (
-              <p className="text-sm text-gray-600 italic border-t pt-2 mt-2">
-                {word.example_sentence}
-              </p>
+              <div className="flex items-start gap-1 border-t pt-2 mt-2">
+                <p className="text-sm text-gray-600 italic flex-1">
+                  {word.example_sentence}
+                </p>
+                <AudioPlayButton text={word.example_sentence} />
+              </div>
             )}
           </div>
         ))}

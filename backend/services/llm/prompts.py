@@ -22,6 +22,15 @@ SYSTEM_PROMPTS = {
         "summary (English, 1-2 sentences), fact_fr (the fact in simple French), "
         "fact_en (English translation). Keep it educational and engaging."
     ),
+    "image_query": (
+        "You are a French language learning assistant analyzing an image. "
+        "Extract any French text visible in the image. Then:\n"
+        "1. Provide the extracted French text\n"
+        "2. Translate it to English\n"
+        "3. Explain any interesting grammar, vocabulary, or cultural notes\n"
+        "4. If the user asked a specific question, answer it\n"
+        "Keep explanations clear and targeted at B1-B2 level learners."
+    ),
     "news_generator": (
         "Generate a short mock news article about a current or plausible topic, "
         "written in simplified French at B1-B2 level. Include vocabulary help. "

@@ -8,4 +8,6 @@ urlpatterns = [
     path("srs/review/", views.SRSReviewView.as_view(), name="srs-review"),
     path("mistakes/", views.MistakeListView.as_view(), name="mistake-list"),
     path("mistakes/reviewed/", views.MistakeMarkReviewedView.as_view(), name="mistake-mark-reviewed"),
+    path("conjugation/check/", views.ConjugationCheckView.as_view(), name="conjugation-check"),
+    path("conjugation/verbs/", views.ConjugationListView.as_view(), name="conjugation-verbs"),
 ]

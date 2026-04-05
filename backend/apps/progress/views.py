@@ -1,7 +1,9 @@
+from django.db.models import Q
 from rest_framework import generics, permissions, status
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
+from apps.content.models import Question
 from apps.gamification.services import award_xp, check_streak
 from .models import MistakeEntry, SRSCard
 from .serializers import (
@@ -97,3 +99,95 @@ class MistakeMarkReviewedView(APIView):
         ).update(reviewed=True)
 
         return Response({"updated": updated})
+
+
+class ConjugationCheckView(APIView):
+    """POST /api/progress/conjugation/check/ — check a conjugation answer.
+
+    Request body: { "verb": "manger", "tense": "present", "subject": "je", "answer": "mange" }
+    """
+
+    permission_classes = (permissions.IsAuthenticated,)
+
+    def post(self, request):
+        verb = request.data.get("verb", "").strip()
+        tense = request.data.get("tense", "").strip()
+        subject = request.data.get("subject", "").strip()
+        answer = request.data.get("answer", "").strip()
+
+        if not all([verb, tense, subject, answer]):
+            return Response(
+                {"detail": "verb, tense, subject, and answer are all required."},
+                status=status.HTTP_400_BAD_REQUEST,
+            )
+
+        # Look up the correct conjugation from Question records (type=conjugation)
+        # Prompt format: "Conjugate {verb} ({tense}, {subject})"
+        question = Question.objects.filter(
+            Q(type="conjugation")
+            & Q(prompt__icontains=verb)
+            & Q(prompt__icontains=tense)
+            & Q(prompt__icontains=subject)
+        ).first()
+
+        if question is None:
+            return Response(
+                {"detail": "No conjugation data found for this combination."},
+                status=status.HTTP_404_NOT_FOUND,
+            )
+
+        is_correct = answer.lower() == question.correct_answer.strip().lower()
+
+        if not is_correct:
+            from apps.progress.services import record_mistake
+            record_mistake(
+                user=request.user,
+                question=question,
+                user_answer=answer,
+                correct_answer=question.correct_answer,
+                mistake_type="conjugation",
+            )
+
+        # Award XP for conjugation drill
+        if is_correct:
+            award_xp(
+                request.user,
+                activity_type="conjugation_drill",
+                xp_amount=10,
+                source_id=f"conjugation_{question.id}",
+            )
+            check_streak(request.user)
+
+        return Response({
+            "is_correct": is_correct,
+            "correct_answer": question.correct_answer,
+            "explanation": question.explanation,
+        })
+
+
+class ConjugationListView(APIView):
+    """GET /api/progress/conjugation/verbs/ — available verbs and tenses."""
+
+    permission_classes = (permissions.IsAuthenticated,)
+
+    def get(self, request):
+        from django.db.models import Count
+
+        questions = Question.objects.filter(type="conjugation")
+
+        # Extract unique verbs from prompts (format: "Conjugate {verb} (...)")
+        verbs = set()
+        tenses = set()
+        for q in questions.values_list("prompt", flat=True):
+            # Expected prompt format: "Conjugate manger (present, je)"
+            parts = q.split("(")
+            if len(parts) >= 2:
+                verb_part = parts[0].replace("Conjugate", "").strip()
+                tense_part = parts[1].split(",")[0].strip().rstrip(")")
+                verbs.add(verb_part)
+                tenses.add(tense_part)
+
+        return Response({
+            "verbs": sorted(verbs),
+            "tenses": sorted(tenses),
+        })

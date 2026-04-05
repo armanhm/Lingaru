@@ -1,3 +1,5 @@
+import unicodedata
+
 from django.utils import timezone
 from rest_framework import generics, permissions, status
 from rest_framework.response import Response
@@ -5,6 +7,66 @@ from rest_framework.views import APIView
 from apps.content.models import Question
 from apps.gamification.services import award_xp, check_streak
 from .models import QuizSession, QuizAnswer
+
+
+def _strip_accents(text: str) -> str:
+    """Remove diacritics: réunion → reunion, café → cafe."""
+    return "".join(
+        c for c in unicodedata.normalize("NFD", text)
+        if unicodedata.category(c) != "Mn"
+    )
+
+
+def _levenshtein(a: str, b: str) -> int:
+    """Simple Levenshtein distance."""
+    if a == b:
+        return 0
+    if len(a) < len(b):
+        a, b = b, a
+    prev = list(range(len(b) + 1))
+    for i, ca in enumerate(a):
+        curr = [i + 1]
+        for j, cb in enumerate(b):
+            curr.append(min(prev[j + 1] + 1, curr[j] + 1, prev[j] + (ca != cb)))
+        prev = curr
+    return prev[-1]
+
+
+def answers_match(user_answer: str, correct_answer: str) -> bool:
+    """Return True if the answer is correct, allowing for:
+    - case differences
+    - leading/trailing articles (le, la, les, l', un, une)
+    - missing or wrong accents (réunion ≈ reunion)
+    - a single-character typo (Levenshtein distance ≤ 1) for words 4+ chars
+    """
+    def normalise(s: str) -> str:
+        s = s.strip().lower()
+        # Strip leading articles so "la réunion" matches "réunion"
+        for article in ("l'", "le ", "la ", "les ", "un ", "une "):
+            if s.startswith(article):
+                s = s[len(article):]
+                break
+        return s
+
+    user = normalise(user_answer)
+    correct = normalise(correct_answer)
+
+    if user == correct:
+        return True
+
+    # Accent-insensitive comparison
+    if _strip_accents(user) == _strip_accents(correct):
+        return True
+
+    # Allow 1-char typo for answers that are at least 4 characters
+    if len(correct) >= 4 and _levenshtein(user, correct) <= 1:
+        return True
+
+    # Also try accent-stripped levenshtein
+    if len(correct) >= 4 and _levenshtein(_strip_accents(user), _strip_accents(correct)) <= 1:
+        return True
+
+    return False
 from .serializers import (
     QuizStartSerializer,
     QuizQuestionSerializer,
@@ -86,7 +148,7 @@ class QuizAnswerView(APIView):
                 status=status.HTTP_400_BAD_REQUEST,
             )
 
-        is_correct = user_answer.strip().lower() == question.correct_answer.strip().lower()
+        is_correct = answers_match(user_answer, question.correct_answer)
 
         answer = QuizAnswer.objects.create(
             session=session,

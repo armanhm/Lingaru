@@ -27,6 +27,7 @@ INSTALLED_APPS = [
     "apps.practice",
     "apps.bot",
     "apps.assistant",
+    "apps.gamification",
 ]
 
 MIDDLEWARE = [

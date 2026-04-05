@@ -24,3 +24,25 @@ class MeView(generics.RetrieveUpdateAPIView):
 
     def get_object(self):
         return self.request.user
+
+
+class ChangePasswordView(generics.UpdateAPIView):
+    permission_classes = (permissions.IsAuthenticated,)
+
+    def update(self, request, *args, **kwargs):
+        user = request.user
+        old_password = request.data.get("old_password")
+        new_password = request.data.get("new_password")
+
+        if not user.check_password(old_password):
+            return Response({"old_password": "Wrong password."}, status=400)
+
+        if len(new_password or "") < 8:
+            return Response(
+                {"new_password": "Password must be at least 8 characters."},
+                status=400,
+            )
+
+        user.set_password(new_password)
+        user.save()
+        return Response({"detail": "Password updated successfully."})

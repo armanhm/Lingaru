@@ -90,3 +90,50 @@ class TestMeView:
         assert response.status_code == 200
         assert response.data["daily_goal_minutes"] == 30
         assert response.data["target_level"] == "B2"
+
+
+@pytest.mark.django_db
+class TestChangePasswordView:
+    def test_change_password_success(self, api_client, registered_user):
+        api_client.force_authenticate(user=registered_user)
+        url = reverse("users:change_password")
+        data = {
+            "old_password": "testpass123!",
+            "new_password": "newstrongpass456!",
+        }
+        response = api_client.put(url, data, format="json")
+        assert response.status_code == 200
+        assert response.data["detail"] == "Password updated successfully."
+        registered_user.refresh_from_db()
+        assert registered_user.check_password("newstrongpass456!")
+
+    def test_change_password_wrong_old(self, api_client, registered_user):
+        api_client.force_authenticate(user=registered_user)
+        url = reverse("users:change_password")
+        data = {
+            "old_password": "wrongpassword!",
+            "new_password": "newstrongpass456!",
+        }
+        response = api_client.put(url, data, format="json")
+        assert response.status_code == 400
+        assert "old_password" in response.data
+
+    def test_change_password_too_short(self, api_client, registered_user):
+        api_client.force_authenticate(user=registered_user)
+        url = reverse("users:change_password")
+        data = {
+            "old_password": "testpass123!",
+            "new_password": "short",
+        }
+        response = api_client.put(url, data, format="json")
+        assert response.status_code == 400
+        assert "new_password" in response.data
+
+    def test_change_password_unauthenticated(self, api_client):
+        url = reverse("users:change_password")
+        data = {
+            "old_password": "testpass123!",
+            "new_password": "newstrongpass456!",
+        }
+        response = api_client.put(url, data, format="json")
+        assert response.status_code == 401

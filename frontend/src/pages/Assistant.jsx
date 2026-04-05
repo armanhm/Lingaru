@@ -16,7 +16,7 @@ const MODE_OPTIONS = [
 
 function ModeSelector({ mode, onModeChange }) {
   return (
-    <div className="flex gap-2 p-3 border-b border-gray-200 bg-gray-50">
+    <div className="flex gap-2 p-3 border-b border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-900">
       {MODE_OPTIONS.map((opt) => (
         <button
           key={opt.value}
@@ -24,7 +24,7 @@ function ModeSelector({ mode, onModeChange }) {
           className={`px-3 py-1.5 rounded-lg text-sm font-medium transition-colors ${
             mode === opt.value
               ? "bg-primary-600 text-white"
-              : "bg-white text-gray-600 border border-gray-200 hover:bg-gray-100"
+              : "bg-white dark:bg-gray-800 text-gray-600 dark:text-gray-400 border border-gray-200 dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-gray-700"
           }`}
           title={opt.description}
         >
@@ -43,7 +43,7 @@ function MessageBubble({ message }) {
         className={`max-w-[75%] px-4 py-3 rounded-2xl whitespace-pre-wrap ${
           isUser
             ? "bg-primary-600 text-white rounded-br-md"
-            : "bg-gray-100 text-gray-900 rounded-bl-md"
+            : "bg-gray-100 dark:bg-gray-700 text-gray-900 dark:text-gray-100 rounded-bl-md"
         }`}
       >
         {message.imagePreview && (
@@ -65,7 +65,7 @@ function MessageBubble({ message }) {
           </p>
         )}
         {!isUser && message.provider && (
-          <p className="text-xs text-gray-400 mt-1">{message.provider}</p>
+          <p className="text-xs text-gray-400 dark:text-gray-500 mt-1">{message.provider}</p>
         )}
       </div>
     </div>
@@ -75,11 +75,11 @@ function MessageBubble({ message }) {
 function TypingIndicator() {
   return (
     <div className="flex justify-start mb-4">
-      <div className="bg-gray-100 px-4 py-3 rounded-2xl rounded-bl-md">
+      <div className="bg-gray-100 dark:bg-gray-700 px-4 py-3 rounded-2xl rounded-bl-md">
         <div className="flex gap-1">
-          <span className="w-2 h-2 bg-gray-400 rounded-full animate-bounce" style={{ animationDelay: "0ms" }} />
-          <span className="w-2 h-2 bg-gray-400 rounded-full animate-bounce" style={{ animationDelay: "150ms" }} />
-          <span className="w-2 h-2 bg-gray-400 rounded-full animate-bounce" style={{ animationDelay: "300ms" }} />
+          <span className="w-2 h-2 bg-gray-400 dark:bg-gray-500 rounded-full animate-bounce" style={{ animationDelay: "0ms" }} />
+          <span className="w-2 h-2 bg-gray-400 dark:bg-gray-500 rounded-full animate-bounce" style={{ animationDelay: "150ms" }} />
+          <span className="w-2 h-2 bg-gray-400 dark:bg-gray-500 rounded-full animate-bounce" style={{ animationDelay: "300ms" }} />
         </div>
       </div>
     </div>
@@ -88,8 +88,8 @@ function TypingIndicator() {
 
 function ConversationSidebar({ conversations, activeId, onSelect, onNew }) {
   return (
-    <div className="w-64 border-r border-gray-200 bg-gray-50 flex flex-col">
-      <div className="p-3 border-b border-gray-200">
+    <div className="w-64 border-r border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-900 flex flex-col">
+      <div className="p-3 border-b border-gray-200 dark:border-gray-700">
         <button
           onClick={onNew}
           className="w-full px-4 py-2 bg-primary-600 text-white text-sm font-semibold rounded-lg hover:bg-primary-700 transition-colors"
@@ -102,14 +102,14 @@ function ConversationSidebar({ conversations, activeId, onSelect, onNew }) {
           <button
             key={conv.id}
             onClick={() => onSelect(conv.id)}
-            className={`w-full text-left px-4 py-3 border-b border-gray-100 text-sm transition-colors ${
+            className={`w-full text-left px-4 py-3 border-b border-gray-100 dark:border-gray-700 text-sm transition-colors ${
               activeId === conv.id
-                ? "bg-primary-50 text-primary-800"
-                : "text-gray-700 hover:bg-gray-100"
+                ? "bg-primary-50 dark:bg-primary-900/20 text-primary-800 dark:text-primary-300"
+                : "text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700"
             }`}
           >
             <p className="font-medium truncate">{conv.title}</p>
-            <p className="text-xs text-gray-400 mt-0.5">
+            <p className="text-xs text-gray-400 dark:text-gray-500 mt-0.5">
               {conv.message_count || 0} messages
             </p>
           </button>
@@ -132,12 +132,12 @@ function ImagePreviewBanner({ file, onRemove }) {
   if (!preview) return null;
 
   return (
-    <div className="flex items-center gap-2 px-4 py-2 border-b border-gray-200 bg-blue-50">
+    <div className="flex items-center gap-2 px-4 py-2 border-b border-gray-200 dark:border-gray-700 bg-blue-50 dark:bg-blue-900/20">
       <img src={preview} alt="Preview" className="h-12 w-12 object-cover rounded" />
-      <span className="text-sm text-gray-600 flex-1 truncate">{file.name}</span>
+      <span className="text-sm text-gray-600 dark:text-gray-400 flex-1 truncate">{file.name}</span>
       <button
         onClick={onRemove}
-        className="text-gray-400 hover:text-red-500 text-lg font-bold"
+        className="text-gray-400 dark:text-gray-500 hover:text-red-500 text-lg font-bold"
         title="Remove image"
       >
         x
@@ -329,7 +329,7 @@ export default function Assistant() {
   };
 
   return (
-    <div className="flex h-[calc(100vh-4rem)] bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden">
+    <div className="flex h-[calc(100vh-4rem-4rem)] bg-white dark:bg-gray-800 rounded-xl shadow-sm border border-gray-200 dark:border-gray-700 overflow-hidden">
       <ConversationSidebar
         conversations={conversations}
         activeId={conversationId}
@@ -346,7 +346,7 @@ export default function Assistant() {
         {/* Messages area */}
         <div className="flex-1 overflow-y-auto p-6">
           {messages.length === 0 && !loading && (
-            <div className="flex flex-col items-center justify-center h-full text-gray-400">
+            <div className="flex flex-col items-center justify-center h-full text-gray-400 dark:text-gray-500">
               <p className="text-lg font-medium mb-1">Start a conversation</p>
               <p className="text-sm">
                 {MODE_OPTIONS.find((m) => m.value === mode)?.description}
@@ -364,7 +364,7 @@ export default function Assistant() {
           {loading && <TypingIndicator />}
 
           {error && (
-            <div className="bg-red-50 border border-red-200 rounded-lg p-3 mb-4 text-sm text-red-700">
+            <div className="bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-lg p-3 mb-4 text-sm text-red-700 dark:text-red-400">
               {error}
             </div>
           )}
@@ -373,7 +373,7 @@ export default function Assistant() {
         </div>
 
         {/* Input area */}
-        <div className="border-t border-gray-200 p-4">
+        <div className="border-t border-gray-200 dark:border-gray-700 p-4">
           <div className="flex gap-2 items-end">
             {/* Image upload button */}
             <input
@@ -425,7 +425,7 @@ export default function Assistant() {
                   : "Type your message in French..."
               }
               rows={1}
-              className="flex-1 px-4 py-3 border border-gray-200 rounded-xl resize-none focus:border-primary-500 focus:ring-0 focus:outline-none text-sm"
+              className="flex-1 px-4 py-3 border border-gray-200 rounded-xl resize-none focus:border-primary-500 focus:ring-0 focus:outline-none text-sm dark:bg-gray-700 dark:border-gray-600 dark:text-gray-100"
               disabled={loading}
             />
 

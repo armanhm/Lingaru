@@ -1,6 +1,7 @@
 import { Routes, Route } from "react-router-dom";
 import { AuthProvider } from "./contexts/AuthContext";
 import { ToastProvider } from "./contexts/ToastContext";
+import { ThemeProvider } from "./contexts/ThemeContext";
 import Layout from "./components/Layout";
 import ProtectedRoute from "./components/ProtectedRoute";
 import Dashboard from "./pages/Dashboard";
@@ -24,6 +25,7 @@ import NotFound from "./pages/NotFound";
 
 export default function App() {
   return (
+    <ThemeProvider>
     <AuthProvider>
       <ToastProvider>
       <Routes>
@@ -57,5 +59,6 @@ export default function App() {
       </Routes>
       </ToastProvider>
     </AuthProvider>
+    </ThemeProvider>
   );
 }

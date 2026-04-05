@@ -46,13 +46,13 @@ export default function Discover() {
   };
 
   if (loading) {
-    return <div className="text-center py-12 text-gray-500">Loading...</div>;
+    return <div className="text-center py-12 text-gray-500 dark:text-gray-400">Loading...</div>;
   }
 
   return (
     <div className="space-y-6">
       <div className="flex items-center justify-between">
-        <h1 className="text-2xl font-bold text-gray-900">Discover</h1>
+        <h1 className="text-2xl font-bold text-gray-900 dark:text-gray-100">Discover</h1>
         <button
           onClick={handleGenerateMore}
           disabled={generating}
@@ -63,14 +63,14 @@ export default function Discover() {
       </div>
 
       {error && (
-        <div className="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-lg text-sm">
+        <div className="bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 text-red-700 dark:text-red-400 px-4 py-3 rounded-lg text-sm">
           {error}
         </div>
       )}
 
       {cards.length === 0 ? (
         <div className="text-center py-16">
-          <p className="text-gray-500 mb-4">
+          <p className="text-gray-500 dark:text-gray-400 mb-4">
             No discover cards yet. Generate some to get started!
           </p>
           <button

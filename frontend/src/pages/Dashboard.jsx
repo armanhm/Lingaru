@@ -30,7 +30,7 @@ const QUICK_ACTIONS = [
 ];
 
 function SkeletonBlock({ className = "" }) {
-  return <div className={`animate-pulse bg-gray-200 rounded-lg ${className}`} />;
+  return <div className={`animate-pulse bg-gray-200 dark:bg-gray-700 rounded-lg ${className}`} />;
 }
 
 function LoadingSkeleton() {
@@ -111,34 +111,34 @@ export default function Dashboard() {
     <div className="max-w-6xl mx-auto space-y-8">
       {/* Welcome header */}
       <div>
-        <h1 className="text-3xl font-bold text-gray-900">
+        <h1 className="text-3xl font-bold text-gray-900 dark:text-gray-100">
           Bonjour, {user?.username}!
         </h1>
-        <p className="text-gray-500 mt-1 capitalize">{frenchDate()}</p>
+        <p className="text-gray-500 dark:text-gray-400 mt-1 capitalize">{frenchDate()}</p>
       </div>
 
       {/* Stats ribbon */}
       <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-        <div className="bg-white rounded-xl shadow-sm border border-gray-100 p-5">
-          <p className="text-sm font-medium text-gray-500">Total XP</p>
+        <div className="bg-white dark:bg-gray-800 rounded-xl shadow-sm border border-gray-100 p-5">
+          <p className="text-sm font-medium text-gray-500 dark:text-gray-400">Total XP</p>
           <p className="text-2xl font-bold text-indigo-600 mt-1">
             {stats?.total_xp ?? 0}
           </p>
-          <p className="text-xs text-gray-400 mt-0.5">{stats?.level_name || "Debutant"}</p>
+          <p className="text-xs text-gray-400 dark:text-gray-500 mt-0.5">{stats?.level_name || "Debutant"}</p>
         </div>
-        <div className="bg-white rounded-xl shadow-sm border border-gray-100 p-5">
-          <p className="text-sm font-medium text-gray-500">Streak</p>
+        <div className="bg-white dark:bg-gray-800 rounded-xl shadow-sm border border-gray-100 p-5">
+          <p className="text-sm font-medium text-gray-500 dark:text-gray-400">Streak</p>
           <p className="text-2xl font-bold text-orange-500 mt-1">
             {stats?.current_streak ?? 0} days {(stats?.current_streak ?? 0) > 0 && "\uD83D\uDD25"}
           </p>
         </div>
-        <div className="bg-white rounded-xl shadow-sm border border-gray-100 p-5">
-          <p className="text-sm font-medium text-gray-500">SRS Due</p>
+        <div className="bg-white dark:bg-gray-800 rounded-xl shadow-sm border border-gray-100 p-5">
+          <p className="text-sm font-medium text-gray-500 dark:text-gray-400">SRS Due</p>
           <p className="text-2xl font-bold text-emerald-600 mt-1">{srsDue}</p>
-          <p className="text-xs text-gray-400 mt-0.5">cards to review</p>
+          <p className="text-xs text-gray-400 dark:text-gray-500 mt-0.5">cards to review</p>
         </div>
-        <div className="bg-white rounded-xl shadow-sm border border-gray-100 p-5">
-          <p className="text-sm font-medium text-gray-500">Leaderboard</p>
+        <div className="bg-white dark:bg-gray-800 rounded-xl shadow-sm border border-gray-100 p-5">
+          <p className="text-sm font-medium text-gray-500 dark:text-gray-400">Leaderboard</p>
           <p className="text-2xl font-bold text-violet-600 mt-1">
             #{stats?.rank ?? "-"}
           </p>
@@ -147,20 +147,20 @@ export default function Dashboard() {
 
       {/* Quick Actions */}
       <div>
-        <h2 className="text-lg font-semibold text-gray-800 mb-3">Quick Actions</h2>
+        <h2 className="text-lg font-semibold text-gray-800 dark:text-gray-200 mb-3">Quick Actions</h2>
         <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
           {QUICK_ACTIONS.map((action) => (
             <Link
               key={action.to}
               to={action.to}
-              className="relative flex items-center gap-4 bg-white rounded-xl shadow-sm border border-gray-100 p-4 hover:shadow-md hover:-translate-y-0.5 transition-all"
+              className="relative flex items-center gap-4 bg-white dark:bg-gray-800 rounded-xl shadow-sm border border-gray-100 p-4 hover:shadow-md hover:-translate-y-0.5 transition-all"
             >
               <div className={`flex-shrink-0 w-11 h-11 ${action.color} rounded-lg flex items-center justify-center text-white font-bold text-lg`}>
                 {action.icon}
               </div>
               <div>
-                <p className="font-semibold text-gray-800">{action.label}</p>
-                <p className="text-xs text-gray-500">{action.desc}</p>
+                <p className="font-semibold text-gray-800 dark:text-gray-200">{action.label}</p>
+                <p className="text-xs text-gray-500 dark:text-gray-400">{action.desc}</p>
               </div>
               {action.badgeKey === "srsDue" && srsDue > 0 && (
                 <span className="absolute top-2 right-2 bg-red-500 text-white text-xs font-bold rounded-full w-6 h-6 flex items-center justify-center">
@@ -175,8 +175,8 @@ export default function Dashboard() {
       {/* Bottom row: Today's Word + Recent Activity */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         {/* Today's Word */}
-        <div className="bg-gradient-to-br from-indigo-50 to-purple-50 rounded-xl border border-indigo-100 p-6">
-          <h2 className="text-lg font-semibold text-gray-800 mb-3">Today&apos;s Word</h2>
+        <div className="bg-gradient-to-br from-indigo-50 to-purple-50 dark:from-indigo-900/20 dark:to-purple-900/20 rounded-xl border border-indigo-100 p-6">
+          <h2 className="text-lg font-semibold text-gray-800 dark:text-gray-200 mb-3">Today&apos;s Word</h2>
           {todayWord ? (
             <div>
               <div className="flex items-center gap-2">
@@ -188,28 +188,28 @@ export default function Dashboard() {
               {todayWord.pronunciation && (
                 <p className="text-sm text-indigo-400 mt-1">/{todayWord.pronunciation}/</p>
               )}
-              <p className="text-gray-600 mt-2">
+              <p className="text-gray-600 dark:text-gray-400 mt-2">
                 {todayWord.english ?? todayWord.back_text ?? todayWord.translation}
               </p>
               {todayWord.example_sentence && (
-                <p className="text-sm text-gray-500 mt-2 italic">
+                <p className="text-sm text-gray-500 dark:text-gray-400 mt-2 italic">
                   &ldquo;{todayWord.example_sentence}&rdquo;
                 </p>
               )}
             </div>
           ) : (
-            <p className="text-gray-500 text-sm">No vocabulary available yet. Start learning to see words here!</p>
+            <p className="text-gray-500 dark:text-gray-400 text-sm">No vocabulary available yet. Start learning to see words here!</p>
           )}
         </div>
 
         {/* Recent Activity */}
-        <div className="bg-white rounded-xl shadow-sm border border-gray-100 p-6">
-          <h2 className="text-lg font-semibold text-gray-800 mb-3">Recent Activity</h2>
+        <div className="bg-white dark:bg-gray-800 rounded-xl shadow-sm border border-gray-100 p-6">
+          <h2 className="text-lg font-semibold text-gray-800 dark:text-gray-200 mb-3">Recent Activity</h2>
           {xpHistory.length > 0 ? (
             <ul className="space-y-3">
               {xpHistory.map((entry, i) => (
                 <li key={entry.id ?? i} className="flex items-center justify-between">
-                  <span className="text-sm text-gray-600 truncate mr-2">
+                  <span className="text-sm text-gray-600 dark:text-gray-400 truncate mr-2">
                     {entry.description || entry.reason || "Activity"}
                   </span>
                   <span className="text-sm font-semibold text-emerald-600 whitespace-nowrap">
@@ -219,7 +219,7 @@ export default function Dashboard() {
               ))}
             </ul>
           ) : (
-            <p className="text-gray-500 text-sm">No recent activity. Complete a lesson or quiz to earn XP!</p>
+            <p className="text-gray-500 dark:text-gray-400 text-sm">No recent activity. Complete a lesson or quiz to earn XP!</p>
           )}
         </div>
       </div>
@@ -227,22 +227,22 @@ export default function Dashboard() {
       {/* Continue Learning */}
       {topics.length > 0 && (
         <div>
-          <h2 className="text-lg font-semibold text-gray-800 mb-3">Continue Learning</h2>
+          <h2 className="text-lg font-semibold text-gray-800 dark:text-gray-200 mb-3">Continue Learning</h2>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
             {topics.map((topic) => (
               <Link
                 key={topic.id}
                 to={`/topics/${topic.id}`}
-                className="bg-white rounded-xl shadow-sm border border-gray-100 p-5 hover:shadow-md transition-shadow"
+                className="bg-white dark:bg-gray-800 rounded-xl shadow-sm border border-gray-100 p-5 hover:shadow-md transition-shadow"
               >
-                <p className="font-semibold text-gray-800">{topic.title ?? topic.name}</p>
-                <div className="mt-3 w-full bg-gray-200 rounded-full h-2">
+                <p className="font-semibold text-gray-800 dark:text-gray-200">{topic.title ?? topic.name}</p>
+                <div className="mt-3 w-full bg-gray-200 dark:bg-gray-700 rounded-full h-2">
                   <div
                     className="bg-primary-500 h-2 rounded-full transition-all"
                     style={{ width: `${Math.round(topic.progress)}%` }}
                   />
                 </div>
-                <p className="text-xs text-gray-500 mt-1">{Math.round(topic.progress)}% complete</p>
+                <p className="text-xs text-gray-500 dark:text-gray-400 mt-1">{Math.round(topic.progress)}% complete</p>
               </Link>
             ))}
           </div>

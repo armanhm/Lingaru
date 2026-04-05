@@ -46,7 +46,7 @@ export default function TopicDetail() {
 
   if (error) {
     return (
-      <div className="bg-red-50 border border-red-200 rounded-lg p-6 text-red-700">
+      <div className="bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-lg p-6 text-red-700 dark:text-red-400">
         {error}
       </div>
     );
@@ -67,24 +67,24 @@ export default function TopicDetail() {
         <div className="flex items-center gap-3 mb-2">
           <span className="text-3xl">{topic.icon || "📘"}</span>
           <div>
-            <h1 className="text-2xl font-bold text-gray-900">{topic.name_fr}</h1>
-            <p className="text-gray-500">{topic.name_en}</p>
+            <h1 className="text-2xl font-bold text-gray-900 dark:text-gray-100">{topic.name_fr}</h1>
+            <p className="text-gray-500 dark:text-gray-400">{topic.name_en}</p>
           </div>
         </div>
-        <p className="text-gray-600 mt-2">{topic.description}</p>
+        <p className="text-gray-600 dark:text-gray-400 mt-2">{topic.description}</p>
       </div>
 
       {lessons.length > 0 && (
         <div className="mb-6">
           <div className="flex items-center justify-between mb-1">
-            <span className="text-sm font-medium text-gray-700">
+            <span className="text-sm font-medium text-gray-700 dark:text-gray-300">
               Progress: {completedCount}/{lessons.length} lessons
             </span>
-            <span className="text-sm text-gray-500">
+            <span className="text-sm text-gray-500 dark:text-gray-400">
               {lessons.length > 0 ? Math.round((completedCount / lessons.length) * 100) : 0}%
             </span>
           </div>
-          <div className="w-full bg-gray-200 rounded-full h-2">
+          <div className="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-2">
             <div
               className="bg-primary-500 h-2 rounded-full transition-all duration-500"
               style={{ width: `${lessons.length > 0 ? (completedCount / lessons.length) * 100 : 0}%` }}
@@ -93,12 +93,12 @@ export default function TopicDetail() {
         </div>
       )}
 
-      <h2 className="text-lg font-semibold text-gray-900 mb-4">
+      <h2 className="text-lg font-semibold text-gray-900 dark:text-gray-100 mb-4">
         Lessons ({lessons.length})
       </h2>
 
       {lessons.length === 0 ? (
-        <p className="text-gray-500 text-center py-12">No lessons in this topic yet.</p>
+        <p className="text-gray-500 dark:text-gray-400 text-center py-12">No lessons in this topic yet.</p>
       ) : (
         <div className="space-y-3">
           {lessons.map((lesson, index) => {
@@ -108,22 +108,22 @@ export default function TopicDetail() {
                 key={lesson.id}
                 to={`/lesson/${lesson.id}`}
                 className={`rounded-lg shadow hover:shadow-md transition-shadow p-5 flex items-center gap-4 block ${
-                  done ? "bg-green-50 border border-green-200" : "bg-white"
+                  done ? "bg-green-50 dark:bg-green-900/20 border border-green-200 dark:border-green-800" : "bg-white dark:bg-gray-800"
                 }`}
               >
-                <span className="text-sm font-medium text-gray-400 w-8 text-center">
+                <span className="text-sm font-medium text-gray-400 dark:text-gray-500 w-8 text-center">
                   {done ? "✓" : index + 1}
                 </span>
                 <span className="text-2xl">
                   {typeIcons[lesson.type] || "📄"}
                 </span>
                 <div className="flex-1 min-w-0">
-                  <h3 className={`font-semibold ${done ? "text-green-800" : "text-gray-900"}`}>
+                  <h3 className={`font-semibold ${done ? "text-green-800 dark:text-green-300" : "text-gray-900 dark:text-gray-100"}`}>
                     {lesson.title}
                   </h3>
-                  <p className="text-sm text-gray-500 truncate">{lesson.description}</p>
+                  <p className="text-sm text-gray-500 dark:text-gray-400 truncate">{lesson.description}</p>
                 </div>
-                <span className="text-xs font-medium px-2 py-1 rounded-full bg-gray-100 text-gray-600 whitespace-nowrap">
+                <span className="text-xs font-medium px-2 py-1 rounded-full bg-gray-100 dark:bg-gray-700 text-gray-600 dark:text-gray-400 whitespace-nowrap">
                   {typeLabels[lesson.type] || lesson.type}
                 </span>
                 {done && (

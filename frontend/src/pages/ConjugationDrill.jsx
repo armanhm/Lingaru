@@ -83,10 +83,10 @@ export default function ConjugationDrill() {
     const correct = results.filter((r) => r.is_correct).length;
     return (
       <div className="max-w-2xl mx-auto py-8 px-4">
-        <h1 className="text-2xl font-bold text-gray-900 mb-6">
+        <h1 className="text-2xl font-bold text-gray-900 dark:text-gray-100 mb-6">
           Conjugation Results: {selectedVerb} ({selectedTense})
         </h1>
-        <div className="bg-white rounded-2xl shadow-lg p-6 mb-6">
+        <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-lg p-6 mb-6">
           <p className="text-3xl font-bold text-center mb-4">
             {correct}/{results.length}
           </p>
@@ -95,7 +95,7 @@ export default function ConjugationDrill() {
               <div
                 key={i}
                 className={`flex justify-between p-3 rounded-lg ${
-                  r.is_correct ? "bg-green-50" : "bg-red-50"
+                  r.is_correct ? "bg-green-50 dark:bg-green-900/20" : "bg-red-50 dark:bg-red-900/20"
                 }`}
               >
                 <span className="font-medium">{r.subject}</span>
@@ -126,15 +126,15 @@ export default function ConjugationDrill() {
   if (!drilling) {
     return (
       <div className="max-w-2xl mx-auto py-8 px-4">
-        <h1 className="text-2xl font-bold text-gray-900 mb-6">Conjugation Drill</h1>
-        <div className="bg-white rounded-2xl shadow-lg p-6">
+        <h1 className="text-2xl font-bold text-gray-900 dark:text-gray-100 mb-6">Conjugation Drill</h1>
+        <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-lg p-6">
           <div className="space-y-4 mb-6">
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">Verb</label>
+              <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Verb</label>
               <select
                 value={selectedVerb}
                 onChange={(e) => setSelectedVerb(e.target.value)}
-                className="w-full px-3 py-2 border border-gray-300 rounded-lg"
+                className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg dark:bg-gray-700 dark:text-gray-100"
               >
                 {verbs.map((v) => (
                   <option key={v} value={v}>{v}</option>
@@ -142,11 +142,11 @@ export default function ConjugationDrill() {
               </select>
             </div>
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">Tense</label>
+              <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Tense</label>
               <select
                 value={selectedTense}
                 onChange={(e) => setSelectedTense(e.target.value)}
-                className="w-full px-3 py-2 border border-gray-300 rounded-lg"
+                className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg dark:bg-gray-700 dark:text-gray-100"
               >
                 {tenses.map((t) => (
                   <option key={t} value={t}>{t}</option>
@@ -171,16 +171,16 @@ export default function ConjugationDrill() {
   return (
     <div className="max-w-2xl mx-auto py-8 px-4">
       <div className="flex items-center justify-between mb-6">
-        <h1 className="text-xl font-bold text-gray-900">
+        <h1 className="text-xl font-bold text-gray-900 dark:text-gray-100">
           {selectedVerb} — {selectedTense}
         </h1>
-        <span className="text-sm text-gray-500">
+        <span className="text-sm text-gray-500 dark:text-gray-400">
           {currentSubjectIndex + 1} / {SUBJECTS.length}
         </span>
       </div>
 
-      <div className="bg-white rounded-2xl shadow-lg p-8 text-center">
-        <p className="text-2xl font-bold text-gray-900 mb-6">
+      <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-lg p-8 text-center">
+        <p className="text-2xl font-bold text-gray-900 dark:text-gray-100 mb-6">
           {subject} ________
         </p>
 
@@ -192,7 +192,7 @@ export default function ConjugationDrill() {
               onChange={(e) => setAnswer(e.target.value)}
               placeholder="Type the conjugation..."
               autoFocus
-              className="w-full px-4 py-3 border-2 border-gray-200 rounded-xl text-lg text-center focus:border-primary-500 focus:ring-0 focus:outline-none"
+              className="w-full px-4 py-3 border-2 border-gray-200 rounded-xl text-lg text-center focus:border-primary-500 focus:ring-0 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:text-gray-100"
             />
             <button
               type="submit"
@@ -207,15 +207,15 @@ export default function ConjugationDrill() {
             <div
               className={`p-4 rounded-xl border-2 mb-4 ${
                 feedback.is_correct
-                  ? "bg-green-50 border-green-300"
-                  : "bg-red-50 border-red-300"
+                  ? "bg-green-50 dark:bg-green-900/20 border-green-300 dark:border-green-800"
+                  : "bg-red-50 dark:bg-red-900/20 border-red-300 dark:border-red-800"
               }`}
             >
-              <p className={`font-bold ${feedback.is_correct ? "text-green-800" : "text-red-800"}`}>
+              <p className={`font-bold ${feedback.is_correct ? "text-green-800 dark:text-green-300" : "text-red-800 dark:text-red-400"}`}>
                 {feedback.is_correct ? "Correct!" : "Incorrect"}
               </p>
               {!feedback.is_correct && (
-                <p className="text-sm text-red-700 mt-1">
+                <p className="text-sm text-red-700 dark:text-red-400 mt-1">
                   Correct answer: <strong>{feedback.correct_answer}</strong>
                 </p>
               )}

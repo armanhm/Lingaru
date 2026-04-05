@@ -7,8 +7,8 @@ const LEVEL_OPTIONS = ["A1", "A2", "B1", "B2", "C1", "C2"];
 
 function SectionCard({ title, children }) {
   return (
-    <div className="bg-white rounded-xl border border-gray-200 p-6 mb-6">
-      <h2 className="text-lg font-semibold text-gray-900 mb-4">{title}</h2>
+    <div className="bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 p-6 mb-6">
+      <h2 className="text-lg font-semibold text-gray-900 dark:text-gray-100 mb-4">{title}</h2>
       {children}
     </div>
   );
@@ -96,13 +96,13 @@ export default function Settings() {
   };
 
   const inputClass =
-    "w-full px-4 py-2 border border-gray-200 rounded-lg text-sm focus:border-primary-500 focus:ring-0 focus:outline-none transition-colors";
+    "w-full px-4 py-2 border border-gray-200 rounded-lg text-sm focus:border-primary-500 focus:ring-0 focus:outline-none transition-colors dark:bg-gray-700 dark:border-gray-600 dark:text-gray-100";
 
   return (
     <div className="max-w-2xl mx-auto">
       <div className="mb-8">
-        <h1 className="text-2xl font-bold text-gray-900">Settings</h1>
-        <p className="text-gray-500 mt-1">
+        <h1 className="text-2xl font-bold text-gray-900 dark:text-gray-100">Settings</h1>
+        <p className="text-gray-500 dark:text-gray-400 mt-1">
           Manage your profile, password, and preferences.
         </p>
       </div>
@@ -111,7 +111,7 @@ export default function Settings() {
       <SectionCard title="Profile">
         <form onSubmit={handleProfileSave} className="space-y-4">
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">
+            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
               Username
             </label>
             <input
@@ -123,7 +123,7 @@ export default function Settings() {
             />
           </div>
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">
+            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
               Email
             </label>
             <input
@@ -136,7 +136,7 @@ export default function Settings() {
           </div>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">
+              <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
                 Daily Goal (minutes)
               </label>
               <input
@@ -149,7 +149,7 @@ export default function Settings() {
               />
             </div>
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">
+              <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
                 Target Level
               </label>
               <select
@@ -181,7 +181,7 @@ export default function Settings() {
       <SectionCard title="Change Password">
         <form onSubmit={handlePasswordChange} className="space-y-4">
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">
+            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
               Current Password
             </label>
             <input
@@ -193,7 +193,7 @@ export default function Settings() {
             />
           </div>
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">
+            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
               New Password
             </label>
             <input
@@ -206,7 +206,7 @@ export default function Settings() {
             />
           </div>
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">
+            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
               Confirm New Password
             </label>
             <input
@@ -240,21 +240,21 @@ export default function Settings() {
             <span className="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-green-100 text-green-700">
               Linked
             </span>
-            <span className="text-sm text-gray-600">
-              Telegram ID: <code className="bg-gray-100 px-1.5 py-0.5 rounded text-xs">{user.telegram_id}</code>
+            <span className="text-sm text-gray-600 dark:text-gray-400">
+              Telegram ID: <code className="bg-gray-100 dark:bg-gray-700 px-1.5 py-0.5 rounded text-xs">{user.telegram_id}</code>
             </span>
           </div>
         ) : (
-          <p className="text-sm text-gray-500">
-            Not linked. Start the Lingaru Telegram bot and use the <code className="bg-gray-100 px-1.5 py-0.5 rounded text-xs">/start</code> command to link your account.
+          <p className="text-sm text-gray-500 dark:text-gray-400">
+            Not linked. Start the Lingaru Telegram bot and use the <code className="bg-gray-100 dark:bg-gray-700 px-1.5 py-0.5 rounded text-xs">/start</code> command to link your account.
           </p>
         )}
       </SectionCard>
 
       {/* Danger zone */}
-      <div className="bg-white rounded-xl border-2 border-red-200 p-6 mb-6">
-        <h2 className="text-lg font-semibold text-red-700 mb-2">Danger Zone</h2>
-        <p className="text-sm text-gray-500 mb-4">
+      <div className="bg-white dark:bg-gray-800 rounded-xl border-2 border-red-200 dark:border-red-800 p-6 mb-6">
+        <h2 className="text-lg font-semibold text-red-700 dark:text-red-400 mb-2">Danger Zone</h2>
+        <p className="text-sm text-gray-500 dark:text-gray-400 mb-4">
           Once you delete your account, there is no going back. Please be certain.
         </p>
         <button

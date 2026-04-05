@@ -54,13 +54,13 @@ export default function MistakeJournal() {
 
   return (
     <div className="max-w-3xl mx-auto py-8 px-4">
-      <h1 className="text-2xl font-bold text-gray-900 mb-6">Mistake Journal</h1>
+      <h1 className="text-2xl font-bold text-gray-900 dark:text-gray-100 mb-6">Mistake Journal</h1>
 
       <div className="flex flex-wrap gap-3 mb-6">
         <select
           value={filter.type}
           onChange={(e) => handleFilterChange("type", e.target.value)}
-          className="px-3 py-2 border border-gray-300 rounded-lg text-sm"
+          className="px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg text-sm dark:bg-gray-700 dark:text-gray-100"
         >
           <option value="">All types</option>
           {Object.entries(TYPE_LABELS).map(([k, v]) => (
@@ -71,7 +71,7 @@ export default function MistakeJournal() {
         <select
           value={filter.reviewed}
           onChange={(e) => handleFilterChange("reviewed", e.target.value)}
-          className="px-3 py-2 border border-gray-300 rounded-lg text-sm"
+          className="px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg text-sm dark:bg-gray-700 dark:text-gray-100"
         >
           <option value="">All</option>
           <option value="false">Not reviewed</option>
@@ -93,13 +93,13 @@ export default function MistakeJournal() {
           <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary-600" />
         </div>
       ) : mistakes.length === 0 ? (
-        <p className="text-gray-500 text-center py-12">No mistakes found. Keep practicing!</p>
+        <p className="text-gray-500 dark:text-gray-400 text-center py-12">No mistakes found. Keep practicing!</p>
       ) : (
         <div className="space-y-3">
           {mistakes.map((m) => (
             <div
               key={m.id}
-              className={`bg-white rounded-xl border p-4 flex items-start gap-3 ${
+              className={`bg-white dark:bg-gray-800 rounded-xl border dark:border-gray-700 p-4 flex items-start gap-3 ${
                 m.reviewed ? "opacity-60" : ""
               }`}
             >
@@ -111,7 +111,7 @@ export default function MistakeJournal() {
               />
               <div className="flex-1">
                 {m.question_prompt && (
-                  <p className="text-sm text-gray-500 mb-1">{m.question_prompt}</p>
+                  <p className="text-sm text-gray-500 dark:text-gray-400 mb-1">{m.question_prompt}</p>
                 )}
                 <p className="text-red-600 font-medium">
                   Your answer: <span className="line-through">{m.user_answer}</span>
@@ -120,7 +120,7 @@ export default function MistakeJournal() {
                   Correct: {m.correct_answer}
                 </p>
               </div>
-              <span className="text-xs font-medium px-2 py-1 bg-gray-100 rounded-full text-gray-600">
+              <span className="text-xs font-medium px-2 py-1 bg-gray-100 dark:bg-gray-700 rounded-full text-gray-600 dark:text-gray-400">
                 {TYPE_LABELS[m.mistake_type] || m.mistake_type}
               </span>
             </div>

@@ -7,7 +7,7 @@ import { useToast } from "../contexts/ToastContext";
 function ProgressBar({ current, total }) {
   const pct = total > 0 ? Math.round((current / total) * 100) : 0;
   return (
-    <div className="w-full bg-gray-200 rounded-full h-3 mb-6">
+    <div className="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-3 mb-6">
       <div
         className="bg-primary-500 h-3 rounded-full transition-all duration-500 ease-out"
         style={{ width: `${pct}%` }}
@@ -27,7 +27,7 @@ function MCQQuestion({ question, onAnswer, disabled }) {
 
   return (
     <div>
-      <p className="text-lg font-semibold text-gray-900 mb-6">
+      <p className="text-lg font-semibold text-gray-900 dark:text-gray-100 mb-6">
         {question.prompt}
       </p>
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
@@ -38,8 +38,8 @@ function MCQQuestion({ question, onAnswer, disabled }) {
             disabled={disabled}
             className={`p-4 rounded-xl border-2 text-left font-medium transition-all duration-200 ${
               selected === option
-                ? "border-primary-500 bg-primary-50 text-primary-800"
-                : "border-gray-200 bg-white text-gray-700 hover:border-gray-300 hover:bg-gray-50"
+                ? "border-primary-500 bg-primary-50 dark:bg-primary-900/20 text-primary-800 dark:text-primary-300"
+                : "border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-300 hover:border-gray-300 dark:hover:border-gray-600 hover:bg-gray-50 dark:hover:bg-gray-700"
             } ${disabled ? "cursor-not-allowed opacity-75" : "cursor-pointer"}`}
           >
             {option}
@@ -61,10 +61,10 @@ function TextInputQuestion({ question, onAnswer, disabled }) {
 
   return (
     <form onSubmit={handleSubmit}>
-      <p className="text-lg font-semibold text-gray-900 mb-2">
+      <p className="text-lg font-semibold text-gray-900 dark:text-gray-100 mb-2">
         {question.prompt}
       </p>
-      <p className="text-sm text-gray-500 mb-6">
+      <p className="text-sm text-gray-500 dark:text-gray-400 mb-6">
         {question.type === "translate"
           ? "Type your translation below"
           : "Fill in the blank"}
@@ -76,7 +76,7 @@ function TextInputQuestion({ question, onAnswer, disabled }) {
         disabled={disabled}
         placeholder="Type your answer..."
         autoFocus
-        className="w-full px-4 py-3 border-2 border-gray-200 rounded-xl text-lg focus:border-primary-500 focus:ring-0 focus:outline-none transition-colors disabled:opacity-75 disabled:cursor-not-allowed"
+        className="w-full px-4 py-3 border-2 border-gray-200 rounded-xl text-lg focus:border-primary-500 focus:ring-0 focus:outline-none transition-colors disabled:opacity-75 disabled:cursor-not-allowed dark:bg-gray-700 dark:border-gray-600 dark:text-gray-100"
       />
       <button
         type="submit"
@@ -96,31 +96,31 @@ function FeedbackBanner({ result, onContinue }) {
     <div
       className={`mt-6 p-5 rounded-xl border-2 animate-fade-in ${
         result.is_correct
-          ? "bg-green-50 border-green-300"
-          : "bg-red-50 border-red-300"
+          ? "bg-green-50 dark:bg-green-900/20 border-green-300 dark:border-green-800"
+          : "bg-red-50 dark:bg-red-900/20 border-red-300 dark:border-red-800"
       }`}
     >
       <div className="flex items-center gap-2 mb-2">
         <span className="text-2xl">{result.is_correct ? "✅" : "❌"}</span>
         <span
           className={`font-bold text-lg ${
-            result.is_correct ? "text-green-800" : "text-red-800"
+            result.is_correct ? "text-green-800 dark:text-green-300" : "text-red-800 dark:text-red-400"
           }`}
         >
           {result.is_correct ? "Correct!" : "Incorrect"}
         </span>
       </div>
       {!result.is_correct && (
-        <p className="text-sm text-red-700 mb-1">
+        <p className="text-sm text-red-700 dark:text-red-400 mb-1">
           Correct answer: <strong>{result.correct_answer}</strong>
         </p>
       )}
       {result.explanation && (
-        <p className="text-sm text-gray-600 mb-3">{result.explanation}</p>
+        <p className="text-sm text-gray-600 dark:text-gray-400 mb-3">{result.explanation}</p>
       )}
       <button
         onClick={onContinue}
-        className="px-6 py-2 bg-white border border-gray-300 rounded-lg font-medium text-gray-700 hover:bg-gray-50 transition-colors"
+        className="px-6 py-2 bg-white dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-lg font-medium text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors"
       >
         Continue
       </button>
@@ -147,21 +147,21 @@ function ReviewList({ answers }) {
               key={i}
               className={`rounded-lg border p-3 ${
                 a.is_correct
-                  ? "bg-green-50 border-green-200"
-                  : "bg-red-50 border-red-200"
+                  ? "bg-green-50 dark:bg-green-900/20 border-green-200 dark:border-green-800"
+                  : "bg-red-50 dark:bg-red-900/20 border-red-200 dark:border-red-800"
               }`}
             >
               <div className="flex items-start gap-2">
                 <span className="text-base mt-0.5">{a.is_correct ? "✅" : "❌"}</span>
                 <div className="flex-1 min-w-0">
-                  <p className="text-sm font-medium text-gray-800 truncate">
+                  <p className="text-sm font-medium text-gray-800 dark:text-gray-200 truncate">
                     {a.prompt}
                   </p>
-                  <p className="text-xs text-gray-500 mt-0.5">
+                  <p className="text-xs text-gray-500 dark:text-gray-400 mt-0.5">
                     Your answer: <span className={a.is_correct ? "text-green-700" : "text-red-700"}>{a.user_answer}</span>
                   </p>
                   {!a.is_correct && (
-                    <p className="text-xs text-gray-500">
+                    <p className="text-xs text-gray-500 dark:text-gray-400">
                       Correct: <span className="text-green-700 font-medium">{a.correct_answer}</span>
                     </p>
                   )}
@@ -200,21 +200,21 @@ function ScoreSummary({ result, lessonId, answers }) {
     <div className="flex flex-col items-center justify-center py-12 animate-fade-in">
       <div className="text-6xl mb-4">{pct === 100 ? "🌟" : pct >= 60 ? "🎉" : "💪"}</div>
       <h2 className={`text-3xl font-bold mb-2 ${gradeColor}`}>{grade}</h2>
-      <p className="text-gray-600 text-lg mb-6">
+      <p className="text-gray-600 dark:text-gray-400 text-lg mb-6">
         {result.lesson_title}
       </p>
-      <div className="bg-white rounded-2xl shadow-lg p-8 mb-6 text-center">
-        <p className="text-5xl font-bold text-gray-900 mb-2">
+      <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-lg p-8 mb-6 text-center">
+        <p className="text-5xl font-bold text-gray-900 dark:text-gray-100 mb-2">
           {result.score}/{result.total_questions}
         </p>
-        <p className="text-gray-500">questions correct</p>
-        <div className="mt-4 w-48 bg-gray-200 rounded-full h-3 mx-auto">
+        <p className="text-gray-500 dark:text-gray-400">questions correct</p>
+        <div className="mt-4 w-48 bg-gray-200 dark:bg-gray-700 rounded-full h-3 mx-auto">
           <div
             className="bg-primary-500 h-3 rounded-full transition-all duration-1000"
             style={{ width: `${pct}%` }}
           />
         </div>
-        <p className="text-sm text-gray-400 mt-2">{pct}%</p>
+        <p className="text-sm text-gray-400 dark:text-gray-500 mt-2">{pct}%</p>
       </div>
 
       <ReviewList answers={answers} />
@@ -222,7 +222,7 @@ function ScoreSummary({ result, lessonId, answers }) {
       <div className="flex flex-wrap gap-3 mt-6 justify-center">
         <Link
           to={`/lesson/${lessonId}`}
-          className="px-6 py-3 border border-gray-300 rounded-xl font-medium text-gray-700 hover:bg-gray-50 transition-colors"
+          className="px-6 py-3 border border-gray-300 dark:border-gray-600 rounded-xl font-medium text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors"
         >
           Back to Lesson
         </Link>
@@ -345,7 +345,7 @@ export default function Quiz() {
   if (error) {
     return (
       <div className="max-w-2xl mx-auto py-12 px-4">
-        <div className="bg-red-50 border border-red-200 rounded-lg p-6 text-red-700">
+        <div className="bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-lg p-6 text-red-700 dark:text-red-400">
           {error}
         </div>
         <Link
@@ -373,14 +373,14 @@ export default function Quiz() {
       <div className="flex items-center justify-between mb-2">
         <button
           onClick={() => navigate(`/lesson/${lessonId}`)}
-          className="text-gray-400 hover:text-gray-600 transition-colors"
+          className="text-gray-400 dark:text-gray-500 hover:text-gray-600 dark:hover:text-gray-400 transition-colors"
           aria-label="Close quiz"
         >
           <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
           </svg>
         </button>
-        <span className="text-sm text-gray-500">
+        <span className="text-sm text-gray-500 dark:text-gray-400">
           {currentIndex + 1} / {questions.length}
         </span>
       </div>

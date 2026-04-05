@@ -33,7 +33,7 @@ export default function Topics() {
 
   if (error) {
     return (
-      <div className="bg-red-50 border border-red-200 rounded-lg p-6 text-red-700">
+      <div className="bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-lg p-6 text-red-700 dark:text-red-400">
         {error}
       </div>
     );
@@ -41,30 +41,30 @@ export default function Topics() {
 
   return (
     <div>
-      <h1 className="text-2xl font-bold text-gray-900 mb-2">Topics</h1>
-      <p className="text-gray-600 mb-8">Choose a topic to start learning.</p>
+      <h1 className="text-2xl font-bold text-gray-900 dark:text-gray-100 mb-2">Topics</h1>
+      <p className="text-gray-600 dark:text-gray-400 mb-8">Choose a topic to start learning.</p>
 
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
         {topics.map((topic) => (
           <Link
             key={topic.id}
             to={`/topics/${topic.id}`}
-            className="bg-white rounded-lg shadow hover:shadow-md transition-shadow p-6 block"
+            className="bg-white dark:bg-gray-800 rounded-lg shadow hover:shadow-md transition-shadow p-6 block"
           >
             <div className="flex items-start justify-between mb-3">
               <span className="text-3xl">{topic.icon || "📘"}</span>
               <span
                 className={`text-xs font-medium px-2 py-1 rounded-full ${
-                  difficultyColors[topic.difficulty_level] || "bg-gray-100 text-gray-800"
+                  difficultyColors[topic.difficulty_level] || "bg-gray-100 dark:bg-gray-700 text-gray-800 dark:text-gray-200"
                 }`}
               >
                 {topic.difficulty_level}
               </span>
             </div>
-            <h2 className="text-lg font-semibold text-gray-900">{topic.name_fr}</h2>
-            <p className="text-sm text-gray-500 mb-2">{topic.name_en}</p>
-            <p className="text-sm text-gray-600 mb-4 line-clamp-2">{topic.description}</p>
-            <div className="text-xs text-gray-400">
+            <h2 className="text-lg font-semibold text-gray-900 dark:text-gray-100">{topic.name_fr}</h2>
+            <p className="text-sm text-gray-500 dark:text-gray-400 mb-2">{topic.name_en}</p>
+            <p className="text-sm text-gray-600 dark:text-gray-400 mb-4 line-clamp-2">{topic.description}</p>
+            <div className="text-xs text-gray-400 dark:text-gray-500">
               {topic.lesson_count} {topic.lesson_count === 1 ? "lesson" : "lessons"}
             </div>
           </Link>
@@ -72,7 +72,7 @@ export default function Topics() {
       </div>
 
       {topics.length === 0 && (
-        <p className="text-gray-500 text-center py-12">No topics available yet.</p>
+        <p className="text-gray-500 dark:text-gray-400 text-center py-12">No topics available yet.</p>
       )}
     </div>
   );

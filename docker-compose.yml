@@ -66,6 +66,19 @@ services:
         condition: service_healthy
     command: celery -A config beat -l info
 
+  bot:
+    build: ./backend
+    env_file: .env
+    environment:
+      DJANGO_SETTINGS_MODULE: config.settings.prod
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    command: python manage.py run_bot
+    restart: unless-stopped
+
   nginx:
     build: ./nginx
     ports:

@@ -3,6 +3,7 @@ from rest_framework import generics, permissions, status
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from apps.content.models import Question
+from apps.gamification.services import award_xp, check_streak
 from .models import QuizSession, QuizAnswer
 from .serializers import (
     QuizStartSerializer,
@@ -121,6 +122,30 @@ class QuizCompleteView(APIView):
         session.score = correct_count
         session.completed_at = timezone.now()
         session.save()
+
+        # --- Gamification: award XP ---
+        source = f"quiz_session_{session.id}"
+
+        # XP per correct answer
+        if correct_count > 0:
+            award_xp(
+                request.user,
+                activity_type="quiz_correct",
+                xp_amount=correct_count * 5,
+                source_id=source,
+            )
+
+        # Perfect score bonus
+        if correct_count == session.total_questions and session.total_questions > 0:
+            award_xp(
+                request.user,
+                activity_type="quiz_perfect",
+                xp_amount=25,
+                source_id=source,
+            )
+
+        # Update streak
+        check_streak(request.user)
 
         return Response(QuizCompleteSerializer(session).data)
 

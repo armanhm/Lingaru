@@ -91,6 +91,21 @@ class ChatView(APIView):
             tokens_used=llm_response.tokens_used,
         )
 
+        # --- Gamification: award XP for 5+ exchange conversations ---
+        user_message_count = Message.objects.filter(
+            conversation=conversation, role="user",
+        ).count()
+        if user_message_count == 5:
+            # Award exactly once when hitting the 5-message threshold
+            from apps.gamification.services import award_xp, check_streak
+            award_xp(
+                request.user,
+                activity_type="ai_conversation",
+                xp_amount=15,
+                source_id=f"conversation_{conversation.id}",
+            )
+            check_streak(request.user)
+
         return Response({
             "reply": llm_response.content,
             "conversation_id": conversation.id,

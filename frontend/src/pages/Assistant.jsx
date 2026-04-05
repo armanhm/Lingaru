@@ -59,6 +59,11 @@ function MessageBubble({ message }) {
             Your browser does not support audio.
           </audio>
         )}
+        {!isUser && message.ragUsed && (
+          <p className="text-xs text-blue-500 mt-1">
+            Using your documents
+          </p>
+        )}
         {!isUser && message.provider && (
           <p className="text-xs text-gray-400 mt-1">{message.provider}</p>
         )}
@@ -251,6 +256,7 @@ export default function Assistant() {
         role: "assistant",
         content: res.data.reply,
         provider: res.data.provider,
+        ragUsed: res.data.rag_used || false,
       };
       setMessages((prev) => [...prev, assistantMessage]);
       setConversationId(res.data.conversation_id);

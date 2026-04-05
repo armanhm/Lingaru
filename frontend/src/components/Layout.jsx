@@ -25,6 +25,9 @@ export default function Layout() {
               <Link to="/assistant" className="text-gray-600 hover:text-primary-600">
                 Assistant
               </Link>
+              <Link to="/documents" className="text-gray-600 hover:text-primary-600">
+                Documents
+              </Link>
               <Link to="/practice/dictation" className="text-gray-600 hover:text-primary-600">
                 Dictation
               </Link>

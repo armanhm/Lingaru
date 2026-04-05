@@ -9,6 +9,7 @@ from apps.bot.handlers.word import word_command
 from apps.bot.handlers.stats import stats_command
 from apps.bot.handlers.news import news_command
 from apps.bot.handlers.daily import daily_command
+from apps.bot.handlers.upload import upload_command
 from apps.bot.handlers.quiz import quiz_conversation_handler
 from apps.bot.handlers.chat import chat_conversation_handler
 from apps.bot.handlers.dictation import dictation_conversation_handler
@@ -34,6 +35,7 @@ def create_bot_application():
     application.add_handler(CommandHandler("stats", stats_command))
     application.add_handler(CommandHandler("news", news_command))
     application.add_handler(CommandHandler("daily", daily_command))
+    application.add_handler(CommandHandler("upload", upload_command))
     application.add_handler(quiz_conversation_handler())
     application.add_handler(chat_conversation_handler())
     application.add_handler(dictation_conversation_handler())

@@ -114,6 +114,104 @@ class ChatView(APIView):
         })
 
 
+class ImageQueryView(APIView):
+    permission_classes = (permissions.IsAuthenticated,)
+
+    def post(self, request):
+        from .serializers import ImageQueryRequestSerializer
+
+        serializer = ImageQueryRequestSerializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+
+        image_file = serializer.validated_data["image"]
+        question = serializer.validated_data.get("question", "")
+        conversation_id = serializer.validated_data.get("conversation_id")
+
+        # Resolve or create conversation
+        conversation = None
+        if conversation_id:
+            try:
+                conversation = Conversation.objects.get(
+                    pk=conversation_id, user=request.user,
+                )
+            except Conversation.DoesNotExist:
+                return Response(
+                    {"detail": "Conversation not found."},
+                    status=status.HTTP_404_NOT_FOUND,
+                )
+        else:
+            title = f"Image: {question[:40]}" if question else "Image query"
+            conversation = Conversation.objects.create(
+                user=request.user,
+                title=title,
+            )
+
+        # Read image bytes
+        image_data = image_file.read()
+        image_mime_type = image_file.content_type or "image/jpeg"
+
+        # Build messages
+        messages = []
+        if question:
+            messages.append({"role": "user", "content": question})
+
+        # Call Gemini Vision
+        try:
+            router = create_llm_router()
+            llm_response = router.generate_with_image(
+                messages=messages,
+                image_data=image_data,
+                image_mime_type=image_mime_type,
+                system_prompt=SYSTEM_PROMPTS["image_query"],
+            )
+        except Exception as exc:
+            logger.error("Vision LLM call failed: %s", exc)
+            return Response(
+                {"detail": "AI vision service is temporarily unavailable. Please try again."},
+                status=status.HTTP_503_SERVICE_UNAVAILABLE,
+            )
+
+        # Save ImageQuery record
+        from .models import ImageQuery
+        image_query = ImageQuery.objects.create(
+            user=request.user,
+            conversation=conversation,
+            image_file=image_file,
+            question=question,
+            ai_response=llm_response.content,
+        )
+
+        # Also save as messages in the conversation for continuity
+        if question:
+            Message.objects.create(
+                conversation=conversation,
+                role="user",
+                content=f"[Image uploaded] {question}",
+            )
+        else:
+            Message.objects.create(
+                conversation=conversation,
+                role="user",
+                content="[Image uploaded for analysis]",
+            )
+
+        Message.objects.create(
+            conversation=conversation,
+            role="assistant",
+            content=llm_response.content,
+            provider=llm_response.provider,
+            tokens_used=llm_response.tokens_used,
+        )
+
+        return Response({
+            "image_query_id": image_query.id,
+            "ai_response": llm_response.content,
+            "conversation_id": conversation.id,
+            "provider": llm_response.provider,
+            "tokens_used": llm_response.tokens_used,
+        })
+
+
 class ConversationListView(generics.ListAPIView):
     serializer_class = ConversationListSerializer
     permission_classes = (permissions.IsAuthenticated,)

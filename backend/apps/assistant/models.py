@@ -50,3 +50,30 @@ class Message(models.Model):
 
     def __str__(self):
         return f"{self.role}: {self.content[:50]}"
+
+
+class ImageQuery(models.Model):
+    user = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        on_delete=models.CASCADE,
+        related_name="image_queries",
+    )
+    conversation = models.ForeignKey(
+        Conversation,
+        on_delete=models.SET_NULL,
+        null=True,
+        blank=True,
+        related_name="image_queries",
+    )
+    image_file = models.ImageField(upload_to="image_queries/")
+    question = models.TextField(blank=True, default="")
+    extracted_text = models.TextField(blank=True, default="")
+    ai_response = models.TextField(blank=True, default="")
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        db_table = "assistant_image_queries"
+        ordering = ["-created_at"]
+
+    def __str__(self):
+        return f"ImageQuery(user={self.user_id}, id={self.id})"

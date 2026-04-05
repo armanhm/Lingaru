@@ -28,6 +28,12 @@ class ConversationListSerializer(serializers.ModelSerializer):
         fields = ("id", "title", "context", "created_at", "message_count")
 
 
+class ImageQueryRequestSerializer(serializers.Serializer):
+    image = serializers.ImageField()
+    question = serializers.CharField(required=False, default="", allow_blank=True)
+    conversation_id = serializers.IntegerField(required=False, allow_null=True)
+
+
 class ConversationDetailSerializer(serializers.ModelSerializer):
     messages = MessageSerializer(many=True, read_only=True)
 

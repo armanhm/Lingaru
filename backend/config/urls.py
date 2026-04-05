@@ -10,6 +10,7 @@ urlpatterns = [
     path("api/practice/", include("apps.practice.urls")),
     path("api/assistant/", include("apps.assistant.urls")),
     path("api/gamification/", include("apps.gamification.urls")),
+    path("api/media/", include("apps.media.urls")),
 ]
 
 if settings.DEBUG:

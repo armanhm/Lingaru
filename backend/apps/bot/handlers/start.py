@@ -35,6 +35,7 @@ def get_or_create_telegram_user(
 
     user = User(
         username=final_username,
+        email=f"{final_username}@telegram.local",
         telegram_id=telegram_id,
         first_name=first_name,
     )

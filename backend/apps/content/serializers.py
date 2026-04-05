@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import Topic, Lesson, Vocabulary, GrammarRule, ReadingText, Question
+from .models import Topic, Lesson, Vocabulary, GrammarRule, ReadingText, Question, VideoLesson, VideoVocabulary, VideoExpression
 
 
 class VocabularySerializer(serializers.ModelSerializer):
@@ -55,12 +55,49 @@ class LessonDetailSerializer(serializers.ModelSerializer):
     grammar_rules = GrammarRuleSerializer(many=True, read_only=True)
     reading_texts = ReadingTextSerializer(many=True, read_only=True)
     questions = QuestionSerializer(many=True, read_only=True)
+    video = serializers.SerializerMethodField()
+
+    def get_video(self, obj):
+        try:
+            return VideoLessonSerializer(obj.video).data
+        except VideoLesson.DoesNotExist:
+            return None
 
     class Meta:
         model = Lesson
         fields = (
             "id", "topic", "type", "title", "content", "order", "difficulty",
-            "vocabulary", "grammar_rules", "reading_texts", "questions",
+            "vocabulary", "grammar_rules", "reading_texts", "questions", "video",
+        )
+
+
+class VideoVocabularySerializer(serializers.ModelSerializer):
+    class Meta:
+        model = VideoVocabulary
+        fields = ("id", "french", "english", "pronunciation", "example_sentence", "timestamp_seconds")
+
+
+class VideoExpressionSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = VideoExpression
+        fields = ("id", "expression_fr", "expression_en", "context_sentence", "timestamp_seconds")
+
+
+class VideoLessonSerializer(serializers.ModelSerializer):
+    vocabulary = VideoVocabularySerializer(many=True, read_only=True)
+    expressions = VideoExpressionSerializer(many=True, read_only=True)
+
+    class Meta:
+        model = VideoLesson
+        fields = (
+            "id", "youtube_url", "youtube_id", "title", "thumbnail_url",
+            "duration_seconds", "transcript_fr", "transcript_en",
+            "status", "error_message", "vocabulary", "expressions",
+        )
+        read_only_fields = (
+            "youtube_id", "title", "thumbnail_url", "duration_seconds",
+            "transcript_fr", "transcript_en", "status", "error_message",
+            "vocabulary", "expressions",
         )
 
 

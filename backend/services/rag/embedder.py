@@ -1,6 +1,7 @@
 import logging
 
-import google.generativeai as genai
+from google import genai
+from google.genai import types
 
 logger = logging.getLogger(__name__)
 
@@ -16,58 +17,32 @@ class GeminiEmbedder:
         model: str = DEFAULT_EMBEDDING_MODEL,
     ):
         self.model = model
-        genai.configure(api_key=api_key)
+        self._client = genai.Client(api_key=api_key)
 
     def embed(self, text: str) -> list[float]:
-        """Generate an embedding for a single text.
-
-        Args:
-            text: The text to embed.
-
-        Returns:
-            List of floats (768-dimensional vector).
-        """
-        result = genai.embed_content(
+        result = self._client.models.embed_content(
             model=self.model,
-            content=text,
-            task_type="retrieval_document",
+            contents=text,
+            config=types.EmbedContentConfig(task_type="RETRIEVAL_DOCUMENT"),
         )
-        embedding = result["embedding"]
+        embedding = result.embeddings[0].values
         logger.debug("Generated embedding: %d dimensions", len(embedding))
-        return embedding
+        return list(embedding)
 
     def embed_query(self, text: str) -> list[float]:
-        """Generate an embedding for a search query.
-
-        Uses task_type="retrieval_query" for better retrieval performance.
-
-        Args:
-            text: The query text to embed.
-
-        Returns:
-            List of floats (768-dimensional vector).
-        """
-        result = genai.embed_content(
+        result = self._client.models.embed_content(
             model=self.model,
-            content=text,
-            task_type="retrieval_query",
+            contents=text,
+            config=types.EmbedContentConfig(task_type="RETRIEVAL_QUERY"),
         )
-        return result["embedding"]
+        return list(result.embeddings[0].values)
 
     def embed_batch(self, texts: list[str]) -> list[list[float]]:
-        """Generate embeddings for multiple texts in one API call.
-
-        Args:
-            texts: List of texts to embed.
-
-        Returns:
-            List of embeddings (each a list of floats).
-        """
-        result = genai.embed_content(
+        result = self._client.models.embed_content(
             model=self.model,
-            content=texts,
-            task_type="retrieval_document",
+            contents=texts,
+            config=types.EmbedContentConfig(task_type="RETRIEVAL_DOCUMENT"),
         )
-        embeddings = result["embedding"]
+        embeddings = [list(e.values) for e in result.embeddings]
         logger.info("Generated %d embeddings in batch", len(embeddings))
         return embeddings

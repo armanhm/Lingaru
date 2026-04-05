@@ -1,7 +1,9 @@
 import { useEffect, useState } from "react";
 import { useParams, Link } from "react-router-dom";
 import { getLesson } from "../api/content";
+import { useAuth } from "../contexts/AuthContext";
 import AudioPlayButton from "../components/AudioPlayButton";
+import VideoSection from "../components/VideoSection";
 
 function VocabSection({ items }) {
   if (!items || items.length === 0) return null;
@@ -139,6 +141,10 @@ function ReadingSection({ texts }) {
 function QuestionsSection({ questions, lessonId }) {
   if (!questions || questions.length === 0) return null;
 
+  // Show regular questions only (video questions shown in VideoSection)
+  const regularQuestions = questions.filter((q) => !q.prompt.startsWith("[VIDEO]"));
+  if (regularQuestions.length === 0) return null;
+
   return (
     <div className="mb-8">
       <div className="flex items-center justify-between mb-4">
@@ -154,11 +160,11 @@ function QuestionsSection({ questions, lessonId }) {
       </div>
       <div className="bg-gray-50 rounded-lg border p-5">
         <p className="text-sm text-gray-500 mb-4">
-          {questions.length} question{questions.length !== 1 ? "s" : ""} available.
+          {regularQuestions.length} question{regularQuestions.length !== 1 ? "s" : ""} available.
           Start the quiz to practice interactively.
         </p>
         <div className="space-y-3">
-          {questions.slice(0, 3).map((q, index) => (
+          {regularQuestions.slice(0, 3).map((q, index) => (
             <div key={q.id} className="flex gap-3 items-start">
               <span className="text-sm font-medium text-gray-400 mt-0.5">
                 {index + 1}.
@@ -171,9 +177,9 @@ function QuestionsSection({ questions, lessonId }) {
               </div>
             </div>
           ))}
-          {questions.length > 3 && (
+          {regularQuestions.length > 3 && (
             <p className="text-xs text-gray-400 pl-7">
-              + {questions.length - 3} more question{questions.length - 3 !== 1 ? "s" : ""}
+              + {regularQuestions.length - 3} more question{regularQuestions.length - 3 !== 1 ? "s" : ""}
             </p>
           )}
         </div>
@@ -184,6 +190,7 @@ function QuestionsSection({ questions, lessonId }) {
 
 export default function LessonDetail() {
   const { id } = useParams();
+  const { user } = useAuth();
   const [lesson, setLesson] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -213,10 +220,13 @@ export default function LessonDetail() {
 
   if (!lesson) return null;
 
+  const isStaff = user?.is_staff || false;
+  const videoQuestions = (lesson.questions || []).filter((q) => q.prompt.startsWith("[VIDEO]"));
+
   return (
     <div>
       <Link
-        to={lesson.topic ? `/topics/${lesson.topic}` : "/topics"}
+        to={lesson.topic ? `/topics/${lesson.topic.id}` : "/topics"}
         className="text-sm text-primary-600 hover:text-primary-800 mb-4 inline-block"
       >
         &larr; Back to Topic
@@ -226,6 +236,14 @@ export default function LessonDetail() {
         <h1 className="text-2xl font-bold text-gray-900 mb-1">{lesson.title}</h1>
         <p className="text-gray-600">{lesson.description}</p>
       </div>
+
+      {/* Video section — shown first so users watch before reading */}
+      <VideoSection
+        video={lesson.video}
+        lessonId={id}
+        isStaff={isStaff}
+        lessonQuestionCount={videoQuestions.length}
+      />
 
       <VocabSection items={lesson.vocabulary || lesson.vocab} />
       <GrammarSection rules={lesson.grammar_rules} />

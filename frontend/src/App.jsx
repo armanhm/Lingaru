@@ -13,6 +13,7 @@ import Dictation from "./pages/Dictation";
 import Pronunciation from "./pages/Pronunciation";
 import Assistant from "./pages/Assistant";
 import Progress from "./pages/Progress";
+import Discover from "./pages/Discover";
 import NotFound from "./pages/NotFound";
 
 export default function App() {
@@ -38,6 +39,7 @@ export default function App() {
           <Route path="practice/pronunciation" element={<Pronunciation />} />
           <Route path="assistant" element={<Assistant />} />
           <Route path="progress" element={<Progress />} />
+          <Route path="discover" element={<Discover />} />
         </Route>
         <Route path="*" element={<NotFound />} />
       </Routes>

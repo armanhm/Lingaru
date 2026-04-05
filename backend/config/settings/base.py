@@ -25,6 +25,7 @@ INSTALLED_APPS = [
     "apps.users",
     "apps.content",
     "apps.practice",
+    "apps.bot",
 ]
 
 MIDDLEWARE = [
@@ -131,3 +132,6 @@ CACHES = {
 # Celery
 CELERY_BROKER_URL = config("CELERY_BROKER_URL", default=REDIS_URL)
 CELERY_RESULT_BACKEND = config("CELERY_RESULT_BACKEND", default=REDIS_URL)
+
+# Telegram Bot
+TELEGRAM_BOT_TOKEN = config("TELEGRAM_BOT_TOKEN", default="")

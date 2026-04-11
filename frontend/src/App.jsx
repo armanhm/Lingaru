@@ -29,6 +29,7 @@ import GenderSnap from "./pages/GenderSnap";
 import SpeedRound from "./pages/SpeedRound";
 import MissingLetter from "./pages/MissingLetter";
 import ListeningChallenge from "./pages/ListeningChallenge";
+import RandomQuiz from "./pages/RandomQuiz";
 import NotFound from "./pages/NotFound";
 
 export default function App() {
@@ -51,6 +52,7 @@ export default function App() {
           <Route path="topics" element={<Topics />} />
           <Route path="topics/:id" element={<TopicDetail />} />
           <Route path="lesson/:id" element={<LessonDetail />} />
+          <Route path="practice/quiz/random" element={<RandomQuiz />} />
           <Route path="practice/quiz/:lessonId" element={<Quiz />} />
           <Route path="practice/dictation" element={<Dictation />} />
           <Route path="practice/pronunciation" element={<Pronunciation />} />

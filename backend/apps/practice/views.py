@@ -4,7 +4,8 @@ from django.utils import timezone
 from rest_framework import generics, permissions, status
 from rest_framework.response import Response
 from rest_framework.views import APIView
-from apps.content.models import Question
+from django.db.models import Count
+from apps.content.models import Lesson, Question
 from apps.gamification.services import award_xp, check_streak
 from .models import QuizSession, QuizAnswer
 
@@ -220,6 +221,23 @@ class QuizCompleteView(APIView):
         check_streak(request.user)
 
         return Response(QuizCompleteSerializer(session).data)
+
+
+class RandomQuizLessonView(APIView):
+    """Return a random lesson ID that has questions."""
+    permission_classes = (permissions.IsAuthenticated,)
+
+    def get(self, request):
+        lesson = (
+            Lesson.objects.annotate(qc=Count("questions"))
+            .filter(qc__gt=0)
+            .exclude(questions__type="conjugation")
+            .order_by("?")
+            .first()
+        )
+        if not lesson:
+            return Response({"detail": "No quizzes available."}, status=status.HTTP_404_NOT_FOUND)
+        return Response({"lesson_id": lesson.id, "title": lesson.title})
 
 
 class QuizHistoryView(generics.ListAPIView):

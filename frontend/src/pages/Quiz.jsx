@@ -368,6 +368,19 @@ export default function Quiz() {
     }
   }, [currentIndex, questions.length, sessionId, lessonId]);
 
+  // Enter/Space to continue after feedback
+  useEffect(() => {
+    if (!feedback) return;
+    const handler = (e) => {
+      if (e.key === "Enter" || e.key === " ") {
+        e.preventDefault();
+        handleContinue();
+      }
+    };
+    window.addEventListener("keydown", handler);
+    return () => window.removeEventListener("keydown", handler);
+  }, [feedback, handleContinue]);
+
   if (loading) {
     return (
       <div className="flex justify-center items-center py-20">

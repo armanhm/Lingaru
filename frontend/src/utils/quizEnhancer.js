@@ -24,9 +24,9 @@ function pickRandom(arr, n) {
  * Groups 4 word pairs (french→english) for the user to match.
  */
 function generateMatchPairs(vocabQuestions) {
-  // Need at least 4 questions to form pairs
+  // Need at least 4 questions to form pairs, skip [VIDEO] questions
   const candidates = vocabQuestions.filter(
-    (q) => q.correct_answer && q.prompt
+    (q) => q.correct_answer && q.prompt && !q.prompt.startsWith("[VIDEO]")
   );
   if (candidates.length < 4) return null;
 
@@ -60,7 +60,7 @@ function generateMatchPairs(vocabQuestions) {
  * Works with frontend data (no correct_answer needed).
  */
 function generateOddOneOut(questions) {
-  const mcqs = questions.filter((q) => q.options && q.options.length >= 3);
+  const mcqs = questions.filter((q) => q.options && q.options.length >= 3 && !q.prompt.startsWith("[VIDEO]"));
   if (mcqs.length < 2) return null;
 
   const shuffled = shuffle(mcqs);

@@ -46,13 +46,20 @@ class PronunciationCheckView(APIView):
         expected_text = serializer.validated_data["expected_text"]
         vocabulary_id = serializer.validated_data.get("vocabulary_id")
 
-        # Transcribe
-        stt = GroqWhisperProvider()
-        result = stt.transcribe(audio_file=audio_file, language="fr")
+        # Transcribe — GroqWhisperProvider reads the file internally
+        try:
+            stt = GroqWhisperProvider()
+            stt_result = stt.transcribe(audio_file=audio_file, language="fr")
+        except Exception as exc:
+            return Response(
+                {"detail": f"Speech recognition failed: {exc}"},
+                status=status.HTTP_503_SERVICE_UNAVAILABLE,
+            )
+        audio_file.seek(0)  # reset stream for saving the attempt below
 
         # Score
-        accuracy = calculate_accuracy(expected_text, result.transcription)
-        feedback = generate_feedback(accuracy, expected_text, result.transcription)
+        accuracy = calculate_accuracy(expected_text, stt_result.transcription)
+        feedback = generate_feedback(accuracy, expected_text, stt_result.transcription)
 
         # Save attempt
         attempt = PronunciationAttempt.objects.create(
@@ -60,7 +67,7 @@ class PronunciationCheckView(APIView):
             vocabulary_id=vocabulary_id,
             expected_text=expected_text,
             audio_file=audio_file,
-            transcription=result.transcription,
+            transcription=stt_result.transcription,
             accuracy_score=accuracy,
             feedback=feedback,
         )

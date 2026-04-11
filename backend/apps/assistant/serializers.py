@@ -7,6 +7,16 @@ class ChatRequestSerializer(serializers.Serializer):
         ("conversation", "Conversation"),
         ("grammar_correction", "Grammar Correction"),
         ("grammar_explanation", "Grammar Explanation"),
+        ("roleplay_hotel", "Roleplay: Hotel"),
+        ("roleplay_airport", "Roleplay: Airport"),
+        ("roleplay_bank", "Roleplay: Bank"),
+        ("roleplay_school", "Roleplay: School"),
+        ("roleplay_job_interview", "Roleplay: Job Interview"),
+        ("roleplay_restaurant", "Roleplay: Restaurant"),
+        ("roleplay_doctor", "Roleplay: Doctor"),
+        ("roleplay_market", "Roleplay: Market"),
+        ("roleplay_train", "Roleplay: Train Station"),
+        ("roleplay_pharmacy", "Roleplay: Pharmacy"),
     ]
 
     message = serializers.CharField(min_length=1)

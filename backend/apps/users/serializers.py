@@ -31,6 +31,6 @@ class UserSerializer(serializers.ModelSerializer):
         fields = (
             "id", "username", "email", "telegram_id",
             "native_language", "target_level", "daily_goal_minutes",
-            "date_joined", "is_staff",
+            "preferences", "date_joined", "is_staff",
         )
         read_only_fields = ("id", "date_joined", "is_staff")

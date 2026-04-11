@@ -14,6 +14,7 @@ urlpatterns = [
     path("api/discover/", include("apps.discover.urls")),
     path("api/progress/", include("apps.progress.urls")),
     path("api/documents/", include("apps.documents.urls")),
+    path("api/dictionary/", include("apps.dictionary.urls")),
 ]
 
 if settings.DEBUG:

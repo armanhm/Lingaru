@@ -32,6 +32,7 @@ INSTALLED_APPS = [
     "apps.discover",
     "apps.progress",
     "apps.documents",
+    "apps.dictionary",
 ]
 
 MIDDLEWARE = [

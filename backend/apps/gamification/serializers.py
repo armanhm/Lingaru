@@ -39,10 +39,32 @@ class UserBadgeSerializer(serializers.ModelSerializer):
         fields = ("id", "name", "description", "icon", "earned_at")
 
 
+ACTIVITY_LABELS = {
+    "quiz_correct": "Quiz — correct answer",
+    "quiz_perfect": "Quiz — perfect score",
+    "lesson_complete": "Lesson completed",
+    "streak_bonus": "Streak bonus",
+    "conjugation_drill": "Conjugation drill",
+    "srs_review": "SRS card reviewed",
+    "dictation": "Dictation exercise",
+    "pronunciation": "Pronunciation exercise",
+    "ai_conversation": "AI conversation",
+    "voice_chat": "Voice chat",
+    "document_upload": "Document uploaded",
+    "video_lesson": "Video lesson",
+    "daily_bonus": "Daily login bonus",
+}
+
+
 class XPTransactionSerializer(serializers.ModelSerializer):
+    description = serializers.SerializerMethodField()
+
     class Meta:
         model = XPTransaction
-        fields = ("id", "activity_type", "xp_amount", "source_id", "created_at")
+        fields = ("id", "activity_type", "description", "xp_amount", "source_id", "created_at")
+
+    def get_description(self, obj):
+        return ACTIVITY_LABELS.get(obj.activity_type, obj.activity_type.replace("_", " ").title())
 
 
 class LeaderboardEntrySerializer(serializers.ModelSerializer):

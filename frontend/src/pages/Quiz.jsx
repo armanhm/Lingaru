@@ -121,7 +121,7 @@ function FeedbackBanner({ result, onContinue }) {
       )}
       <button
         onClick={onContinue}
-        className="px-6 py-2 bg-white dark:bg-surface-700 border border-surface-300 dark:border-surface-600 rounded-lg font-medium text-surface-700 dark:text-surface-300 hover:bg-surface-50 dark:hover:bg-surface-700 transition-colors"
+        className="btn-secondary btn-sm"
       >
         Continue
       </button>
@@ -201,11 +201,11 @@ function ScoreSummary({ result, lessonId, answers }) {
   return (
     <div className="flex flex-col items-center justify-center py-12 animate-fade-in">
       <div className="text-6xl mb-4 animate-bounce-in">{pct === 100 ? "🌟" : pct >= 60 ? "🎉" : "💪"}</div>
-      <h2 className={`text-3xl font-bold mb-2 ${gradeColor} animate-fade-in-up`}>{grade}</h2>
+      <h2 className={`text-3xl font-extrabold mb-2 ${gradeColor} animate-fade-in-up`}>{grade}</h2>
       <p className="text-surface-600 dark:text-surface-400 text-lg mb-6">
         {result.lesson_title}
       </p>
-      <div className="bg-white dark:bg-surface-800 rounded-2xl shadow-lg p-8 mb-6 text-center animate-scale-in">
+      <div className="card p-8 mb-6 text-center animate-scale-in">
         <p className="text-5xl font-bold text-surface-900 dark:text-surface-100 mb-2">
           {result.score}/{result.total_questions}
         </p>
@@ -231,7 +231,7 @@ function ScoreSummary({ result, lessonId, answers }) {
         {result.next_lesson && (
           <Link
             to={`/lesson/${result.next_lesson.id}`}
-            className="px-6 py-3 bg-green-600 text-white font-semibold rounded-xl hover:bg-green-700 transition-colors"
+            className="px-6 py-3 bg-success-600 text-white font-semibold rounded-xl hover:bg-success-700 transition-colors"
           >
             Next Lesson →
           </Link>
@@ -347,7 +347,7 @@ export default function Quiz() {
   if (error) {
     return (
       <div className="max-w-2xl mx-auto py-12 px-4">
-        <div className="bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-lg p-6 text-red-700 dark:text-red-400">
+        <div className="card border-danger-200 dark:border-danger-800 bg-danger-50 dark:bg-danger-700/20 p-6 text-danger-600 dark:text-danger-400">
           {error}
         </div>
         <Link

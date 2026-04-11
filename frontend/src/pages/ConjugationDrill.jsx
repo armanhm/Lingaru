@@ -101,10 +101,10 @@ export default function ConjugationDrill() {
     const correct = results.filter((r) => r.is_correct).length;
     return (
       <div className="max-w-2xl mx-auto py-8 px-4">
-        <h1 className="text-2xl font-bold text-surface-900 dark:text-surface-100 mb-6">
+        <h1 className="text-2xl font-extrabold text-surface-900 dark:text-surface-100 mb-6">
           Conjugation Results: {selectedVerb} ({selectedTense})
         </h1>
-        <div className="bg-white dark:bg-surface-800 rounded-2xl shadow-lg p-6 mb-6 animate-scale-in">
+        <div className="card p-6 mb-6 animate-scale-in">
           <p className="text-3xl font-bold text-center mb-4 animate-bounce-in">
             {correct}/{results.length}
           </p>
@@ -134,7 +134,7 @@ export default function ConjugationDrill() {
         </div>
         <button
           onClick={startDrill}
-          className="w-full px-6 py-3 bg-primary-600 text-white font-semibold rounded-xl hover:bg-primary-700 transition-colors"
+          className="btn-primary btn-lg w-full"
         >
           Try Again
         </button>
@@ -145,15 +145,15 @@ export default function ConjugationDrill() {
   if (!drilling) {
     return (
       <div className="max-w-2xl mx-auto py-8 px-4">
-        <h1 className="text-2xl font-bold text-surface-900 dark:text-surface-100 mb-6">Conjugation Drill</h1>
-        <div className="bg-white dark:bg-surface-800 rounded-2xl shadow-lg p-6">
+        <h1 className="text-2xl font-extrabold text-surface-900 dark:text-surface-100 mb-6">Conjugation Drill</h1>
+        <div className="card p-6">
           <div className="space-y-4 mb-6">
             <div>
               <label className="block text-sm font-medium text-surface-700 dark:text-surface-300 mb-1">Verb</label>
               <select
                 value={selectedVerb}
                 onChange={(e) => setSelectedVerb(e.target.value)}
-                className="w-full px-3 py-2 border border-surface-300 dark:border-surface-600 rounded-lg dark:bg-surface-700 dark:text-surface-100"
+                className="input"
               >
                 {verbs.map((v) => (
                   <option key={v} value={v}>{v}</option>
@@ -165,7 +165,7 @@ export default function ConjugationDrill() {
               <select
                 value={selectedTense}
                 onChange={(e) => setSelectedTense(e.target.value)}
-                className="w-full px-3 py-2 border border-surface-300 dark:border-surface-600 rounded-lg dark:bg-surface-700 dark:text-surface-100"
+                className="input"
               >
                 {tenses.map((t) => (
                   <option key={t} value={t}>{t}</option>
@@ -176,7 +176,7 @@ export default function ConjugationDrill() {
           <button
             onClick={startDrill}
             disabled={!selectedVerb || !selectedTense}
-            className="w-full px-6 py-3 bg-primary-600 text-white font-semibold rounded-xl hover:bg-primary-700 transition-colors disabled:opacity-50"
+            className="btn-primary btn-lg w-full"
           >
             Start Drill
           </button>
@@ -190,7 +190,7 @@ export default function ConjugationDrill() {
   return (
     <div className="max-w-2xl mx-auto py-8 px-4">
       <div className="flex items-center justify-between mb-6">
-        <h1 className="text-xl font-bold text-surface-900 dark:text-surface-100">
+        <h1 className="text-xl font-extrabold text-surface-900 dark:text-surface-100">
           {selectedVerb} — {selectedTense}
         </h1>
         <span className="text-sm text-surface-500 dark:text-surface-400">
@@ -198,7 +198,7 @@ export default function ConjugationDrill() {
         </span>
       </div>
 
-      <div className="bg-white dark:bg-surface-800 rounded-2xl shadow-lg p-8 text-center animate-scale-in" key={currentSubjectIndex}>
+      <div className="card p-8 text-center animate-scale-in" key={currentSubjectIndex}>
         <p className="text-2xl font-bold text-surface-900 dark:text-surface-100 mb-6">
           {subject} ________
         </p>
@@ -211,12 +211,12 @@ export default function ConjugationDrill() {
               onChange={(e) => setAnswer(e.target.value)}
               placeholder="Type the conjugation..."
               autoFocus
-              className="w-full px-4 py-3 border-2 border-surface-200 rounded-xl text-lg text-center focus:border-primary-500 focus:ring-0 focus:outline-none dark:bg-surface-700 dark:border-surface-600 dark:text-surface-100"
+              className="input text-lg text-center"
             />
             <button
               type="submit"
               disabled={!answer.trim()}
-              className="mt-4 w-full px-8 py-3 bg-primary-600 text-white font-semibold rounded-xl hover:bg-primary-700 transition-colors disabled:opacity-50"
+              className="btn-primary btn-lg w-full mt-4"
             >
               Check
             </button>
@@ -241,7 +241,7 @@ export default function ConjugationDrill() {
             </div>
             <button
               onClick={handleNext}
-              className="w-full px-8 py-3 bg-primary-600 text-white font-semibold rounded-xl hover:bg-primary-700 transition-colors"
+              className="btn-primary btn-lg w-full"
             >
               {currentSubjectIndex + 1 < SUBJECTS.length ? "Next" : "See Results"}
             </button>

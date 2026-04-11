@@ -174,7 +174,7 @@ function ConversationSidebar({ conversations, activeId, onSelect, onNew }) {
       <div className="p-3 border-b border-surface-200 dark:border-surface-700">
         <button
           onClick={onNew}
-          className="w-full px-4 py-2 bg-primary-600 text-white text-sm font-semibold rounded-lg hover:bg-primary-700 transition-colors"
+          className="btn-primary btn-sm w-full"
         >
           New Chat
         </button>
@@ -424,7 +424,7 @@ export default function Assistant() {
   };
 
   return (
-    <div className="flex h-[calc(100vh-4rem-4rem)] bg-white dark:bg-surface-800 rounded-xl shadow-sm border border-surface-200 dark:border-surface-700 overflow-hidden">
+    <div className="flex h-[calc(100vh-4rem-4rem)] card overflow-hidden">
       <ConversationSidebar
         conversations={conversations}
         activeId={conversationId}
@@ -507,7 +507,7 @@ export default function Assistant() {
           {loading && <TypingIndicator />}
 
           {error && (
-            <div className="bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-lg p-3 mb-4 text-sm text-red-700 dark:text-red-400">
+            <div className="bg-danger-50 dark:bg-danger-700/20 border border-danger-200 dark:border-danger-800 rounded-xl p-3 mb-4 text-sm text-danger-600 dark:text-danger-400 animate-shake">
               {error}
             </div>
           )}
@@ -578,7 +578,7 @@ export default function Assistant() {
             <button
               onClick={handleSend}
               disabled={loading || (!input.trim() && !imageFile)}
-              className="px-6 py-3 bg-primary-600 text-white font-semibold rounded-xl hover:bg-primary-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+              className="btn-primary btn-lg disabled:opacity-50 disabled:cursor-not-allowed"
             >
               Send
             </button>

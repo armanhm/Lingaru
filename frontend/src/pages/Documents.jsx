@@ -1,6 +1,7 @@
 import { useState, useEffect, useRef } from "react";
 import { getDocuments, uploadDocument, deleteDocument } from "../api/documents";
 import { useToast } from "../contexts/ToastContext";
+import { staggerDelay } from "../hooks/useAnimations";
 
 function DocumentCard({ doc, onDelete, showToast }) {
   const [deleting, setDeleting] = useState(false);
@@ -20,7 +21,7 @@ function DocumentCard({ doc, onDelete, showToast }) {
   };
 
   return (
-    <div className="bg-white dark:bg-surface-800 rounded-xl border border-surface-200 dark:border-surface-700 p-5 flex flex-col gap-3">
+    <div className="card p-5 flex flex-col gap-3 card-hover">
       <div className="flex items-start justify-between">
         <div>
           <h3 className="font-semibold text-surface-900 dark:text-surface-100">{doc.title}</h3>
@@ -28,25 +29,19 @@ function DocumentCard({ doc, onDelete, showToast }) {
             {doc.file_type.toUpperCase()} &middot; {doc.page_count || "?"} page{doc.page_count !== 1 ? "s" : ""}
           </p>
         </div>
-        <span
-          className={`text-xs px-2 py-1 rounded-full font-medium ${
-            doc.processed
-              ? doc.processing_error
-                ? "bg-red-100 text-red-700"
-                : "bg-green-100 text-green-700"
-              : "bg-yellow-100 text-yellow-700"
-          }`}
-        >
+        <span className={
+          doc.processed
+            ? doc.processing_error ? "badge-danger" : "badge-success"
+            : "badge-warn"
+        }>
           {doc.processed
-            ? doc.processing_error
-              ? "Error"
-              : "Indexed"
+            ? doc.processing_error ? "Error" : "Indexed"
             : "Processing..."}
         </span>
       </div>
 
       {doc.processing_error && (
-        <p className="text-xs text-red-600 bg-red-50 p-2 rounded">
+        <p className="text-xs text-danger-600 dark:text-danger-400 bg-danger-50 dark:bg-danger-700/20 p-2 rounded-lg">
           {doc.processing_error}
         </p>
       )}
@@ -56,7 +51,7 @@ function DocumentCard({ doc, onDelete, showToast }) {
         <button
           onClick={handleDelete}
           disabled={deleting}
-          className="text-red-500 hover:text-red-700 disabled:opacity-50"
+          className="text-danger-500 hover:text-danger-700 dark:hover:text-danger-400 disabled:opacity-50 text-xs font-medium transition-colors"
         >
           {deleting ? "Deleting..." : "Delete"}
         </button>
@@ -123,8 +118,8 @@ export default function Documents() {
 
   return (
     <div>
-      <div className="mb-8">
-        <h1 className="text-2xl font-bold text-surface-900 dark:text-surface-100">Documents</h1>
+      <div className="mb-8 animate-fade-in">
+        <h1 className="text-2xl font-extrabold text-surface-900 dark:text-surface-100">Documents</h1>
         <p className="text-surface-500 dark:text-surface-400 mt-1">
           Upload your French textbooks and notes. The AI assistant will use them
           to give you more relevant answers.
@@ -132,33 +127,33 @@ export default function Documents() {
       </div>
 
       {/* Upload form */}
-      <div className="bg-white dark:bg-surface-800 rounded-xl border border-surface-200 dark:border-surface-700 p-6 mb-8">
-        <h2 className="font-semibold text-surface-900 dark:text-surface-100 mb-4">Upload a document</h2>
+      <div className="card p-6 mb-8">
+        <h2 className="font-bold text-surface-900 dark:text-surface-100 mb-4">Upload a document</h2>
         <div className="flex flex-col sm:flex-row gap-3">
           <input
             type="text"
             value={title}
             onChange={(e) => setTitle(e.target.value)}
             placeholder="Document title"
-            className="flex-1 px-4 py-2 border border-surface-200 rounded-lg text-sm focus:border-primary-500 focus:ring-0 focus:outline-none dark:bg-surface-700 dark:border-surface-600 dark:text-surface-100"
+            className="input flex-1"
           />
           <input
             type="file"
             ref={fileInputRef}
             accept=".pdf,.txt"
-            className="text-sm text-surface-500 file:mr-3 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-sm file:font-semibold file:bg-primary-50 file:text-primary-700 hover:file:bg-primary-100"
+            className="text-sm text-surface-500 file:mr-3 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-sm file:font-semibold file:bg-primary-50 dark:file:bg-primary-900/30 file:text-primary-700 dark:file:text-primary-300 hover:file:bg-primary-100"
           />
           <button
             onClick={handleUpload}
             disabled={uploading}
-            className="px-6 py-2 bg-primary-600 text-white font-semibold rounded-lg hover:bg-primary-700 transition-colors disabled:opacity-50"
+            className="btn-primary btn-md"
           >
             {uploading ? "Uploading..." : "Upload"}
           </button>
         </div>
 
         {error && (
-          <p className="text-sm text-red-600 mt-3">{error}</p>
+          <p className="text-sm text-danger-600 dark:text-danger-400 mt-3">{error}</p>
         )}
 
         <p className="text-xs text-surface-400 dark:text-surface-500 mt-3">
@@ -168,18 +163,23 @@ export default function Documents() {
 
       {/* Document list */}
       {loading ? (
-        <p className="text-surface-500 dark:text-surface-400 text-center py-8">Loading documents...</p>
+        <div className="flex justify-center items-center py-12">
+          <div className="animate-spin rounded-full h-10 w-10 border-b-2 border-primary-600" />
+        </div>
       ) : documents.length === 0 ? (
-        <div className="text-center py-12 text-surface-400 dark:text-surface-500">
-          <p className="text-lg font-medium mb-1">No documents yet</p>
-          <p className="text-sm">
+        <div className="text-center py-16 animate-fade-in-up">
+          <span className="text-5xl mb-3 block">📄</span>
+          <p className="text-lg font-medium text-surface-600 dark:text-surface-400 mb-1">No documents yet</p>
+          <p className="text-sm text-surface-400 dark:text-surface-500">
             Upload a French textbook or notes to get context-aware AI responses.
           </p>
         </div>
       ) : (
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-          {documents.map((doc) => (
-            <DocumentCard key={doc.id} doc={doc} onDelete={handleDelete} showToast={showToast} />
+          {documents.map((doc, i) => (
+            <div key={doc.id} className="animate-fade-in-up" style={staggerDelay(i, 50)}>
+              <DocumentCard doc={doc} onDelete={handleDelete} showToast={showToast} />
+            </div>
           ))}
         </div>
       )}

@@ -212,7 +212,7 @@ export default function SRSReview() {
   if (error) {
     return (
       <div className="max-w-xl mx-auto py-12">
-        <div className="bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-xl p-6 text-red-700 dark:text-red-400">
+        <div className="card border-danger-200 dark:border-danger-800 bg-danger-50 dark:bg-danger-700/20 p-6 text-danger-600 dark:text-danger-400">
           {error}
         </div>
       </div>
@@ -223,7 +223,7 @@ export default function SRSReview() {
     return (
       <div className="max-w-xl mx-auto py-16 text-center space-y-4">
         <div className="text-6xl mb-2">{reviewedCount > 0 ? "🎉" : "✅"}</div>
-        <h2 className="text-2xl font-bold text-surface-900 dark:text-surface-100">
+        <h2 className="text-2xl font-extrabold text-surface-900 dark:text-surface-100">
           {reviewedCount > 0 ? "Session complete!" : "All caught up!"}
         </h2>
         <p className="text-surface-500 dark:text-surface-400">
@@ -264,7 +264,7 @@ export default function SRSReview() {
       {/* Header */}
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-2xl font-bold text-surface-900 dark:text-surface-100">Flashcards</h1>
+          <h1 className="text-2xl font-extrabold text-surface-900 dark:text-surface-100">Flashcards</h1>
           <p className="text-sm text-surface-400 dark:text-surface-500 mt-0.5">{cards.length} cards due today</p>
         </div>
         <span className="text-sm font-medium text-surface-500 dark:text-surface-400 bg-surface-100 dark:bg-surface-700 px-3 py-1 rounded-full">

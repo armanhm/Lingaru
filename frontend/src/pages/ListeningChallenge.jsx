@@ -149,11 +149,12 @@ export default function ListeningChallenge() {
     if (resultState || !input.trim()) return;
 
     const word = words[round];
-    const target = word.targetWord;
-    const guess = input.trim();
+    const guess = stripAccents(input.trim().toLowerCase());
 
-    // Accent-insensitive comparison
-    const correct = stripAccents(guess.toLowerCase()) === stripAccents(target.toLowerCase());
+    // Accept both the full word (l'application) and the stripped version (application)
+    const matchesStripped = guess === stripAccents(word.targetWord.toLowerCase());
+    const matchesFull = guess === stripAccents(word.french.toLowerCase());
+    const correct = matchesStripped || matchesFull;
 
     setResultState(correct ? "correct" : "wrong");
     if (correct) setScore((s) => s + 1);

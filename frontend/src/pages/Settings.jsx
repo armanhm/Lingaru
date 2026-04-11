@@ -51,10 +51,10 @@ const DEFAULT_PREFS = {
 
 function SectionCard({ title, description, children }) {
   return (
-    <div className="bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 overflow-hidden mb-5">
-      <div className="px-6 py-4 border-b border-gray-100 dark:border-gray-700">
-        <h2 className="text-base font-semibold text-gray-900 dark:text-gray-100">{title}</h2>
-        {description && <p className="text-sm text-gray-400 dark:text-gray-500 mt-0.5">{description}</p>}
+    <div className="card overflow-hidden mb-5">
+      <div className="px-6 py-4 border-b border-surface-100 dark:border-surface-700/50">
+        <h2 className="text-base font-semibold text-surface-900 dark:text-surface-100">{title}</h2>
+        {description && <p className="text-sm text-surface-400 dark:text-surface-500 mt-0.5">{description}</p>}
       </div>
       <div className="px-6 py-4 space-y-4">
         {children}
@@ -67,8 +67,8 @@ function FieldRow({ label, description, children }) {
   return (
     <div className="flex items-center justify-between gap-6">
       <div className="min-w-0">
-        <p className="text-sm font-medium text-gray-700 dark:text-gray-200">{label}</p>
-        {description && <p className="text-xs text-gray-400 dark:text-gray-500 mt-0.5">{description}</p>}
+        <p className="text-sm font-medium text-surface-700 dark:text-surface-200">{label}</p>
+        {description && <p className="text-xs text-surface-400 dark:text-surface-500 mt-0.5">{description}</p>}
       </div>
       <div className="shrink-0">{children}</div>
     </div>
@@ -80,7 +80,7 @@ function Toggle({ checked, onChange }) {
     <button
       type="button"
       onClick={() => onChange(!checked)}
-      className={`relative inline-flex h-6 w-11 rounded-full transition-colors duration-200 focus:outline-none ${checked ? "bg-primary-600" : "bg-gray-200 dark:bg-gray-600"}`}
+      className={`relative inline-flex h-6 w-11 rounded-full transition-colors duration-200 focus:outline-none ${checked ? "bg-primary-600" : "bg-surface-200 dark:bg-surface-600"}`}
     >
       <span className={`inline-block h-5 w-5 mt-0.5 rounded-full bg-white shadow transform transition-transform duration-200 ${checked ? "translate-x-5" : "translate-x-0.5"}`} />
     </button>
@@ -93,13 +93,13 @@ function NumberStepper({ value, onChange, min, max, step = 1 }) {
       <button
         type="button"
         onClick={() => onChange(Math.max(min, value - step))}
-        className="w-8 h-8 rounded-lg border border-gray-200 dark:border-gray-600 text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 flex items-center justify-center font-bold text-lg transition-colors"
+        className="w-8 h-8 rounded-lg border border-surface-200 dark:border-surface-600 text-surface-600 dark:text-surface-300 hover:bg-surface-100 dark:hover:bg-gray-700 flex items-center justify-center font-bold text-lg transition-colors"
       >−</button>
-      <span className="w-10 text-center text-sm font-semibold text-gray-800 dark:text-gray-200">{value}</span>
+      <span className="w-10 text-center text-sm font-semibold text-gray-800 dark:text-surface-200">{value}</span>
       <button
         type="button"
         onClick={() => onChange(Math.min(max, value + step))}
-        className="w-8 h-8 rounded-lg border border-gray-200 dark:border-gray-600 text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 flex items-center justify-center font-bold text-lg transition-colors"
+        className="w-8 h-8 rounded-lg border border-surface-200 dark:border-surface-600 text-surface-600 dark:text-surface-300 hover:bg-surface-100 dark:hover:bg-gray-700 flex items-center justify-center font-bold text-lg transition-colors"
       >+</button>
     </div>
   );
@@ -110,7 +110,7 @@ function SelectInput({ value, onChange, options, className = "" }) {
     <select
       value={value}
       onChange={(e) => onChange(e.target.value)}
-      className={`px-3 py-1.5 border border-gray-200 dark:border-gray-600 rounded-lg text-sm bg-white dark:bg-gray-700 text-gray-800 dark:text-gray-100 focus:outline-none focus:border-primary-400 transition-colors ${className}`}
+      className={`px-3 py-1.5 border border-surface-200 dark:border-surface-600 rounded-lg text-sm bg-white dark:bg-surface-700 text-gray-800 dark:text-surface-100 focus:outline-none focus:border-primary-400 transition-colors ${className}`}
     >
       {options.map((o) => (
         <option key={o.value} value={o.value}>{o.label}</option>
@@ -223,20 +223,20 @@ export default function Settings() {
   };
 
   const inputClass =
-    "w-full px-4 py-2 border border-gray-200 dark:border-gray-600 rounded-lg text-sm focus:border-primary-500 focus:ring-0 focus:outline-none transition-colors bg-white dark:bg-gray-700 dark:text-gray-100";
+    "w-full px-4 py-2 border border-surface-200 dark:border-surface-600 rounded-lg text-sm focus:border-primary-500 focus:ring-0 focus:outline-none transition-colors bg-white dark:bg-surface-700 dark:text-surface-100";
 
   return (
     <div className="max-w-2xl mx-auto">
       <div className="mb-7">
-        <h1 className="text-2xl font-bold text-gray-900 dark:text-gray-100">Settings</h1>
-        <p className="text-gray-400 dark:text-gray-500 mt-1 text-sm">Manage your profile, preferences, and account.</p>
+        <h1 className="text-2xl font-extrabold text-surface-900 dark:text-surface-100">Settings</h1>
+        <p className="text-surface-500 dark:text-surface-400 mt-1 text-sm">Manage your profile, preferences, and account.</p>
       </div>
 
       {/* ── Appearance ─────────────────────────────────────────────────────── */}
       <SectionCard title="Appearance">
         <FieldRow label="Theme" description="Switch between light and dark mode">
           <div className="flex items-center gap-3">
-            <span className="text-sm text-gray-500 dark:text-gray-400">{dark ? "Dark" : "Light"}</span>
+            <span className="text-sm text-surface-500 dark:text-surface-400">{dark ? "Dark" : "Light"}</span>
             <Toggle checked={dark} onChange={toggleTheme} />
           </div>
         </FieldRow>
@@ -247,29 +247,29 @@ export default function Settings() {
         <form onSubmit={handleProfileSave} className="space-y-4">
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div>
-              <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Username</label>
+              <label className="block text-sm font-medium text-surface-700 dark:text-surface-300 mb-1">Username</label>
               <input type="text" value={username} onChange={(e) => setUsername(e.target.value)} className={inputClass} required />
             </div>
             <div>
-              <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Email</label>
+              <label className="block text-sm font-medium text-surface-700 dark:text-surface-300 mb-1">Email</label>
               <input type="email" value={email} onChange={(e) => setEmail(e.target.value)} className={inputClass} required />
             </div>
           </div>
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
             <div>
-              <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Native Language</label>
+              <label className="block text-sm font-medium text-surface-700 dark:text-surface-300 mb-1">Native Language</label>
               <select value={nativeLang} onChange={(e) => setNativeLang(e.target.value)} className={inputClass}>
                 {LANGUAGE_OPTIONS.map((l) => <option key={l.value} value={l.value}>{l.label}</option>)}
               </select>
             </div>
             <div>
-              <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Target Level</label>
+              <label className="block text-sm font-medium text-surface-700 dark:text-surface-300 mb-1">Target Level</label>
               <select value={targetLevel} onChange={(e) => setTargetLevel(e.target.value)} className={inputClass}>
                 {LEVEL_OPTIONS.map((l) => <option key={l.value} value={l.value}>{l.label}</option>)}
               </select>
             </div>
             <div>
-              <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Daily Goal (min)</label>
+              <label className="block text-sm font-medium text-surface-700 dark:text-surface-300 mb-1">Daily Goal (min)</label>
               <input type="number" min={5} max={180} value={dailyGoal} onChange={(e) => setDailyGoal(Number(e.target.value))} className={inputClass} />
             </div>
           </div>
@@ -343,7 +343,7 @@ export default function Settings() {
 
       {/* ── Mini Games ──────────────────────────────────────────────────── */}
       <SectionCard title="Mini Games" description="Customize difficulty and length of each mini game">
-        <p className="text-xs font-semibold text-gray-400 dark:text-gray-500 uppercase tracking-wider">Word Scramble</p>
+        <p className="text-xs font-semibold text-surface-400 dark:text-surface-500 uppercase tracking-wider">Word Scramble</p>
         <FieldRow label="Words per game" description="Number of words to unscramble each round">
           <NumberStepper value={prefs.word_scramble_rounds} onChange={(v) => setPref("word_scramble_rounds", v)} min={3} max={20} step={1} />
         </FieldRow>
@@ -351,8 +351,8 @@ export default function Settings() {
           <NumberStepper value={prefs.word_scramble_timer} onChange={(v) => setPref("word_scramble_timer", v)} min={10} max={60} step={5} />
         </FieldRow>
 
-        <div className="border-t border-gray-100 dark:border-gray-700 pt-4 mt-2" />
-        <p className="text-xs font-semibold text-gray-400 dark:text-gray-500 uppercase tracking-wider">Match Pairs</p>
+        <div className="border-t border-surface-100 dark:border-surface-700/50 pt-4 mt-2" />
+        <p className="text-xs font-semibold text-surface-400 dark:text-surface-500 uppercase tracking-wider">Match Pairs</p>
         <FieldRow label="Number of pairs" description="French–English pairs to match (more pairs = harder)">
           <NumberStepper value={prefs.match_pairs_count} onChange={(v) => setPref("match_pairs_count", v)} min={4} max={10} step={1} />
         </FieldRow>
@@ -360,20 +360,20 @@ export default function Settings() {
           <NumberStepper value={prefs.match_pairs_preview} onChange={(v) => setPref("match_pairs_preview", v)} min={1} max={10} step={1} />
         </FieldRow>
 
-        <div className="border-t border-gray-100 dark:border-gray-700 pt-4 mt-2" />
-        <p className="text-xs font-semibold text-gray-400 dark:text-gray-500 uppercase tracking-wider">Gender Snap</p>
+        <div className="border-t border-surface-100 dark:border-surface-700/50 pt-4 mt-2" />
+        <p className="text-xs font-semibold text-surface-400 dark:text-surface-500 uppercase tracking-wider">Gender Snap</p>
         <FieldRow label="Words per game" description="Number of le/la questions each round">
           <NumberStepper value={prefs.gender_snap_rounds} onChange={(v) => setPref("gender_snap_rounds", v)} min={5} max={20} step={1} />
         </FieldRow>
 
-        <div className="border-t border-gray-100 dark:border-gray-700 pt-4 mt-2" />
-        <p className="text-xs font-semibold text-gray-400 dark:text-gray-500 uppercase tracking-wider">Missing Letter</p>
+        <div className="border-t border-surface-100 dark:border-surface-700/50 pt-4 mt-2" />
+        <p className="text-xs font-semibold text-surface-400 dark:text-surface-500 uppercase tracking-wider">Missing Letter</p>
         <FieldRow label="Words per game" description="Number of fill-in-the-blank words">
           <NumberStepper value={prefs.missing_letter_rounds} onChange={(v) => setPref("missing_letter_rounds", v)} min={3} max={20} step={1} />
         </FieldRow>
 
-        <div className="border-t border-gray-100 dark:border-gray-700 pt-4 mt-2" />
-        <p className="text-xs font-semibold text-gray-400 dark:text-gray-500 uppercase tracking-wider">Speed Round</p>
+        <div className="border-t border-surface-100 dark:border-surface-700/50 pt-4 mt-2" />
+        <p className="text-xs font-semibold text-surface-400 dark:text-surface-500 uppercase tracking-wider">Speed Round</p>
         <FieldRow label="Questions per game" description="Number of true/false questions">
           <NumberStepper value={prefs.speed_round_questions} onChange={(v) => setPref("speed_round_questions", v)} min={5} max={30} step={1} />
         </FieldRow>
@@ -381,8 +381,8 @@ export default function Settings() {
           <NumberStepper value={prefs.speed_round_timer} onChange={(v) => setPref("speed_round_timer", v)} min={15} max={120} step={5} />
         </FieldRow>
 
-        <div className="border-t border-gray-100 dark:border-gray-700 pt-4 mt-2" />
-        <p className="text-xs font-semibold text-gray-400 dark:text-gray-500 uppercase tracking-wider">Listening Challenge</p>
+        <div className="border-t border-surface-100 dark:border-surface-700/50 pt-4 mt-2" />
+        <p className="text-xs font-semibold text-surface-400 dark:text-surface-500 uppercase tracking-wider">Listening Challenge</p>
         <FieldRow label="Words per game" description="Number of listen-and-type rounds">
           <NumberStepper value={prefs.listening_challenge_rounds} onChange={(v) => setPref("listening_challenge_rounds", v)} min={3} max={20} step={1} />
         </FieldRow>
@@ -403,16 +403,16 @@ export default function Settings() {
       <SectionCard title="Change Password">
         <form onSubmit={handlePasswordChange} className="space-y-4">
           <div>
-            <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Current Password</label>
+            <label className="block text-sm font-medium text-surface-700 dark:text-surface-300 mb-1">Current Password</label>
             <input type="password" value={oldPassword} onChange={(e) => setOldPassword(e.target.value)} className={inputClass} required />
           </div>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div>
-              <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">New Password</label>
+              <label className="block text-sm font-medium text-surface-700 dark:text-surface-300 mb-1">New Password</label>
               <input type="password" value={newPassword} onChange={(e) => setNewPassword(e.target.value)} className={inputClass} required minLength={8} />
             </div>
             <div>
-              <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Confirm Password</label>
+              <label className="block text-sm font-medium text-surface-700 dark:text-surface-300 mb-1">Confirm Password</label>
               <input type="password" value={confirmPassword} onChange={(e) => setConfirmPassword(e.target.value)} className={inputClass} required minLength={8} />
             </div>
           </div>
@@ -430,24 +430,24 @@ export default function Settings() {
             <span className="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-medium bg-emerald-100 dark:bg-emerald-900/30 text-emerald-700 dark:text-emerald-300">
               ✓ Linked
             </span>
-            <span className="text-sm text-gray-500 dark:text-gray-400">
-              ID: <code className="bg-gray-100 dark:bg-gray-700 px-1.5 py-0.5 rounded text-xs">{user.telegram_id}</code>
+            <span className="text-sm text-surface-500 dark:text-surface-400">
+              ID: <code className="bg-surface-100 dark:bg-surface-700 px-1.5 py-0.5 rounded text-xs">{user.telegram_id}</code>
             </span>
           </div>
         ) : (
-          <p className="text-sm text-gray-500 dark:text-gray-400">
-            Not linked. Start the Lingaru bot on Telegram and send <code className="bg-gray-100 dark:bg-gray-700 px-1.5 py-0.5 rounded text-xs">/start</code> to connect your account.
+          <p className="text-sm text-surface-500 dark:text-surface-400">
+            Not linked. Start the Lingaru bot on Telegram and send <code className="bg-surface-100 dark:bg-surface-700 px-1.5 py-0.5 rounded text-xs">/start</code> to connect your account.
           </p>
         )}
       </SectionCard>
 
       {/* ── Danger zone ────────────────────────────────────────────────────── */}
-      <div className="bg-white dark:bg-gray-800 rounded-xl border-2 border-red-200 dark:border-red-900 overflow-hidden mb-5">
+      <div className="bg-white dark:bg-surface-800 rounded-xl border-2 border-red-200 dark:border-red-900 overflow-hidden mb-5">
         <div className="px-6 py-4 border-b border-red-100 dark:border-red-900">
           <h2 className="text-base font-semibold text-red-700 dark:text-red-400">Danger Zone</h2>
         </div>
         <div className="px-6 py-4">
-          <p className="text-sm text-gray-500 dark:text-gray-400 mb-4">
+          <p className="text-sm text-surface-500 dark:text-surface-400 mb-4">
             Once you delete your account all data is permanently removed.
           </p>
           <button disabled className="px-5 py-2 bg-red-600 text-white text-sm font-semibold rounded-lg opacity-40 cursor-not-allowed">

@@ -4,12 +4,12 @@ import { getTopics } from "../api/content";
 import { staggerDelay } from "../hooks/useAnimations";
 
 const difficultyColors = {
-  A1: "bg-green-100 text-green-800",
-  A2: "bg-emerald-100 text-emerald-800",
-  B1: "bg-yellow-100 text-yellow-800",
-  B2: "bg-orange-100 text-orange-800",
-  C1: "bg-red-100 text-red-800",
-  C2: "bg-purple-100 text-purple-800",
+  A1: "badge-success",
+  A2: "badge-success",
+  B1: "badge-warn",
+  B2: "badge-warn",
+  C1: "badge-danger",
+  C2: "badge-primary",
 };
 
 export default function Topics() {
@@ -42,31 +42,31 @@ export default function Topics() {
 
   return (
     <div>
-      <h1 className="text-2xl font-bold text-gray-900 dark:text-gray-100 mb-2">Topics</h1>
-      <p className="text-gray-600 dark:text-gray-400 mb-8">Choose a topic to start learning.</p>
+      <h1 className="text-2xl font-extrabold text-surface-900 dark:text-surface-100 mb-2">Topics</h1>
+      <p className="text-surface-600 dark:text-surface-400 mb-8">Choose a topic to start learning.</p>
 
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
         {topics.map((topic, i) => (
           <Link
             key={topic.id}
             to={`/topics/${topic.id}`}
-            className="bg-white dark:bg-gray-800 rounded-lg shadow hover:shadow-md hover:-translate-y-1 hover:scale-[1.02] transition-all p-6 block animate-fade-in-up"
+            className="card card-hover hover:-translate-y-1 hover:scale-[1.02] transition-all p-6 block animate-fade-in-up"
             style={staggerDelay(i, 40)}
           >
             <div className="flex items-start justify-between mb-3">
               <span className="text-3xl">{topic.icon || "📘"}</span>
               <span
                 className={`text-xs font-medium px-2 py-1 rounded-full ${
-                  difficultyColors[topic.difficulty_level] || "bg-gray-100 dark:bg-gray-700 text-gray-800 dark:text-gray-200"
+                  difficultyColors[topic.difficulty_level] || "bg-surface-100 dark:bg-surface-700 text-surface-800 dark:text-surface-200"
                 }`}
               >
                 {topic.difficulty_level}
               </span>
             </div>
-            <h2 className="text-lg font-semibold text-gray-900 dark:text-gray-100">{topic.name_fr}</h2>
-            <p className="text-sm text-gray-500 dark:text-gray-400 mb-2">{topic.name_en}</p>
-            <p className="text-sm text-gray-600 dark:text-gray-400 mb-4 line-clamp-2">{topic.description}</p>
-            <div className="text-xs text-gray-400 dark:text-gray-500">
+            <h2 className="text-lg font-semibold text-surface-900 dark:text-surface-100">{topic.name_fr}</h2>
+            <p className="text-sm text-surface-500 dark:text-surface-400 mb-2">{topic.name_en}</p>
+            <p className="text-sm text-surface-600 dark:text-surface-400 mb-4 line-clamp-2">{topic.description}</p>
+            <div className="text-xs text-surface-400 dark:text-surface-500">
               {topic.lesson_count} {topic.lesson_count === 1 ? "lesson" : "lessons"}
             </div>
           </Link>
@@ -74,7 +74,7 @@ export default function Topics() {
       </div>
 
       {topics.length === 0 && (
-        <p className="text-gray-500 dark:text-gray-400 text-center py-12">No topics available yet.</p>
+        <p className="text-surface-500 dark:text-surface-400 text-center py-12">No topics available yet.</p>
       )}
     </div>
   );

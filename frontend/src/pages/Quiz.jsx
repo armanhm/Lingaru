@@ -2,8 +2,15 @@ import { useEffect, useState, useCallback } from "react";
 import { useParams, useNavigate, Link } from "react-router-dom";
 import { startQuiz, submitAnswer, completeQuiz } from "../api/practice";
 import { completeLesson } from "../api/progress";
+import { generateTTS } from "../api/media";
 import { useToast } from "../contexts/ToastContext";
 import { useCountUp, staggerDelay } from "../hooks/useAnimations";
+import { enhanceQuestions } from "../utils/quizEnhancer";
+import MatchPairsQuestion from "../components/quiz/MatchPairsQuestion";
+import OddOneOutQuestion from "../components/quiz/OddOneOutQuestion";
+import ReorderQuestion from "../components/quiz/ReorderQuestion";
+import ErrorDetectQuestion from "../components/quiz/ErrorDetectQuestion";
+import ListenChooseQuestion from "../components/quiz/ListenChooseQuestion";
 
 function ProgressBar({ current, total }) {
   const pct = total > 0 ? Math.round((current / total) * 100) : 0;
@@ -267,7 +274,7 @@ export default function Quiz() {
     startQuiz(lessonId)
       .then((res) => {
         setSessionId(res.data.session_id);
-        setQuestions(res.data.questions);
+        setQuestions(enhanceQuestions(res.data.questions));
       })
       .catch((err) => {
         setError(
@@ -283,6 +290,31 @@ export default function Quiz() {
     async (answer) => {
       if (!sessionId || feedback) return;
       const question = questions[currentIndex];
+
+      // Enhanced question types are handled client-side (no backend question ID)
+      const isEnhanced = ["match_pairs", "odd_one_out", "reorder", "error_detect", "listen_choose"].includes(question.type);
+
+      if (isEnhanced) {
+        // For enhanced types, `answer` is either a boolean (correct/wrong) or the user's text
+        const is_correct = typeof answer === "boolean" ? answer : answer === question.correct_answer;
+        setFeedback({
+          is_correct,
+          correct_answer: question.correct_answer,
+          explanation: "",
+        });
+        setAnsweredCount((prev) => prev + 1);
+        setAnswers((prev) => [
+          ...prev,
+          {
+            prompt: question.prompt || question.type.replace(/_/g, " "),
+            user_answer: typeof answer === "string" ? answer : (is_correct ? "Correct" : "Wrong"),
+            correct_answer: question.correct_answer,
+            is_correct,
+          },
+        ]);
+        return;
+      }
+
       try {
         const res = await submitAnswer(sessionId, question.id, answer);
         setFeedback(res.data);
@@ -391,19 +423,19 @@ export default function Quiz() {
 
       <div className="min-h-[300px] animate-fade-in" key={currentIndex}>
         {question.type === "mcq" ? (
-          <MCQQuestion
-            key={question.id}
-            question={question}
-            onAnswer={handleAnswer}
-            disabled={!!feedback}
-          />
+          <MCQQuestion key={question.id} question={question} onAnswer={handleAnswer} disabled={!!feedback} />
+        ) : question.type === "match_pairs" ? (
+          <MatchPairsQuestion key={question.id} pairs={question.pairs} onAnswer={handleAnswer} disabled={!!feedback} />
+        ) : question.type === "odd_one_out" ? (
+          <OddOneOutQuestion key={question.id} words={question.words} category={question.category} onAnswer={handleAnswer} disabled={!!feedback} />
+        ) : question.type === "reorder" ? (
+          <ReorderQuestion key={question.id} words={question.words} correctSentence={question.correctSentence} onAnswer={(result) => handleAnswer(result != null)} disabled={!!feedback} />
+        ) : question.type === "error_detect" ? (
+          <ErrorDetectQuestion key={question.id} words={question.words} correctWord={question.correctWord} onAnswer={handleAnswer} disabled={!!feedback} />
+        ) : question.type === "listen_choose" ? (
+          <ListenChooseQuestion key={question.id} word={question.word} options={question.options} correctAnswer={question.correct_answer} onAnswer={handleAnswer} disabled={!!feedback} generateTTS={generateTTS} />
         ) : (
-          <TextInputQuestion
-            key={question.id}
-            question={question}
-            onAnswer={handleAnswer}
-            disabled={!!feedback}
-          />
+          <TextInputQuestion key={question.id} question={question} onAnswer={handleAnswer} disabled={!!feedback} />
         )}
 
         <FeedbackBanner result={feedback} onContinue={handleContinue} />

@@ -18,9 +18,15 @@ class GroqWhisperProvider(BaseSTTProvider):
         self.client = Groq(api_key=self.api_key)
 
     def transcribe(self, audio_file, language: str = "fr") -> STTResult:
+        # Groq requires the file tuple to have a proper extension so it can
+        # detect the audio format. Django's uploaded file may have name "blob"
+        # or no extension, so we force it to "audio.webm".
+        audio_bytes = audio_file.read()
+        file_tuple = ("audio.webm", audio_bytes, "audio/webm")
+
         response = self.client.audio.transcriptions.create(
             model=WHISPER_MODEL,
-            file=audio_file,
+            file=file_tuple,
             language=language,
             response_format="text",
         )

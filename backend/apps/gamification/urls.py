@@ -9,4 +9,6 @@ urlpatterns = [
     path("badges/", views.BadgesView.as_view(), name="badges"),
     path("leaderboard/", views.LeaderboardView.as_view(), name="leaderboard"),
     path("history/", views.HistoryView.as_view(), name="history"),
+    path("trend/", views.TrendReportView.as_view(), name="trend"),
+    path("mini-game/score/", views.MiniGameScoreView.as_view(), name="mini-game-score"),
 ]

@@ -27,10 +27,21 @@ class RandomVocabularyView(APIView):
     permission_classes = (permissions.IsAuthenticated,)
 
     def get(self, request):
-        vocab = Vocabulary.objects.order_by("?").first()
-        if not vocab:
-            return Response({"detail": "No vocabulary available."}, status=404)
-        return Response(VocabularySerializer(vocab).data)
+        count = min(int(request.query_params.get("count", 1)), 20)
+        single_word = request.query_params.get("single_word", "").lower() == "true"
+        gendered = request.query_params.get("gendered", "").lower() == "true"
+        qs = Vocabulary.objects.all()
+        if single_word:
+            qs = qs.exclude(french__contains=" ").filter(french__regex=r"^.{3,}$")
+        if gendered:
+            qs = qs.filter(gender__in=["m", "f"])
+        vocab = qs.order_by("?")[:count]
+        if count == 1:
+            v = vocab.first()
+            if not v:
+                return Response({"detail": "No vocabulary available."}, status=404)
+            return Response(VocabularySerializer(v).data)
+        return Response(VocabularySerializer(vocab, many=True).data)
 
 
 class LessonDetailView(generics.RetrieveAPIView):

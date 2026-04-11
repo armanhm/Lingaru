@@ -20,7 +20,12 @@ import SRSReview from "./pages/SRSReview";
 import MistakeJournal from "./pages/MistakeJournal";
 import ConjugationDrill from "./pages/ConjugationDrill";
 import Documents from "./pages/Documents";
+import Dictionary from "./pages/Dictionary";
 import Settings from "./pages/Settings";
+import MiniGames from "./pages/MiniGames";
+import WordScramble from "./pages/WordScramble";
+import MatchPairs from "./pages/MatchPairs";
+import GenderSnap from "./pages/GenderSnap";
 import NotFound from "./pages/NotFound";
 
 export default function App() {
@@ -53,6 +58,11 @@ export default function App() {
           <Route path="practice/srs" element={<SRSReview />} />
           <Route path="practice/conjugation" element={<ConjugationDrill />} />
           <Route path="progress/mistakes" element={<MistakeJournal />} />
+          <Route path="dictionary" element={<Dictionary />} />
+          <Route path="mini-games" element={<MiniGames />} />
+          <Route path="mini-games/word-scramble" element={<WordScramble />} />
+          <Route path="mini-games/match-pairs" element={<MatchPairs />} />
+          <Route path="mini-games/gender-snap" element={<GenderSnap />} />
           <Route path="settings" element={<Settings />} />
         </Route>
         <Route path="*" element={<NotFound />} />

@@ -3,129 +3,206 @@ import { Link, Outlet, useNavigate, useLocation } from "react-router-dom";
 import { useAuth } from "../contexts/AuthContext";
 import { useTheme } from "../contexts/ThemeContext";
 
-const navGroups = {
-  main: [
-    { to: "/", label: "Dashboard" },
-    { to: "/topics", label: "Topics" },
-    { to: "/discover", label: "Discover" },
-  ],
-  practice: [
-    { to: "/practice/dictation", label: "Dictation" },
-    { to: "/practice/pronunciation", label: "Pronunciation" },
-    { to: "/practice/conjugation", label: "Conjugation" },
-    { to: "/practice/srs", label: "SRS Review" },
-  ],
-  ai: [
-    { to: "/assistant", label: "Assistant" },
-  ],
-  personal: [
-    { to: "/progress", label: "Progress" },
-    { to: "/progress/mistakes", label: "Mistakes" },
-    { to: "/documents", label: "Documents" },
-  ],
-};
+const NAV_SECTIONS = [
+  {
+    label: null,
+    items: [
+      { to: "/", label: "Dashboard", icon: (
+        <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
+        </svg>
+      )},
+      { to: "/topics", label: "Topics", icon: (
+        <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
+        </svg>
+      )},
+      { to: "/discover", label: "Discover", icon: (
+        <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+        </svg>
+      )},
+    ],
+  },
+  {
+    label: "Practice",
+    items: [
+      { to: "/practice/dictation", label: "Dictation", icon: (
+        <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15.536 8.464a5 5 0 010 7.072M12 9.5l-3 3m0 0l3 3m-3-3h7.5M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+        </svg>
+      )},
+      { to: "/practice/pronunciation", label: "Pronunciation", icon: (
+        <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 11a7 7 0 01-7 7m0 0a7 7 0 01-7-7m7 7v4m0 0H8m4 0h4m-4-8a3 3 0 01-3-3V5a3 3 0 116 0v6a3 3 0 01-3 3z" />
+        </svg>
+      )},
+      { to: "/practice/conjugation", label: "Conjugation", icon: (
+        <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z" />
+        </svg>
+      )},
+      { to: "/practice/srs", label: "Flashcards", icon: (
+        <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
+        </svg>
+      )},
+      { to: "/mini-games", label: "Mini Games", icon: (
+        <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z" />
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+        </svg>
+      )},
+    ],
+  },
+  {
+    label: "AI",
+    items: [
+      { to: "/assistant", label: "Assistant", icon: (
+        <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z" />
+        </svg>
+      )},
+    ],
+  },
+  {
+    label: "Dictionary",
+    items: [
+      { to: "/dictionary", label: "Dictionary", icon: (
+        <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" />
+        </svg>
+      )},
+    ],
+  },
+  {
+    label: "Personal",
+    items: [
+      { to: "/progress", label: "Progress", icon: (
+        <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
+        </svg>
+      )},
+      { to: "/progress/mistakes", label: "Mistakes", icon: (
+        <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+        </svg>
+      )},
+      { to: "/documents", label: "Documents", icon: (
+        <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 21h10a2 2 0 002-2V9.414a1 1 0 00-.293-.707l-5.414-5.414A1 1 0 0012.586 3H7a2 2 0 00-2 2v14a2 2 0 002 2z" />
+        </svg>
+      )},
+    ],
+  },
+];
 
-function ThemeToggle() {
+// ── UserMenu ─────────────────────────────────────────────────────────────────
+function UserMenu({ user, collapsed, onLogout }) {
   const { dark, toggle } = useTheme();
-  return (
-    <button
-      onClick={toggle}
-      className="p-2 rounded-lg text-gray-500 hover:text-gray-700 hover:bg-gray-100 dark:text-gray-400 dark:hover:text-gray-200 dark:hover:bg-gray-700 transition-colors"
-      aria-label="Toggle dark mode"
-      title={dark ? "Switch to light mode" : "Switch to dark mode"}
-    >
-      {dark ? (
-        // Sun icon
-        <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2}
-            d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364-6.364l-.707.707M6.343 17.657l-.707.707M17.657 17.657l-.707-.707M6.343 6.343l-.707-.707M12 7a5 5 0 100 10A5 5 0 0012 7z" />
-        </svg>
-      ) : (
-        // Moon icon
-        <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2}
-            d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
-        </svg>
-      )}
-    </button>
-  );
-}
-
-function NavLink({ to, label, active, onClick }) {
-  return (
-    <Link
-      to={to}
-      onClick={onClick}
-      className={`block px-3 py-2 rounded-md text-sm font-medium transition-colors ${
-        active
-          ? "text-primary-600 bg-primary-50 dark:bg-primary-900/30 dark:text-primary-400"
-          : "text-gray-600 hover:text-primary-600 hover:bg-gray-50 dark:text-gray-300 dark:hover:text-primary-400 dark:hover:bg-gray-700"
-      }`}
-    >
-      {label}
-    </Link>
-  );
-}
-
-function DesktopNavLink({ to, label, active }) {
-  return (
-    <Link
-      to={to}
-      className={`inline-flex items-center px-1 pt-1 text-sm font-medium border-b-2 transition-colors ${
-        active
-          ? "border-primary-500 text-primary-600 dark:text-primary-400"
-          : "border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300 dark:text-gray-400 dark:hover:text-gray-200 dark:hover:border-gray-500"
-      }`}
-    >
-      {label}
-    </Link>
-  );
-}
-
-function Dropdown({ label, children, className = "" }) {
   const [open, setOpen] = useState(false);
   const ref = useRef(null);
 
   useEffect(() => {
-    function handleClickOutside(e) {
+    function handler(e) {
       if (ref.current && !ref.current.contains(e.target)) setOpen(false);
     }
-    document.addEventListener("mousedown", handleClickOutside);
-    return () => document.removeEventListener("mousedown", handleClickOutside);
+    document.addEventListener("mousedown", handler);
+    return () => document.removeEventListener("mousedown", handler);
   }, []);
 
+  if (!user) return null;
+
   return (
-    <div ref={ref} className={`relative ${className}`}>
+    <div ref={ref} className="border-t border-gray-100 dark:border-gray-700 p-3 relative">
+      {/* Trigger */}
       <button
-        onClick={() => setOpen(!open)}
-        className="inline-flex items-center gap-1 px-1 pt-1 text-sm font-medium text-gray-500 hover:text-gray-700 border-b-2 border-transparent hover:border-gray-300 dark:text-gray-400 dark:hover:text-gray-200 dark:hover:border-gray-500 transition-colors"
+        onClick={() => setOpen((o) => !o)}
+        className={`flex items-center gap-2 w-full px-2 py-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors ${collapsed ? "justify-center" : ""}`}
+        title={collapsed ? user.username : undefined}
       >
-        {label}
-        <svg className={`w-4 h-4 transition-transform ${open ? "rotate-180" : ""}`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
-        </svg>
+        <span className="w-7 h-7 bg-primary-100 dark:bg-primary-900 text-primary-700 dark:text-primary-300 rounded-full flex items-center justify-center text-xs font-semibold shrink-0">
+          {user.username?.[0]?.toUpperCase() || "U"}
+        </span>
+        {!collapsed && (
+          <>
+            <span className="text-sm font-medium text-gray-700 dark:text-gray-200 truncate flex-1 text-left">
+              {user.username}
+            </span>
+            <svg
+              className={`w-4 h-4 text-gray-400 transition-transform shrink-0 ${open ? "" : "rotate-180"}`}
+              fill="none" stroke="currentColor" viewBox="0 0 24 24"
+            >
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+            </svg>
+          </>
+        )}
       </button>
+
+      {/* Dropdown */}
       {open && (
-        <div className="absolute left-0 mt-1 w-48 bg-white dark:bg-gray-800 rounded-md shadow-lg ring-1 ring-black ring-opacity-5 dark:ring-gray-600 py-1 z-50">
-          {children}
+        <div className={`absolute bottom-full mb-2 bg-white dark:bg-gray-800 rounded-xl border border-gray-100 dark:border-gray-700 shadow-lg overflow-hidden z-50 ${collapsed ? "left-14 w-52" : "left-3 right-3"}`}>
+          {/* Dark / Light toggle */}
+          <div className="flex items-center justify-between px-4 py-3">
+            <span className="text-sm text-gray-700 dark:text-gray-200">{dark ? "Dark mode" : "Light mode"}</span>
+            <button
+              onClick={toggle}
+              className={`relative inline-flex h-5 w-9 shrink-0 rounded-full transition-colors duration-200 ${dark ? "bg-primary-600" : "bg-gray-200"}`}
+              aria-label="Toggle theme"
+            >
+              <span className={`inline-block h-4 w-4 mt-0.5 rounded-full bg-white shadow transform transition-transform duration-200 ${dark ? "translate-x-4" : "translate-x-0.5"}`} />
+            </button>
+          </div>
+
+          <div className="h-px bg-gray-100 dark:bg-gray-700" />
+
+          <Link
+            to="/settings"
+            onClick={() => setOpen(false)}
+            className="flex items-center gap-3 px-4 py-3 text-sm text-gray-700 dark:text-gray-200 hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors"
+          >
+            <svg className="w-4 h-4 text-gray-400 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" />
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+            </svg>
+            Settings
+          </Link>
+
+          <div className="h-px bg-gray-100 dark:bg-gray-700" />
+
+          <button
+            onClick={() => { setOpen(false); onLogout(); }}
+            className="flex items-center gap-3 w-full px-4 py-3 text-sm text-red-600 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-900/20 transition-colors"
+          >
+            <svg className="w-4 h-4 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
+            </svg>
+            Sign out
+          </button>
         </div>
       )}
     </div>
   );
 }
 
+// ── Layout ────────────────────────────────────────────────────────────────────
 export default function Layout() {
   const { user, logout } = useAuth();
   const navigate = useNavigate();
   const location = useLocation();
+  const [collapsed, setCollapsed] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
-  const [userMenuOpen, setUserMenuOpen] = useState(false);
-  const userMenuRef = useRef(null);
-  const mobileRef = useRef(null);
 
   const isActive = (path) => {
-    if (path === "/") return location.pathname === "/";
-    return location.pathname === path || location.pathname.startsWith(path + "/");
+    const [base, query] = path.split("?");
+    if (base === "/") return location.pathname === "/";
+    // Items with a query param need exact path + param match
+    if (query) {
+      const [paramKey, paramVal] = query.split("=");
+      return location.pathname === base && new URLSearchParams(location.search).get(paramKey) === paramVal;
+    }
+    // Exact match only — prevents /progress from lighting up when on /progress/mistakes
+    return location.pathname === base;
   };
 
   const handleLogout = () => {
@@ -133,171 +210,128 @@ export default function Layout() {
     navigate("/login");
   };
 
-  const closeMobile = () => setMobileOpen(false);
-
-  useEffect(() => {
-    function handleClickOutside(e) {
-      if (userMenuRef.current && !userMenuRef.current.contains(e.target)) {
-        setUserMenuOpen(false);
-      }
-    }
-    document.addEventListener("mousedown", handleClickOutside);
-    return () => document.removeEventListener("mousedown", handleClickOutside);
-  }, []);
-
-  useEffect(() => {
-    function handleClickOutside(e) {
-      if (mobileOpen && mobileRef.current && !mobileRef.current.contains(e.target)) {
-        setMobileOpen(false);
-      }
-    }
-    document.addEventListener("mousedown", handleClickOutside);
-    return () => document.removeEventListener("mousedown", handleClickOutside);
-  }, [mobileOpen]);
-
   useEffect(() => {
     setMobileOpen(false);
   }, [location.pathname]);
 
-  return (
-    <div className="min-h-screen bg-gray-50 dark:bg-gray-900 transition-colors duration-200">
-      <nav className="bg-white dark:bg-gray-800 shadow-sm border-b dark:border-gray-700 transition-colors duration-200" ref={mobileRef}>
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex h-16 items-center gap-8">
-            {/* Logo */}
-            <Link to="/" className="text-xl font-bold text-primary-600 dark:text-primary-400 shrink-0">
-              Lingaru
-            </Link>
+  const SidebarInner = ({ onNav }) => (
+    <div className="flex flex-col h-full">
+      {/* Logo */}
+      <div className={`flex items-center gap-3 px-4 py-5 border-b border-gray-100 dark:border-gray-700 ${collapsed ? "justify-center" : ""}`}>
+        <Link to="/" onClick={onNav} className="flex items-center gap-2 shrink-0">
+          <span className="w-8 h-8 bg-primary-600 rounded-lg flex items-center justify-center text-white font-bold text-sm shrink-0">L</span>
+          {!collapsed && <span className="text-lg font-bold text-primary-600 dark:text-primary-400">Lingaru</span>}
+        </Link>
+        {!onNav && !collapsed && (
+          <button
+            onClick={() => setCollapsed(true)}
+            className="ml-auto p-1 rounded text-gray-400 hover:text-gray-600 dark:hover:text-gray-200 transition-colors"
+            title="Collapse sidebar"
+          >
+            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M11 19l-7-7 7-7m8 14l-7-7 7-7" />
+            </svg>
+          </button>
+        )}
+      </div>
 
-            {/* Desktop nav */}
-            <div className="hidden md:flex items-center gap-4 h-full flex-1">
-              {navGroups.main.map((item) => (
-                <DesktopNavLink key={item.to} to={item.to} label={item.label} active={isActive(item.to)} />
-              ))}
-
-              <Dropdown label="Practice">
-                {navGroups.practice.map((item) => (
-                  <NavLink key={item.to} to={item.to} label={item.label} active={isActive(item.to)} />
-                ))}
-              </Dropdown>
-
-              {navGroups.ai.map((item) => (
-                <DesktopNavLink key={item.to} to={item.to} label={item.label} active={isActive(item.to)} />
-              ))}
-
-              {navGroups.personal.map((item) => (
-                <DesktopNavLink key={item.to} to={item.to} label={item.label} active={isActive(item.to)} />
-              ))}
-
-              {/* Theme toggle + User menu */}
-              <div className="ml-auto flex items-center gap-2">
-                <ThemeToggle />
-
-                {user && (
-                  <div ref={userMenuRef} className="relative">
-                    <button
-                      onClick={() => setUserMenuOpen(!userMenuOpen)}
-                      className="flex items-center gap-1 text-sm text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200 transition-colors"
-                    >
-                      <span className="w-7 h-7 bg-primary-100 dark:bg-primary-900 text-primary-700 dark:text-primary-300 rounded-full flex items-center justify-center text-xs font-semibold">
-                        {user.username?.[0]?.toUpperCase() || "U"}
-                      </span>
-                      <span>{user.username}</span>
-                      <svg className={`w-4 h-4 transition-transform ${userMenuOpen ? "rotate-180" : ""}`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
-                      </svg>
-                    </button>
-                    {userMenuOpen && (
-                      <div className="absolute right-0 mt-2 w-44 bg-white dark:bg-gray-800 rounded-md shadow-lg ring-1 ring-black ring-opacity-5 dark:ring-gray-600 py-1 z-50">
-                        <Link
-                          to="/settings"
-                          onClick={() => setUserMenuOpen(false)}
-                          className="block px-4 py-2 text-sm text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700"
-                        >
-                          Settings
-                        </Link>
-                        <button
-                          onClick={() => { setUserMenuOpen(false); handleLogout(); }}
-                          className="block w-full text-left px-4 py-2 text-sm text-red-600 dark:text-red-400 hover:bg-gray-100 dark:hover:bg-gray-700"
-                        >
-                          Logout
-                        </button>
-                      </div>
-                    )}
-                  </div>
-                )}
-              </div>
-            </div>
-
-            {/* Mobile: theme toggle + hamburger */}
-            <div className="md:hidden ml-auto flex items-center gap-1">
-              <ThemeToggle />
-              <button
-                onClick={() => setMobileOpen(!mobileOpen)}
-                className="p-2 rounded-md text-gray-500 hover:text-gray-700 hover:bg-gray-100 dark:text-gray-400 dark:hover:text-gray-200 dark:hover:bg-gray-700 transition-colors"
-                aria-label="Toggle menu"
-              >
-                {mobileOpen ? (
-                  <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-                  </svg>
-                ) : (
-                  <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
-                  </svg>
-                )}
-              </button>
-            </div>
-          </div>
-        </div>
-
-        {/* Mobile menu */}
-        <div className={`md:hidden overflow-hidden transition-all duration-300 ease-in-out ${mobileOpen ? "max-h-[80vh] opacity-100" : "max-h-0 opacity-0"}`}>
-          <div className="px-4 pb-4 space-y-4 border-t dark:border-gray-700 bg-white dark:bg-gray-800">
-            <div className="pt-3">
-              <p className="text-xs font-semibold text-gray-400 dark:text-gray-500 uppercase tracking-wider mb-1">Main</p>
-              {navGroups.main.map((item) => (
-                <NavLink key={item.to} to={item.to} label={item.label} active={isActive(item.to)} onClick={closeMobile} />
-              ))}
-            </div>
-            <div>
-              <p className="text-xs font-semibold text-gray-400 dark:text-gray-500 uppercase tracking-wider mb-1">Practice</p>
-              {navGroups.practice.map((item) => (
-                <NavLink key={item.to} to={item.to} label={item.label} active={isActive(item.to)} onClick={closeMobile} />
-              ))}
-            </div>
-            <div>
-              <p className="text-xs font-semibold text-gray-400 dark:text-gray-500 uppercase tracking-wider mb-1">AI</p>
-              {navGroups.ai.map((item) => (
-                <NavLink key={item.to} to={item.to} label={item.label} active={isActive(item.to)} onClick={closeMobile} />
-              ))}
-            </div>
-            <div>
-              <p className="text-xs font-semibold text-gray-400 dark:text-gray-500 uppercase tracking-wider mb-1">Personal</p>
-              {navGroups.personal.map((item) => (
-                <NavLink key={item.to} to={item.to} label={item.label} active={isActive(item.to)} onClick={closeMobile} />
-              ))}
-            </div>
-            {user && (
-              <div className="border-t dark:border-gray-700 pt-3">
-                <p className="text-sm text-gray-500 dark:text-gray-400 mb-2">
-                  Signed in as <span className="font-medium text-gray-700 dark:text-gray-200">{user.username}</span>
-                </p>
-                <button
-                  onClick={() => { closeMobile(); handleLogout(); }}
-                  className="text-sm text-red-600 dark:text-red-400 hover:text-red-800 font-medium"
-                >
-                  Logout
-                </button>
-              </div>
+      {/* Nav */}
+      <nav className="flex-1 overflow-y-auto py-4 space-y-5 px-2">
+        {NAV_SECTIONS.map((section) => (
+          <div key={section.label ?? "main"}>
+            {section.label && !collapsed && (
+              <p className="px-3 mb-1 text-xs font-semibold uppercase tracking-wider text-gray-400 dark:text-gray-500">
+                {section.label}
+              </p>
             )}
+            <div className="space-y-0.5">
+              {section.items.map((item) => {
+                const active = isActive(item.to);
+                return (
+                  <Link
+                    key={item.to}
+                    to={item.to}
+                    onClick={onNav}
+                    title={collapsed ? item.label : undefined}
+                    className={`flex items-center gap-3 px-3 py-2 rounded-lg text-sm font-medium transition-colors ${
+                      active
+                        ? "bg-primary-50 dark:bg-primary-900/30 text-primary-600 dark:text-primary-400"
+                        : "text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 hover:text-gray-900 dark:hover:text-gray-100"
+                    } ${collapsed ? "justify-center" : ""}`}
+                  >
+                    <span className={`shrink-0 ${active ? "text-primary-600 dark:text-primary-400" : "text-gray-400 dark:text-gray-500"}`}>
+                      {item.icon}
+                    </span>
+                    {!collapsed && <span>{item.label}</span>}
+                    {active && !collapsed && (
+                      <span className="ml-auto w-1.5 h-1.5 rounded-full bg-primary-500" />
+                    )}
+                  </Link>
+                );
+              })}
+            </div>
           </div>
-        </div>
+        ))}
       </nav>
 
-      <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        <Outlet />
-      </main>
+      {/* User menu */}
+      <UserMenu user={user} collapsed={collapsed} onLogout={handleLogout} />
+    </div>
+  );
+
+  return (
+    <div className="flex h-screen bg-gray-50 dark:bg-gray-900 overflow-hidden transition-colors duration-200">
+
+      {/* Desktop sidebar */}
+      <aside className={`hidden md:flex flex-col bg-white dark:bg-gray-800 border-r border-gray-100 dark:border-gray-700 transition-all duration-200 shrink-0 ${collapsed ? "w-16" : "w-56"}`}>
+        <SidebarInner onNav={null} />
+      </aside>
+
+      {/* Expand tab when collapsed */}
+      {collapsed && (
+        <button
+          onClick={() => setCollapsed(false)}
+          className="hidden md:flex fixed left-16 top-1/2 -translate-y-1/2 z-40 w-5 h-10 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-r-lg items-center justify-center text-gray-400 hover:text-primary-600 transition-colors shadow-sm"
+          title="Expand sidebar"
+        >
+          <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 5l7 7-7 7M5 5l7 7-7 7" />
+          </svg>
+        </button>
+      )}
+
+      {/* Mobile overlay */}
+      {mobileOpen && (
+        <div className="md:hidden fixed inset-0 z-40 bg-black/40" onClick={() => setMobileOpen(false)} />
+      )}
+
+      {/* Mobile sidebar */}
+      <aside className={`md:hidden fixed inset-y-0 left-0 z-50 w-64 bg-white dark:bg-gray-800 border-r border-gray-100 dark:border-gray-700 transform transition-transform duration-200 ${mobileOpen ? "translate-x-0" : "-translate-x-full"}`}>
+        <SidebarInner onNav={() => setMobileOpen(false)} />
+      </aside>
+
+      {/* Main content */}
+      <div className="flex-1 flex flex-col overflow-hidden">
+        {/* Mobile topbar */}
+        <header className="md:hidden flex items-center gap-3 px-4 py-3 bg-white dark:bg-gray-800 border-b border-gray-100 dark:border-gray-700 shrink-0">
+          <button
+            onClick={() => setMobileOpen(true)}
+            className="p-2 rounded-lg text-gray-500 hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors"
+            aria-label="Open menu"
+          >
+            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
+            </svg>
+          </button>
+          <Link to="/" className="text-lg font-bold text-primary-600 dark:text-primary-400">Lingaru</Link>
+        </header>
+
+        <main className="flex-1 overflow-y-auto">
+          <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+            <Outlet />
+          </div>
+        </main>
+      </div>
     </div>
   );
 }

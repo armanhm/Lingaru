@@ -1,12 +1,16 @@
 import { useEffect, useState, useCallback } from "react";
+import { useSearchParams } from "react-router-dom";
 import { getConjugationVerbs, checkConjugation } from "../api/progress";
+import { staggerDelay } from "../hooks/useAnimations";
 
 export default function ConjugationDrill() {
+  const [searchParams] = useSearchParams();
   const [verbs, setVerbs] = useState([]);
   const [tenses, setTenses] = useState([]);
   const [selectedVerb, setSelectedVerb] = useState("");
   const [selectedTense, setSelectedTense] = useState("");
   const [loading, setLoading] = useState(true);
+  const [autoStart, setAutoStart] = useState(false);
 
   // Drill state
   const SUBJECTS = ["je", "tu", "il/elle", "nous", "vous", "ils/elles"];
@@ -17,15 +21,21 @@ export default function ConjugationDrill() {
   const [drilling, setDrilling] = useState(false);
 
   useEffect(() => {
+    const paramVerb = searchParams.get("verb");
     getConjugationVerbs()
       .then((res) => {
         setVerbs(res.data.verbs);
         setTenses(res.data.tenses);
-        if (res.data.verbs.length > 0) setSelectedVerb(res.data.verbs[0]);
+        if (paramVerb && res.data.verbs.includes(paramVerb)) {
+          setSelectedVerb(paramVerb);
+          setAutoStart(true);
+        } else if (res.data.verbs.length > 0) {
+          setSelectedVerb(res.data.verbs[0]);
+        }
         if (res.data.tenses.length > 0) setSelectedTense(res.data.tenses[0]);
       })
       .finally(() => setLoading(false));
-  }, []);
+  }, [searchParams]);
 
   const startDrill = () => {
     setDrilling(true);
@@ -34,6 +44,14 @@ export default function ConjugationDrill() {
     setFeedback(null);
     setAnswer("");
   };
+
+  // Auto-start if verb was passed via URL param
+  useEffect(() => {
+    if (autoStart && !loading && selectedVerb && selectedTense) {
+      setAutoStart(false);
+      startDrill();
+    }
+  }, [autoStart, loading, selectedVerb, selectedTense]);
 
   const handleSubmit = useCallback(
     async (e) => {
@@ -86,15 +104,16 @@ export default function ConjugationDrill() {
         <h1 className="text-2xl font-bold text-gray-900 dark:text-gray-100 mb-6">
           Conjugation Results: {selectedVerb} ({selectedTense})
         </h1>
-        <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-lg p-6 mb-6">
-          <p className="text-3xl font-bold text-center mb-4">
+        <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-lg p-6 mb-6 animate-scale-in">
+          <p className="text-3xl font-bold text-center mb-4 animate-bounce-in">
             {correct}/{results.length}
           </p>
           <div className="space-y-2">
             {results.map((r, i) => (
               <div
                 key={i}
-                className={`flex justify-between p-3 rounded-lg ${
+                style={staggerDelay(i, 60)}
+                className={`flex justify-between p-3 rounded-lg animate-fade-in-up ${
                   r.is_correct ? "bg-green-50 dark:bg-green-900/20" : "bg-red-50 dark:bg-red-900/20"
                 }`}
               >
@@ -179,7 +198,7 @@ export default function ConjugationDrill() {
         </span>
       </div>
 
-      <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-lg p-8 text-center">
+      <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-lg p-8 text-center animate-scale-in" key={currentSubjectIndex}>
         <p className="text-2xl font-bold text-gray-900 dark:text-gray-100 mb-6">
           {subject} ________
         </p>
@@ -207,8 +226,8 @@ export default function ConjugationDrill() {
             <div
               className={`p-4 rounded-xl border-2 mb-4 ${
                 feedback.is_correct
-                  ? "bg-green-50 dark:bg-green-900/20 border-green-300 dark:border-green-800"
-                  : "bg-red-50 dark:bg-red-900/20 border-red-300 dark:border-red-800"
+                  ? "bg-green-50 dark:bg-green-900/20 border-green-300 dark:border-green-800 animate-fade-in"
+                  : "bg-red-50 dark:bg-red-900/20 border-red-300 dark:border-red-800 animate-shake"
               }`}
             >
               <p className={`font-bold ${feedback.is_correct ? "text-green-800 dark:text-green-300" : "text-red-800 dark:text-red-400"}`}>

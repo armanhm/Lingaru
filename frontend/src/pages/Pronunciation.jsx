@@ -2,6 +2,7 @@ import { useState, useRef, useCallback, useEffect } from "react";
 import { Link } from "react-router-dom";
 import client from "../api/client";
 import { checkPronunciation, generateTTS } from "../api/media";
+import { useCountUp } from "../hooks/useAnimations";
 
 const API_BASE_URL = import.meta.env.VITE_API_URL || "/api";
 
@@ -20,11 +21,13 @@ async function fetchRandomVocab() {
 
 export default function Pronunciation() {
   const [word, setWord] = useState(null);
+  const wordRef = useRef(null);
   const [loading, setLoading] = useState(false);
   const [recording, setRecording] = useState(false);
   const [result, setResult] = useState(null);
   const [error, setError] = useState(null);
   const [permissionDenied, setPermissionDenied] = useState(false);
+  const animatedAccuracy = useCountUp(result ? Math.round(result.accuracy_score * 100) : 0, 600);
   const mediaRecorderRef = useRef(null);
   const chunksRef = useRef([]);
 
@@ -34,6 +37,7 @@ export default function Pronunciation() {
     setResult(null);
     try {
       const vocab = await fetchRandomVocab();
+      wordRef.current = vocab;
       setWord(vocab);
     } catch (err) {
       setError(err.response?.data?.detail || "Failed to load vocabulary word.");
@@ -102,11 +106,12 @@ export default function Pronunciation() {
   }, []);
 
   const submitRecording = async (blob) => {
-    if (!word) return;
+    const currentWord = wordRef.current;
+    if (!currentWord) return;
     setLoading(true);
     setError(null);
     try {
-      const res = await checkPronunciation(blob, word.french, word.id);
+      const res = await checkPronunciation(blob, currentWord.french, currentWord.id);
       setResult(res.data);
     } catch (err) {
       setError(err.response?.data?.detail || "Failed to check pronunciation.");
@@ -163,7 +168,7 @@ export default function Pronunciation() {
       )}
 
       {word && (
-        <div className="bg-white rounded-xl shadow-lg p-8">
+        <div className="bg-white dark:bg-gray-800 rounded-xl shadow-lg p-8 animate-scale-in" key={word.id}>
           {/* Word display */}
           <div className="text-center mb-8">
             <p className="text-4xl font-bold text-gray-900 mb-2">
@@ -198,7 +203,7 @@ export default function Pronunciation() {
                 disabled={loading}
                 className={`inline-flex items-center gap-2 px-8 py-4 font-semibold rounded-xl transition-all ${
                   recording
-                    ? "bg-red-500 text-white hover:bg-red-600 animate-pulse"
+                    ? "bg-red-500 text-white hover:bg-red-600 animate-recording-pulse"
                     : "bg-primary-600 text-white hover:bg-primary-700"
                 } disabled:opacity-50`}
               >
@@ -236,11 +241,11 @@ export default function Pronunciation() {
 
           {/* Results */}
           {result && (
-            <div className="space-y-6">
+            <div className="space-y-6 animate-fade-in-up">
               <div className="text-center">
                 <p className="text-sm text-gray-500 mb-1">Accuracy</p>
-                <p className={`text-5xl font-bold ${accuracyColor(result.accuracy_score)}`}>
-                  {Math.round(result.accuracy_score * 100)}%
+                <p className={`text-5xl font-bold ${accuracyColor(result.accuracy_score)} animate-count-up`}>
+                  {animatedAccuracy}%
                 </p>
               </div>
 
@@ -267,14 +272,14 @@ export default function Pronunciation() {
               <div className="flex gap-3">
                 <button
                   onClick={() => setResult(null)}
-                  className="flex-1 px-6 py-3 border border-gray-300 rounded-xl font-medium text-gray-700 hover:bg-gray-50 transition-colors"
+                  className="flex-1 px-6 py-3 border border-gray-300 dark:border-gray-600 rounded-xl font-medium text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700 hover:-translate-y-0.5 transition-all"
                 >
                   Try Again
                 </button>
                 <button
                   onClick={handleNext}
                   disabled={loading}
-                  className="flex-1 px-6 py-3 bg-primary-600 text-white font-semibold rounded-xl hover:bg-primary-700 transition-colors disabled:opacity-50"
+                  className="flex-1 px-6 py-3 bg-primary-600 text-white font-semibold rounded-xl hover:bg-primary-700 hover:-translate-y-0.5 transition-all disabled:opacity-50"
                 >
                   Next Word
                 </button>

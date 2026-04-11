@@ -1,6 +1,7 @@
 import { useState, useRef, useCallback } from "react";
 import { Link } from "react-router-dom";
 import { startDictation, checkDictation } from "../api/media";
+import { useCountUp } from "../hooks/useAnimations";
 
 const API_BASE_URL = import.meta.env.VITE_API_URL || "/api";
 
@@ -20,6 +21,7 @@ export default function Dictation() {
   const [result, setResult] = useState(null);
   const [totalXP, setTotalXP] = useState(0);
   const audioRef = useRef(null);
+  const animatedXP = useCountUp(totalXP, 500);
 
   const handleStart = useCallback(async () => {
     setLoading(true);
@@ -28,11 +30,16 @@ export default function Dictation() {
     setUserText("");
     try {
       const res = await startDictation();
-      setClip(res.data);
+      // Backend returns { sentence_id, audio_clip: { id, audio_url, ... } }
+      const clipData = {
+        audio_clip_id: res.data.audio_clip.id,
+        audio_url: res.data.audio_clip.audio_url,
+      };
+      setClip(clipData);
       setPhase("listening");
 
       // Auto-play the audio
-      const url = resolveAudioUrl(res.data.audio_url);
+      const url = resolveAudioUrl(clipData.audio_url);
       if (url) {
         const audio = new Audio(url);
         audioRef.current = audio;
@@ -98,9 +105,9 @@ export default function Dictation() {
       </div>
 
       {totalXP > 0 && (
-        <div className="mb-6 inline-flex items-center gap-2 bg-yellow-50 border border-yellow-200 text-yellow-800 rounded-lg px-4 py-2 text-sm font-medium">
+        <div className="mb-6 inline-flex items-center gap-2 bg-yellow-50 dark:bg-yellow-900/20 border border-yellow-200 dark:border-yellow-800 text-yellow-800 dark:text-yellow-200 rounded-lg px-4 py-2 text-sm font-medium animate-pop-in">
           <span>XP earned this session:</span>
-          <span className="font-bold">{totalXP}</span>
+          <span className="font-bold">{animatedXP}</span>
         </div>
       )}
 
@@ -111,8 +118,8 @@ export default function Dictation() {
       )}
 
       {phase === "idle" && (
-        <div className="text-center py-12">
-          <div className="text-6xl mb-6">
+        <div className="text-center py-12 animate-fade-in-up">
+          <div className="text-6xl mb-6 animate-bounce-in">
             <svg className="w-16 h-16 mx-auto text-primary-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M19 11a7 7 0 01-7 7m0 0a7 7 0 01-7-7m7 7v4m-4 0h8m-4-8a3 3 0 01-3-3V5a3 3 0 116 0v6a3 3 0 01-3 3z" />
             </svg>
@@ -120,7 +127,7 @@ export default function Dictation() {
           <button
             onClick={handleStart}
             disabled={loading}
-            className="px-8 py-3 bg-primary-600 text-white font-semibold rounded-xl hover:bg-primary-700 transition-colors disabled:opacity-50"
+            className="px-8 py-3 bg-primary-600 text-white font-semibold rounded-xl hover:bg-primary-700 hover:-translate-y-0.5 transition-all disabled:opacity-50 animate-pulse-glow"
           >
             {loading ? "Loading..." : "Start Dictation"}
           </button>
@@ -128,7 +135,7 @@ export default function Dictation() {
       )}
 
       {phase === "listening" && (
-        <div className="bg-white rounded-xl shadow-lg p-8">
+        <div className="bg-white dark:bg-gray-800 rounded-xl shadow-lg p-8 animate-scale-in">
           <div className="flex items-center justify-center gap-4 mb-8">
             <button
               onClick={handleReplay}
@@ -174,8 +181,8 @@ export default function Dictation() {
           <div
             className={`p-6 rounded-xl border-2 ${
               result.correct
-                ? "bg-green-50 border-green-300"
-                : "bg-red-50 border-red-300"
+                ? "bg-green-50 dark:bg-green-900/20 border-green-300 dark:border-green-800 animate-fade-in-up"
+                : "bg-red-50 dark:bg-red-900/20 border-red-300 dark:border-red-800 animate-shake"
             }`}
           >
             <div className="flex items-center gap-3 mb-4">
@@ -197,7 +204,7 @@ export default function Dictation() {
             <div className="space-y-2 text-sm">
               <div>
                 <span className="font-medium text-gray-700">Expected: </span>
-                <span className="text-gray-900">{result.expected_text}</span>
+                <span className="text-gray-900">{result.expected ?? result.expected_text}</span>
               </div>
               <div>
                 <span className="font-medium text-gray-700">You typed: </span>
@@ -206,7 +213,7 @@ export default function Dictation() {
             </div>
 
             {result.xp_earned > 0 && (
-              <div className="mt-4 inline-flex items-center gap-1 bg-yellow-100 text-yellow-800 rounded-lg px-3 py-1 text-sm font-medium">
+              <div className="mt-4 inline-flex items-center gap-1 bg-yellow-100 dark:bg-yellow-900/30 text-yellow-800 dark:text-yellow-200 rounded-lg px-3 py-1 text-sm font-bold animate-pop-in">
                 +{result.xp_earned} XP
               </div>
             )}

@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { getTopics } from "../api/content";
+import { staggerDelay } from "../hooks/useAnimations";
 
 const difficultyColors = {
   A1: "bg-green-100 text-green-800",
@@ -45,11 +46,12 @@ export default function Topics() {
       <p className="text-gray-600 dark:text-gray-400 mb-8">Choose a topic to start learning.</p>
 
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-        {topics.map((topic) => (
+        {topics.map((topic, i) => (
           <Link
             key={topic.id}
             to={`/topics/${topic.id}`}
-            className="bg-white dark:bg-gray-800 rounded-lg shadow hover:shadow-md transition-shadow p-6 block"
+            className="bg-white dark:bg-gray-800 rounded-lg shadow hover:shadow-md hover:-translate-y-1 hover:scale-[1.02] transition-all p-6 block animate-fade-in-up"
+            style={staggerDelay(i, 40)}
           >
             <div className="flex items-start justify-between mb-3">
               <span className="text-3xl">{topic.icon || "📘"}</span>

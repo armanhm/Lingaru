@@ -1,14 +1,15 @@
 import { useState, useEffect } from "react";
 import { getStats, getBadges, getLeaderboard, getXPHistory } from "../api/gamification";
+import { useCountUp, staggerDelay } from "../hooks/useAnimations";
 
 function BadgeCard({ name, description, icon, earned, earnedAt }) {
   return (
     <div
-      className={`rounded-lg border p-4 ${
+      className={`rounded-lg border p-4 transition-all hover:scale-[1.03] ${
         earned ? "bg-yellow-50 dark:bg-yellow-900/20 border-yellow-300" : "bg-gray-50 dark:bg-gray-900 border-gray-200 dark:border-gray-700 opacity-60"
       }`}
     >
-      <div className="text-2xl mb-2">{icon === "trophy" ? "\u{1F3C6}" : icon === "fire" ? "\u{1F525}" : icon === "star" ? "\u{2B50}" : icon === "gem" ? "\u{1F48E}" : icon === "crown" ? "\u{1F451}" : icon === "medal" ? "\u{1F3C5}" : icon === "chat" ? "\u{1F4AC}" : "\u{1F3C6}"}</div>
+      <div className={`text-2xl mb-2 ${earned ? "animate-bounce-in" : ""}`}>{icon === "trophy" ? "\u{1F3C6}" : icon === "fire" ? "\u{1F525}" : icon === "star" ? "\u{2B50}" : icon === "gem" ? "\u{1F48E}" : icon === "crown" ? "\u{1F451}" : icon === "medal" ? "\u{1F3C5}" : icon === "chat" ? "\u{1F4AC}" : "\u{1F3C6}"}</div>
       <h3 className="font-semibold text-gray-800 dark:text-gray-200">{name}</h3>
       <p className="text-sm text-gray-500 dark:text-gray-400">{description}</p>
       {earned && earnedAt && (
@@ -39,31 +40,39 @@ export default function Progress() {
       .finally(() => setLoading(false));
   }, []);
 
+  const animatedXP = useCountUp(stats?.total_xp ?? 0);
+  const animatedStreak = useCountUp(stats?.current_streak ?? 0, 600);
+  const animatedLongest = useCountUp(stats?.longest_streak ?? 0, 600);
+
   if (loading) {
-    return <div className="text-center py-12 text-gray-500 dark:text-gray-400">Loading...</div>;
+    return (
+      <div className="flex justify-center items-center py-20">
+        <div className="animate-spin rounded-full h-10 w-10 border-b-2 border-primary-600" />
+      </div>
+    );
   }
 
   return (
     <div className="space-y-8">
-      <h1 className="text-2xl font-bold text-gray-900 dark:text-gray-100">Your Progress</h1>
+      <h1 className="text-2xl font-bold text-gray-900 dark:text-gray-100 animate-fade-in">Your Progress</h1>
 
       {/* Stats overview */}
       <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-        <div className="bg-white dark:bg-gray-800 rounded-lg shadow p-4 text-center">
+        <div className="bg-white dark:bg-gray-800 rounded-lg shadow p-4 text-center animate-fade-in-up" style={staggerDelay(0)}>
           <p className="text-sm text-gray-500 dark:text-gray-400">Total XP</p>
-          <p className="text-2xl font-bold text-primary-600">{stats?.total_xp ?? 0}</p>
+          <p className="text-2xl font-bold text-primary-600">{animatedXP}</p>
         </div>
-        <div className="bg-white dark:bg-gray-800 rounded-lg shadow p-4 text-center">
+        <div className="bg-white dark:bg-gray-800 rounded-lg shadow p-4 text-center animate-fade-in-up" style={staggerDelay(1)}>
           <p className="text-sm text-gray-500 dark:text-gray-400">Level</p>
           <p className="text-2xl font-bold text-primary-600">{stats?.level_name}</p>
         </div>
-        <div className="bg-white dark:bg-gray-800 rounded-lg shadow p-4 text-center">
+        <div className="bg-white dark:bg-gray-800 rounded-lg shadow p-4 text-center animate-fade-in-up" style={staggerDelay(2)}>
           <p className="text-sm text-gray-500 dark:text-gray-400">Current Streak</p>
-          <p className="text-2xl font-bold text-primary-600">{stats?.current_streak} days</p>
+          <p className="text-2xl font-bold text-primary-600">{animatedStreak} days</p>
         </div>
-        <div className="bg-white dark:bg-gray-800 rounded-lg shadow p-4 text-center">
+        <div className="bg-white dark:bg-gray-800 rounded-lg shadow p-4 text-center animate-fade-in-up" style={staggerDelay(3)}>
           <p className="text-sm text-gray-500 dark:text-gray-400">Longest Streak</p>
-          <p className="text-2xl font-bold text-primary-600">{stats?.longest_streak} days</p>
+          <p className="text-2xl font-bold text-primary-600">{animatedLongest} days</p>
         </div>
       </div>
 
@@ -71,7 +80,7 @@ export default function Progress() {
       <section>
         <h2 className="text-xl font-semibold text-gray-800 dark:text-gray-200 mb-4">Badges</h2>
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-          {badges.earned.map((b) => (
+          {badges.earned.map((b, i) => (
             <BadgeCard
               key={b.id}
               name={b.name}
@@ -108,7 +117,7 @@ export default function Progress() {
             </thead>
             <tbody className="divide-y divide-gray-100 dark:divide-gray-700">
               {leaderboard.map((entry, idx) => (
-                <tr key={idx} className="hover:bg-gray-50 dark:hover:bg-gray-700">
+                <tr key={idx} className="hover:bg-gray-50 dark:hover:bg-gray-700 animate-fade-in-up" style={staggerDelay(idx, 40)}>
                   <td className="px-4 py-3 text-sm font-medium text-gray-900 dark:text-gray-100">#{idx + 1}</td>
                   <td className="px-4 py-3 text-sm text-gray-700 dark:text-gray-300">{entry.username}</td>
                   <td className="px-4 py-3 text-sm text-right text-gray-700 dark:text-gray-300">{entry.total_xp}</td>
@@ -127,10 +136,11 @@ export default function Progress() {
           <p className="text-gray-500 dark:text-gray-400">No XP earned yet. Start a quiz!</p>
         ) : (
           <div className="space-y-2">
-            {history.map((txn) => (
+            {history.map((txn, i) => (
               <div
                 key={txn.id}
-                className="bg-white dark:bg-gray-800 rounded-lg shadow p-3 flex justify-between items-center"
+                className="bg-white dark:bg-gray-800 rounded-lg shadow p-3 flex justify-between items-center animate-slide-in-right"
+                style={staggerDelay(i, 40)}
               >
                 <div>
                   <span className="font-medium text-gray-800 dark:text-gray-200">

@@ -3,6 +3,7 @@ import { useParams, useNavigate, Link } from "react-router-dom";
 import { startQuiz, submitAnswer, completeQuiz } from "../api/practice";
 import { completeLesson } from "../api/progress";
 import { useToast } from "../contexts/ToastContext";
+import { useCountUp, staggerDelay } from "../hooks/useAnimations";
 
 function ProgressBar({ current, total }) {
   const pct = total > 0 ? Math.round((current / total) * 100) : 0;
@@ -36,7 +37,7 @@ function MCQQuestion({ question, onAnswer, disabled }) {
             key={i}
             onClick={() => handleSelect(option)}
             disabled={disabled}
-            className={`p-4 rounded-xl border-2 text-left font-medium transition-all duration-200 ${
+            className={`p-4 rounded-xl border-2 text-left font-medium transition-all duration-200 hover:scale-[1.02] ${
               selected === option
                 ? "border-primary-500 bg-primary-50 dark:bg-primary-900/20 text-primary-800 dark:text-primary-300"
                 : "border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-300 hover:border-gray-300 dark:hover:border-gray-600 hover:bg-gray-50 dark:hover:bg-gray-700"
@@ -94,10 +95,10 @@ function FeedbackBanner({ result, onContinue }) {
 
   return (
     <div
-      className={`mt-6 p-5 rounded-xl border-2 animate-fade-in ${
+      className={`mt-6 p-5 rounded-xl border-2 ${
         result.is_correct
-          ? "bg-green-50 dark:bg-green-900/20 border-green-300 dark:border-green-800"
-          : "bg-red-50 dark:bg-red-900/20 border-red-300 dark:border-red-800"
+          ? "bg-green-50 dark:bg-green-900/20 border-green-300 dark:border-green-800 animate-fade-in"
+          : "bg-red-50 dark:bg-red-900/20 border-red-300 dark:border-red-800 animate-shake"
       }`}
     >
       <div className="flex items-center gap-2 mb-2">
@@ -145,7 +146,8 @@ function ReviewList({ answers }) {
           {answers.map((a, i) => (
             <div
               key={i}
-              className={`rounded-lg border p-3 ${
+              style={staggerDelay(i, 50)}
+              className={`rounded-lg border p-3 animate-fade-in-up ${
                 a.is_correct
                   ? "bg-green-50 dark:bg-green-900/20 border-green-200 dark:border-green-800"
                   : "bg-red-50 dark:bg-red-900/20 border-red-200 dark:border-red-800"
@@ -198,12 +200,12 @@ function ScoreSummary({ result, lessonId, answers }) {
 
   return (
     <div className="flex flex-col items-center justify-center py-12 animate-fade-in">
-      <div className="text-6xl mb-4">{pct === 100 ? "🌟" : pct >= 60 ? "🎉" : "💪"}</div>
-      <h2 className={`text-3xl font-bold mb-2 ${gradeColor}`}>{grade}</h2>
+      <div className="text-6xl mb-4 animate-bounce-in">{pct === 100 ? "🌟" : pct >= 60 ? "🎉" : "💪"}</div>
+      <h2 className={`text-3xl font-bold mb-2 ${gradeColor} animate-fade-in-up`}>{grade}</h2>
       <p className="text-gray-600 dark:text-gray-400 text-lg mb-6">
         {result.lesson_title}
       </p>
-      <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-lg p-8 mb-6 text-center">
+      <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-lg p-8 mb-6 text-center animate-scale-in">
         <p className="text-5xl font-bold text-gray-900 dark:text-gray-100 mb-2">
           {result.score}/{result.total_questions}
         </p>
@@ -387,7 +389,7 @@ export default function Quiz() {
 
       <ProgressBar current={answeredCount} total={questions.length} />
 
-      <div className="min-h-[300px]">
+      <div className="min-h-[300px] animate-fade-in" key={currentIndex}>
         {question.type === "mcq" ? (
           <MCQQuestion
             key={question.id}

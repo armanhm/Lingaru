@@ -4,9 +4,10 @@ import { getRandomVocabulary } from "../api/content";
 import { submitMiniGameScore } from "../api/gamification";
 import AudioPlayButton from "../components/AudioPlayButton";
 import { useCountUp, staggerDelay } from "../hooks/useAnimations";
+import { useAuth } from "../contexts/AuthContext";
 
-const ROUNDS = 8;
-const TIME_PER_ROUND = 30; // seconds
+const DEFAULT_ROUNDS = 8;
+const DEFAULT_TIMER = 30;
 
 /** Strip accents for comparison: é→e, ç→c, etc. */
 function stripAccents(str) {
@@ -90,6 +91,10 @@ function CircleTimer({ timeLeft, total }) {
 
 /* ── Main game component ──────────────────────────────── */
 export default function WordScramble() {
+  const { user } = useAuth();
+  const ROUNDS = user?.preferences?.word_scramble_rounds ?? DEFAULT_ROUNDS;
+  const TIME_PER_ROUND = user?.preferences?.word_scramble_timer ?? DEFAULT_TIMER;
+
   const [phase, setPhase] = useState("loading"); // loading | playing | done
   const [words, setWords] = useState([]);
   const [round, setRound] = useState(0);

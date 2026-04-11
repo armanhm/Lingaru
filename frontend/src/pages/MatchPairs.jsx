@@ -3,8 +3,10 @@ import { Link } from "react-router-dom";
 import { getRandomVocabulary } from "../api/content";
 import { submitMiniGameScore } from "../api/gamification";
 import { useCountUp } from "../hooks/useAnimations";
+import { useAuth } from "../contexts/AuthContext";
 
-const PAIR_COUNT = 6; // 6 pairs = 12 cards
+const DEFAULT_PAIR_COUNT = 6;
+const DEFAULT_PREVIEW = 3;
 
 function shuffle(arr) {
   const a = [...arr];
@@ -76,10 +78,12 @@ function Card({ card, flipped, matched, onClick, preview }) {
   );
 }
 
-const PREVIEW_SECONDS = 3;
-
 /* ── Main game ────────────────────────────────────────── */
 export default function MatchPairs() {
+  const { user } = useAuth();
+  const PAIR_COUNT = user?.preferences?.match_pairs_count ?? DEFAULT_PAIR_COUNT;
+  const PREVIEW_SECONDS = user?.preferences?.match_pairs_preview ?? DEFAULT_PREVIEW;
+
   const [phase, setPhase] = useState("loading"); // loading | preview | playing | done
   const [cards, setCards] = useState([]);
   const [flippedIds, setFlippedIds] = useState([]); // currently flipped (max 2)

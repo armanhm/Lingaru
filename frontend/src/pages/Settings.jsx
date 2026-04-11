@@ -37,6 +37,14 @@ const DEFAULT_PREFS = {
   quiz_difficulty: "mixed",
   coaching_tips: true,
   daily_reminder: false,
+  // Mini Games
+  word_scramble_rounds: 8,
+  word_scramble_timer: 30,
+  match_pairs_count: 6,
+  match_pairs_preview: 3,
+  gender_snap_rounds: 10,
+  speed_round_questions: 12,
+  speed_round_timer: 45,
 };
 
 function SectionCard({ title, description, children }) {
@@ -328,6 +336,41 @@ export default function Settings() {
         </FieldRow>
         <FieldRow label="Daily reminder" description="Receive a reminder to practice each day (requires Telegram)">
           <Toggle checked={prefs.daily_reminder} onChange={(v) => setPref("daily_reminder", v)} />
+        </FieldRow>
+      </SectionCard>
+
+      {/* ── Mini Games ──────────────────────────────────────────────────── */}
+      <SectionCard title="Mini Games" description="Customize difficulty and length of each mini game">
+        <p className="text-xs font-semibold text-gray-400 dark:text-gray-500 uppercase tracking-wider">Word Scramble</p>
+        <FieldRow label="Words per game" description="Number of words to unscramble each round">
+          <NumberStepper value={prefs.word_scramble_rounds} onChange={(v) => setPref("word_scramble_rounds", v)} min={3} max={20} step={1} />
+        </FieldRow>
+        <FieldRow label="Time per word (sec)" description="Seconds allowed to solve each word">
+          <NumberStepper value={prefs.word_scramble_timer} onChange={(v) => setPref("word_scramble_timer", v)} min={10} max={60} step={5} />
+        </FieldRow>
+
+        <div className="border-t border-gray-100 dark:border-gray-700 pt-4 mt-2" />
+        <p className="text-xs font-semibold text-gray-400 dark:text-gray-500 uppercase tracking-wider">Match Pairs</p>
+        <FieldRow label="Number of pairs" description="French–English pairs to match (more pairs = harder)">
+          <NumberStepper value={prefs.match_pairs_count} onChange={(v) => setPref("match_pairs_count", v)} min={4} max={10} step={1} />
+        </FieldRow>
+        <FieldRow label="Preview time (sec)" description="Seconds to memorize cards before they flip">
+          <NumberStepper value={prefs.match_pairs_preview} onChange={(v) => setPref("match_pairs_preview", v)} min={1} max={10} step={1} />
+        </FieldRow>
+
+        <div className="border-t border-gray-100 dark:border-gray-700 pt-4 mt-2" />
+        <p className="text-xs font-semibold text-gray-400 dark:text-gray-500 uppercase tracking-wider">Gender Snap</p>
+        <FieldRow label="Words per game" description="Number of le/la questions each round">
+          <NumberStepper value={prefs.gender_snap_rounds} onChange={(v) => setPref("gender_snap_rounds", v)} min={5} max={20} step={1} />
+        </FieldRow>
+
+        <div className="border-t border-gray-100 dark:border-gray-700 pt-4 mt-2" />
+        <p className="text-xs font-semibold text-gray-400 dark:text-gray-500 uppercase tracking-wider">Speed Round</p>
+        <FieldRow label="Questions per game" description="Number of true/false questions">
+          <NumberStepper value={prefs.speed_round_questions} onChange={(v) => setPref("speed_round_questions", v)} min={5} max={30} step={1} />
+        </FieldRow>
+        <FieldRow label="Time limit (sec)" description="Total seconds to answer all questions">
+          <NumberStepper value={prefs.speed_round_timer} onChange={(v) => setPref("speed_round_timer", v)} min={15} max={120} step={5} />
         </FieldRow>
       </SectionCard>
 

@@ -4,8 +4,9 @@ import { getRandomVocabulary } from "../api/content";
 import { submitMiniGameScore } from "../api/gamification";
 import AudioPlayButton from "../components/AudioPlayButton";
 import { useCountUp, staggerDelay } from "../hooks/useAnimations";
+import { useAuth } from "../contexts/AuthContext";
 
-const ROUNDS = 10;
+const DEFAULT_ROUNDS = 10;
 const SWIPE_THRESHOLD = 60;
 const FLY_DISTANCE = 500;
 const FLY_DURATION = 350;
@@ -47,6 +48,9 @@ function SwipeOverlay({ dx, threshold }) {
 
 /* ── Main game ────────────────────────────────────────── */
 export default function GenderSnap() {
+  const { user } = useAuth();
+  const ROUNDS = user?.preferences?.gender_snap_rounds ?? DEFAULT_ROUNDS;
+
   const [phase, setPhase] = useState("loading"); // loading | playing | done
   const [words, setWords] = useState([]);
   const [round, setRound] = useState(0);
@@ -302,31 +306,7 @@ export default function GenderSnap() {
           {/* Swipe overlays (only while actively dragging, not during result) */}
           {dragging && !resultFlash && <SwipeOverlay dx={tx} threshold={SWIPE_THRESHOLD} />}
 
-          {/* Result overlay — stays visible during pause */}
-          {resultFlash && (
-            <div className={`absolute inset-0 rounded-2xl z-20 flex flex-col items-center justify-center pointer-events-none animate-fade-in ${
-              resultFlash === "correct"
-                ? "bg-emerald-500/15 dark:bg-emerald-500/20"
-                : "bg-red-500/15 dark:bg-red-500/20"
-            }`}>
-              <span className="text-4xl animate-pop-in">{resultFlash === "correct" ? "✅" : "❌"}</span>
-              <p className={`mt-2 text-sm font-bold animate-fade-in-up ${
-                resultFlash === "correct"
-                  ? "text-emerald-700 dark:text-emerald-300"
-                  : "text-red-700 dark:text-red-300"
-              }`}>
-                {resultFlash === "correct" ? "Correct!" : "Incorrect"}
-              </p>
-              <p className="mt-1 text-base font-bold text-gray-800 dark:text-gray-200 animate-fade-in-up">
-                <span className={word.isM ? "text-blue-600 dark:text-blue-400" : "text-pink-600 dark:text-pink-400"}>
-                  {word.isM ? "le " : "la "}
-                </span>
-                {word.displayText}
-              </p>
-            </div>
-          )}
-
-          <div className="px-8 py-12 text-center space-y-4">
+          <div className="px-8 pt-10 pb-4 text-center space-y-3">
             <p className="text-xs font-semibold text-gray-400 dark:text-gray-500 uppercase tracking-wider">
               Le or La?
             </p>
@@ -341,6 +321,34 @@ export default function GenderSnap() {
               </span>
             )}
           </div>
+
+          {/* Result feedback — below the word, inside the card */}
+          {resultFlash ? (
+            <div className={`mx-4 mb-5 px-4 py-3 rounded-xl text-center animate-fade-in-up ${
+              resultFlash === "correct"
+                ? "bg-emerald-50 dark:bg-emerald-900/20 border border-emerald-200 dark:border-emerald-800"
+                : "bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800"
+            }`}>
+              <div className="flex items-center justify-center gap-2">
+                <span className="text-xl animate-pop-in">{resultFlash === "correct" ? "✅" : "❌"}</span>
+                <span className={`text-sm font-bold ${
+                  resultFlash === "correct"
+                    ? "text-emerald-700 dark:text-emerald-300"
+                    : "text-red-700 dark:text-red-300"
+                }`}>
+                  {resultFlash === "correct" ? "Correct!" : "Incorrect"}
+                </span>
+              </div>
+              <p className="mt-1 text-base font-bold text-gray-800 dark:text-gray-200">
+                <span className={word.isM ? "text-blue-600 dark:text-blue-400" : "text-pink-600 dark:text-pink-400"}>
+                  {word.isM ? "le " : "la "}
+                </span>
+                {word.displayText}
+              </p>
+            </div>
+          ) : (
+            <div className="h-16" />
+          )}
         </div>
       </div>
 

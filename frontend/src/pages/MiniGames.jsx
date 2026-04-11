@@ -66,7 +66,7 @@ const GAMES = [
     border: "border-cyan-200 dark:border-cyan-800",
     bg: "bg-cyan-50 dark:bg-cyan-900/20",
     to: "/mini-games/listening-challenge",
-    ready: false,
+    ready: true,
   },
 ];
 

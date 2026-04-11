@@ -28,6 +28,7 @@ import MatchPairs from "./pages/MatchPairs";
 import GenderSnap from "./pages/GenderSnap";
 import SpeedRound from "./pages/SpeedRound";
 import MissingLetter from "./pages/MissingLetter";
+import ListeningChallenge from "./pages/ListeningChallenge";
 import NotFound from "./pages/NotFound";
 
 export default function App() {
@@ -67,6 +68,7 @@ export default function App() {
           <Route path="mini-games/gender-snap" element={<GenderSnap />} />
           <Route path="mini-games/speed-round" element={<SpeedRound />} />
           <Route path="mini-games/missing-letter" element={<MissingLetter />} />
+          <Route path="mini-games/listening-challenge" element={<ListeningChallenge />} />
           <Route path="settings" element={<Settings />} />
         </Route>
         <Route path="*" element={<NotFound />} />

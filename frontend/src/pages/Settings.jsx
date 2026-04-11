@@ -46,6 +46,7 @@ const DEFAULT_PREFS = {
   gender_snap_rounds: 10,
   speed_round_questions: 12,
   speed_round_timer: 45,
+  listening_challenge_rounds: 8,
 };
 
 function SectionCard({ title, description, children }) {
@@ -378,6 +379,12 @@ export default function Settings() {
         </FieldRow>
         <FieldRow label="Time limit (sec)" description="Total seconds to answer all questions">
           <NumberStepper value={prefs.speed_round_timer} onChange={(v) => setPref("speed_round_timer", v)} min={15} max={120} step={5} />
+        </FieldRow>
+
+        <div className="border-t border-gray-100 dark:border-gray-700 pt-4 mt-2" />
+        <p className="text-xs font-semibold text-gray-400 dark:text-gray-500 uppercase tracking-wider">Listening Challenge</p>
+        <FieldRow label="Words per game" description="Number of listen-and-type rounds">
+          <NumberStepper value={prefs.listening_challenge_rounds} onChange={(v) => setPref("listening_challenge_rounds", v)} min={3} max={20} step={1} />
         </FieldRow>
       </SectionCard>
 

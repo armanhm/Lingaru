@@ -33,6 +33,7 @@ INSTALLED_APPS = [
     "apps.progress",
     "apps.documents",
     "apps.dictionary",
+    "apps.exam_prep",
 ]
 
 MIDDLEWARE = [

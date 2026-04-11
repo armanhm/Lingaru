@@ -15,6 +15,7 @@ urlpatterns = [
     path("api/progress/", include("apps.progress.urls")),
     path("api/documents/", include("apps.documents.urls")),
     path("api/dictionary/", include("apps.dictionary.urls")),
+    path("api/exam-prep/", include("apps.exam_prep.urls")),
 ]
 
 if settings.DEBUG:

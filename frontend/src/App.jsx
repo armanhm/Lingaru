@@ -30,6 +30,9 @@ import SpeedRound from "./pages/SpeedRound";
 import MissingLetter from "./pages/MissingLetter";
 import ListeningChallenge from "./pages/ListeningChallenge";
 import RandomQuiz from "./pages/RandomQuiz";
+import ExamPrepHub from "./pages/ExamPrepHub";
+import ExamSection from "./pages/ExamSection";
+import ExamExercise from "./pages/ExamExercise";
 import NotFound from "./pages/NotFound";
 
 export default function App() {
@@ -71,6 +74,9 @@ export default function App() {
           <Route path="mini-games/speed-round" element={<SpeedRound />} />
           <Route path="mini-games/missing-letter" element={<MissingLetter />} />
           <Route path="mini-games/listening-challenge" element={<ListeningChallenge />} />
+          <Route path="exam-prep" element={<ExamPrepHub />} />
+          <Route path="exam-prep/:section" element={<ExamSection />} />
+          <Route path="exam-prep/:section/:sessionId" element={<ExamExercise />} />
           <Route path="settings" element={<Settings />} />
         </Route>
         <Route path="*" element={<NotFound />} />

@@ -92,14 +92,17 @@ export default function Dictation() {
     <div className="max-w-2xl mx-auto py-8 px-4">
       <Link
         to="/"
-        className="text-sm text-primary-600 hover:text-primary-800 mb-6 inline-block"
+        className="text-sm font-medium text-primary-600 dark:text-primary-400 hover:text-primary-700 mb-6 inline-flex items-center gap-1 transition-colors"
       >
-        &larr; Back to Dashboard
+        <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+        </svg>
+        Back to Dashboard
       </Link>
 
       <div className="mb-8">
-        <h1 className="text-2xl font-bold text-surface-900 mb-1">Dictation Practice</h1>
-        <p className="text-surface-600">
+        <h1 className="text-2xl font-extrabold text-surface-900 dark:text-surface-100 mb-1">Dictation Practice</h1>
+        <p className="text-surface-500 dark:text-surface-400">
           Listen to a French sentence and type what you hear.
         </p>
       </div>
@@ -112,7 +115,7 @@ export default function Dictation() {
       )}
 
       {error && (
-        <div className="bg-red-50 border border-red-200 rounded-lg p-4 text-red-700 mb-6">
+        <div className="card border-danger-200 dark:border-danger-800 bg-danger-50 dark:bg-danger-700/20 p-4 text-danger-600 dark:text-danger-400 mb-6 text-sm">
           {error}
         </div>
       )}

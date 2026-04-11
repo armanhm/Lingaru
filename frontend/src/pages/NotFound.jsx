@@ -2,15 +2,16 @@ import { Link } from "react-router-dom";
 
 export default function NotFound() {
   return (
-    <div className="min-h-screen flex flex-col items-center justify-center bg-surface-50">
-      <h1 className="text-6xl font-bold text-surface-300 mb-4">404</h1>
-      <p className="text-surface-600 mb-6">Page not found</p>
-      <Link
-        to="/"
-        className="bg-primary-600 text-white px-6 py-2 rounded-lg hover:bg-primary-700 transition"
-      >
-        Go home
-      </Link>
+    <div className="min-h-screen flex flex-col items-center justify-center bg-surface-50 dark:bg-surface-900 px-4">
+      <div className="text-center animate-fade-in-up">
+        <span className="text-7xl font-extrabold text-gradient-primary">404</span>
+        <p className="text-lg font-medium text-surface-600 dark:text-surface-400 mt-3 mb-6">
+          Oops, this page doesn't exist.
+        </p>
+        <Link to="/" className="btn-primary btn-lg">
+          Back to Dashboard
+        </Link>
+      </div>
     </div>
   );
 }

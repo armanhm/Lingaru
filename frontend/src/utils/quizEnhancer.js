@@ -194,12 +194,6 @@ export function enhanceQuestions(standardQuestions) {
   try {
     if (!standardQuestions || standardQuestions.length < 4) return standardQuestions;
 
-    // Only enhance if questions have the data we need (options for MCQ etc.)
-    // Backend doesn't send correct_answer to the frontend for security,
-    // so we can only generate from options-based questions
-    const hasOptions = standardQuestions.some((q) => q.options && q.options.length > 0);
-    if (!hasOptions) return standardQuestions;
-
     const enhanced = [...standardQuestions];
     const generators = [
       () => generateMatchPairs(standardQuestions),
@@ -209,11 +203,10 @@ export function enhanceQuestions(standardQuestions) {
       () => generateListenChoose(standardQuestions),
     ];
 
-    // Try to generate 2-3 enhanced questions
+    // Try every generator, keep all that succeed (up to 4)
     const toInsert = [];
-    const shuffledGens = shuffle(generators);
-    for (const gen of shuffledGens) {
-      if (toInsert.length >= 3) break;
+    for (const gen of shuffle(generators)) {
+      if (toInsert.length >= 4) break;
       try {
         const q = gen();
         if (q) toInsert.push(q);

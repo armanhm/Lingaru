@@ -20,7 +20,7 @@ class QuizQuestionSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Question
-        fields = ("id", "type", "prompt", "difficulty", "options")
+        fields = ("id", "type", "prompt", "correct_answer", "difficulty", "options")
 
     def get_options(self, obj):
         if obj.type == "mcq" and obj.wrong_answers:

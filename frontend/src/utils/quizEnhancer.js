@@ -55,24 +55,23 @@ function generateMatchPairs(vocabQuestions) {
 }
 
 /**
- * Generate an "odd_one_out" question from vocabulary.
- * Picks 3 words of the same part_of_speech/gender and 1 different one.
+ * Generate an "odd_one_out" question from MCQ questions.
+ * Takes 3 options from one question, 1 option from a different question.
+ * Works with frontend data (no correct_answer needed).
  */
-function generateOddOneOut(vocabQuestions) {
-  if (vocabQuestions.length < 4) return null;
+function generateOddOneOut(questions) {
+  const mcqs = questions.filter((q) => q.options && q.options.length >= 3);
+  if (mcqs.length < 2) return null;
 
-  // Group by whether they have options (MCQ type)
-  const mcqs = vocabQuestions.filter((q) => q.options && q.options.length >= 3);
-  if (mcqs.length === 0) return null;
+  const shuffled = shuffle(mcqs);
+  const q1 = shuffled[0];
+  const q2 = shuffled[1];
 
-  // Take one question's correct + wrong answers as the "same" group, and find an outlier
-  const q = mcqs[Math.floor(Math.random() * mcqs.length)];
-  const same = [q.correct_answer, ...q.options.filter((o) => o !== q.correct_answer).slice(0, 2)];
-  // Pick an outlier from a different question
-  const others = vocabQuestions.filter((oq) => oq.id !== q.id && oq.correct_answer && !same.includes(oq.correct_answer));
-  if (others.length === 0) return null;
-
-  const odd = others[Math.floor(Math.random() * others.length)].correct_answer;
+  // Take 3 options from q1 (they belong to the same question context)
+  const same = q1.options.slice(0, 3);
+  // Take 1 option from q2 as the odd one (different question context)
+  const odd = q2.options.find((o) => !same.includes(o));
+  if (!odd) return null;
 
   const words = shuffle([
     ...same.map((t) => ({ text: t, isOdd: false })),
@@ -83,7 +82,7 @@ function generateOddOneOut(vocabQuestions) {
     id: `odd_${Date.now()}_${Math.random().toString(36).slice(2, 6)}`,
     type: "odd_one_out",
     words,
-    category: q.prompt.replace(/^(What|Which|How|Translate|Choose).+?\??\s*/i, "").slice(0, 60) || "same category",
+    category: q1.prompt.replace(/^(What|Which|How|Translate|Choose).+?\??\s*/i, "").slice(0, 60) || "same category",
     correct_answer: odd,
   };
 }
@@ -169,19 +168,19 @@ function generateErrorDetect(questions) {
  */
 function generateListenChoose(questions) {
   const mcqs = questions.filter(
-    (q) => q.type === "mcq" && q.options && q.options.length >= 3
+    (q) => q.type === "mcq" && q.options && q.options.length >= 3 && q.correct_answer
   );
   if (mcqs.length === 0) return null;
 
   const q = mcqs[Math.floor(Math.random() * mcqs.length)];
-  // Extract the French word from the prompt
+  // Extract the French word from the prompt (usually in quotes)
   const frenchMatch = q.prompt.match(/[""«](.+?)[""»]/);
-  const word = frenchMatch ? frenchMatch[1] : q.correct_answer;
+  if (!frenchMatch) return null;
 
   return {
     id: `listen_${Date.now()}_${Math.random().toString(36).slice(2, 6)}`,
     type: "listen_choose",
-    word,
+    word: frenchMatch[1],
     options: shuffle(q.options.slice(0, 4)),
     correct_answer: q.correct_answer,
   };
@@ -192,34 +191,49 @@ function generateListenChoose(questions) {
  * Inserts 2-4 enhanced questions spread throughout the quiz.
  */
 export function enhanceQuestions(standardQuestions) {
-  if (standardQuestions.length < 4) return standardQuestions;
+  try {
+    if (!standardQuestions || standardQuestions.length < 4) return standardQuestions;
 
-  const enhanced = [...standardQuestions];
-  const generators = [
-    () => generateMatchPairs(standardQuestions),
-    () => generateOddOneOut(standardQuestions),
-    () => generateReorder(standardQuestions),
-    () => generateErrorDetect(standardQuestions),
-    () => generateListenChoose(standardQuestions),
-  ];
+    // Only enhance if questions have the data we need (options for MCQ etc.)
+    // Backend doesn't send correct_answer to the frontend for security,
+    // so we can only generate from options-based questions
+    const hasOptions = standardQuestions.some((q) => q.options && q.options.length > 0);
+    if (!hasOptions) return standardQuestions;
 
-  // Try to generate 2-3 enhanced questions
-  const toInsert = [];
-  const shuffledGens = shuffle(generators);
-  for (const gen of shuffledGens) {
-    if (toInsert.length >= 3) break;
-    const q = gen();
-    if (q) toInsert.push(q);
+    const enhanced = [...standardQuestions];
+    const generators = [
+      () => generateMatchPairs(standardQuestions),
+      () => generateOddOneOut(standardQuestions),
+      () => generateReorder(standardQuestions),
+      () => generateErrorDetect(standardQuestions),
+      () => generateListenChoose(standardQuestions),
+    ];
+
+    // Try to generate 2-3 enhanced questions
+    const toInsert = [];
+    const shuffledGens = shuffle(generators);
+    for (const gen of shuffledGens) {
+      if (toInsert.length >= 3) break;
+      try {
+        const q = gen();
+        if (q) toInsert.push(q);
+      } catch {
+        // Skip failed generators
+      }
+    }
+
+    // Insert enhanced questions at evenly spaced positions
+    for (let i = 0; i < toInsert.length; i++) {
+      const pos = Math.min(
+        enhanced.length,
+        Math.floor(((i + 1) / (toInsert.length + 1)) * enhanced.length)
+      );
+      enhanced.splice(pos + i, 0, toInsert[i]);
+    }
+
+    return enhanced;
+  } catch {
+    // If anything fails, return original questions unmodified
+    return standardQuestions;
   }
-
-  // Insert enhanced questions at evenly spaced positions
-  for (let i = 0; i < toInsert.length; i++) {
-    const pos = Math.min(
-      enhanced.length,
-      Math.floor(((i + 1) / (toInsert.length + 1)) * enhanced.length)
-    );
-    enhanced.splice(pos + i, 0, toInsert[i]); // +i to account for previous insertions
-  }
-
-  return enhanced;
 }

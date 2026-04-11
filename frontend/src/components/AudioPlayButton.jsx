@@ -1,4 +1,4 @@
-import { useState, useRef, useCallback } from "react";
+import { useState, useRef, useCallback, useEffect } from "react";
 import { generateTTS } from "../api/media";
 
 const API_BASE_URL = import.meta.env.VITE_API_URL || "/api";
@@ -53,6 +53,16 @@ export default function AudioPlayButton({ text, size = "sm" }) {
   const [state, setState] = useState("idle"); // idle | loading | playing
   const audioRef = useRef(null);
   const cachedUrlRef = useRef(null);
+
+  // Reset cache whenever the text changes
+  useEffect(() => {
+    if (audioRef.current) {
+      audioRef.current.pause();
+      audioRef.current = null;
+    }
+    cachedUrlRef.current = null;
+    setState("idle");
+  }, [text]);
 
   const handleClick = useCallback(async () => {
     if (state === "playing") {

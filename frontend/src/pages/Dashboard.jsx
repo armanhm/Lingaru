@@ -40,7 +40,6 @@ function frenchDate() {
 
 const QUICK_ACTIONS = [
   { label: "Quiz",         to: "/topics",               color: "bg-indigo-500",  emoji: "📝" },
-  { label: "Flashcards",   to: "/practice/srs",         color: "bg-emerald-500", emoji: "🃏", badgeKey: "srsDue" },
   { label: "Dictation",    to: "/practice/dictation",   color: "bg-amber-500",   emoji: "🎧" },
   { label: "Conjugation",  to: "/practice/conjugation", color: "bg-rose-500",    emoji: "✏️" },
   { label: "AI Chat",      to: "/assistant",             color: "bg-violet-500",  emoji: "💬" },

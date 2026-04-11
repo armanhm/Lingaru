@@ -44,7 +44,7 @@ const GAMES = [
     border: "border-amber-200 dark:border-amber-800",
     bg: "bg-amber-50 dark:bg-amber-900/20",
     to: "/mini-games/speed-round",
-    ready: false,
+    ready: true,
   },
   {
     id: "missing-letter",

@@ -27,6 +27,7 @@ import WordScramble from "./pages/WordScramble";
 import MatchPairs from "./pages/MatchPairs";
 import GenderSnap from "./pages/GenderSnap";
 import SpeedRound from "./pages/SpeedRound";
+import MissingLetter from "./pages/MissingLetter";
 import NotFound from "./pages/NotFound";
 
 export default function App() {
@@ -65,6 +66,7 @@ export default function App() {
           <Route path="mini-games/match-pairs" element={<MatchPairs />} />
           <Route path="mini-games/gender-snap" element={<GenderSnap />} />
           <Route path="mini-games/speed-round" element={<SpeedRound />} />
+          <Route path="mini-games/missing-letter" element={<MissingLetter />} />
           <Route path="settings" element={<Settings />} />
         </Route>
         <Route path="*" element={<NotFound />} />

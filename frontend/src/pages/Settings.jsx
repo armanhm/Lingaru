@@ -38,6 +38,7 @@ const DEFAULT_PREFS = {
   coaching_tips: true,
   daily_reminder: false,
   // Mini Games
+  missing_letter_rounds: 8,
   word_scramble_rounds: 8,
   word_scramble_timer: 30,
   match_pairs_count: 6,
@@ -362,6 +363,12 @@ export default function Settings() {
         <p className="text-xs font-semibold text-gray-400 dark:text-gray-500 uppercase tracking-wider">Gender Snap</p>
         <FieldRow label="Words per game" description="Number of le/la questions each round">
           <NumberStepper value={prefs.gender_snap_rounds} onChange={(v) => setPref("gender_snap_rounds", v)} min={5} max={20} step={1} />
+        </FieldRow>
+
+        <div className="border-t border-gray-100 dark:border-gray-700 pt-4 mt-2" />
+        <p className="text-xs font-semibold text-gray-400 dark:text-gray-500 uppercase tracking-wider">Missing Letter</p>
+        <FieldRow label="Words per game" description="Number of fill-in-the-blank words">
+          <NumberStepper value={prefs.missing_letter_rounds} onChange={(v) => setPref("missing_letter_rounds", v)} min={3} max={20} step={1} />
         </FieldRow>
 
         <div className="border-t border-gray-100 dark:border-gray-700 pt-4 mt-2" />

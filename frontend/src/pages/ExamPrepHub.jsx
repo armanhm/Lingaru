@@ -61,7 +61,7 @@ export default function ExamPrepHub() {
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
         {sections.map((s, i) => {
           const cfg = SECTION_CONFIG[s.code] || {};
-          const isReady = s.code === "CE" || s.code === "CO";
+          const isReady = true; // all 4 sections now active
 
           return (
             <div key={s.code} className="animate-fade-in-up" style={staggerDelay(i, 70)}>

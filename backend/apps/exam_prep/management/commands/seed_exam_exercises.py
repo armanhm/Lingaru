@@ -134,13 +134,92 @@ CO_EXERCISES = [
 ]
 
 
+EE_EXERCISES = [
+    {
+        "section": "EE", "cefr_level": "A1", "title": "Se présenter", "order": 1,
+        "instructions_fr": "Écrivez un court texte pour vous présenter.",
+        "instructions_en": "Write a short text introducing yourself.",
+        "time_limit_seconds": 300,
+        "content": {
+            "prompt_fr": "Présentez-vous en français : votre nom, votre âge, votre ville, votre profession et une chose que vous aimez faire.",
+            "prompt_en": "Introduce yourself in French: your name, age, city, job, and one thing you enjoy doing.",
+            "word_limit": 60,
+            "rubric": "A1 level: simple sentences, basic vocabulary, present tense. Expect 3-5 sentences.",
+        },
+    },
+    {
+        "section": "EE", "cefr_level": "A2", "title": "Un e-mail à un ami", "order": 2,
+        "instructions_fr": "Écrivez un e-mail à un ami français.",
+        "instructions_en": "Write an email to a French friend.",
+        "time_limit_seconds": 600,
+        "content": {
+            "prompt_fr": "Écrivez un e-mail à votre ami français Paul. Racontez-lui votre week-end dernier : où vous êtes allé, ce que vous avez fait, et avec qui.",
+            "prompt_en": "Write an email to your French friend Paul. Tell him about your last weekend: where you went, what you did, and with whom.",
+            "word_limit": 100,
+            "rubric": "A2 level: past tense (passé composé), time expressions, informal register. Expect 5-8 sentences.",
+        },
+    },
+    {
+        "section": "EE", "cefr_level": "B1", "title": "Lettre de motivation", "order": 3,
+        "instructions_fr": "Écrivez une lettre pour postuler à un emploi d'été.",
+        "instructions_en": "Write a letter applying for a summer job.",
+        "time_limit_seconds": 900,
+        "content": {
+            "prompt_fr": "Vous voulez travailler dans un café français pendant l'été. Écrivez une lettre de motivation : présentez-vous, expliquez pourquoi vous voulez ce travail, et décrivez vos qualités.",
+            "prompt_en": "You want to work in a French café during summer. Write a cover letter: introduce yourself, explain why you want this job, and describe your qualities.",
+            "word_limit": 150,
+            "rubric": "B1 level: formal register, conditional tense, connectors (car, donc, cependant), structured paragraphs.",
+        },
+    },
+]
+
+EO_EXERCISES = [
+    {
+        "section": "EO", "cefr_level": "A1", "title": "Parler de soi", "order": 1,
+        "instructions_fr": "Parlez de vous pendant 30 secondes.",
+        "instructions_en": "Talk about yourself for 30 seconds.",
+        "time_limit_seconds": 45,
+        "content": {
+            "prompt_fr": "Présentez-vous : dites votre nom, votre nationalité, votre ville et ce que vous aimez.",
+            "prompt_en": "Introduce yourself: say your name, nationality, city, and what you like.",
+            "duration_seconds": 30,
+            "rubric": "A1 level: basic pronunciation, simple sentences, present tense.",
+        },
+    },
+    {
+        "section": "EO", "cefr_level": "A2", "title": "Décrire sa journée", "order": 2,
+        "instructions_fr": "Décrivez une journée typique.",
+        "instructions_en": "Describe a typical day.",
+        "time_limit_seconds": 60,
+        "content": {
+            "prompt_fr": "Décrivez votre journée typique : à quelle heure vous vous levez, ce que vous faites le matin, l'après-midi et le soir.",
+            "prompt_en": "Describe your typical day: what time you get up, what you do in the morning, afternoon, and evening.",
+            "duration_seconds": 45,
+            "rubric": "A2 level: reflexive verbs, time expressions, daily routine vocabulary.",
+        },
+    },
+    {
+        "section": "EO", "cefr_level": "B1", "title": "Donner son opinion", "order": 3,
+        "instructions_fr": "Donnez votre opinion sur un sujet.",
+        "instructions_en": "Give your opinion on a topic.",
+        "time_limit_seconds": 90,
+        "content": {
+            "prompt_fr": "Les réseaux sociaux sont-ils bons ou mauvais pour les jeunes ? Donnez votre opinion avec des arguments et des exemples.",
+            "prompt_en": "Are social media good or bad for young people? Give your opinion with arguments and examples.",
+            "duration_seconds": 60,
+            "rubric": "B1 level: opinion expressions (je pense que, à mon avis), arguments with connectors, subjunctive optional.",
+        },
+    },
+]
+
+
 class Command(BaseCommand):
     help = "Seed initial exam prep exercises for CE and CO sections."
 
     def handle(self, *args, **options):
         self.stdout.write("Seeding exam prep exercises...")
         count = 0
-        for data in CE_EXERCISES + CO_EXERCISES:
+        for data in CE_EXERCISES + CO_EXERCISES + EE_EXERCISES + EO_EXERCISES:
             _, created = ExamExercise.objects.get_or_create(
                 section=data["section"],
                 cefr_level=data["cefr_level"],

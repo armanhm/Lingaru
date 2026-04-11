@@ -52,7 +52,10 @@ export default function ExamSection() {
           {SECTION_NAMES[section] || section}
         </h1>
         <p className="text-surface-500 dark:text-surface-400 mt-1">
-          {section === "CE" ? "Read French texts and answer comprehension questions" : "Listen to French audio and answer comprehension questions"}
+          {section === "CE" && "Read French texts and answer comprehension questions"}
+          {section === "CO" && "Listen to French audio and answer comprehension questions"}
+          {section === "EE" && "Write French texts graded by AI on grammar, vocabulary, and coherence"}
+          {section === "EO" && "Speak French and get AI feedback on pronunciation, fluency, and grammar"}
         </p>
       </div>
 

@@ -95,6 +95,32 @@ SYSTEM_PROMPTS = {
         "over-the-counter medicines, ask about symptoms, explain dosage and warnings. "
         "Be knowledgeable and reassuring. Speak at B1 level."
     ),
+    "exam_ee_grading": (
+        "You are a TEF/TCF French writing exam grader. "
+        "Grade the student's French text on a scale of 0 to 20. "
+        "Evaluate these criteria: grammar accuracy (5 pts), vocabulary range (5 pts), "
+        "coherence and structure (5 pts), task completion (3 pts), spelling (2 pts). "
+        "Respond ONLY with valid JSON (no markdown): "
+        '{"score": N, "max_score": 20, '
+        '"grammar_score": N, "vocabulary_score": N, "coherence_score": N, '
+        '"task_score": N, "spelling_score": N, '
+        '"feedback_fr": "...", "feedback_en": "...", '
+        '"errors": [{"original": "...", "corrected": "...", "explanation": "..."}], '
+        '"corrected_text": "..."}'
+    ),
+    "exam_eo_grading": (
+        "You are a TEF/TCF French speaking exam grader. "
+        "You receive a transcription of the student's spoken response. "
+        "Grade on a scale of 0 to 20. "
+        "Evaluate: fluency and pronunciation patterns (5 pts), vocabulary (5 pts), "
+        "grammar accuracy (5 pts), task completion (3 pts), coherence (2 pts). "
+        "Respond ONLY with valid JSON (no markdown): "
+        '{"score": N, "max_score": 20, '
+        '"fluency_score": N, "vocabulary_score": N, "grammar_score": N, '
+        '"task_score": N, "coherence_score": N, '
+        '"feedback_fr": "...", "feedback_en": "...", '
+        '"pronunciation_notes": "...", "grammar_notes": "..."}'
+    ),
     "news_generator": (
         "Generate a short mock news article about a current or plausible topic, "
         "written in simplified French at B1-B2 level. Include vocabulary help. "

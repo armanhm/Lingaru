@@ -85,7 +85,11 @@ class SessionStartView(APIView):
                         pass  # TTS failure is non-fatal
 
         # Calculate total time and max score
-        total_questions = sum(len(ex.content.get("questions", [])) for ex in exercises)
+        if section in ("CE", "CO"):
+            total_max = sum(len(ex.content.get("questions", [])) for ex in exercises)
+        else:
+            # EE/EO: 20 points per exercise (AI grading scale)
+            total_max = exercises.count() * 20
         total_time = sum(ex.time_limit_seconds for ex in exercises) if mode == "mock" else 0
 
         session = ExamSession.objects.create(
@@ -94,7 +98,7 @@ class SessionStartView(APIView):
             cefr_level=level,
             mode=mode,
             time_limit_seconds=total_time,
-            max_score=total_questions,
+            max_score=total_max,
         )
 
         return Response({
@@ -132,29 +136,83 @@ class SessionRespondView(APIView):
         except ExamExercise.DoesNotExist:
             return Response({"detail": "Exercise not found."}, status=status.HTTP_404_NOT_FOUND)
 
-        # Check answer for MCQ-based sections (CE, CO)
-        questions = exercise.content.get("questions", [])
-        if question_index >= len(questions):
-            return Response({"detail": "Invalid question index."}, status=status.HTTP_400_BAD_REQUEST)
+        # MCQ-based sections (CE, CO)
+        if session.section in ("CE", "CO"):
+            questions = exercise.content.get("questions", [])
+            if question_index >= len(questions):
+                return Response({"detail": "Invalid question index."}, status=status.HTTP_400_BAD_REQUEST)
 
-        question = questions[question_index]
-        correct_answer = question.get("correct_answer", "")
-        is_correct = user_answer.strip().lower() == correct_answer.strip().lower()
+            question = questions[question_index]
+            correct_answer = question.get("correct_answer", "")
+            is_correct = user_answer.strip().lower() == correct_answer.strip().lower()
 
-        response = ExamResponse.objects.create(
-            session=session,
-            exercise=exercise,
-            question_index=question_index,
-            user_answer=user_answer,
-            is_correct=is_correct,
-            score=1 if is_correct else 0,
-            max_score=1,
-        )
+            response = ExamResponse.objects.create(
+                session=session,
+                exercise=exercise,
+                question_index=question_index,
+                user_answer=user_answer,
+                is_correct=is_correct,
+                score=1 if is_correct else 0,
+                max_score=1,
+            )
 
-        result = ResponseResultSerializer(response).data
-        result["correct_answer"] = correct_answer
-        result["explanation"] = question.get("explanation", "")
-        return Response(result)
+            result = ResponseResultSerializer(response).data
+            result["correct_answer"] = correct_answer
+            result["explanation"] = question.get("explanation", "")
+            return Response(result)
+
+        # AI-graded sections (EE, EO)
+        if session.section in ("EE", "EO"):
+            import json, re
+            from services.llm.factory import create_llm_router
+            from services.llm.prompts import SYSTEM_PROMPTS
+
+            prompt_key = "exam_ee_grading" if session.section == "EE" else "exam_eo_grading"
+            system_prompt = SYSTEM_PROMPTS.get(prompt_key, "")
+
+            # Build the grading prompt
+            task_prompt = exercise.content.get("prompt_fr", exercise.content.get("prompt_en", ""))
+            rubric = exercise.content.get("rubric", "")
+            user_msg = (
+                f"Task: {task_prompt}\n"
+                f"{'Rubric: ' + rubric if rubric else ''}\n\n"
+                f"Student response:\n{user_answer}"
+            )
+
+            try:
+                router = create_llm_router()
+                llm_result = router.generate(
+                    messages=[{"role": "user", "content": user_msg}],
+                    system_prompt=system_prompt,
+                )
+                # Parse JSON from LLM
+                text = llm_result.content.strip()
+                text = re.sub(r"^```(?:json)?\s*", "", text)
+                text = re.sub(r"\s*```$", "", text)
+                grading = json.loads(text)
+            except Exception:
+                grading = {"score": 0, "max_score": 20, "feedback_en": "Grading failed. Please try again.", "feedback_fr": ""}
+
+            ai_score = grading.get("score", 0)
+            ai_max = grading.get("max_score", 20)
+            ai_feedback = json.dumps(grading, ensure_ascii=False)
+
+            response = ExamResponse.objects.create(
+                session=session,
+                exercise=exercise,
+                question_index=question_index,
+                user_answer=user_answer,
+                is_correct=None,
+                score=ai_score,
+                max_score=ai_max,
+                ai_feedback=ai_feedback,
+            )
+
+            result = ResponseResultSerializer(response).data
+            result["grading"] = grading
+            return Response(result)
+
+        return Response({"detail": "Unsupported section."}, status=status.HTTP_400_BAD_REQUEST)
 
 
 class SessionCompleteView(APIView):

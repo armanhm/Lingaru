@@ -114,23 +114,23 @@ function UserMenu({ user, collapsed, onLogout }) {
   if (!user) return null;
 
   return (
-    <div ref={ref} className="border-t border-gray-100 dark:border-gray-700 p-3 relative">
+    <div ref={ref} className="border-t border-surface-100 dark:border-surface-700/50 p-3 relative">
       {/* Trigger */}
       <button
         onClick={() => setOpen((o) => !o)}
-        className={`flex items-center gap-2 w-full px-2 py-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors ${collapsed ? "justify-center" : ""}`}
+        className={`flex items-center gap-2 w-full px-2 py-2 rounded-xl hover:bg-surface-100 dark:hover:bg-surface-700/50 transition-colors ${collapsed ? "justify-center" : ""}`}
         title={collapsed ? user.username : undefined}
       >
-        <span className="w-7 h-7 bg-primary-100 dark:bg-primary-900 text-primary-700 dark:text-primary-300 rounded-full flex items-center justify-center text-xs font-semibold shrink-0">
+        <span className="w-7 h-7 bg-gradient-to-br from-primary-400 to-primary-600 text-white rounded-full flex items-center justify-center text-xs font-bold shrink-0">
           {user.username?.[0]?.toUpperCase() || "U"}
         </span>
         {!collapsed && (
           <>
-            <span className="text-sm font-medium text-gray-700 dark:text-gray-200 truncate flex-1 text-left">
+            <span className="text-sm font-medium text-surface-700 dark:text-surface-200 truncate flex-1 text-left">
               {user.username}
             </span>
             <svg
-              className={`w-4 h-4 text-gray-400 transition-transform shrink-0 ${open ? "" : "rotate-180"}`}
+              className={`w-4 h-4 text-surface-400 transition-transform shrink-0 ${open ? "" : "rotate-180"}`}
               fill="none" stroke="currentColor" viewBox="0 0 24 24"
             >
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
@@ -141,38 +141,38 @@ function UserMenu({ user, collapsed, onLogout }) {
 
       {/* Dropdown */}
       {open && (
-        <div className={`absolute bottom-full mb-2 bg-white dark:bg-gray-800 rounded-xl border border-gray-100 dark:border-gray-700 shadow-lg overflow-hidden z-50 ${collapsed ? "left-14 w-52" : "left-3 right-3"}`}>
+        <div className={`absolute bottom-full mb-2 bg-white dark:bg-surface-800 rounded-xl border border-surface-100 dark:border-surface-700/50 shadow-lg overflow-hidden z-50 animate-fade-in ${collapsed ? "left-14 w-52" : "left-3 right-3"}`}>
           {/* Dark / Light toggle */}
           <div className="flex items-center justify-between px-4 py-3">
-            <span className="text-sm text-gray-700 dark:text-gray-200">{dark ? "Dark mode" : "Light mode"}</span>
+            <span className="text-sm text-surface-700 dark:text-surface-200">{dark ? "Dark mode" : "Light mode"}</span>
             <button
               onClick={toggle}
-              className={`relative inline-flex h-5 w-9 shrink-0 rounded-full transition-colors duration-200 ${dark ? "bg-primary-600" : "bg-gray-200"}`}
+              className={`relative inline-flex h-5 w-9 shrink-0 rounded-full transition-colors duration-200 ${dark ? "bg-primary-600" : "bg-surface-200"}`}
               aria-label="Toggle theme"
             >
               <span className={`inline-block h-4 w-4 mt-0.5 rounded-full bg-white shadow transform transition-transform duration-200 ${dark ? "translate-x-4" : "translate-x-0.5"}`} />
             </button>
           </div>
 
-          <div className="h-px bg-gray-100 dark:bg-gray-700" />
+          <div className="h-px bg-surface-100 dark:bg-surface-700" />
 
           <Link
             to="/settings"
             onClick={() => setOpen(false)}
-            className="flex items-center gap-3 px-4 py-3 text-sm text-gray-700 dark:text-gray-200 hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors"
+            className="flex items-center gap-3 px-4 py-3 text-sm text-surface-700 dark:text-surface-200 hover:bg-surface-50 dark:hover:bg-surface-700 transition-colors"
           >
-            <svg className="w-4 h-4 text-gray-400 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <svg className="w-4 h-4 text-surface-400 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" />
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
             </svg>
             Settings
           </Link>
 
-          <div className="h-px bg-gray-100 dark:bg-gray-700" />
+          <div className="h-px bg-surface-100 dark:bg-surface-700" />
 
           <button
             onClick={() => { setOpen(false); onLogout(); }}
-            className="flex items-center gap-3 w-full px-4 py-3 text-sm text-red-600 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-900/20 transition-colors"
+            className="flex items-center gap-3 w-full px-4 py-3 text-sm text-danger-600 dark:text-danger-400 hover:bg-danger-50 dark:hover:bg-danger-700/20 transition-colors"
           >
             <svg className="w-4 h-4 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
@@ -217,15 +217,15 @@ export default function Layout() {
   const SidebarInner = ({ onNav }) => (
     <div className="flex flex-col h-full">
       {/* Logo */}
-      <div className={`flex items-center gap-3 px-4 py-5 border-b border-gray-100 dark:border-gray-700 ${collapsed ? "justify-center" : ""}`}>
-        <Link to="/" onClick={onNav} className="flex items-center gap-2 shrink-0">
-          <span className="w-8 h-8 bg-primary-600 rounded-lg flex items-center justify-center text-white font-bold text-sm shrink-0">L</span>
-          {!collapsed && <span className="text-lg font-bold text-primary-600 dark:text-primary-400">Lingaru</span>}
+      <div className={`flex items-center gap-3 px-4 py-5 border-b border-surface-100 dark:border-surface-700/50 ${collapsed ? "justify-center" : ""}`}>
+        <Link to="/" onClick={onNav} className="flex items-center gap-2.5 shrink-0">
+          <span className="w-8 h-8 bg-gradient-to-br from-primary-500 to-primary-700 rounded-xl flex items-center justify-center text-white font-extrabold text-sm shrink-0 shadow-sm">L</span>
+          {!collapsed && <span className="text-lg font-extrabold text-gradient-primary">Lingaru</span>}
         </Link>
         {!onNav && !collapsed && (
           <button
             onClick={() => setCollapsed(true)}
-            className="ml-auto p-1 rounded text-gray-400 hover:text-gray-600 dark:hover:text-gray-200 transition-colors"
+            className="ml-auto p-1.5 rounded-lg text-surface-400 hover:text-surface-600 dark:hover:text-surface-200 hover:bg-surface-100 dark:hover:bg-surface-700 transition-colors"
             title="Collapse sidebar"
           >
             <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -236,11 +236,11 @@ export default function Layout() {
       </div>
 
       {/* Nav */}
-      <nav className="flex-1 overflow-y-auto py-4 space-y-5 px-2">
+      <nav className="flex-1 overflow-y-auto py-4 space-y-5 px-3">
         {NAV_SECTIONS.map((section) => (
           <div key={section.label ?? "main"}>
             {section.label && !collapsed && (
-              <p className="px-3 mb-1 text-xs font-semibold uppercase tracking-wider text-gray-400 dark:text-gray-500">
+              <p className="px-3 mb-1.5 section-label">
                 {section.label}
               </p>
             )}
@@ -253,18 +253,18 @@ export default function Layout() {
                     to={item.to}
                     onClick={onNav}
                     title={collapsed ? item.label : undefined}
-                    className={`flex items-center gap-3 px-3 py-2 rounded-lg text-sm font-medium transition-colors ${
+                    className={`flex items-center gap-3 px-3 py-2 rounded-xl text-sm font-medium transition-all duration-200 ${
                       active
-                        ? "bg-primary-50 dark:bg-primary-900/30 text-primary-600 dark:text-primary-400"
-                        : "text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 hover:text-gray-900 dark:hover:text-gray-100"
+                        ? "bg-primary-50 dark:bg-primary-900/30 text-primary-600 dark:text-primary-400 shadow-sm"
+                        : "text-surface-600 dark:text-surface-400 hover:bg-surface-100 dark:hover:bg-surface-700/50 hover:text-surface-900 dark:hover:text-surface-100"
                     } ${collapsed ? "justify-center" : ""}`}
                   >
-                    <span className={`shrink-0 ${active ? "text-primary-600 dark:text-primary-400" : "text-gray-400 dark:text-gray-500"}`}>
+                    <span className={`shrink-0 ${active ? "text-primary-500 dark:text-primary-400" : "text-surface-400 dark:text-surface-500"}`}>
                       {item.icon}
                     </span>
                     {!collapsed && <span>{item.label}</span>}
                     {active && !collapsed && (
-                      <span className="ml-auto w-1.5 h-1.5 rounded-full bg-primary-500" />
+                      <span className="ml-auto w-1.5 h-1.5 rounded-full bg-primary-500 animate-pulse" />
                     )}
                   </Link>
                 );
@@ -280,10 +280,10 @@ export default function Layout() {
   );
 
   return (
-    <div className="flex h-screen bg-gray-50 dark:bg-gray-900 overflow-hidden transition-colors duration-200">
+    <div className="flex h-screen bg-surface-50 dark:bg-surface-900 overflow-hidden transition-colors duration-200">
 
       {/* Desktop sidebar */}
-      <aside className={`hidden md:flex flex-col bg-white dark:bg-gray-800 border-r border-gray-100 dark:border-gray-700 transition-all duration-200 shrink-0 ${collapsed ? "w-16" : "w-56"}`}>
+      <aside className={`hidden md:flex flex-col bg-white dark:bg-surface-800 border-r border-surface-100 dark:border-surface-700/50 transition-all duration-200 shrink-0 ${collapsed ? "w-16" : "w-60"}`}>
         <SidebarInner onNav={null} />
       </aside>
 
@@ -291,7 +291,7 @@ export default function Layout() {
       {collapsed && (
         <button
           onClick={() => setCollapsed(false)}
-          className="hidden md:flex fixed left-16 top-1/2 -translate-y-1/2 z-40 w-5 h-10 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-r-lg items-center justify-center text-gray-400 hover:text-primary-600 transition-colors shadow-sm"
+          className="hidden md:flex fixed left-16 top-1/2 -translate-y-1/2 z-40 w-5 h-10 bg-white dark:bg-surface-800 border border-surface-200 dark:border-surface-700 rounded-r-lg items-center justify-center text-surface-400 hover:text-primary-600 transition-colors shadow-sm"
           title="Expand sidebar"
         >
           <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -302,28 +302,28 @@ export default function Layout() {
 
       {/* Mobile overlay */}
       {mobileOpen && (
-        <div className="md:hidden fixed inset-0 z-40 bg-black/40" onClick={() => setMobileOpen(false)} />
+        <div className="md:hidden fixed inset-0 z-40 bg-black/40 backdrop-blur-sm" onClick={() => setMobileOpen(false)} />
       )}
 
       {/* Mobile sidebar */}
-      <aside className={`md:hidden fixed inset-y-0 left-0 z-50 w-64 bg-white dark:bg-gray-800 border-r border-gray-100 dark:border-gray-700 transform transition-transform duration-200 ${mobileOpen ? "translate-x-0" : "-translate-x-full"}`}>
+      <aside className={`md:hidden fixed inset-y-0 left-0 z-50 w-64 bg-white dark:bg-surface-800 border-r border-surface-100 dark:border-surface-700/50 transform transition-transform duration-300 ease-out ${mobileOpen ? "translate-x-0" : "-translate-x-full"}`}>
         <SidebarInner onNav={() => setMobileOpen(false)} />
       </aside>
 
       {/* Main content */}
       <div className="flex-1 flex flex-col overflow-hidden">
         {/* Mobile topbar */}
-        <header className="md:hidden flex items-center gap-3 px-4 py-3 bg-white dark:bg-gray-800 border-b border-gray-100 dark:border-gray-700 shrink-0">
+        <header className="md:hidden flex items-center gap-3 px-4 py-3 bg-white/80 dark:bg-surface-800/80 backdrop-blur-lg border-b border-surface-100 dark:border-surface-700/50 shrink-0">
           <button
             onClick={() => setMobileOpen(true)}
-            className="p-2 rounded-lg text-gray-500 hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors"
+            className="p-2 rounded-lg text-surface-500 hover:bg-surface-100 dark:hover:bg-surface-700 transition-colors"
             aria-label="Open menu"
           >
             <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
             </svg>
           </button>
-          <Link to="/" className="text-lg font-bold text-primary-600 dark:text-primary-400">Lingaru</Link>
+          <Link to="/" className="text-lg font-extrabold text-gradient-primary">Lingaru</Link>
         </header>
 
         <main className="flex-1 overflow-y-auto">

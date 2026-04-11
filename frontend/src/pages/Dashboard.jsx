@@ -39,7 +39,7 @@ function frenchDate() {
 }
 
 const QUICK_ACTIONS = [
-  { label: "Quiz",         to: "/topics",               color: "bg-indigo-500",  emoji: "📝" },
+  { label: "Quiz",         to: "/topics",               color: "bg-primary-500",  emoji: "📝" },
   { label: "Dictation",    to: "/practice/dictation",   color: "bg-amber-500",   emoji: "🎧" },
   { label: "Conjugation",  to: "/practice/conjugation", color: "bg-rose-500",    emoji: "✏️" },
   { label: "AI Chat",      to: "/assistant",             color: "bg-violet-500",  emoji: "💬" },
@@ -55,7 +55,7 @@ const ALL_SUGGESTIONS = [
   { label: "Buy bread at the market",  sub: "Roleplay",     to: "/assistant?mode=roleplay&scenario=roleplay_market&prompt=Bonjour, je voudrais une baguette s'il vous plaît.",            accent: "bg-orange-500", emoji: "🥖" },
   { label: "See a doctor in French",   sub: "Roleplay",     to: "/assistant?mode=roleplay&scenario=roleplay_doctor&prompt=Bonjour docteur, j'ai mal à la tête depuis deux jours.",        accent: "bg-cyan-500", emoji: "🏥" },
   { label: "Buy a train ticket",       sub: "Roleplay",     to: "/assistant?mode=roleplay&scenario=roleplay_train&prompt=Bonjour, un aller-retour pour Lyon s'il vous plaît.",            accent: "bg-blue-500", emoji: "🚆" },
-  { label: "Job interview practice",   sub: "Roleplay",     to: "/assistant?mode=roleplay&scenario=roleplay_job_interview&prompt=Bonjour, je suis candidat pour le poste de…",            accent: "bg-indigo-500", emoji: "💼" },
+  { label: "Job interview practice",   sub: "Roleplay",     to: "/assistant?mode=roleplay&scenario=roleplay_job_interview&prompt=Bonjour, je suis candidat pour le poste de…",            accent: "bg-primary-500", emoji: "💼" },
   // Verb conjugation
   { label: "Practice verb « venir »",  sub: "Conjugation",  to: "/practice/conjugation?verb=venir",  accent: "bg-violet-500", emoji: "✏️" },
   { label: "Practice verb « aller »",  sub: "Conjugation",  to: "/practice/conjugation?verb=aller",  accent: "bg-violet-500", emoji: "✏️" },
@@ -75,8 +75,8 @@ const ALL_SUGGESTIONS = [
   { label: "Look up « éphémère »",     sub: "Dictionary",   to: "/dictionary?word=éphémère",  accent: "bg-cyan-500", emoji: "📖" },
   { label: "Conjugate « être »",       sub: "Dictionary",   to: "/dictionary?tab=conjugator&verb=être", accent: "bg-cyan-500", emoji: "📖" },
   // Grammar
-  { label: "Passé composé explained",  sub: "Grammar",      to: "/assistant?mode=grammar_explanation&prompt=Explain passé composé vs imparfait with examples", accent: "bg-indigo-500", emoji: "📚" },
-  { label: "When to use subjunctive",  sub: "Grammar",      to: "/assistant?mode=grammar_explanation&prompt=When do I use the subjunctive in French?",         accent: "bg-indigo-500", emoji: "📚" },
+  { label: "Passé composé explained",  sub: "Grammar",      to: "/assistant?mode=grammar_explanation&prompt=Explain passé composé vs imparfait with examples", accent: "bg-primary-500", emoji: "📚" },
+  { label: "When to use subjunctive",  sub: "Grammar",      to: "/assistant?mode=grammar_explanation&prompt=When do I use the subjunctive in French?",         accent: "bg-primary-500", emoji: "📚" },
 ];
 
 /**
@@ -124,10 +124,10 @@ function QuoteCard({ quoteIndex, setQuoteIndex }) {
   };
 
   return (
-    <div className="bg-gradient-to-br from-indigo-50 to-purple-50 dark:from-indigo-900/20 dark:to-purple-900/20 rounded-xl border border-indigo-100 dark:border-indigo-800/30 p-4 flex flex-col gap-2 hover:shadow-lg hover:-translate-y-0.5 transition-all duration-300">
+    <div className="bg-gradient-to-br from-primary-50 to-purple-50 dark:from-primary-950/40 dark:to-purple-950/30 rounded-2xl border border-primary-100 dark:border-primary-800/30 p-4 flex flex-col gap-2 hover:shadow-card-hover hover:-translate-y-0.5 transition-all duration-300">
       <div className="flex items-center justify-between">
-        <span className="text-xs font-semibold text-indigo-400 dark:text-indigo-500 uppercase tracking-wide">Citation du jour</span>
-        <button onClick={shuffle} className="p-1 rounded-lg text-indigo-300 hover:text-indigo-600 hover:bg-indigo-100 dark:hover:bg-indigo-900/40 transition-colors" title="Next quote">
+        <span className="text-xs font-semibold section-label uppercase tracking-wide">Citation du jour</span>
+        <button onClick={shuffle} className="p-1 rounded-lg text-primary-300 hover:text-primary-600 hover:bg-primary-100 dark:hover:bg-primary-900/40 transition-colors" title="Next quote">
           <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
           </svg>
@@ -135,7 +135,7 @@ function QuoteCard({ quoteIndex, setQuoteIndex }) {
       </div>
 
       <div className="flex gap-2 items-start">
-        <p className="flex-1 text-sm font-medium text-indigo-800 dark:text-indigo-200 italic leading-relaxed">
+        <p className="flex-1 text-sm font-medium text-primary-800 dark:text-primary-200 italic leading-relaxed">
           {frenchLines.map((line, i) => (
             <span key={i}>{line}{i < frenchLines.length - 1 && <br />}</span>
           ))}
@@ -145,17 +145,17 @@ function QuoteCard({ quoteIndex, setQuoteIndex }) {
 
       <div className="flex items-center gap-2">
         <span className={`text-xs font-medium px-2 py-0.5 rounded-full ${badge.color}`}>{badge.label}</span>
-        <span className="text-xs text-gray-400 dark:text-gray-500 truncate">— {quote.author}</span>
+        <span className="text-xs text-surface-400 dark:text-surface-500 truncate">— {quote.author}</span>
       </div>
 
       <button
         onClick={() => setShowTranslation((v) => !v)}
-        className="self-start text-xs text-indigo-400 hover:text-indigo-600 dark:hover:text-indigo-300 underline underline-offset-2 transition-colors"
+        className="self-start text-xs text-primary-400 hover:text-primary-600 dark:hover:text-primary-300 underline underline-offset-2 transition-colors"
       >
         {showTranslation ? "Hide translation" : "Show translation"}
       </button>
       {showTranslation && (
-        <p className="text-xs text-gray-500 dark:text-gray-400 italic border-l-2 border-indigo-200 dark:border-indigo-700 pl-2 leading-relaxed animate-fade-in-up">
+        <p className="text-xs text-surface-500 dark:text-surface-400 italic border-l-2 border-primary-200 dark:border-primary-700 pl-2 leading-relaxed animate-fade-in-up">
           {englishLines.map((line, i) => (
             <span key={i}>{line}{i < englishLines.length - 1 && <br />}</span>
           ))}
@@ -168,10 +168,10 @@ function QuoteCard({ quoteIndex, setQuoteIndex }) {
 function TrendReport({ trend }) {
   if (!trend) {
     return (
-      <div className="bg-white dark:bg-gray-800 rounded-xl border border-gray-100 dark:border-gray-700 p-4 animate-pulse space-y-3">
-        <div className="h-3 bg-gray-200 dark:bg-gray-700 rounded w-1/3" />
-        <div className="h-10 bg-gray-200 dark:bg-gray-700 rounded" />
-        <div className="h-10 bg-gray-200 dark:bg-gray-700 rounded" />
+      <div className="bg-white dark:bg-surface-800 rounded-xl border border-surface-100 dark:border-surface-700/50 p-4 animate-pulse space-y-3">
+        <div className="h-3 bg-surface-200 dark:bg-surface-700 rounded w-1/3" />
+        <div className="h-10 bg-surface-200 dark:bg-surface-700 rounded" />
+        <div className="h-10 bg-surface-200 dark:bg-surface-700 rounded" />
       </div>
     );
   }
@@ -181,25 +181,25 @@ function TrendReport({ trend }) {
   const topInsights = insights.slice(0, 2);
 
   return (
-    <div className="bg-white dark:bg-gray-800 rounded-xl border border-gray-100 dark:border-gray-700 p-4 flex flex-col gap-3 hover:shadow-lg hover:-translate-y-0.5 transition-all duration-300">
+    <div className="card card-hover p-4 flex flex-col gap-3">
       <div className="flex items-center justify-between">
-        <span className="text-xs font-semibold text-gray-400 dark:text-gray-500 uppercase tracking-wide">Trend Report</span>
-        <span className="text-xs text-gray-400 dark:text-gray-500">last 7 days</span>
+        <span className="section-label">Trend Report</span>
+        <span className="text-xs text-surface-400 dark:text-surface-500">last 7 days</span>
       </div>
 
       {/* Stat pills */}
       <div className="flex gap-2">
-        <div className="flex-1 text-center bg-gray-50 dark:bg-gray-700/50 rounded-lg py-2 hover:scale-105 hover:shadow-sm transition-all duration-200 cursor-default">
-          <p className="text-base font-bold text-indigo-600 dark:text-indigo-400">{week.total_xp}</p>
-          <p className="text-xs text-gray-400">XP</p>
+        <div className="flex-1 text-center bg-surface-50 dark:bg-surface-700/50 rounded-lg py-2 hover:scale-105 hover:shadow-sm transition-all duration-200 cursor-default">
+          <p className="text-base font-bold text-primary-600 dark:text-primary-400">{week.total_xp}</p>
+          <p className="text-xs text-surface-400">XP</p>
         </div>
-        <div className="flex-1 text-center bg-gray-50 dark:bg-gray-700/50 rounded-lg py-2 hover:scale-105 hover:shadow-sm transition-all duration-200 cursor-default">
+        <div className="flex-1 text-center bg-surface-50 dark:bg-surface-700/50 rounded-lg py-2 hover:scale-105 hover:shadow-sm transition-all duration-200 cursor-default">
           <p className="text-base font-bold text-emerald-600 dark:text-emerald-400">{week.lessons_completed}</p>
-          <p className="text-xs text-gray-400">lessons</p>
+          <p className="text-xs text-surface-400">lessons</p>
         </div>
-        <div className="flex-1 text-center bg-gray-50 dark:bg-gray-700/50 rounded-lg py-2 hover:scale-105 hover:shadow-sm transition-all duration-200 cursor-default">
+        <div className="flex-1 text-center bg-surface-50 dark:bg-surface-700/50 rounded-lg py-2 hover:scale-105 hover:shadow-sm transition-all duration-200 cursor-default">
           <p className="text-base font-bold text-rose-500 dark:text-rose-400">{week.mistakes}</p>
-          <p className="text-xs text-gray-400">mistakes</p>
+          <p className="text-xs text-surface-400">mistakes</p>
         </div>
       </div>
 
@@ -254,13 +254,13 @@ export default function Dashboard() {
   if (loading) {
     return (
       <div className="max-w-5xl mx-auto space-y-6 animate-pulse">
-        <div className="h-12 bg-gray-200 dark:bg-gray-700 rounded w-1/3" />
+        <div className="h-12 bg-surface-200 dark:bg-surface-700 rounded w-1/3" />
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          <div className="h-36 bg-gray-200 dark:bg-gray-700 rounded-xl" />
-          <div className="h-36 bg-gray-200 dark:bg-gray-700 rounded-xl" />
+          <div className="h-36 bg-surface-200 dark:bg-surface-700 rounded-xl" />
+          <div className="h-36 bg-surface-200 dark:bg-surface-700 rounded-xl" />
         </div>
         <div className="grid grid-cols-3 md:grid-cols-6 gap-3">
-          {[...Array(6)].map((_, i) => <div key={i} className="h-20 bg-gray-200 dark:bg-gray-700 rounded-xl" />)}
+          {[...Array(6)].map((_, i) => <div key={i} className="h-20 bg-surface-200 dark:bg-surface-700 rounded-xl" />)}
         </div>
       </div>
     );
@@ -272,26 +272,26 @@ export default function Dashboard() {
       {/* ── Header ─────────────────────────────────────────── */}
       <div className="flex items-end justify-between gap-4 flex-wrap animate-fade-in">
         <div>
-          <h1 className="text-2xl font-bold text-gray-900 dark:text-gray-100">
+          <h1 className="text-2xl font-extrabold text-surface-900 dark:text-surface-100">
             Bonjour, {user?.username}!
           </h1>
-          <p className="text-sm text-gray-400 dark:text-gray-500 capitalize">{frenchDate()}</p>
+          <p className="text-sm text-surface-400 dark:text-surface-500 capitalize font-medium">{frenchDate()}</p>
         </div>
 
         {/* Stat pills */}
         <div className="flex gap-2 flex-wrap">
-          <div className="flex items-center gap-1.5 bg-white dark:bg-gray-800 border border-gray-100 dark:border-gray-700 rounded-full px-3 py-1 shadow-sm animate-fade-in-up hover:shadow-md hover:scale-105 transition-all duration-200 cursor-default" style={staggerDelay(0)}>
-            <span className="text-xs text-gray-500 dark:text-gray-400">XP</span>
-            <span className="text-sm font-bold text-indigo-600 dark:text-indigo-400">{animatedXP}</span>
+          <div className="stat-pill animate-fade-in-up hover:shadow-card-hover hover:scale-105 transition-all duration-200 cursor-default" style={staggerDelay(0)}>
+            <span className="text-xs text-surface-500 dark:text-surface-400">XP</span>
+            <span className="text-sm font-bold text-primary-600 dark:text-primary-400">{animatedXP}</span>
           </div>
-          <div className="flex items-center gap-1.5 bg-white dark:bg-gray-800 border border-gray-100 dark:border-gray-700 rounded-full px-3 py-1 shadow-sm animate-fade-in-up hover:shadow-md hover:scale-105 transition-all duration-200 cursor-default" style={staggerDelay(1)}>
+          <div className="stat-pill animate-fade-in-up hover:shadow-card-hover hover:scale-105 transition-all duration-200 cursor-default" style={staggerDelay(1)}>
             <span className="text-base leading-none">🔥</span>
-            <span className="text-sm font-bold text-orange-500">{stats?.current_streak ?? 0}</span>
-            <span className="text-xs text-gray-400">day streak</span>
+            <span className="text-sm font-bold text-warn-500">{stats?.current_streak ?? 0}</span>
+            <span className="text-xs text-surface-400">streak</span>
           </div>
-          <div className="flex items-center gap-1.5 bg-white dark:bg-gray-800 border border-gray-100 dark:border-gray-700 rounded-full px-3 py-1 shadow-sm animate-fade-in-up hover:shadow-md hover:scale-105 transition-all duration-200 cursor-default" style={staggerDelay(2)}>
-            <span className="text-xs text-gray-500 dark:text-gray-400">Rank</span>
-            <span className="text-sm font-bold text-violet-600 dark:text-violet-400">#{stats?.rank ?? "—"}</span>
+          <div className="stat-pill animate-fade-in-up hover:shadow-card-hover hover:scale-105 transition-all duration-200 cursor-default" style={staggerDelay(2)}>
+            <span className="text-xs text-surface-500 dark:text-surface-400">Rank</span>
+            <span className="text-sm font-bold text-primary-600 dark:text-primary-400">#{stats?.rank ?? "—"}</span>
           </div>
           {srsDue > 0 && (
             <Link to="/practice/srs" className="flex items-center gap-1.5 bg-emerald-50 dark:bg-emerald-900/30 border border-emerald-200 dark:border-emerald-800 rounded-full px-3 py-1 shadow-sm hover:bg-emerald-100 transition-colors animate-fade-in-up" style={staggerDelay(3)}>
@@ -311,19 +311,19 @@ export default function Dashboard() {
 
       {/* ── Quick Actions ───────────────────────────────────── */}
       <div>
-        <p className="text-xs font-semibold text-gray-400 dark:text-gray-500 uppercase tracking-wide mb-3">Quick Actions</p>
+        <p className="section-label mb-3">Quick Actions</p>
         <div className="grid grid-cols-3 md:grid-cols-6 gap-3">
           {QUICK_ACTIONS.map((action, i) => (
             <Link
               key={action.to}
               to={action.to}
-              className="relative flex flex-col items-center gap-1.5 bg-white dark:bg-gray-800 rounded-xl border border-gray-100 dark:border-gray-700 py-4 px-2 hover:shadow-md hover:-translate-y-1 hover:scale-[1.03] transition-all animate-fade-in-up"
+              className="relative flex flex-col items-center gap-1.5 card py-4 px-2 card-hover animate-fade-in-up"
               style={staggerDelay(i, 50)}
             >
-              <div className={`w-10 h-10 ${action.color} rounded-lg flex items-center justify-center text-xl`}>
+              <div className={`w-10 h-10 ${action.color} rounded-xl flex items-center justify-center text-xl shadow-sm`}>
                 {action.emoji}
               </div>
-              <span className="text-xs font-medium text-gray-600 dark:text-gray-300 text-center leading-tight">{action.label}</span>
+              <span className="text-xs font-medium text-surface-600 dark:text-surface-300 text-center leading-tight">{action.label}</span>
               {action.badgeKey === "srsDue" && srsDue > 0 && (
                 <span className="absolute -top-1.5 -right-1.5 bg-red-500 text-white text-xs font-bold rounded-full w-5 h-5 flex items-center justify-center animate-bounce-in">
                   {srsDue > 9 ? "9+" : srsDue}
@@ -336,25 +336,25 @@ export default function Dashboard() {
 
       {/* ── Suggestions / Try Today ─────────────────────────── */}
       <div>
-        <p className="text-xs font-semibold text-gray-400 dark:text-gray-500 uppercase tracking-wide mb-3">Try Today</p>
+        <p className="section-label mb-3">Try Today</p>
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
           {suggestions.map((s, i) => (
             <Link
               key={s.to}
               to={s.to}
-              className="group flex items-center gap-3 bg-white dark:bg-gray-800 rounded-xl border border-gray-100 dark:border-gray-700 px-4 py-3 hover:shadow-lg hover:-translate-y-0.5 hover:scale-[1.01] transition-all duration-200 animate-fade-in-up"
+              className="group flex items-center gap-3 card px-4 py-3 card-hover animate-fade-in-up"
               style={staggerDelay(i, 70)}
             >
               <div className={`shrink-0 w-10 h-10 ${s.accent} rounded-lg flex items-center justify-center text-lg group-hover:scale-110 transition-transform duration-200`}>
                 {s.emoji}
               </div>
               <div className="flex-1 min-w-0">
-                <p className="text-sm font-semibold text-gray-800 dark:text-gray-100 group-hover:text-primary-600 dark:group-hover:text-primary-400 transition-colors truncate">
+                <p className="text-sm font-semibold text-surface-800 dark:text-surface-100 group-hover:text-primary-600 dark:group-hover:text-primary-400 transition-colors truncate">
                   {s.label}
                 </p>
-                <p className="text-xs text-gray-400 dark:text-gray-500">{s.sub}</p>
+                <p className="text-xs text-surface-400 dark:text-surface-500">{s.sub}</p>
               </div>
-              <svg className="w-4 h-4 text-gray-300 dark:text-gray-600 group-hover:text-primary-500 group-hover:translate-x-0.5 transition-all shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <svg className="w-4 h-4 text-gray-300 dark:text-surface-600 group-hover:text-primary-500 group-hover:translate-x-0.5 transition-all shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
               </svg>
             </Link>

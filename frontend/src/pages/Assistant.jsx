@@ -65,7 +65,7 @@ function ModeSelector({ mode, scenario, onModeChange, onScenarioChange }) {
   const isRoleplay = mode === "roleplay";
 
   return (
-    <div className="border-b border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-900">
+    <div className="border-b border-surface-200 dark:border-surface-700 bg-surface-50 dark:bg-surface-900">
       <div className="flex gap-2 p-3">
         {MODE_OPTIONS.map((opt) => (
           <button
@@ -74,7 +74,7 @@ function ModeSelector({ mode, scenario, onModeChange, onScenarioChange }) {
             className={`px-3 py-1.5 rounded-lg text-sm font-medium transition-colors ${
               mode === opt.value
                 ? "bg-primary-600 text-white"
-                : "bg-white dark:bg-gray-800 text-gray-600 dark:text-gray-400 border border-gray-200 dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-gray-700"
+                : "bg-white dark:bg-surface-800 text-surface-600 dark:text-surface-400 border border-surface-200 dark:border-surface-700 hover:bg-surface-100 dark:hover:bg-surface-700"
             }`}
             title={opt.description}
           >
@@ -93,7 +93,7 @@ function ModeSelector({ mode, scenario, onModeChange, onScenarioChange }) {
               className={`flex flex-col items-center gap-0.5 px-2 py-2 rounded-lg text-xs font-medium transition-colors ${
                 scenario === s.value
                   ? "bg-primary-100 dark:bg-primary-900/40 text-primary-700 dark:text-primary-300 border border-primary-300 dark:border-primary-700"
-                  : "bg-white dark:bg-gray-800 text-gray-600 dark:text-gray-400 border border-gray-200 dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-gray-700"
+                  : "bg-white dark:bg-surface-800 text-surface-600 dark:text-surface-400 border border-surface-200 dark:border-surface-700 hover:bg-surface-100 dark:hover:bg-surface-700"
               }`}
             >
               <span className="text-base">{s.emoji}</span>
@@ -114,7 +114,7 @@ function MessageBubble({ message }) {
         className={`max-w-[75%] px-4 py-3 rounded-2xl whitespace-pre-wrap ${
           isUser
             ? "bg-primary-600 text-white rounded-br-md"
-            : "bg-gray-100 dark:bg-gray-700 text-gray-900 dark:text-gray-100 rounded-bl-md"
+            : "bg-surface-100 dark:bg-surface-700 text-surface-900 dark:text-surface-100 rounded-bl-md"
         }`}
       >
         {message.imagePreview && (
@@ -132,7 +132,7 @@ function MessageBubble({ message }) {
             prose-h3:text-base prose-h3:font-semibold
             prose-ul:my-1 prose-ol:my-1 prose-li:my-0.5
             prose-strong:font-semibold prose-em:italic
-            prose-code:bg-gray-100 prose-code:dark:bg-gray-700 prose-code:px-1 prose-code:rounded prose-code:text-xs">
+            prose-code:bg-surface-100 prose-code:dark:bg-surface-700 prose-code:px-1 prose-code:rounded prose-code:text-xs">
             <ReactMarkdown>{message.content}</ReactMarkdown>
           </div>
         )}
@@ -147,7 +147,7 @@ function MessageBubble({ message }) {
           </p>
         )}
         {!isUser && message.provider && (
-          <p className="text-xs text-gray-400 dark:text-gray-500 mt-1">{message.provider}</p>
+          <p className="text-xs text-surface-400 dark:text-surface-500 mt-1">{message.provider}</p>
         )}
       </div>
     </div>
@@ -157,11 +157,11 @@ function MessageBubble({ message }) {
 function TypingIndicator() {
   return (
     <div className="flex justify-start mb-4">
-      <div className="bg-gray-100 dark:bg-gray-700 px-4 py-3 rounded-2xl rounded-bl-md">
+      <div className="bg-surface-100 dark:bg-surface-700 px-4 py-3 rounded-2xl rounded-bl-md">
         <div className="flex gap-1">
-          <span className="w-2 h-2 bg-gray-400 dark:bg-gray-500 rounded-full animate-bounce" style={{ animationDelay: "0ms" }} />
-          <span className="w-2 h-2 bg-gray-400 dark:bg-gray-500 rounded-full animate-bounce" style={{ animationDelay: "150ms" }} />
-          <span className="w-2 h-2 bg-gray-400 dark:bg-gray-500 rounded-full animate-bounce" style={{ animationDelay: "300ms" }} />
+          <span className="w-2 h-2 bg-surface-400 dark:bg-surface-500 rounded-full animate-bounce" style={{ animationDelay: "0ms" }} />
+          <span className="w-2 h-2 bg-surface-400 dark:bg-surface-500 rounded-full animate-bounce" style={{ animationDelay: "150ms" }} />
+          <span className="w-2 h-2 bg-surface-400 dark:bg-surface-500 rounded-full animate-bounce" style={{ animationDelay: "300ms" }} />
         </div>
       </div>
     </div>
@@ -170,8 +170,8 @@ function TypingIndicator() {
 
 function ConversationSidebar({ conversations, activeId, onSelect, onNew }) {
   return (
-    <div className="w-64 border-r border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-900 flex flex-col">
-      <div className="p-3 border-b border-gray-200 dark:border-gray-700">
+    <div className="w-64 border-r border-surface-200 dark:border-surface-700 bg-surface-50 dark:bg-surface-900 flex flex-col">
+      <div className="p-3 border-b border-surface-200 dark:border-surface-700">
         <button
           onClick={onNew}
           className="w-full px-4 py-2 bg-primary-600 text-white text-sm font-semibold rounded-lg hover:bg-primary-700 transition-colors"
@@ -184,14 +184,14 @@ function ConversationSidebar({ conversations, activeId, onSelect, onNew }) {
           <button
             key={conv.id}
             onClick={() => onSelect(conv.id)}
-            className={`w-full text-left px-4 py-3 border-b border-gray-100 dark:border-gray-700 text-sm transition-colors ${
+            className={`w-full text-left px-4 py-3 border-b border-surface-100 dark:border-surface-700 text-sm transition-colors ${
               activeId === conv.id
                 ? "bg-primary-50 dark:bg-primary-900/20 text-primary-800 dark:text-primary-300"
-                : "text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700"
+                : "text-surface-700 dark:text-surface-300 hover:bg-surface-100 dark:hover:bg-surface-700"
             }`}
           >
             <p className="font-medium truncate">{conv.title}</p>
-            <p className="text-xs text-gray-400 dark:text-gray-500 mt-0.5">
+            <p className="text-xs text-surface-400 dark:text-surface-500 mt-0.5">
               {conv.message_count || 0} messages
             </p>
           </button>
@@ -214,12 +214,12 @@ function ImagePreviewBanner({ file, onRemove }) {
   if (!preview) return null;
 
   return (
-    <div className="flex items-center gap-2 px-4 py-2 border-b border-gray-200 dark:border-gray-700 bg-blue-50 dark:bg-blue-900/20">
+    <div className="flex items-center gap-2 px-4 py-2 border-b border-surface-200 dark:border-surface-700 bg-blue-50 dark:bg-blue-900/20">
       <img src={preview} alt="Preview" className="h-12 w-12 object-cover rounded" />
-      <span className="text-sm text-gray-600 dark:text-gray-400 flex-1 truncate">{file.name}</span>
+      <span className="text-sm text-surface-600 dark:text-surface-400 flex-1 truncate">{file.name}</span>
       <button
         onClick={onRemove}
-        className="text-gray-400 dark:text-gray-500 hover:text-red-500 text-lg font-bold"
+        className="text-surface-400 dark:text-surface-500 hover:text-red-500 text-lg font-bold"
         title="Remove image"
       >
         x
@@ -424,7 +424,7 @@ export default function Assistant() {
   };
 
   return (
-    <div className="flex h-[calc(100vh-4rem-4rem)] bg-white dark:bg-gray-800 rounded-xl shadow-sm border border-gray-200 dark:border-gray-700 overflow-hidden">
+    <div className="flex h-[calc(100vh-4rem-4rem)] bg-white dark:bg-surface-800 rounded-xl shadow-sm border border-surface-200 dark:border-surface-700 overflow-hidden">
       <ConversationSidebar
         conversations={conversations}
         activeId={conversationId}
@@ -454,19 +454,19 @@ export default function Assistant() {
                     <p className="text-3xl mb-1">
                       {ROLEPLAY_SCENARIOS.find((s) => s.value === scenario)?.emoji}
                     </p>
-                    <p className="text-base font-semibold text-gray-700 dark:text-gray-200">
+                    <p className="text-base font-semibold text-surface-700 dark:text-surface-200">
                       {ROLEPLAY_SCENARIOS.find((s) => s.value === scenario)?.label} Roleplay
                     </p>
-                    <p className="text-xs text-gray-400 dark:text-gray-500 mt-0.5">
+                    <p className="text-xs text-surface-400 dark:text-surface-500 mt-0.5">
                       {ROLEPLAY_SCENARIOS.find((s) => s.value === scenario)?.description}
                     </p>
                   </>
                 ) : (
                   <>
-                    <p className="text-base font-semibold text-gray-700 dark:text-gray-200">
+                    <p className="text-base font-semibold text-surface-700 dark:text-surface-200">
                       {MODE_OPTIONS.find((m) => m.value === mode)?.label}
                     </p>
-                    <p className="text-xs text-gray-400 dark:text-gray-500 mt-0.5">
+                    <p className="text-xs text-surface-400 dark:text-surface-500 mt-0.5">
                       {MODE_OPTIONS.find((m) => m.value === mode)?.description}
                     </p>
                   </>
@@ -476,7 +476,7 @@ export default function Assistant() {
               {/* Prompt templates */}
               {(PROMPT_TEMPLATES[mode] || PROMPT_TEMPLATES.roleplay).length > 0 && (
                 <div className="w-full max-w-lg">
-                  <p className="text-xs font-medium text-gray-400 dark:text-gray-500 uppercase tracking-wide mb-2 text-center">
+                  <p className="text-xs font-medium text-surface-400 dark:text-surface-500 uppercase tracking-wide mb-2 text-center">
                     Try one of these
                   </p>
                   <div className="grid grid-cols-2 gap-2">
@@ -484,12 +484,12 @@ export default function Assistant() {
                       <button
                         key={t.label}
                         onClick={() => handleTemplate(t.text)}
-                        className="text-left px-3 py-2.5 rounded-xl border border-gray-200 dark:border-gray-600 bg-white dark:bg-gray-700 hover:border-primary-400 hover:bg-primary-50 dark:hover:bg-primary-900/20 transition-colors group"
+                        className="text-left px-3 py-2.5 rounded-xl border border-surface-200 dark:border-surface-600 bg-white dark:bg-surface-700 hover:border-primary-400 hover:bg-primary-50 dark:hover:bg-primary-900/20 transition-colors group"
                       >
-                        <p className="text-xs font-semibold text-gray-700 dark:text-gray-200 group-hover:text-primary-700 dark:group-hover:text-primary-300">
+                        <p className="text-xs font-semibold text-surface-700 dark:text-surface-200 group-hover:text-primary-700 dark:group-hover:text-primary-300">
                           {t.label}
                         </p>
-                        <p className="text-xs text-gray-400 dark:text-gray-500 mt-0.5 line-clamp-2 leading-relaxed">
+                        <p className="text-xs text-surface-400 dark:text-surface-500 mt-0.5 line-clamp-2 leading-relaxed">
                           {t.text}
                         </p>
                       </button>
@@ -516,7 +516,7 @@ export default function Assistant() {
         </div>
 
         {/* Input area */}
-        <div className="border-t border-gray-200 dark:border-gray-700 p-4">
+        <div className="border-t border-surface-200 dark:border-surface-700 p-4">
           <div className="flex gap-2 items-end">
             {/* Image upload button */}
             <input
@@ -529,7 +529,7 @@ export default function Assistant() {
             <button
               onClick={() => fileInputRef.current?.click()}
               disabled={loading}
-              className="p-3 text-gray-400 hover:text-primary-600 transition-colors disabled:opacity-50"
+              className="p-3 text-surface-400 hover:text-primary-600 transition-colors disabled:opacity-50"
               title="Upload image"
             >
               <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
@@ -544,7 +544,7 @@ export default function Assistant() {
               className={`p-3 transition-colors ${
                 isRecording
                   ? "text-red-500 animate-pulse"
-                  : "text-gray-400 hover:text-primary-600"
+                  : "text-surface-400 hover:text-primary-600"
               } disabled:opacity-50`}
               title={isRecording ? "Stop recording" : "Record voice message"}
             >
@@ -570,7 +570,7 @@ export default function Assistant() {
                   : "Type your message in French..."
               }
               rows={1}
-              className="flex-1 px-4 py-3 border border-gray-200 rounded-xl resize-none focus:border-primary-500 focus:ring-0 focus:outline-none text-sm dark:bg-gray-700 dark:border-gray-600 dark:text-gray-100"
+              className="flex-1 px-4 py-3 border border-surface-200 rounded-xl resize-none focus:border-primary-500 focus:ring-0 focus:outline-none text-sm dark:bg-surface-700 dark:border-surface-600 dark:text-surface-100"
               disabled={loading}
             />
 

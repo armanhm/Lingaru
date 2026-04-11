@@ -141,10 +141,10 @@ export default function Pronunciation() {
       </Link>
 
       <div className="mb-8">
-        <h1 className="text-2xl font-bold text-gray-900 mb-1">
+        <h1 className="text-2xl font-bold text-surface-900 mb-1">
           Pronunciation Practice
         </h1>
-        <p className="text-gray-600">
+        <p className="text-surface-600">
           Listen to the word, then record yourself saying it.
         </p>
       </div>
@@ -168,18 +168,18 @@ export default function Pronunciation() {
       )}
 
       {word && (
-        <div className="bg-white dark:bg-gray-800 rounded-xl shadow-lg p-8 animate-scale-in" key={word.id}>
+        <div className="bg-white dark:bg-surface-800 rounded-xl shadow-lg p-8 animate-scale-in" key={word.id}>
           {/* Word display */}
           <div className="text-center mb-8">
-            <p className="text-4xl font-bold text-gray-900 mb-2">
+            <p className="text-4xl font-bold text-surface-900 mb-2">
               {word.french}
             </p>
             {word.pronunciation && (
-              <p className="text-lg text-gray-400 mb-1">
+              <p className="text-lg text-surface-400 mb-1">
                 /{word.pronunciation}/
               </p>
             )}
-            <p className="text-gray-500">{word.english}</p>
+            <p className="text-surface-500">{word.english}</p>
           </div>
 
           {/* Listen button */}
@@ -232,7 +232,7 @@ export default function Pronunciation() {
                 )}
               </button>
               {!recording && !loading && (
-                <p className="text-xs text-gray-400 mt-3">
+                <p className="text-xs text-surface-400 mt-3">
                   Click to start recording, then click again to stop.
                 </p>
               )}
@@ -243,28 +243,28 @@ export default function Pronunciation() {
           {result && (
             <div className="space-y-6 animate-fade-in-up">
               <div className="text-center">
-                <p className="text-sm text-gray-500 mb-1">Accuracy</p>
+                <p className="text-sm text-surface-500 mb-1">Accuracy</p>
                 <p className={`text-5xl font-bold ${accuracyColor(result.accuracy_score)} animate-count-up`}>
                   {animatedAccuracy}%
                 </p>
               </div>
 
-              <div className="bg-gray-50 rounded-xl p-4 space-y-3">
+              <div className="bg-surface-50 rounded-xl p-4 space-y-3">
                 <div>
-                  <span className="text-sm font-medium text-gray-500">
+                  <span className="text-sm font-medium text-surface-500">
                     We heard:{" "}
                   </span>
-                  <span className="text-gray-900">{result.transcription}</span>
+                  <span className="text-surface-900">{result.transcription}</span>
                 </div>
                 <div>
-                  <span className="text-sm font-medium text-gray-500">
+                  <span className="text-sm font-medium text-surface-500">
                     Expected:{" "}
                   </span>
-                  <span className="text-gray-900">{result.expected_text}</span>
+                  <span className="text-surface-900">{result.expected_text}</span>
                 </div>
                 {result.feedback && (
                   <div className="border-t pt-3">
-                    <p className="text-sm text-gray-700">{result.feedback}</p>
+                    <p className="text-sm text-surface-700">{result.feedback}</p>
                   </div>
                 )}
               </div>
@@ -272,7 +272,7 @@ export default function Pronunciation() {
               <div className="flex gap-3">
                 <button
                   onClick={() => setResult(null)}
-                  className="flex-1 px-6 py-3 border border-gray-300 dark:border-gray-600 rounded-xl font-medium text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700 hover:-translate-y-0.5 transition-all"
+                  className="flex-1 px-6 py-3 border border-surface-300 dark:border-surface-600 rounded-xl font-medium text-surface-700 dark:text-surface-300 hover:bg-surface-50 dark:hover:bg-surface-700 hover:-translate-y-0.5 transition-all"
                 >
                   Try Again
                 </button>

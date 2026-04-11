@@ -34,14 +34,14 @@ function pickBlanks(word) {
 function LetterSlot({ char, isBlank, userChar, focused, correct, wrong, onClick }) {
   if (!isBlank) {
     return (
-      <span className="w-9 h-11 sm:w-11 sm:h-13 flex items-center justify-center text-lg sm:text-xl font-bold text-gray-700 dark:text-gray-300">
+      <span className="w-9 h-11 sm:w-11 sm:h-13 flex items-center justify-center text-lg sm:text-xl font-bold text-surface-700 dark:text-surface-300">
         {char}
       </span>
     );
   }
 
-  let borderColor = "border-gray-300 dark:border-gray-600";
-  let bgColor = "bg-white dark:bg-gray-800";
+  let borderColor = "border-surface-300 dark:border-surface-600";
+  let bgColor = "bg-white dark:bg-surface-800";
   if (correct) { borderColor = "border-emerald-400 dark:border-emerald-500"; bgColor = "bg-emerald-50 dark:bg-emerald-900/20"; }
   if (wrong)   { borderColor = "border-red-400 dark:border-red-500"; bgColor = "bg-red-50 dark:bg-red-900/20"; }
   if (focused && !correct && !wrong) { borderColor = "border-primary-500 dark:border-primary-400"; bgColor = "bg-primary-50 dark:bg-primary-900/10"; }
@@ -55,11 +55,11 @@ function LetterSlot({ char, isBlank, userChar, focused, correct, wrong, onClick 
         ${!correct && !wrong ? "hover:border-primary-400 hover:scale-105" : ""}`}
     >
       {userChar ? (
-        <span className={correct ? "text-emerald-600 dark:text-emerald-400" : wrong ? "text-red-600 dark:text-red-400" : "text-gray-900 dark:text-gray-100"}>
+        <span className={correct ? "text-emerald-600 dark:text-emerald-400" : wrong ? "text-red-600 dark:text-red-400" : "text-surface-900 dark:text-surface-100"}>
           {userChar}
         </span>
       ) : (
-        <span className="text-gray-300 dark:text-gray-600">_</span>
+        <span className="text-surface-300 dark:text-surface-600">_</span>
       )}
     </button>
   );
@@ -279,23 +279,23 @@ export default function MissingLetter() {
         <div className="animate-bounce-in text-6xl mb-2">
           {pct === 100 ? "🌟" : pct >= 60 ? "🎉" : ranOut ? "💔" : "💪"}
         </div>
-        <h2 className="text-2xl font-bold text-gray-900 dark:text-gray-100 animate-fade-in-up">
+        <h2 className="text-2xl font-bold text-surface-900 dark:text-surface-100 animate-fade-in-up">
           {ranOut ? "Out of Lives!" : pct === 100 ? "Perfect Spelling!" : pct >= 60 ? "Well Done!" : "Keep Practicing!"}
         </h2>
 
-        <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-lg p-6 space-y-4 animate-scale-in">
+        <div className="bg-white dark:bg-surface-800 rounded-2xl shadow-lg p-6 space-y-4 animate-scale-in">
           <div className="flex justify-center gap-8">
             <div className="text-center">
               <p className="text-3xl font-bold text-primary-600">{animatedScore}/{roundResults.length}</p>
-              <p className="text-xs text-gray-400">correct</p>
+              <p className="text-xs text-surface-400">correct</p>
             </div>
             <div className="text-center">
               <Lives lives={lives} max={MAX_LIVES} />
-              <p className="text-xs text-gray-400 mt-1">lives left</p>
+              <p className="text-xs text-surface-400 mt-1">lives left</p>
             </div>
             <div className="text-center">
               <p className="text-3xl font-bold text-amber-500">+{animatedXP}</p>
-              <p className="text-xs text-gray-400">XP earned</p>
+              <p className="text-xs text-surface-400">XP earned</p>
             </div>
           </div>
 
@@ -310,16 +310,16 @@ export default function MissingLetter() {
               >
                 <div className="flex items-center gap-2">
                   <span>{r.correct ? "✅" : "❌"}</span>
-                  <span className="font-semibold text-gray-800 dark:text-gray-200">{r.word.french}</span>
+                  <span className="font-semibold text-surface-800 dark:text-surface-200">{r.word.french}</span>
                 </div>
-                <span className="text-xs text-gray-500 dark:text-gray-400">{r.word.english}</span>
+                <span className="text-xs text-surface-500 dark:text-surface-400">{r.word.english}</span>
               </div>
             ))}
           </div>
         </div>
 
         <div className="flex gap-3 justify-center animate-fade-in-up">
-          <Link to="/mini-games" className="px-5 py-2.5 border border-gray-300 dark:border-gray-600 rounded-xl text-sm font-medium text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors">
+          <Link to="/mini-games" className="px-5 py-2.5 border border-surface-300 dark:border-surface-600 rounded-xl text-sm font-medium text-surface-700 dark:text-surface-300 hover:bg-surface-50 dark:hover:bg-surface-700 transition-colors">
             ← Mini Games
           </Link>
           <button onClick={() => window.location.reload()} className="px-5 py-2.5 bg-primary-600 text-white rounded-xl text-sm font-semibold hover:bg-primary-700 transition-colors">
@@ -338,42 +338,42 @@ export default function MissingLetter() {
     <div className="max-w-xl mx-auto py-8 space-y-5">
       {/* Header */}
       <div className="flex items-center justify-between animate-fade-in">
-        <Link to="/mini-games" className="text-sm text-gray-400 hover:text-gray-600 dark:hover:text-gray-300 transition-colors">
+        <Link to="/mini-games" className="text-sm text-surface-400 hover:text-surface-600 dark:hover:text-surface-300 transition-colors">
           ← Back
         </Link>
-        <h1 className="text-lg font-bold text-gray-900 dark:text-gray-100">Missing Letter</h1>
-        <span className="text-sm font-medium text-gray-500 dark:text-gray-400 bg-gray-100 dark:bg-gray-700 px-3 py-1 rounded-full">
+        <h1 className="text-lg font-bold text-surface-900 dark:text-surface-100">Missing Letter</h1>
+        <span className="text-sm font-medium text-surface-500 dark:text-surface-400 bg-surface-100 dark:bg-surface-700 px-3 py-1 rounded-full">
           {round + 1}/{words.length}
         </span>
       </div>
 
       {/* Progress */}
-      <div className="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-1.5">
+      <div className="w-full bg-surface-200 dark:bg-surface-700 rounded-full h-1.5">
         <div className="bg-primary-500 h-1.5 rounded-full transition-all duration-500" style={{ width: `${(round / words.length) * 100}%` }} />
       </div>
 
       {/* Score + lives */}
       <div className="flex items-center justify-between px-1">
-        <div className="flex items-center gap-3 bg-white dark:bg-gray-800 border border-gray-100 dark:border-gray-700 rounded-full px-4 py-1.5 shadow-sm">
-          <span className="text-xs text-gray-400">Score</span>
+        <div className="flex items-center gap-3 bg-white dark:bg-surface-800 border border-surface-100 dark:border-surface-700 rounded-full px-4 py-1.5 shadow-sm">
+          <span className="text-xs text-surface-400">Score</span>
           <span className="text-sm font-bold text-primary-600">{score}/{round + (resultState ? 1 : 0)}</span>
         </div>
         <Lives lives={lives} max={MAX_LIVES} />
       </div>
 
       {/* Game card */}
-      <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-sm border border-gray-100 dark:border-gray-700 overflow-hidden animate-scale-in" key={round}>
+      <div className="bg-white dark:bg-surface-800 rounded-2xl shadow-sm border border-surface-100 dark:border-surface-700 overflow-hidden animate-scale-in" key={round}>
         <div className="px-6 pt-6 pb-4 space-y-4">
           {/* Hint */}
           <div className="text-center space-y-1">
-            <p className="text-xs font-semibold text-gray-400 dark:text-gray-500 uppercase tracking-wider">
+            <p className="text-xs font-semibold text-surface-400 dark:text-surface-500 uppercase tracking-wider">
               Fill in the missing letters
             </p>
             <div className="flex items-center justify-center gap-2">
-              <p className="text-xl font-bold text-gray-900 dark:text-gray-100">{word.english}</p>
+              <p className="text-xl font-bold text-surface-900 dark:text-surface-100">{word.english}</p>
             </div>
             {word.part_of_speech && (
-              <span className="inline-block text-xs bg-gray-100 dark:bg-gray-700 text-gray-500 dark:text-gray-400 px-2 py-0.5 rounded-full">
+              <span className="inline-block text-xs bg-surface-100 dark:bg-surface-700 text-surface-500 dark:text-surface-400 px-2 py-0.5 rounded-full">
                 {word.part_of_speech}
               </span>
             )}
@@ -422,8 +422,8 @@ export default function MissingLetter() {
               {resultState === "correct" && <AudioPlayButton text={word.french} />}
             </div>
             {resultState === "wrong" && (
-              <p className="mt-1 text-sm text-gray-600 dark:text-gray-400">
-                Answer: <strong className="text-gray-900 dark:text-gray-100">{word.french}</strong>
+              <p className="mt-1 text-sm text-surface-600 dark:text-surface-400">
+                Answer: <strong className="text-surface-900 dark:text-surface-100">{word.french}</strong>
               </p>
             )}
             {resultState === "correct" && (
@@ -456,7 +456,7 @@ export default function MissingLetter() {
                   setCorrectMap(cMap);
                 }}
                 tabIndex={-1}
-                className="flex-1 py-2.5 border border-gray-300 dark:border-gray-600 rounded-xl text-sm font-medium text-gray-600 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors"
+                className="flex-1 py-2.5 border border-surface-300 dark:border-surface-600 rounded-xl text-sm font-medium text-surface-600 dark:text-surface-300 hover:bg-surface-50 dark:hover:bg-surface-700 transition-colors"
               >
                 Skip (−❤️)
               </button>
@@ -468,7 +468,7 @@ export default function MissingLetter() {
                 }}
                 tabIndex={-1}
                 disabled={Object.keys(userLetters).length === 0}
-                className="flex-1 py-2.5 border border-gray-300 dark:border-gray-600 rounded-xl text-sm font-medium text-gray-600 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700 disabled:opacity-40 transition-colors"
+                className="flex-1 py-2.5 border border-surface-300 dark:border-surface-600 rounded-xl text-sm font-medium text-surface-600 dark:text-surface-300 hover:bg-surface-50 dark:hover:bg-surface-700 disabled:opacity-40 transition-colors"
               >
                 Clear
               </button>
@@ -478,7 +478,7 @@ export default function MissingLetter() {
       </div>
 
       {/* Hints */}
-      <div className="flex justify-center gap-3 text-xs text-gray-400 dark:text-gray-500">
+      <div className="flex justify-center gap-3 text-xs text-surface-400 dark:text-surface-500">
         <span>Type letters to fill blanks</span>
         <span>·</span>
         <span>Backspace to undo</span>

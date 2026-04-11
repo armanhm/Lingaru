@@ -45,7 +45,7 @@ function SearchBar({ value, onChange, onSubmit, loading, placeholder }) {
         value={value}
         onChange={(e) => onChange(e.target.value)}
         placeholder={placeholder}
-        className="flex-1 px-4 py-3 border border-gray-200 dark:border-gray-600 rounded-xl text-sm bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 focus:outline-none focus:border-primary-400 dark:focus:border-primary-500 transition-colors"
+        className="flex-1 px-4 py-3 border border-surface-200 dark:border-surface-600 rounded-xl text-sm bg-white dark:bg-surface-800 text-surface-900 dark:text-surface-100 focus:outline-none focus:border-primary-400 dark:focus:border-primary-500 transition-colors"
       />
       <button
         type="submit"
@@ -79,12 +79,12 @@ function DictionaryResult({ result }) {
       {/* Word header */}
       <div className="flex flex-wrap items-center gap-3">
         <div className="flex items-center gap-2">
-          <h2 className="text-3xl font-bold text-gray-900 dark:text-gray-100">{word}</h2>
+          <h2 className="text-3xl font-bold text-surface-900 dark:text-surface-100">{word}</h2>
           <AudioPlayButton text={word} />
         </div>
         <div className="flex flex-wrap gap-2">
           {part_of_speech && (
-            <Badge className={POS_COLORS[part_of_speech] || "bg-gray-100 dark:bg-gray-700 text-gray-600 dark:text-gray-300"}>
+            <Badge className={POS_COLORS[part_of_speech] || "bg-surface-100 dark:bg-surface-700 text-surface-600 dark:text-surface-300"}>
               {part_of_speech}
             </Badge>
           )}
@@ -94,7 +94,7 @@ function DictionaryResult({ result }) {
             </Badge>
           )}
           {register && register !== "neutral" && (
-            <Badge className="bg-gray-100 dark:bg-gray-700 text-gray-500 dark:text-gray-400">
+            <Badge className="bg-surface-100 dark:bg-surface-700 text-surface-500 dark:text-surface-400">
               {register}
             </Badge>
           )}
@@ -104,7 +104,7 @@ function DictionaryResult({ result }) {
       {/* Definitions */}
       {definitions?.length > 0 && (
         <div>
-          <h3 className="text-xs font-semibold uppercase tracking-wider text-gray-400 dark:text-gray-500 mb-2">Definitions</h3>
+          <h3 className="text-xs font-semibold uppercase tracking-wider text-surface-400 dark:text-surface-500 mb-2">Definitions</h3>
           <ol className="space-y-2">
             {definitions.map((def, i) => (
               <li key={i} className="flex gap-3">
@@ -112,8 +112,8 @@ function DictionaryResult({ result }) {
                   {i + 1}
                 </span>
                 <div>
-                  <p className="text-gray-800 dark:text-gray-200 text-sm font-medium">{def.en}</p>
-                  {def.fr && <p className="text-gray-500 dark:text-gray-400 text-xs mt-0.5 italic">{def.fr}</p>}
+                  <p className="text-surface-800 dark:text-surface-200 text-sm font-medium">{def.en}</p>
+                  {def.fr && <p className="text-surface-500 dark:text-surface-400 text-xs mt-0.5 italic">{def.fr}</p>}
                 </div>
               </li>
             ))}
@@ -124,15 +124,15 @@ function DictionaryResult({ result }) {
       {/* Examples */}
       {examples?.length > 0 && (
         <div>
-          <h3 className="text-xs font-semibold uppercase tracking-wider text-gray-400 dark:text-gray-500 mb-2">Examples</h3>
+          <h3 className="text-xs font-semibold uppercase tracking-wider text-surface-400 dark:text-surface-500 mb-2">Examples</h3>
           <div className="space-y-2">
             {examples.map((ex, i) => (
               <div key={i} className="border-l-2 border-primary-200 dark:border-primary-800 pl-3">
                 <div className="flex items-start gap-2">
-                  <p className="text-sm text-gray-800 dark:text-gray-200 italic flex-1">{ex.fr}</p>
+                  <p className="text-sm text-surface-800 dark:text-surface-200 italic flex-1">{ex.fr}</p>
                   <AudioPlayButton text={ex.fr} />
                 </div>
-                <p className="text-xs text-gray-500 dark:text-gray-400 mt-0.5">{ex.en}</p>
+                <p className="text-xs text-surface-500 dark:text-surface-400 mt-0.5">{ex.en}</p>
               </div>
             ))}
           </div>
@@ -143,7 +143,7 @@ function DictionaryResult({ result }) {
       <div className="grid grid-cols-2 gap-4">
         {synonyms?.length > 0 && (
           <div>
-            <h3 className="text-xs font-semibold uppercase tracking-wider text-gray-400 dark:text-gray-500 mb-2">Synonyms</h3>
+            <h3 className="text-xs font-semibold uppercase tracking-wider text-surface-400 dark:text-surface-500 mb-2">Synonyms</h3>
             <div className="flex flex-wrap gap-1.5">
               {synonyms.map((s, i) => (
                 <span key={i} className="px-2.5 py-1 text-xs rounded-lg bg-emerald-50 dark:bg-emerald-900/20 text-emerald-700 dark:text-emerald-300 border border-emerald-200 dark:border-emerald-800">
@@ -155,7 +155,7 @@ function DictionaryResult({ result }) {
         )}
         {antonyms?.length > 0 && (
           <div>
-            <h3 className="text-xs font-semibold uppercase tracking-wider text-gray-400 dark:text-gray-500 mb-2">Antonyms</h3>
+            <h3 className="text-xs font-semibold uppercase tracking-wider text-surface-400 dark:text-surface-500 mb-2">Antonyms</h3>
             <div className="flex flex-wrap gap-1.5">
               {antonyms.map((a, i) => (
                 <span key={i} className="px-2.5 py-1 text-xs rounded-lg bg-rose-50 dark:bg-rose-900/20 text-rose-700 dark:text-rose-300 border border-rose-200 dark:border-rose-800">
@@ -169,9 +169,9 @@ function DictionaryResult({ result }) {
 
       {/* Etymology */}
       {etymology && etymology !== "null" && (
-        <div className="bg-gray-50 dark:bg-gray-700/50 rounded-lg px-4 py-3">
-          <h3 className="text-xs font-semibold uppercase tracking-wider text-gray-400 dark:text-gray-500 mb-1">Etymology</h3>
-          <p className="text-sm text-gray-600 dark:text-gray-300">{etymology}</p>
+        <div className="bg-surface-50 dark:bg-surface-700/50 rounded-lg px-4 py-3">
+          <h3 className="text-xs font-semibold uppercase tracking-wider text-surface-400 dark:text-surface-500 mb-1">Etymology</h3>
+          <p className="text-sm text-surface-600 dark:text-surface-300">{etymology}</p>
         </div>
       )}
     </div>
@@ -189,25 +189,25 @@ function ConjugationResult({ result }) {
       {/* Verb header */}
       <div>
         <div className="flex items-center gap-2 mb-2">
-          <h2 className="text-3xl font-bold text-gray-900 dark:text-gray-100">{verb}</h2>
+          <h2 className="text-3xl font-bold text-surface-900 dark:text-surface-100">{verb}</h2>
           <AudioPlayButton text={verb} />
         </div>
-        <div className="flex flex-wrap gap-2 text-sm text-gray-500 dark:text-gray-400">
+        <div className="flex flex-wrap gap-2 text-sm text-surface-500 dark:text-surface-400">
           {auxiliary && (
             <span className="flex items-center gap-1">
-              <span className="font-medium text-gray-700 dark:text-gray-300">auxiliary:</span>
+              <span className="font-medium text-surface-700 dark:text-surface-300">auxiliary:</span>
               <span className="font-bold text-primary-600 dark:text-primary-400">{auxiliary}</span>
             </span>
           )}
           {past_participle && (
             <span className="flex items-center gap-1">
-              <span className="font-medium text-gray-700 dark:text-gray-300">past participle:</span>
+              <span className="font-medium text-surface-700 dark:text-surface-300">past participle:</span>
               <span className="font-bold text-violet-600 dark:text-violet-400">{past_participle}</span>
             </span>
           )}
           {present_participle && (
             <span className="flex items-center gap-1">
-              <span className="font-medium text-gray-700 dark:text-gray-300">present participle:</span>
+              <span className="font-medium text-surface-700 dark:text-surface-300">present participle:</span>
               <span className="font-bold text-emerald-600 dark:text-emerald-400">{present_participle}</span>
             </span>
           )}
@@ -223,7 +223,7 @@ function ConjugationResult({ result }) {
             className={`px-3 py-1.5 rounded-lg text-xs font-semibold transition-colors ${
               activeTab === tense
                 ? "bg-primary-600 text-white"
-                : "bg-gray-100 dark:bg-gray-700 text-gray-600 dark:text-gray-400 hover:bg-gray-200 dark:hover:bg-gray-600"
+                : "bg-surface-100 dark:bg-surface-700 text-surface-600 dark:text-surface-400 hover:bg-surface-200 dark:hover:bg-surface-600"
             }`}
           >
             {tense}
@@ -233,14 +233,14 @@ function ConjugationResult({ result }) {
 
       {/* Active tense table */}
       {tenses?.[activeTab] && (
-        <div className={`rounded-xl border-2 p-4 ${TENSE_COLORS[activeTab] || "border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-800"}`}>
-          <h3 className="text-sm font-bold text-gray-700 dark:text-gray-200 mb-3">{activeTab}</h3>
+        <div className={`rounded-xl border-2 p-4 ${TENSE_COLORS[activeTab] || "border-surface-200 dark:border-surface-700 bg-surface-50 dark:bg-surface-800"}`}>
+          <h3 className="text-sm font-bold text-surface-700 dark:text-surface-200 mb-3">{activeTab}</h3>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
             {Object.entries(tenses[activeTab]).map(([pronoun, form]) => (
-              <div key={pronoun} className="flex items-center justify-between gap-4 bg-white/60 dark:bg-gray-800/60 rounded-lg px-3 py-2">
-                <span className="text-xs font-medium text-gray-500 dark:text-gray-400 shrink-0">{pronoun}</span>
+              <div key={pronoun} className="flex items-center justify-between gap-4 bg-white/60 dark:bg-surface-800/60 rounded-lg px-3 py-2">
+                <span className="text-xs font-medium text-surface-500 dark:text-surface-400 shrink-0">{pronoun}</span>
                 <div className="flex items-center gap-1.5">
-                  <span className="text-sm font-bold text-gray-900 dark:text-gray-100">{form}</span>
+                  <span className="text-sm font-bold text-surface-900 dark:text-surface-100">{form}</span>
                   <AudioPlayButton text={`${pronoun} ${form}`} />
                 </div>
               </div>
@@ -251,7 +251,7 @@ function ConjugationResult({ result }) {
 
       {/* All tenses overview (collapsed) */}
       <details className="group">
-        <summary className="text-xs font-medium text-gray-400 dark:text-gray-500 cursor-pointer hover:text-primary-600 dark:hover:text-primary-400 select-none list-none flex items-center gap-1">
+        <summary className="text-xs font-medium text-surface-400 dark:text-surface-500 cursor-pointer hover:text-primary-600 dark:hover:text-primary-400 select-none list-none flex items-center gap-1">
           <svg className="w-3 h-3 transition-transform group-open:rotate-90" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
           </svg>
@@ -260,12 +260,12 @@ function ConjugationResult({ result }) {
         <div className="mt-3 grid grid-cols-1 md:grid-cols-2 gap-3">
           {availableTenses.map((tense) => (
             <div key={tense} className={`rounded-lg border p-3 ${TENSE_COLORS[tense] || ""}`}>
-              <h4 className="text-xs font-bold text-gray-600 dark:text-gray-300 mb-2">{tense}</h4>
+              <h4 className="text-xs font-bold text-surface-600 dark:text-surface-300 mb-2">{tense}</h4>
               <div className="space-y-1">
                 {Object.entries(tenses[tense]).map(([pronoun, form]) => (
                   <div key={pronoun} className="flex justify-between text-xs">
-                    <span className="text-gray-500 dark:text-gray-400">{pronoun}</span>
-                    <span className="font-semibold text-gray-800 dark:text-gray-200">{form}</span>
+                    <span className="text-surface-500 dark:text-surface-400">{pronoun}</span>
+                    <span className="font-semibold text-surface-800 dark:text-surface-200">{form}</span>
                   </div>
                 ))}
               </div>
@@ -388,18 +388,18 @@ export default function Dictionary() {
     <div className="max-w-4xl mx-auto space-y-6">
       {/* Page header */}
       <div>
-        <h1 className="text-3xl font-bold text-gray-900 dark:text-gray-100">Dictionary</h1>
-        <p className="text-gray-500 dark:text-gray-400 mt-1">Look up French words and conjugate verbs</p>
+        <h1 className="text-3xl font-bold text-surface-900 dark:text-surface-100">Dictionary</h1>
+        <p className="text-surface-500 dark:text-surface-400 mt-1">Look up French words and conjugate verbs</p>
       </div>
 
       {/* Tabs */}
-      <div className="flex gap-1 p-1 bg-gray-100 dark:bg-gray-800 rounded-xl w-fit">
+      <div className="flex gap-1 p-1 bg-surface-100 dark:bg-surface-800 rounded-xl w-fit">
         <button
           onClick={() => setTab("dictionary")}
           className={`px-5 py-2 rounded-lg text-sm font-semibold transition-colors ${
             tab === "dictionary"
-              ? "bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100 shadow-sm"
-              : "text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-200"
+              ? "bg-white dark:bg-surface-700 text-surface-900 dark:text-surface-100 shadow-sm"
+              : "text-surface-500 dark:text-surface-400 hover:text-surface-700 dark:hover:text-surface-200"
           }`}
         >
           📖 Dictionary
@@ -408,8 +408,8 @@ export default function Dictionary() {
           onClick={() => setTab("conjugator")}
           className={`px-5 py-2 rounded-lg text-sm font-semibold transition-colors ${
             tab === "conjugator"
-              ? "bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100 shadow-sm"
-              : "text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-200"
+              ? "bg-white dark:bg-surface-700 text-surface-900 dark:text-surface-100 shadow-sm"
+              : "text-surface-500 dark:text-surface-400 hover:text-surface-700 dark:hover:text-surface-200"
           }`}
         >
           ✏️ Verb Conjugator
@@ -430,14 +430,14 @@ export default function Dictionary() {
           {/* Quick words */}
           {!dictResult && !dictLoading && (
             <div>
-              <p className="text-xs font-medium text-gray-400 dark:text-gray-500 mb-2">Try a word:</p>
+              <p className="text-xs font-medium text-surface-400 dark:text-surface-500 mb-2">Try a word:</p>
               <div className="flex flex-wrap gap-2">
                 {QUICK_WORDS.map((w, i) => (
                   <button
                     key={w}
                     onClick={() => quickLookup(w)}
                     style={staggerDelay(i, 50)}
-                    className="px-3 py-1.5 text-sm rounded-lg bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 text-gray-700 dark:text-gray-300 hover:border-primary-400 hover:text-primary-600 dark:hover:text-primary-400 hover:scale-105 transition-all animate-fade-in-up"
+                    className="px-3 py-1.5 text-sm rounded-lg bg-white dark:bg-surface-800 border border-surface-200 dark:border-surface-700 text-surface-700 dark:text-surface-300 hover:border-primary-400 hover:text-primary-600 dark:hover:text-primary-400 hover:scale-105 transition-all animate-fade-in-up"
                   >
                     {w}
                   </button>
@@ -447,7 +447,7 @@ export default function Dictionary() {
           )}
 
           {dictLoading && (
-            <div className="bg-white dark:bg-gray-800 rounded-xl border border-gray-100 dark:border-gray-700 p-8 flex flex-col items-center gap-3 text-gray-400 dark:text-gray-500">
+            <div className="bg-white dark:bg-surface-800 rounded-xl border border-surface-100 dark:border-surface-700 p-8 flex flex-col items-center gap-3 text-surface-400 dark:text-surface-500">
               <svg className="w-8 h-8 animate-spin" fill="none" viewBox="0 0 24 24">
                 <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
                 <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8z" />
@@ -463,11 +463,11 @@ export default function Dictionary() {
           )}
 
           {dictResult && !dictLoading && (
-            <div className="bg-white dark:bg-gray-800 rounded-xl border border-gray-100 dark:border-gray-700 p-6 animate-scale-in">
+            <div className="bg-white dark:bg-surface-800 rounded-xl border border-surface-100 dark:border-surface-700 p-6 animate-scale-in">
               <DictionaryResult result={dictResult} />
               {/* Link to conjugator if it's a verb */}
               {dictResult.part_of_speech === "verb" && (
-                <div className="mt-5 pt-4 border-t border-gray-100 dark:border-gray-700">
+                <div className="mt-5 pt-4 border-t border-surface-100 dark:border-surface-700">
                   <button
                     onClick={() => quickConjugate(dictResult.word)}
                     className="text-sm font-medium text-primary-600 dark:text-primary-400 hover:underline"
@@ -495,14 +495,14 @@ export default function Dictionary() {
           {/* Quick verbs */}
           {!conjResult && !conjLoading && (
             <div>
-              <p className="text-xs font-medium text-gray-400 dark:text-gray-500 mb-2">Common verbs:</p>
+              <p className="text-xs font-medium text-surface-400 dark:text-surface-500 mb-2">Common verbs:</p>
               <div className="flex flex-wrap gap-2">
                 {QUICK_VERBS.map((v, i) => (
                   <button
                     key={v}
                     onClick={() => quickConjugate(v)}
                     style={staggerDelay(i, 50)}
-                    className="px-3 py-1.5 text-sm rounded-lg bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 text-gray-700 dark:text-gray-300 hover:border-primary-400 hover:text-primary-600 dark:hover:text-primary-400 hover:scale-105 transition-all animate-fade-in-up"
+                    className="px-3 py-1.5 text-sm rounded-lg bg-white dark:bg-surface-800 border border-surface-200 dark:border-surface-700 text-surface-700 dark:text-surface-300 hover:border-primary-400 hover:text-primary-600 dark:hover:text-primary-400 hover:scale-105 transition-all animate-fade-in-up"
                   >
                     {v}
                   </button>
@@ -512,7 +512,7 @@ export default function Dictionary() {
           )}
 
           {conjLoading && (
-            <div className="bg-white dark:bg-gray-800 rounded-xl border border-gray-100 dark:border-gray-700 p-8 flex flex-col items-center gap-3 text-gray-400 dark:text-gray-500">
+            <div className="bg-white dark:bg-surface-800 rounded-xl border border-surface-100 dark:border-surface-700 p-8 flex flex-col items-center gap-3 text-surface-400 dark:text-surface-500">
               <svg className="w-8 h-8 animate-spin" fill="none" viewBox="0 0 24 24">
                 <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
                 <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8z" />
@@ -528,7 +528,7 @@ export default function Dictionary() {
           )}
 
           {conjResult && !conjLoading && (
-            <div className="bg-white dark:bg-gray-800 rounded-xl border border-gray-100 dark:border-gray-700 p-6 animate-scale-in">
+            <div className="bg-white dark:bg-surface-800 rounded-xl border border-surface-100 dark:border-surface-700 p-6 animate-scale-in">
               <ConjugationResult result={conjResult} />
             </div>
           )}

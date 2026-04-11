@@ -21,7 +21,7 @@ function YouTubeEmbed({ videoId }) {
   return (
     <div className="relative w-full" style={{ paddingBottom: "56.25%" }}>
       {!loaded && (
-        <div className="absolute inset-0 bg-gray-100 dark:bg-gray-700 rounded-xl flex items-center justify-center">
+        <div className="absolute inset-0 bg-surface-100 dark:bg-surface-700 rounded-xl flex items-center justify-center">
           <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary-600" />
         </div>
       )}
@@ -46,14 +46,14 @@ function TranscriptPanel({ transcriptFr, transcriptEn }) {
   if (!transcriptFr) return null;
 
   return (
-    <div className="bg-white dark:bg-gray-800 rounded-xl shadow p-5">
+    <div className="bg-white dark:bg-surface-800 rounded-xl shadow p-5">
       <div className="flex items-center justify-between mb-3">
-        <h3 className="font-semibold text-gray-900 dark:text-gray-100">Transcript</h3>
-        <div className="flex gap-1 bg-gray-100 dark:bg-gray-700 rounded-lg p-1">
+        <h3 className="font-semibold text-surface-900 dark:text-surface-100">Transcript</h3>
+        <div className="flex gap-1 bg-surface-100 dark:bg-surface-700 rounded-lg p-1">
           <button
             onClick={() => setLang("fr")}
             className={`px-3 py-1 rounded-md text-sm font-medium transition-colors ${
-              lang === "fr" ? "bg-white dark:bg-gray-600 shadow text-primary-700 dark:text-primary-400" : "text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300"
+              lang === "fr" ? "bg-white dark:bg-surface-600 shadow text-primary-700 dark:text-primary-400" : "text-surface-500 dark:text-surface-400 hover:text-surface-700 dark:hover:text-surface-300"
             }`}
           >
             Français
@@ -62,7 +62,7 @@ function TranscriptPanel({ transcriptFr, transcriptEn }) {
             <button
               onClick={() => setLang("en")}
               className={`px-3 py-1 rounded-md text-sm font-medium transition-colors ${
-                lang === "en" ? "bg-white dark:bg-gray-600 shadow text-primary-700 dark:text-primary-400" : "text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300"
+                lang === "en" ? "bg-white dark:bg-surface-600 shadow text-primary-700 dark:text-primary-400" : "text-surface-500 dark:text-surface-400 hover:text-surface-700 dark:hover:text-surface-300"
               }`}
             >
               English
@@ -70,7 +70,7 @@ function TranscriptPanel({ transcriptFr, transcriptEn }) {
           )}
         </div>
       </div>
-      <div className="max-h-48 overflow-y-auto text-sm text-gray-700 dark:text-gray-300 leading-relaxed whitespace-pre-line pr-1">
+      <div className="max-h-48 overflow-y-auto text-sm text-surface-700 dark:text-surface-300 leading-relaxed whitespace-pre-line pr-1">
         {text}
       </div>
     </div>
@@ -81,25 +81,25 @@ function TranscriptPanel({ transcriptFr, transcriptEn }) {
 
 function VideoVocabularyCard({ word }) {
   return (
-    <div className="bg-white dark:bg-gray-800 rounded-lg shadow p-4 border-l-4 border-primary-400">
+    <div className="bg-white dark:bg-surface-800 rounded-lg shadow p-4 border-l-4 border-primary-400">
       <div className="flex items-center justify-between mb-1">
         <span className="flex items-center gap-1">
-          <span className="text-base font-semibold text-gray-900 dark:text-gray-100">{word.french}</span>
+          <span className="text-base font-semibold text-surface-900 dark:text-surface-100">{word.french}</span>
           <AudioPlayButton text={word.french} />
         </span>
         <span className="text-sm text-primary-600 font-medium">{word.english}</span>
       </div>
       {word.pronunciation && (
-        <p className="text-xs text-gray-400 dark:text-gray-500 mb-1">{word.pronunciation}</p>
+        <p className="text-xs text-surface-400 dark:text-surface-500 mb-1">{word.pronunciation}</p>
       )}
       {word.example_sentence && (
-        <div className="flex items-start gap-1 border-t dark:border-gray-700 pt-2 mt-2">
-          <p className="text-sm text-gray-600 dark:text-gray-400 italic flex-1">{word.example_sentence}</p>
+        <div className="flex items-start gap-1 border-t dark:border-surface-700 pt-2 mt-2">
+          <p className="text-sm text-surface-600 dark:text-surface-400 italic flex-1">{word.example_sentence}</p>
           <AudioPlayButton text={word.example_sentence} />
         </div>
       )}
       {word.timestamp_seconds > 0 && (
-        <p className="text-xs text-gray-400 dark:text-gray-500 mt-1">⏱ {formatTime(word.timestamp_seconds)}</p>
+        <p className="text-xs text-surface-400 dark:text-surface-500 mt-1">⏱ {formatTime(word.timestamp_seconds)}</p>
       )}
     </div>
   );
@@ -158,7 +158,7 @@ function StatusBanner({ status, errorMessage }) {
         {c.icon} {c.message}
       </p>
       {status !== "failed" && (
-        <p className="text-xs text-gray-500 dark:text-gray-400 mt-1">Refresh the page to see the result.</p>
+        <p className="text-xs text-surface-500 dark:text-surface-400 mt-1">Refresh the page to see the result.</p>
       )}
     </div>
   );
@@ -191,11 +191,11 @@ function VideoUrlForm({ lessonId, onSubmitted }) {
   };
 
   return (
-    <div className="bg-white dark:bg-gray-800 rounded-xl shadow p-6 border-2 border-dashed border-gray-200 dark:border-gray-700">
+    <div className="bg-white dark:bg-surface-800 rounded-xl shadow p-6 border-2 border-dashed border-surface-200 dark:border-surface-700">
       <div className="text-center mb-4">
         <span className="text-4xl">🎬</span>
-        <h3 className="text-lg font-semibold text-gray-900 dark:text-gray-100 mt-2">Add a YouTube Video</h3>
-        <p className="text-sm text-gray-500 dark:text-gray-400 mt-1">
+        <h3 className="text-lg font-semibold text-surface-900 dark:text-surface-100 mt-2">Add a YouTube Video</h3>
+        <p className="text-sm text-surface-500 dark:text-surface-400 mt-1">
           Paste a YouTube URL — we'll extract the transcript and generate vocabulary practice automatically.
         </p>
       </div>
@@ -205,7 +205,7 @@ function VideoUrlForm({ lessonId, onSubmitted }) {
           value={url}
           onChange={(e) => setUrl(e.target.value)}
           placeholder="https://www.youtube.com/watch?v=..."
-          className="flex-1 px-4 py-2.5 border border-gray-200 rounded-xl text-sm focus:border-primary-500 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:text-gray-100"
+          className="flex-1 px-4 py-2.5 border border-surface-200 rounded-xl text-sm focus:border-primary-500 focus:outline-none dark:bg-surface-700 dark:border-surface-600 dark:text-surface-100"
           disabled={loading}
         />
         <button
@@ -233,7 +233,7 @@ export default function VideoSection({ video, lessonId, isStaff, lessonQuestionC
   if (!currentVideo && isStaff) {
     return (
       <div className="mb-8">
-        <h2 className="text-lg font-semibold text-gray-900 dark:text-gray-100 mb-4">Video Lesson</h2>
+        <h2 className="text-lg font-semibold text-surface-900 dark:text-surface-100 mb-4">Video Lesson</h2>
         <VideoUrlForm lessonId={lessonId} onSubmitted={setCurrentVideo} />
       </div>
     );
@@ -249,11 +249,11 @@ export default function VideoSection({ video, lessonId, isStaff, lessonQuestionC
   return (
     <div className="mb-8">
       <div className="flex items-center justify-between mb-4">
-        <h2 className="text-lg font-semibold text-gray-900 dark:text-gray-100">Video Lesson</h2>
+        <h2 className="text-lg font-semibold text-surface-900 dark:text-surface-100">Video Lesson</h2>
         {isStaff && (
           <button
             onClick={() => setCurrentVideo(null)}
-            className="text-xs text-gray-400 dark:text-gray-500 hover:text-red-500 transition-colors"
+            className="text-xs text-surface-400 dark:text-surface-500 hover:text-red-500 transition-colors"
             title="Replace video"
           >
             Replace video
@@ -264,7 +264,7 @@ export default function VideoSection({ video, lessonId, isStaff, lessonQuestionC
       <div className="space-y-5">
         {/* Player */}
         {youtube_id && <YouTubeEmbed videoId={youtube_id} />}
-        {title && <p className="text-sm font-medium text-gray-700 dark:text-gray-300">{title}</p>}
+        {title && <p className="text-sm font-medium text-surface-700 dark:text-surface-300">{title}</p>}
 
         {/* Processing status */}
         <StatusBanner status={status} errorMessage={error_message} />
@@ -277,9 +277,9 @@ export default function VideoSection({ video, lessonId, isStaff, lessonQuestionC
         {/* Vocabulary from video */}
         {isReady && hasVocab && (
           <div>
-            <h3 className="text-base font-semibold text-gray-900 dark:text-gray-100 mb-3">
+            <h3 className="text-base font-semibold text-surface-900 dark:text-surface-100 mb-3">
               Vocabulary from this video
-              <span className="ml-2 text-xs font-normal text-gray-400 dark:text-gray-500">({vocabulary.length} words)</span>
+              <span className="ml-2 text-xs font-normal text-surface-400 dark:text-surface-500">({vocabulary.length} words)</span>
             </h3>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               {vocabulary.map((word) => (
@@ -292,9 +292,9 @@ export default function VideoSection({ video, lessonId, isStaff, lessonQuestionC
         {/* Expressions from video */}
         {isReady && hasExpressions && (
           <div>
-            <h3 className="text-base font-semibold text-gray-900 dark:text-gray-100 mb-3">
+            <h3 className="text-base font-semibold text-surface-900 dark:text-surface-100 mb-3">
               Expressions &amp; Collocations
-              <span className="ml-2 text-xs font-normal text-gray-400 dark:text-gray-500">({expressions.length} expressions)</span>
+              <span className="ml-2 text-xs font-normal text-surface-400 dark:text-surface-500">({expressions.length} expressions)</span>
             </h3>
             <div className="space-y-3">
               {expressions.map((expr) => (

@@ -93,13 +93,13 @@ function NumberStepper({ value, onChange, min, max, step = 1 }) {
       <button
         type="button"
         onClick={() => onChange(Math.max(min, value - step))}
-        className="w-8 h-8 rounded-lg border border-surface-200 dark:border-surface-600 text-surface-600 dark:text-surface-300 hover:bg-surface-100 dark:hover:bg-gray-700 flex items-center justify-center font-bold text-lg transition-colors"
+        className="w-8 h-8 rounded-lg border border-surface-200 dark:border-surface-600 text-surface-600 dark:text-surface-300 hover:bg-surface-100 dark:hover:bg-surface-700 flex items-center justify-center font-bold text-lg transition-colors"
       >−</button>
-      <span className="w-10 text-center text-sm font-semibold text-gray-800 dark:text-surface-200">{value}</span>
+      <span className="w-10 text-center text-sm font-semibold text-surface-800 dark:text-surface-200">{value}</span>
       <button
         type="button"
         onClick={() => onChange(Math.min(max, value + step))}
-        className="w-8 h-8 rounded-lg border border-surface-200 dark:border-surface-600 text-surface-600 dark:text-surface-300 hover:bg-surface-100 dark:hover:bg-gray-700 flex items-center justify-center font-bold text-lg transition-colors"
+        className="w-8 h-8 rounded-lg border border-surface-200 dark:border-surface-600 text-surface-600 dark:text-surface-300 hover:bg-surface-100 dark:hover:bg-surface-700 flex items-center justify-center font-bold text-lg transition-colors"
       >+</button>
     </div>
   );
@@ -110,7 +110,7 @@ function SelectInput({ value, onChange, options, className = "" }) {
     <select
       value={value}
       onChange={(e) => onChange(e.target.value)}
-      className={`px-3 py-1.5 border border-surface-200 dark:border-surface-600 rounded-lg text-sm bg-white dark:bg-surface-700 text-gray-800 dark:text-surface-100 focus:outline-none focus:border-primary-400 transition-colors ${className}`}
+      className={`px-3 py-1.5 border border-surface-200 dark:border-surface-600 rounded-lg text-sm bg-white dark:bg-surface-700 text-surface-800 dark:text-surface-100 focus:outline-none focus:border-primary-400 transition-colors ${className}`}
     >
       {options.map((o) => (
         <option key={o.value} value={o.value}>{o.label}</option>

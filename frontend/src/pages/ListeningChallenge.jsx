@@ -26,7 +26,7 @@ function SoundWave({ playing }) {
         <div
           key={i}
           className={`w-1 rounded-full transition-all duration-300 ${
-            playing ? "bg-primary-500 dark:bg-primary-400" : "bg-gray-300 dark:bg-gray-600"
+            playing ? "bg-primary-500 dark:bg-primary-400" : "bg-surface-300 dark:bg-surface-600"
           }`}
           style={{
             height: playing ? `${12 + Math.sin((Date.now() / 200) + i * 1.2) * 10}px` : "6px",
@@ -214,19 +214,19 @@ export default function ListeningChallenge() {
         <div className="animate-bounce-in text-6xl mb-2">
           {pct === 100 ? "🎧" : pct >= 60 ? "🎉" : "💪"}
         </div>
-        <h2 className="text-2xl font-bold text-gray-900 dark:text-gray-100 animate-fade-in-up">
+        <h2 className="text-2xl font-bold text-surface-900 dark:text-surface-100 animate-fade-in-up">
           {pct === 100 ? "Perfect Ears!" : pct >= 60 ? "Great Listening!" : "Keep Practicing!"}
         </h2>
 
-        <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-lg p-6 space-y-4 animate-scale-in">
+        <div className="bg-white dark:bg-surface-800 rounded-2xl shadow-lg p-6 space-y-4 animate-scale-in">
           <div className="flex justify-center gap-8">
             <div className="text-center">
               <p className="text-3xl font-bold text-primary-600">{animatedScore}/{words.length}</p>
-              <p className="text-xs text-gray-400">correct</p>
+              <p className="text-xs text-surface-400">correct</p>
             </div>
             <div className="text-center">
               <p className="text-3xl font-bold text-amber-500">+{animatedXP}</p>
-              <p className="text-xs text-gray-400">XP earned</p>
+              <p className="text-xs text-surface-400">XP earned</p>
             </div>
           </div>
 
@@ -241,14 +241,14 @@ export default function ListeningChallenge() {
               >
                 <div className="flex items-center gap-2 min-w-0">
                   <span className="shrink-0">{r.correct ? "✅" : "❌"}</span>
-                  <span className="font-semibold text-gray-800 dark:text-gray-200 truncate">{r.word.french}</span>
+                  <span className="font-semibold text-surface-800 dark:text-surface-200 truncate">{r.word.french}</span>
                   {!r.correct && (
                     <span className="text-xs text-red-400 truncate">"{r.guess}"</span>
                   )}
                 </div>
                 <div className="flex items-center gap-2 shrink-0">
                   {r.hintsUsed > 0 && <span className="text-xs text-amber-400">💡×{r.hintsUsed}</span>}
-                  <span className="text-xs text-gray-500 dark:text-gray-400">{r.word.english}</span>
+                  <span className="text-xs text-surface-500 dark:text-surface-400">{r.word.english}</span>
                 </div>
               </div>
             ))}
@@ -256,7 +256,7 @@ export default function ListeningChallenge() {
         </div>
 
         <div className="flex gap-3 justify-center animate-fade-in-up">
-          <Link to="/mini-games" className="px-5 py-2.5 border border-gray-300 dark:border-gray-600 rounded-xl text-sm font-medium text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors">
+          <Link to="/mini-games" className="px-5 py-2.5 border border-surface-300 dark:border-surface-600 rounded-xl text-sm font-medium text-surface-700 dark:text-surface-300 hover:bg-surface-50 dark:hover:bg-surface-700 transition-colors">
             ← Mini Games
           </Link>
           <button onClick={() => window.location.reload()} className="px-5 py-2.5 bg-primary-600 text-white rounded-xl text-sm font-semibold hover:bg-primary-700 transition-colors">
@@ -274,34 +274,34 @@ export default function ListeningChallenge() {
     <div className="max-w-md mx-auto py-8 space-y-5">
       {/* Header */}
       <div className="flex items-center justify-between animate-fade-in">
-        <Link to="/mini-games" className="text-sm text-gray-400 hover:text-gray-600 dark:hover:text-gray-300 transition-colors">
+        <Link to="/mini-games" className="text-sm text-surface-400 hover:text-surface-600 dark:hover:text-surface-300 transition-colors">
           ← Back
         </Link>
-        <h1 className="text-lg font-bold text-gray-900 dark:text-gray-100">Listening Challenge</h1>
-        <span className="text-sm font-medium text-gray-500 dark:text-gray-400 bg-gray-100 dark:bg-gray-700 px-3 py-1 rounded-full">
+        <h1 className="text-lg font-bold text-surface-900 dark:text-surface-100">Listening Challenge</h1>
+        <span className="text-sm font-medium text-surface-500 dark:text-surface-400 bg-surface-100 dark:bg-surface-700 px-3 py-1 rounded-full">
           {round + 1}/{words.length}
         </span>
       </div>
 
       {/* Progress */}
-      <div className="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-1.5">
+      <div className="w-full bg-surface-200 dark:bg-surface-700 rounded-full h-1.5">
         <div className="bg-primary-500 h-1.5 rounded-full transition-all duration-500" style={{ width: `${(round / words.length) * 100}%` }} />
       </div>
 
       {/* Score */}
       <div className="flex justify-center">
-        <div className="flex items-center gap-4 bg-white dark:bg-gray-800 border border-gray-100 dark:border-gray-700 rounded-full px-4 py-1.5 shadow-sm text-xs">
-          <span className="text-gray-400">Score</span>
+        <div className="flex items-center gap-4 bg-white dark:bg-surface-800 border border-surface-100 dark:border-surface-700 rounded-full px-4 py-1.5 shadow-sm text-xs">
+          <span className="text-surface-400">Score</span>
           <span className="font-bold text-primary-600">{score}/{round + (resultState ? 1 : 0)}</span>
         </div>
       </div>
 
       {/* Game card */}
-      <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-sm border border-gray-100 dark:border-gray-700 overflow-hidden animate-scale-in" key={round}>
+      <div className="bg-white dark:bg-surface-800 rounded-2xl shadow-sm border border-surface-100 dark:border-surface-700 overflow-hidden animate-scale-in" key={round}>
         <div className="px-6 pt-8 pb-4 space-y-5">
           {/* Play button */}
           <div className="flex flex-col items-center gap-3">
-            <p className="text-xs font-semibold text-gray-400 dark:text-gray-500 uppercase tracking-wider">
+            <p className="text-xs font-semibold text-surface-400 dark:text-surface-500 uppercase tracking-wider">
               Listen and type the French word
             </p>
 
@@ -323,7 +323,7 @@ export default function ListeningChallenge() {
               )}
             </button>
 
-            <p className="text-xs text-gray-400 dark:text-gray-500">
+            <p className="text-xs text-surface-400 dark:text-surface-500">
               {playCount === 0 ? "Tap to listen" : `Played ${playCount} time${playCount > 1 ? "s" : ""}`}
             </p>
           </div>
@@ -360,7 +360,7 @@ export default function ListeningChallenge() {
                   ? "border-emerald-400 dark:border-emerald-600 bg-emerald-50 dark:bg-emerald-900/20 text-emerald-700 dark:text-emerald-300"
                   : resultState === "wrong"
                     ? "border-red-400 dark:border-red-600 bg-red-50 dark:bg-red-900/20 text-red-700 dark:text-red-300"
-                    : "border-gray-200 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100 focus:border-primary-500"
+                    : "border-surface-200 dark:border-surface-600 bg-white dark:bg-surface-700 text-surface-900 dark:text-surface-100 focus:border-primary-500"
                 }
                 disabled:cursor-default`}
             />
@@ -391,9 +391,9 @@ export default function ListeningChallenge() {
                 {resultState === "correct" ? "Correct!" : "Not quite!"}
               </span>
             </div>
-            <p className="mt-1 text-base font-bold text-gray-800 dark:text-gray-200">
+            <p className="mt-1 text-base font-bold text-surface-800 dark:text-surface-200">
               {word.french}
-              <span className="text-sm font-normal text-gray-500 dark:text-gray-400 ml-2">— {word.english}</span>
+              <span className="text-sm font-normal text-surface-500 dark:text-surface-400 ml-2">— {word.english}</span>
             </p>
             {resultState === "correct" && (
               <span className="text-xs text-emerald-600 dark:text-emerald-400 font-medium">+2 XP</span>
@@ -415,7 +415,7 @@ export default function ListeningChallenge() {
       </div>
 
       {/* Hints */}
-      <div className="flex justify-center gap-3 text-xs text-gray-400 dark:text-gray-500">
+      <div className="flex justify-center gap-3 text-xs text-surface-400 dark:text-surface-500">
         <span>Listen, then type</span>
         <span>·</span>
         <span>Enter to check / next</span>

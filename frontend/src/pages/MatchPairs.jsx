@@ -67,7 +67,7 @@ function Card({ card, flipped, matched, onClick, preview }) {
           <span className={`text-sm sm:text-base font-bold text-center leading-tight ${
             matched
               ? "text-emerald-700 dark:text-emerald-300"
-              : "text-gray-900 dark:text-gray-100"
+              : "text-surface-900 dark:text-surface-100"
           }`}>
             {card.text}
           </span>
@@ -233,23 +233,23 @@ export default function MatchPairs() {
         <div className="animate-bounce-in text-6xl mb-2">
           {stars === 3 ? "🌟" : stars === 2 ? "🎉" : "💪"}
         </div>
-        <h2 className="text-2xl font-bold text-gray-900 dark:text-gray-100 animate-fade-in-up">
+        <h2 className="text-2xl font-bold text-surface-900 dark:text-surface-100 animate-fade-in-up">
           {stars === 3 ? "Perfect Memory!" : stars === 2 ? "Well Done!" : "Keep Practicing!"}
         </h2>
 
-        <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-lg p-6 animate-scale-in">
+        <div className="bg-white dark:bg-surface-800 rounded-2xl shadow-lg p-6 animate-scale-in">
           <div className="flex justify-center gap-6 mb-4">
             <div className="text-center">
               <p className="text-3xl font-bold text-primary-600">{animatedMoves}</p>
-              <p className="text-xs text-gray-400">moves</p>
+              <p className="text-xs text-surface-400">moves</p>
             </div>
             <div className="text-center">
-              <p className="text-3xl font-bold text-gray-600 dark:text-gray-300">{formatTime(elapsed)}</p>
-              <p className="text-xs text-gray-400">time</p>
+              <p className="text-3xl font-bold text-surface-600 dark:text-surface-300">{formatTime(elapsed)}</p>
+              <p className="text-xs text-surface-400">time</p>
             </div>
             <div className="text-center">
               <p className="text-3xl font-bold text-amber-500">+{animatedXP}</p>
-              <p className="text-xs text-gray-400">XP earned</p>
+              <p className="text-xs text-surface-400">XP earned</p>
             </div>
           </div>
 
@@ -264,9 +264,9 @@ export default function MatchPairs() {
           {/* Word review */}
           <div className="space-y-1.5 text-left">
             {cards.filter((c) => c.lang === "fr").map((c, i) => (
-              <div key={i} className="flex items-center justify-between px-3 py-2 rounded-lg bg-gray-50 dark:bg-gray-700/30 text-sm">
-                <span className="font-semibold text-gray-800 dark:text-gray-200">{c.text}</span>
-                <span className="text-xs text-gray-500 dark:text-gray-400">{c.vocab.english}</span>
+              <div key={i} className="flex items-center justify-between px-3 py-2 rounded-lg bg-surface-50 dark:bg-surface-700/30 text-sm">
+                <span className="font-semibold text-surface-800 dark:text-surface-200">{c.text}</span>
+                <span className="text-xs text-surface-500 dark:text-surface-400">{c.vocab.english}</span>
               </div>
             ))}
           </div>
@@ -275,7 +275,7 @@ export default function MatchPairs() {
         <div className="flex gap-3 justify-center animate-fade-in-up">
           <Link
             to="/mini-games"
-            className="px-5 py-2.5 border border-gray-300 dark:border-gray-600 rounded-xl text-sm font-medium text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors"
+            className="px-5 py-2.5 border border-surface-300 dark:border-surface-600 rounded-xl text-sm font-medium text-surface-700 dark:text-surface-300 hover:bg-surface-50 dark:hover:bg-surface-700 transition-colors"
           >
             ← Mini Games
           </Link>
@@ -297,13 +297,13 @@ export default function MatchPairs() {
     <div className="max-w-2xl mx-auto py-8 space-y-5">
       {/* Header */}
       <div className="flex items-center justify-between animate-fade-in">
-        <Link to="/mini-games" className="text-sm text-gray-400 hover:text-gray-600 dark:hover:text-gray-300 transition-colors">
+        <Link to="/mini-games" className="text-sm text-surface-400 hover:text-surface-600 dark:hover:text-surface-300 transition-colors">
           ← Back
         </Link>
-        <h1 className="text-lg font-bold text-gray-900 dark:text-gray-100">Match Pairs</h1>
+        <h1 className="text-lg font-bold text-surface-900 dark:text-surface-100">Match Pairs</h1>
         <div className="flex items-center gap-3">
-          {!isPreview && <span className="text-xs text-gray-400 dark:text-gray-500">{formatTime(elapsed)}</span>}
-          <span className="text-sm font-medium text-gray-500 dark:text-gray-400 bg-gray-100 dark:bg-gray-700 px-3 py-1 rounded-full">
+          {!isPreview && <span className="text-xs text-surface-400 dark:text-surface-500">{formatTime(elapsed)}</span>}
+          <span className="text-sm font-medium text-surface-500 dark:text-surface-400 bg-surface-100 dark:bg-surface-700 px-3 py-1 rounded-full">
             {matchCount}/{PAIR_COUNT}
           </span>
         </div>
@@ -320,7 +320,7 @@ export default function MatchPairs() {
 
       {/* Progress */}
       {!isPreview && (
-        <div className="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-1.5">
+        <div className="w-full bg-surface-200 dark:bg-surface-700 rounded-full h-1.5">
           <div
             className="bg-primary-500 h-1.5 rounded-full transition-all duration-500"
             style={{ width: `${(matchCount / PAIR_COUNT) * 100}%` }}
@@ -331,11 +331,11 @@ export default function MatchPairs() {
       {/* Stats pill */}
       {!isPreview && (
         <div className="flex justify-center">
-          <div className="flex items-center gap-4 bg-white dark:bg-gray-800 border border-gray-100 dark:border-gray-700 rounded-full px-4 py-1.5 shadow-sm text-xs">
-            <span className="text-gray-400">Moves</span>
+          <div className="flex items-center gap-4 bg-white dark:bg-surface-800 border border-surface-100 dark:border-surface-700 rounded-full px-4 py-1.5 shadow-sm text-xs">
+            <span className="text-surface-400">Moves</span>
             <span className="font-bold text-primary-600">{moves}</span>
-            <span className="text-gray-300 dark:text-gray-600">|</span>
-            <span className="text-gray-400">Pairs</span>
+            <span className="text-surface-300 dark:text-surface-600">|</span>
+            <span className="text-surface-400">Pairs</span>
             <span className="font-bold text-emerald-600">{matchCount}/{PAIR_COUNT}</span>
           </div>
         </div>
@@ -356,7 +356,7 @@ export default function MatchPairs() {
       </div>
 
       {/* Legend */}
-      <div className="flex justify-center gap-4 text-xs text-gray-400 dark:text-gray-500">
+      <div className="flex justify-center gap-4 text-xs text-surface-400 dark:text-surface-500">
         <span className="flex items-center gap-1">
           <span className="w-3 h-3 rounded bg-blue-200 dark:bg-blue-800" /> French
         </span>
@@ -368,7 +368,7 @@ export default function MatchPairs() {
         </span>
       </div>
 
-      <p className="text-xs text-center text-gray-400 dark:text-gray-500">
+      <p className="text-xs text-center text-surface-400 dark:text-surface-500">
         {isPreview ? "Study the positions carefully!" : `Find all ${PAIR_COUNT} French–English pairs`}
       </p>
     </div>

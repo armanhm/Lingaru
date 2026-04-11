@@ -111,7 +111,7 @@ export default function AudioPlayButton({ text, size = "sm" }) {
   const colorClasses =
     state === "playing"
       ? "text-primary-700 bg-primary-100"
-      : "text-gray-500 hover:text-primary-600 hover:bg-primary-50";
+      : "text-surface-500 hover:text-primary-600 hover:bg-primary-50";
 
   return (
     <button

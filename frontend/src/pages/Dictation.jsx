@@ -98,8 +98,8 @@ export default function Dictation() {
       </Link>
 
       <div className="mb-8">
-        <h1 className="text-2xl font-bold text-gray-900 mb-1">Dictation Practice</h1>
-        <p className="text-gray-600">
+        <h1 className="text-2xl font-bold text-surface-900 mb-1">Dictation Practice</h1>
+        <p className="text-surface-600">
           Listen to a French sentence and type what you hear.
         </p>
       </div>
@@ -135,7 +135,7 @@ export default function Dictation() {
       )}
 
       {phase === "listening" && (
-        <div className="bg-white dark:bg-gray-800 rounded-xl shadow-lg p-8 animate-scale-in">
+        <div className="bg-white dark:bg-surface-800 rounded-xl shadow-lg p-8 animate-scale-in">
           <div className="flex items-center justify-center gap-4 mb-8">
             <button
               onClick={handleReplay}
@@ -154,7 +154,7 @@ export default function Dictation() {
               handleCheck();
             }}
           >
-            <label className="block text-sm font-medium text-gray-700 mb-2">
+            <label className="block text-sm font-medium text-surface-700 mb-2">
               Type what you heard:
             </label>
             <input
@@ -163,7 +163,7 @@ export default function Dictation() {
               onChange={(e) => setUserText(e.target.value)}
               placeholder="Type the French sentence..."
               autoFocus
-              className="w-full px-4 py-3 border-2 border-gray-200 rounded-xl text-lg focus:border-primary-500 focus:ring-0 focus:outline-none transition-colors"
+              className="w-full px-4 py-3 border-2 border-surface-200 rounded-xl text-lg focus:border-primary-500 focus:ring-0 focus:outline-none transition-colors"
             />
             <button
               type="submit"
@@ -195,7 +195,7 @@ export default function Dictation() {
                 {result.correct ? "Correct!" : "Not quite"}
               </span>
               {result.accuracy != null && (
-                <span className="ml-auto text-sm font-medium text-gray-600">
+                <span className="ml-auto text-sm font-medium text-surface-600">
                   Accuracy: {Math.round(result.accuracy * 100)}%
                 </span>
               )}
@@ -203,12 +203,12 @@ export default function Dictation() {
 
             <div className="space-y-2 text-sm">
               <div>
-                <span className="font-medium text-gray-700">Expected: </span>
-                <span className="text-gray-900">{result.expected ?? result.expected_text}</span>
+                <span className="font-medium text-surface-700">Expected: </span>
+                <span className="text-surface-900">{result.expected ?? result.expected_text}</span>
               </div>
               <div>
-                <span className="font-medium text-gray-700">You typed: </span>
-                <span className="text-gray-900">{result.user_text}</span>
+                <span className="font-medium text-surface-700">You typed: </span>
+                <span className="text-surface-900">{result.user_text}</span>
               </div>
             </div>
 

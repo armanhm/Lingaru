@@ -196,19 +196,19 @@ export default function GenderSnap() {
         <div className="animate-bounce-in text-6xl mb-2">
           {pct === 100 ? "🌟" : pct >= 60 ? "🎉" : "💪"}
         </div>
-        <h2 className="text-2xl font-bold text-gray-900 dark:text-gray-100 animate-fade-in-up">
+        <h2 className="text-2xl font-bold text-surface-900 dark:text-surface-100 animate-fade-in-up">
           {pct === 100 ? "Gender Master!" : pct >= 60 ? "Well Done!" : "Keep Practicing!"}
         </h2>
 
-        <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-lg p-6 space-y-4 animate-scale-in">
+        <div className="bg-white dark:bg-surface-800 rounded-2xl shadow-lg p-6 space-y-4 animate-scale-in">
           <div className="flex justify-center gap-8">
             <div className="text-center">
               <p className="text-3xl font-bold text-primary-600">{animatedScore}/{words.length}</p>
-              <p className="text-xs text-gray-400">correct</p>
+              <p className="text-xs text-surface-400">correct</p>
             </div>
             <div className="text-center">
               <p className="text-3xl font-bold text-amber-500">+{animatedXP}</p>
-              <p className="text-xs text-gray-400">XP earned</p>
+              <p className="text-xs text-surface-400">XP earned</p>
             </div>
           </div>
 
@@ -226,16 +226,16 @@ export default function GenderSnap() {
                   <span className={`font-bold ${r.word.isM ? "text-blue-600 dark:text-blue-400" : "text-pink-600 dark:text-pink-400"}`}>
                     {r.word.isM ? "le" : "la"}
                   </span>
-                  <span className="font-semibold text-gray-800 dark:text-gray-200">{r.word.displayText}</span>
+                  <span className="font-semibold text-surface-800 dark:text-surface-200">{r.word.displayText}</span>
                 </div>
-                <span className="text-xs text-gray-500 dark:text-gray-400">{r.word.english}</span>
+                <span className="text-xs text-surface-500 dark:text-surface-400">{r.word.english}</span>
               </div>
             ))}
           </div>
         </div>
 
         <div className="flex gap-3 justify-center animate-fade-in-up">
-          <Link to="/mini-games" className="px-5 py-2.5 border border-gray-300 dark:border-gray-600 rounded-xl text-sm font-medium text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors">
+          <Link to="/mini-games" className="px-5 py-2.5 border border-surface-300 dark:border-surface-600 rounded-xl text-sm font-medium text-surface-700 dark:text-surface-300 hover:bg-surface-50 dark:hover:bg-surface-700 transition-colors">
             ← Mini Games
           </Link>
           <button onClick={() => window.location.reload()} className="px-5 py-2.5 bg-primary-600 text-white rounded-xl text-sm font-semibold hover:bg-primary-700 transition-colors">
@@ -256,17 +256,17 @@ export default function GenderSnap() {
     <div className="max-w-md mx-auto py-8 space-y-5 select-none">
       {/* Header */}
       <div className="flex items-center justify-between animate-fade-in">
-        <Link to="/mini-games" className="text-sm text-gray-400 hover:text-gray-600 dark:hover:text-gray-300 transition-colors">
+        <Link to="/mini-games" className="text-sm text-surface-400 hover:text-surface-600 dark:hover:text-surface-300 transition-colors">
           ← Back
         </Link>
-        <h1 className="text-lg font-bold text-gray-900 dark:text-gray-100">Gender Snap</h1>
-        <span className="text-sm font-medium text-gray-500 dark:text-gray-400 bg-gray-100 dark:bg-gray-700 px-3 py-1 rounded-full">
+        <h1 className="text-lg font-bold text-surface-900 dark:text-surface-100">Gender Snap</h1>
+        <span className="text-sm font-medium text-surface-500 dark:text-surface-400 bg-surface-100 dark:bg-surface-700 px-3 py-1 rounded-full">
           {round + 1}/{words.length}
         </span>
       </div>
 
       {/* Progress */}
-      <div className="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-1.5">
+      <div className="w-full bg-surface-200 dark:bg-surface-700 rounded-full h-1.5">
         <div className="bg-primary-500 h-1.5 rounded-full transition-all duration-500" style={{ width: `${(round / words.length) * 100}%` }} />
       </div>
 
@@ -277,8 +277,8 @@ export default function GenderSnap() {
           <span className="text-sm font-bold">La</span>
           <span className="text-xs text-pink-400">fém.</span>
         </div>
-        <div className="flex items-center gap-1.5 bg-white dark:bg-gray-800 border border-gray-100 dark:border-gray-700 rounded-full px-3 py-1 shadow-sm">
-          <span className="text-xs text-gray-400">Score</span>
+        <div className="flex items-center gap-1.5 bg-white dark:bg-surface-800 border border-surface-100 dark:border-surface-700 rounded-full px-3 py-1 shadow-sm">
+          <span className="text-xs text-surface-400">Score</span>
           <span className="text-sm font-bold text-primary-600">{score}/{round}</span>
         </div>
         <div className="flex items-center gap-1.5 text-blue-500">
@@ -295,7 +295,7 @@ export default function GenderSnap() {
           onPointerMove={onPointerMove}
           onPointerUp={onPointerUp}
           onPointerCancel={onPointerUp}
-          className="relative bg-white dark:bg-gray-800 rounded-2xl shadow-lg border-2 border-gray-100 dark:border-gray-700 touch-none overflow-hidden"
+          className="relative bg-white dark:bg-surface-800 rounded-2xl shadow-lg border-2 border-surface-100 dark:border-surface-700 touch-none overflow-hidden"
           style={{
             transform: `translateX(${tx}px) rotate(${rotate}deg)`,
             transition,
@@ -307,16 +307,16 @@ export default function GenderSnap() {
           {dragging && !resultFlash && <SwipeOverlay dx={tx} threshold={SWIPE_THRESHOLD} />}
 
           <div className="px-8 pt-10 pb-4 text-center space-y-3">
-            <p className="text-xs font-semibold text-gray-400 dark:text-gray-500 uppercase tracking-wider">
+            <p className="text-xs font-semibold text-surface-400 dark:text-surface-500 uppercase tracking-wider">
               Le or La?
             </p>
             <div className="flex items-center justify-center gap-3">
-              <span className="text-4xl font-bold text-gray-900 dark:text-gray-100">{word.displayText}</span>
+              <span className="text-4xl font-bold text-surface-900 dark:text-surface-100">{word.displayText}</span>
               <AudioPlayButton text={word.french} />
             </div>
-            <p className="text-base text-gray-500 dark:text-gray-400">{word.english}</p>
+            <p className="text-base text-surface-500 dark:text-surface-400">{word.english}</p>
             {word.part_of_speech && (
-              <span className="inline-block text-xs bg-gray-100 dark:bg-gray-700 text-gray-500 dark:text-gray-400 px-2.5 py-0.5 rounded-full">
+              <span className="inline-block text-xs bg-surface-100 dark:bg-surface-700 text-surface-500 dark:text-surface-400 px-2.5 py-0.5 rounded-full">
                 {word.part_of_speech}
               </span>
             )}
@@ -339,7 +339,7 @@ export default function GenderSnap() {
                   {resultFlash === "correct" ? "Correct!" : "Incorrect"}
                 </span>
               </div>
-              <p className="mt-1 text-base font-bold text-gray-800 dark:text-gray-200">
+              <p className="mt-1 text-base font-bold text-surface-800 dark:text-surface-200">
                 <span className={word.isM ? "text-blue-600 dark:text-blue-400" : "text-pink-600 dark:text-pink-400"}>
                   {word.isM ? "le " : "la "}
                 </span>
@@ -371,7 +371,7 @@ export default function GenderSnap() {
       </div>
 
       {/* Hints */}
-      <div className="flex justify-center gap-3 text-xs text-gray-400 dark:text-gray-500">
+      <div className="flex justify-center gap-3 text-xs text-surface-400 dark:text-surface-500">
         <span>Swipe or tap</span>
         <span>·</span>
         <span>← La</span>

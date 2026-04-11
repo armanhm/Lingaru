@@ -46,28 +46,28 @@ function DetailContent({ card }) {
       <div className="space-y-4">
         <div className="bg-gradient-to-br from-blue-50 to-indigo-50 dark:from-blue-900/20 dark:to-indigo-900/20 rounded-xl p-5 border border-blue-100 dark:border-blue-800/40 space-y-2">
           <div className="flex items-center gap-3">
-            <span className="text-3xl font-bold text-gray-900 dark:text-gray-100">{content.french}</span>
+            <span className="text-3xl font-bold text-surface-900 dark:text-surface-100">{content.french}</span>
             <AudioPlayButton text={content.french} />
             {content.part_of_speech && (
-              <span className="text-xs bg-white/70 dark:bg-gray-700/70 text-gray-500 dark:text-gray-400 px-2 py-0.5 rounded-full">{content.part_of_speech}</span>
+              <span className="text-xs bg-white/70 dark:bg-surface-700/70 text-surface-500 dark:text-surface-400 px-2 py-0.5 rounded-full">{content.part_of_speech}</span>
             )}
           </div>
-          <p className="text-lg text-gray-600 dark:text-gray-300">{content.english}</p>
+          <p className="text-lg text-surface-600 dark:text-surface-300">{content.english}</p>
           {content.pronunciation && (
-            <p className="text-sm text-gray-400 dark:text-gray-500 font-mono">/{content.pronunciation}/</p>
+            <p className="text-sm text-surface-400 dark:text-surface-500 font-mono">/{content.pronunciation}/</p>
           )}
         </div>
         {content.example && (
           <div className="border-l-2 border-blue-300 dark:border-blue-700 pl-3 py-1">
-            <p className="text-xs font-semibold text-gray-400 dark:text-gray-500 uppercase tracking-wider mb-1">Example</p>
-            <p className="text-sm italic text-gray-700 dark:text-gray-300">{content.example}</p>
+            <p className="text-xs font-semibold text-surface-400 dark:text-surface-500 uppercase tracking-wider mb-1">Example</p>
+            <p className="text-sm italic text-surface-700 dark:text-surface-300">{content.example}</p>
           </div>
         )}
         {(content.synonyms?.length > 0 || content.related_words?.length > 0) && (
           <div className="grid grid-cols-2 gap-4">
             {content.synonyms?.length > 0 && (
               <div>
-                <p className="text-xs font-semibold text-gray-400 dark:text-gray-500 uppercase tracking-wider mb-2">Synonyms</p>
+                <p className="text-xs font-semibold text-surface-400 dark:text-surface-500 uppercase tracking-wider mb-2">Synonyms</p>
                 <div className="flex flex-wrap gap-1.5">
                   {content.synonyms.map((s, i) => (
                     <span key={i} className="px-2.5 py-1 text-xs rounded-lg bg-blue-50 dark:bg-blue-900/30 text-blue-700 dark:text-blue-300 border border-blue-200 dark:border-blue-800">{s}</span>
@@ -77,10 +77,10 @@ function DetailContent({ card }) {
             )}
             {content.related_words?.length > 0 && (
               <div>
-                <p className="text-xs font-semibold text-gray-400 dark:text-gray-500 uppercase tracking-wider mb-2">Related</p>
+                <p className="text-xs font-semibold text-surface-400 dark:text-surface-500 uppercase tracking-wider mb-2">Related</p>
                 <div className="flex flex-wrap gap-1.5">
                   {content.related_words.map((w, i) => (
-                    <span key={i} className="px-2.5 py-1 text-xs rounded-lg bg-gray-100 dark:bg-gray-700 text-gray-600 dark:text-gray-300">{w}</span>
+                    <span key={i} className="px-2.5 py-1 text-xs rounded-lg bg-surface-100 dark:bg-surface-700 text-surface-600 dark:text-surface-300">{w}</span>
                   ))}
                 </div>
               </div>
@@ -100,7 +100,7 @@ function DetailContent({ card }) {
   if (card.type === "grammar") {
     return (
       <div className="space-y-4">
-        <p className="text-sm text-gray-700 dark:text-gray-300 leading-relaxed">{content.explanation || card.summary}</p>
+        <p className="text-sm text-surface-700 dark:text-surface-300 leading-relaxed">{content.explanation || card.summary}</p>
         {content.formula && (
           <div className="bg-gradient-to-r from-purple-50 to-violet-50 dark:from-purple-900/30 dark:to-violet-900/30 rounded-xl px-4 py-3 border border-purple-200 dark:border-purple-800/40">
             <p className="text-xs font-semibold text-purple-500 dark:text-purple-400 uppercase tracking-wider mb-1">Formula</p>
@@ -109,12 +109,12 @@ function DetailContent({ card }) {
         )}
         {content.examples?.length > 0 && (
           <div>
-            <p className="text-xs font-semibold text-gray-400 dark:text-gray-500 uppercase tracking-wider mb-2">Examples</p>
+            <p className="text-xs font-semibold text-surface-400 dark:text-surface-500 uppercase tracking-wider mb-2">Examples</p>
             <div className="space-y-2">
               {content.examples.map((ex, i) => (
-                <div key={i} className="flex items-start gap-2.5 bg-gray-50 dark:bg-gray-700/40 rounded-lg px-3 py-2">
+                <div key={i} className="flex items-start gap-2.5 bg-surface-50 dark:bg-surface-700/40 rounded-lg px-3 py-2">
                   <span className="shrink-0 w-5 h-5 mt-0.5 rounded-full bg-purple-100 dark:bg-purple-900/40 text-purple-600 dark:text-purple-300 text-xs flex items-center justify-center font-bold">{i + 1}</span>
-                  <p className="text-sm text-gray-700 dark:text-gray-300">{ex}</p>
+                  <p className="text-sm text-surface-700 dark:text-surface-300">{ex}</p>
                 </div>
               ))}
             </div>
@@ -136,19 +136,19 @@ function DetailContent({ card }) {
         {content.fact_fr && (
           <div className="bg-gradient-to-br from-amber-50 to-orange-50 dark:from-amber-900/20 dark:to-orange-900/20 rounded-xl p-4 border border-amber-100 dark:border-amber-800/40">
             <div className="flex items-start gap-2">
-              <p className="text-sm font-medium text-gray-800 dark:text-gray-200 flex-1">{content.fact_fr}</p>
+              <p className="text-sm font-medium text-surface-800 dark:text-surface-200 flex-1">{content.fact_fr}</p>
               <AudioPlayButton text={content.fact_fr} />
             </div>
           </div>
         )}
         {content.fact_en && (
           <div className="border-l-2 border-amber-300 dark:border-amber-700 pl-3">
-            <p className="text-xs font-semibold text-gray-400 dark:text-gray-500 uppercase tracking-wider mb-1">Translation</p>
-            <p className="text-sm text-gray-500 dark:text-gray-400 italic">{content.fact_en}</p>
+            <p className="text-xs font-semibold text-surface-400 dark:text-surface-500 uppercase tracking-wider mb-1">Translation</p>
+            <p className="text-sm text-surface-500 dark:text-surface-400 italic">{content.fact_en}</p>
           </div>
         )}
         {card.summary && card.summary !== content.fact_en && (
-          <p className="text-sm text-gray-600 dark:text-gray-400 leading-relaxed">{card.summary}</p>
+          <p className="text-sm text-surface-600 dark:text-surface-400 leading-relaxed">{card.summary}</p>
         )}
       </div>
     );
@@ -158,19 +158,19 @@ function DetailContent({ card }) {
     return (
       <div className="space-y-4">
         {content.article_fr && (
-          <div className="bg-gray-50 dark:bg-gray-700/30 rounded-xl p-4">
-            <p className="text-sm text-gray-800 dark:text-gray-200 leading-relaxed">{content.article_fr}</p>
+          <div className="bg-surface-50 dark:bg-surface-700/30 rounded-xl p-4">
+            <p className="text-sm text-surface-800 dark:text-surface-200 leading-relaxed">{content.article_fr}</p>
           </div>
         )}
         {content.article_en && (
           <div className="border-l-2 border-green-300 dark:border-green-700 pl-3">
-            <p className="text-xs text-gray-400 dark:text-gray-500 uppercase tracking-wider font-semibold mb-1">Translation</p>
-            <p className="text-sm text-gray-600 dark:text-gray-400 leading-relaxed">{content.article_en}</p>
+            <p className="text-xs text-surface-400 dark:text-surface-500 uppercase tracking-wider font-semibold mb-1">Translation</p>
+            <p className="text-sm text-surface-600 dark:text-surface-400 leading-relaxed">{content.article_en}</p>
           </div>
         )}
         {content.key_vocabulary?.length > 0 && (
           <div>
-            <p className="text-xs font-semibold text-gray-400 dark:text-gray-500 uppercase tracking-wider mb-2">Key Vocabulary</p>
+            <p className="text-xs font-semibold text-surface-400 dark:text-surface-500 uppercase tracking-wider mb-2">Key Vocabulary</p>
             <div className="grid grid-cols-2 gap-1.5">
               {content.key_vocabulary.map((v, i) => (
                 <div key={i} className="flex items-center justify-between bg-green-50 dark:bg-green-900/20 rounded-lg px-3 py-2">
@@ -222,20 +222,20 @@ export function CompactCard({ card, onOpen }) {
           {style.icon} {style.label}
         </span>
         {card.interacted && (
-          <span className="text-xs text-gray-400 dark:text-gray-500">✓</span>
+          <span className="text-xs text-surface-400 dark:text-surface-500">✓</span>
         )}
       </div>
-      <h3 className="text-sm font-bold text-gray-900 dark:text-gray-100 line-clamp-2 leading-snug">{card.title}</h3>
+      <h3 className="text-sm font-bold text-surface-900 dark:text-surface-100 line-clamp-2 leading-snug">{card.title}</h3>
       {card.type === "word" && content.french && (
         <div className="flex items-center gap-2">
           <span className={`text-lg font-bold ${style.accent}`}>{content.french}</span>
           {content.part_of_speech && (
-            <span className="text-xs bg-gray-100 dark:bg-gray-700 text-gray-500 dark:text-gray-400 px-1.5 py-0.5 rounded">{content.part_of_speech}</span>
+            <span className="text-xs bg-surface-100 dark:bg-surface-700 text-surface-500 dark:text-surface-400 px-1.5 py-0.5 rounded">{content.part_of_speech}</span>
           )}
         </div>
       )}
       {preview && (
-        <p className="text-xs text-gray-500 dark:text-gray-400 leading-relaxed line-clamp-2">{preview}</p>
+        <p className="text-xs text-surface-500 dark:text-surface-400 leading-relaxed line-clamp-2">{preview}</p>
       )}
       <div className="mt-auto pt-1">
         <span className={`text-xs font-medium ${style.accent} flex items-center gap-1`}>
@@ -291,7 +291,7 @@ export function ExpandedCard({ card, onClose, onInteracted }) {
         transform: visible ? "translateY(0)" : "translateY(-12px)",
       }}
     >
-      <div className={`mt-2 mb-2 rounded-2xl border-2 ${style.border} bg-white dark:bg-gray-800 shadow-xl overflow-hidden`}>
+      <div className={`mt-2 mb-2 rounded-2xl border-2 ${style.border} bg-white dark:bg-surface-800 shadow-xl overflow-hidden`}>
         {/* Header */}
         <div className={`${style.bg} px-6 py-4 flex items-center justify-between border-b ${style.border}`}>
           <div className="flex items-center gap-2.5">
@@ -303,7 +303,7 @@ export function ExpandedCard({ card, onClose, onInteracted }) {
           </div>
           <button
             onClick={handleClose}
-            className="w-8 h-8 rounded-full flex items-center justify-center text-gray-400 hover:text-gray-600 dark:hover:text-gray-300 hover:bg-gray-200/50 dark:hover:bg-gray-700/50 transition-all"
+            className="w-8 h-8 rounded-full flex items-center justify-center text-surface-400 hover:text-surface-600 dark:hover:text-surface-300 hover:bg-surface-200/50 dark:hover:bg-surface-700/50 transition-all"
           >
             <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
               <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
@@ -313,18 +313,18 @@ export function ExpandedCard({ card, onClose, onInteracted }) {
 
         {/* Body */}
         <div className="p-6 space-y-4">
-          <h2 className="text-lg font-bold text-gray-900 dark:text-gray-100">{card.title}</h2>
+          <h2 className="text-lg font-bold text-surface-900 dark:text-surface-100">{card.title}</h2>
           <DetailContent card={card} />
         </div>
 
         {/* Footer */}
-        <div className="px-6 py-3 border-t border-gray-100 dark:border-gray-700 flex items-center justify-between">
-          <span className="text-xs text-gray-400 dark:text-gray-500">
+        <div className="px-6 py-3 border-t border-surface-100 dark:border-surface-700 flex items-center justify-between">
+          <span className="text-xs text-surface-400 dark:text-surface-500">
             {new Date(card.generated_at).toLocaleDateString()}
           </span>
           <button
             onClick={handleClose}
-            className="px-4 py-1.5 text-xs font-medium text-gray-600 dark:text-gray-300 bg-gray-100 dark:bg-gray-700 rounded-lg hover:bg-gray-200 dark:hover:bg-gray-600 transition-colors"
+            className="px-4 py-1.5 text-xs font-medium text-surface-600 dark:text-surface-300 bg-surface-100 dark:bg-surface-700 rounded-lg hover:bg-surface-200 dark:hover:bg-surface-600 transition-colors"
           >
             Collapse
           </button>

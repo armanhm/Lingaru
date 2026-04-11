@@ -77,7 +77,7 @@ export default function Discover() {
   return (
     <div className="space-y-6">
       <div className="flex items-center justify-between animate-fade-in">
-        <h1 className="text-2xl font-bold text-gray-900 dark:text-gray-100">Discover</h1>
+        <h1 className="text-2xl font-bold text-surface-900 dark:text-surface-100">Discover</h1>
         <button
           onClick={handleGenerateMore}
           disabled={generating}
@@ -104,7 +104,7 @@ export default function Discover() {
       {cards.length === 0 ? (
         <div className="text-center py-16 animate-fade-in-up">
           <div className="text-5xl mb-4 animate-bounce-in">🔍</div>
-          <p className="text-gray-500 dark:text-gray-400 mb-4">
+          <p className="text-surface-500 dark:text-surface-400 mb-4">
             No discover cards yet. Generate some to get started!
           </p>
           <button

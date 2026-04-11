@@ -223,10 +223,10 @@ export default function SRSReview() {
     return (
       <div className="max-w-xl mx-auto py-16 text-center space-y-4">
         <div className="text-6xl mb-2">{reviewedCount > 0 ? "🎉" : "✅"}</div>
-        <h2 className="text-2xl font-bold text-gray-900 dark:text-gray-100">
+        <h2 className="text-2xl font-bold text-surface-900 dark:text-surface-100">
           {reviewedCount > 0 ? "Session complete!" : "All caught up!"}
         </h2>
-        <p className="text-gray-500 dark:text-gray-400">
+        <p className="text-surface-500 dark:text-surface-400">
           {reviewedCount > 0
             ? `You reviewed ${reviewedCount} card${reviewedCount !== 1 ? "s" : ""}. Great work!`
             : "No cards are due right now. Come back later!"}
@@ -264,16 +264,16 @@ export default function SRSReview() {
       {/* Header */}
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-2xl font-bold text-gray-900 dark:text-gray-100">Flashcards</h1>
-          <p className="text-sm text-gray-400 dark:text-gray-500 mt-0.5">{cards.length} cards due today</p>
+          <h1 className="text-2xl font-bold text-surface-900 dark:text-surface-100">Flashcards</h1>
+          <p className="text-sm text-surface-400 dark:text-surface-500 mt-0.5">{cards.length} cards due today</p>
         </div>
-        <span className="text-sm font-medium text-gray-500 dark:text-gray-400 bg-gray-100 dark:bg-gray-700 px-3 py-1 rounded-full">
+        <span className="text-sm font-medium text-surface-500 dark:text-surface-400 bg-surface-100 dark:bg-surface-700 px-3 py-1 rounded-full">
           {currentIndex + 1} / {cards.length}
         </span>
       </div>
 
       {/* Progress bar */}
-      <div className="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-1.5">
+      <div className="w-full bg-surface-200 dark:bg-surface-700 rounded-full h-1.5">
         <div
           className="bg-primary-500 h-1.5 rounded-full transition-all duration-500"
           style={{ width: `${progress}%` }}
@@ -282,7 +282,7 @@ export default function SRSReview() {
 
       {/* Swipe hints */}
       {showAnswer && !exiting && (
-        <div className="flex justify-between items-center text-xs text-gray-400 dark:text-gray-500 px-2">
+        <div className="flex justify-between items-center text-xs text-surface-400 dark:text-surface-500 px-2">
           <span className="flex items-center gap-1">← Again</span>
           <span className="flex items-center gap-1">↓ Hard</span>
           <span className="flex items-center gap-1">Easy →</span>
@@ -297,8 +297,8 @@ export default function SRSReview() {
           onPointerMove={onPointerMove}
           onPointerUp={onPointerUp}
           onPointerCancel={onPointerUp}
-          className={`relative bg-white dark:bg-gray-800 rounded-2xl shadow-sm border-2 overflow-hidden touch-none
-            ${borderColor || "border-gray-100 dark:border-gray-700"}`}
+          className={`relative bg-white dark:bg-surface-800 rounded-2xl shadow-sm border-2 overflow-hidden touch-none
+            ${borderColor || "border-surface-100 dark:border-surface-700"}`}
           style={{
             transform: `translate(${tx}px, ${ty}px) rotate(${rotate}deg) scale(${scale})`,
             transition,
@@ -312,14 +312,14 @@ export default function SRSReview() {
           )}
 
           {/* Front — always visible */}
-          <div className="px-8 py-10 text-center border-b border-gray-100 dark:border-gray-700">
-            <p className="text-xs font-semibold uppercase tracking-wider text-gray-400 dark:text-gray-500 mb-3">French</p>
+          <div className="px-8 py-10 text-center border-b border-surface-100 dark:border-surface-700">
+            <p className="text-xs font-semibold uppercase tracking-wider text-surface-400 dark:text-surface-500 mb-3">French</p>
             <div className="flex items-center justify-center gap-3">
-              <span className="text-4xl font-bold text-gray-900 dark:text-gray-100">{card.french}</span>
+              <span className="text-4xl font-bold text-surface-900 dark:text-surface-100">{card.french}</span>
               <AudioPlayButton text={card.french} />
             </div>
             {card.pronunciation && (
-              <p className="text-sm text-gray-400 dark:text-gray-500 font-mono mt-2">/{card.pronunciation}/</p>
+              <p className="text-sm text-surface-400 dark:text-surface-500 font-mono mt-2">/{card.pronunciation}/</p>
             )}
           </div>
 
@@ -332,15 +332,15 @@ export default function SRSReview() {
               >
                 Tap to reveal
               </button>
-              <p className="text-xs text-gray-400 dark:text-gray-500 mt-2">or press Space</p>
+              <p className="text-xs text-surface-400 dark:text-surface-500 mt-2">or press Space</p>
             </div>
           ) : (
             <div className="transition-all duration-300 opacity-100">
-              <div className="px-8 py-6 text-center border-b border-gray-100 dark:border-gray-700">
-                <p className="text-xs font-semibold uppercase tracking-wider text-gray-400 dark:text-gray-500 mb-2">English</p>
-                <p className="text-2xl font-semibold text-gray-800 dark:text-gray-100">{card.english}</p>
+              <div className="px-8 py-6 text-center border-b border-surface-100 dark:border-surface-700">
+                <p className="text-xs font-semibold uppercase tracking-wider text-surface-400 dark:text-surface-500 mb-2">English</p>
+                <p className="text-2xl font-semibold text-surface-800 dark:text-surface-100">{card.english}</p>
                 {card.example_sentence && (
-                  <p className="text-sm text-gray-500 dark:text-gray-400 italic mt-3 border-l-2 border-primary-200 dark:border-primary-800 pl-3 text-left">
+                  <p className="text-sm text-surface-500 dark:text-surface-400 italic mt-3 border-l-2 border-primary-200 dark:border-primary-800 pl-3 text-left">
                     "{card.example_sentence}"
                   </p>
                 )}
@@ -348,7 +348,7 @@ export default function SRSReview() {
 
               {/* Rating buttons — fallback for non-swipe users */}
               <div className="px-6 py-4">
-                <p className="text-xs text-center text-gray-400 dark:text-gray-500 mb-3">Swipe or tap to rate</p>
+                <p className="text-xs text-center text-surface-400 dark:text-surface-500 mb-3">Swipe or tap to rate</p>
                 <div className="grid grid-cols-3 gap-2">
                   <button
                     onClick={() => handleRate(1, "left")}
@@ -379,7 +379,7 @@ export default function SRSReview() {
       </div>
 
       {/* Keyboard hint */}
-      <p className="text-xs text-center text-gray-400 dark:text-gray-500">
+      <p className="text-xs text-center text-surface-400 dark:text-surface-500">
         Keyboard: ← Again &nbsp;·&nbsp; ↓ Hard &nbsp;·&nbsp; → Easy &nbsp;·&nbsp; Space reveal
       </p>
     </div>

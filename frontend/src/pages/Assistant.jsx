@@ -154,15 +154,16 @@ function MessageBubble({ message }) {
   );
 }
 
-function TypingIndicator() {
+function TypingIndicator({ label = "Claude is thinking" }) {
   return (
-    <div className="flex justify-start mb-4">
-      <div className="bg-surface-100 dark:bg-surface-700 px-4 py-3 rounded-2xl rounded-bl-md">
-        <div className="flex gap-1">
-          <span className="w-2 h-2 bg-surface-400 dark:bg-surface-500 rounded-full animate-bounce" style={{ animationDelay: "0ms" }} />
-          <span className="w-2 h-2 bg-surface-400 dark:bg-surface-500 rounded-full animate-bounce" style={{ animationDelay: "150ms" }} />
-          <span className="w-2 h-2 bg-surface-400 dark:bg-surface-500 rounded-full animate-bounce" style={{ animationDelay: "300ms" }} />
+    <div className="flex justify-start mb-4 animate-fade-in-up">
+      <div className="flex items-center gap-2.5 bg-surface-100 dark:bg-surface-800 px-4 py-3 rounded-2xl rounded-bl-md shadow-sm">
+        <div className="flex gap-1 items-end h-4">
+          <span className="w-1.5 h-1.5 bg-primary-400 dark:bg-primary-500 rounded-full animate-bounce" style={{ animationDelay: "0ms", animationDuration: "1s" }} />
+          <span className="w-1.5 h-1.5 bg-primary-500 dark:bg-primary-400 rounded-full animate-bounce" style={{ animationDelay: "150ms", animationDuration: "1s" }} />
+          <span className="w-1.5 h-1.5 bg-primary-600 dark:bg-primary-300 rounded-full animate-bounce" style={{ animationDelay: "300ms", animationDuration: "1s" }} />
         </div>
+        <span className="text-caption font-medium text-surface-500 dark:text-surface-400">{label}</span>
       </div>
     </div>
   );

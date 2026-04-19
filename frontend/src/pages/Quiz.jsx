@@ -5,6 +5,8 @@ import { completeLesson } from "../api/progress";
 import { generateTTS } from "../api/media";
 import { useToast } from "../contexts/ToastContext";
 import { useCountUp, staggerDelay } from "../hooks/useAnimations";
+import { markActivity, clearActivity } from "../hooks/useResumeSession";
+import { TriumphHero } from "../components/ui";
 import { enhanceQuestions } from "../utils/quizEnhancer";
 import MatchPairsQuestion from "../components/quiz/MatchPairsQuestion";
 import OddOneOutQuestion from "../components/quiz/OddOneOutQuestion";
@@ -35,24 +37,36 @@ function MCQQuestion({ question, onAnswer, disabled }) {
 
   return (
     <div>
-      <p className="text-lg font-semibold text-surface-900 dark:text-surface-100 mb-6">
+      <p className="text-h3 text-surface-900 dark:text-surface-100 mb-6 leading-snug">
         {question.prompt}
       </p>
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-        {(question.options || []).map((option, i) => (
-          <button
-            key={i}
-            onClick={() => handleSelect(option)}
-            disabled={disabled}
-            className={`p-4 rounded-xl border-2 text-left font-medium transition-all duration-200 hover:scale-[1.02] ${
-              selected === option
-                ? "border-primary-500 bg-primary-50 dark:bg-primary-900/20 text-primary-800 dark:text-primary-300"
-                : "border-surface-200 dark:border-surface-700 bg-white dark:bg-surface-800 text-surface-700 dark:text-surface-300 hover:border-surface-300 dark:hover:border-surface-600 hover:bg-surface-50 dark:hover:bg-surface-700"
-            } ${disabled ? "cursor-not-allowed opacity-75" : "cursor-pointer"}`}
-          >
-            {option}
-          </button>
-        ))}
+        {(question.options || []).map((option, i) => {
+          const isSelected = selected === option;
+          return (
+            <button
+              key={i}
+              onClick={() => handleSelect(option)}
+              disabled={disabled}
+              className={`group relative overflow-hidden p-4 rounded-2xl border-2 text-left font-medium transition-all duration-150 focus-ring active:scale-[0.98] active:brightness-105 ${
+                isSelected
+                  ? "border-primary-500 bg-primary-50 dark:bg-primary-900/30 text-primary-800 dark:text-primary-300 shadow-glow-primary"
+                  : "border-surface-200 dark:border-surface-700 bg-white dark:bg-surface-800 text-surface-700 dark:text-surface-200 hover:border-primary-300 dark:hover:border-primary-700 hover:bg-primary-50/50 dark:hover:bg-primary-900/10 hover:-translate-y-0.5 hover:shadow-card-hover"
+              } ${disabled ? "cursor-not-allowed opacity-75" : "cursor-pointer"}`}
+            >
+              <span className="flex items-center gap-3">
+                <span className={`shrink-0 w-7 h-7 rounded-lg flex items-center justify-center text-caption font-bold transition-colors ${
+                  isSelected
+                    ? "bg-primary-500 text-white"
+                    : "bg-surface-100 dark:bg-surface-700 text-surface-500 dark:text-surface-400 group-hover:bg-primary-100 dark:group-hover:bg-primary-900/40 group-hover:text-primary-600 dark:group-hover:text-primary-300"
+                }`}>
+                  {String.fromCharCode(65 + i)}
+                </span>
+                <span className="flex-1">{option}</span>
+              </span>
+            </button>
+          );
+        })}
       </div>
     </div>
   );
@@ -190,68 +204,55 @@ function ScoreSummary({ result, lessonId, answers }) {
       ? Math.round((result.score / result.total_questions) * 100)
       : 0;
 
-  let grade, gradeColor;
-  if (pct === 100) {
-    grade = "Perfect!";
-    gradeColor = "text-yellow-600";
-  } else if (pct >= 80) {
-    grade = "Great job!";
-    gradeColor = "text-green-600";
-  } else if (pct >= 60) {
-    grade = "Good effort!";
-    gradeColor = "text-blue-600";
-  } else {
-    grade = "Keep practicing!";
-    gradeColor = "text-orange-600";
-  }
+  const { emoji, headline, subline, tone, celebrate } =
+    pct === 100 ? { emoji: "🌟", headline: "Perfect!",       subline: "Flawless run. That's exam-level work.",   tone: "celebratory", celebrate: true  } :
+    pct >= 80   ? { emoji: "🎉", headline: "Great job!",     subline: "Strong performance — nearly there.",      tone: "celebratory", celebrate: true  } :
+    pct >= 60   ? { emoji: "👍", headline: "Good effort!",   subline: "You're building real momentum.",           tone: "neutral",     celebrate: false } :
+                  { emoji: "💪", headline: "Keep practicing",subline: "Every mistake is a step forward.",         tone: "retry",       celebrate: false };
 
   return (
-    <div className="flex flex-col items-center justify-center py-12 animate-fade-in">
-      <div className="text-6xl mb-4 animate-bounce-in">{pct === 100 ? "🌟" : pct >= 60 ? "🎉" : "💪"}</div>
-      <h2 className={`text-3xl font-extrabold mb-2 ${gradeColor} animate-fade-in-up`}>{grade}</h2>
-      <p className="text-surface-600 dark:text-surface-400 text-lg mb-6">
-        {result.lesson_title}
-      </p>
-      <div className="card p-8 mb-6 text-center animate-scale-in">
-        <p className="text-5xl font-bold text-surface-900 dark:text-surface-100 mb-2">
-          {result.score}/{result.total_questions}
-        </p>
-        <p className="text-surface-500 dark:text-surface-400">questions correct</p>
-        <div className="mt-4 w-48 bg-surface-200 dark:bg-surface-700 rounded-full h-3 mx-auto">
-          <div
-            className="bg-primary-500 h-3 rounded-full transition-all duration-1000"
-            style={{ width: `${pct}%` }}
-          />
-        </div>
-        <p className="text-sm text-surface-400 dark:text-surface-500 mt-2">{pct}%</p>
+    <>
+      <TriumphHero
+        emoji={emoji}
+        headline={headline}
+        subline={`${subline} · ${result.lesson_title}`}
+        tone={tone}
+        celebrate={celebrate}
+        stats={[
+          { value: `${result.score}/${result.total_questions}`, label: "correct", color: "text-primary-600 dark:text-primary-400" },
+          { value: `${pct}%`, label: "score", color: pct >= 80 ? "text-success-600 dark:text-success-400" : pct >= 60 ? "text-primary-600 dark:text-primary-400" : "text-warn-600 dark:text-warn-400" },
+          ...(result.xp_earned ? [{ value: `+${result.xp_earned}`, label: "XP earned", color: "text-accent-600 dark:text-accent-400" }] : []),
+        ]}
+        extra={
+          <div className="mt-5">
+            <div className="w-full bg-surface-100 dark:bg-surface-800 rounded-full h-2 overflow-hidden">
+              <div
+                className="h-2 rounded-full bg-gradient-to-r from-primary-500 via-accent-500 to-success-500 transition-all duration-1000"
+                style={{ width: `${pct}%` }}
+              />
+            </div>
+          </div>
+        }
+        actions={
+          <>
+            <Link to={`/lesson/${lessonId}`} className="btn-secondary btn-md">
+              Back to lesson
+            </Link>
+            {result.next_lesson && (
+              <Link to={`/lesson/${result.next_lesson.id}`} className="btn-success btn-md">
+                Next lesson →
+              </Link>
+            )}
+            <Link to={`/practice/quiz/${lessonId}`} reloadDocument className="btn-primary btn-md">
+              Try again
+            </Link>
+          </>
+        }
+      />
+      <div className="max-w-xl mx-auto px-4">
+        <ReviewList answers={answers} />
       </div>
-
-      <ReviewList answers={answers} />
-
-      <div className="flex flex-wrap gap-3 mt-6 justify-center">
-        <Link
-          to={`/lesson/${lessonId}`}
-          className="px-6 py-3 border border-surface-300 dark:border-surface-600 rounded-xl font-medium text-surface-700 dark:text-surface-300 hover:bg-surface-50 dark:hover:bg-surface-700 transition-colors"
-        >
-          Back to Lesson
-        </Link>
-        {result.next_lesson && (
-          <Link
-            to={`/lesson/${result.next_lesson.id}`}
-            className="px-6 py-3 bg-success-600 text-white font-semibold rounded-xl hover:bg-success-700 transition-colors"
-          >
-            Next Lesson →
-          </Link>
-        )}
-        <Link
-          to={`/practice/quiz/${lessonId}`}
-          reloadDocument
-          className="px-6 py-3 bg-primary-600 text-white font-semibold rounded-xl hover:bg-primary-700 transition-colors"
-        >
-          Try Again
-        </Link>
-      </div>
-    </div>
+    </>
   );
 }
 
@@ -271,6 +272,7 @@ export default function Quiz() {
   const [answers, setAnswers] = useState([]);
 
   useEffect(() => {
+    markActivity(`Quiz in progress`, `/practice/quiz/${lessonId}`);
     startQuiz(lessonId)
       .then((res) => {
         setSessionId(res.data.session_id);
@@ -294,14 +296,11 @@ export default function Quiz() {
       // Enhanced question types are handled client-side (no backend question ID)
       const isEnhanced = ["match_pairs", "odd_one_out", "reorder", "error_detect", "listen_choose"].includes(question.type);
 
+      // Feedback pause — let user see selected state before verdict lands
+      const FEEDBACK_DELAY = 350;
+
       if (isEnhanced) {
-        // For enhanced types, `answer` is either a boolean (correct/wrong) or the user's text
         const is_correct = typeof answer === "boolean" ? answer : answer === question.correct_answer;
-        setFeedback({
-          is_correct,
-          correct_answer: question.correct_answer,
-          explanation: "",
-        });
         setAnsweredCount((prev) => prev + 1);
         setAnswers((prev) => [
           ...prev,
@@ -312,12 +311,14 @@ export default function Quiz() {
             is_correct,
           },
         ]);
+        setTimeout(() => {
+          setFeedback({ is_correct, correct_answer: question.correct_answer, explanation: "" });
+        }, FEEDBACK_DELAY);
         return;
       }
 
       try {
         const res = await submitAnswer(sessionId, question.id, answer);
-        setFeedback(res.data);
         setAnsweredCount((prev) => prev + 1);
         setAnswers((prev) => [
           ...prev,
@@ -328,6 +329,7 @@ export default function Quiz() {
             is_correct: res.data.is_correct,
           },
         ]);
+        setTimeout(() => setFeedback(res.data), FEEDBACK_DELAY);
       } catch (err) {
         setError(err.response?.data?.detail || "Failed to submit answer.");
       }
@@ -360,6 +362,7 @@ export default function Quiz() {
         }
 
         setSummary({ ...quizData, next_lesson: nextLesson });
+        clearActivity();
         const xp = quizData.xp_earned;
         if (xp) showToast(`Quiz completed! +${xp} XP`, "success");
       } catch (err) {

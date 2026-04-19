@@ -3,6 +3,13 @@ import Toast from "../components/Toast";
 
 const ToastContext = createContext(null);
 
+const DEFAULT_DURATIONS = {
+  success: 2800,
+  info:    3000,
+  warn:    4000,
+  error:   5000, // errors need reading time
+};
+
 let toastId = 0;
 
 export function ToastProvider({ children }) {
@@ -16,10 +23,11 @@ export function ToastProvider({ children }) {
   }, []);
 
   const showToast = useCallback(
-    (message, type = "success", duration = 3000) => {
+    (message, type = "success", duration) => {
       const id = ++toastId;
       setToasts((prev) => [...prev, { id, message, type }]);
-      timersRef.current[id] = setTimeout(() => removeToast(id), duration);
+      const finalDuration = duration ?? DEFAULT_DURATIONS[type] ?? 3000;
+      timersRef.current[id] = setTimeout(() => removeToast(id), finalDuration);
       return id;
     },
     [removeToast]
@@ -28,7 +36,8 @@ export function ToastProvider({ children }) {
   return (
     <ToastContext.Provider value={{ showToast }}>
       {children}
-      <div className="fixed bottom-4 right-4 z-50 flex flex-col gap-2 pointer-events-none">
+      {/* Bottom-right stack with proper gap and mobile bottom-safe padding */}
+      <div className="fixed bottom-4 right-4 z-[100] flex flex-col gap-2 pointer-events-none max-w-[calc(100vw-2rem)]">
         {toasts.map((toast) => (
           <Toast
             key={toast.id}

@@ -3,7 +3,8 @@ import { Link } from "react-router-dom";
 import { getSRSDueCards, submitSRSReview } from "../api/progress";
 import AudioPlayButton from "../components/AudioPlayButton";
 import { useAuth } from "../contexts/AuthContext";
-import { Confetti } from "../components/ui";
+import { TriumphHero, EmptyState } from "../components/ui";
+import { markActivity, clearActivity } from "../hooks/useResumeSession";
 
 /* ── swipe config ─────────────────────────────────── */
 const SWIPE_THRESHOLD = 80;         // px to commit
@@ -86,6 +87,7 @@ export default function SRSReview() {
   const flashcardLimit = user?.preferences?.flashcard_count ?? 20;
 
   useEffect(() => {
+    markActivity("Flashcard review in progress", "/practice/srs");
     getSRSDueCards(flashcardLimit)
       .then((res) => {
         setCards(res.data.cards || []);
@@ -94,6 +96,10 @@ export default function SRSReview() {
       .catch((err) => setError(err.response?.data?.detail || "Failed to load cards."))
       .finally(() => setLoading(false));
   }, [flashcardLimit]);
+
+  useEffect(() => {
+    if (done) clearActivity();
+  }, [done]);
 
   /* ── advance to next card ───────────────────── */
   const advance = useCallback(() => {
@@ -221,24 +227,46 @@ export default function SRSReview() {
   }
 
   if (done) {
+    if (reviewedCount === 0) {
+      return (
+        <EmptyState
+          icon="✅"
+          title="All caught up!"
+          subtitle="No cards are due right now. Come back later to keep your streak going — or take a quiz to stay sharp."
+          tone="success"
+          action={
+            <div className="flex gap-2">
+              <Link to="/" className="btn-secondary btn-md">Back to Dashboard</Link>
+              <Link to="/practice/quiz/random" className="btn-primary btn-md">Take a quiz</Link>
+            </div>
+          }
+        />
+      );
+    }
+
+    const subline =
+      reviewedCount >= 20 ? "Deep work. Your memory is going to thank you tomorrow."
+      : reviewedCount >= 10 ? "Solid session — consistency builds fluency."
+      : reviewedCount >= 5 ? "Great pace. Every review strengthens the memory trace."
+      : "Small wins compound. See you tomorrow.";
+
     return (
-      <div className="max-w-xl mx-auto py-16 text-center space-y-5 relative">
-        {reviewedCount >= 5 && <Confetti count={50} duration={1800} />}
-        <div className="text-7xl mb-2 animate-bounce-in inline-block">{reviewedCount > 0 ? "🎉" : "✅"}</div>
-        <h2 className="text-h1 text-gradient-primary">
-          {reviewedCount > 0 ? "Session complete!" : "All caught up!"}
-        </h2>
-        <p className="text-body text-surface-500 dark:text-surface-400 max-w-md mx-auto">
-          {reviewedCount > 0
-            ? `You reviewed ${reviewedCount} card${reviewedCount !== 1 ? "s" : ""}. Great work — consistency builds memory.`
-            : "No cards are due right now. Come back later to keep your streak going!"}
-        </p>
-        <div className="pt-2">
-          <Link to="/" className="btn-primary btn-lg inline-flex">
-            Back to Dashboard
-          </Link>
-        </div>
-      </div>
+      <TriumphHero
+        emoji="🎉"
+        headline="Session complete!"
+        subline={subline}
+        tone="celebratory"
+        celebrate={reviewedCount >= 5}
+        stats={[
+          { value: reviewedCount, label: "cards reviewed", color: "text-primary-600 dark:text-primary-400" },
+        ]}
+        actions={
+          <>
+            <Link to="/" className="btn-secondary btn-md">Dashboard</Link>
+            <Link to="/practice/srs" reloadDocument className="btn-primary btn-md">Review more</Link>
+          </>
+        }
+      />
     );
   }
 

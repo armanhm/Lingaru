@@ -6,6 +6,7 @@ import AudioPlayButton from "../components/AudioPlayButton";
 import useVoiceRecorder from "../hooks/useVoiceRecorder";
 import { useCountUp, staggerDelay } from "../hooks/useAnimations";
 import { useToast } from "../contexts/ToastContext";
+import { TriumphHero } from "../components/ui";
 
 const API_BASE_URL = import.meta.env.VITE_API_URL || "/api";
 function resolveAudioUrl(rawUrl) {
@@ -167,47 +168,47 @@ export default function ExamExercise() {
   /* ── Done screen ────────────────────────────────────── */
   if (done && summary) {
     const pct = summary.percentage || 0;
+    const emoji = pct >= 85 ? "🌟" : pct >= 65 ? "🎉" : pct >= 50 ? "👍" : "💪";
+    const headline = pct >= 85 ? "Excellent!" : pct >= 65 ? "Great job!" : pct >= 50 ? "Good effort!" : "Keep practicing!";
+    const subline = pct >= 85 ? "You're performing at exam standard — nearly ready."
+      : pct >= 65 ? "Strong progress. Another session or two at this level should cement it."
+      : pct >= 50 ? "Solid base. Focus on the tricky bits and try again."
+      : "Each attempt teaches your brain something new. Try again when ready.";
+
+    const stats = [
+      { value: `${animatedScore}%`, label: "score", color: "text-primary-600 dark:text-primary-400" },
+    ];
+    if (summary.cefr_estimate) {
+      stats.push({ value: summary.cefr_estimate, label: "estimated level", color: "text-warn-600 dark:text-warn-400" });
+    }
+    if (xpEarned) {
+      stats.push({ value: `+${xpEarned}`, label: "XP earned", color: "text-success-600 dark:text-success-400" });
+    }
+
     return (
-      <div className="max-w-xl mx-auto py-8 space-y-6 text-center">
-        <div className="animate-bounce-in text-6xl mb-2">
-          {pct >= 85 ? "🌟" : pct >= 65 ? "🎉" : pct >= 50 ? "👍" : "💪"}
-        </div>
-        <h2 className="text-2xl font-extrabold text-surface-900 dark:text-surface-100 animate-fade-in-up">
-          {pct >= 85 ? "Excellent!" : pct >= 65 ? "Great job!" : pct >= 50 ? "Good effort!" : "Keep practicing!"}
-        </h2>
-
-        <div className="card p-6 space-y-4 animate-scale-in">
-          <div className="flex justify-center gap-8">
-            <div className="text-center">
-              <p className="text-4xl font-bold text-primary-600">{animatedScore}%</p>
-              <p className="text-xs text-surface-400 mt-1">score</p>
-            </div>
-            {summary.cefr_estimate && (
-              <div className="text-center">
-                <p className="text-4xl font-bold text-warn-500">{summary.cefr_estimate}</p>
-                <p className="text-xs text-surface-400 mt-1">estimated level</p>
-              </div>
-            )}
-            <div className="text-center">
-              <p className="text-4xl font-bold text-success-500">+{xpEarned}</p>
-              <p className="text-xs text-surface-400 mt-1">XP earned</p>
-            </div>
-          </div>
-
-          <p className="text-sm text-surface-500 dark:text-surface-400">
+      <TriumphHero
+        emoji={emoji}
+        headline={headline}
+        subline={subline}
+        tone={pct >= 65 ? "celebratory" : pct >= 50 ? "neutral" : "retry"}
+        celebrate={pct >= 85}
+        stats={stats}
+        extra={
+          <p className="mt-5 text-sm text-surface-500 dark:text-surface-400">
             {score}/{totalAnswered} questions correct
           </p>
-        </div>
-
-        <div className="flex gap-3 justify-center animate-fade-in-up">
-          <Link to={`/exam-prep/${section}`} className="btn-secondary btn-md">
-            ← Back to Section
-          </Link>
-          <Link to="/exam-prep" className="btn-primary btn-md">
-            Exam Prep Hub
-          </Link>
-        </div>
-      </div>
+        }
+        actions={
+          <>
+            <Link to={`/exam-prep/${section}`} className="btn-secondary btn-md">
+              Back to section
+            </Link>
+            <Link to="/exam-prep" className="btn-primary btn-md">
+              Exam Prep hub
+            </Link>
+          </>
+        }
+      />
     );
   }
 

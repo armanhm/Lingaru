@@ -5,6 +5,7 @@ import { getStats, getTrendReport } from "../api/gamification";
 import { getSRSDueCards } from "../api/progress";
 import AudioPlayButton from "../components/AudioPlayButton";
 import { useCountUp, staggerDelay } from "../hooks/useAnimations";
+import { useLastActivity } from "../hooks/useResumeSession";
 import { SkeletonCard, SkeletonGrid, Confetti } from "../components/ui";
 
 // Curated daily quotes — poems and inspirational phrases in French
@@ -325,6 +326,126 @@ function SuggestionCard({ s, i }) {
 /* ═══════════════════════════════════════════════════════════
  * MAIN
  * ═══════════════════════════════════════════════════════════ */
+/* ─────────────────────────────────────────────────────────
+ * NEXT ACTION — single dominant CTA based on user state
+ * ───────────────────────────────────────────────────────── */
+function chooseNextAction({ srsDue, trend }) {
+  if (srsDue >= 5) {
+    return {
+      icon: "🃏",
+      eyebrow: "Time to review",
+      title: `${srsDue} flashcards are due`,
+      subtitle: "Quick reviews now — stronger memory tomorrow.",
+      cta: "Start review",
+      to: "/practice/srs",
+      tone: "primary",
+    };
+  }
+  if (trend?.week?.mistakes > 3) {
+    return {
+      icon: "🔎",
+      eyebrow: "Fix what's shaky",
+      title: `${trend.week.mistakes} mistakes this week`,
+      subtitle: "Turn weak spots into strengths.",
+      cta: "Review mistakes",
+      to: "/progress/mistakes",
+      tone: "warn",
+    };
+  }
+  if (!trend?.week?.lessons_completed) {
+    return {
+      icon: "📝",
+      eyebrow: "Start strong",
+      title: "Take a quick quiz",
+      subtitle: "A random lesson, tuned to your level.",
+      cta: "Start quiz",
+      to: "/practice/quiz/random",
+      tone: "primary",
+    };
+  }
+  return {
+    icon: "🎮",
+    eyebrow: "Have some fun",
+    title: "Play a mini game",
+    subtitle: "Learning feels lighter when it's play.",
+    cta: "Explore games",
+    to: "/mini-games",
+    tone: "accent",
+  };
+}
+
+function NextActionCard({ action }) {
+  const toneClass = action.tone === "warn"
+    ? "from-warn-500 via-accent-500 to-danger-500"
+    : action.tone === "accent"
+      ? "from-accent-500 via-primary-500 to-purple-600"
+      : "from-primary-500 via-primary-600 to-purple-600";
+
+  return (
+    <Link
+      to={action.to}
+      className="group relative overflow-hidden rounded-3xl card-elevated p-0 block card-hover focus-ring animate-fade-in-up"
+    >
+      {/* Gradient wash */}
+      <div className={`absolute inset-0 bg-gradient-to-br ${toneClass} opacity-[0.08] dark:opacity-[0.15] pointer-events-none`} />
+      <div className="absolute -top-12 -right-12 w-48 h-48 bg-gradient-mesh opacity-30 pointer-events-none rounded-full blur-3xl" />
+
+      <div className="relative flex items-center gap-5 p-5 sm:p-6">
+        <div className={`shrink-0 w-14 h-14 sm:w-16 sm:h-16 rounded-2xl bg-gradient-to-br ${toneClass} flex items-center justify-center text-3xl sm:text-4xl shadow-glow-primary group-hover:scale-110 group-hover:rotate-3 transition-all duration-300`}>
+          {action.icon}
+        </div>
+        <div className="flex-1 min-w-0">
+          <p className="eyebrow-primary mb-0.5">{action.eyebrow}</p>
+          <h3 className="text-h3 text-surface-900 dark:text-surface-100 group-hover:text-primary-600 dark:group-hover:text-primary-400 transition-colors truncate">
+            {action.title}
+          </h3>
+          <p className="text-caption text-surface-500 dark:text-surface-400 mt-0.5 truncate">{action.subtitle}</p>
+        </div>
+        <div className="shrink-0 hidden sm:flex">
+          <span className="btn-primary btn-md pointer-events-none">
+            {action.cta}
+            <svg className="w-4 h-4 ml-1 group-hover:translate-x-1 transition-transform" fill="none" strokeWidth={2.5} viewBox="0 0 24 24" stroke="currentColor">
+              <path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" />
+            </svg>
+          </span>
+        </div>
+      </div>
+    </Link>
+  );
+}
+
+/* ─────────────────────────────────────────────────────────
+ * RESUME BANNER — shows when user has an active mid-flow session
+ * ───────────────────────────────────────────────────────── */
+function ResumeBanner({ activity, onDismiss }) {
+  if (!activity) return null;
+  return (
+    <div className="flex items-center gap-3 rounded-2xl bg-info-50 dark:bg-info-900/20 border border-info-200 dark:border-info-800/50 px-4 py-3 animate-slide-in-down">
+      <span className="shrink-0 w-9 h-9 rounded-xl bg-info-100 dark:bg-info-800/40 text-info-600 dark:text-info-300 flex items-center justify-center">
+        <svg className="w-4 h-4" fill="none" stroke="currentColor" strokeWidth={2.5} viewBox="0 0 24 24">
+          <path strokeLinecap="round" strokeLinejoin="round" d="M8 5v14l11-7z" />
+        </svg>
+      </span>
+      <div className="flex-1 min-w-0">
+        <p className="text-caption font-semibold text-info-700 dark:text-info-300 uppercase tracking-wider">Resume where you left off</p>
+        <p className="text-sm font-medium text-surface-800 dark:text-surface-200 truncate">{activity.label}</p>
+      </div>
+      <Link to={activity.url} className="btn-primary btn-sm shrink-0">
+        Continue
+      </Link>
+      <button
+        onClick={onDismiss}
+        className="shrink-0 w-7 h-7 rounded-lg text-surface-400 hover:text-surface-700 dark:hover:text-surface-200 hover:bg-white/60 dark:hover:bg-surface-800/60 transition-colors flex items-center justify-center"
+        aria-label="Dismiss"
+      >
+        <svg className="w-4 h-4" fill="none" stroke="currentColor" strokeWidth={2.5} viewBox="0 0 24 24">
+          <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
+        </svg>
+      </button>
+    </div>
+  );
+}
+
 export default function Dashboard() {
   const { user } = useAuth();
   const [loading, setLoading] = useState(true);
@@ -335,6 +456,7 @@ export default function Dashboard() {
   const animatedXP = useCountUp(stats?.total_xp ?? 0);
   const [suggestions] = useState(() => pickDailySuggestions(4));
   const [celebrate, setCelebrate] = useState(false);
+  const [lastActivity, dismissActivity] = useLastActivity();
 
   useEffect(() => {
     Promise.allSettled([getStats(), getSRSDueCards(1), getTrendReport()])
@@ -403,6 +525,12 @@ export default function Dashboard() {
         </div>
         <HeroStats stats={stats} srsDue={srsDue} animatedXP={animatedXP} />
       </header>
+
+      {/* ── Resume banner ──────────────────────────────────── */}
+      <ResumeBanner activity={lastActivity} onDismiss={dismissActivity} />
+
+      {/* ── Next Action hero ───────────────────────────────── */}
+      <NextActionCard action={chooseNextAction({ srsDue, trend })} />
 
       {/* ── Quote + Trend Report ────────────────────────────── */}
       <section className="grid grid-cols-1 md:grid-cols-2 gap-4">

@@ -2,22 +2,11 @@ import { useEffect, useState } from "react";
 import { useParams, Link } from "react-router-dom";
 import { getTopic } from "../api/content";
 import { getTopicProgress } from "../api/progress";
+import { staggerDelay } from "../hooks/useAnimations";
+import { PageHeader, EmptyState, SkeletonCard } from "../components/ui";
 
-const typeIcons = {
-  vocab: "📝",
-  vocabulary: "📝",
-  grammar: "📐",
-  text: "📖",
-  reading: "📖",
-};
-
-const typeLabels = {
-  vocab: "Vocabulary",
-  vocabulary: "Vocabulary",
-  grammar: "Grammar",
-  text: "Reading",
-  reading: "Reading",
-};
+const TYPE_ICON = { vocab: "📝", vocabulary: "📝", grammar: "📐", text: "📖", reading: "📖" };
+const TYPE_LABEL = { vocab: "Vocabulary", vocabulary: "Vocabulary", grammar: "Grammar", text: "Reading", reading: "Reading" };
 
 export default function TopicDetail() {
   const { id } = useParams();
@@ -38,99 +27,98 @@ export default function TopicDetail() {
 
   if (loading) {
     return (
-      <div className="flex justify-center items-center py-20">
-        <div className="animate-spin rounded-full h-10 w-10 border-b-2 border-primary-600" />
+      <div className="max-w-4xl mx-auto space-y-4">
+        <div className="skeleton h-5 w-24 rounded" />
+        <div className="skeleton h-12 w-2/3 rounded-lg" />
+        <div className="skeleton h-3 w-full rounded" />
+        <div className="space-y-3 pt-4">
+          {[...Array(4)].map((_, i) => <SkeletonCard key={i} height="h-20" />)}
+        </div>
       </div>
     );
   }
 
-  if (error) {
-    return (
-      <div className="bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-lg p-6 text-red-700 dark:text-red-400">
-        {error}
-      </div>
-    );
-  }
-
+  if (error) return <EmptyState icon="⚠️" title="Couldn't load topic" subtitle={error} tone="warn" />;
   if (!topic) return null;
 
   const lessons = topic.lessons || [];
   const completedCount = lessons.filter((l) => completedIds.has(l.id)).length;
+  const pct = lessons.length > 0 ? (completedCount / lessons.length) * 100 : 0;
 
   return (
-    <div>
-      <Link to="/topics" className="text-sm text-primary-600 hover:text-primary-800 mb-4 inline-block">
-        &larr; Back to Topics
-      </Link>
-
-      <div className="mb-6">
-        <div className="flex items-center gap-3 mb-2">
-          <span className="text-3xl">{topic.icon || "📘"}</span>
-          <div>
-            <h1 className="text-2xl font-extrabold text-surface-900 dark:text-surface-100">{topic.name_fr}</h1>
-            <p className="text-surface-500 dark:text-surface-400">{topic.name_en}</p>
-          </div>
-        </div>
-        <p className="text-surface-600 dark:text-surface-400 mt-2">{topic.description}</p>
-      </div>
+    <div className="max-w-4xl mx-auto">
+      <PageHeader
+        backTo="/topics"
+        backLabel="All topics"
+        eyebrow={topic.name_en}
+        title={topic.name_fr}
+        subtitle={topic.description}
+        icon={topic.icon || "📘"}
+      />
 
       {lessons.length > 0 && (
-        <div className="mb-6">
-          <div className="flex items-center justify-between mb-1">
-            <span className="text-sm font-medium text-surface-700 dark:text-surface-300">
-              Progress: {completedCount}/{lessons.length} lessons
+        <div className="card p-4 mb-6 animate-fade-in">
+          <div className="flex items-center justify-between mb-2">
+            <span className="text-sm font-semibold text-surface-700 dark:text-surface-300">
+              {completedCount}/{lessons.length} lessons completed
             </span>
-            <span className="text-sm text-surface-500 dark:text-surface-400">
-              {lessons.length > 0 ? Math.round((completedCount / lessons.length) * 100) : 0}%
-            </span>
+            <span className="text-h4 font-extrabold text-gradient-primary">{Math.round(pct)}%</span>
           </div>
-          <div className="w-full bg-surface-200 dark:bg-surface-700 rounded-full h-2">
+          <div className="w-full bg-surface-100 dark:bg-surface-800 rounded-full h-2 overflow-hidden">
             <div
-              className="bg-primary-500 h-2 rounded-full transition-all duration-500"
-              style={{ width: `${lessons.length > 0 ? (completedCount / lessons.length) * 100 : 0}%` }}
+              className="h-2 rounded-full bg-gradient-to-r from-primary-500 via-primary-400 to-accent-500 transition-all duration-700 ease-out"
+              style={{ width: `${pct}%` }}
             />
           </div>
         </div>
       )}
 
-      <h2 className="text-lg font-semibold text-surface-900 dark:text-surface-100 mb-4">
-        Lessons ({lessons.length})
-      </h2>
+      <div className="flex items-baseline justify-between mb-4">
+        <h2 className="text-h3 text-surface-900 dark:text-surface-100">Lessons</h2>
+        <span className="badge-neutral !text-[10px]">{lessons.length} total</span>
+      </div>
 
       {lessons.length === 0 ? (
-        <p className="text-surface-500 dark:text-surface-400 text-center py-12">No lessons in this topic yet.</p>
+        <EmptyState icon="📚" title="No lessons yet" subtitle="Content is being added soon." />
       ) : (
-        <div className="space-y-3">
+        <div className="space-y-2.5">
           {lessons.map((lesson, index) => {
             const done = completedIds.has(lesson.id);
             return (
               <Link
                 key={lesson.id}
                 to={`/lesson/${lesson.id}`}
-                className={`rounded-2xl shadow hover:shadow-md transition-shadow p-5 flex items-center gap-4 block ${
-                  done ? "bg-success-50 dark:bg-success-700/20 border border-success-200 dark:border-success-700" : "card"
+                className={`group relative overflow-hidden rounded-2xl p-5 flex items-center gap-4 card-hover animate-fade-in-up focus-ring transition-all duration-300 ${
+                  done
+                    ? "bg-gradient-to-r from-success-50 via-success-50/60 to-white dark:from-success-900/30 dark:via-success-900/15 dark:to-surface-900 border border-success-200 dark:border-success-800/50"
+                    : "card"
                 }`}
+                style={staggerDelay(index, 40)}
               >
-                <span className="text-sm font-medium text-surface-400 dark:text-surface-500 w-8 text-center">
+                <div className={`shrink-0 w-10 h-10 rounded-xl flex items-center justify-center text-base font-bold ${
+                  done
+                    ? "bg-gradient-to-br from-success-500 to-success-600 text-white shadow-glow-success"
+                    : "bg-surface-100 dark:bg-surface-800 text-surface-500 dark:text-surface-400"
+                }`}>
                   {done ? "✓" : index + 1}
-                </span>
-                <span className="text-2xl">
-                  {typeIcons[lesson.type] || "📄"}
-                </span>
+                </div>
+
+                <div className="shrink-0 text-2xl">{TYPE_ICON[lesson.type] || "📄"}</div>
+
                 <div className="flex-1 min-w-0">
-                  <h3 className={`font-semibold ${done ? "text-green-800 dark:text-green-300" : "text-surface-900 dark:text-surface-100"}`}>
+                  <h3 className={`font-bold ${done ? "text-success-800 dark:text-success-200" : "text-surface-900 dark:text-surface-100 group-hover:text-primary-600 dark:group-hover:text-primary-400"} transition-colors`}>
                     {lesson.title}
                   </h3>
-                  <p className="text-sm text-surface-500 dark:text-surface-400 truncate">{lesson.description}</p>
+                  <p className="text-caption text-surface-500 dark:text-surface-400 truncate">{lesson.description}</p>
                 </div>
-                <span className="text-xs font-medium px-2 py-1 rounded-full bg-surface-100 dark:bg-surface-700 text-surface-600 dark:text-surface-400 whitespace-nowrap">
-                  {typeLabels[lesson.type] || lesson.type}
-                </span>
-                {done && (
-                  <span className="badge-success whitespace-nowrap">
-                    Done
-                  </span>
-                )}
+
+                <div className="flex items-center gap-2 shrink-0">
+                  <span className="badge-neutral !text-[10px] hidden sm:inline-flex">{TYPE_LABEL[lesson.type] || lesson.type}</span>
+                  {done && <span className="badge-success !text-[10px]">Done</span>}
+                  <svg className="w-4 h-4 text-surface-300 dark:text-surface-600 group-hover:text-primary-500 group-hover:translate-x-1 transition-all" fill="none" strokeWidth={2.5} viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" />
+                  </svg>
+                </div>
               </Link>
             );
           })}

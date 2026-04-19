@@ -258,10 +258,10 @@ export default function Layout() {
                     to={item.to}
                     onClick={onNav}
                     title={collapsed ? item.label : undefined}
-                    className={`flex items-center gap-3 px-3 py-2 rounded-xl text-sm font-medium transition-all duration-200 ${
+                    className={`flex items-center gap-3 px-3 py-2 rounded-xl text-sm font-medium transition-all duration-200 focus-ring ${
                       active
-                        ? "bg-primary-50 dark:bg-primary-900/30 text-primary-600 dark:text-primary-400 shadow-sm"
-                        : "text-surface-600 dark:text-surface-400 hover:bg-surface-100 dark:hover:bg-surface-700/50 hover:text-surface-900 dark:hover:text-surface-100"
+                        ? "bg-gradient-to-r from-primary-50 to-primary-100/50 dark:from-primary-900/40 dark:to-primary-900/20 text-primary-700 dark:text-primary-300 shadow-sm ring-1 ring-primary-200/50 dark:ring-primary-800/50"
+                        : "text-surface-600 dark:text-surface-400 hover:bg-surface-100 dark:hover:bg-surface-800/60 hover:text-surface-900 dark:hover:text-surface-100"
                     } ${collapsed ? "justify-center" : ""}`}
                   >
                     <span className={`shrink-0 ${active ? "text-primary-500 dark:text-primary-400" : "text-surface-400 dark:text-surface-500"}`}>
@@ -285,10 +285,10 @@ export default function Layout() {
   );
 
   return (
-    <div className="flex h-screen bg-surface-50 dark:bg-surface-900 overflow-hidden transition-colors duration-200">
+    <div className="flex h-screen bg-surface-50 dark:bg-surface-950 overflow-hidden transition-colors duration-200">
 
       {/* Desktop sidebar */}
-      <aside className={`hidden md:flex flex-col bg-white dark:bg-surface-800 border-r border-surface-100 dark:border-surface-700/50 transition-all duration-200 shrink-0 ${collapsed ? "w-16" : "w-60"}`}>
+      <aside className={`hidden md:flex flex-col bg-white/80 dark:bg-surface-900/80 backdrop-blur-xl border-r border-surface-100 dark:border-surface-800/70 transition-all duration-200 shrink-0 ${collapsed ? "w-16" : "w-60"}`}>
         <SidebarInner onNav={null} />
       </aside>
 
@@ -311,17 +311,17 @@ export default function Layout() {
       )}
 
       {/* Mobile sidebar */}
-      <aside className={`md:hidden fixed inset-y-0 left-0 z-50 w-64 bg-white dark:bg-surface-800 border-r border-surface-100 dark:border-surface-700/50 transform transition-transform duration-300 ease-out ${mobileOpen ? "translate-x-0" : "-translate-x-full"}`}>
+      <aside className={`md:hidden fixed inset-y-0 left-0 z-50 w-64 bg-white dark:bg-surface-900 border-r border-surface-100 dark:border-surface-800/70 transform transition-transform duration-300 ease-out ${mobileOpen ? "translate-x-0" : "-translate-x-full"}`}>
         <SidebarInner onNav={() => setMobileOpen(false)} />
       </aside>
 
       {/* Main content */}
       <div className="flex-1 flex flex-col overflow-hidden">
         {/* Mobile topbar */}
-        <header className="md:hidden flex items-center gap-3 px-4 py-3 bg-white/80 dark:bg-surface-800/80 backdrop-blur-lg border-b border-surface-100 dark:border-surface-700/50 shrink-0">
+        <header className="md:hidden flex items-center gap-3 px-4 py-3 bg-white/80 dark:bg-surface-900/80 backdrop-blur-lg border-b border-surface-100 dark:border-surface-800/70 shrink-0">
           <button
             onClick={() => setMobileOpen(true)}
-            className="p-2 rounded-lg text-surface-500 hover:bg-surface-100 dark:hover:bg-surface-700 transition-colors"
+            className="p-2 rounded-lg text-surface-500 hover:bg-surface-100 dark:hover:bg-surface-800 transition-colors focus-ring"
             aria-label="Open menu"
           >
             <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">

@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import { getSRSDueCards, submitSRSReview } from "../api/progress";
 import AudioPlayButton from "../components/AudioPlayButton";
 import { useAuth } from "../contexts/AuthContext";
+import { Confetti } from "../components/ui";
 
 /* ── swipe config ─────────────────────────────────── */
 const SWIPE_THRESHOLD = 80;         // px to commit
@@ -221,22 +222,22 @@ export default function SRSReview() {
 
   if (done) {
     return (
-      <div className="max-w-xl mx-auto py-16 text-center space-y-4">
-        <div className="text-6xl mb-2">{reviewedCount > 0 ? "🎉" : "✅"}</div>
-        <h2 className="text-2xl font-extrabold text-surface-900 dark:text-surface-100">
+      <div className="max-w-xl mx-auto py-16 text-center space-y-5 relative">
+        {reviewedCount >= 5 && <Confetti count={50} duration={1800} />}
+        <div className="text-7xl mb-2 animate-bounce-in inline-block">{reviewedCount > 0 ? "🎉" : "✅"}</div>
+        <h2 className="text-h1 text-gradient-primary">
           {reviewedCount > 0 ? "Session complete!" : "All caught up!"}
         </h2>
-        <p className="text-surface-500 dark:text-surface-400">
+        <p className="text-body text-surface-500 dark:text-surface-400 max-w-md mx-auto">
           {reviewedCount > 0
-            ? `You reviewed ${reviewedCount} card${reviewedCount !== 1 ? "s" : ""}. Great work!`
-            : "No cards are due right now. Come back later!"}
+            ? `You reviewed ${reviewedCount} card${reviewedCount !== 1 ? "s" : ""}. Great work — consistency builds memory.`
+            : "No cards are due right now. Come back later to keep your streak going!"}
         </p>
-        <Link
-          to="/"
-          className="inline-block mt-4 px-6 py-3 bg-primary-600 text-white font-semibold rounded-xl hover:bg-primary-700 transition-colors"
-        >
-          Back to Dashboard
-        </Link>
+        <div className="pt-2">
+          <Link to="/" className="btn-primary btn-lg inline-flex">
+            Back to Dashboard
+          </Link>
+        </div>
       </div>
     );
   }

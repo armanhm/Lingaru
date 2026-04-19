@@ -241,20 +241,22 @@ export default function LessonDetail() {
     <div className="max-w-4xl mx-auto animate-fade-in">
       <Link
         to={lesson.topic ? `/topics/${lesson.topic.id}` : "/topics"}
-        className="text-sm font-medium text-primary-600 dark:text-primary-400 hover:text-primary-700 mb-6 inline-flex items-center gap-1 transition-colors"
+        className="inline-flex items-center gap-1.5 text-caption font-medium text-surface-500 dark:text-surface-400 hover:text-primary-600 dark:hover:text-primary-400 mb-3 transition-colors focus-ring rounded-md -mx-1 px-1 py-0.5"
       >
-        <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+        <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" strokeWidth={2.5} viewBox="0 0 24 24">
+          <path strokeLinecap="round" strokeLinejoin="round" d="M15 19l-7-7 7-7" />
         </svg>
         Back to Topic
       </Link>
 
-      <div className="mb-8">
-        <div className="flex items-center gap-2.5 mb-2">
-          <span className="text-2xl">{TYPE_ICON[lesson.type] || "📄"}</span>
-          <h1 className="text-2xl font-extrabold text-surface-900 dark:text-surface-100">{lesson.title}</h1>
+      <div className="mb-8 flex items-start gap-3">
+        <div className="shrink-0 w-12 h-12 rounded-2xl bg-gradient-to-br from-primary-500 to-primary-700 text-white flex items-center justify-center text-2xl shadow-glow-primary">
+          {TYPE_ICON[lesson.type] || "📄"}
         </div>
-        <p className="text-surface-500 dark:text-surface-400 leading-relaxed">{lesson.description}</p>
+        <div>
+          <h1 className="text-h1 text-surface-900 dark:text-surface-100">{lesson.title}</h1>
+          <p className="text-body text-surface-500 dark:text-surface-400 leading-relaxed mt-1">{lesson.description}</p>
+        </div>
       </div>
 
       <VideoSection

@@ -2,12 +2,13 @@ import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { getExamHub } from "../api/examPrep";
 import { staggerDelay } from "../hooks/useAnimations";
+import { PageHeader, SkeletonCard } from "../components/ui";
 
 const SECTION_CONFIG = {
-  CO: { name: "Compréhension orale", sub: "Listening Comprehension", emoji: "🎧", gradient: "from-info-500 to-blue-600", bg: "bg-info-50 dark:bg-info-700/20", border: "border-info-200 dark:border-info-800/50" },
-  CE: { name: "Compréhension écrite", sub: "Reading Comprehension", emoji: "📖", gradient: "from-success-500 to-emerald-600", bg: "bg-success-50 dark:bg-success-700/20", border: "border-success-200 dark:border-success-800/50" },
-  EE: { name: "Expression écrite", sub: "Writing", emoji: "✏️", gradient: "from-primary-500 to-violet-600", bg: "bg-primary-50 dark:bg-primary-700/20", border: "border-primary-200 dark:border-primary-800/50" },
-  EO: { name: "Expression orale", sub: "Speaking", emoji: "🎤", gradient: "from-warn-500 to-amber-600", bg: "bg-warn-50 dark:bg-warn-700/20", border: "border-warn-200 dark:border-warn-800/50" },
+  CO: { name: "Compréhension orale", sub: "Listening Comprehension", emoji: "🎧", gradient: "from-info-500 via-info-600 to-primary-600" },
+  CE: { name: "Compréhension écrite", sub: "Reading Comprehension", emoji: "📖", gradient: "from-success-500 via-success-600 to-info-600" },
+  EE: { name: "Expression écrite",    sub: "Writing",                 emoji: "✏️", gradient: "from-primary-500 via-primary-600 to-purple-600" },
+  EO: { name: "Expression orale",     sub: "Speaking",                emoji: "🎤", gradient: "from-accent-500 via-accent-600 to-danger-500" },
 };
 
 const CEFR_LEVELS = ["A1", "A2", "B1", "B2", "C1", "C2"];
@@ -16,16 +17,15 @@ function CEFRBar({ level }) {
   if (!level) return null;
   const idx = CEFR_LEVELS.indexOf(level);
   return (
-    <div className="flex items-center gap-1 mt-2">
+    <div className="flex items-center gap-1 mt-3">
       {CEFR_LEVELS.map((l, i) => (
-        <div
-          key={l}
-          className={`h-1.5 flex-1 rounded-full transition-all ${
-            i <= idx ? "bg-primary-500" : "bg-surface-200 dark:bg-surface-700"
-          }`}
-        />
+        <div key={l} className="flex-1">
+          <div className={`h-1 rounded-full transition-all ${i <= idx ? "bg-gradient-to-r from-primary-500 to-primary-600" : "bg-surface-200 dark:bg-surface-800"}`} />
+          <span className={`block text-[8px] mt-1 text-center font-semibold ${i === idx ? "text-primary-600 dark:text-primary-400" : "text-surface-400 dark:text-surface-600"}`}>
+            {l}
+          </span>
+        </div>
       ))}
-      <span className="text-xs font-bold text-primary-600 dark:text-primary-400 ml-1">{level}</span>
     </div>
   );
 }
@@ -35,15 +35,20 @@ export default function ExamPrepHub() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    getExamHub()
-      .then((res) => setHub(res.data))
-      .finally(() => setLoading(false));
+    getExamHub().then((res) => setHub(res.data)).finally(() => setLoading(false));
   }, []);
 
   if (loading) {
     return (
-      <div className="flex justify-center items-center py-20">
-        <div className="animate-spin rounded-full h-10 w-10 border-b-2 border-primary-600" />
+      <div className="max-w-5xl mx-auto">
+        <div className="mb-7 space-y-2">
+          <div className="skeleton h-4 w-24 rounded" />
+          <div className="skeleton h-10 w-72 rounded-lg" />
+          <div className="skeleton h-4 w-96 rounded" />
+        </div>
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          {[...Array(4)].map((_, i) => <SkeletonCard key={i} height="h-48" />)}
+        </div>
       </div>
     );
   }
@@ -51,76 +56,75 @@ export default function ExamPrepHub() {
   const sections = hub?.sections || [];
 
   return (
-    <div className="max-w-4xl mx-auto space-y-6">
-      <div className="animate-fade-in">
-        <h1 className="text-2xl font-extrabold text-surface-900 dark:text-surface-100">Exam Preparation</h1>
-        <p className="text-surface-500 dark:text-surface-400 mt-1">Practice for TEF/TCF French proficiency exams</p>
-      </div>
+    <div className="max-w-5xl mx-auto">
+      <PageHeader
+        eyebrow="TEF / TCF exam prep"
+        title="Exam Preparation"
+        subtitle="Practice the four skills of the French proficiency exams — at your own pace."
+        icon="🎓"
+        gradient
+      />
 
       {/* Section cards */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-8">
         {sections.map((s, i) => {
           const cfg = SECTION_CONFIG[s.code] || {};
-          const isReady = true; // all 4 sections now active
-
           return (
-            <div key={s.code} className="animate-fade-in-up" style={staggerDelay(i, 70)}>
-              {isReady ? (
-                <Link
-                  to={`/exam-prep/${s.code}`}
-                  className={`block rounded-2xl border ${cfg.border} ${cfg.bg} p-5 h-full hover:shadow-card-hover hover:-translate-y-1 hover:scale-[1.01] transition-all duration-300`}
-                >
-                  <div className="flex items-start justify-between mb-3">
-                    <div className={`w-12 h-12 bg-gradient-to-br ${cfg.gradient} rounded-xl flex items-center justify-center text-2xl shadow-sm`}>
-                      {cfg.emoji}
-                    </div>
-                    {s.estimated_cefr && (
-                      <span className="badge-primary">{s.estimated_cefr}</span>
-                    )}
-                  </div>
-                  <h3 className="text-base font-bold text-surface-900 dark:text-surface-100">{cfg.name}</h3>
-                  <p className="text-xs text-surface-500 dark:text-surface-400 mt-0.5">{cfg.sub}</p>
+            <Link
+              key={s.code}
+              to={`/exam-prep/${s.code}`}
+              className="group relative overflow-hidden card card-hover focus-ring animate-fade-in-up p-0"
+              style={staggerDelay(i, 70)}
+            >
+              {/* Gradient top band */}
+              <div className={`h-1.5 bg-gradient-to-r ${cfg.gradient}`} />
 
-                  {s.exercise_count > 0 && (
-                    <div className="mt-3 flex items-center justify-between text-xs text-surface-400 dark:text-surface-500">
-                      <span>{s.exercise_count} exercises</span>
-                      <span>{s.sessions_completed} completed</span>
-                    </div>
-                  )}
-
-                  {s.estimated_cefr && <CEFRBar level={s.estimated_cefr} />}
-
-                  {s.best_score_pct > 0 && (
-                    <div className="mt-2 w-full bg-surface-200 dark:bg-surface-700 rounded-full h-1.5">
-                      <div className="bg-primary-500 h-1.5 rounded-full" style={{ width: `${s.best_score_pct}%` }} />
-                    </div>
-                  )}
-                </Link>
-              ) : (
-                <div className={`rounded-2xl border ${cfg.border} ${cfg.bg} p-5 h-full opacity-50`}>
-                  <div className={`w-12 h-12 bg-gradient-to-br ${cfg.gradient} rounded-xl flex items-center justify-center text-2xl shadow-sm grayscale`}>
+              <div className="p-5">
+                <div className="flex items-start justify-between mb-3">
+                  <div className={`w-14 h-14 bg-gradient-to-br ${cfg.gradient} rounded-2xl flex items-center justify-center text-3xl shadow-lg group-hover:scale-110 group-hover:rotate-3 transition-all duration-300`}>
                     {cfg.emoji}
                   </div>
-                  <h3 className="text-base font-bold text-surface-900 dark:text-surface-100 mt-3">{cfg.name}</h3>
-                  <p className="text-xs text-surface-500 dark:text-surface-400 mt-0.5">{cfg.sub}</p>
-                  <span className="inline-block mt-3 text-xs font-medium text-surface-400 dark:text-surface-500 bg-surface-100 dark:bg-surface-700 px-2 py-0.5 rounded-full">Coming soon</span>
+                  {s.estimated_cefr ? (
+                    <span className="badge-primary">{s.estimated_cefr}</span>
+                  ) : (
+                    <span className="badge-neutral !text-[10px]">Not started</span>
+                  )}
                 </div>
-              )}
-            </div>
+
+                <h3 className="text-h3 text-surface-900 dark:text-surface-100 mb-0.5 group-hover:text-primary-600 dark:group-hover:text-primary-400 transition-colors">
+                  {cfg.name}
+                </h3>
+                <p className="text-caption text-surface-500 dark:text-surface-400">{cfg.sub}</p>
+
+                <div className="mt-4 flex items-center justify-between text-caption">
+                  <span className="text-surface-500 dark:text-surface-400">
+                    <span className="font-bold text-surface-900 dark:text-surface-100">{s.exercise_count}</span> exercises
+                  </span>
+                  {s.sessions_completed > 0 && (
+                    <span className="text-surface-500 dark:text-surface-400">
+                      <span className="font-bold text-success-600 dark:text-success-400">{s.sessions_completed}</span> completed
+                    </span>
+                  )}
+                </div>
+
+                <CEFRBar level={s.estimated_cefr} />
+              </div>
+            </Link>
           );
         })}
       </div>
 
-      {/* Info card */}
-      <div className="card p-5">
-        <div className="flex items-start gap-3">
-          <span className="text-2xl">📋</span>
+      {/* Info panel */}
+      <div className="card p-6 relative overflow-hidden">
+        <div className="absolute top-0 right-0 w-64 h-64 bg-gradient-mesh opacity-30 pointer-events-none" />
+        <div className="relative flex items-start gap-4">
+          <div className="shrink-0 w-12 h-12 rounded-2xl bg-gradient-to-br from-primary-500 to-primary-700 text-white flex items-center justify-center text-xl shadow-glow-primary">
+            📋
+          </div>
           <div>
-            <h3 className="font-bold text-surface-900 dark:text-surface-100">About TEF/TCF</h3>
-            <p className="text-sm text-surface-500 dark:text-surface-400 mt-1 leading-relaxed">
-              The TEF (Test d'évaluation de français) and TCF (Test de connaissance du français) are official French proficiency exams.
-              They evaluate your abilities across 4 skills: listening, reading, writing, and speaking.
-              Your results are mapped to CEFR levels from A1 (beginner) to C2 (proficiency).
+            <h3 className="text-h4 text-surface-900 dark:text-surface-100">About TEF/TCF</h3>
+            <p className="text-body text-surface-500 dark:text-surface-400 mt-1 leading-relaxed max-w-2xl">
+              The <strong className="text-surface-700 dark:text-surface-300">TEF</strong> (Test d'évaluation de français) and <strong className="text-surface-700 dark:text-surface-300">TCF</strong> (Test de connaissance du français) are official French proficiency exams accepted for immigration, university admission, and citizenship applications. They evaluate four skills mapped to CEFR levels from A1 (beginner) to C2 (mastery).
             </p>
           </div>
         </div>

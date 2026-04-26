@@ -116,35 +116,37 @@ function FeedbackBanner({ result, onContinue }) {
 
   return (
     <div
-      className={`mt-6 p-5 rounded-xl border-2 ${
+      className={`mt-6 p-5 rounded-xl border-2 relative overflow-hidden ${
         result.is_correct
-          ? "bg-green-50 dark:bg-green-900/20 border-green-300 dark:border-green-800 animate-fade-in"
-          : "bg-red-50 dark:bg-red-900/20 border-red-300 dark:border-red-800 animate-shake"
+          ? "bg-success-50 dark:bg-success-900/20 border-success-300 dark:border-success-800 animate-fade-in"
+          : "bg-danger-50 dark:bg-danger-900/20 border-danger-300 dark:border-danger-800 animate-shake"
       }`}
     >
-      <div className="flex items-center gap-2 mb-2">
+      <div className={`absolute inset-x-0 top-0 h-1 bg-gradient-to-r ${result.is_correct ? "from-success-500 to-info-500" : "from-danger-500 to-accent-500"}`} />
+      <div className="flex items-center gap-2.5 mb-2">
         <span className="text-2xl">{result.is_correct ? "✅" : "❌"}</span>
         <span
-          className={`font-bold text-lg ${
-            result.is_correct ? "text-green-800 dark:text-green-300" : "text-red-800 dark:text-red-400"
+          className={`font-extrabold text-h4 ${
+            result.is_correct ? "text-success-700 dark:text-success-300" : "text-danger-700 dark:text-danger-300"
           }`}
         >
-          {result.is_correct ? "Correct!" : "Incorrect"}
+          {result.is_correct ? "Correct!" : "Not quite"}
         </span>
       </div>
       {!result.is_correct && (
-        <p className="text-sm text-red-700 dark:text-red-400 mb-1">
-          Correct answer: <strong>{result.correct_answer}</strong>
+        <p className="text-sm text-danger-700 dark:text-danger-300 mb-1">
+          Correct answer: <strong className="font-bold">{result.correct_answer}</strong>
         </p>
       )}
       {result.explanation && (
-        <p className="text-sm text-surface-600 dark:text-surface-400 mb-3">{result.explanation}</p>
+        <p className="text-sm text-surface-600 dark:text-surface-400 mb-3 leading-relaxed">{result.explanation}</p>
       )}
       <button
         onClick={onContinue}
         className="btn-secondary btn-sm"
       >
         Continue
+        <svg className="w-3.5 h-3.5 ml-1" fill="none" stroke="currentColor" strokeWidth={2.5} viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" /></svg>
       </button>
     </div>
   );
@@ -168,24 +170,24 @@ function ReviewList({ answers }) {
             <div
               key={i}
               style={staggerDelay(i, 50)}
-              className={`rounded-lg border p-3 animate-fade-in-up ${
+              className={`rounded-xl border p-3 animate-fade-in-up ${
                 a.is_correct
-                  ? "bg-green-50 dark:bg-green-900/20 border-green-200 dark:border-green-800"
-                  : "bg-red-50 dark:bg-red-900/20 border-red-200 dark:border-red-800"
+                  ? "bg-success-50 dark:bg-success-900/20 border-success-200 dark:border-success-800"
+                  : "bg-danger-50 dark:bg-danger-900/20 border-danger-200 dark:border-danger-800"
               }`}
             >
               <div className="flex items-start gap-2">
                 <span className="text-base mt-0.5">{a.is_correct ? "✅" : "❌"}</span>
                 <div className="flex-1 min-w-0">
-                  <p className="text-sm font-medium text-surface-800 dark:text-surface-200 truncate">
+                  <p className="text-sm font-semibold text-surface-800 dark:text-surface-200 truncate">
                     {a.prompt}
                   </p>
-                  <p className="text-xs text-surface-500 dark:text-surface-400 mt-0.5">
-                    Your answer: <span className={a.is_correct ? "text-green-700" : "text-red-700"}>{a.user_answer}</span>
+                  <p className="text-xs text-surface-500 dark:text-surface-400 mt-1">
+                    Your answer: <span className={`font-semibold ${a.is_correct ? "text-success-700 dark:text-success-300" : "text-danger-700 dark:text-danger-300"}`}>{a.user_answer}</span>
                   </p>
                   {!a.is_correct && (
                     <p className="text-xs text-surface-500 dark:text-surface-400">
-                      Correct: <span className="text-green-700 font-medium">{a.correct_answer}</span>
+                      Correct: <span className="text-success-700 dark:text-success-300 font-semibold">{a.correct_answer}</span>
                     </p>
                   )}
                 </div>

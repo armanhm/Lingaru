@@ -38,7 +38,7 @@ function Card({ card, flipped, matched, onClick, preview }) {
       >
         {/* Back (hidden state) */}
         <div
-          className="absolute inset-0 rounded-xl bg-gradient-to-br from-primary-500 to-violet-600 flex items-center justify-center shadow-md"
+          className="absolute inset-0 rounded-xl bg-gradient-to-br from-primary-500 to-primary-600 flex items-center justify-center shadow-md"
           style={{ backfaceVisibility: "hidden" }}
         >
           <span className="text-3xl text-white/80">?</span>
@@ -48,25 +48,25 @@ function Card({ card, flipped, matched, onClick, preview }) {
         <div
           className={`absolute inset-0 rounded-xl flex flex-col items-center justify-center p-2 shadow-md border-2
             ${matched
-              ? "bg-emerald-50 dark:bg-emerald-900/20 border-emerald-300 dark:border-emerald-700"
+              ? "bg-success-50 dark:bg-success-900/20 border-success-300 dark:border-success-700"
               : isFr
-                ? "bg-blue-50 dark:bg-blue-900/20 border-blue-300 dark:border-blue-700"
-                : "bg-amber-50 dark:bg-amber-900/20 border-amber-300 dark:border-amber-700"
+                ? "bg-info-50 dark:bg-info-900/20 border-info-300 dark:border-info-700"
+                : "bg-warn-50 dark:bg-warn-900/20 border-warn-300 dark:border-warn-700"
             }`}
           style={{ backfaceVisibility: "hidden", transform: "rotateY(180deg)" }}
         >
           <span className={`text-xs font-semibold uppercase tracking-wider mb-1 ${
             matched
-              ? "text-emerald-500 dark:text-emerald-400"
+              ? "text-success-500 dark:text-success-400"
               : isFr
-                ? "text-blue-400 dark:text-blue-500"
-                : "text-amber-400 dark:text-amber-500"
+                ? "text-info-400 dark:text-info-500"
+                : "text-warn-400 dark:text-warn-500"
           }`}>
             {isFr ? "FR" : "EN"}
           </span>
           <span className={`text-sm sm:text-base font-bold text-center leading-tight ${
             matched
-              ? "text-emerald-700 dark:text-emerald-300"
+              ? "text-success-700 dark:text-success-300"
               : "text-surface-900 dark:text-surface-100"
           }`}>
             {card.text}
@@ -207,7 +207,7 @@ export default function MatchPairs() {
   if (error) {
     return (
       <div className="max-w-xl mx-auto py-12 text-center">
-        <div className="bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-xl p-6 text-red-700 dark:text-red-400">
+        <div className="bg-danger-50 dark:bg-danger-900/20 border border-danger-200 dark:border-danger-800 rounded-xl p-6 text-danger-700 dark:text-danger-400">
           {error}
         </div>
         <Link to="/mini-games" className="mt-4 inline-block text-sm text-primary-600 hover:underline">
@@ -248,7 +248,7 @@ export default function MatchPairs() {
               <p className="text-xs text-surface-400">time</p>
             </div>
             <div className="text-center">
-              <p className="text-3xl font-bold text-amber-500">+{animatedXP}</p>
+              <p className="text-3xl font-bold text-warn-500">+{animatedXP}</p>
               <p className="text-xs text-surface-400">XP earned</p>
             </div>
           </div>
@@ -336,7 +336,7 @@ export default function MatchPairs() {
             <span className="font-bold text-primary-600">{moves}</span>
             <span className="text-surface-300 dark:text-surface-600">|</span>
             <span className="text-surface-400">Pairs</span>
-            <span className="font-bold text-emerald-600">{matchCount}/{PAIR_COUNT}</span>
+            <span className="font-bold text-success-600">{matchCount}/{PAIR_COUNT}</span>
           </div>
         </div>
       )}
@@ -358,13 +358,13 @@ export default function MatchPairs() {
       {/* Legend */}
       <div className="flex justify-center gap-4 text-xs text-surface-400 dark:text-surface-500">
         <span className="flex items-center gap-1">
-          <span className="w-3 h-3 rounded bg-blue-200 dark:bg-blue-800" /> French
+          <span className="w-3 h-3 rounded bg-info-200 dark:bg-info-800" /> French
         </span>
         <span className="flex items-center gap-1">
-          <span className="w-3 h-3 rounded bg-amber-200 dark:bg-amber-800" /> English
+          <span className="w-3 h-3 rounded bg-warn-200 dark:bg-warn-800" /> English
         </span>
         <span className="flex items-center gap-1">
-          <span className="w-3 h-3 rounded bg-emerald-200 dark:bg-emerald-800" /> Matched
+          <span className="w-3 h-3 rounded bg-success-200 dark:bg-success-800" /> Matched
         </span>
       </div>
 

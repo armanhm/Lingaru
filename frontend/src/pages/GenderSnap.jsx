@@ -28,8 +28,8 @@ function SwipeOverlay({ dx, threshold }) {
         style={{ background: `rgba(59,130,246,${rightOp * 0.2})`, opacity: rightOp }}
       >
         <div className="flex flex-col items-center gap-1">
-          <span className="text-4xl font-black text-blue-600 dark:text-blue-400">Le</span>
-          <span className="text-sm font-semibold text-blue-500">Masculine</span>
+          <span className="text-4xl font-black text-info-600 dark:text-info-400">Le</span>
+          <span className="text-sm font-semibold text-info-500">Masculine</span>
         </div>
       </div>
       {/* Left → La (feminine) */}
@@ -174,7 +174,7 @@ export default function GenderSnap() {
   if (error) {
     return (
       <div className="max-w-xl mx-auto py-12 text-center">
-        <div className="bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-xl p-6 text-red-700 dark:text-red-400">{error}</div>
+        <div className="bg-danger-50 dark:bg-danger-900/20 border border-danger-200 dark:border-danger-800 rounded-xl p-6 text-danger-700 dark:text-danger-400">{error}</div>
         <Link to="/mini-games" className="mt-4 inline-block text-sm text-primary-600 hover:underline">← Back to Mini Games</Link>
       </div>
     );
@@ -207,7 +207,7 @@ export default function GenderSnap() {
               <p className="text-xs text-surface-400">correct</p>
             </div>
             <div className="text-center">
-              <p className="text-3xl font-bold text-amber-500">+{animatedXP}</p>
+              <p className="text-3xl font-bold text-warn-500">+{animatedXP}</p>
               <p className="text-xs text-surface-400">XP earned</p>
             </div>
           </div>
@@ -218,12 +218,12 @@ export default function GenderSnap() {
                 key={i}
                 style={staggerDelay(i, 40)}
                 className={`flex items-center justify-between px-3 py-2 rounded-lg text-sm animate-fade-in-up ${
-                  r.correct ? "bg-emerald-50 dark:bg-emerald-900/20" : "bg-red-50 dark:bg-red-900/20"
+                  r.correct ? "bg-success-50 dark:bg-success-900/20" : "bg-danger-50 dark:bg-danger-900/20"
                 }`}
               >
                 <div className="flex items-center gap-2">
                   <span>{r.correct ? "✅" : "❌"}</span>
-                  <span className={`font-bold ${r.word.isM ? "text-blue-600 dark:text-blue-400" : "text-pink-600 dark:text-pink-400"}`}>
+                  <span className={`font-bold ${r.word.isM ? "text-info-600 dark:text-info-400" : "text-pink-600 dark:text-pink-400"}`}>
                     {r.word.isM ? "le" : "la"}
                   </span>
                   <span className="font-semibold text-surface-800 dark:text-surface-200">{r.word.displayText}</span>
@@ -281,8 +281,8 @@ export default function GenderSnap() {
           <span className="text-xs text-surface-400">Score</span>
           <span className="text-sm font-bold text-primary-600">{score}/{round}</span>
         </div>
-        <div className="flex items-center gap-1.5 text-blue-500">
-          <span className="text-xs text-blue-400">masc.</span>
+        <div className="flex items-center gap-1.5 text-info-500">
+          <span className="text-xs text-info-400">masc.</span>
           <span className="text-sm font-bold">Le</span>
           <span className="text-lg">→</span>
         </div>
@@ -326,21 +326,21 @@ export default function GenderSnap() {
           {resultFlash ? (
             <div className={`mx-4 mb-5 px-4 py-3 rounded-xl text-center animate-fade-in-up ${
               resultFlash === "correct"
-                ? "bg-emerald-50 dark:bg-emerald-900/20 border border-emerald-200 dark:border-emerald-800"
-                : "bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800"
+                ? "bg-success-50 dark:bg-success-900/20 border border-success-200 dark:border-success-800"
+                : "bg-danger-50 dark:bg-danger-900/20 border border-danger-200 dark:border-danger-800"
             }`}>
               <div className="flex items-center justify-center gap-2">
                 <span className="text-xl animate-pop-in">{resultFlash === "correct" ? "✅" : "❌"}</span>
                 <span className={`text-sm font-bold ${
                   resultFlash === "correct"
-                    ? "text-emerald-700 dark:text-emerald-300"
-                    : "text-red-700 dark:text-red-300"
+                    ? "text-success-700 dark:text-success-300"
+                    : "text-danger-700 dark:text-danger-300"
                 }`}>
                   {resultFlash === "correct" ? "Correct!" : "Incorrect"}
                 </span>
               </div>
               <p className="mt-1 text-base font-bold text-surface-800 dark:text-surface-200">
-                <span className={word.isM ? "text-blue-600 dark:text-blue-400" : "text-pink-600 dark:text-pink-400"}>
+                <span className={word.isM ? "text-info-600 dark:text-info-400" : "text-pink-600 dark:text-pink-400"}>
                   {word.isM ? "le " : "la "}
                 </span>
                 {word.displayText}
@@ -364,7 +364,7 @@ export default function GenderSnap() {
         <button
           onClick={() => handleAnswer(true, "right")}
           disabled={!!exiting || !!resultFlash}
-          className="py-3 rounded-xl text-sm font-bold bg-blue-50 dark:bg-blue-900/20 text-blue-600 dark:text-blue-400 border-2 border-blue-200 dark:border-blue-800 hover:bg-blue-100 dark:hover:bg-blue-900/30 hover:scale-[1.02] active:scale-95 transition-all disabled:opacity-40"
+          className="py-3 rounded-xl text-sm font-bold bg-info-50 dark:bg-info-900/20 text-info-600 dark:text-info-400 border-2 border-info-200 dark:border-info-800 hover:bg-info-100 dark:hover:bg-info-900/30 hover:scale-[1.02] active:scale-95 transition-all disabled:opacity-40"
         >
           Le (masc.)
         </button>

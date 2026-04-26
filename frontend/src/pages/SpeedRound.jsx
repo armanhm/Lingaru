@@ -24,7 +24,7 @@ function CircleTimer({ timeLeft, total }) {
   const circumference = 2 * Math.PI * radius;
   const pct = timeLeft / total;
   const offset = circumference * (1 - pct);
-  const strokeColor = pct > 0.5 ? "stroke-emerald-500" : pct > 0.25 ? "stroke-amber-500" : "stroke-red-500";
+  const strokeColor = pct > 0.5 ? "stroke-success-500" : pct > 0.25 ? "stroke-warn-500" : "stroke-danger-500";
 
   return (
     <div className="relative w-12 h-12 flex items-center justify-center shrink-0">
@@ -180,7 +180,7 @@ export default function SpeedRound() {
   if (error) {
     return (
       <div className="max-w-xl mx-auto py-12 text-center">
-        <div className="bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-xl p-6 text-red-700 dark:text-red-400">{error}</div>
+        <div className="bg-danger-50 dark:bg-danger-900/20 border border-danger-200 dark:border-danger-800 rounded-xl p-6 text-danger-700 dark:text-danger-400">{error}</div>
         <Link to="/mini-games" className="mt-4 inline-block text-sm text-primary-600 hover:underline">← Back to Mini Games</Link>
       </div>
     );
@@ -233,7 +233,7 @@ export default function SpeedRound() {
               <p className="text-xs text-surface-400">avg / question</p>
             </div>
             <div className="text-center">
-              <p className="text-3xl font-bold text-amber-500">+{animatedXP}</p>
+              <p className="text-3xl font-bold text-warn-500">+{animatedXP}</p>
               <p className="text-xs text-surface-400">XP earned</p>
             </div>
           </div>
@@ -244,7 +244,7 @@ export default function SpeedRound() {
                 key={i}
                 style={staggerDelay(i, 30)}
                 className={`flex items-center justify-between px-3 py-2 rounded-lg text-sm animate-fade-in-up ${
-                  r.correct ? "bg-emerald-50 dark:bg-emerald-900/20" : "bg-red-50 dark:bg-red-900/20"
+                  r.correct ? "bg-success-50 dark:bg-success-900/20" : "bg-danger-50 dark:bg-danger-900/20"
                 }`}
               >
                 <div className="flex items-center gap-2 min-w-0">
@@ -255,8 +255,8 @@ export default function SpeedRound() {
                 </div>
                 <span className={`shrink-0 text-xs font-medium px-1.5 py-0.5 rounded ${
                   r.isCorrect
-                    ? "bg-emerald-100 dark:bg-emerald-900/30 text-emerald-600"
-                    : "bg-red-100 dark:bg-red-900/30 text-red-600"
+                    ? "bg-success-100 dark:bg-success-900/30 text-success-600"
+                    : "bg-danger-100 dark:bg-danger-900/30 text-danger-600"
                 }`}>
                   {r.isCorrect ? "TRUE" : "FALSE"}
                 </span>
@@ -282,8 +282,8 @@ export default function SpeedRound() {
 
   // Flash border color
   let cardBorder = "border-surface-100 dark:border-surface-700";
-  if (flash === "correct") cardBorder = "border-emerald-400 dark:border-emerald-600";
-  if (flash === "wrong") cardBorder = "border-red-400 dark:border-red-600";
+  if (flash === "correct") cardBorder = "border-success-400 dark:border-success-600";
+  if (flash === "wrong") cardBorder = "border-danger-400 dark:border-danger-600";
 
   return (
     <div className="max-w-md mx-auto py-8 space-y-5">
@@ -338,8 +338,8 @@ export default function SpeedRound() {
         {flash && (
           <div className={`py-2 rounded-lg animate-fade-in ${
             flash === "correct"
-              ? "bg-emerald-50 dark:bg-emerald-900/20 text-emerald-700 dark:text-emerald-300"
-              : "bg-red-50 dark:bg-red-900/20 text-red-700 dark:text-red-300"
+              ? "bg-success-50 dark:bg-success-900/20 text-success-700 dark:text-success-300"
+              : "bg-danger-50 dark:bg-danger-900/20 text-danger-700 dark:text-danger-300"
           }`}>
             <span className="text-sm font-bold">
               {flash === "correct" ? "✅ Correct!" : `❌ It was ${q.isCorrect ? "TRUE" : "FALSE"}`}
@@ -358,14 +358,14 @@ export default function SpeedRound() {
         <button
           onClick={() => handleAnswer(false)}
           disabled={!!flash}
-          className="py-4 rounded-xl text-base font-bold bg-red-50 dark:bg-red-900/20 text-red-600 dark:text-red-400 border-2 border-red-200 dark:border-red-800 hover:bg-red-100 dark:hover:bg-red-900/30 hover:scale-[1.02] active:scale-95 transition-all disabled:opacity-40"
+          className="py-4 rounded-xl text-base font-bold bg-danger-50 dark:bg-danger-900/20 text-danger-600 dark:text-danger-400 border-2 border-danger-200 dark:border-danger-800 hover:bg-danger-100 dark:hover:bg-danger-900/30 hover:scale-[1.02] active:scale-95 transition-all disabled:opacity-40"
         >
           ✕ False
         </button>
         <button
           onClick={() => handleAnswer(true)}
           disabled={!!flash}
-          className="py-4 rounded-xl text-base font-bold bg-emerald-50 dark:bg-emerald-900/20 text-emerald-600 dark:text-emerald-400 border-2 border-emerald-200 dark:border-emerald-800 hover:bg-emerald-100 dark:hover:bg-emerald-900/30 hover:scale-[1.02] active:scale-95 transition-all disabled:opacity-40"
+          className="py-4 rounded-xl text-base font-bold bg-success-50 dark:bg-success-900/20 text-success-600 dark:text-success-400 border-2 border-success-200 dark:border-success-800 hover:bg-success-100 dark:hover:bg-success-900/30 hover:scale-[1.02] active:scale-95 transition-all disabled:opacity-40"
         >
           ✓ True
         </button>

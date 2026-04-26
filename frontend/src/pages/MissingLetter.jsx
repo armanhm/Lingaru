@@ -42,8 +42,8 @@ function LetterSlot({ char, isBlank, userChar, focused, correct, wrong, onClick 
 
   let borderColor = "border-surface-300 dark:border-surface-600";
   let bgColor = "bg-white dark:bg-surface-800";
-  if (correct) { borderColor = "border-emerald-400 dark:border-emerald-500"; bgColor = "bg-emerald-50 dark:bg-emerald-900/20"; }
-  if (wrong)   { borderColor = "border-red-400 dark:border-red-500"; bgColor = "bg-red-50 dark:bg-red-900/20"; }
+  if (correct) { borderColor = "border-success-400 dark:border-success-500"; bgColor = "bg-success-50 dark:bg-success-900/20"; }
+  if (wrong)   { borderColor = "border-danger-400 dark:border-danger-500"; bgColor = "bg-danger-50 dark:bg-danger-900/20"; }
   if (focused && !correct && !wrong) { borderColor = "border-primary-500 dark:border-primary-400"; bgColor = "bg-primary-50 dark:bg-primary-900/10"; }
 
   return (
@@ -55,7 +55,7 @@ function LetterSlot({ char, isBlank, userChar, focused, correct, wrong, onClick 
         ${!correct && !wrong ? "hover:border-primary-400 hover:scale-105" : ""}`}
     >
       {userChar ? (
-        <span className={correct ? "text-emerald-600 dark:text-emerald-400" : wrong ? "text-red-600 dark:text-red-400" : "text-surface-900 dark:text-surface-100"}>
+        <span className={correct ? "text-success-600 dark:text-success-400" : wrong ? "text-danger-600 dark:text-danger-400" : "text-surface-900 dark:text-surface-100"}>
           {userChar}
         </span>
       ) : (
@@ -256,7 +256,7 @@ export default function MissingLetter() {
   if (error) {
     return (
       <div className="max-w-xl mx-auto py-12 text-center">
-        <div className="bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-xl p-6 text-red-700 dark:text-red-400">{error}</div>
+        <div className="bg-danger-50 dark:bg-danger-900/20 border border-danger-200 dark:border-danger-800 rounded-xl p-6 text-danger-700 dark:text-danger-400">{error}</div>
         <Link to="/mini-games" className="mt-4 inline-block text-sm text-primary-600 hover:underline">← Back to Mini Games</Link>
       </div>
     );
@@ -294,7 +294,7 @@ export default function MissingLetter() {
               <p className="text-xs text-surface-400 mt-1">lives left</p>
             </div>
             <div className="text-center">
-              <p className="text-3xl font-bold text-amber-500">+{animatedXP}</p>
+              <p className="text-3xl font-bold text-warn-500">+{animatedXP}</p>
               <p className="text-xs text-surface-400">XP earned</p>
             </div>
           </div>
@@ -305,7 +305,7 @@ export default function MissingLetter() {
                 key={i}
                 style={staggerDelay(i, 40)}
                 className={`flex items-center justify-between px-3 py-2 rounded-lg text-sm animate-fade-in-up ${
-                  r.correct ? "bg-emerald-50 dark:bg-emerald-900/20" : "bg-red-50 dark:bg-red-900/20"
+                  r.correct ? "bg-success-50 dark:bg-success-900/20" : "bg-danger-50 dark:bg-danger-900/20"
                 }`}
               >
                 <div className="flex items-center gap-2">
@@ -409,13 +409,13 @@ export default function MissingLetter() {
         {resultState && (
           <div className={`mx-4 mb-4 px-4 py-3 rounded-xl text-center animate-fade-in-up ${
             resultState === "correct"
-              ? "bg-emerald-50 dark:bg-emerald-900/20 border border-emerald-200 dark:border-emerald-800"
-              : "bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800"
+              ? "bg-success-50 dark:bg-success-900/20 border border-success-200 dark:border-success-800"
+              : "bg-danger-50 dark:bg-danger-900/20 border border-danger-200 dark:border-danger-800"
           }`}>
             <div className="flex items-center justify-center gap-2">
               <span className="text-xl animate-pop-in">{resultState === "correct" ? "✅" : "❌"}</span>
               <span className={`text-sm font-bold ${
-                resultState === "correct" ? "text-emerald-700 dark:text-emerald-300" : "text-red-700 dark:text-red-300"
+                resultState === "correct" ? "text-success-700 dark:text-success-300" : "text-danger-700 dark:text-danger-300"
               }`}>
                 {resultState === "correct" ? "Correct!" : "Wrong!"}
               </span>
@@ -427,7 +427,7 @@ export default function MissingLetter() {
               </p>
             )}
             {resultState === "correct" && (
-              <span className="text-xs text-emerald-600 dark:text-emerald-400 font-medium">+2 XP</span>
+              <span className="text-xs text-success-600 dark:text-success-400 font-medium">+2 XP</span>
             )}
           </div>
         )}

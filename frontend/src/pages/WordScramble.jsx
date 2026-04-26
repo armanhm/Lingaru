@@ -47,8 +47,8 @@ function LetterTile({ letter, index, selected, onClick, disabled }) {
 /* ── Answer slot ──────────────────────────────────────── */
 function AnswerSlot({ letter, index, onClick, correct, wrong }) {
   let colorClass = "border-surface-200 dark:border-surface-600 bg-white dark:bg-surface-800";
-  if (correct) colorClass = "border-emerald-400 dark:border-emerald-600 bg-emerald-50 dark:bg-emerald-900/20";
-  if (wrong) colorClass = "border-red-400 dark:border-red-600 bg-red-50 dark:bg-red-900/20";
+  if (correct) colorClass = "border-success-400 dark:border-success-600 bg-success-50 dark:bg-success-900/20";
+  if (wrong) colorClass = "border-danger-400 dark:border-danger-600 bg-danger-50 dark:bg-danger-900/20";
 
   return (
     <button
@@ -56,7 +56,7 @@ function AnswerSlot({ letter, index, onClick, correct, wrong }) {
       tabIndex={-1}
       className={`w-10 h-10 sm:w-12 sm:h-12 rounded-xl text-lg sm:text-xl font-bold flex items-center justify-center
         border-2 ${colorClass} transition-all duration-200
-        ${letter ? "hover:border-red-300 hover:scale-105 cursor-pointer" : "cursor-default border-dashed"}`}
+        ${letter ? "hover:border-danger-300 hover:scale-105 cursor-pointer" : "cursor-default border-dashed"}`}
     >
       {letter ? letter.toUpperCase() : ""}
     </button>
@@ -69,8 +69,8 @@ function CircleTimer({ timeLeft, total }) {
   const circumference = 2 * Math.PI * radius;
   const pct = timeLeft / total;
   const offset = circumference * (1 - pct);
-  const color = pct > 0.5 ? "text-emerald-500" : pct > 0.25 ? "text-amber-500" : "text-red-500";
-  const strokeColor = pct > 0.5 ? "stroke-emerald-500" : pct > 0.25 ? "stroke-amber-500" : "stroke-red-500";
+  const color = pct > 0.5 ? "text-success-500" : pct > 0.25 ? "text-warn-500" : "text-danger-500";
+  const strokeColor = pct > 0.5 ? "stroke-success-500" : pct > 0.25 ? "stroke-warn-500" : "stroke-danger-500";
 
   return (
     <div className="relative w-14 h-14 flex items-center justify-center shrink-0">
@@ -300,7 +300,7 @@ export default function WordScramble() {
   if (error) {
     return (
       <div className="max-w-xl mx-auto py-12 text-center">
-        <div className="bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-xl p-6 text-red-700 dark:text-red-400">
+        <div className="bg-danger-50 dark:bg-danger-900/20 border border-danger-200 dark:border-danger-800 rounded-xl p-6 text-danger-700 dark:text-danger-400">
           {error}
         </div>
         <Link to="/mini-games" className="mt-4 inline-block text-sm text-primary-600 hover:underline">
@@ -337,7 +337,7 @@ export default function WordScramble() {
               <p className="text-xs text-surface-400">correct</p>
             </div>
             <div className="text-center">
-              <p className="text-3xl font-bold text-amber-500">+{animatedXP}</p>
+              <p className="text-3xl font-bold text-warn-500">+{animatedXP}</p>
               <p className="text-xs text-surface-400">XP earned</p>
             </div>
           </div>
@@ -350,8 +350,8 @@ export default function WordScramble() {
                 style={staggerDelay(i, 40)}
                 className={`flex items-center justify-between px-3 py-2 rounded-lg text-sm animate-fade-in-up ${
                   r.correct
-                    ? "bg-emerald-50 dark:bg-emerald-900/20"
-                    : "bg-red-50 dark:bg-red-900/20"
+                    ? "bg-success-50 dark:bg-success-900/20"
+                    : "bg-danger-50 dark:bg-danger-900/20"
                 }`}
               >
                 <div className="flex items-center gap-2">
@@ -475,15 +475,15 @@ export default function WordScramble() {
           {resultState && (
             <div className={`text-center py-3 rounded-xl animate-fade-in-up ${
               resultState === "correct"
-                ? "bg-emerald-50 dark:bg-emerald-900/20"
-                : "bg-red-50 dark:bg-red-900/20"
+                ? "bg-success-50 dark:bg-success-900/20"
+                : "bg-danger-50 dark:bg-danger-900/20"
             }`}>
               <div className="flex items-center justify-center gap-2 mb-1">
                 <span className="text-2xl">{resultState === "correct" ? "✅" : "❌"}</span>
                 <span className={`text-lg font-bold ${
                   resultState === "correct"
-                    ? "text-emerald-700 dark:text-emerald-300"
-                    : "text-red-700 dark:text-red-300"
+                    ? "text-success-700 dark:text-success-300"
+                    : "text-danger-700 dark:text-danger-300"
                 }`}>
                   {resultState === "correct" ? "Correct!" : "Not quite!"}
                 </span>
@@ -496,7 +496,7 @@ export default function WordScramble() {
               {resultState === "correct" && (
                 <div className="flex items-center justify-center gap-1 mt-1">
                   <AudioPlayButton text={word.french} />
-                  <span className="text-sm text-emerald-600 dark:text-emerald-400 font-medium">+2 XP</span>
+                  <span className="text-sm text-success-600 dark:text-success-400 font-medium">+2 XP</span>
                 </div>
               )}
             </div>

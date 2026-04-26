@@ -1,8 +1,8 @@
 import { useState, useRef, useCallback, useEffect } from "react";
-import { Link } from "react-router-dom";
 import client from "../api/client";
 import { checkPronunciation, generateTTS } from "../api/media";
 import { useCountUp } from "../hooks/useAnimations";
+import { PageHeader } from "../components/ui";
 
 const API_BASE_URL = import.meta.env.VITE_API_URL || "/api";
 
@@ -13,7 +13,6 @@ function resolveAudioUrl(rawUrl) {
     : `${API_BASE_URL.replace(/\/api$/, "")}${rawUrl}`;
 }
 
-// Fetch random vocabulary from the content API for practice
 async function fetchRandomVocab() {
   const res = await client.get("/content/vocabulary/random/");
   return res.data;
@@ -60,7 +59,7 @@ export default function Pronunciation() {
         audio.play().catch(() => {});
       }
     } catch {
-      // Silently fail for TTS playback
+      // Silently fail
     }
   }, [word]);
 
@@ -126,41 +125,40 @@ export default function Pronunciation() {
   }, [loadWord]);
 
   const accuracyColor = (score) => {
-    if (score >= 0.8) return "text-green-600";
-    if (score >= 0.5) return "text-yellow-600";
-    return "text-red-600";
+    if (score >= 0.8) return "text-success-600 dark:text-success-400";
+    if (score >= 0.5) return "text-warn-600 dark:text-warn-400";
+    return "text-danger-600 dark:text-danger-400";
+  };
+
+  const accuracyTone = (score) => {
+    if (score >= 0.8) return { ring: "ring-success-200 dark:ring-success-800/40", grad: "from-success-500 to-info-500", emoji: "🎯" };
+    if (score >= 0.5) return { ring: "ring-warn-200 dark:ring-warn-800/40", grad: "from-warn-500 to-accent-500", emoji: "👍" };
+    return { ring: "ring-danger-200 dark:ring-danger-800/40", grad: "from-danger-500 to-accent-500", emoji: "💪" };
   };
 
   return (
-    <div className="max-w-2xl mx-auto py-8 px-4">
-      <Link
-        to="/"
-        className="text-sm font-medium text-primary-600 dark:text-primary-400 hover:text-primary-700 mb-6 inline-flex items-center gap-1 transition-colors"
-      >
-        <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
-        </svg>
-        Back to Dashboard
-      </Link>
-
-      <div className="mb-8">
-        <h1 className="text-2xl font-extrabold text-surface-900 dark:text-surface-100 mb-1">
-          Pronunciation Practice
-        </h1>
-        <p className="text-surface-500 dark:text-surface-400">
-          Listen to the word, then record yourself saying it.
-        </p>
-      </div>
+    <div className="max-w-2xl mx-auto">
+      <PageHeader
+        eyebrow="Speak it out"
+        title="Pronunciation"
+        subtitle="Listen, then record yourself. We'll score your accent and give feedback."
+        icon="🎤"
+        backTo="/"
+        backLabel="Back to dashboard"
+        gradient
+      />
 
       {error && (
-        <div className="card border-danger-200 dark:border-danger-800 bg-danger-50 dark:bg-danger-700/20 p-4 text-danger-600 dark:text-danger-400 mb-6 text-sm">
-          {error}
+        <div className="bg-danger-50 dark:bg-danger-900/20 border border-danger-200 dark:border-danger-800 rounded-xl px-4 py-3 text-sm text-danger-700 dark:text-danger-300 mb-5 flex items-start gap-2 animate-shake">
+          <svg className="w-4 h-4 mt-0.5 shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm-1-5a1 1 0 102 0v-1a1 1 0 10-2 0v1zm0-7a1 1 0 012 0v3a1 1 0 11-2 0V6z" clipRule="evenodd" /></svg>
+          <span>{error}</span>
         </div>
       )}
 
       {permissionDenied && (
-        <div className="card border-warn-200 dark:border-warn-700 bg-warn-50 dark:bg-warn-700/20 p-4 text-warn-700 dark:text-warn-300 mb-6 text-sm">
-          Microphone access was denied. Please enable it in your browser settings to use pronunciation practice.
+        <div className="bg-warn-50 dark:bg-warn-900/20 border border-warn-200 dark:border-warn-800 rounded-xl px-4 py-3 text-sm text-warn-700 dark:text-warn-300 mb-5 flex items-start gap-2">
+          <svg className="w-4 h-4 mt-0.5 shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm0-7a1 1 0 011 1v3a1 1 0 11-2 0v-3a1 1 0 011-1zm0-3a1 1 0 110 2 1 1 0 010-2z" clipRule="evenodd" /></svg>
+          <span>Microphone access was denied. Enable it in your browser settings to use pronunciation practice.</span>
         </div>
       )}
 
@@ -171,43 +169,46 @@ export default function Pronunciation() {
       )}
 
       {word && (
-        <div className="bg-white dark:bg-surface-800 rounded-xl shadow-lg p-8 animate-scale-in" key={word.id}>
+        <div className="card relative overflow-hidden p-8 animate-scale-in" key={word.id}>
+          <div className="absolute inset-x-0 top-0 h-1 bg-gradient-to-r from-primary-500 via-purple-500 to-accent-500" />
+          <div className="absolute -top-12 -right-12 w-48 h-48 bg-primary-200/30 dark:bg-primary-700/20 rounded-full blur-3xl pointer-events-none" />
+
           {/* Word display */}
-          <div className="text-center mb-8">
-            <p className="text-4xl font-bold text-surface-900 mb-2">
+          <div className="relative text-center mb-8">
+            <p className="text-display-xl font-extrabold text-surface-900 dark:text-surface-100 tracking-tight mb-2">
               {word.french}
             </p>
             {word.pronunciation && (
-              <p className="text-lg text-surface-400 mb-1">
+              <p className="text-body-lg text-surface-400 dark:text-surface-500 mb-1 font-mono">
                 /{word.pronunciation}/
               </p>
             )}
-            <p className="text-surface-500">{word.english}</p>
+            <p className="text-body text-surface-500 dark:text-surface-400">{word.english}</p>
           </div>
 
           {/* Listen button */}
-          <div className="flex justify-center mb-8">
+          <div className="relative flex justify-center mb-8">
             <button
               onClick={handleListen}
-              className="flex items-center gap-2 px-6 py-3 bg-primary-100 text-primary-700 font-medium rounded-xl hover:bg-primary-200 transition-colors"
+              className="flex items-center gap-2 px-6 py-3 bg-primary-50 dark:bg-primary-900/30 text-primary-700 dark:text-primary-300 font-semibold rounded-xl border border-primary-200 dark:border-primary-700 hover:bg-primary-100 dark:hover:bg-primary-900/50 hover:scale-105 active:scale-95 transition-all"
             >
-              <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15.536 8.464a5 5 0 010 7.072M17.95 6.05a8 8 0 010 11.9M11 5L6 9H2v6h4l5 4V5z" />
+              <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                <path strokeLinecap="round" strokeLinejoin="round" d="M15.536 8.464a5 5 0 010 7.072M17.95 6.05a8 8 0 010 11.9M11 5L6 9H2v6h4l5 4V5z" />
               </svg>
-              Listen First
+              Listen first
             </button>
           </div>
 
           {/* Record section */}
           {!result && (
-            <div className="text-center">
+            <div className="relative text-center">
               <button
                 onClick={recording ? stopRecording : startRecording}
                 disabled={loading}
-                className={`inline-flex items-center gap-2 px-8 py-4 font-semibold rounded-xl transition-all ${
+                className={`inline-flex items-center gap-2 px-8 py-4 font-bold rounded-2xl transition-all active:scale-95 ${
                   recording
-                    ? "bg-red-500 text-white hover:bg-red-600 animate-recording-pulse"
-                    : "bg-primary-600 text-white hover:bg-primary-700"
+                    ? "bg-gradient-to-br from-danger-500 to-accent-600 text-white animate-recording-pulse shadow-glow-danger"
+                    : "bg-gradient-to-br from-primary-600 to-purple-700 text-white hover:scale-105 shadow-glow-primary"
                 } disabled:opacity-50`}
               >
                 {recording ? (
@@ -215,7 +216,7 @@ export default function Pronunciation() {
                     <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
                       <rect x="6" y="6" width="12" height="12" rx="2" />
                     </svg>
-                    Stop Recording
+                    Stop recording
                   </>
                 ) : loading ? (
                   <>
@@ -223,19 +224,19 @@ export default function Pronunciation() {
                       <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
                       <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v4a4 4 0 00-4 4H4z" />
                     </svg>
-                    Analyzing...
+                    Analyzing…
                   </>
                 ) : (
                   <>
-                    <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 11a7 7 0 01-7 7m0 0a7 7 0 01-7-7m7 7v4m-4 0h8m-4-8a3 3 0 01-3-3V5a3 3 0 116 0v6a3 3 0 01-3 3z" />
+                    <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                      <path strokeLinecap="round" strokeLinejoin="round" d="M19 11a7 7 0 01-7 7m0 0a7 7 0 01-7-7m7 7v4m-4 0h8m-4-8a3 3 0 01-3-3V5a3 3 0 116 0v6a3 3 0 01-3 3z" />
                     </svg>
-                    Record Yourself
+                    Record yourself
                   </>
                 )}
               </button>
               {!recording && !loading && (
-                <p className="text-xs text-surface-400 mt-3">
+                <p className="text-caption text-surface-500 dark:text-surface-400 mt-3">
                   Click to start recording, then click again to stop.
                 </p>
               )}
@@ -243,52 +244,53 @@ export default function Pronunciation() {
           )}
 
           {/* Results */}
-          {result && (
-            <div className="space-y-6 animate-fade-in-up">
-              <div className="text-center">
-                <p className="text-sm text-surface-500 mb-1">Accuracy</p>
-                <p className={`text-5xl font-bold ${accuracyColor(result.accuracy_score)} animate-count-up`}>
-                  {animatedAccuracy}%
-                </p>
-              </div>
+          {result && (() => {
+            const tone = accuracyTone(result.accuracy_score);
+            return (
+              <div className="relative space-y-6 animate-fade-in-up">
+                <div className="text-center">
+                  <p className="text-4xl mb-2 animate-bounce-in">{tone.emoji}</p>
+                  <p className="section-label mb-2">Accuracy</p>
+                  <p className={`text-display-xl font-extrabold tracking-tight ${accuracyColor(result.accuracy_score)} animate-count-up`}>
+                    {animatedAccuracy}%
+                  </p>
+                </div>
 
-              <div className="bg-surface-50 rounded-xl p-4 space-y-3">
-                <div>
-                  <span className="text-sm font-medium text-surface-500">
-                    We heard:{" "}
-                  </span>
-                  <span className="text-surface-900">{result.transcription}</span>
-                </div>
-                <div>
-                  <span className="text-sm font-medium text-surface-500">
-                    Expected:{" "}
-                  </span>
-                  <span className="text-surface-900">{result.expected_text}</span>
-                </div>
-                {result.feedback && (
-                  <div className="border-t pt-3">
-                    <p className="text-sm text-surface-700">{result.feedback}</p>
+                <div className="rounded-xl bg-gradient-to-br from-surface-50 to-primary-50/30 dark:from-surface-700/40 dark:to-primary-900/10 border border-surface-200 dark:border-surface-700 p-4 space-y-3">
+                  <div className="flex items-baseline gap-2 flex-wrap">
+                    <span className="section-label">We heard</span>
+                    <span className="text-body font-semibold text-surface-900 dark:text-surface-100">{result.transcription}</span>
                   </div>
-                )}
-              </div>
+                  <div className="flex items-baseline gap-2 flex-wrap">
+                    <span className="section-label">Expected</span>
+                    <span className="text-body font-semibold text-surface-900 dark:text-surface-100">{result.expected_text}</span>
+                  </div>
+                  {result.feedback && (
+                    <div className="border-t border-surface-200 dark:border-surface-700 pt-3">
+                      <p className="text-sm text-surface-700 dark:text-surface-300 leading-relaxed">{result.feedback}</p>
+                    </div>
+                  )}
+                </div>
 
-              <div className="flex gap-3">
-                <button
-                  onClick={() => setResult(null)}
-                  className="flex-1 px-6 py-3 border border-surface-300 dark:border-surface-600 rounded-xl font-medium text-surface-700 dark:text-surface-300 hover:bg-surface-50 dark:hover:bg-surface-700 hover:-translate-y-0.5 transition-all"
-                >
-                  Try Again
-                </button>
-                <button
-                  onClick={handleNext}
-                  disabled={loading}
-                  className="flex-1 px-6 py-3 bg-primary-600 text-white font-semibold rounded-xl hover:bg-primary-700 hover:-translate-y-0.5 transition-all disabled:opacity-50"
-                >
-                  Next Word
-                </button>
+                <div className="flex gap-3">
+                  <button
+                    onClick={() => setResult(null)}
+                    className="btn-secondary btn-md flex-1"
+                  >
+                    Try again
+                  </button>
+                  <button
+                    onClick={handleNext}
+                    disabled={loading}
+                    className="btn-primary btn-md flex-1"
+                  >
+                    Next word
+                    <svg className="w-4 h-4" fill="none" stroke="currentColor" strokeWidth={2.5} viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" /></svg>
+                  </button>
+                </div>
               </div>
-            </div>
-          )}
+            );
+          })()}
         </div>
       )}
     </div>

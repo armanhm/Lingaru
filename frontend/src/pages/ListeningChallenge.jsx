@@ -57,7 +57,7 @@ function HintDisplay({ word, hintsUsed }) {
     hint = `${target[0]}${"_".repeat(target.length - 2)}${target[target.length - 1]} (${target.length} letters)`;
   }
   return (
-    <p className="text-sm text-amber-600 dark:text-amber-400 font-mono animate-fade-in">
+    <p className="text-sm text-warn-600 dark:text-warn-400 font-mono animate-fade-in">
       💡 {hint}
     </p>
   );
@@ -192,7 +192,7 @@ export default function ListeningChallenge() {
   if (error) {
     return (
       <div className="max-w-xl mx-auto py-12 text-center">
-        <div className="bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-xl p-6 text-red-700 dark:text-red-400">{error}</div>
+        <div className="bg-danger-50 dark:bg-danger-900/20 border border-danger-200 dark:border-danger-800 rounded-xl p-6 text-danger-700 dark:text-danger-400">{error}</div>
         <Link to="/mini-games" className="mt-4 inline-block text-sm text-primary-600 hover:underline">← Back to Mini Games</Link>
       </div>
     );
@@ -225,7 +225,7 @@ export default function ListeningChallenge() {
               <p className="text-xs text-surface-400">correct</p>
             </div>
             <div className="text-center">
-              <p className="text-3xl font-bold text-amber-500">+{animatedXP}</p>
+              <p className="text-3xl font-bold text-warn-500">+{animatedXP}</p>
               <p className="text-xs text-surface-400">XP earned</p>
             </div>
           </div>
@@ -236,18 +236,18 @@ export default function ListeningChallenge() {
                 key={i}
                 style={staggerDelay(i, 40)}
                 className={`flex items-center justify-between px-3 py-2 rounded-lg text-sm animate-fade-in-up ${
-                  r.correct ? "bg-emerald-50 dark:bg-emerald-900/20" : "bg-red-50 dark:bg-red-900/20"
+                  r.correct ? "bg-success-50 dark:bg-success-900/20" : "bg-danger-50 dark:bg-danger-900/20"
                 }`}
               >
                 <div className="flex items-center gap-2 min-w-0">
                   <span className="shrink-0">{r.correct ? "✅" : "❌"}</span>
                   <span className="font-semibold text-surface-800 dark:text-surface-200 truncate">{r.word.french}</span>
                   {!r.correct && (
-                    <span className="text-xs text-red-400 truncate">"{r.guess}"</span>
+                    <span className="text-xs text-danger-400 truncate">"{r.guess}"</span>
                   )}
                 </div>
                 <div className="flex items-center gap-2 shrink-0">
-                  {r.hintsUsed > 0 && <span className="text-xs text-amber-400">💡×{r.hintsUsed}</span>}
+                  {r.hintsUsed > 0 && <span className="text-xs text-warn-400">💡×{r.hintsUsed}</span>}
                   <span className="text-xs text-surface-500 dark:text-surface-400">{r.word.english}</span>
                 </div>
               </div>
@@ -334,7 +334,7 @@ export default function ListeningChallenge() {
             {hintsUsed < 2 && !resultState && (
               <button
                 onClick={handleHint}
-                className="mt-1 text-xs text-amber-500 hover:text-amber-600 dark:hover:text-amber-400 transition-colors"
+                className="mt-1 text-xs text-warn-500 hover:text-warn-600 dark:hover:text-warn-400 transition-colors"
               >
                 💡 Use hint ({2 - hintsUsed} left)
               </button>
@@ -357,9 +357,9 @@ export default function ListeningChallenge() {
               className={`w-full px-4 py-3 border-2 rounded-xl text-center text-lg font-medium
                 focus:outline-none transition-colors
                 ${resultState === "correct"
-                  ? "border-emerald-400 dark:border-emerald-600 bg-emerald-50 dark:bg-emerald-900/20 text-emerald-700 dark:text-emerald-300"
+                  ? "border-success-400 dark:border-success-600 bg-success-50 dark:bg-success-900/20 text-success-700 dark:text-success-300"
                   : resultState === "wrong"
-                    ? "border-red-400 dark:border-red-600 bg-red-50 dark:bg-red-900/20 text-red-700 dark:text-red-300"
+                    ? "border-danger-400 dark:border-danger-600 bg-danger-50 dark:bg-danger-900/20 text-danger-700 dark:text-danger-300"
                     : "border-surface-200 dark:border-surface-600 bg-white dark:bg-surface-700 text-surface-900 dark:text-surface-100 focus:border-primary-500"
                 }
                 disabled:cursor-default`}
@@ -380,13 +380,13 @@ export default function ListeningChallenge() {
         {resultState && (
           <div className={`mx-4 mb-4 px-4 py-3 rounded-xl text-center animate-fade-in-up ${
             resultState === "correct"
-              ? "bg-emerald-50 dark:bg-emerald-900/20 border border-emerald-200 dark:border-emerald-800"
-              : "bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800"
+              ? "bg-success-50 dark:bg-success-900/20 border border-success-200 dark:border-success-800"
+              : "bg-danger-50 dark:bg-danger-900/20 border border-danger-200 dark:border-danger-800"
           }`}>
             <div className="flex items-center justify-center gap-2">
               <span className="text-xl animate-pop-in">{resultState === "correct" ? "✅" : "❌"}</span>
               <span className={`text-sm font-bold ${
-                resultState === "correct" ? "text-emerald-700 dark:text-emerald-300" : "text-red-700 dark:text-red-300"
+                resultState === "correct" ? "text-success-700 dark:text-success-300" : "text-danger-700 dark:text-danger-300"
               }`}>
                 {resultState === "correct" ? "Correct!" : "Not quite!"}
               </span>
@@ -396,7 +396,7 @@ export default function ListeningChallenge() {
               <span className="text-sm font-normal text-surface-500 dark:text-surface-400 ml-2">— {word.english}</span>
             </p>
             {resultState === "correct" && (
-              <span className="text-xs text-emerald-600 dark:text-emerald-400 font-medium">+2 XP</span>
+              <span className="text-xs text-success-600 dark:text-success-400 font-medium">+2 XP</span>
             )}
           </div>
         )}

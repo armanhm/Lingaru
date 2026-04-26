@@ -12,9 +12,9 @@ const FLY_DISTANCE    = 600;        // px off-screen
 const FLY_DURATION    = 300;        // ms exit animation
 
 const QUALITY_MAP = {
-  right: { value: 5, label: "Easy",  emoji: "😎", color: "emerald" },
-  left:  { value: 1, label: "Again", emoji: "🔄", color: "red" },
-  down:  { value: 3, label: "Hard",  emoji: "😤", color: "orange" },
+  right: { value: 5, label: "Easy",  emoji: "😎", color: "success" },
+  left:  { value: 1, label: "Again", emoji: "🔄", color: "danger" },
+  down:  { value: 3, label: "Hard",  emoji: "😤", color: "warn" },
 };
 
 function clamp(v, min, max) { return Math.max(min, Math.min(max, v)); }
@@ -37,27 +37,27 @@ function SwipeOverlay({ dx, dy, threshold }) {
       >
         <div className="flex flex-col items-center gap-1">
           <span className="text-5xl">😎</span>
-          <span className="text-lg font-bold text-emerald-600 dark:text-emerald-400">Easy</span>
+          <span className="text-h4 font-extrabold text-success-600 dark:text-success-400">Easy</span>
         </div>
       </div>
       {/* Left → Again */}
       <div
         className="absolute inset-0 rounded-2xl flex items-center justify-center pointer-events-none z-10"
-        style={{ background: `rgba(239,68,68,${leftOp * 0.25})`, opacity: leftOp }}
+        style={{ background: `rgba(244,63,94,${leftOp * 0.25})`, opacity: leftOp }}
       >
         <div className="flex flex-col items-center gap-1">
           <span className="text-5xl">🔄</span>
-          <span className="text-lg font-bold text-red-600 dark:text-red-400">Again</span>
+          <span className="text-h4 font-extrabold text-danger-600 dark:text-danger-400">Again</span>
         </div>
       </div>
       {/* Down → Hard */}
       <div
         className="absolute inset-0 rounded-2xl flex items-center justify-center pointer-events-none z-10"
-        style={{ background: `rgba(251,146,60,${downOp * 0.25})`, opacity: downOp }}
+        style={{ background: `rgba(245,158,11,${downOp * 0.25})`, opacity: downOp }}
       >
         <div className="flex flex-col items-center gap-1">
           <span className="text-5xl">😤</span>
-          <span className="text-lg font-bold text-orange-600 dark:text-orange-400">Hard</span>
+          <span className="text-h4 font-extrabold text-warn-600 dark:text-warn-400">Hard</span>
         </div>
       </div>
     </>
@@ -283,38 +283,39 @@ export default function SRSReview() {
   // Border glow
   let borderColor = "";
   if (showAnswer && !exiting) {
-    if (dx > 30)       borderColor = "border-emerald-400 dark:border-emerald-500";
-    else if (dx < -30) borderColor = "border-red-400 dark:border-red-500";
-    else if (dy > 30)  borderColor = "border-orange-400 dark:border-orange-500";
+    if (dx > 30)       borderColor = "border-success-400 dark:border-success-500";
+    else if (dx < -30) borderColor = "border-danger-400 dark:border-danger-500";
+    else if (dy > 30)  borderColor = "border-warn-400 dark:border-warn-500";
   }
 
   return (
-    <div className="max-w-xl mx-auto py-8 space-y-6 select-none">
+    <div className="max-w-xl mx-auto select-none">
       {/* Header */}
-      <div className="flex items-center justify-between">
-        <div>
-          <h1 className="text-2xl font-extrabold text-surface-900 dark:text-surface-100">Flashcards</h1>
-          <p className="text-sm text-surface-400 dark:text-surface-500 mt-0.5">{cards.length} cards due today</p>
+      <div className="mb-5 flex items-start justify-between gap-4 animate-fade-in">
+        <div className="min-w-0">
+          <p className="eyebrow-primary mb-1">Spaced repetition</p>
+          <h1 className="text-h1 text-gradient-primary">Flashcards</h1>
+          <p className="text-caption text-surface-500 dark:text-surface-400 mt-1">{cards.length} cards due today</p>
         </div>
-        <span className="text-sm font-medium text-surface-500 dark:text-surface-400 bg-surface-100 dark:bg-surface-700 px-3 py-1 rounded-full">
+        <span className="stat-pill shrink-0">
           {currentIndex + 1} / {cards.length}
         </span>
       </div>
 
       {/* Progress bar */}
-      <div className="w-full bg-surface-200 dark:bg-surface-700 rounded-full h-1.5">
+      <div className="w-full bg-surface-200 dark:bg-surface-700 rounded-full h-2 mb-5 overflow-hidden">
         <div
-          className="bg-primary-500 h-1.5 rounded-full transition-all duration-500"
+          className="h-full rounded-full bg-gradient-to-r from-primary-500 to-purple-600 transition-all duration-500 ease-out"
           style={{ width: `${progress}%` }}
         />
       </div>
 
       {/* Swipe hints */}
       {showAnswer && !exiting && (
-        <div className="flex justify-between items-center text-xs text-surface-400 dark:text-surface-500 px-2">
-          <span className="flex items-center gap-1">← Again</span>
-          <span className="flex items-center gap-1">↓ Hard</span>
-          <span className="flex items-center gap-1">Easy →</span>
+        <div className="flex justify-between items-center text-xs font-semibold text-surface-500 dark:text-surface-400 px-2 mb-4 uppercase tracking-wider">
+          <span className="flex items-center gap-1 text-danger-600 dark:text-danger-400">← Again</span>
+          <span className="flex items-center gap-1 text-warn-600 dark:text-warn-400">↓ Hard</span>
+          <span className="flex items-center gap-1 text-success-600 dark:text-success-400">Easy →</span>
         </div>
       )}
 
@@ -326,7 +327,7 @@ export default function SRSReview() {
           onPointerMove={onPointerMove}
           onPointerUp={onPointerUp}
           onPointerCancel={onPointerUp}
-          className={`relative bg-white dark:bg-surface-800 rounded-2xl shadow-sm border-2 overflow-hidden touch-none
+          className={`relative bg-white dark:bg-surface-800 rounded-2xl shadow-card border-2 overflow-hidden touch-none
             ${borderColor || "border-surface-100 dark:border-surface-700"}`}
           style={{
             transform: `translate(${tx}px, ${ty}px) rotate(${rotate}deg) scale(${scale})`,
@@ -335,16 +336,19 @@ export default function SRSReview() {
             cursor: showAnswer ? "grab" : "pointer",
           }}
         >
+          {/* Top accent band */}
+          <div className="absolute inset-x-0 top-0 h-1 bg-gradient-to-r from-primary-500 via-purple-500 to-accent-500" />
+
           {/* Swipe overlays */}
           {dragging && showAnswer && (
             <SwipeOverlay dx={dx} dy={dy} threshold={SWIPE_THRESHOLD} />
           )}
 
           {/* Front — always visible */}
-          <div className="px-8 py-10 text-center border-b border-surface-100 dark:border-surface-700">
-            <p className="text-xs font-semibold uppercase tracking-wider text-surface-400 dark:text-surface-500 mb-3">French</p>
-            <div className="flex items-center justify-center gap-3">
-              <span className="text-4xl font-bold text-surface-900 dark:text-surface-100">{card.french}</span>
+          <div className="px-8 pt-10 pb-8 text-center border-b border-surface-100 dark:border-surface-700">
+            <p className="section-label mb-3">French</p>
+            <div className="flex items-center justify-center gap-3 flex-wrap">
+              <span className="text-display font-extrabold text-surface-900 dark:text-surface-100 tracking-tight">{card.french}</span>
               <AudioPlayButton text={card.french} />
             </div>
             {card.pronunciation && (
@@ -357,48 +361,49 @@ export default function SRSReview() {
             <div className="px-8 py-8 text-center">
               <button
                 onClick={handleReveal}
-                className="px-8 py-3 bg-primary-600 text-white font-semibold rounded-xl hover:bg-primary-700 transition-colors"
+                className="btn-primary btn-lg"
               >
                 Tap to reveal
               </button>
-              <p className="text-xs text-surface-400 dark:text-surface-500 mt-2">or press Space</p>
+              <p className="text-caption text-surface-400 dark:text-surface-500 mt-3">or press <kbd className="kbd">Space</kbd></p>
             </div>
           ) : (
             <div className="transition-all duration-300 opacity-100">
               <div className="px-8 py-6 text-center border-b border-surface-100 dark:border-surface-700">
-                <p className="text-xs font-semibold uppercase tracking-wider text-surface-400 dark:text-surface-500 mb-2">English</p>
-                <p className="text-2xl font-semibold text-surface-800 dark:text-surface-100">{card.english}</p>
+                <p className="section-label mb-2">English</p>
+                <p className="text-h2 font-extrabold text-surface-800 dark:text-surface-100">{card.english}</p>
                 {card.example_sentence && (
-                  <p className="text-sm text-surface-500 dark:text-surface-400 italic mt-3 border-l-2 border-primary-200 dark:border-primary-800 pl-3 text-left">
-                    "{card.example_sentence}"
-                  </p>
+                  <div className="mt-4 rounded-xl bg-primary-50/60 dark:bg-primary-900/20 border-l-4 border-primary-400 dark:border-primary-600 pl-4 pr-3 py-2.5 text-left">
+                    <p className="section-label mb-0.5">Example</p>
+                    <p className="text-sm text-surface-700 dark:text-surface-300 italic">"{card.example_sentence}"</p>
+                  </div>
                 )}
               </div>
 
-              {/* Rating buttons — fallback for non-swipe users */}
-              <div className="px-6 py-4">
-                <p className="text-xs text-center text-surface-400 dark:text-surface-500 mb-3">Swipe or tap to rate</p>
+              {/* Rating buttons */}
+              <div className="px-6 py-5">
+                <p className="text-xs text-center font-semibold text-surface-500 dark:text-surface-400 uppercase tracking-wider mb-3">Swipe or tap to rate</p>
                 <div className="grid grid-cols-3 gap-2">
                   <button
                     onClick={() => handleRate(1, "left")}
-                    className="bg-red-500 hover:bg-red-600 text-white rounded-xl py-2.5 flex flex-col items-center gap-0.5 transition-colors"
+                    className="bg-gradient-to-br from-danger-500 to-danger-600 hover:shadow-glow-danger text-white rounded-xl py-3 flex flex-col items-center gap-0.5 transition-all active:scale-95 font-bold"
                   >
-                    <span className="text-sm font-semibold">Again</span>
-                    <span className="text-xs opacity-80">←</span>
+                    <span className="text-sm">Again</span>
+                    <span className="text-xs opacity-90">←</span>
                   </button>
                   <button
                     onClick={() => handleRate(3, "down")}
-                    className="bg-orange-400 hover:bg-orange-500 text-white rounded-xl py-2.5 flex flex-col items-center gap-0.5 transition-colors"
+                    className="bg-gradient-to-br from-warn-500 to-accent-500 hover:shadow-glow-accent text-white rounded-xl py-3 flex flex-col items-center gap-0.5 transition-all active:scale-95 font-bold"
                   >
-                    <span className="text-sm font-semibold">Hard</span>
-                    <span className="text-xs opacity-80">↓</span>
+                    <span className="text-sm">Hard</span>
+                    <span className="text-xs opacity-90">↓</span>
                   </button>
                   <button
                     onClick={() => handleRate(5, "right")}
-                    className="bg-emerald-500 hover:bg-emerald-600 text-white rounded-xl py-2.5 flex flex-col items-center gap-0.5 transition-colors"
+                    className="bg-gradient-to-br from-success-500 to-info-500 hover:shadow-glow-success text-white rounded-xl py-3 flex flex-col items-center gap-0.5 transition-all active:scale-95 font-bold"
                   >
-                    <span className="text-sm font-semibold">Easy</span>
-                    <span className="text-xs opacity-80">→</span>
+                    <span className="text-sm">Easy</span>
+                    <span className="text-xs opacity-90">→</span>
                   </button>
                 </div>
               </div>
@@ -408,8 +413,8 @@ export default function SRSReview() {
       </div>
 
       {/* Keyboard hint */}
-      <p className="text-xs text-center text-surface-400 dark:text-surface-500">
-        Keyboard: ← Again &nbsp;·&nbsp; ↓ Hard &nbsp;·&nbsp; → Easy &nbsp;·&nbsp; Space reveal
+      <p className="text-xs text-center text-surface-400 dark:text-surface-500 mt-4">
+        <kbd className="kbd">←</kbd> Again &nbsp;·&nbsp; <kbd className="kbd">↓</kbd> Hard &nbsp;·&nbsp; <kbd className="kbd">→</kbd> Easy &nbsp;·&nbsp; <kbd className="kbd">Space</kbd> reveal
       </p>
     </div>
   );

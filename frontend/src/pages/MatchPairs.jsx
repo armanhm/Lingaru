@@ -51,7 +51,7 @@ function Card({ card, flipped, matched, onClick, preview }) {
               ? "bg-success-50 dark:bg-success-900/20 border-success-300 dark:border-success-700"
               : isFr
                 ? "bg-info-50 dark:bg-info-900/20 border-info-300 dark:border-info-700"
-                : "bg-warn-50 dark:bg-warn-900/20 border-warn-300 dark:border-warn-700"
+                : "bg-purple-50 dark:bg-purple-900/20 border-purple-300 dark:border-purple-700"
             }`}
           style={{ backfaceVisibility: "hidden", transform: "rotateY(180deg)" }}
         >
@@ -60,7 +60,7 @@ function Card({ card, flipped, matched, onClick, preview }) {
               ? "text-success-500 dark:text-success-400"
               : isFr
                 ? "text-info-400 dark:text-info-500"
-                : "text-warn-400 dark:text-warn-500"
+                : "text-purple-400 dark:text-purple-500"
           }`}>
             {isFr ? "FR" : "EN"}
           </span>
@@ -361,7 +361,7 @@ export default function MatchPairs() {
           <span className="w-3 h-3 rounded bg-info-200 dark:bg-info-800" /> French
         </span>
         <span className="flex items-center gap-1">
-          <span className="w-3 h-3 rounded bg-warn-200 dark:bg-warn-800" /> English
+          <span className="w-3 h-3 rounded bg-purple-200 dark:bg-purple-800" /> English
         </span>
         <span className="flex items-center gap-1">
           <span className="w-3 h-3 rounded bg-success-200 dark:bg-success-800" /> Matched

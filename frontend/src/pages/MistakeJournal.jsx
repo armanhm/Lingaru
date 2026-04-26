@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { getMistakes, markMistakesReviewed } from "../api/progress";
 import { staggerDelay } from "../hooks/useAnimations";
+import { PageHeader } from "../components/ui";
 
 const TYPE_LABELS = {
   gender: "Gender",
@@ -62,8 +63,14 @@ export default function MistakeJournal() {
   };
 
   return (
-    <div className="max-w-3xl mx-auto py-8 px-4">
-      <h1 className="text-2xl font-extrabold text-surface-900 dark:text-surface-100 mb-6 animate-fade-in">Mistake Journal</h1>
+    <div className="max-w-3xl mx-auto">
+      <PageHeader
+        eyebrow="Learn from slip-ups"
+        title="Mistake journal"
+        subtitle="Every mistake you've made — review them and they stop coming back."
+        icon="📓"
+        gradient
+      />
 
       <div className="flex flex-wrap gap-3 mb-6">
         <select

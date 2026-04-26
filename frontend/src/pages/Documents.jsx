@@ -2,6 +2,7 @@ import { useState, useEffect, useRef } from "react";
 import { getDocuments, uploadDocument, deleteDocument } from "../api/documents";
 import { useToast } from "../contexts/ToastContext";
 import { staggerDelay } from "../hooks/useAnimations";
+import { PageHeader } from "../components/ui";
 
 function DocumentCard({ doc, onDelete, showToast }) {
   const [deleting, setDeleting] = useState(false);
@@ -118,13 +119,13 @@ export default function Documents() {
 
   return (
     <div>
-      <div className="mb-8 animate-fade-in">
-        <h1 className="text-2xl font-extrabold text-surface-900 dark:text-surface-100">Documents</h1>
-        <p className="text-surface-500 dark:text-surface-400 mt-1">
-          Upload your French textbooks and notes. The AI assistant will use them
-          to give you more relevant answers.
-        </p>
-      </div>
+      <PageHeader
+        eyebrow="Your library"
+        title="Documents"
+        subtitle="Upload your French textbooks and notes — the AI assistant will use them for grounded answers."
+        icon="📄"
+        gradient
+      />
 
       {/* Upload form */}
       <div className="card p-6 mb-8">

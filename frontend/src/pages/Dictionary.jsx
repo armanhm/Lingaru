@@ -3,6 +3,7 @@ import { useSearchParams } from "react-router-dom";
 import { lookupWord, conjugateVerb } from "../api/dictionary";
 import AudioPlayButton from "../components/AudioPlayButton";
 import { staggerDelay } from "../hooks/useAnimations";
+import { PageHeader } from "../components/ui";
 
 const TENSE_ORDER = [
   "Présent",
@@ -16,41 +17,46 @@ const TENSE_ORDER = [
 ];
 
 const TENSE_COLORS = {
-  "Présent":              "border-blue-300 dark:border-blue-700 bg-blue-50 dark:bg-blue-900/20",
-  "Imparfait":            "border-amber-300 dark:border-amber-700 bg-amber-50 dark:bg-amber-900/20",
-  "Passé composé":        "border-violet-300 dark:border-violet-700 bg-violet-50 dark:bg-violet-900/20",
-  "Futur simple":         "border-emerald-300 dark:border-emerald-700 bg-emerald-50 dark:bg-emerald-900/20",
-  "Conditionnel présent": "border-rose-300 dark:border-rose-700 bg-rose-50 dark:bg-rose-900/20",
-  "Subjonctif présent":   "border-cyan-300 dark:border-cyan-700 bg-cyan-50 dark:bg-cyan-900/20",
-  "Impératif":            "border-orange-300 dark:border-orange-700 bg-orange-50 dark:bg-orange-900/20",
-  "Plus-que-parfait":     "border-indigo-300 dark:border-indigo-700 bg-indigo-50 dark:bg-indigo-900/20",
+  "Présent":              "border-info-300 dark:border-info-700 bg-info-50 dark:bg-info-900/20",
+  "Imparfait":            "border-warn-300 dark:border-warn-700 bg-warn-50 dark:bg-warn-900/20",
+  "Passé composé":        "border-purple-300 dark:border-purple-700 bg-purple-50 dark:bg-purple-900/20",
+  "Futur simple":         "border-success-300 dark:border-success-700 bg-success-50 dark:bg-success-900/20",
+  "Conditionnel présent": "border-danger-300 dark:border-danger-700 bg-danger-50 dark:bg-danger-900/20",
+  "Subjonctif présent":   "border-info-300 dark:border-info-700 bg-info-50 dark:bg-info-900/20",
+  "Impératif":            "border-accent-300 dark:border-accent-700 bg-accent-50 dark:bg-accent-900/20",
+  "Plus-que-parfait":     "border-primary-300 dark:border-primary-700 bg-primary-50 dark:bg-primary-900/20",
 };
 
 const POS_COLORS = {
-  noun:          "bg-blue-100 dark:bg-blue-900/40 text-blue-700 dark:text-blue-300",
-  verb:          "bg-violet-100 dark:bg-violet-900/40 text-violet-700 dark:text-violet-300",
-  adjective:     "bg-emerald-100 dark:bg-emerald-900/40 text-emerald-700 dark:text-emerald-300",
-  adverb:        "bg-amber-100 dark:bg-amber-900/40 text-amber-700 dark:text-amber-300",
-  pronoun:       "bg-rose-100 dark:bg-rose-900/40 text-rose-700 dark:text-rose-300",
-  preposition:   "bg-cyan-100 dark:bg-cyan-900/40 text-cyan-700 dark:text-cyan-300",
-  conjunction:   "bg-orange-100 dark:bg-orange-900/40 text-orange-700 dark:text-orange-300",
+  noun:          "bg-info-100 dark:bg-info-900/40 text-info-700 dark:text-info-300",
+  verb:          "bg-purple-100 dark:bg-purple-900/40 text-purple-700 dark:text-purple-300",
+  adjective:     "bg-success-100 dark:bg-success-900/40 text-success-700 dark:text-success-300",
+  adverb:        "bg-warn-100 dark:bg-warn-900/40 text-warn-700 dark:text-warn-300",
+  pronoun:       "bg-danger-100 dark:bg-danger-900/40 text-danger-700 dark:text-danger-300",
+  preposition:   "bg-info-100 dark:bg-info-900/40 text-info-700 dark:text-info-300",
+  conjunction:   "bg-accent-100 dark:bg-accent-900/40 text-accent-700 dark:text-accent-300",
   interjection:  "bg-pink-100 dark:bg-pink-900/40 text-pink-700 dark:text-pink-300",
 };
 
 function SearchBar({ value, onChange, onSubmit, loading, placeholder }) {
   return (
     <form onSubmit={onSubmit} className="flex gap-2">
-      <input
-        type="text"
-        value={value}
-        onChange={(e) => onChange(e.target.value)}
-        placeholder={placeholder}
-        className="flex-1 px-4 py-3 border border-surface-200 dark:border-surface-600 rounded-xl text-sm bg-white dark:bg-surface-800 text-surface-900 dark:text-surface-100 focus:outline-none focus:border-primary-400 dark:focus:border-primary-500 transition-colors"
-      />
+      <div className="relative flex-1">
+        <svg className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-surface-400 dark:text-surface-500 pointer-events-none" fill="none" stroke="currentColor" strokeWidth={2.2} viewBox="0 0 24 24">
+          <path strokeLinecap="round" strokeLinejoin="round" d="M21 21l-4.35-4.35M11 19a8 8 0 110-16 8 8 0 010 16z" />
+        </svg>
+        <input
+          type="text"
+          value={value}
+          onChange={(e) => onChange(e.target.value)}
+          placeholder={placeholder}
+          className="w-full pl-11 pr-4 py-3 border border-surface-200 dark:border-surface-600 rounded-xl text-base bg-white dark:bg-surface-800 text-surface-900 dark:text-surface-100 placeholder:text-surface-400 focus:outline-none focus:border-primary-500 focus:ring-2 focus:ring-primary-500/20 transition-all"
+        />
+      </div>
       <button
         type="submit"
         disabled={loading || !value.trim()}
-        className="px-6 py-3 bg-primary-600 text-white font-semibold rounded-xl hover:bg-primary-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+        className="btn-primary btn-lg shrink-0"
       >
         {loading ? (
           <svg className="w-5 h-5 animate-spin" fill="none" viewBox="0 0 24 24">
@@ -78,8 +84,8 @@ function DictionaryResult({ result }) {
     <div className="space-y-5 animate-fade-in">
       {/* Word header */}
       <div className="flex flex-wrap items-center gap-3">
-        <div className="flex items-center gap-2">
-          <h2 className="text-3xl font-bold text-surface-900 dark:text-surface-100">{word}</h2>
+        <div className="flex items-center gap-3">
+          <h2 className="text-display font-extrabold text-surface-900 dark:text-surface-100 tracking-tight">{word}</h2>
           <AudioPlayButton text={word} />
         </div>
         <div className="flex flex-wrap gap-2">
@@ -104,16 +110,16 @@ function DictionaryResult({ result }) {
       {/* Definitions */}
       {definitions?.length > 0 && (
         <div>
-          <h3 className="text-xs font-semibold uppercase tracking-wider text-surface-400 dark:text-surface-500 mb-2">Definitions</h3>
-          <ol className="space-y-2">
+          <h3 className="section-label mb-2.5">Definitions</h3>
+          <ol className="space-y-2.5">
             {definitions.map((def, i) => (
-              <li key={i} className="flex gap-3">
-                <span className="shrink-0 w-5 h-5 rounded-full bg-primary-100 dark:bg-primary-900/40 text-primary-700 dark:text-primary-300 text-xs font-bold flex items-center justify-center mt-0.5">
+              <li key={i} className="flex gap-3 animate-fade-in-up" style={staggerDelay(i, 60)}>
+                <span className="shrink-0 w-6 h-6 rounded-full bg-gradient-to-br from-primary-500 to-purple-600 text-white text-xs font-bold flex items-center justify-center mt-0.5 shadow-sm">
                   {i + 1}
                 </span>
                 <div>
-                  <p className="text-surface-800 dark:text-surface-200 text-sm font-medium">{def.en}</p>
-                  {def.fr && <p className="text-surface-500 dark:text-surface-400 text-xs mt-0.5 italic">{def.fr}</p>}
+                  <p className="text-body text-surface-800 dark:text-surface-200 font-medium">{def.en}</p>
+                  {def.fr && <p className="text-caption text-surface-500 dark:text-surface-400 mt-0.5 italic">{def.fr}</p>}
                 </div>
               </li>
             ))}
@@ -124,15 +130,15 @@ function DictionaryResult({ result }) {
       {/* Examples */}
       {examples?.length > 0 && (
         <div>
-          <h3 className="text-xs font-semibold uppercase tracking-wider text-surface-400 dark:text-surface-500 mb-2">Examples</h3>
-          <div className="space-y-2">
+          <h3 className="section-label mb-2.5">Examples</h3>
+          <div className="space-y-2.5">
             {examples.map((ex, i) => (
-              <div key={i} className="border-l-2 border-primary-200 dark:border-primary-800 pl-3">
+              <div key={i} className="rounded-xl bg-primary-50/60 dark:bg-primary-900/20 border-l-4 border-primary-400 dark:border-primary-600 pl-4 pr-3 py-2.5 animate-fade-in-up" style={staggerDelay(i, 60)}>
                 <div className="flex items-start gap-2">
                   <p className="text-sm text-surface-800 dark:text-surface-200 italic flex-1">{ex.fr}</p>
                   <AudioPlayButton text={ex.fr} />
                 </div>
-                <p className="text-xs text-surface-500 dark:text-surface-400 mt-0.5">{ex.en}</p>
+                <p className="text-xs text-surface-500 dark:text-surface-400 mt-1">{ex.en}</p>
               </div>
             ))}
           </div>
@@ -140,13 +146,13 @@ function DictionaryResult({ result }) {
       )}
 
       {/* Synonyms & Antonyms */}
-      <div className="grid grid-cols-2 gap-4">
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
         {synonyms?.length > 0 && (
           <div>
-            <h3 className="text-xs font-semibold uppercase tracking-wider text-surface-400 dark:text-surface-500 mb-2">Synonyms</h3>
+            <h3 className="section-label mb-2.5">Synonyms</h3>
             <div className="flex flex-wrap gap-1.5">
               {synonyms.map((s, i) => (
-                <span key={i} className="px-2.5 py-1 text-xs rounded-lg bg-emerald-50 dark:bg-emerald-900/20 text-emerald-700 dark:text-emerald-300 border border-emerald-200 dark:border-emerald-800">
+                <span key={i} className="px-2.5 py-1 text-xs font-medium rounded-lg bg-success-50 dark:bg-success-900/20 text-success-700 dark:text-success-300 border border-success-200 dark:border-success-800">
                   {s}
                 </span>
               ))}
@@ -155,10 +161,10 @@ function DictionaryResult({ result }) {
         )}
         {antonyms?.length > 0 && (
           <div>
-            <h3 className="text-xs font-semibold uppercase tracking-wider text-surface-400 dark:text-surface-500 mb-2">Antonyms</h3>
+            <h3 className="section-label mb-2.5">Antonyms</h3>
             <div className="flex flex-wrap gap-1.5">
               {antonyms.map((a, i) => (
-                <span key={i} className="px-2.5 py-1 text-xs rounded-lg bg-rose-50 dark:bg-rose-900/20 text-rose-700 dark:text-rose-300 border border-rose-200 dark:border-rose-800">
+                <span key={i} className="px-2.5 py-1 text-xs font-medium rounded-lg bg-danger-50 dark:bg-danger-900/20 text-danger-700 dark:text-danger-300 border border-danger-200 dark:border-danger-800">
                   {a}
                 </span>
               ))}
@@ -169,9 +175,9 @@ function DictionaryResult({ result }) {
 
       {/* Etymology */}
       {etymology && etymology !== "null" && (
-        <div className="bg-surface-50 dark:bg-surface-700/50 rounded-lg px-4 py-3">
-          <h3 className="text-xs font-semibold uppercase tracking-wider text-surface-400 dark:text-surface-500 mb-1">Etymology</h3>
-          <p className="text-sm text-surface-600 dark:text-surface-300">{etymology}</p>
+        <div className="rounded-xl bg-gradient-to-br from-surface-50 to-primary-50/30 dark:from-surface-700/40 dark:to-primary-900/10 border border-surface-200 dark:border-surface-700 px-4 py-3">
+          <h3 className="section-label mb-1.5 flex items-center gap-1.5"><span>📜</span> Etymology</h3>
+          <p className="text-sm text-surface-700 dark:text-surface-300 leading-relaxed">{etymology}</p>
         </div>
       )}
     </div>
@@ -188,27 +194,27 @@ function ConjugationResult({ result }) {
     <div className="space-y-4 animate-fade-in">
       {/* Verb header */}
       <div>
-        <div className="flex items-center gap-2 mb-2">
-          <h2 className="text-3xl font-bold text-surface-900 dark:text-surface-100">{verb}</h2>
+        <div className="flex items-center gap-3 mb-3">
+          <h2 className="text-display font-extrabold text-surface-900 dark:text-surface-100 tracking-tight">{verb}</h2>
           <AudioPlayButton text={verb} />
         </div>
-        <div className="flex flex-wrap gap-2 text-sm text-surface-500 dark:text-surface-400">
+        <div className="flex flex-wrap gap-2">
           {auxiliary && (
-            <span className="flex items-center gap-1">
-              <span className="font-medium text-surface-700 dark:text-surface-300">auxiliary:</span>
-              <span className="font-bold text-primary-600 dark:text-primary-400">{auxiliary}</span>
+            <span className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-primary-50 dark:bg-primary-900/30 border border-primary-200 dark:border-primary-800 text-xs">
+              <span className="font-medium text-surface-600 dark:text-surface-300">auxiliary</span>
+              <span className="font-bold text-primary-700 dark:text-primary-300">{auxiliary}</span>
             </span>
           )}
           {past_participle && (
-            <span className="flex items-center gap-1">
-              <span className="font-medium text-surface-700 dark:text-surface-300">past participle:</span>
-              <span className="font-bold text-violet-600 dark:text-violet-400">{past_participle}</span>
+            <span className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-purple-50 dark:bg-purple-900/30 border border-purple-200 dark:border-purple-800 text-xs">
+              <span className="font-medium text-surface-600 dark:text-surface-300">past participle</span>
+              <span className="font-bold text-purple-700 dark:text-purple-300">{past_participle}</span>
             </span>
           )}
           {present_participle && (
-            <span className="flex items-center gap-1">
-              <span className="font-medium text-surface-700 dark:text-surface-300">present participle:</span>
-              <span className="font-bold text-emerald-600 dark:text-emerald-400">{present_participle}</span>
+            <span className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-success-50 dark:bg-success-900/30 border border-success-200 dark:border-success-800 text-xs">
+              <span className="font-medium text-surface-600 dark:text-surface-300">present participle</span>
+              <span className="font-bold text-success-700 dark:text-success-300">{present_participle}</span>
             </span>
           )}
         </div>
@@ -220,13 +226,14 @@ function ConjugationResult({ result }) {
           <button
             key={tense}
             onClick={() => setActiveTab(tense)}
-            className={`px-3 py-1.5 rounded-lg text-xs font-semibold transition-colors ${
+            className={`relative px-3.5 py-1.5 rounded-lg text-xs font-semibold transition-all ${
               activeTab === tense
-                ? "bg-primary-600 text-white"
-                : "bg-surface-100 dark:bg-surface-700 text-surface-600 dark:text-surface-400 hover:bg-surface-200 dark:hover:bg-surface-600"
+                ? "text-white shadow-sm"
+                : "bg-surface-100 dark:bg-surface-700 text-surface-600 dark:text-surface-300 hover:bg-surface-200 dark:hover:bg-surface-600"
             }`}
           >
-            {tense}
+            {activeTab === tense && <span className="absolute inset-0 rounded-lg bg-gradient-to-br from-primary-500 to-purple-600" />}
+            <span className="relative z-10">{tense}</span>
           </button>
         ))}
       </div>
@@ -385,34 +392,38 @@ export default function Dictionary() {
   };
 
   return (
-    <div className="max-w-4xl mx-auto space-y-6">
-      {/* Page header */}
-      <div>
-        <h1 className="text-3xl font-bold text-surface-900 dark:text-surface-100">Dictionary</h1>
-        <p className="text-surface-500 dark:text-surface-400 mt-1">Look up French words and conjugate verbs</p>
-      </div>
+    <div className="max-w-4xl mx-auto">
+      <PageHeader
+        eyebrow="Lookup"
+        title="Dictionary"
+        subtitle="Look up French words and conjugate any verb in seconds."
+        icon="📖"
+        gradient
+      />
 
       {/* Tabs */}
-      <div className="flex gap-1 p-1 bg-surface-100 dark:bg-surface-800 rounded-xl w-fit">
+      <div className="card p-1.5 mb-5 inline-flex">
         <button
           onClick={() => setTab("dictionary")}
-          className={`px-5 py-2 rounded-lg text-sm font-semibold transition-colors ${
+          className={`relative px-5 py-2 rounded-lg text-sm font-semibold transition-all ${
             tab === "dictionary"
-              ? "bg-white dark:bg-surface-700 text-surface-900 dark:text-surface-100 shadow-sm"
-              : "text-surface-500 dark:text-surface-400 hover:text-surface-700 dark:hover:text-surface-200"
+              ? "text-white shadow-sm"
+              : "text-surface-600 dark:text-surface-300 hover:bg-surface-100 dark:hover:bg-surface-700"
           }`}
         >
-          📖 Dictionary
+          {tab === "dictionary" && <span className="absolute inset-0 rounded-lg bg-gradient-to-br from-primary-500 to-purple-600" />}
+          <span className="relative z-10">📖 Dictionary</span>
         </button>
         <button
           onClick={() => setTab("conjugator")}
-          className={`px-5 py-2 rounded-lg text-sm font-semibold transition-colors ${
+          className={`relative px-5 py-2 rounded-lg text-sm font-semibold transition-all ${
             tab === "conjugator"
-              ? "bg-white dark:bg-surface-700 text-surface-900 dark:text-surface-100 shadow-sm"
-              : "text-surface-500 dark:text-surface-400 hover:text-surface-700 dark:hover:text-surface-200"
+              ? "text-white shadow-sm"
+              : "text-surface-600 dark:text-surface-300 hover:bg-surface-100 dark:hover:bg-surface-700"
           }`}
         >
-          ✏️ Verb Conjugator
+          {tab === "conjugator" && <span className="absolute inset-0 rounded-lg bg-gradient-to-br from-info-500 to-primary-600" />}
+          <span className="relative z-10">✏️ Verb conjugator</span>
         </button>
       </div>
 
@@ -430,14 +441,14 @@ export default function Dictionary() {
           {/* Quick words */}
           {!dictResult && !dictLoading && (
             <div>
-              <p className="text-xs font-medium text-surface-400 dark:text-surface-500 mb-2">Try a word:</p>
+              <p className="section-label mb-2">Try a word</p>
               <div className="flex flex-wrap gap-2">
                 {QUICK_WORDS.map((w, i) => (
                   <button
                     key={w}
                     onClick={() => quickLookup(w)}
                     style={staggerDelay(i, 50)}
-                    className="px-3 py-1.5 text-sm rounded-lg bg-white dark:bg-surface-800 border border-surface-200 dark:border-surface-700 text-surface-700 dark:text-surface-300 hover:border-primary-400 hover:text-primary-600 dark:hover:text-primary-400 hover:scale-105 transition-all animate-fade-in-up"
+                    className="px-3.5 py-1.5 text-sm font-medium rounded-lg bg-white dark:bg-surface-800 border border-surface-200 dark:border-surface-700 text-surface-700 dark:text-surface-300 hover:border-primary-400 hover:bg-primary-50 dark:hover:bg-primary-900/20 hover:text-primary-700 dark:hover:text-primary-300 hover:scale-105 transition-all animate-fade-in-up active:scale-95"
                   >
                     {w}
                   </button>
@@ -447,32 +458,34 @@ export default function Dictionary() {
           )}
 
           {dictLoading && (
-            <div className="bg-white dark:bg-surface-800 rounded-xl border border-surface-100 dark:border-surface-700 p-8 flex flex-col items-center gap-3 text-surface-400 dark:text-surface-500">
-              <svg className="w-8 h-8 animate-spin" fill="none" viewBox="0 0 24 24">
+            <div className="card p-10 flex flex-col items-center gap-3 text-surface-500 dark:text-surface-400">
+              <svg className="w-8 h-8 animate-spin text-primary-500" fill="none" viewBox="0 0 24 24">
                 <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
                 <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8z" />
               </svg>
-              <p className="text-sm">Looking up word…</p>
+              <p className="text-sm font-medium">Looking up word…</p>
             </div>
           )}
 
           {dictError && (
-            <div className="bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-xl p-4 text-sm text-red-700 dark:text-red-400">
-              {dictError}
+            <div className="bg-danger-50 dark:bg-danger-900/20 border border-danger-200 dark:border-danger-800 rounded-xl p-4 text-sm text-danger-700 dark:text-danger-400 flex items-start gap-2">
+              <svg className="w-4 h-4 mt-0.5 shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm-1-5a1 1 0 102 0v-1a1 1 0 10-2 0v1zm0-7a1 1 0 012 0v3a1 1 0 11-2 0V6z" clipRule="evenodd" /></svg>
+              <span>{dictError}</span>
             </div>
           )}
 
           {dictResult && !dictLoading && (
-            <div className="bg-white dark:bg-surface-800 rounded-xl border border-surface-100 dark:border-surface-700 p-6 animate-scale-in">
+            <div className="card relative overflow-hidden p-6 animate-scale-in">
+              <div className="absolute inset-x-0 top-0 h-1 bg-gradient-to-r from-primary-500 via-purple-500 to-info-500" />
               <DictionaryResult result={dictResult} />
-              {/* Link to conjugator if it's a verb */}
               {dictResult.part_of_speech === "verb" && (
                 <div className="mt-5 pt-4 border-t border-surface-100 dark:border-surface-700">
                   <button
                     onClick={() => quickConjugate(dictResult.word)}
-                    className="text-sm font-medium text-primary-600 dark:text-primary-400 hover:underline"
+                    className="inline-flex items-center gap-1 text-sm font-semibold text-primary-600 dark:text-primary-400 hover:gap-2 transition-all"
                   >
-                    Conjugate &ldquo;{dictResult.word}&rdquo; →
+                    Conjugate &ldquo;{dictResult.word}&rdquo;
+                    <svg className="w-4 h-4" fill="none" stroke="currentColor" strokeWidth={2.5} viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" /></svg>
                   </button>
                 </div>
               )}
@@ -495,14 +508,14 @@ export default function Dictionary() {
           {/* Quick verbs */}
           {!conjResult && !conjLoading && (
             <div>
-              <p className="text-xs font-medium text-surface-400 dark:text-surface-500 mb-2">Common verbs:</p>
+              <p className="section-label mb-2">Common verbs</p>
               <div className="flex flex-wrap gap-2">
                 {QUICK_VERBS.map((v, i) => (
                   <button
                     key={v}
                     onClick={() => quickConjugate(v)}
                     style={staggerDelay(i, 50)}
-                    className="px-3 py-1.5 text-sm rounded-lg bg-white dark:bg-surface-800 border border-surface-200 dark:border-surface-700 text-surface-700 dark:text-surface-300 hover:border-primary-400 hover:text-primary-600 dark:hover:text-primary-400 hover:scale-105 transition-all animate-fade-in-up"
+                    className="px-3.5 py-1.5 text-sm font-medium rounded-lg bg-white dark:bg-surface-800 border border-surface-200 dark:border-surface-700 text-surface-700 dark:text-surface-300 hover:border-info-400 hover:bg-info-50 dark:hover:bg-info-900/20 hover:text-info-700 dark:hover:text-info-300 hover:scale-105 transition-all animate-fade-in-up active:scale-95"
                   >
                     {v}
                   </button>
@@ -512,23 +525,25 @@ export default function Dictionary() {
           )}
 
           {conjLoading && (
-            <div className="bg-white dark:bg-surface-800 rounded-xl border border-surface-100 dark:border-surface-700 p-8 flex flex-col items-center gap-3 text-surface-400 dark:text-surface-500">
-              <svg className="w-8 h-8 animate-spin" fill="none" viewBox="0 0 24 24">
+            <div className="card p-10 flex flex-col items-center gap-3 text-surface-500 dark:text-surface-400">
+              <svg className="w-8 h-8 animate-spin text-info-500" fill="none" viewBox="0 0 24 24">
                 <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
                 <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8z" />
               </svg>
-              <p className="text-sm">Conjugating verb…</p>
+              <p className="text-sm font-medium">Conjugating verb…</p>
             </div>
           )}
 
           {conjError && (
-            <div className="bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-xl p-4 text-sm text-red-700 dark:text-red-400">
-              {conjError}
+            <div className="bg-danger-50 dark:bg-danger-900/20 border border-danger-200 dark:border-danger-800 rounded-xl p-4 text-sm text-danger-700 dark:text-danger-400 flex items-start gap-2">
+              <svg className="w-4 h-4 mt-0.5 shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm-1-5a1 1 0 102 0v-1a1 1 0 10-2 0v1zm0-7a1 1 0 012 0v3a1 1 0 11-2 0V6z" clipRule="evenodd" /></svg>
+              <span>{conjError}</span>
             </div>
           )}
 
           {conjResult && !conjLoading && (
-            <div className="bg-white dark:bg-surface-800 rounded-xl border border-surface-100 dark:border-surface-700 p-6 animate-scale-in">
+            <div className="card relative overflow-hidden p-6 animate-scale-in">
+              <div className="absolute inset-x-0 top-0 h-1 bg-gradient-to-r from-info-500 via-primary-500 to-purple-500" />
               <ConjugationResult result={conjResult} />
             </div>
           )}

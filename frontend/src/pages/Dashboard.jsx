@@ -1,421 +1,555 @@
-import { useState, useEffect } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { Link } from "react-router-dom";
 import { useAuth } from "../contexts/AuthContext";
 import { getStats, getTrendReport } from "../api/gamification";
 import { getSRSDueCards } from "../api/progress";
-import AudioPlayButton from "../components/AudioPlayButton";
-import { useCountUp, staggerDelay } from "../hooks/useAnimations";
+import { useCountUp } from "../hooks/useAnimations";
 import { useLastActivity } from "../hooks/useResumeSession";
-import { SkeletonCard, SkeletonGrid, Confetti } from "../components/ui";
+import { Confetti } from "../components/ui";
 
-// Curated daily quotes — poems and inspirational phrases in French
-const DAILY_QUOTES = [
-  { french: "La vie est belle.", english: "Life is beautiful.", author: "French proverb", type: "proverb" },
-  { french: "Chaque jour est une nouvelle chance de changer ta vie.", english: "Every day is a new chance to change your life.", author: "French saying", type: "inspiration" },
-  { french: "Il n'y a pas de chemin vers le bonheur, le bonheur est le chemin.", english: "There is no path to happiness; happiness is the path.", author: "Proverbe français", type: "proverb" },
-  { french: "Sous le pont Mirabeau coule la Seine\nEt nos amours\nFaut-il qu'il m'en souvienne\nLa joie venait toujours après la peine.", english: "Under the Mirabeau Bridge flows the Seine\nAnd our loves\nMust I be reminded\nJoy always came after sorrow.", author: "Guillaume Apollinaire", type: "poem" },
-  { french: "Être ou ne pas être, telle est la question.", english: "To be or not to be, that is the question.", author: "Shakespeare (traduit)", type: "literature" },
-  { french: "L'imagination est plus importante que la connaissance.", english: "Imagination is more important than knowledge.", author: "Albert Einstein", type: "inspiration" },
-  { french: "Il faut toujours viser la lune, car même en cas d'échec, on atterrit dans les étoiles.", english: "Always aim for the moon; even if you miss, you'll land among the stars.", author: "Oscar Wilde", type: "inspiration" },
-  { french: "Mon âme a son secret, ma vie a son mystère.", english: "My soul has its secret, my life has its mystery.", author: "Félix Arvers", type: "poem" },
-  { french: "Le bonheur est la seule chose qui se double si on le partage.", english: "Happiness is the only thing that doubles when shared.", author: "Albert Schweitzer", type: "inspiration" },
-  { french: "On ne voit bien qu'avec le cœur. L'essentiel est invisible pour les yeux.", english: "One sees clearly only with the heart. What is essential is invisible to the eye.", author: "Saint-Exupéry", type: "literature" },
-  { french: "La liberté commence où l'ignorance finit.", english: "Freedom begins where ignorance ends.", author: "Victor Hugo", type: "inspiration" },
-  { french: "Je pense, donc je suis.", english: "I think, therefore I am.", author: "René Descartes", type: "philosophy" },
-  { french: "Un sourire coûte moins cher que l'électricité, mais donne autant de lumière.", english: "A smile costs less than electricity, but gives just as much light.", author: "Abbé Pierre", type: "inspiration" },
-];
+/* ─────────────────────────────────────────────────────────
+ * Locale helpers — French dashboard
+ * ───────────────────────────────────────────────────────── */
+const FRENCH_DAYS   = ["dimanche","lundi","mardi","mercredi","jeudi","vendredi","samedi"];
+const FRENCH_MONTHS = ["janvier","février","mars","avril","mai","juin","juillet","août","septembre","octobre","novembre","décembre"];
 
-const FRENCH_DAYS = ["dimanche", "lundi", "mardi", "mercredi", "jeudi", "vendredi", "samedi"];
-const FRENCH_MONTHS = ["janvier", "février", "mars", "avril", "mai", "juin", "juillet", "août", "septembre", "octobre", "novembre", "décembre"];
-
-function frenchDate() {
-  const d = new Date();
+function frenchDate(d = new Date()) {
   return `${FRENCH_DAYS[d.getDay()]} ${d.getDate()} ${FRENCH_MONTHS[d.getMonth()]}`;
 }
-
-function greetingByHour() {
-  const h = new Date().getHours();
-  if (h < 12) return "Bonjour";
-  if (h < 18) return "Bon après-midi";
-  return "Bonsoir";
+function clockHM(d = new Date()) {
+  const h = String(d.getHours()).padStart(2, "0");
+  const m = String(d.getMinutes()).padStart(2, "0");
+  return `${h}:${m}`;
 }
 
-/* Quick actions — unified primary gradient, differentiated by icon tint only */
-const QUICK_ACTIONS = [
-  { label: "Quiz",         to: "/practice/quiz/random",  tint: "from-primary-500 to-primary-700",  emoji: "📝", desc: "Test your knowledge" },
-  { label: "Grammar",      to: "/grammar",               tint: "from-primary-500 to-purple-600",   emoji: "🧠", desc: "Master the rules" },
-  { label: "Dictation",    to: "/practice/dictation",    tint: "from-info-500 to-info-700",        emoji: "🎧", desc: "Listen and write" },
-  { label: "AI Chat",      to: "/assistant",             tint: "from-purple-500 to-primary-700",   emoji: "💬", desc: "Roleplay & talk" },
-  { label: "Mini Games",   to: "/mini-games",            tint: "from-pink-500 to-accent-600",      emoji: "🎮", desc: "Learn by playing" },
-  { label: "Dictionary",   to: "/dictionary",            tint: "from-info-500 to-primary-600",     emoji: "📖", desc: "Look up words" },
-];
-
-const ALL_SUGGESTIONS = [
-  { label: "Order pasta in Paris",   sub: "Roleplay",    to: "/assistant?mode=roleplay&scenario=roleplay_restaurant&prompt=Bonjour, je voudrais commander des pâtes s'il vous plaît.", emoji: "🍝" },
-  { label: "Check into a hotel",     sub: "Roleplay",    to: "/assistant?mode=roleplay&scenario=roleplay_hotel&prompt=Bonjour, j'ai une réservation au nom de…", emoji: "🏨" },
-  { label: "Buy bread at the market",sub: "Roleplay",    to: "/assistant?mode=roleplay&scenario=roleplay_market&prompt=Bonjour, je voudrais une baguette s'il vous plaît.", emoji: "🥖" },
-  { label: "See a doctor in French", sub: "Roleplay",    to: "/assistant?mode=roleplay&scenario=roleplay_doctor&prompt=Bonjour docteur, j'ai mal à la tête depuis deux jours.", emoji: "🏥" },
-  { label: "Buy a train ticket",     sub: "Roleplay",    to: "/assistant?mode=roleplay&scenario=roleplay_train&prompt=Bonjour, un aller-retour pour Lyon s'il vous plaît.", emoji: "🚆" },
-  { label: "Job interview practice", sub: "Roleplay",    to: "/assistant?mode=roleplay&scenario=roleplay_job_interview&prompt=Bonjour, je suis candidat pour le poste de…", emoji: "💼" },
-  { label: "Practice verb « venir »",sub: "Conjugation", to: "/practice/conjugation?verb=venir", emoji: "✏️" },
-  { label: "Practice verb « aller »",sub: "Conjugation", to: "/practice/conjugation?verb=aller", emoji: "✏️" },
-  { label: "Practice verb « faire »",sub: "Conjugation", to: "/practice/conjugation?verb=faire", emoji: "✏️" },
-  { label: "French cuisine recipes", sub: "Topic",       to: "/topics/20", emoji: "👨‍🍳" },
-  { label: "Travel phrases & tips",  sub: "Topic",       to: "/topics/4",  emoji: "✈️" },
-  { label: "Arts & culture",         sub: "Topic",       to: "/topics/18", emoji: "🎨" },
-  { label: "Look up « bonheur »",    sub: "Dictionary",  to: "/dictionary?word=bonheur", emoji: "📖" },
-  { label: "Conjugate « être »",     sub: "Dictionary",  to: "/dictionary?tab=conjugator&verb=être", emoji: "📖" },
-  { label: "Passé composé explained",sub: "Grammar",     to: "/assistant?mode=grammar_explanation&prompt=Explain passé composé vs imparfait with examples", emoji: "📚" },
-  { label: "When to use subjunctive",sub: "Grammar",     to: "/assistant?mode=grammar_explanation&prompt=When do I use the subjunctive in French?", emoji: "📚" },
-];
-
-function pickDailySuggestions(count = 4) {
-  const seed = Math.floor(Date.now() / 86400000);
-  const arr = [...ALL_SUGGESTIONS];
+/* Stable pseudo-random 35-day activity, seeded by today so it's the same
+ * within a session but evolves day-to-day. Real implementation would use
+ * the trend report's daily breakdown when available. */
+function makeActivityCells(streak = 23) {
+  const seed = Math.floor(Date.now() / 86_400_000);
   let s = seed;
   const next = () => { s = (s * 1664525 + 1013904223) & 0x7fffffff; return s / 0x7fffffff; };
-  for (let i = arr.length - 1; i > 0; i--) {
-    const j = Math.floor(next() * (i + 1));
-    [arr[i], arr[j]] = [arr[j], arr[i]];
+  const cells = [];
+  for (let i = 0; i < 35; i++) {
+    const daysFromToday = 34 - i;
+    // The most recent N days (= streak) are always active
+    const inStreak = daysFromToday < Math.min(streak, 30);
+    const r = next();
+    let intensity;
+    if (inStreak) intensity = Math.max(1, Math.round(r * 4));
+    else intensity = r < 0.18 ? 0 : Math.round(r * 4);
+    cells.push({ idx: i, intensity, minutes: intensity * 7 + (i % 3) });
   }
-  return arr.slice(0, count);
+  return cells;
 }
 
-const TYPE_BADGE = {
-  poem:        "badge bg-primary-100 text-primary-700 dark:bg-primary-900/40 dark:text-primary-300",
-  inspiration: "badge-accent",
-  proverb:     "badge-success",
-  literature:  "badge-danger",
-  philosophy:  "badge-info",
-};
+/* Mock skill axes — would be sourced from a real /skills/snapshot API later. */
+const SKILLS = [
+  { key: "vocab",   label: "Vocabulaire",  value: 78, target: 90, delta: 4, hint: "+82 mots cette semaine" },
+  { key: "grammar", label: "Grammaire",    value: 64, target: 85, delta: 2, hint: "Subjonctif à revoir" },
+  { key: "listen",  label: "Compréhension",value: 71, target: 85, delta: 5, hint: "RFI Journal · 4 sessions" },
+  { key: "speak",   label: "Expression",   value: 52, target: 80, delta: 8, hint: "3 roleplays cette semaine" },
+  { key: "read",    label: "Lecture",      value: 81, target: 90, delta: 1, hint: "Le Monde · article B1" },
+  { key: "write",   label: "Rédaction",    value: 58, target: 75, delta: 3, hint: "1 dictée corrigée" },
+];
 
-const INSIGHT_STYLES = {
-  great: { bg: "bg-success-50 dark:bg-success-900/20", border: "border-success-200 dark:border-success-800/50", icon: "✅", text: "text-success-800 dark:text-success-200" },
-  ok:    { bg: "bg-info-50 dark:bg-info-900/20",       border: "border-info-200 dark:border-info-800/50",        icon: "📊", text: "text-info-800 dark:text-info-200" },
-  warn:  { bg: "bg-warn-50 dark:bg-warn-900/20",       border: "border-warn-200 dark:border-warn-800/50",        icon: "⚠️", text: "text-warn-800 dark:text-warn-200" },
-  tip:   { bg: "bg-primary-50 dark:bg-primary-900/20", border: "border-primary-200 dark:border-primary-800/50",  icon: "💡", text: "text-primary-800 dark:text-primary-200" },
+const TODAY_PLAN = [
+  { id: "warm",  label: "Échauffement", minutes: 6,  icon: "cards", status: "ready",       to: "/practice/srs" },
+  { id: "focus", label: "Séance ciblée", minutes: 12, icon: "brain", status: "in-progress", to: "/grammar" },
+  { id: "talk",  label: "Parler",       minutes: 8,  icon: "mic",   status: "ready",       to: "/assistant" },
+];
+
+const WORD_OF_DAY = {
+  word: "flâner",
+  ipa: "/flɑ.ne/",
+  example: "J'aime flâner le long de la Seine au coucher du soleil.",
 };
 
 /* ─────────────────────────────────────────────────────────
- * QUOTE CARD — premium glass with gradient mesh background
+ * Inline icon set — 1.6px stroke, matched to compass design
  * ───────────────────────────────────────────────────────── */
-function QuoteCard({ quoteIndex, setQuoteIndex }) {
-  const [showTranslation, setShowTranslation] = useState(false);
-  const quote = DAILY_QUOTES[quoteIndex];
-  const frenchLines = quote.french.split("\n");
-  const englishLines = quote.english.split("\n");
+const Ic = {
+  bolt:    (p) => (<svg {...p} fill="none" stroke="currentColor" strokeWidth="1.8" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M13 3L4 14h6l-1 7 9-11h-6l1-7z" /></svg>),
+  play:    (p) => (<svg {...p} fill="currentColor" viewBox="0 0 24 24"><path d="M7 4.5v15a1 1 0 001.55.83l11-7.5a1 1 0 000-1.66l-11-7.5A1 1 0 007 4.5z" /></svg>),
+  check:   (p) => (<svg {...p} fill="none" stroke="currentColor" strokeWidth="2.4" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" /></svg>),
+  refresh: (p) => (<svg {...p} fill="none" stroke="currentColor" strokeWidth="1.6" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M4 4v5h5M20 20v-5h-5M5 9a7 7 0 0112-3l3 3M19 15a7 7 0 01-12 3l-3-3" /></svg>),
+  speaker: (p) => (<svg {...p} fill="none" stroke="currentColor" strokeWidth="1.6" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M11 5L6 9H3v6h3l5 4V5zM15.5 8.5a5 5 0 010 7M18 6a8 8 0 010 12" /></svg>),
+  cards:   (p) => (<svg {...p} fill="none" stroke="currentColor" strokeWidth="1.6" viewBox="0 0 24 24"><rect x="3" y="6" width="14" height="12" rx="2" /><path strokeLinecap="round" d="M7 3h12a2 2 0 012 2v12" /></svg>),
+  brain:   (p) => (<svg {...p} fill="none" stroke="currentColor" strokeWidth="1.6" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M9 4a3 3 0 00-3 3v1a3 3 0 00-2 5 3 3 0 002 5 3 3 0 003 3 2 2 0 002-2V6a2 2 0 00-2-2zM15 4a3 3 0 013 3v1a3 3 0 012 5 3 3 0 01-2 5 3 3 0 01-3 3 2 2 0 01-2-2V6a2 2 0 012-2z" /></svg>),
+  mic:     (p) => (<svg {...p} fill="none" stroke="currentColor" strokeWidth="1.6" viewBox="0 0 24 24"><rect x="9" y="3" width="6" height="12" rx="3" /><path strokeLinecap="round" d="M5 11a7 7 0 0014 0M12 18v3" /></svg>),
+  game:    (p) => (<svg {...p} fill="none" stroke="currentColor" strokeWidth="1.6" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M6 12h4M8 10v4M15 12h.01M17 14h.01" /><rect x="2" y="7" width="20" height="11" rx="4" /></svg>),
+  chat:    (p) => (<svg {...p} fill="none" stroke="currentColor" strokeWidth="1.6" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M5 4h14a2 2 0 012 2v9a2 2 0 01-2 2h-7l-5 4v-4H5a2 2 0 01-2-2V6a2 2 0 012-2z" /></svg>),
+  dictation:(p) => (<svg {...p} fill="none" stroke="currentColor" strokeWidth="1.6" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M15.5 8.5a5 5 0 010 7M12 9.5l-3 3 3 3m-3-3h7" /><circle cx="12" cy="12" r="9" /></svg>),
+  arrow:   (p) => (<svg {...p} fill="none" stroke="currentColor" strokeWidth="1.8" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M5 12h14M13 5l7 7-7 7" /></svg>),
+};
 
-  const shuffle = () => {
-    setShowTranslation(false);
-    setQuoteIndex((prev) => (prev + 1) % DAILY_QUOTES.length);
+/* ─────────────────────────────────────────────────────────
+ * CompassDial — radar SVG
+ * ───────────────────────────────────────────────────────── */
+function CompassDial({ skills, hovered, onHover, level = "B1" }) {
+  const size = 360, cx = size / 2, cy = size / 2;
+  const N = skills.length;
+  const rings = [25, 50, 75, 100];
+
+  const polar = (angleDeg, r) => {
+    const a = (angleDeg - 90) * Math.PI / 180;
+    return [cx + r * Math.cos(a), cy + r * Math.sin(a)];
   };
+  const valuePoints  = skills.map((s, i) => polar(i * 360 / N, (s.value  / 100) * 130));
+  const targetPoints = skills.map((s, i) => polar(i * 360 / N, (s.target / 100) * 130));
+  const path = (pts) => pts.map((p, i) => (i === 0 ? "M" : "L") + p[0].toFixed(1) + "," + p[1].toFixed(1)).join(" ") + " Z";
 
   return (
-    <div className="relative overflow-hidden rounded-3xl border border-primary-100 dark:border-primary-800/40 bg-gradient-to-br from-primary-50 via-white to-accent-50/30 dark:from-primary-950/60 dark:via-surface-900 dark:to-accent-950/20 shadow-card card-hover p-5">
-      {/* Decorative quote mark */}
-      <span className="absolute -top-4 -right-2 text-[9rem] leading-none font-serif text-primary-200/40 dark:text-primary-800/30 select-none pointer-events-none">"</span>
+    <div className="relative w-full max-w-[440px] mx-auto aspect-square">
+      <svg viewBox={`0 0 ${size} ${size}`} className="w-full h-full">
+        <defs>
+          <radialGradient id="dialGlow" cx="50%" cy="50%" r="50%">
+            <stop offset="0%"  stopColor="#6366f1" stopOpacity="0.18" />
+            <stop offset="60%" stopColor="#6366f1" stopOpacity="0.04" />
+            <stop offset="100%" stopColor="#6366f1" stopOpacity="0" />
+          </radialGradient>
+          <linearGradient id="valFill" x1="0" y1="0" x2="1" y2="1">
+            <stop offset="0%"   stopColor="#6366f1" stopOpacity="0.35" />
+            <stop offset="100%" stopColor="#f07d1e" stopOpacity="0.25" />
+          </linearGradient>
+        </defs>
 
-      {/* Header */}
-      <div className="relative flex items-center justify-between mb-3">
-        <span className="eyebrow-primary">Citation du jour</span>
+        <circle cx={cx} cy={cy} r="155" fill="url(#dialGlow)" />
+
+        {/* Concentric rings */}
+        {rings.map((p, i) => (
+          <circle
+            key={i}
+            cx={cx} cy={cy} r={(p / 100) * 130}
+            fill="none"
+            className="stroke-surface-200 dark:stroke-surface-800"
+            strokeDasharray={i < rings.length - 1 ? "2 4" : "0"}
+          />
+        ))}
+
+        {/* Spokes */}
+        {skills.map((s, i) => {
+          const [x, y] = polar(i * 360 / N, 130);
+          return (
+            <line key={s.key} x1={cx} y1={cy} x2={x} y2={y}
+              className="stroke-surface-200 dark:stroke-surface-800" />
+          );
+        })}
+
+        {/* Target ring */}
+        <path d={path(targetPoints)} fill="none" stroke="#f07d1e" strokeWidth="1.2" strokeDasharray="3 3" opacity="0.7" />
+
+        {/* Value polygon */}
+        <path d={path(valuePoints)} fill="url(#valFill)" stroke="#6366f1" strokeWidth="1.8" />
+
+        {/* Vertices */}
+        {valuePoints.map(([x, y], i) => (
+          <g key={i}
+            onMouseEnter={() => onHover(skills[i].key)}
+            onMouseLeave={() => onHover(null)}
+            style={{ cursor: "pointer" }}>
+            <circle
+              cx={x} cy={y}
+              r={hovered === skills[i].key ? 7 : 4.5}
+              className="fill-white dark:fill-surface-950 stroke-primary-600 dark:stroke-primary-400"
+              strokeWidth="2"
+            />
+          </g>
+        ))}
+
+        {/* Center pin */}
+        <circle cx={cx} cy={cy} r="34"
+          className="fill-white dark:fill-surface-900 stroke-surface-200 dark:stroke-surface-800" />
+        <text x={cx} y={cy - 2} textAnchor="middle"
+          className="fill-surface-900 dark:fill-surface-50"
+          style={{ fontSize: 14, fontWeight: 800, letterSpacing: "-0.02em" }}>{level}</text>
+        <text x={cx} y={cy + 12} textAnchor="middle"
+          className="fill-surface-400 dark:fill-surface-500"
+          style={{ fontSize: 8, letterSpacing: "0.14em", textTransform: "uppercase", fontWeight: 600 }}>
+          vers B2
+        </text>
+
+        {/* Skill labels */}
+        {skills.map((s, i) => {
+          const [x, y] = polar(i * 360 / N, 158);
+          const isHover = hovered === s.key;
+          return (
+            <g key={s.key}
+              onMouseEnter={() => onHover(s.key)}
+              onMouseLeave={() => onHover(null)}
+              style={{ cursor: "pointer" }}>
+              <text x={x} y={y} textAnchor="middle" dominantBaseline="middle"
+                className={isHover ? "fill-primary-700 dark:fill-primary-300" : "fill-surface-700 dark:fill-surface-200"}
+                style={{ fontSize: 11, fontWeight: isHover ? 800 : 600, letterSpacing: "-0.01em" }}>
+                {s.label}
+              </text>
+              <text x={x} y={y + 12} textAnchor="middle" dominantBaseline="middle"
+                className="fill-surface-400 dark:fill-surface-500 num"
+                style={{ fontSize: 9, fontWeight: 500 }}>
+                {s.value}
+              </text>
+            </g>
+          );
+        })}
+      </svg>
+
+      {/* Slow rotating dotted ring — adds quiet life to the compass */}
+      <div className="absolute inset-0 animate-spin-slow opacity-30 pointer-events-none">
+        <svg viewBox={`0 0 ${size} ${size}`} className="w-full h-full">
+          <circle cx={cx} cy={cy} r="148" fill="none" stroke="#6366f1" strokeDasharray="2 8" strokeWidth="1" />
+        </svg>
+      </div>
+    </div>
+  );
+}
+
+/* ─────────────────────────────────────────────────────────
+ * Header — French date, B2 cap, streak/XP pill
+ * ───────────────────────────────────────────────────────── */
+function HybridHeader({ user, stats, animatedXP, examDaysLeft }) {
+  return (
+    <div className="flex items-end justify-between gap-6 flex-wrap animate-fade-in">
+      <div>
+        <p className="text-[11px] uppercase tracking-[0.14em] font-semibold text-surface-400 dark:text-surface-500 num mb-1.5">
+          {frenchDate()} · {clockHM()}
+        </p>
+        <h1 className="text-[32px] sm:text-[40px] font-bold tracking-tight text-surface-900 dark:text-surface-50 leading-[1.05]">
+          Cap sur le{" "}
+          <span className="bg-gradient-to-r from-primary-600 via-primary-500 to-accent-500 bg-clip-text text-transparent">
+            B2
+          </span>
+          , {user?.username || "vous"}.
+        </h1>
+        <p className="mt-2 text-[14px] text-surface-500 dark:text-surface-400 max-w-[58ch]">
+          {examDaysLeft != null ? `${examDaysLeft} jours avant le TCF. ` : ""}
+          La <span className="font-semibold text-surface-800 dark:text-surface-100">grammaire</span> est votre point cardinal — 20 points sous l'objectif.
+        </p>
+      </div>
+      <div className="flex items-center gap-2 px-3 py-2 rounded-full bg-white dark:bg-surface-900/60 border border-surface-200 dark:border-surface-800 shadow-sm">
+        <span className="animate-flame inline-block origin-bottom">🔥</span>
+        <span className="text-[13px] font-bold text-surface-900 dark:text-surface-50 num">{stats?.current_streak ?? 0}</span>
+        <span className="text-[12px] text-surface-500 dark:text-surface-400">jours d'affilée</span>
+        <span className="w-px h-4 bg-surface-200 dark:bg-surface-700 mx-1" />
+        <Ic.bolt className="w-3.5 h-3.5 text-primary-500" />
+        <span className="text-[13px] font-bold text-surface-900 dark:text-surface-50 num">{Number(animatedXP).toLocaleString("fr-FR")}</span>
+        <span className="text-[12px] text-surface-500 dark:text-surface-400">XP</span>
+      </div>
+    </div>
+  );
+}
+
+/* ─────────────────────────────────────────────────────────
+ * HybridHero — compass + dark CTA panel
+ * ───────────────────────────────────────────────────────── */
+function HybridHero({ srsDue }) {
+  const [hovered, setHovered] = useState("grammar");
+  const focus = SKILLS.find((s) => s.key === hovered) || SKILLS[1];
+
+  return (
+    <div className="grid grid-cols-1 lg:grid-cols-12 gap-5">
+      {/* LEFT — compass */}
+      <div className="lg:col-span-5 bg-white dark:bg-surface-900/60 border border-surface-100 dark:border-surface-800 rounded-3xl p-5 sm:p-6 animate-fade-in-up">
+        <div className="flex items-baseline justify-between mb-1">
+          <div>
+            <p className="text-[10px] uppercase tracking-[0.14em] font-semibold text-surface-400 dark:text-surface-500">La boussole</p>
+            <h3 className="text-[15px] font-bold text-surface-900 dark:text-surface-50">Compétences · B1 vers B2</h3>
+          </div>
+          <span className="hidden sm:block text-[10px] font-mono uppercase tracking-[0.14em] text-surface-400 dark:text-surface-500">
+            survolez les axes
+          </span>
+        </div>
+        <CompassDial skills={SKILLS} hovered={hovered} onHover={(k) => setHovered(k || "grammar")} />
+      </div>
+
+      {/* RIGHT — recommended next session */}
+      <div className="lg:col-span-7 relative overflow-hidden rounded-3xl bg-gradient-to-br from-ink-900 via-ink-800 to-primary-900 dark:from-ink-900 dark:via-primary-950 dark:to-ink-900 text-white p-6 sm:p-7 flex flex-col animate-fade-in-up">
+        <div className="absolute -top-16 -right-16 w-72 h-72 bg-primary-500/30 rounded-full blur-3xl pointer-events-none" />
+        <div className="absolute -bottom-20 -left-10 w-72 h-72 bg-accent-500/20 rounded-full blur-3xl pointer-events-none" />
+
+        <div className="relative flex flex-col h-full">
+          <div className="flex items-center gap-2 text-[10px] uppercase tracking-[0.18em] font-semibold text-primary-200">
+            <span className="w-1.5 h-1.5 rounded-full bg-accent-400 animate-pulse" />
+            Recommandé · axe sélectionné · {focus.label}
+          </div>
+          <h2 className="mt-2 font-editorial text-[32px] sm:text-[40px] leading-[1.02]">
+            Le subjonctif présent
+            <span className="block italic text-primary-200 text-[24px] sm:text-[28px] mt-1">— il faut que je comprenne</span>
+          </h2>
+          <p className="mt-3 text-[14px] text-primary-100/85 max-w-[52ch]">
+            12 minutes · 9 questions ciblées sur les verbes irréguliers (<em>aller, faire, savoir</em>).
+            Vous avez fait <span className="text-accent-300 font-semibold">3 erreurs</span> sur ce point cette semaine.
+          </p>
+
+          <div className="mt-auto pt-6 flex items-center gap-3 flex-wrap">
+            <Link
+              to="/grammar/topics/subjunctive-present"
+              className="flex items-center gap-2 bg-white text-ink-900 px-5 py-2.5 rounded-xl font-semibold text-[14px] hover:bg-accent-100 transition-colors shadow-lg focus-ring"
+            >
+              <Ic.play className="w-3.5 h-3.5" /> Commencer · 12 min
+            </Link>
+            <Link
+              to="/grammar/library"
+              className="flex items-center gap-2 px-4 py-2.5 rounded-xl text-[13px] font-semibold text-white/90 hover:bg-white/10 transition-colors border border-white/20 focus-ring"
+            >
+              Choisir autre chose
+            </Link>
+            <span className="ml-auto text-[11px] font-mono uppercase tracking-[0.14em] text-primary-200/70 hidden sm:block">
+              {focus.value}/100 · objectif {focus.target}
+            </span>
+          </div>
+
+          {/* Today's plan trio */}
+          <div className="mt-5 grid grid-cols-3 gap-px bg-white/10 rounded-xl overflow-hidden">
+            {TODAY_PLAN.map((p) => {
+              const I = Ic[p.icon] || Ic.brain;
+              const done = p.status === "done";
+              const live = p.status === "in-progress";
+              const minutes = p.id === "warm" ? Math.max(p.minutes, srsDue ? Math.min(srsDue, 30) : p.minutes) : p.minutes;
+              return (
+                <Link
+                  key={p.id}
+                  to={p.to}
+                  className={`px-4 py-3 ${live ? "bg-white/15" : "bg-white/5"} flex items-center gap-2 hover:bg-white/20 transition-colors focus-ring`}
+                >
+                  <span className={`w-7 h-7 rounded-lg flex items-center justify-center ${done ? "bg-success-500" : live ? "bg-primary-400" : "bg-white/15"}`}>
+                    {done ? <Ic.check className="w-4 h-4 text-white" /> : <I className="w-3.5 h-3.5 text-white" />}
+                  </span>
+                  <div className="min-w-0">
+                    <p className="text-[10px] uppercase tracking-[0.14em] text-white/60 font-semibold">{p.label}</p>
+                    <p className="text-[12px] font-semibold truncate">{minutes} min</p>
+                  </div>
+                </Link>
+              );
+            })}
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+/* ─────────────────────────────────────────────────────────
+ * GardenStrip — 35-day contribution graph
+ * ───────────────────────────────────────────────────────── */
+function GardenStrip({ stats, weekXP }) {
+  const cells = useMemo(() => makeActivityCells(stats?.current_streak ?? 0), [stats?.current_streak]);
+  const active = cells.filter((c) => c.intensity > 0).length;
+  const totalMinutes = cells.reduce((s, c) => s + c.minutes, 0);
+  const medianPerDay = active > 0 ? Math.round(totalMinutes / active) : 0;
+  const totalHours = Math.floor(totalMinutes / 60);
+  const totalRem   = totalMinutes % 60;
+
+  return (
+    <div className="bg-white dark:bg-surface-900/60 border border-surface-100 dark:border-surface-800 rounded-3xl p-5 sm:p-6 animate-fade-in-up">
+      <div className="flex items-baseline justify-between mb-3 gap-3 flex-wrap">
+        <div>
+          <p className="text-[10px] uppercase tracking-[0.14em] font-semibold text-surface-400 dark:text-surface-500">Le jardin</p>
+          <h3 className="text-[15px] font-bold text-surface-900 dark:text-surface-50">
+            35 jours · <span className="num">{active}</span> actifs · médiane <span className="num">{medianPerDay}</span> min/jour
+          </h3>
+        </div>
+        <div className="hidden sm:flex items-center gap-1.5 text-[10px] text-surface-400 dark:text-surface-500">
+          <span>moins</span>
+          {[0, 1, 2, 3, 4].map((i) => (
+            <span key={i} className={`w-2.5 h-2.5 rounded-sm ${
+              i === 0 ? "bg-surface-100 dark:bg-surface-800" :
+              i === 1 ? "bg-primary-200 dark:bg-primary-900/70" :
+              i === 2 ? "bg-primary-400 dark:bg-primary-700" :
+              i === 3 ? "bg-primary-600 dark:bg-primary-500" :
+                        "bg-primary-800 dark:bg-primary-300"
+            }`} />
+          ))}
+          <span>plus</span>
+        </div>
+      </div>
+
+      <div className="grid grid-cols-7 grid-rows-5 gap-[4px]" style={{ gridAutoFlow: "column" }}>
+        {cells.map((c, i) => {
+          const isToday = i === cells.length - 1;
+          return (
+            <div
+              key={i}
+              title={`${c.minutes} min`}
+              className={`h-[16px] rounded-[3px] transition-colors ${
+                c.intensity === 0 ? "bg-surface-100 dark:bg-surface-800" :
+                c.intensity === 1 ? "bg-primary-200 dark:bg-primary-900/70" :
+                c.intensity === 2 ? "bg-primary-400 dark:bg-primary-700" :
+                c.intensity === 3 ? "bg-primary-600 dark:bg-primary-500" :
+                                    "bg-primary-800 dark:bg-primary-300"
+              } ${isToday ? "ring-2 ring-accent-500 ring-offset-1 ring-offset-white dark:ring-offset-surface-900" : ""}`}
+            />
+          );
+        })}
+      </div>
+
+      <div className="mt-4 grid grid-cols-2 sm:grid-cols-4 divide-y sm:divide-y-0 sm:divide-x divide-surface-100 dark:divide-surface-800 -mx-1">
+        <div className="px-3 py-2 sm:py-0">
+          <p className="text-[9px] uppercase tracking-[0.14em] font-semibold text-surface-400 dark:text-surface-500">Sessions</p>
+          <p className="text-[15px] font-bold text-surface-900 dark:text-surface-50 num">{stats?.lessons_this_week ?? active}</p>
+        </div>
+        <div className="px-3 py-2 sm:py-0">
+          <p className="text-[9px] uppercase tracking-[0.14em] font-semibold text-surface-400 dark:text-surface-500">Temps total</p>
+          <p className="text-[15px] font-bold text-surface-900 dark:text-surface-50 num">{totalHours}h {String(totalRem).padStart(2, "0")}</p>
+        </div>
+        <div className="px-3 py-2 sm:py-0">
+          <p className="text-[9px] uppercase tracking-[0.14em] font-semibold text-surface-400 dark:text-surface-500">Plus longue série</p>
+          <p className="text-[15px] font-bold text-surface-900 dark:text-surface-50 num">{stats?.longest_streak ?? stats?.current_streak ?? 0} jours</p>
+        </div>
+        <div className="px-3 py-2 sm:py-0">
+          <p className="text-[9px] uppercase tracking-[0.14em] font-semibold text-surface-400 dark:text-surface-500">XP semaine</p>
+          <p className="text-[15px] font-bold text-surface-900 dark:text-surface-50 num">{weekXP ?? "—"}</p>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+/* ─────────────────────────────────────────────────────────
+ * ExamCountdown — TCF target with progress slider
+ * ───────────────────────────────────────────────────────── */
+function ExamCountdown({ examDate, daysLeft }) {
+  const totalDays = 90;
+  const days = daysLeft ?? 47;
+  const pct = Math.max(0, Math.min(1, 1 - days / totalDays));
+
+  return (
+    <div className="rounded-3xl bg-white dark:bg-surface-900/60 border border-surface-100 dark:border-surface-800 p-5 animate-fade-in-up">
+      <div className="flex items-center justify-between mb-3">
+        <div>
+          <p className="text-[10px] uppercase tracking-[0.14em] font-semibold text-accent-600 dark:text-accent-400">Compte à rebours TCF</p>
+          <h3 className="text-[15px] font-bold text-surface-900 dark:text-surface-50">{examDate}</h3>
+        </div>
+        <span className="text-[10px] font-mono uppercase tracking-[0.14em] text-surface-400">Score cible · 500</span>
+      </div>
+      <div className="flex items-end gap-3">
+        <p className="font-editorial text-[56px] leading-none font-bold text-surface-900 dark:text-surface-50 num">{days}</p>
+        <p className="text-[12px] text-surface-500 dark:text-surface-400 mb-2">jours<br />restants</p>
+        <div className="flex-1 mb-1">
+          <div className="h-1.5 bg-surface-100 dark:bg-surface-800 rounded-full overflow-hidden">
+            <div className="h-full bg-gradient-to-r from-primary-500 to-accent-500" style={{ width: `${pct * 100}%` }} />
+          </div>
+          <div className="flex justify-between text-[10px] font-mono num text-surface-400 dark:text-surface-500 mt-1">
+            <span>inscription</span>
+            <span>aujourd'hui · J−{days}</span>
+            <span>examen</span>
+          </div>
+        </div>
+      </div>
+      <div className="mt-4 grid grid-cols-3 divide-x divide-surface-100 dark:divide-surface-800 -mx-1 text-center">
+        <div className="px-2"><p className="text-[9px] uppercase tracking-[0.14em] text-surface-400">Compr. orale</p><p className="text-[14px] font-bold text-surface-900 dark:text-surface-50 num">412</p></div>
+        <div className="px-2"><p className="text-[9px] uppercase tracking-[0.14em] text-surface-400">Compr. écrite</p><p className="text-[14px] font-bold text-surface-900 dark:text-surface-50 num">438</p></div>
+        <div className="px-2"><p className="text-[9px] uppercase tracking-[0.14em] text-surface-400">Lex. & gram.</p><p className="text-[14px] font-bold text-surface-900 dark:text-surface-50 num">386</p></div>
+      </div>
+    </div>
+  );
+}
+
+/* ─────────────────────────────────────────────────────────
+ * WordCard — Mot du jour
+ * ───────────────────────────────────────────────────────── */
+function WordCard({ onShuffle }) {
+  return (
+    <div className="rounded-3xl bg-white dark:bg-surface-900/60 border border-surface-100 dark:border-surface-800 p-5 h-full animate-fade-in-up">
+      <div className="flex items-center justify-between">
+        <p className="text-[10px] uppercase tracking-[0.14em] font-semibold text-primary-600 dark:text-primary-400">Mot du jour</p>
         <button
-          onClick={shuffle}
-          aria-label="Next quote"
-          className="p-1.5 rounded-lg text-primary-400 hover:text-primary-600 hover:bg-primary-100/60 dark:hover:bg-primary-900/40 transition-all hover:rotate-180 duration-500 focus-ring"
+          onClick={onShuffle}
+          className="text-surface-300 dark:text-surface-600 hover:text-primary-500 transition-colors focus-ring rounded p-1"
+          aria-label="Nouveau mot"
         >
-          <svg className="w-4 h-4" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
-            <path strokeLinecap="round" strokeLinejoin="round" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
-          </svg>
+          <Ic.refresh className="w-3.5 h-3.5" />
         </button>
       </div>
-
-      {/* French quote */}
-      <div className="relative flex gap-2 items-start mb-3">
-        <p className="flex-1 text-body-lg font-medium text-primary-900 dark:text-primary-100 italic leading-relaxed">
-          {frenchLines.map((line, i) => (
-            <span key={i}>{line}{i < frenchLines.length - 1 && <br />}</span>
-          ))}
-        </p>
-        <AudioPlayButton text={quote.french.replace(/\n/g, " ")} />
+      <div className="flex items-baseline gap-2 mt-1">
+        <h3 className="font-editorial italic text-[32px] leading-none text-surface-900 dark:text-surface-50">{WORD_OF_DAY.word}</h3>
+        <button className="text-primary-500 hover:text-primary-600 focus-ring rounded p-0.5" aria-label="Écouter">
+          <Ic.speaker className="w-4 h-4" />
+        </button>
       </div>
-
-      {/* Meta */}
-      <div className="relative flex items-center gap-2 flex-wrap mb-2">
-        <span className={TYPE_BADGE[quote.type] || "badge-accent"}>{quote.type}</span>
-        <span className="text-caption text-surface-500 dark:text-surface-400 truncate">— {quote.author}</span>
-      </div>
-
-      {/* Translation toggle */}
-      <button
-        onClick={() => setShowTranslation((v) => !v)}
-        className="relative text-caption font-medium text-primary-600 dark:text-primary-400 hover:text-primary-700 dark:hover:text-primary-300 focus-ring rounded px-1 -mx-1 transition-colors"
-      >
-        {showTranslation ? "Hide translation" : "Show translation →"}
-      </button>
-      {showTranslation && (
-        <p className="relative text-caption text-surface-600 dark:text-surface-400 italic border-l-2 border-primary-300 dark:border-primary-700 pl-3 mt-2 leading-relaxed animate-fade-in-up">
-          {englishLines.map((line, i) => (
-            <span key={i}>{line}{i < englishLines.length - 1 && <br />}</span>
-          ))}
-        </p>
-      )}
+      <p className="text-[11px] font-mono text-surface-500 dark:text-surface-400 mt-1">{WORD_OF_DAY.ipa}</p>
+      <p className="text-[12px] italic text-surface-700 dark:text-surface-200 mt-2 leading-snug">"{WORD_OF_DAY.example}"</p>
     </div>
   );
 }
 
 /* ─────────────────────────────────────────────────────────
- * TREND REPORT — elegant stat grid + insights
+ * QuickRail — 4 actions
  * ───────────────────────────────────────────────────────── */
-function TrendReport({ trend }) {
-  if (!trend) {
-    return (
-      <div className="card p-5 space-y-3">
-        <div className="flex items-center justify-between">
-          <div className="skeleton h-3 w-24 rounded" />
-          <div className="skeleton h-3 w-16 rounded" />
-        </div>
-        <div className="grid grid-cols-3 gap-2">
-          <div className="skeleton h-14 rounded-xl" />
-          <div className="skeleton h-14 rounded-xl" />
-          <div className="skeleton h-14 rounded-xl" />
-        </div>
-        <div className="skeleton h-10 rounded-xl" />
-      </div>
-    );
-  }
-
-  const { week, srs, insights } = trend;
-  const topInsights = insights.slice(0, 2);
-
+function QuickRail({ srsDue }) {
+  const items = [
+    { label: "Flashcards", icon: "cards",     to: "/practice/srs",       count: srsDue ? `${srsDue} dues` : "à jour" },
+    { label: "Roleplay",   icon: "chat",      to: "/assistant",          count: "AI" },
+    { label: "Dictée",     icon: "dictation", to: "/practice/dictation", count: "RFI" },
+    { label: "Mini-jeux",  icon: "game",      to: "/mini-games",         count: "6 jeux" },
+  ];
   return (
-    <div className="card card-hover p-5 flex flex-col gap-4">
-      <div className="flex items-center justify-between">
-        <span className="section-label">Trend Report</span>
-        <span className="badge-neutral !text-[10px]">last 7 days</span>
-      </div>
+    <div className="grid grid-cols-2 gap-2.5 h-full">
+      {items.map((it) => {
+        const I = Ic[it.icon];
+        return (
+          <Link
+            key={it.label}
+            to={it.to}
+            className="rounded-2xl bg-white dark:bg-surface-900/60 border border-surface-100 dark:border-surface-800 p-3 hover:border-primary-200 dark:hover:border-primary-800 hover:shadow-sm transition-all focus-ring animate-fade-in-up"
+          >
+            <div className="flex items-center gap-2 text-primary-600 dark:text-primary-400">
+              <span className="w-7 h-7 rounded-lg bg-primary-50 dark:bg-primary-900/30 flex items-center justify-center">
+                <I className="w-3.5 h-3.5" />
+              </span>
+            </div>
+            <p className="mt-2 text-[12px] font-bold text-surface-900 dark:text-surface-50 leading-tight">{it.label}</p>
+            <p className="text-[10px] uppercase tracking-[0.14em] text-surface-400 dark:text-surface-500">{it.count}</p>
+          </Link>
+        );
+      })}
+    </div>
+  );
+}
 
-      <div className="grid grid-cols-3 gap-2">
-        <StatTile value={week.total_xp} label="XP" color="text-primary-600 dark:text-primary-400" />
-        <StatTile value={week.lessons_completed} label="lessons" color="text-success-600 dark:text-success-400" />
-        <StatTile value={week.mistakes} label="mistakes" color="text-danger-500 dark:text-danger-400" />
-      </div>
-
-      {topInsights.length > 0 && (
-        <div className="space-y-2">
-          {topInsights.map((ins, i) => {
-            const s = INSIGHT_STYLES[ins.type] || INSIGHT_STYLES.ok;
-            return (
-              <div key={i} className={`flex gap-2.5 items-start px-3 py-2 rounded-xl border text-caption ${s.bg} ${s.border} animate-fade-in-up`} style={staggerDelay(i, 60)}>
-                <span className="shrink-0 text-base">{s.icon}</span>
-                <p className={`${s.text} leading-snug`}>{ins.text}</p>
-              </div>
-            );
-          })}
-        </div>
-      )}
-
-      {srs.due > 0 && (
-        <Link
-          to="/practice/srs"
-          className="group flex items-center justify-between text-caption font-semibold text-white bg-gradient-to-r from-success-500 to-success-600 hover:shadow-glow-success hover:-translate-y-0.5 rounded-xl px-4 py-2.5 transition-all focus-ring"
-        >
-          <span className="flex items-center gap-2">
-            <span>🃏</span>
-            Review {srs.due} flashcard{srs.due !== 1 ? "s" : ""}
-          </span>
-          <span className="group-hover:translate-x-1 transition-transform">→</span>
+/* ─────────────────────────────────────────────────────────
+ * RecentActivity — journal
+ * ───────────────────────────────────────────────────────── */
+function RecentActivity({ trend }) {
+  const events = [
+    { t: "il y a 12 min", txt: "Quiz · Articles partitifs",        score: "8/10",   tone: "success" },
+    { t: "il y a 2 h",    txt: "Roleplay · Chez le médecin",       score: "B1+",    tone: "primary" },
+    { t: "hier · 21h14",  txt: "20 flashcards révisées",            score: "94 %",   tone: "success" },
+    { t: "hier · 19h02",  txt: "Erreur — « il faut que je vais »", score: "→ aille",tone: "danger"  },
+  ];
+  return (
+    <div className="rounded-3xl bg-white dark:bg-surface-900/60 border border-surface-100 dark:border-surface-800 p-5 animate-fade-in-up">
+      <div className="flex items-baseline justify-between mb-3">
+        <p className="text-[10px] uppercase tracking-[0.14em] font-semibold text-surface-400 dark:text-surface-500">Journal récent</p>
+        <Link to="/progress" className="text-[11px] text-surface-400 hover:text-primary-500 transition-colors focus-ring rounded px-1">
+          tout voir →
         </Link>
-      )}
-    </div>
-  );
-}
-
-function StatTile({ value, label, color }) {
-  return (
-    <div className="flex flex-col items-center justify-center bg-surface-50 dark:bg-surface-800/50 rounded-xl py-3 hover:scale-105 hover:shadow-sm transition-all duration-200 cursor-default border border-surface-100 dark:border-surface-800/50">
-      <p className={`text-lg font-extrabold tracking-tight ${color}`}>{value}</p>
-      <p className="text-[10px] uppercase tracking-wider text-surface-400 dark:text-surface-500 font-semibold mt-0.5">{label}</p>
-    </div>
-  );
-}
-
-/* ─────────────────────────────────────────────────────────
- * HERO STAT — XP + Streak side by side
- * ───────────────────────────────────────────────────────── */
-function HeroStats({ stats, srsDue, animatedXP }) {
-  return (
-    <div className="flex flex-wrap gap-2">
-      <HeroPill icon="⚡" value={animatedXP} label="XP" gradient="from-primary-500/10 to-primary-600/10" accent="text-primary-600 dark:text-primary-400" delay={0} />
-      <HeroPill icon="🔥" value={stats?.current_streak ?? 0} label="day streak" gradient="from-accent-500/10 to-accent-600/10" accent="text-accent-600 dark:text-accent-400" delay={1} />
-      <HeroPill icon="🏆" value={`#${stats?.rank ?? "—"}`} label="rank" gradient="from-purple-500/10 to-primary-500/10" accent="text-purple-600 dark:text-purple-400" delay={2} />
-      {srsDue > 0 && (
-        <Link
-          to="/practice/srs"
-          className="stat-pill bg-gradient-to-br from-success-500/10 to-success-600/10 border-success-200/60 dark:border-success-800/40 hover:shadow-glow-success hover:scale-105 hover:-translate-y-0.5 transition-all duration-200 focus-ring animate-fade-in-up"
-          style={staggerDelay(3)}
-        >
-          <span>🃏</span>
-          <span className="text-sm font-bold text-success-600 dark:text-success-400">{srsDue}</span>
-          <span className="text-caption text-success-700 dark:text-success-300">due</span>
-        </Link>
-      )}
-    </div>
-  );
-}
-
-function HeroPill({ icon, value, label, gradient, accent, delay }) {
-  return (
-    <div
-      className={`stat-pill bg-gradient-to-br ${gradient} hover:shadow-card-hover hover:scale-105 hover:-translate-y-0.5 transition-all duration-200 cursor-default animate-fade-in-up`}
-      style={staggerDelay(delay)}
-    >
-      <span>{icon}</span>
-      <span className={`text-sm font-bold ${accent}`}>{value}</span>
-      <span className="text-caption text-surface-500 dark:text-surface-400">{label}</span>
+      </div>
+      <ul className="space-y-2.5">
+        {events.map((e, i) => (
+          <li key={i} className="flex items-start gap-3">
+            <span className={`mt-1 w-1.5 h-1.5 rounded-full shrink-0 ${
+              e.tone === "success" ? "bg-success-500" :
+              e.tone === "primary" ? "bg-primary-500" :
+                                     "bg-danger-500"
+            }`} />
+            <div className="flex-1 min-w-0">
+              <p className="text-[13px] text-surface-800 dark:text-surface-100 truncate">{e.txt}</p>
+              <p className="text-[10px] font-mono uppercase tracking-[0.12em] text-surface-400 dark:text-surface-500">{e.t}</p>
+            </div>
+            <span className={`text-[11px] font-mono num font-semibold shrink-0 ${
+              e.tone === "success" ? "text-success-600 dark:text-success-400" :
+              e.tone === "primary" ? "text-primary-600 dark:text-primary-400" :
+                                     "text-danger-600 dark:text-danger-400"
+            }`}>{e.score}</span>
+          </li>
+        ))}
+      </ul>
     </div>
   );
 }
 
 /* ─────────────────────────────────────────────────────────
- * QUICK ACTION TILE
- * ───────────────────────────────────────────────────────── */
-function QuickActionTile({ action, srsDue, i }) {
-  return (
-    <Link
-      to={action.to}
-      className="group relative flex flex-col items-center gap-2 card card-hover py-5 px-3 animate-fade-in-up focus-ring"
-      style={staggerDelay(i, 50)}
-    >
-      <div className={`w-11 h-11 bg-gradient-to-br ${action.tint} rounded-2xl flex items-center justify-center text-xl shadow-sm group-hover:shadow-glow-primary group-hover:scale-110 transition-all duration-300`}>
-        {action.emoji}
-      </div>
-      <span className="text-caption font-semibold text-surface-700 dark:text-surface-200 text-center leading-tight">{action.label}</span>
-      <span className="text-[10px] text-surface-400 dark:text-surface-500 text-center opacity-0 group-hover:opacity-100 transition-opacity duration-300 absolute bottom-1.5 left-0 right-0">
-        {action.desc}
-      </span>
-    </Link>
-  );
-}
-
-/* ─────────────────────────────────────────────────────────
- * SUGGESTION CARD
- * ───────────────────────────────────────────────────────── */
-function SuggestionCard({ s, i }) {
-  return (
-    <Link
-      to={s.to}
-      className="group flex items-center gap-3 card card-hover px-4 py-3.5 animate-fade-in-up focus-ring"
-      style={staggerDelay(i, 70)}
-    >
-      <div className="shrink-0 w-10 h-10 rounded-xl bg-gradient-to-br from-surface-100 to-surface-200 dark:from-surface-800 dark:to-surface-700 flex items-center justify-center text-lg group-hover:scale-110 group-hover:rotate-3 transition-all duration-300">
-        {s.emoji}
-      </div>
-      <div className="flex-1 min-w-0">
-        <p className="text-sm font-semibold text-surface-800 dark:text-surface-100 group-hover:text-primary-600 dark:group-hover:text-primary-400 transition-colors truncate">
-          {s.label}
-        </p>
-        <p className="text-[11px] uppercase tracking-wider font-semibold text-surface-400 dark:text-surface-500 mt-0.5">{s.sub}</p>
-      </div>
-      <svg className="w-4 h-4 text-surface-300 dark:text-surface-600 group-hover:text-primary-500 group-hover:translate-x-1 transition-all shrink-0" fill="none" strokeWidth={2.5} viewBox="0 0 24 24" stroke="currentColor">
-        <path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" />
-      </svg>
-    </Link>
-  );
-}
-
-/* ═══════════════════════════════════════════════════════════
- * MAIN
- * ═══════════════════════════════════════════════════════════ */
-/* ─────────────────────────────────────────────────────────
- * NEXT ACTION — single dominant CTA based on user state
- * ───────────────────────────────────────────────────────── */
-function chooseNextAction({ srsDue, trend }) {
-  if (srsDue >= 5) {
-    return {
-      icon: "🃏",
-      eyebrow: "Time to review",
-      title: `${srsDue} flashcards are due`,
-      subtitle: "Quick reviews now — stronger memory tomorrow.",
-      cta: "Start review",
-      to: "/practice/srs",
-      tone: "primary",
-    };
-  }
-  if (trend?.week?.mistakes > 3) {
-    return {
-      icon: "🔎",
-      eyebrow: "Fix what's shaky",
-      title: `${trend.week.mistakes} mistakes this week`,
-      subtitle: "Turn weak spots into strengths.",
-      cta: "Review mistakes",
-      to: "/progress/mistakes",
-      tone: "warn",
-    };
-  }
-  if (!trend?.week?.lessons_completed) {
-    return {
-      icon: "📝",
-      eyebrow: "Start strong",
-      title: "Take a quick quiz",
-      subtitle: "A random lesson, tuned to your level.",
-      cta: "Start quiz",
-      to: "/practice/quiz/random",
-      tone: "primary",
-    };
-  }
-  return {
-    icon: "🎮",
-    eyebrow: "Have some fun",
-    title: "Play a mini game",
-    subtitle: "Learning feels lighter when it's play.",
-    cta: "Explore games",
-    to: "/mini-games",
-    tone: "accent",
-  };
-}
-
-function NextActionCard({ action }) {
-  const toneClass = action.tone === "warn"
-    ? "from-warn-500 via-accent-500 to-danger-500"
-    : action.tone === "accent"
-      ? "from-accent-500 via-primary-500 to-purple-600"
-      : "from-primary-500 via-primary-600 to-purple-600";
-
-  return (
-    <Link
-      to={action.to}
-      className="group relative overflow-hidden rounded-3xl card-elevated p-0 block card-hover focus-ring animate-fade-in-up"
-    >
-      {/* Gradient wash */}
-      <div className={`absolute inset-0 bg-gradient-to-br ${toneClass} opacity-[0.08] dark:opacity-[0.15] pointer-events-none`} />
-      <div className="absolute -top-12 -right-12 w-48 h-48 bg-gradient-mesh opacity-30 pointer-events-none rounded-full blur-3xl" />
-
-      <div className="relative flex items-center gap-5 p-5 sm:p-6">
-        <div className={`shrink-0 w-14 h-14 sm:w-16 sm:h-16 rounded-2xl bg-gradient-to-br ${toneClass} flex items-center justify-center text-3xl sm:text-4xl shadow-glow-primary group-hover:scale-110 group-hover:rotate-3 transition-all duration-300`}>
-          {action.icon}
-        </div>
-        <div className="flex-1 min-w-0">
-          <p className="eyebrow-primary mb-0.5">{action.eyebrow}</p>
-          <h3 className="text-h3 text-surface-900 dark:text-surface-100 group-hover:text-primary-600 dark:group-hover:text-primary-400 transition-colors truncate">
-            {action.title}
-          </h3>
-          <p className="text-caption text-surface-500 dark:text-surface-400 mt-0.5 truncate">{action.subtitle}</p>
-        </div>
-        <div className="shrink-0 hidden sm:flex">
-          <span className="btn-primary btn-md pointer-events-none">
-            {action.cta}
-            <svg className="w-4 h-4 ml-1 group-hover:translate-x-1 transition-transform" fill="none" strokeWidth={2.5} viewBox="0 0 24 24" stroke="currentColor">
-              <path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" />
-            </svg>
-          </span>
-        </div>
-      </div>
-    </Link>
-  );
-}
-
-/* ─────────────────────────────────────────────────────────
- * RESUME BANNER — shows when user has an active mid-flow session
+ * ResumeBanner — kept from previous Dashboard for continuity
  * ───────────────────────────────────────────────────────── */
 function ResumeBanner({ activity, onDismiss }) {
   if (!activity) return null;
@@ -427,16 +561,14 @@ function ResumeBanner({ activity, onDismiss }) {
         </svg>
       </span>
       <div className="flex-1 min-w-0">
-        <p className="text-caption font-semibold text-info-700 dark:text-info-300 uppercase tracking-wider">Resume where you left off</p>
+        <p className="text-[10px] uppercase tracking-[0.14em] font-semibold text-info-700 dark:text-info-300">Reprendre où vous étiez</p>
         <p className="text-sm font-medium text-surface-800 dark:text-surface-200 truncate">{activity.label}</p>
       </div>
-      <Link to={activity.url} className="btn-primary btn-sm shrink-0">
-        Continue
-      </Link>
+      <Link to={activity.url} className="btn-primary btn-sm shrink-0">Continuer</Link>
       <button
         onClick={onDismiss}
         className="shrink-0 w-7 h-7 rounded-lg text-surface-400 hover:text-surface-700 dark:hover:text-surface-200 hover:bg-white/60 dark:hover:bg-surface-800/60 transition-colors flex items-center justify-center"
-        aria-label="Dismiss"
+        aria-label="Ignorer"
       >
         <svg className="w-4 h-4" fill="none" stroke="currentColor" strokeWidth={2.5} viewBox="0 0 24 24">
           <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
@@ -446,34 +578,43 @@ function ResumeBanner({ activity, onDismiss }) {
   );
 }
 
+/* ─────────────────────────────────────────────────────────
+ * MAIN — Dashboard
+ * ───────────────────────────────────────────────────────── */
 export default function Dashboard() {
   const { user } = useAuth();
-  const [loading, setLoading] = useState(true);
-  const [stats, setStats] = useState(null);
+  const [stats, setStats]   = useState(null);
+  const [trend, setTrend]   = useState(null);
   const [srsDue, setSrsDue] = useState(0);
-  const [trend, setTrend] = useState(null);
-  const [quoteIndex, setQuoteIndex] = useState(() => Math.floor(Date.now() / 86400000) % DAILY_QUOTES.length);
-  const animatedXP = useCountUp(stats?.total_xp ?? 0);
-  const [suggestions] = useState(() => pickDailySuggestions(4));
+  const [loading, setLoading] = useState(true);
   const [celebrate, setCelebrate] = useState(false);
   const [lastActivity, dismissActivity] = useLastActivity();
+  const animatedXP = useCountUp(stats?.total_xp ?? 0);
+
+  // Calc days-to-exam from user's prefs if present, else default to 47
+  const examDaysLeft = user?.preferences?.exam_days_left
+    ?? user?.preferences?.examDaysLeft
+    ?? 47;
+  const examDate = user?.preferences?.exam_date
+    ?? user?.preferences?.examDate
+    ?? "12 juin 2026";
 
   useEffect(() => {
     Promise.allSettled([getStats(), getSRSDueCards(1), getTrendReport()])
       .then(([statsRes, srsRes, trendRes]) => {
         if (statsRes.status === "fulfilled") setStats(statsRes.value.data);
         if (srsRes.status === "fulfilled") {
-          const data = srsRes.value.data;
-          setSrsDue(data.count ?? data.results?.length ?? 0);
+          const d = srsRes.value.data;
+          setSrsDue(d.count ?? d.results?.length ?? 0);
         }
         if (trendRes.status === "fulfilled") setTrend(trendRes.value.data);
         setLoading(false);
       });
   }, []);
 
-  // Fire confetti on streak milestone (every 7 days)
+  // Confetti on a 7-day streak milestone
   useEffect(() => {
-    if (stats && stats.current_streak > 0 && stats.current_streak % 7 === 0) {
+    if (stats?.current_streak > 0 && stats.current_streak % 7 === 0) {
       const key = `celebrated-streak-${stats.current_streak}`;
       if (!sessionStorage.getItem(key)) {
         sessionStorage.setItem(key, "1");
@@ -484,85 +625,63 @@ export default function Dashboard() {
 
   if (loading) {
     return (
-      <div className="max-w-5xl mx-auto space-y-6">
-        <div className="flex items-end justify-between gap-4 flex-wrap">
+      <div className="bg-grid-soft -mx-4 sm:-mx-6 lg:-mx-8 -my-8 px-4 sm:px-6 lg:px-8 py-8 min-h-full">
+        <div className="max-w-7xl mx-auto space-y-5">
           <div className="space-y-2">
-            <div className="skeleton h-9 w-64 rounded-lg" />
-            <div className="skeleton h-4 w-40 rounded-lg" />
+            <div className="skeleton h-3 w-32 rounded" />
+            <div className="skeleton h-10 w-72 rounded-lg" />
+            <div className="skeleton h-3 w-96 rounded" />
           </div>
-          <div className="flex gap-2">
-            <div className="skeleton h-8 w-20 rounded-full" />
-            <div className="skeleton h-8 w-28 rounded-full" />
-            <div className="skeleton h-8 w-20 rounded-full" />
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-5">
+            <div className="lg:col-span-5 skeleton h-[420px] rounded-3xl" />
+            <div className="lg:col-span-7 skeleton h-[420px] rounded-3xl" />
+          </div>
+          <div className="skeleton h-32 rounded-3xl" />
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-5">
+            <div className="lg:col-span-5 skeleton h-44 rounded-3xl" />
+            <div className="lg:col-span-4 skeleton h-44 rounded-3xl" />
+            <div className="lg:col-span-3 skeleton h-44 rounded-2xl" />
           </div>
         </div>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          <SkeletonCard height="h-44" className="rounded-3xl" />
-          <SkeletonCard height="h-44" className="rounded-2xl" />
-        </div>
-        <SkeletonGrid count={6} height="h-28" />
       </div>
     );
   }
 
+  // Pull weekly XP from trend if possible
+  const weekXP = trend?.week?.total_xp ?? null;
+
   return (
-    <div className="max-w-5xl mx-auto space-y-7 relative">
+    <div className="bg-grid-soft -mx-4 sm:-mx-6 lg:-mx-8 -my-6 lg:-my-8 px-4 sm:px-6 lg:px-8 py-6 lg:py-8 min-h-full">
       {celebrate && <Confetti count={60} duration={2000} />}
 
-      {/* ── Header ─────────────────────────────────────────── */}
-      <header className="flex items-end justify-between gap-4 flex-wrap animate-fade-in">
-        <div>
-          <p className="eyebrow-primary mb-1">{frenchDate()}</p>
-          <h1 className="text-h1 text-surface-900 dark:text-surface-100">
-            {greetingByHour()}, <span className="text-gradient-primary">{user?.username}</span>
-          </h1>
-          {stats?.current_streak > 0 && (
-            <p className="text-caption text-surface-500 dark:text-surface-400 mt-1 flex items-center gap-1">
-              <span className="animate-float inline-block">🔥</span>
-              {stats.current_streak}-day streak — keep it going!
-            </p>
-          )}
-        </div>
-        <HeroStats stats={stats} srsDue={srsDue} animatedXP={animatedXP} />
-      </header>
+      <div className="max-w-7xl mx-auto space-y-5">
+        <HybridHeader
+          user={user}
+          stats={stats}
+          animatedXP={animatedXP}
+          examDaysLeft={examDaysLeft}
+        />
 
-      {/* ── Resume banner ──────────────────────────────────── */}
-      <ResumeBanner activity={lastActivity} onDismiss={dismissActivity} />
+        <ResumeBanner activity={lastActivity} onDismiss={dismissActivity} />
 
-      {/* ── Next Action hero ───────────────────────────────── */}
-      <NextActionCard action={chooseNextAction({ srsDue, trend })} />
+        <HybridHero srsDue={srsDue} />
 
-      {/* ── Quote + Trend Report ────────────────────────────── */}
-      <section className="grid grid-cols-1 md:grid-cols-2 gap-4">
-        <QuoteCard quoteIndex={quoteIndex} setQuoteIndex={setQuoteIndex} />
-        <TrendReport trend={trend} />
-      </section>
+        <GardenStrip stats={stats} weekXP={weekXP} />
 
-      {/* ── Quick Actions ───────────────────────────────────── */}
-      <section>
-        <div className="flex items-baseline justify-between mb-3">
-          <h2 className="text-h4 text-surface-900 dark:text-surface-100">Quick Actions</h2>
-          <span className="text-caption text-surface-400 dark:text-surface-500">Start practicing</span>
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-5">
+          <div className="lg:col-span-5">
+            <ExamCountdown examDate={examDate} daysLeft={examDaysLeft} />
+          </div>
+          <div className="lg:col-span-4">
+            <WordCard onShuffle={() => { /* future: rotate word */ }} />
+          </div>
+          <div className="lg:col-span-3">
+            <QuickRail srsDue={srsDue} />
+          </div>
         </div>
-        <div className="grid grid-cols-3 md:grid-cols-6 gap-3">
-          {QUICK_ACTIONS.map((action, i) => (
-            <QuickActionTile key={action.to} action={action} srsDue={srsDue} i={i} />
-          ))}
-        </div>
-      </section>
 
-      {/* ── Try Today ──────────────────────────────────────── */}
-      <section>
-        <div className="flex items-baseline justify-between mb-3">
-          <h2 className="text-h4 text-surface-900 dark:text-surface-100">Try Today</h2>
-          <span className="badge-neutral !text-[10px]">Refreshes daily</span>
-        </div>
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-          {suggestions.map((s, i) => (
-            <SuggestionCard key={s.to} s={s} i={i} />
-          ))}
-        </div>
-      </section>
+        <RecentActivity trend={trend} />
+      </div>
     </div>
   );
 }

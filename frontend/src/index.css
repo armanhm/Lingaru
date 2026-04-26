@@ -184,4 +184,28 @@
 
   /* No-select helper for gameplay UIs */
   .no-select { user-select: none; -webkit-user-select: none; }
+
+  /* ── Editorial / dashboard utilities ───────────────────── */
+  /* Instrument Serif renders French diacritics & ligatures cleanly when liga is off */
+  .font-editorial {
+    font-family: "Instrument Serif", ui-serif, Georgia, serif;
+    font-feature-settings: "liga" 0;
+    letter-spacing: -0.005em;
+  }
+
+  /* Tabular numerics for stat readouts */
+  .num { font-variant-numeric: tabular-nums; }
+
+  /* Soft grid background (compass / dashboard hero canvas) */
+  .bg-grid-soft {
+    background-image:
+      linear-gradient(to right, rgb(148 163 184 / 0.10) 1px, transparent 1px),
+      linear-gradient(to bottom, rgb(148 163 184 / 0.10) 1px, transparent 1px);
+    background-size: 36px 36px;
+  }
+  .dark .bg-grid-soft {
+    background-image:
+      linear-gradient(to right, rgb(148 163 184 / 0.06) 1px, transparent 1px),
+      linear-gradient(to bottom, rgb(148 163 184 / 0.06) 1px, transparent 1px);
+  }
 }

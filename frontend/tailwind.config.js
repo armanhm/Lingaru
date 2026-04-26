@@ -87,6 +87,14 @@ export default {
           'from': { transform: 'rotate(0deg)' },
           'to': { transform: 'rotate(360deg)' },
         },
+        'flame': {
+          '0%, 100%': { transform: 'rotate(-2deg) scale(1)' },
+          '50%':      { transform: 'rotate(2deg) scale(1.06)' },
+        },
+        'pulse-soft': {
+          '0%, 100%': { opacity: '0.6' },
+          '50%':      { opacity: '1' },
+        },
       },
       animation: {
         'fade-in': 'fade-in 0.3s ease-out',
@@ -107,11 +115,15 @@ export default {
         'shimmer': 'shimmer 2s ease-in-out infinite',
         'float': 'float 3s ease-in-out infinite',
         'gradient-shift': 'gradient-shift 6s ease infinite',
-        'spin-slow': 'spin-slow 3s linear infinite',
+        'spin-slow': 'spin-slow 22s linear infinite',
+        'flame':     'flame 1.6s ease-in-out infinite',
+        'pulse-soft':'pulse-soft 2.4s ease-in-out infinite',
       },
       fontFamily: {
         sans: ['"Inter"', 'ui-sans-serif', 'system-ui', '-apple-system', 'BlinkMacSystemFont', '"Segoe UI"', 'Roboto', '"Helvetica Neue"', 'Arial', 'sans-serif'],
         display: ['"Inter"', 'ui-sans-serif', 'system-ui', 'sans-serif'],
+        editorial: ['"Instrument Serif"', 'ui-serif', 'Georgia', 'serif'],
+        mono: ['"JetBrains Mono"', 'ui-monospace', 'SFMono-Regular', 'monospace'],
       },
       fontSize: {
         // Display-grade sizes with baked-in line-height
@@ -188,6 +200,21 @@ export default {
           800: "#1e293b",
           900: "#0f172a",
           950: "#020617",
+        },
+        // ── Paper / Ink (editorial moments, dark hero panels) ──
+        paper: {
+          50:  "#fbfaf6",
+          100: "#f5f2ea",
+          200: "#ebe6d8",
+          300: "#d9d2bf",
+          400: "#a8a08a",
+          500: "#7a7361",
+          600: "#5d5848",
+        },
+        ink: {
+          700: "#2a2a2e",
+          800: "#1a1a1c",
+          900: "#0f0f10",
         },
       },
       borderRadius: {

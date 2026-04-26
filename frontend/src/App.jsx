@@ -33,6 +33,10 @@ import RandomQuiz from "./pages/RandomQuiz";
 import ExamPrepHub from "./pages/ExamPrepHub";
 import ExamSection from "./pages/ExamSection";
 import ExamExercise from "./pages/ExamExercise";
+import GrammarHub from "./pages/GrammarHub";
+import GrammarLibrary from "./pages/GrammarLibrary";
+import GrammarTopic from "./pages/GrammarTopic";
+import GrammarDrill from "./pages/GrammarDrill";
 import NotFound from "./pages/NotFound";
 
 export default function App() {
@@ -77,6 +81,10 @@ export default function App() {
           <Route path="exam-prep" element={<ExamPrepHub />} />
           <Route path="exam-prep/:section" element={<ExamSection />} />
           <Route path="exam-prep/:section/:sessionId" element={<ExamExercise />} />
+          <Route path="grammar" element={<GrammarHub />} />
+          <Route path="grammar/library" element={<GrammarLibrary />} />
+          <Route path="grammar/topics/:slug" element={<GrammarTopic />} />
+          <Route path="grammar/drill/:sessionId" element={<GrammarDrill />} />
           <Route path="settings" element={<Settings />} />
         </Route>
         <Route path="*" element={<NotFound />} />

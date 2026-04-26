@@ -43,11 +43,11 @@ function greetingByHour() {
 /* Quick actions — unified primary gradient, differentiated by icon tint only */
 const QUICK_ACTIONS = [
   { label: "Quiz",         to: "/practice/quiz/random",  tint: "from-primary-500 to-primary-700",  emoji: "📝", desc: "Test your knowledge" },
+  { label: "Grammar",      to: "/grammar",               tint: "from-primary-500 to-purple-600",   emoji: "🧠", desc: "Master the rules" },
   { label: "Dictation",    to: "/practice/dictation",    tint: "from-info-500 to-info-700",        emoji: "🎧", desc: "Listen and write" },
-  { label: "Conjugation",  to: "/practice/conjugation",  tint: "from-accent-500 to-accent-700",    emoji: "✏️", desc: "Drill verbs" },
   { label: "AI Chat",      to: "/assistant",             tint: "from-purple-500 to-primary-700",   emoji: "💬", desc: "Roleplay & talk" },
-  { label: "Dictionary",   to: "/dictionary",            tint: "from-info-500 to-primary-600",     emoji: "📖", desc: "Look up words" },
   { label: "Mini Games",   to: "/mini-games",            tint: "from-pink-500 to-accent-600",      emoji: "🎮", desc: "Learn by playing" },
+  { label: "Dictionary",   to: "/dictionary",            tint: "from-info-500 to-primary-600",     emoji: "📖", desc: "Look up words" },
 ];
 
 const ALL_SUGGESTIONS = [

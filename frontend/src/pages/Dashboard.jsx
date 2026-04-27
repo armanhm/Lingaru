@@ -351,7 +351,6 @@ function QuoteCard({ quoteIndex, onShuffle }) {
   return (
     <div className="relative overflow-hidden rounded-3xl bg-white dark:bg-surface-900/60 border border-surface-100 dark:border-surface-800 p-5 sm:p-6 h-full flex flex-col animate-fade-in-up">
       <div className="absolute inset-x-0 top-0 h-1 bg-gradient-to-r from-primary-500 via-primary-400 to-accent-500" />
-      <span className="absolute -top-6 -right-2 text-[8rem] leading-none font-editorial text-primary-100 dark:text-primary-900/40 select-none pointer-events-none">"</span>
 
       <div className="relative flex items-center justify-between mb-2">
         <p className="text-[10px] uppercase tracking-[0.14em] font-semibold text-primary-600 dark:text-primary-400">Citation du jour</p>

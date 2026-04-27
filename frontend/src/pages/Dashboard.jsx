@@ -23,6 +23,13 @@ function clockHM(d = new Date()) {
   const m = String(d.getMinutes()).padStart(2, "0");
   return `${h}:${m}`;
 }
+function frenchGreeting(d = new Date()) {
+  const h = d.getHours();
+  if (h < 5)  return "Bonne nuit";
+  if (h < 12) return "Bonjour";
+  if (h < 18) return "Bon après-midi";
+  return "Bonsoir";
+}
 
 /* ─────────────────────────────────────────────────────────
  * Curated daily quotes (French + English) — rotated daily
@@ -200,7 +207,7 @@ function CompassDial({ skills, hovered, onHover, onSelect, level = "B1" }) {
 /* ─────────────────────────────────────────────────────────
  * Header
  * ───────────────────────────────────────────────────────── */
-function HybridHeader({ user, stats, animatedXP, examDaysLeft }) {
+function HybridHeader({ user, stats, animatedXP }) {
   return (
     <div className="flex items-end justify-between gap-6 flex-wrap animate-fade-in">
       <div>
@@ -208,16 +215,12 @@ function HybridHeader({ user, stats, animatedXP, examDaysLeft }) {
           {frenchDate()} · {clockHM()}
         </p>
         <h1 className="text-[32px] sm:text-[40px] font-bold tracking-tight text-surface-900 dark:text-surface-50 leading-[1.05]">
-          Cap sur le{" "}
+          {frenchGreeting()},{" "}
           <span className="bg-gradient-to-r from-primary-600 via-primary-500 to-accent-500 bg-clip-text text-transparent">
-            B2
+            {user?.username || "vous"}
           </span>
-          , {user?.username || "vous"}.
+          .
         </h1>
-        <p className="mt-2 text-[14px] text-surface-500 dark:text-surface-400 max-w-[58ch]">
-          {examDaysLeft != null ? `${examDaysLeft} jours avant le TCF. ` : ""}
-          La <span className="font-semibold text-surface-800 dark:text-surface-100">grammaire</span> est votre point cardinal — 20 points sous l'objectif.
-        </p>
       </div>
       <div className="flex items-center gap-2 px-3 py-2 rounded-full bg-white dark:bg-surface-900/60 border border-surface-200 dark:border-surface-800 shadow-sm">
         <span className="animate-flame inline-block origin-bottom">🔥</span>
@@ -774,7 +777,6 @@ export default function Dashboard() {
           user={user}
           stats={stats}
           animatedXP={animatedXP}
-          examDaysLeft={examDaysLeft}
         />
 
         <ResumeBanner activity={lastActivity} onDismiss={dismissActivity} />

@@ -806,7 +806,7 @@ export default function Assistant() {
       </div>
 
       {/* ═══ Composer ═══════════════════════════════════════════ */}
-      <div className="bg-white dark:bg-surface-900/80 border-t border-surface-100 dark:border-surface-800 p-3 sm:p-4 shrink-0">
+      <div className="border-t border-surface-100 dark:border-surface-800 p-3 sm:p-4 shrink-0">
         <div className="max-w-3xl mx-auto">
           <div className="rounded-2xl border border-surface-200 dark:border-surface-700 bg-surface-50/60 dark:bg-surface-900 focus-within:border-primary-400 focus-within:ring-2 focus-within:ring-primary-100 dark:focus-within:ring-primary-900/40 transition-all">
             <textarea

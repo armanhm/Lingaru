@@ -204,6 +204,72 @@ const TUTOR = {
 };
 
 /* ──────────────────────────────────────────────────────────────
+ * @-mention agents
+ * Type "@" in the composer to summon a specific behaviour for the
+ * current message. Each agent can override the assistant mode for
+ * that single turn and prepends a directive to the message body.
+ * ────────────────────────────────────────────────────────────── */
+const AGENTS = [
+  { key: "grammar",   emoji: "🧠", label: "Grammar",      hint: "Explique un point de grammaire", mode: "grammar_explanation",
+    directive: "Explique le point de grammaire suivant en français, avec des exemples concrets B1-B2." },
+  { key: "correct",   emoji: "✍️", label: "Correct",      hint: "Corrige un texte français",       mode: "grammar_correction",
+    directive: "Corrige ce texte en français et explique chaque erreur." },
+  { key: "vocab",     emoji: "📚", label: "Vocab",        hint: "Définition d'un mot",              mode: "conversation",
+    directive: "Donne la définition, le genre, la prononciation IPA et 2 exemples du mot suivant." },
+  { key: "conjugate", emoji: "✏️", label: "Conjugate",    hint: "Conjugue un verbe",                 mode: "conversation",
+    directive: "Conjugue le verbe suivant aux 8 temps principaux (présent, imparfait, passé composé, futur simple, conditionnel présent, subjonctif présent, impératif, plus-que-parfait)." },
+  { key: "translate", emoji: "🌐", label: "Translate",    hint: "Traduit FR ↔ EN",                  mode: "conversation",
+    directive: "Traduis ce texte. Détecte la langue source et donne la traduction dans l'autre langue, avec une note sur les choix difficiles." },
+  { key: "idiom",     emoji: "💬", label: "Idiom",        hint: "Explique une expression française", mode: "conversation",
+    directive: "Explique cette expression idiomatique française : sens littéral, sens réel, registre, et un exemple d'usage." },
+  { key: "culture",   emoji: "🇫🇷", label: "Culture",      hint: "Note culturelle sur la France",    mode: "conversation",
+    directive: "Donne une note culturelle française liée au sujet suivant : contexte, anecdote, mots-clés." },
+  { key: "pron",      emoji: "🔊", label: "Pronunciation", hint: "Prononciation + IPA",              mode: "conversation",
+    directive: "Donne la prononciation phonétique (IPA) et un conseil concret pour bien prononcer ce mot/phrase." },
+];
+const AGENTS_BY_KEY = Object.fromEntries(AGENTS.map((a) => [a.key, a]));
+
+/** Returns { start, end, query } if the caret sits inside an @-mention being typed, else null. */
+function findActiveMention(text, caret) {
+  if (caret == null) return null;
+  let i = caret - 1;
+  while (i >= 0) {
+    const ch = text[i];
+    if (ch === "@") {
+      if (i === 0 || /\s/.test(text[i - 1])) {
+        const slice = text.slice(i + 1, caret);
+        if (!/\s/.test(slice)) {
+          return { start: i, end: caret, query: slice };
+        }
+      }
+      return null;
+    }
+    if (/\s/.test(ch)) return null;
+    i--;
+  }
+  return null;
+}
+
+/** Returns the array of complete @agent tokens currently in the text (only valid ones). */
+function parseMentions(text) {
+  const out = [];
+  const re = /(^|\s)@([a-zA-Z]+)\b/g;
+  let match;
+  while ((match = re.exec(text)) !== null) {
+    const key = match[2].toLowerCase();
+    if (AGENTS_BY_KEY[key]) out.push({ key, index: match.index + match[1].length });
+  }
+  return out;
+}
+
+/** Strip @agent tokens from text — used when sending to keep the conversation clean. */
+function stripMentions(text) {
+  return text.replace(/(^|\s)@([a-zA-Z]+)\b/g, (full, lead, name) => {
+    return AGENTS_BY_KEY[name.toLowerCase()] ? lead : full;
+  }).trim();
+}
+
+/* ──────────────────────────────────────────────────────────────
  * Inline icons
  * ────────────────────────────────────────────────────────────── */
 const Ic = {
@@ -487,17 +553,18 @@ function ErreursDrawer({ open, onClose, mistakes }) {
 }
 
 /* ──────────────────────────────────────────────────────────────
- * CorrectedText — wraps `from` substrings with wavy underline + tooltip
+ * CorrectedText — wraps `from` substrings with wavy underline + tooltip,
+ * and renders @mentions as gradient pills.
  * ────────────────────────────────────────────────────────────── */
 function CorrectedText({ text, issues }) {
-  if (!issues || !issues.length) return <span>{text}</span>;
+  if (!issues || !issues.length) return <MentionedText text={text} />;
   const parts = [];
   let cursor = 0;
   let key = 0;
   issues.forEach((iss) => {
     const idx = text.indexOf(iss.from, cursor);
     if (idx === -1) return;
-    if (idx > cursor) parts.push(<span key={key++}>{text.slice(cursor, idx)}</span>);
+    if (idx > cursor) parts.push(<MentionedText key={key++} text={text.slice(cursor, idx)} />);
     parts.push(
       <span key={key++} className="relative group/iss inline-block">
         <span className="underline-wavy cursor-help">{iss.from}</span>
@@ -510,7 +577,7 @@ function CorrectedText({ text, issues }) {
     );
     cursor = idx + iss.from.length;
   });
-  if (cursor < text.length) parts.push(<span key={key++}>{text.slice(cursor)}</span>);
+  if (cursor < text.length) parts.push(<MentionedText key={key++} text={text.slice(cursor)} />);
   return <>{parts}</>;
 }
 
@@ -624,6 +691,100 @@ function ImagePreviewBanner({ file, onRemove }) {
 }
 
 /* ──────────────────────────────────────────────────────────────
+ * MentionPopover — palette of agents shown above the textarea
+ * ────────────────────────────────────────────────────────────── */
+function MentionPopover({ open, query, onPick, onClose, activeIndex, setActiveIndex, matches }) {
+  if (!open || matches.length === 0) return null;
+  return (
+    <div
+      className="absolute bottom-full left-0 right-0 mb-2 rounded-2xl border border-surface-200 dark:border-surface-700 bg-white dark:bg-surface-900 shadow-card-elevated overflow-hidden animate-fade-in-up z-30"
+      role="listbox"
+      aria-label="Agents disponibles"
+    >
+      <div className="px-3 py-2 border-b border-surface-100 dark:border-surface-800 flex items-center justify-between">
+        <div className="text-[11px] uppercase tracking-[0.14em] font-semibold text-surface-500 dark:text-surface-400">
+          Agents · @{query || "…"}
+        </div>
+        <div className="flex items-center gap-2 text-[10px] text-surface-400 dark:text-surface-500">
+          <span><kbd className="kbd">↑↓</kbd> naviguer</span>
+          <span><kbd className="kbd">Tab</kbd> compléter</span>
+          <span><kbd className="kbd">Esc</kbd> fermer</span>
+        </div>
+      </div>
+      <ul className="max-h-72 overflow-y-auto py-1">
+        {matches.map((a, i) => {
+          const active = i === activeIndex;
+          return (
+            <li key={a.key}>
+              <button
+                onMouseEnter={() => setActiveIndex(i)}
+                onClick={() => onPick(a)}
+                role="option"
+                aria-selected={active}
+                className={`w-full flex items-center gap-3 px-3 py-2 text-left transition-colors ${
+                  active
+                    ? "bg-gradient-to-r from-primary-50 to-purple-50 dark:from-primary-900/40 dark:to-purple-900/30"
+                    : "hover:bg-surface-50 dark:hover:bg-surface-800/40"
+                }`}
+              >
+                <span className="shrink-0 w-8 h-8 rounded-lg bg-gradient-to-br from-primary-500 to-purple-600 text-white flex items-center justify-center text-base shadow-sm">
+                  {a.emoji}
+                </span>
+                <div className="min-w-0 flex-1">
+                  <p className="text-[13px] font-bold text-surface-900 dark:text-surface-50 flex items-center gap-1.5">
+                    @{a.key}
+                    <span className="text-[10px] font-mono uppercase tracking-[0.12em] text-surface-400 dark:text-surface-500 font-semibold">{a.label}</span>
+                  </p>
+                  <p className="text-[11.5px] text-surface-500 dark:text-surface-400 leading-tight truncate">{a.hint}</p>
+                </div>
+                {active && (
+                  <span className="shrink-0 text-[10px] font-mono uppercase tracking-[0.12em] text-primary-600 dark:text-primary-400 font-semibold">
+                    Tab ↵
+                  </span>
+                )}
+              </button>
+            </li>
+          );
+        })}
+      </ul>
+    </div>
+  );
+}
+
+/* ──────────────────────────────────────────────────────────────
+ * MentionedText — renders text with @agent tokens as gradient pills
+ * Used in chat bubbles and the composer's echo strip.
+ * ────────────────────────────────────────────────────────────── */
+function MentionedText({ text }) {
+  const parts = [];
+  const re = /(^|\s)(@[a-zA-Z]+)/g;
+  let last = 0;
+  let key = 0;
+  let m;
+  while ((m = re.exec(text)) !== null) {
+    const tagStart = m.index + m[1].length;
+    const tag = m[2];
+    const agentKey = tag.slice(1).toLowerCase();
+    const agent = AGENTS_BY_KEY[agentKey];
+    if (!agent) continue;
+    if (tagStart > last) parts.push(<span key={key++}>{text.slice(last, tagStart)}</span>);
+    parts.push(
+      <span
+        key={key++}
+        className="inline-flex items-center gap-1 px-1.5 py-0.5 rounded-md bg-gradient-to-br from-primary-500/20 to-purple-500/20 text-primary-700 dark:text-primary-200 ring-1 ring-primary-300/50 dark:ring-primary-700/50 font-semibold whitespace-nowrap"
+        title={agent.hint}
+      >
+        <span className="text-[11px]">{agent.emoji}</span>
+        {tag}
+      </span>
+    );
+    last = tagStart + tag.length;
+  }
+  if (last < text.length) parts.push(<span key={key++}>{text.slice(last)}</span>);
+  return parts.length ? <>{parts}</> : <>{text}</>;
+}
+
+/* ──────────────────────────────────────────────────────────────
  * MAIN — Assistant
  * ────────────────────────────────────────────────────────────── */
 export default function Assistant() {
@@ -652,7 +813,23 @@ export default function Assistant() {
 
   const messagesEndRef = useRef(null);
   const fileInputRef = useRef(null);
+  const textareaRef = useRef(null);
   const { isRecording, startRecording, stopRecording } = useVoiceRecorder();
+
+  // @-mention state
+  const [mention, setMention] = useState(null); // { start, end, query } when active
+  const [mentionIndex, setMentionIndex] = useState(0);
+  const mentionMatches = useMemo(() => {
+    if (!mention) return [];
+    const q = mention.query.toLowerCase();
+    if (!q) return AGENTS;
+    return AGENTS.filter((a) =>
+      a.key.startsWith(q) || a.label.toLowerCase().startsWith(q)
+    );
+  }, [mention]);
+  useEffect(() => {
+    if (mentionIndex >= mentionMatches.length) setMentionIndex(0);
+  }, [mentionMatches.length, mentionIndex]);
 
   // Mistakes are derived per-message — not yet provided by the backend.
   // We keep the UI for future wiring.
@@ -734,13 +911,27 @@ export default function Assistant() {
       return;
     }
 
+    // The user's bubble shows the original (with @-mentions visible).
     const userMessage = { role: "user", content: trimmed };
     setMessages((prev) => [...prev, userMessage]);
     setInput("");
 
+    // If the message has agent mentions, the LAST one wins for routing
+    // — its mode overrides the session mode for this turn, and its
+    // directive is prepended to the message body sent to the LLM.
+    const mentions = parseMentions(trimmed);
+    const lastAgent = mentions.length ? AGENTS_BY_KEY[mentions[mentions.length - 1].key] : null;
+
+    let outgoingText = trimmed;
+    let outgoingMode = mode === "roleplay" ? scenario : mode;
+    if (lastAgent) {
+      outgoingMode = lastAgent.mode;
+      const cleaned = stripMentions(trimmed);
+      outgoingText = cleaned ? `${lastAgent.directive}\n\n${cleaned}` : lastAgent.directive;
+    }
+
     try {
-      const resolvedMode = mode === "roleplay" ? scenario : mode;
-      const res = await sendChatMessage(trimmed, resolvedMode, conversationId);
+      const res = await sendChatMessage(outgoingText, outgoingMode, conversationId);
       const assistantMessage = {
         role: "assistant",
         content: res.data.reply,
@@ -793,7 +984,67 @@ export default function Assistant() {
 
   const handleTemplate = useCallback((text) => setInput(text), []);
 
+  // Update mention state from current textarea selection
+  const updateMentionFromCaret = useCallback((nextValue, caret) => {
+    const m = findActiveMention(nextValue, caret);
+    setMention(m);
+    setMentionIndex(0);
+  }, []);
+
+  const handleInputChange = (e) => {
+    const value = e.target.value;
+    setInput(value);
+    updateMentionFromCaret(value, e.target.selectionStart);
+  };
+
+  const handleSelectionChange = (e) => {
+    updateMentionFromCaret(e.target.value, e.target.selectionStart);
+  };
+
+  /** Insert the agent in place of the active @-fragment, append a space. */
+  const insertAgent = useCallback((agent) => {
+    if (!mention) return;
+    const before = input.slice(0, mention.start);
+    const after  = input.slice(mention.end);
+    const inserted = `@${agent.key}`;
+    const next = `${before}${inserted}${after.startsWith(" ") ? "" : " "}${after}`;
+    setInput(next);
+    setMention(null);
+    // Move caret just after the inserted token + space
+    requestAnimationFrame(() => {
+      const ta = textareaRef.current;
+      if (ta) {
+        const pos = before.length + inserted.length + 1;
+        ta.focus();
+        ta.setSelectionRange(pos, pos);
+      }
+    });
+  }, [input, mention]);
+
   const handleKeyDown = (e) => {
+    // Mention popover is open and we have results — intercept nav keys
+    if (mention && mentionMatches.length > 0) {
+      if (e.key === "ArrowDown") {
+        e.preventDefault();
+        setMentionIndex((i) => (i + 1) % mentionMatches.length);
+        return;
+      }
+      if (e.key === "ArrowUp") {
+        e.preventDefault();
+        setMentionIndex((i) => (i - 1 + mentionMatches.length) % mentionMatches.length);
+        return;
+      }
+      if (e.key === "Tab" || (e.key === "Enter" && !e.shiftKey)) {
+        e.preventDefault();
+        insertAgent(mentionMatches[mentionIndex]);
+        return;
+      }
+      if (e.key === "Escape") {
+        e.preventDefault();
+        setMention(null);
+        return;
+      }
+    }
     if (e.key === "Enter" && !e.shiftKey) {
       e.preventDefault();
       handleSend();
@@ -944,12 +1195,34 @@ export default function Assistant() {
 
       {/* ═══ Composer ═══════════════════════════════════════════ */}
       <div className="border-t border-surface-100 dark:border-surface-800 p-3 sm:p-4 shrink-0">
-        <div className="max-w-3xl mx-auto">
+        <div className="max-w-3xl mx-auto relative">
+          {/* @-mention popover */}
+          <MentionPopover
+            open={!!mention}
+            query={mention?.query || ""}
+            matches={mentionMatches}
+            activeIndex={mentionIndex}
+            setActiveIndex={setMentionIndex}
+            onPick={insertAgent}
+            onClose={() => setMention(null)}
+          />
+
+          {/* Echo strip — shows the typed message with @mentions colored, only when at least one mention is present */}
+          {parseMentions(input).length > 0 && (
+            <div className="mb-1.5 px-3 py-1.5 rounded-lg bg-primary-50/40 dark:bg-primary-900/15 border border-primary-100 dark:border-primary-900/40 text-[12.5px] leading-snug text-surface-700 dark:text-surface-200 break-words">
+              <span className="text-[10px] font-mono uppercase tracking-[0.14em] text-primary-600 dark:text-primary-400 font-semibold mr-2">Aperçu</span>
+              <MentionedText text={input} />
+            </div>
+          )}
+
           <div className="rounded-2xl border border-surface-200 dark:border-surface-700 bg-surface-50/60 dark:bg-surface-900 focus-within:border-primary-400 focus-within:ring-2 focus-within:ring-primary-100 dark:focus-within:ring-primary-900/40 transition-all">
             <textarea
+              ref={textareaRef}
               value={input}
-              onChange={(e) => setInput(e.target.value)}
+              onChange={handleInputChange}
               onKeyDown={handleKeyDown}
+              onSelect={handleSelectionChange}
+              onClick={handleSelectionChange}
               placeholder={placeholder}
               rows={2}
               disabled={loading}
@@ -1010,7 +1283,7 @@ export default function Assistant() {
           )}
 
           <p className="text-[10px] font-mono text-surface-400 dark:text-surface-500 text-center mt-2">
-            Entrée pour envoyer · Shift+Entrée pour une nouvelle ligne
+            Entrée pour envoyer · Shift+Entrée pour une nouvelle ligne · tapez <kbd className="kbd">@</kbd> pour invoquer un agent
           </p>
         </div>
       </div>

@@ -196,6 +196,15 @@
   /* Tabular numerics for stat readouts */
   .num { font-variant-numeric: tabular-nums; }
 
+  /* Wavy underline for inline corrections (used in Assistant) */
+  .underline-wavy {
+    text-decoration: underline;
+    text-decoration-style: wavy;
+    text-decoration-color: rgba(244, 63, 94, 0.6);
+    text-underline-offset: 4px;
+    text-decoration-thickness: 1.5px;
+  }
+
   /* Soft grid background (compass / dashboard hero canvas) */
   .bg-grid-soft {
     background-image:

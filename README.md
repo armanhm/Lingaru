@@ -15,10 +15,16 @@ A comprehensive French language learning application targeting B1 to B2 progress
 | 5 - AI Assistant | Gemini/Groq chat, writing correction, grammar explanations, image queries |
 | 6 - Gamification | XP, streaks, badges, leaderboard |
 | 7 - Audio | TTS for vocabulary, STT for pronunciation, dictation exercises |
-| 8 - Discover | Explore feed, news fetcher, daily content cards |
+| 8 - Discover | Explore feed, daily content cards (word / grammar / trivia) |
 | 9 - Advanced Practice | Conjugation drills, cloze exercises, mistake journal, SRS (SM-2) |
 | 10 - Multimodal | Image queries (Gemini vision), voice conversation practice |
 | 11 - RAG | Document upload, PDF indexing, context-aware AI answers |
+| 12 - Dictionary | French dictionary lookups + verb conjugator (cached LLM-generated entries) |
+| 13 - Mini Games | 6 mini-games — Word Scramble, Match Pairs, Gender Snap, Missing Letter, Speed Round, Listening Challenge |
+| 14 - Exam Prep | TCF / TEF practice — diagnostic, week-by-week plan, section-by-section drills, mocks history |
+| 15 - Grammar Booster | Dedicated grammar app: 6 categories, 11 topics, 90 drill items, SM-2 mastery scoring |
+| 16 - News | Standalone `/news` page — articles by topic with vocab, expressions, and grammar tabs |
+| 17 - UI Overhaul | Premium token system (Inter + Instrument Serif + JetBrains Mono), Hybride dashboard (compass + recommended session), redesigned Assistant (single-column chat with drawers), gradient top-band cards across all pages |
 
 ## Tech Stack
 
@@ -102,14 +108,17 @@ Lingaru/
 ├── backend/
 │   ├── apps/
 │   │   ├── users/          # Auth, registration, profiles
-│   │   ├── content/        # Topics, lessons, vocabulary, grammar
+│   │   ├── content/        # Topics, lessons, vocabulary, grammar (legacy GrammarRule)
 │   │   ├── practice/       # Quiz engine, sessions, answers
 │   │   ├── progress/       # SRS cards, mistake journal, conjugation drills
 │   │   ├── gamification/   # XP, streaks, badges, leaderboard
 │   │   ├── assistant/      # AI chat, image queries, voice chat
 │   │   ├── media/          # TTS, pronunciation, dictation
-│   │   ├── discover/       # Explore feed, daily cards
+│   │   ├── discover/       # Explore feed, daily cards, dedicated News API
 │   │   ├── documents/      # PDF upload, RAG indexing
+│   │   ├── dictionary/     # French dictionary lookups + verb conjugator
+│   │   ├── exam_prep/      # TCF/TEF prep — exercises, sessions, history
+│   │   ├── grammar/        # Grammar Booster — categories, topics, drills, mastery (SM-2)
 │   │   └── bot/            # Telegram bot handlers
 │   ├── config/             # Django settings, URLs, WSGI, Celery
 │   │   └── settings/       # base.py, dev.py, prod.py, test.py
@@ -203,11 +212,54 @@ Lingaru/
 
 ### Discover (`/api/discover/`)
 
+The Discover feed surfaces short word, grammar, and trivia cards. **News has its own dedicated `/api/news/` namespace** (see below).
+
 | Method | Endpoint | Description |
 |--------|----------|-------------|
-| GET | `/api/discover/feed/` | Explore feed cards |
-| POST | `/api/discover/generate-more/` | Generate fresh cards |
-| POST | `/api/discover/cards/{id}/interact/` | Record card interaction |
+| GET | `/api/discover/feed/` | Explore feed cards (excludes news) |
+| POST | `/api/discover/generate-more/` | Generate fresh word + grammar + trivia cards |
+| POST | `/api/discover/cards/{id}/interact/` | Mark card as seen, award XP |
+
+### News (`/api/news/`)
+
+A dedicated practice surface — French news articles with vocabulary, expressions, and grammar points pulled out for guided study. Falls back to a curated 9-topic offline mock library when the LLM is unavailable.
+
+| Method | Endpoint | Description |
+|--------|----------|-------------|
+| GET | `/api/news/?topic={slug}` | Paginated list (filter by topic: `politics`, `sports`, `culture`, `economy`, `science`, `tech`, `society`, `environ`, `world`) |
+| GET | `/api/news/{id}/` | Full article + `vocabulary[]`, `expressions[]`, `grammar_points[]` |
+| POST | `/api/news/generate/` | Generate a new article (optional `{ "topic": "…" }`) |
+| POST | `/api/news/{id}/interact/` | Mark as read, award XP |
+
+### Grammar Booster (`/api/grammar/`)
+
+| Method | Endpoint | Description |
+|--------|----------|-------------|
+| GET | `/api/grammar/hub/` | Categories + mastery aggregates + recommended-next topic |
+| GET | `/api/grammar/categories/` | List all 6 grammar categories |
+| GET | `/api/grammar/topics/` | List topics, filterable by category and CEFR level |
+| GET | `/api/grammar/topics/{slug}/` | Topic detail (markdown explanation, formula, examples, exceptions, common mistakes) |
+| POST | `/api/grammar/sessions/start/` | Start a drill session (`{ topic_id?, mode: "drill"\|"diagnostic" }`) |
+| POST | `/api/grammar/sessions/{id}/answer/` | Submit a drill answer |
+| POST | `/api/grammar/sessions/{id}/complete/` | Finish session, update SM-2 mastery, award XP |
+
+### Exam Prep (`/api/exam-prep/`)
+
+| Method | Endpoint | Description |
+|--------|----------|-------------|
+| GET | `/api/exam-prep/hub/` | Countdown, readiness gauge, week plan, weak topics |
+| GET | `/api/exam-prep/exercises/` | List exercises (filter by exam, section, level) |
+| POST | `/api/exam-prep/sessions/start/` | Start a section drill or full mock |
+| POST | `/api/exam-prep/sessions/{id}/respond/` | Submit an answer |
+| POST | `/api/exam-prep/sessions/{id}/complete/` | Finish, score, persist to history |
+| GET | `/api/exam-prep/sessions/history/` | Past mocks and section drills |
+
+### Dictionary (`/api/dictionary/`)
+
+| Method | Endpoint | Description |
+|--------|----------|-------------|
+| POST | `/api/dictionary/lookup/` | Look up a French word — POS, gender, definitions, examples, synonyms, antonyms, etymology |
+| POST | `/api/dictionary/conjugate/` | Conjugate a verb across 8 tenses |
 
 ### Documents (`/api/documents/`)
 

@@ -335,9 +335,150 @@ LLMService
 | **5 - AI Assistant** | Gemini/Groq integration, chat, writing correction, grammar explanation |
 | **6 - Gamification** | XP, streaks, badges, leaderboard |
 | **7 - Audio** | TTS for vocab, STT for pronunciation, dictation |
-| **8 - Discover** | Explore feed, news fetcher, generate more |
+| **8 - Discover** | Explore feed (word / grammar / trivia cards) |
 | **9 - Advanced Practice** | Conjugation drills, cloze exercises, mistake journal, SRS |
 | **10 - Multimodal** | Image queries, voice conversation practice |
 | **11 - RAG** | Textbook document indexing, context-aware answers |
+| **12 - Dictionary** | French dictionary lookups + verb conjugator (cached LLM-generated entries) |
+| **13 - Mini Games** | 6 games — Word Scramble, Match Pairs, Gender Snap, Missing Letter, Speed Round, Listening Challenge |
+| **14 - Exam Prep** | TCF / TEF prep — diagnostic, week plan, section drills, mocks history |
+| **15 - Grammar Booster** | Dedicated grammar app — 6 categories, 11 topics, 90 drill items, SM-2 mastery scoring |
+| **16 - News** | Standalone /news surface — articles by topic with vocab, expressions, grammar tabs |
+| **17 - UI Overhaul** | Premium token system, Hybride dashboard, redesigned Assistant, gradient top-band cards across all pages |
+
+Each phase is self-contained and deployable. Features can be reordered based on priorities.
+
+---
+
+## Addendum (April 2026) — Phases 12–17
+
+This addendum captures the apps and surfaces added after the original 11-phase plan landed. Models live alongside existing Django apps (`apps.dictionary`, `apps.exam_prep`, `apps.grammar`); UI sits on the same React + Vite + Tailwind base as the rest of the app.
+
+### Phase 12 — Dictionary (`apps.dictionary`)
+
+LLM-backed lookup with a caching layer so repeat lookups stay free.
+
+- `POST /api/dictionary/lookup/` — body `{ "word": "..." }` → `{ result: { word, part_of_speech, gender, register, definitions[], examples[], synonyms[], antonyms[], etymology } }`
+- `POST /api/dictionary/conjugate/` — body `{ "verb": "..." }` → `{ result: { verb, auxiliary, past_participle, present_participle, tenses: { Présent, Imparfait, Passé composé, Futur simple, Conditionnel présent, Subjonctif présent, Impératif, Plus-que-parfait } } }`
+- LLM responses cached in `DictionaryEntry` and `ConjugationCache` models keyed by lemma.
+
+### Phase 13 — Mini Games (frontend-only)
+
+Six gameplay loops, each with its own settings (count / timer / preview duration) on the Settings page:
+
+| Game | Mechanic |
+|---|---|
+| Word Scramble | Drag-letters or type to unscramble; comma-separated synonyms accepted; 350 ms feedback delay |
+| Match Pairs | French ↔ English memory grid with preview window; matched pairs stay revealed; topic-coordinated colours (FR=info, EN=purple, matched=success) |
+| Gender Snap | Le / La timed tap challenge with feminine = pink, masculine = info |
+| Missing Letter | Fill in the missing letter, accent-insensitive comparison |
+| Speed Round | True / False rapid-fire with overall countdown |
+| Listening Challenge | TTS-driven listen-and-type with hints |
+
+Mini-game scores post to `/api/gamification/mini-game/score/`.
+
+### Phase 14 — Exam Prep (`apps.exam_prep`)
+
+End-to-end TCF / TEF practice. Same hub-list-detail-session pattern as Grammar Booster.
+
+**Models** — `ExamSection`, `ExamExercise`, `ExamSession`, `ExamResponse`. Sessions carry mode (`section_drill | mock`), exam (`tcf | tef`), and level. Responses store user answer + AI-graded score where applicable (writing / speaking).
+
+**Endpoints** (`/api/exam-prep/`):
+- `GET hub/` — countdown, readiness gauge, week plan, weak topics
+- `GET exercises/` — filter by exam/section/level
+- `POST sessions/start/` — `{ exam, section?, mode }`
+- `POST sessions/{id}/respond/` — submit answer
+- `POST sessions/{id}/complete/` — score + persist
+- `GET sessions/history/` — past mocks
+
+### Phase 15 — Grammar Booster (`apps.grammar`)
+
+Distinct from `apps.content.GrammarRule` (which is theme-attached). This app is **structural** practice (tenses, pronouns, articles, negation, moods, sentence structure).
+
+**Models**
+
+- `GrammarCategory` — slug, icon, order (6 seeded: tenses, pronouns, articles, negation, moods, structure)
+- `GrammarTopic` — category FK, slug, cefr_level, summary, explanation (markdown), formula, examples (JSON), exceptions (JSON), common_mistakes (JSON)
+- `GrammarDrillItem` — topic FK, type (`fill_blank | mcq | transform | error_detect | reorder`), prompt, correct_answer, options (JSON), explanation, difficulty
+- `GrammarMastery` — user, topic, attempts, correct_count, mastery_score 0–100, last_drilled_at, next_review_at, interval_days, ease_factor (default 2.5) — SM-2 with `CORRECT_GAIN=5`, `WRONG_PENALTY=3`, `MASTERED_THRESHOLD=80`, `MASTERED_MIN_ATTEMPTS=10`
+- `GrammarSession`, `GrammarAnswer` — practice telemetry
+
+**XP** — `XP_PER_CORRECT_DRILL=3`, `XP_DRILL_PERFECT_BONUS=10`.
+
+**Endpoints** (`/api/grammar/`):
+- `GET hub/` — categories + mastery aggregates + recommended next topic (priority: due-for-review → weakest non-mastered → first not-started)
+- `GET categories/`, `GET topics/`, `GET topics/{slug}/`
+- `POST sessions/start/` — `{ topicId?, mode: "drill" | "diagnostic" }` — diagnostic picks one drill per topic at user's CEFR level
+- `POST sessions/{id}/answer/` — records answer (no server-side grading; client validates against `correct_answer` returned in serializer with 350 ms feedback delay)
+- `POST sessions/{id}/complete/` — calls `update_mastery`, awards XP, calls `check_streak`
+
+Seeded with 90 real drill items (passé composé avoir/être, imparfait, futur simple, direct/indirect object pronouns, definite/partitive articles, ne…pas, subjunctive present, forming questions).
+
+### Phase 16 — News (`apps.discover`, alternate URL namespace)
+
+Reuses `DiscoverCard` with two new optional fields on the model:
+
+- `topic` — choices: `politics, sports, culture, economy, science, tech, society, environ, world, misc`
+- `level` — CEFR `A1 | A2 | B1 | B2 | C1 | C2`
+
+Discover feed now `.exclude(type="news")` so each surface has a clear purpose. News cards live for 7 days (vs 24h for Discover types).
+
+`content_json` shape for news:
+
+```json
+{
+  "article_fr": "...",
+  "article_en": "...",
+  "vocabulary":     [{ "french", "english", "pos", "example_fr" }],
+  "expressions":    [{ "fr", "en", "note" }],
+  "grammar_points": [{ "title", "explanation", "example_fr" }]
+}
+```
+
+Backed by `services.llm` with a curated 9-topic offline fallback library so the feature works without a live LLM. `seed_news` management command bulk-loads the fallback set.
+
+**Endpoints** (`/api/news/`):
+- `GET ` — paginated list, optional `?topic=` filter, returns `{ articles, topics }`
+- `GET {id}/` — full article
+- `POST generate/` — generate one (optional topic)
+- `POST {id}/interact/` — mark read, award XP
+
+### Phase 17 — UI Overhaul
+
+#### Design tokens
+
+Tailwind config carries: `primary` (indigo-violet), `accent` (coral), `success`, `danger`, `warn`, `info`, `surface` (slate), `paper`, `ink`. Typography scale: `display-xl, display, h1, h2, h3, h4, body-lg, body, caption, eyebrow` with baked-in line-height and tracking. Custom shadows: `card, card-hover, card-elevated, glow-primary, glow-success, glow-danger, glow-accent`. Custom keyframes: `fade-in, fade-in-up, slide-in-*, scale-in, pop-in, bounce-in, shake, confetti-pop, confetti-fall, pulse-glow, recording-pulse, count-up, shimmer, float, gradient-shift, spin-slow, flame, pulse-soft`.
+
+Fonts: **Inter** (UI), **Instrument Serif** (display headlines + pull quotes — `font-editorial` utility), **JetBrains Mono** (numerics).
+
+CSS component layer: `.card, .card-hover, .card-elevated, .btn-primary/secondary/ghost/accent/danger/success, .btn-sm/md/lg/xl, .badge-*, .input, .input-error, .focus-ring, .section-label, .eyebrow-primary, .stat-pill, .kbd, .glass, .skeleton, .underline-wavy`.
+
+Shared UI components: `PageHeader, EmptyState, Confetti, TriumphHero, Skeleton/SkeletonText/SkeletonCard/SkeletonCircle/SkeletonGrid`.
+
+#### Dashboard — Hybride direction
+
+- Header: French date · 24h clock, time-of-day greeting (Bonjour / Bon après-midi / Bonsoir), streak-flame + XP pill
+- Hero: dark ink + primary panel with a recommended subjunctif drill on the **left** (col-span 7), `CompassDial` SVG radar with 6 skill axes on the **right** (col-span 5)
+- Today's plan trio inside the hero
+- Bottom row: TCF countdown / Mot du jour / Quick rail (4 tiles)
+- Citation du jour card (13 curated French quotes, daily rotation, FR ↔ EN toggle, AudioPlayButton)
+- Recent activity panel (sourced from `trend.top_activities` + `trend.sample_mistakes`)
+
+#### Assistant — single-column chat with drawers
+
+- Sticky header: history-drawer toggle, "Nouvelle" pill, scenario/mode title, Tuteur avatar button, Erreurs flag button
+- HistoryDrawer (left): mode picker, scenario tile grid, search, real conversation history
+- TuteurDrawer (right): persona card, mode + scenario pickers
+- ErreursDrawer (right): per-message correction list (wired for backend issues when surfaced)
+- 10 scenario-specific copy bundles (placeholder, starter chips, mise-en-situation sentence, header blurb)
+- Bypasses the Layout's max-width wrapper for an edge-to-edge feel
+
+#### Layout
+
+Sidebar nav: groups have an optional `collapsible` flag — Practice is collapsible (chevron header, persisted to `localStorage` under `lingaru.sidebar.collapsedSections.v1`). Auto-expands when the active route lives inside a collapsed section. Mistakes was demoted to a Progress page header action; Documents was demoted to a Settings → Security card.
+
+The Assistant route is special-cased in `Layout.jsx` to render full-bleed (no `max-w-7xl mx-auto px-4…py-8` wrapper).
+
+---
 
 Each phase is self-contained and deployable. Features can be reordered based on priorities.

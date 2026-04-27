@@ -738,7 +738,7 @@ export default function Dashboard() {
 
   if (loading) {
     return (
-      <div className="bg-grid-soft -mx-4 sm:-mx-6 lg:-mx-8 -my-8 px-4 sm:px-6 lg:px-8 py-8 min-h-full">
+      <div className="min-h-full">
         <div className="max-w-7xl mx-auto space-y-5">
           <div className="space-y-2">
             <div className="skeleton h-3 w-32 rounded" />
@@ -764,7 +764,7 @@ export default function Dashboard() {
   }
 
   return (
-    <div className="bg-grid-soft -mx-4 sm:-mx-6 lg:-mx-8 -my-8 px-4 sm:px-6 lg:px-8 py-8 min-h-full">
+    <div className="min-h-full">
       {celebrate && <Confetti count={60} duration={2000} />}
 
       <div className="max-w-7xl mx-auto space-y-5">

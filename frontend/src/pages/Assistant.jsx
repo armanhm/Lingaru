@@ -678,7 +678,7 @@ export default function Assistant() {
     : "Écrivez en français… Claire vous corrigera gentiment.";
 
   return (
-    <div className="-mx-4 sm:-mx-6 lg:-mx-8 -my-8 h-[calc(100vh-4rem)] flex flex-col bg-surface-50 dark:bg-surface-950 overflow-hidden">
+    <div className="h-full flex flex-col bg-surface-50 dark:bg-surface-950 overflow-hidden">
       {/* ═══ Sticky session header ═══════════════════════════════ */}
       <div className="px-3 sm:px-5 py-2.5 bg-white/85 dark:bg-surface-900/80 backdrop-blur-lg border-b border-surface-100 dark:border-surface-800 shrink-0">
         <div className="flex items-center gap-2 max-w-5xl mx-auto">

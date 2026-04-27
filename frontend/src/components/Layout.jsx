@@ -341,11 +341,19 @@ export default function Layout() {
           <Link to="/" className="text-lg font-extrabold text-gradient-primary">Lingaru</Link>
         </header>
 
-        <main className="flex-1 overflow-y-auto">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        {/* The Assistant page renders edge-to-edge with its own scrolling
+           region so its sticky header and composer can span the full width. */}
+        {location.pathname === "/assistant" ? (
+          <main className="flex-1 overflow-hidden">
             <Outlet />
-          </div>
-        </main>
+          </main>
+        ) : (
+          <main className="flex-1 overflow-y-auto">
+            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+              <Outlet />
+            </div>
+          </main>
+        )}
       </div>
     </div>
   );

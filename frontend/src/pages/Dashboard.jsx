@@ -1,11 +1,13 @@
 import { useEffect, useMemo, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../contexts/AuthContext";
 import { getStats, getTrendReport } from "../api/gamification";
 import { getSRSDueCards } from "../api/progress";
+import { getRandomVocabulary } from "../api/content";
 import { useCountUp } from "../hooks/useAnimations";
 import { useLastActivity } from "../hooks/useResumeSession";
 import { Confetti } from "../components/ui";
+import AudioPlayButton from "../components/AudioPlayButton";
 
 /* ─────────────────────────────────────────────────────────
  * Locale helpers — French dashboard
@@ -22,58 +24,57 @@ function clockHM(d = new Date()) {
   return `${h}:${m}`;
 }
 
-/* Stable pseudo-random 35-day activity, seeded by today so it's the same
- * within a session but evolves day-to-day. Real implementation would use
- * the trend report's daily breakdown when available. */
-function makeActivityCells(streak = 23) {
-  const seed = Math.floor(Date.now() / 86_400_000);
-  let s = seed;
-  const next = () => { s = (s * 1664525 + 1013904223) & 0x7fffffff; return s / 0x7fffffff; };
-  const cells = [];
-  for (let i = 0; i < 35; i++) {
-    const daysFromToday = 34 - i;
-    // The most recent N days (= streak) are always active
-    const inStreak = daysFromToday < Math.min(streak, 30);
-    const r = next();
-    let intensity;
-    if (inStreak) intensity = Math.max(1, Math.round(r * 4));
-    else intensity = r < 0.18 ? 0 : Math.round(r * 4);
-    cells.push({ idx: i, intensity, minutes: intensity * 7 + (i % 3) });
-  }
-  return cells;
-}
+/* ─────────────────────────────────────────────────────────
+ * Curated daily quotes (French + English) — rotated daily
+ * ───────────────────────────────────────────────────────── */
+const DAILY_QUOTES = [
+  { french: "La vie est belle.", english: "Life is beautiful.", author: "Proverbe français", type: "proverb" },
+  { french: "Chaque jour est une nouvelle chance de changer ta vie.", english: "Every day is a new chance to change your life.", author: "Sagesse populaire", type: "inspiration" },
+  { french: "Il n'y a pas de chemin vers le bonheur — le bonheur est le chemin.", english: "There is no path to happiness; happiness is the path.", author: "Proverbe français", type: "proverb" },
+  { french: "Sous le pont Mirabeau coule la Seine\nEt nos amours\nFaut-il qu'il m'en souvienne\nLa joie venait toujours après la peine.", english: "Under the Mirabeau Bridge flows the Seine\nAnd our loves\nMust I be reminded\nJoy always came after sorrow.", author: "Guillaume Apollinaire", type: "poem" },
+  { french: "L'imagination est plus importante que la connaissance.", english: "Imagination is more important than knowledge.", author: "Albert Einstein", type: "inspiration" },
+  { french: "Il faut toujours viser la lune, car même en cas d'échec, on atterrit dans les étoiles.", english: "Always aim for the moon — even if you miss, you'll land among the stars.", author: "Oscar Wilde", type: "inspiration" },
+  { french: "Mon âme a son secret, ma vie a son mystère.", english: "My soul has its secret, my life has its mystery.", author: "Félix Arvers", type: "poem" },
+  { french: "Le bonheur est la seule chose qui se double si on le partage.", english: "Happiness is the only thing that doubles when shared.", author: "Albert Schweitzer", type: "inspiration" },
+  { french: "On ne voit bien qu'avec le cœur. L'essentiel est invisible pour les yeux.", english: "One sees clearly only with the heart. What is essential is invisible to the eye.", author: "Antoine de Saint-Exupéry", type: "literature" },
+  { french: "La liberté commence où l'ignorance finit.", english: "Freedom begins where ignorance ends.", author: "Victor Hugo", type: "inspiration" },
+  { french: "Je pense, donc je suis.", english: "I think, therefore I am.", author: "René Descartes", type: "philosophy" },
+  { french: "Un sourire coûte moins cher que l'électricité, mais donne autant de lumière.", english: "A smile costs less than electricity, but gives just as much light.", author: "Abbé Pierre", type: "inspiration" },
+  { french: "Être ou ne pas être, telle est la question.", english: "To be or not to be, that is the question.", author: "Shakespeare (traduit)", type: "literature" },
+];
 
-/* Mock skill axes — would be sourced from a real /skills/snapshot API later. */
+const QUOTE_TYPE_LABEL = {
+  proverb:     "Proverbe",
+  inspiration: "Inspiration",
+  poem:        "Poésie",
+  literature:  "Littérature",
+  philosophy:  "Philosophie",
+};
+
+/* Mock skill axes for the compass — TODO: wire to /skills/snapshot when shipped */
 const SKILLS = [
-  { key: "vocab",   label: "Vocabulaire",  value: 78, target: 90, delta: 4, hint: "+82 mots cette semaine" },
-  { key: "grammar", label: "Grammaire",    value: 64, target: 85, delta: 2, hint: "Subjonctif à revoir" },
-  { key: "listen",  label: "Compréhension",value: 71, target: 85, delta: 5, hint: "RFI Journal · 4 sessions" },
-  { key: "speak",   label: "Expression",   value: 52, target: 80, delta: 8, hint: "3 roleplays cette semaine" },
-  { key: "read",    label: "Lecture",      value: 81, target: 90, delta: 1, hint: "Le Monde · article B1" },
-  { key: "write",   label: "Rédaction",    value: 58, target: 75, delta: 3, hint: "1 dictée corrigée" },
+  { key: "vocab",   label: "Vocabulaire",   value: 78, target: 90, delta: 4, hint: "+82 mots cette semaine",   to: "/dictionary" },
+  { key: "grammar", label: "Grammaire",     value: 64, target: 85, delta: 2, hint: "Subjonctif à revoir",       to: "/grammar" },
+  { key: "listen",  label: "Compréhension", value: 71, target: 85, delta: 5, hint: "Dictée · 4 sessions",       to: "/practice/dictation" },
+  { key: "speak",   label: "Expression",    value: 52, target: 80, delta: 8, hint: "3 roleplays cette semaine", to: "/assistant" },
+  { key: "read",    label: "Lecture",       value: 81, target: 90, delta: 1, hint: "Discover · article B1",     to: "/discover" },
+  { key: "write",   label: "Rédaction",     value: 58, target: 75, delta: 3, hint: "1 dictée corrigée",         to: "/practice/dictation" },
 ];
 
 const TODAY_PLAN = [
   { id: "warm",  label: "Échauffement", minutes: 6,  icon: "cards", status: "ready",       to: "/practice/srs" },
-  { id: "focus", label: "Séance ciblée", minutes: 12, icon: "brain", status: "in-progress", to: "/grammar" },
+  { id: "focus", label: "Séance ciblée", minutes: 12, icon: "brain", status: "in-progress", to: "/grammar/topics/subjunctive-present" },
   { id: "talk",  label: "Parler",       minutes: 8,  icon: "mic",   status: "ready",       to: "/assistant" },
 ];
 
-const WORD_OF_DAY = {
-  word: "flâner",
-  ipa: "/flɑ.ne/",
-  example: "J'aime flâner le long de la Seine au coucher du soleil.",
-};
-
 /* ─────────────────────────────────────────────────────────
- * Inline icon set — 1.6px stroke, matched to compass design
+ * Inline icon set
  * ───────────────────────────────────────────────────────── */
 const Ic = {
   bolt:    (p) => (<svg {...p} fill="none" stroke="currentColor" strokeWidth="1.8" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M13 3L4 14h6l-1 7 9-11h-6l1-7z" /></svg>),
   play:    (p) => (<svg {...p} fill="currentColor" viewBox="0 0 24 24"><path d="M7 4.5v15a1 1 0 001.55.83l11-7.5a1 1 0 000-1.66l-11-7.5A1 1 0 007 4.5z" /></svg>),
   check:   (p) => (<svg {...p} fill="none" stroke="currentColor" strokeWidth="2.4" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" /></svg>),
   refresh: (p) => (<svg {...p} fill="none" stroke="currentColor" strokeWidth="1.6" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M4 4v5h5M20 20v-5h-5M5 9a7 7 0 0112-3l3 3M19 15a7 7 0 01-12 3l-3-3" /></svg>),
-  speaker: (p) => (<svg {...p} fill="none" stroke="currentColor" strokeWidth="1.6" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M11 5L6 9H3v6h3l5 4V5zM15.5 8.5a5 5 0 010 7M18 6a8 8 0 010 12" /></svg>),
   cards:   (p) => (<svg {...p} fill="none" stroke="currentColor" strokeWidth="1.6" viewBox="0 0 24 24"><rect x="3" y="6" width="14" height="12" rx="2" /><path strokeLinecap="round" d="M7 3h12a2 2 0 012 2v12" /></svg>),
   brain:   (p) => (<svg {...p} fill="none" stroke="currentColor" strokeWidth="1.6" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M9 4a3 3 0 00-3 3v1a3 3 0 00-2 5 3 3 0 002 5 3 3 0 003 3 2 2 0 002-2V6a2 2 0 00-2-2zM15 4a3 3 0 013 3v1a3 3 0 012 5 3 3 0 01-2 5 3 3 0 01-3 3 2 2 0 01-2-2V6a2 2 0 012-2z" /></svg>),
   mic:     (p) => (<svg {...p} fill="none" stroke="currentColor" strokeWidth="1.6" viewBox="0 0 24 24"><rect x="9" y="3" width="6" height="12" rx="3" /><path strokeLinecap="round" d="M5 11a7 7 0 0014 0M12 18v3" /></svg>),
@@ -86,7 +87,7 @@ const Ic = {
 /* ─────────────────────────────────────────────────────────
  * CompassDial — radar SVG
  * ───────────────────────────────────────────────────────── */
-function CompassDial({ skills, hovered, onHover, level = "B1" }) {
+function CompassDial({ skills, hovered, onHover, onSelect, level = "B1" }) {
   const size = 360, cx = size / 2, cy = size / 2;
   const N = skills.length;
   const rings = [25, 50, 75, 100];
@@ -116,7 +117,6 @@ function CompassDial({ skills, hovered, onHover, level = "B1" }) {
 
         <circle cx={cx} cy={cy} r="155" fill="url(#dialGlow)" />
 
-        {/* Concentric rings */}
         {rings.map((p, i) => (
           <circle
             key={i}
@@ -127,7 +127,6 @@ function CompassDial({ skills, hovered, onHover, level = "B1" }) {
           />
         ))}
 
-        {/* Spokes */}
         {skills.map((s, i) => {
           const [x, y] = polar(i * 360 / N, 130);
           return (
@@ -136,17 +135,14 @@ function CompassDial({ skills, hovered, onHover, level = "B1" }) {
           );
         })}
 
-        {/* Target ring */}
         <path d={path(targetPoints)} fill="none" stroke="#f07d1e" strokeWidth="1.2" strokeDasharray="3 3" opacity="0.7" />
-
-        {/* Value polygon */}
         <path d={path(valuePoints)} fill="url(#valFill)" stroke="#6366f1" strokeWidth="1.8" />
 
-        {/* Vertices */}
         {valuePoints.map(([x, y], i) => (
           <g key={i}
             onMouseEnter={() => onHover(skills[i].key)}
             onMouseLeave={() => onHover(null)}
+            onClick={() => onSelect && onSelect(skills[i])}
             style={{ cursor: "pointer" }}>
             <circle
               cx={x} cy={y}
@@ -157,7 +153,6 @@ function CompassDial({ skills, hovered, onHover, level = "B1" }) {
           </g>
         ))}
 
-        {/* Center pin */}
         <circle cx={cx} cy={cy} r="34"
           className="fill-white dark:fill-surface-900 stroke-surface-200 dark:stroke-surface-800" />
         <text x={cx} y={cy - 2} textAnchor="middle"
@@ -169,7 +164,6 @@ function CompassDial({ skills, hovered, onHover, level = "B1" }) {
           vers B2
         </text>
 
-        {/* Skill labels */}
         {skills.map((s, i) => {
           const [x, y] = polar(i * 360 / N, 158);
           const isHover = hovered === s.key;
@@ -177,6 +171,7 @@ function CompassDial({ skills, hovered, onHover, level = "B1" }) {
             <g key={s.key}
               onMouseEnter={() => onHover(s.key)}
               onMouseLeave={() => onHover(null)}
+              onClick={() => onSelect && onSelect(s)}
               style={{ cursor: "pointer" }}>
               <text x={x} y={y} textAnchor="middle" dominantBaseline="middle"
                 className={isHover ? "fill-primary-700 dark:fill-primary-300" : "fill-surface-700 dark:fill-surface-200"}
@@ -193,7 +188,6 @@ function CompassDial({ skills, hovered, onHover, level = "B1" }) {
         })}
       </svg>
 
-      {/* Slow rotating dotted ring — adds quiet life to the compass */}
       <div className="absolute inset-0 animate-spin-slow opacity-30 pointer-events-none">
         <svg viewBox={`0 0 ${size} ${size}`} className="w-full h-full">
           <circle cx={cx} cy={cy} r="148" fill="none" stroke="#6366f1" strokeDasharray="2 8" strokeWidth="1" />
@@ -204,7 +198,7 @@ function CompassDial({ skills, hovered, onHover, level = "B1" }) {
 }
 
 /* ─────────────────────────────────────────────────────────
- * Header — French date, B2 cap, streak/XP pill
+ * Header
  * ───────────────────────────────────────────────────────── */
 function HybridHeader({ user, stats, animatedXP, examDaysLeft }) {
   return (
@@ -242,6 +236,7 @@ function HybridHeader({ user, stats, animatedXP, examDaysLeft }) {
  * HybridHero — compass + dark CTA panel
  * ───────────────────────────────────────────────────────── */
 function HybridHero({ srsDue }) {
+  const navigate = useNavigate();
   const [hovered, setHovered] = useState("grammar");
   const focus = SKILLS.find((s) => s.key === hovered) || SKILLS[1];
 
@@ -255,10 +250,15 @@ function HybridHero({ srsDue }) {
             <h3 className="text-[15px] font-bold text-surface-900 dark:text-surface-50">Compétences · B1 vers B2</h3>
           </div>
           <span className="hidden sm:block text-[10px] font-mono uppercase tracking-[0.14em] text-surface-400 dark:text-surface-500">
-            survolez les axes
+            cliquez un axe
           </span>
         </div>
-        <CompassDial skills={SKILLS} hovered={hovered} onHover={(k) => setHovered(k || "grammar")} />
+        <CompassDial
+          skills={SKILLS}
+          hovered={hovered}
+          onHover={(k) => setHovered(k || "grammar")}
+          onSelect={(s) => navigate?.(s.to)}
+        />
       </div>
 
       {/* RIGHT — recommended next session */}
@@ -298,13 +298,14 @@ function HybridHero({ srsDue }) {
             </span>
           </div>
 
-          {/* Today's plan trio */}
           <div className="mt-5 grid grid-cols-3 gap-px bg-white/10 rounded-xl overflow-hidden">
             {TODAY_PLAN.map((p) => {
               const I = Ic[p.icon] || Ic.brain;
               const done = p.status === "done";
               const live = p.status === "in-progress";
-              const minutes = p.id === "warm" ? Math.max(p.minutes, srsDue ? Math.min(srsDue, 30) : p.minutes) : p.minutes;
+              const minutes = p.id === "warm" && srsDue > 0
+                ? Math.max(p.minutes, Math.min(srsDue, 30))
+                : p.minutes;
               return (
                 <Link
                   key={p.id}
@@ -329,83 +330,72 @@ function HybridHero({ srsDue }) {
 }
 
 /* ─────────────────────────────────────────────────────────
- * GardenStrip — 35-day contribution graph
+ * QuoteCard — daily inspiration phrase (rotates daily)
  * ───────────────────────────────────────────────────────── */
-function GardenStrip({ stats, weekXP }) {
-  const cells = useMemo(() => makeActivityCells(stats?.current_streak ?? 0), [stats?.current_streak]);
-  const active = cells.filter((c) => c.intensity > 0).length;
-  const totalMinutes = cells.reduce((s, c) => s + c.minutes, 0);
-  const medianPerDay = active > 0 ? Math.round(totalMinutes / active) : 0;
-  const totalHours = Math.floor(totalMinutes / 60);
-  const totalRem   = totalMinutes % 60;
+function QuoteCard({ quoteIndex, onShuffle }) {
+  const [showTranslation, setShowTranslation] = useState(false);
+  const quote = DAILY_QUOTES[quoteIndex];
+  const frenchLines = quote.french.split("\n");
+  const englishLines = quote.english.split("\n");
+
+  const handleShuffle = () => {
+    setShowTranslation(false);
+    onShuffle();
+  };
 
   return (
-    <div className="bg-white dark:bg-surface-900/60 border border-surface-100 dark:border-surface-800 rounded-3xl p-5 sm:p-6 animate-fade-in-up">
-      <div className="flex items-baseline justify-between mb-3 gap-3 flex-wrap">
-        <div>
-          <p className="text-[10px] uppercase tracking-[0.14em] font-semibold text-surface-400 dark:text-surface-500">Le jardin</p>
-          <h3 className="text-[15px] font-bold text-surface-900 dark:text-surface-50">
-            35 jours · <span className="num">{active}</span> actifs · médiane <span className="num">{medianPerDay}</span> min/jour
-          </h3>
-        </div>
-        <div className="hidden sm:flex items-center gap-1.5 text-[10px] text-surface-400 dark:text-surface-500">
-          <span>moins</span>
-          {[0, 1, 2, 3, 4].map((i) => (
-            <span key={i} className={`w-2.5 h-2.5 rounded-sm ${
-              i === 0 ? "bg-surface-100 dark:bg-surface-800" :
-              i === 1 ? "bg-primary-200 dark:bg-primary-900/70" :
-              i === 2 ? "bg-primary-400 dark:bg-primary-700" :
-              i === 3 ? "bg-primary-600 dark:bg-primary-500" :
-                        "bg-primary-800 dark:bg-primary-300"
-            }`} />
-          ))}
-          <span>plus</span>
-        </div>
+    <div className="relative overflow-hidden rounded-3xl bg-white dark:bg-surface-900/60 border border-surface-100 dark:border-surface-800 p-5 sm:p-6 h-full flex flex-col animate-fade-in-up">
+      <div className="absolute inset-x-0 top-0 h-1 bg-gradient-to-r from-primary-500 via-primary-400 to-accent-500" />
+      <span className="absolute -top-6 -right-2 text-[8rem] leading-none font-editorial text-primary-100 dark:text-primary-900/40 select-none pointer-events-none">"</span>
+
+      <div className="relative flex items-center justify-between mb-2">
+        <p className="text-[10px] uppercase tracking-[0.14em] font-semibold text-primary-600 dark:text-primary-400">Citation du jour</p>
+        <button
+          onClick={handleShuffle}
+          aria-label="Citation suivante"
+          className="p-1.5 rounded-lg text-surface-300 dark:text-surface-600 hover:text-primary-500 hover:bg-primary-50/60 dark:hover:bg-primary-900/20 transition-all hover:rotate-180 duration-500 focus-ring"
+        >
+          <Ic.refresh className="w-3.5 h-3.5" />
+        </button>
       </div>
 
-      <div className="grid grid-cols-7 grid-rows-5 gap-[4px]" style={{ gridAutoFlow: "column" }}>
-        {cells.map((c, i) => {
-          const isToday = i === cells.length - 1;
-          return (
-            <div
-              key={i}
-              title={`${c.minutes} min`}
-              className={`h-[16px] rounded-[3px] transition-colors ${
-                c.intensity === 0 ? "bg-surface-100 dark:bg-surface-800" :
-                c.intensity === 1 ? "bg-primary-200 dark:bg-primary-900/70" :
-                c.intensity === 2 ? "bg-primary-400 dark:bg-primary-700" :
-                c.intensity === 3 ? "bg-primary-600 dark:bg-primary-500" :
-                                    "bg-primary-800 dark:bg-primary-300"
-              } ${isToday ? "ring-2 ring-accent-500 ring-offset-1 ring-offset-white dark:ring-offset-surface-900" : ""}`}
-            />
-          );
-        })}
-      </div>
+      <div className="relative flex-1 flex flex-col">
+        <div className="flex gap-2 items-start mb-3">
+          <p className="flex-1 font-editorial text-[20px] sm:text-[22px] leading-[1.35] text-surface-900 dark:text-surface-50 italic">
+            {frenchLines.map((line, i) => (
+              <span key={i}>{line}{i < frenchLines.length - 1 && <br />}</span>
+            ))}
+          </p>
+          <AudioPlayButton text={quote.french.replace(/\n/g, " ")} />
+        </div>
 
-      <div className="mt-4 grid grid-cols-2 sm:grid-cols-4 divide-y sm:divide-y-0 sm:divide-x divide-surface-100 dark:divide-surface-800 -mx-1">
-        <div className="px-3 py-2 sm:py-0">
-          <p className="text-[9px] uppercase tracking-[0.14em] font-semibold text-surface-400 dark:text-surface-500">Sessions</p>
-          <p className="text-[15px] font-bold text-surface-900 dark:text-surface-50 num">{stats?.lessons_this_week ?? active}</p>
+        <div className="flex items-center gap-2 flex-wrap mb-2">
+          <span className="text-[10px] font-mono uppercase tracking-[0.14em] font-semibold text-primary-700 dark:text-primary-300 bg-primary-50 dark:bg-primary-900/30 px-2 py-0.5 rounded-full">
+            {QUOTE_TYPE_LABEL[quote.type] || quote.type}
+          </span>
+          <span className="text-[12px] text-surface-500 dark:text-surface-400 truncate">— {quote.author}</span>
         </div>
-        <div className="px-3 py-2 sm:py-0">
-          <p className="text-[9px] uppercase tracking-[0.14em] font-semibold text-surface-400 dark:text-surface-500">Temps total</p>
-          <p className="text-[15px] font-bold text-surface-900 dark:text-surface-50 num">{totalHours}h {String(totalRem).padStart(2, "0")}</p>
-        </div>
-        <div className="px-3 py-2 sm:py-0">
-          <p className="text-[9px] uppercase tracking-[0.14em] font-semibold text-surface-400 dark:text-surface-500">Plus longue série</p>
-          <p className="text-[15px] font-bold text-surface-900 dark:text-surface-50 num">{stats?.longest_streak ?? stats?.current_streak ?? 0} jours</p>
-        </div>
-        <div className="px-3 py-2 sm:py-0">
-          <p className="text-[9px] uppercase tracking-[0.14em] font-semibold text-surface-400 dark:text-surface-500">XP semaine</p>
-          <p className="text-[15px] font-bold text-surface-900 dark:text-surface-50 num">{weekXP ?? "—"}</p>
-        </div>
+
+        <button
+          onClick={() => setShowTranslation((v) => !v)}
+          className="self-start text-[12px] font-semibold text-primary-600 dark:text-primary-400 hover:text-primary-700 dark:hover:text-primary-300 focus-ring rounded px-1 -mx-1 transition-colors mt-auto pt-1"
+        >
+          {showTranslation ? "Masquer la traduction" : "Voir la traduction →"}
+        </button>
+        {showTranslation && (
+          <p className="text-[12px] text-surface-600 dark:text-surface-400 italic border-l-2 border-primary-300 dark:border-primary-700 pl-3 mt-2 leading-relaxed animate-fade-in-up">
+            {englishLines.map((line, i) => (
+              <span key={i}>{line}{i < englishLines.length - 1 && <br />}</span>
+            ))}
+          </p>
+        )}
       </div>
     </div>
   );
 }
 
 /* ─────────────────────────────────────────────────────────
- * ExamCountdown — TCF target with progress slider
+ * ExamCountdown
  * ───────────────────────────────────────────────────────── */
 function ExamCountdown({ examDate, daysLeft }) {
   const totalDays = 90;
@@ -445,35 +435,68 @@ function ExamCountdown({ examDate, daysLeft }) {
 }
 
 /* ─────────────────────────────────────────────────────────
- * WordCard — Mot du jour
+ * WordCard — Mot du jour (real vocab API)
  * ───────────────────────────────────────────────────────── */
-function WordCard({ onShuffle }) {
+function WordCard({ word, loading, onShuffle }) {
+  // Extract IPA-like pronunciation hint if backend provides it; else fallback.
+  const pronunciation = word?.pronunciation || word?.ipa || "";
+  const example = word?.example_sentence || word?.example || "";
+
   return (
     <div className="rounded-3xl bg-white dark:bg-surface-900/60 border border-surface-100 dark:border-surface-800 p-5 h-full animate-fade-in-up">
       <div className="flex items-center justify-between">
         <p className="text-[10px] uppercase tracking-[0.14em] font-semibold text-primary-600 dark:text-primary-400">Mot du jour</p>
         <button
           onClick={onShuffle}
-          className="text-surface-300 dark:text-surface-600 hover:text-primary-500 transition-colors focus-ring rounded p-1"
+          className="text-surface-300 dark:text-surface-600 hover:text-primary-500 transition-all focus-ring rounded p-1 disabled:opacity-50 hover:rotate-180 duration-500"
           aria-label="Nouveau mot"
+          disabled={loading}
         >
-          <Ic.refresh className="w-3.5 h-3.5" />
+          <Ic.refresh className={`w-3.5 h-3.5 ${loading ? "animate-spin" : ""}`} />
         </button>
       </div>
-      <div className="flex items-baseline gap-2 mt-1">
-        <h3 className="font-editorial italic text-[32px] leading-none text-surface-900 dark:text-surface-50">{WORD_OF_DAY.word}</h3>
-        <button className="text-primary-500 hover:text-primary-600 focus-ring rounded p-0.5" aria-label="Écouter">
-          <Ic.speaker className="w-4 h-4" />
-        </button>
-      </div>
-      <p className="text-[11px] font-mono text-surface-500 dark:text-surface-400 mt-1">{WORD_OF_DAY.ipa}</p>
-      <p className="text-[12px] italic text-surface-700 dark:text-surface-200 mt-2 leading-snug">"{WORD_OF_DAY.example}"</p>
+
+      {loading || !word ? (
+        <div className="space-y-2 mt-2">
+          <div className="skeleton h-8 w-32 rounded" />
+          <div className="skeleton h-3 w-20 rounded" />
+          <div className="skeleton h-3 w-full rounded mt-3" />
+          <div className="skeleton h-3 w-3/4 rounded" />
+        </div>
+      ) : (
+        <>
+          <div className="flex items-baseline gap-2 mt-1">
+            <h3 className="font-editorial italic text-[32px] leading-none text-surface-900 dark:text-surface-50">{word.french}</h3>
+            <AudioPlayButton text={word.french} />
+          </div>
+          {pronunciation && (
+            <p className="text-[11px] font-mono text-surface-500 dark:text-surface-400 mt-1">
+              {pronunciation.startsWith("/") ? pronunciation : `/${pronunciation}/`}
+            </p>
+          )}
+          {word.english && (
+            <p className="text-[12px] text-surface-700 dark:text-surface-200 mt-1.5 font-medium">{word.english}</p>
+          )}
+          {example && (
+            <p className="text-[12px] italic text-surface-600 dark:text-surface-300 mt-2 leading-snug">"{example}"</p>
+          )}
+          <Link
+            to={`/dictionary?word=${encodeURIComponent(word.french)}`}
+            className="inline-flex items-center gap-1 mt-3 text-[11px] font-semibold text-primary-600 dark:text-primary-400 hover:gap-2 transition-all focus-ring rounded"
+          >
+            Définition complète
+            <svg className="w-3 h-3" fill="none" stroke="currentColor" strokeWidth={2.5} viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" />
+            </svg>
+          </Link>
+        </>
+      )}
     </div>
   );
 }
 
 /* ─────────────────────────────────────────────────────────
- * QuickRail — 4 actions
+ * QuickRail
  * ───────────────────────────────────────────────────────── */
 function QuickRail({ srsDue }) {
   const items = [
@@ -507,15 +530,73 @@ function QuickRail({ srsDue }) {
 }
 
 /* ─────────────────────────────────────────────────────────
- * RecentActivity — journal
+ * RecentActivity — pulled from trend report when available
  * ───────────────────────────────────────────────────────── */
+function timeAgoFr(iso) {
+  if (!iso) return "récemment";
+  const d = new Date(iso);
+  const diff = (Date.now() - d.getTime()) / 1000; // seconds
+  if (diff < 60)       return "à l'instant";
+  if (diff < 3600)     return `il y a ${Math.floor(diff / 60)} min`;
+  if (diff < 86400)    return `il y a ${Math.floor(diff / 3600)} h`;
+  if (diff < 86400*2)  return "hier";
+  if (diff < 86400*7)  return `il y a ${Math.floor(diff / 86400)} jours`;
+  return d.toLocaleDateString("fr-FR", { day: "numeric", month: "short" });
+}
+
+const ACTIVITY_TYPE_LABEL = {
+  quiz: "Quiz",
+  flashcard_review: "Flashcards",
+  conjugation_drill: "Conjugaison",
+  pronunciation: "Prononciation",
+  dictation: "Dictée",
+  mini_game: "Mini-jeu",
+  roleplay: "Roleplay",
+  grammar: "Grammaire",
+  lesson_complete: "Leçon",
+};
+
 function RecentActivity({ trend }) {
-  const events = [
-    { t: "il y a 12 min", txt: "Quiz · Articles partitifs",        score: "8/10",   tone: "success" },
-    { t: "il y a 2 h",    txt: "Roleplay · Chez le médecin",       score: "B1+",    tone: "primary" },
-    { t: "hier · 21h14",  txt: "20 flashcards révisées",            score: "94 %",   tone: "success" },
-    { t: "hier · 19h02",  txt: "Erreur — « il faut que je vais »", score: "→ aille",tone: "danger"  },
+  // Build event list from real backend data
+  const events = [];
+
+  if (trend?.top_activities?.length) {
+    trend.top_activities.slice(0, 2).forEach((a) => {
+      events.push({
+        t: `${a.count || 0} cette semaine`,
+        txt: ACTIVITY_TYPE_LABEL[a.activity_type] || a.activity_type,
+        score: `+${a.total_xp ?? a.xp ?? 0} XP`,
+        tone: "primary",
+      });
+    });
+  }
+
+  if (trend?.sample_mistakes?.length) {
+    trend.sample_mistakes.slice(0, 2).forEach((m) => {
+      events.push({
+        t: timeAgoFr(m.created_at || m.timestamp),
+        txt: m.user_text ? `Erreur — « ${m.user_text} »` : (m.context || "Erreur récente"),
+        score: m.correct_text ? `→ ${m.correct_text}` : "à revoir",
+        tone: "danger",
+      });
+    });
+  }
+
+  // Streak success line
+  if (trend?.streak >= 3) {
+    events.push({
+      t: "aujourd'hui",
+      txt: `Série de ${trend.streak} jours`,
+      score: "🔥",
+      tone: "success",
+    });
+  }
+
+  // Fallback if backend returned nothing yet
+  const display = events.length > 0 ? events : [
+    { t: "—", txt: "Aucune activité récente", score: "", tone: "primary" },
   ];
+
   return (
     <div className="rounded-3xl bg-white dark:bg-surface-900/60 border border-surface-100 dark:border-surface-800 p-5 animate-fade-in-up">
       <div className="flex items-baseline justify-between mb-3">
@@ -525,7 +606,7 @@ function RecentActivity({ trend }) {
         </Link>
       </div>
       <ul className="space-y-2.5">
-        {events.map((e, i) => (
+        {display.slice(0, 5).map((e, i) => (
           <li key={i} className="flex items-start gap-3">
             <span className={`mt-1 w-1.5 h-1.5 rounded-full shrink-0 ${
               e.tone === "success" ? "bg-success-500" :
@@ -549,7 +630,7 @@ function RecentActivity({ trend }) {
 }
 
 /* ─────────────────────────────────────────────────────────
- * ResumeBanner — kept from previous Dashboard for continuity
+ * ResumeBanner
  * ───────────────────────────────────────────────────────── */
 function ResumeBanner({ activity, onDismiss }) {
   if (!activity) return null;
@@ -583,15 +664,24 @@ function ResumeBanner({ activity, onDismiss }) {
  * ───────────────────────────────────────────────────────── */
 export default function Dashboard() {
   const { user } = useAuth();
-  const [stats, setStats]   = useState(null);
-  const [trend, setTrend]   = useState(null);
-  const [srsDue, setSrsDue] = useState(0);
+  const [stats, setStats]     = useState(null);
+  const [trend, setTrend]     = useState(null);
+  const [srsDue, setSrsDue]   = useState(0);
+  const [word, setWord]       = useState(null);
+  const [wordLoading, setWordLoading] = useState(true);
   const [loading, setLoading] = useState(true);
   const [celebrate, setCelebrate] = useState(false);
   const [lastActivity, dismissActivity] = useLastActivity();
   const animatedXP = useCountUp(stats?.total_xp ?? 0);
 
-  // Calc days-to-exam from user's prefs if present, else default to 47
+  // Daily quote — rotates each calendar day, shuffleable in-session
+  const initialQuoteIndex = useMemo(
+    () => Math.floor(Date.now() / 86_400_000) % DAILY_QUOTES.length,
+    []
+  );
+  const [quoteIndex, setQuoteIndex] = useState(initialQuoteIndex);
+  const shuffleQuote = () => setQuoteIndex((q) => (q + 1) % DAILY_QUOTES.length);
+
   const examDaysLeft = user?.preferences?.exam_days_left
     ?? user?.preferences?.examDaysLeft
     ?? 47;
@@ -599,6 +689,7 @@ export default function Dashboard() {
     ?? user?.preferences?.examDate
     ?? "12 juin 2026";
 
+  // Load core dashboard data
   useEffect(() => {
     Promise.allSettled([getStats(), getSRSDueCards(1), getTrendReport()])
       .then(([statsRes, srsRes, trendRes]) => {
@@ -611,6 +702,28 @@ export default function Dashboard() {
         setLoading(false);
       });
   }, []);
+
+  // Word of the day — fetch a real random vocab word
+  const loadWord = () => {
+    setWordLoading(true);
+    getRandomVocabulary(1)
+      .then((res) => {
+        const data = res.data;
+        const item = Array.isArray(data) ? data[0] : (data.results?.[0] ?? data);
+        if (item) setWord(item);
+      })
+      .catch(() => {
+        // Fallback word if API unavailable
+        setWord({
+          french: "flâner",
+          english: "to stroll, to wander leisurely",
+          pronunciation: "flɑ.ne",
+          example: "J'aime flâner le long de la Seine au coucher du soleil.",
+        });
+      })
+      .finally(() => setWordLoading(false));
+  };
+  useEffect(() => { loadWord(); }, []);
 
   // Confetti on a 7-day streak milestone
   useEffect(() => {
@@ -636,22 +749,22 @@ export default function Dashboard() {
             <div className="lg:col-span-5 skeleton h-[420px] rounded-3xl" />
             <div className="lg:col-span-7 skeleton h-[420px] rounded-3xl" />
           </div>
-          <div className="skeleton h-32 rounded-3xl" />
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-5">
             <div className="lg:col-span-5 skeleton h-44 rounded-3xl" />
             <div className="lg:col-span-4 skeleton h-44 rounded-3xl" />
             <div className="lg:col-span-3 skeleton h-44 rounded-2xl" />
+          </div>
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-5">
+            <div className="skeleton h-44 rounded-3xl" />
+            <div className="skeleton h-44 rounded-3xl" />
           </div>
         </div>
       </div>
     );
   }
 
-  // Pull weekly XP from trend if possible
-  const weekXP = trend?.week?.total_xp ?? null;
-
   return (
-    <div className="bg-grid-soft -mx-4 sm:-mx-6 lg:-mx-8 -my-6 lg:-my-8 px-4 sm:px-6 lg:px-8 py-6 lg:py-8 min-h-full">
+    <div className="bg-grid-soft -mx-4 sm:-mx-6 lg:-mx-8 -my-8 px-4 sm:px-6 lg:px-8 py-8 min-h-full">
       {celebrate && <Confetti count={60} duration={2000} />}
 
       <div className="max-w-7xl mx-auto space-y-5">
@@ -666,21 +779,24 @@ export default function Dashboard() {
 
         <HybridHero srsDue={srsDue} />
 
-        <GardenStrip stats={stats} weekXP={weekXP} />
-
+        {/* Bottom row: countdown + word + quick rail */}
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-5">
           <div className="lg:col-span-5">
             <ExamCountdown examDate={examDate} daysLeft={examDaysLeft} />
           </div>
           <div className="lg:col-span-4">
-            <WordCard onShuffle={() => { /* future: rotate word */ }} />
+            <WordCard word={word} loading={wordLoading} onShuffle={loadWord} />
           </div>
           <div className="lg:col-span-3">
             <QuickRail srsDue={srsDue} />
           </div>
         </div>
 
-        <RecentActivity trend={trend} />
+        {/* Quote + Recent activity */}
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-5">
+          <QuoteCard quoteIndex={quoteIndex} onShuffle={shuffleQuote} />
+          <RecentActivity trend={trend} />
+        </div>
       </div>
     </div>
   );

@@ -40,7 +40,7 @@ function VocabRow({ item, i }) {
       style={staggerDelay(i, 50)}
     >
       <div className="flex items-baseline gap-2 flex-wrap">
-        <span className="font-editorial italic text-[20px] leading-none text-surface-900 dark:text-surface-50">{item.french}</span>
+        <span className="font-sans font-bold text-[18px] leading-tight text-surface-900 dark:text-surface-50">{item.french}</span>
         <AudioPlayButton text={item.french} />
         {item.pos && (
           <span className="text-[10px] uppercase tracking-[0.12em] font-bold text-surface-500 dark:text-surface-400 bg-surface-100 dark:bg-surface-800 px-1.5 py-0.5 rounded">
@@ -65,7 +65,7 @@ function ExpressionRow({ item, i }) {
       style={staggerDelay(i, 50)}
     >
       <div className="flex items-baseline gap-2 flex-wrap">
-        <span className="font-editorial italic text-[18px] leading-none text-surface-900 dark:text-surface-50">{item.fr}</span>
+        <span className="font-sans font-bold text-[16px] leading-tight text-surface-900 dark:text-surface-50">{item.fr}</span>
         <AudioPlayButton text={item.fr} />
       </div>
       <p className="text-[13px] text-surface-700 dark:text-surface-300 mt-1.5 font-medium">{item.en}</p>
@@ -96,7 +96,7 @@ function GrammarRow({ item, i }) {
       {item.example_fr && (
         <div className="mt-2 rounded-lg bg-white dark:bg-surface-900/60 border border-purple-100 dark:border-purple-900/40 px-3 py-2 flex items-center gap-2">
           <span className="text-[10px] font-mono uppercase tracking-[0.12em] font-semibold text-purple-600 dark:text-purple-400 shrink-0">EX</span>
-          <span className="font-editorial italic text-[14px] text-surface-900 dark:text-surface-50">« {item.example_fr} »</span>
+          <span className="font-sans italic text-[14px] text-surface-900 dark:text-surface-50">« {item.example_fr} »</span>
           <AudioPlayButton text={item.example_fr} />
         </div>
       )}

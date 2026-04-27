@@ -1,7 +1,7 @@
 # Lingaru
 A comprehensive French language learning application targeting B1 to B2 progression. Lingaru combines structured lessons, interactive practice, AI-powered assistance, and a Telegram bot -- all backed by a Django monolith with a React frontend.
 
-<img width="1432" height="905" alt="image" src="https://github.com/user-attachments/assets/b171d092-5a38-4065-967c-aebcad5f70a6" />
+<img width="1577" height="906" alt="image" src="https://github.com/user-attachments/assets/2640737a-eb5e-40a0-ba04-391e72e28098" />
 
 
 ## Features

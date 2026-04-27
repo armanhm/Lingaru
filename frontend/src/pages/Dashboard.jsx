@@ -242,26 +242,7 @@ function HybridHero({ srsDue }) {
 
   return (
     <div className="grid grid-cols-1 lg:grid-cols-12 gap-5">
-      {/* LEFT — compass */}
-      <div className="lg:col-span-5 bg-white dark:bg-surface-900/60 border border-surface-100 dark:border-surface-800 rounded-3xl p-5 sm:p-6 animate-fade-in-up">
-        <div className="flex items-baseline justify-between mb-1">
-          <div>
-            <p className="text-[10px] uppercase tracking-[0.14em] font-semibold text-surface-400 dark:text-surface-500">La boussole</p>
-            <h3 className="text-[15px] font-bold text-surface-900 dark:text-surface-50">Compétences · B1 vers B2</h3>
-          </div>
-          <span className="hidden sm:block text-[10px] font-mono uppercase tracking-[0.14em] text-surface-400 dark:text-surface-500">
-            cliquez un axe
-          </span>
-        </div>
-        <CompassDial
-          skills={SKILLS}
-          hovered={hovered}
-          onHover={(k) => setHovered(k || "grammar")}
-          onSelect={(s) => navigate?.(s.to)}
-        />
-      </div>
-
-      {/* RIGHT — recommended next session */}
+      {/* LEFT — recommended next session */}
       <div className="lg:col-span-7 relative overflow-hidden rounded-3xl bg-gradient-to-br from-ink-900 via-ink-800 to-primary-900 dark:from-ink-900 dark:via-primary-950 dark:to-ink-900 text-white p-6 sm:p-7 flex flex-col animate-fade-in-up">
         <div className="absolute -top-16 -right-16 w-72 h-72 bg-primary-500/30 rounded-full blur-3xl pointer-events-none" />
         <div className="absolute -bottom-20 -left-10 w-72 h-72 bg-accent-500/20 rounded-full blur-3xl pointer-events-none" />
@@ -324,6 +305,25 @@ function HybridHero({ srsDue }) {
             })}
           </div>
         </div>
+      </div>
+
+      {/* RIGHT — compass */}
+      <div className="lg:col-span-5 bg-white dark:bg-surface-900/60 border border-surface-100 dark:border-surface-800 rounded-3xl p-5 sm:p-6 animate-fade-in-up">
+        <div className="flex items-baseline justify-between mb-1">
+          <div>
+            <p className="text-[10px] uppercase tracking-[0.14em] font-semibold text-surface-400 dark:text-surface-500">La boussole</p>
+            <h3 className="text-[15px] font-bold text-surface-900 dark:text-surface-50">Compétences · B1 vers B2</h3>
+          </div>
+          <span className="hidden sm:block text-[10px] font-mono uppercase tracking-[0.14em] text-surface-400 dark:text-surface-500">
+            cliquez un axe
+          </span>
+        </div>
+        <CompassDial
+          skills={SKILLS}
+          hovered={hovered}
+          onHover={(k) => setHovered(k || "grammar")}
+          onSelect={(s) => navigate?.(s.to)}
+        />
       </div>
     </div>
   );

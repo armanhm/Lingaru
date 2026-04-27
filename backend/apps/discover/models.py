@@ -11,6 +11,19 @@ class DiscoverCard(models.Model):
         ("trivia", "Trivia"),
     ]
 
+    NEWS_TOPICS = [
+        ("politics",  "Politics"),
+        ("sports",    "Sports"),
+        ("culture",   "Culture"),
+        ("economy",   "Economy"),
+        ("science",   "Science"),
+        ("tech",      "Technology"),
+        ("society",   "Society"),
+        ("environ",   "Environment"),
+        ("world",     "World"),
+        ("misc",      "Miscellaneous"),
+    ]
+
     type = models.CharField(max_length=10, choices=TYPE_CHOICES)
     title = models.CharField(max_length=300)
     summary = models.TextField(blank=True, default="")
@@ -19,6 +32,10 @@ class DiscoverCard(models.Model):
     image_url = models.URLField(max_length=500, null=True, blank=True)
     generated_at = models.DateTimeField(default=timezone.now)
     expires_at = models.DateTimeField(null=True, blank=True)
+
+    # News-specific (also reusable for other types)
+    topic = models.CharField(max_length=12, choices=NEWS_TOPICS, blank=True, default="")
+    level = models.CharField(max_length=2, blank=True, default="")  # A1..C2
 
     class Meta:
         db_table = "discover_cards"

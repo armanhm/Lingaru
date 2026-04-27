@@ -122,11 +122,17 @@ SYSTEM_PROMPTS = {
         '"pronunciation_notes": "...", "grammar_notes": "..."}'
     ),
     "news_generator": (
-        "Generate a short mock news article about a current or plausible topic, "
-        "written in simplified French at B1-B2 level. Include vocabulary help. "
-        "Respond in JSON format with keys: title (French headline, max 80 chars), "
-        "summary (English, 1-2 sentences), article_fr (French article, 100-150 words), "
-        "article_en (English translation), key_vocabulary (list of 5 objects with "
-        "'french' and 'english' keys for important words in the article)."
+        "Generate a short, plausible French news article tailored to a B1-B2 learner. "
+        "Pick a topic from: politics, sports, culture, economy, science, tech, society, "
+        "environment ('environ'), world. Respond ONLY in JSON with keys: "
+        "title (French headline, max 80 chars), "
+        "summary (English, 1-2 sentences), "
+        "topic (one of: politics, sports, culture, economy, science, tech, society, environ, world), "
+        "level (CEFR level: A2, B1, B2, or C1), "
+        "article_fr (French article, 100-180 words), "
+        "article_en (English translation), "
+        "vocabulary (list of 6 objects: {'french', 'english', 'pos', 'example_fr'} — pos is the part of speech), "
+        "expressions (list of 3 objects: {'fr', 'en', 'note'} — idioms/collocations from the article with a short note on usage), "
+        "grammar_points (list of 2 objects: {'title', 'explanation', 'example_fr'} — grammar features illustrated by the article)."
     ),
 }

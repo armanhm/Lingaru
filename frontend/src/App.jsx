@@ -16,6 +16,8 @@ import Pronunciation from "./pages/Pronunciation";
 import Assistant from "./pages/Assistant";
 import Progress from "./pages/Progress";
 import Discover from "./pages/Discover";
+import News from "./pages/News";
+import NewsArticle from "./pages/NewsArticle";
 import SRSReview from "./pages/SRSReview";
 import MistakeJournal from "./pages/MistakeJournal";
 import ConjugationDrill from "./pages/ConjugationDrill";
@@ -67,6 +69,8 @@ export default function App() {
           <Route path="documents" element={<Documents />} />
           <Route path="progress" element={<Progress />} />
           <Route path="discover" element={<Discover />} />
+          <Route path="news" element={<News />} />
+          <Route path="news/:id" element={<NewsArticle />} />
           <Route path="practice/srs" element={<SRSReview />} />
           <Route path="practice/conjugation" element={<ConjugationDrill />} />
           <Route path="progress/mistakes" element={<MistakeJournal />} />

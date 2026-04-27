@@ -466,7 +466,7 @@ function WordCard({ word, loading, onShuffle }) {
       ) : (
         <>
           <div className="flex items-baseline gap-2 mt-1">
-            <h3 className="font-sans font-extrabold tracking-tight text-[28px] leading-none text-surface-900 dark:text-surface-50">{word.french}</h3>
+            <h3 className="font-editorial italic text-[32px] leading-none text-surface-900 dark:text-surface-50">{word.french}</h3>
             <AudioPlayButton text={word.french} />
           </div>
           {pronunciation && (

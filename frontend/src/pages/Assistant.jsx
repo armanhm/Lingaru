@@ -14,23 +14,159 @@ import useVoiceRecorder from "../hooks/useVoiceRecorder";
  * Modes & Scenarios
  * ────────────────────────────────────────────────────────────── */
 const MODE_OPTIONS = [
-  { value: "conversation",        label: "Conversation",        emoji: "💬", description: "Pratique libre avec un tuteur" },
-  { value: "grammar_correction",  label: "Correction",          emoji: "✍️", description: "Faites corriger un texte français" },
-  { value: "grammar_explanation", label: "Explication grammaire", emoji: "📚", description: "Comprendre un point de grammaire" },
-  { value: "roleplay",            label: "Roleplay",            emoji: "🎭", description: "Mise en situation guidée" },
+  {
+    value: "conversation", label: "Conversation", emoji: "💬",
+    description: "Pratique libre avec un tuteur",
+    tagline: "Discutez librement en français — Claire vous corrigera au fil de la conversation.",
+  },
+  {
+    value: "grammar_correction", label: "Correction", emoji: "✍️",
+    description: "Faites corriger un texte français",
+    tagline: "Collez un texte français — Claire le corrigera et vous expliquera chaque erreur.",
+  },
+  {
+    value: "grammar_explanation", label: "Explication grammaire", emoji: "📚",
+    description: "Comprendre un point de grammaire",
+    tagline: "Posez une question de grammaire — Claire vous l'explique avec des exemples concrets.",
+  },
+  {
+    value: "roleplay", label: "Roleplay", emoji: "🎭",
+    description: "Mise en situation guidée",
+    tagline: "Choisissez une scène et jouez-la avec Claire dans la peau d'un personnage.",
+  },
 ];
 
 const ROLEPLAY_SCENARIOS = [
-  { value: "roleplay_market",       emoji: "🥖", label: "Au marché",        sub: "Acheter du fromage et des fruits", level: "B1",  minutes: 8  },
-  { value: "roleplay_doctor",       emoji: "🩺", label: "Chez le médecin",  sub: "Décrire un symptôme",              level: "B1",  minutes: 10 },
-  { value: "roleplay_hotel",        emoji: "🏨", label: "À l'hôtel",        sub: "Check-in, services",                level: "A2+", minutes: 6  },
-  { value: "roleplay_restaurant",   emoji: "🍽️", label: "Au restaurant",    sub: "Commander un plat",                 level: "A2",  minutes: 6  },
-  { value: "roleplay_train",        emoji: "🚆", label: "Gare SNCF",        sub: "Acheter un billet",                 level: "A2+", minutes: 5  },
-  { value: "roleplay_pharmacy",     emoji: "💊", label: "Pharmacie",        sub: "Demander un médicament",            level: "A2+", minutes: 6  },
-  { value: "roleplay_bank",         emoji: "🏦", label: "À la banque",      sub: "Ouvrir un compte",                  level: "B1",  minutes: 9  },
-  { value: "roleplay_school",       emoji: "🏫", label: "À l'école",        sub: "Parler à un enseignant",            level: "B1",  minutes: 8  },
-  { value: "roleplay_job_interview",emoji: "💼", label: "Entretien d'embauche", sub: "Stage / poste",                level: "B2",  minutes: 14 },
-  { value: "roleplay_airport",      emoji: "✈️", label: "Aéroport",         sub: "Enregistrement / bagages",          level: "A2+", minutes: 7  },
+  {
+    value: "roleplay_market", emoji: "🥖", label: "Au marché",
+    sub: "Vous êtes au marché des Enfants Rouges, à Paris. Vous voulez acheter un fromage et des fruits pour ce soir.",
+    blurb: "Acheter du fromage et des fruits",
+    level: "B1", minutes: 8,
+    placeholder: "Bonjour ! Je voudrais un fromage pour ce soir…",
+    starters: [
+      "Bonjour, je cherche un fromage pour ce soir.",
+      "Vous avez du Comté affiné ?",
+      "C'est combien le kilo de pommes ?",
+      "Je vais prendre 200 grammes, s'il vous plaît.",
+    ],
+  },
+  {
+    value: "roleplay_doctor", emoji: "🩺", label: "Chez le médecin",
+    sub: "Vous consultez votre médecin généraliste. Vous avez mal à la tête depuis trois jours.",
+    blurb: "Décrire un symptôme",
+    level: "B1", minutes: 10,
+    placeholder: "Bonjour docteur. J'ai mal à la tête depuis…",
+    starters: [
+      "Bonjour docteur, j'ai mal à la tête depuis trois jours.",
+      "Je dors mal et je suis très fatigué(e).",
+      "Est-ce que je peux avoir une ordonnance ?",
+      "Je suis allergique aux antibiotiques.",
+    ],
+  },
+  {
+    value: "roleplay_hotel", emoji: "🏨", label: "À l'hôtel",
+    sub: "Vous arrivez à votre hôtel à Lyon. Vous avez réservé une chambre pour deux nuits.",
+    blurb: "Check-in et services de l'hôtel",
+    level: "A2+", minutes: 6,
+    placeholder: "Bonjour, j'ai une réservation au nom de…",
+    starters: [
+      "Bonjour, j'ai une réservation au nom de Martin.",
+      "À quelle heure est le petit-déjeuner ?",
+      "Est-ce que le Wi-Fi est gratuit ?",
+      "Pouvez-vous m'appeler un taxi pour 8 heures ?",
+    ],
+  },
+  {
+    value: "roleplay_restaurant", emoji: "🍽️", label: "Au restaurant",
+    sub: "Vous êtes en terrasse d'un bistrot parisien. Vous regardez la carte et vous voulez commander.",
+    blurb: "Commander un plat et un dessert",
+    level: "A2", minutes: 6,
+    placeholder: "Bonjour, je voudrais voir la carte s'il vous plaît…",
+    starters: [
+      "Bonjour, je voudrais voir la carte s'il vous plaît.",
+      "Quel est le plat du jour ?",
+      "Je vais prendre le steak frites, à point.",
+      "L'addition, s'il vous plaît !",
+    ],
+  },
+  {
+    value: "roleplay_train", emoji: "🚆", label: "À la gare",
+    sub: "Vous êtes à la gare de Lyon. Vous voulez acheter un billet de TGV pour Marseille.",
+    blurb: "Acheter un billet de train",
+    level: "A2+", minutes: 5,
+    placeholder: "Bonjour, je voudrais un billet pour Marseille…",
+    starters: [
+      "Bonjour, un aller-retour pour Marseille s'il vous plaît.",
+      "Il y a un TGV vers 9 heures ?",
+      "Combien coûte le billet en seconde classe ?",
+      "De quel quai part le train ?",
+    ],
+  },
+  {
+    value: "roleplay_pharmacy", emoji: "💊", label: "À la pharmacie",
+    sub: "Vous entrez dans une pharmacie. Vous avez mal à la gorge et vous cherchez un médicament.",
+    blurb: "Demander un médicament sans ordonnance",
+    level: "A2+", minutes: 6,
+    placeholder: "Bonjour, j'ai mal à la gorge depuis…",
+    starters: [
+      "Bonjour, j'ai mal à la gorge depuis hier.",
+      "Avez-vous quelque chose contre le rhume ?",
+      "Est-ce que c'est sans ordonnance ?",
+      "Je peux le prendre combien de fois par jour ?",
+    ],
+  },
+  {
+    value: "roleplay_bank", emoji: "🏦", label: "À la banque",
+    sub: "Vous voulez ouvrir un compte bancaire pour étudiants à la BNP Paribas.",
+    blurb: "Ouvrir un compte étudiant",
+    level: "B1", minutes: 9,
+    placeholder: "Bonjour, je voudrais ouvrir un compte étudiant…",
+    starters: [
+      "Bonjour, je voudrais ouvrir un compte étudiant.",
+      "Quels documents dois-je apporter ?",
+      "Y a-t-il des frais de tenue de compte ?",
+      "Comment je peux faire un virement international ?",
+    ],
+  },
+  {
+    value: "roleplay_school", emoji: "🏫", label: "À l'école",
+    sub: "Vous parlez avec un professeur après un cours de français. Vous avez des questions sur le devoir.",
+    blurb: "Parler à un enseignant après le cours",
+    level: "B1", minutes: 8,
+    placeholder: "Bonjour Madame, j'ai une question sur le devoir…",
+    starters: [
+      "Bonjour Madame, j'ai une question sur le devoir.",
+      "Pouvez-vous m'expliquer cette règle de grammaire ?",
+      "Quand est-ce que nous devons rendre la dissertation ?",
+      "Est-ce que je peux avoir un peu plus de temps ?",
+    ],
+  },
+  {
+    value: "roleplay_job_interview", emoji: "💼", label: "Entretien d'embauche",
+    sub: "Vous passez un entretien pour un stage de design à Paris. La recruteuse vous pose des questions.",
+    blurb: "Stage / poste · entretien professionnel",
+    level: "B2", minutes: 14,
+    placeholder: "Bonjour, je suis candidat(e) pour le poste de…",
+    starters: [
+      "Bonjour, je suis candidat(e) pour le poste de stagiaire en design.",
+      "Voici un peu mon parcours…",
+      "Mes qualités principales sont la créativité et la rigueur.",
+      "Je souhaite rejoindre votre équipe parce que…",
+    ],
+  },
+  {
+    value: "roleplay_airport", emoji: "✈️", label: "À l'aéroport",
+    sub: "Vous êtes au comptoir d'enregistrement à Roissy CDG. Vous partez pour Montréal.",
+    blurb: "Enregistrement et bagages",
+    level: "A2+", minutes: 7,
+    placeholder: "Bonjour, je vais à Montréal, vol Air France…",
+    starters: [
+      "Bonjour, je vais à Montréal, vol Air France 348.",
+      "Voici mon passeport et ma carte d'embarquement.",
+      "Je n'ai qu'un bagage à main, c'est bon ?",
+      "À quelle heure commence l'embarquement ?",
+    ],
+  },
 ];
 
 const SCENARIOS_BY_VALUE = Object.fromEntries(ROLEPLAY_SCENARIOS.map((s) => [s.value, s]));
@@ -40,7 +176,7 @@ const PROMPT_TEMPLATES = {
     "Comment dit-on « I would like to make a reservation » en français ?",
     "Corrige : « Je suis allé au magasin hier et j'ai acheter du pain. »",
     "Apprends-moi 5 expressions familières utilisées par les jeunes.",
-    "Quelles sont les phrases utiles pour la vie quotidienne ?",
+    "Quelles sont les phrases utiles pour la vie quotidienne en France ?",
     "Raconte-moi quelque chose d'intéressant sur la culture française.",
   ],
   grammar_correction: [
@@ -50,17 +186,13 @@ const PROMPT_TEMPLATES = {
     "Est-ce correct : « Il faut que tu viens avec moi » ?",
   ],
   grammar_explanation: [
-    "Passé composé vs imparfait — donne-moi des exemples.",
+    "Quelle est la différence entre passé composé et imparfait ?",
     "Quand utilise-t-on le subjonctif en français ?",
-    "Explique du, de la, des et de.",
+    "Explique du, de la, des, et de — avec des exemples.",
     "Comment marchent les verbes pronominaux ?",
+    "Quand utilise-t-on « y » et « en » ?",
   ],
-  roleplay: [
-    "Bonjour, je voudrais commencer.",
-    "Excusez-moi, pouvez-vous m'aider ?",
-    "Je ne comprends pas, pouvez-vous répéter plus lentement ?",
-    "Combien ça coûte ?",
-  ],
+  // Roleplay starters are scenario-specific — see ROLEPLAY_SCENARIOS[*].starters
 };
 
 const TUTOR = {
@@ -292,7 +424,7 @@ function TuteurDrawer({ open, onClose, mode, onModeChange, scenario, onScenarioC
               <span className="text-[28px]">{sc.emoji}</span>
               <div>
                 <p className="text-[14px] font-bold text-surface-900 dark:text-surface-50">{sc.label}</p>
-                <p className="text-[11px] text-surface-500 dark:text-surface-400">{sc.sub} · {sc.level} · {sc.minutes} min</p>
+                <p className="text-[11px] text-surface-500 dark:text-surface-400">{sc.blurb || sc.sub} · {sc.level} · {sc.minutes} min</p>
               </div>
             </div>
             <div className="grid grid-cols-2 gap-1.5">
@@ -674,8 +806,13 @@ export default function Assistant() {
     imageFile ? "Posez une question sur l'image (optionnel)…"
     : mode === "grammar_correction" ? "Collez un texte français à corriger…"
     : mode === "grammar_explanation" ? "Posez une question de grammaire…"
-    : mode === "roleplay" ? "Dites quelque chose en français pour démarrer la scène…"
+    : mode === "roleplay" ? (sc.placeholder || "Dites quelque chose en français pour démarrer la scène…")
     : "Écrivez en français… Claire vous corrigera gentiment.";
+
+  // Suggested starters: scenario-specific in roleplay, mode-specific otherwise.
+  const starters = mode === "roleplay"
+    ? (sc.starters || [])
+    : (PROMPT_TEMPLATES[mode] || PROMPT_TEMPLATES.conversation);
 
   return (
     <div className="h-full flex flex-col bg-surface-50 dark:bg-surface-950 overflow-hidden">
@@ -717,7 +854,7 @@ export default function Assistant() {
             </div>
             <p className="text-[11.5px] text-surface-500 dark:text-surface-400 mt-0.5 truncate">
               avec <span className="font-semibold text-surface-700 dark:text-surface-200">{TUTOR.name}</span>
-              {mode === "roleplay" ? ` · ${sc.sub}` : ` · ${activeMode.description}`}
+              {mode === "roleplay" ? ` · ${sc.blurb || sc.sub}` : ` · ${activeMode.description}`}
             </p>
           </div>
 
@@ -757,20 +894,20 @@ export default function Assistant() {
                 {mode === "roleplay" ? sc.emoji : activeMode.emoji}
               </div>
               <p className="text-[10px] uppercase tracking-[0.14em] font-semibold text-surface-400 dark:text-surface-500 mb-1">
-                {mode === "roleplay" ? "Mise en situation" : "Mode"}
+                {mode === "roleplay" ? "Mise en situation" : activeMode.label}
               </p>
               <p className="font-editorial text-[18px] sm:text-[20px] text-surface-900 dark:text-surface-50 italic max-w-[60ch] mx-auto">
-                {mode === "roleplay" ? sc.sub : activeMode.description}
+                {mode === "roleplay" ? sc.sub : activeMode.tagline}
               </p>
             </div>
 
             {/* Suggested prompts */}
             <div>
               <p className="text-[10px] uppercase tracking-[0.14em] font-semibold text-surface-400 dark:text-surface-500 mb-3 text-center">
-                Essayez l'une de ces phrases
+                {mode === "roleplay" ? "Pour commencer la scène, essayez :" : "Essayez l'une de ces phrases"}
               </p>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
-                {(PROMPT_TEMPLATES[mode] || PROMPT_TEMPLATES.conversation).map((t, i) => (
+                {starters.map((t, i) => (
                   <button
                     key={i}
                     onClick={() => handleTemplate(t)}

@@ -251,15 +251,15 @@ function HybridHero({ srsDue }) {
         <div className="absolute -bottom-14 -left-8 w-56 h-56 bg-accent-500/20 rounded-full blur-3xl pointer-events-none" />
 
         <div className="relative flex flex-col h-full">
-          <div className="flex items-center gap-2 text-[9px] uppercase tracking-[0.18em] font-semibold text-primary-200">
+          <div className="flex items-center gap-2 text-[11px] uppercase tracking-[0.18em] font-semibold text-primary-200">
             <span className="w-1.5 h-1.5 rounded-full bg-accent-400 animate-pulse" />
             Recommandé · axe sélectionné · {focus.label}
           </div>
-          <h2 className="mt-1.5 font-editorial text-[24px] sm:text-[30px] leading-[1.05]">
+          <h2 className="mt-2 font-editorial text-[28px] sm:text-[34px] leading-[1.05]">
             Le subjonctif présent
-            <span className="block italic text-primary-200 text-[18px] sm:text-[22px] mt-0.5">— il faut que je comprenne</span>
+            <span className="block italic text-primary-200 text-[20px] sm:text-[24px] mt-1">— il faut que je comprenne</span>
           </h2>
-          <p className="mt-2 text-[12.5px] text-primary-100/85 max-w-[52ch] leading-snug">
+          <p className="mt-2.5 text-[14px] text-primary-100/85 max-w-[52ch] leading-snug">
             12 minutes · 9 questions ciblées sur les verbes irréguliers (<em>aller, faire, savoir</em>).
             Vous avez fait <span className="text-accent-300 font-semibold">3 erreurs</span> sur ce point cette semaine.
           </p>
@@ -267,17 +267,17 @@ function HybridHero({ srsDue }) {
           <div className="mt-auto pt-4 flex items-center gap-2 flex-wrap">
             <Link
               to="/grammar/topics/subjunctive-present"
-              className="flex items-center gap-1.5 bg-white text-ink-900 px-4 py-2 rounded-lg font-semibold text-[13px] hover:bg-accent-100 transition-colors shadow-lg focus-ring"
+              className="flex items-center gap-1.5 bg-white text-ink-900 px-4 py-2 rounded-lg font-semibold text-[14px] hover:bg-accent-100 transition-colors shadow-lg focus-ring"
             >
-              <Ic.play className="w-3 h-3" /> Commencer · 12 min
+              <Ic.play className="w-3.5 h-3.5" /> Commencer · 12 min
             </Link>
             <Link
               to="/grammar/library"
-              className="flex items-center gap-2 px-3 py-2 rounded-lg text-[12px] font-semibold text-white/90 hover:bg-white/10 transition-colors border border-white/20 focus-ring"
+              className="flex items-center gap-2 px-3 py-2 rounded-lg text-[13px] font-semibold text-white/90 hover:bg-white/10 transition-colors border border-white/20 focus-ring"
             >
               Choisir autre chose
             </Link>
-            <span className="ml-auto text-[10px] font-mono uppercase tracking-[0.14em] text-primary-200/70 hidden sm:block">
+            <span className="ml-auto text-[11px] font-mono uppercase tracking-[0.14em] text-primary-200/70 hidden sm:block">
               {focus.value}/100 · objectif {focus.target}
             </span>
           </div>
@@ -294,14 +294,14 @@ function HybridHero({ srsDue }) {
                 <Link
                   key={p.id}
                   to={p.to}
-                  className={`px-3 py-2 ${live ? "bg-white/15" : "bg-white/5"} flex items-center gap-2 hover:bg-white/20 transition-colors focus-ring`}
+                  className={`px-3 py-2.5 ${live ? "bg-white/15" : "bg-white/5"} flex items-center gap-2 hover:bg-white/20 transition-colors focus-ring`}
                 >
-                  <span className={`w-6 h-6 rounded-md flex items-center justify-center shrink-0 ${done ? "bg-success-500" : live ? "bg-primary-400" : "bg-white/15"}`}>
-                    {done ? <Ic.check className="w-3 h-3 text-white" /> : <I className="w-3 h-3 text-white" />}
+                  <span className={`w-7 h-7 rounded-md flex items-center justify-center shrink-0 ${done ? "bg-success-500" : live ? "bg-primary-400" : "bg-white/15"}`}>
+                    {done ? <Ic.check className="w-3.5 h-3.5 text-white" /> : <I className="w-3.5 h-3.5 text-white" />}
                   </span>
                   <div className="min-w-0">
-                    <p className="text-[9px] uppercase tracking-[0.14em] text-white/60 font-semibold">{p.label}</p>
-                    <p className="text-[11px] font-semibold truncate">{minutes} min</p>
+                    <p className="text-[10px] uppercase tracking-[0.14em] text-white/60 font-semibold">{p.label}</p>
+                    <p className="text-[12.5px] font-semibold truncate">{minutes} min</p>
                   </div>
                 </Link>
               );

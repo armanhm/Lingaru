@@ -171,134 +171,142 @@ export default function NewsArticle() {
         backLabel="Retour aux actualités"
       />
 
-      <div className="grid grid-cols-1 lg:grid-cols-12 gap-5">
-        {/* LEFT — article body */}
-        <div className="lg:col-span-7">
-          <article className="card relative overflow-hidden p-6 sm:p-7 animate-fade-in-up">
-            <div className={`absolute inset-x-0 top-0 h-1 bg-gradient-to-r ${topic.tint}`} />
+      {/* ─── Article body (full width) ────────────────────────────── */}
+      <article className="card relative overflow-hidden p-6 sm:p-8 animate-fade-in-up">
+        <div className={`absolute inset-x-0 top-0 h-1 bg-gradient-to-r ${topic.tint}`} />
 
-            <div className="flex items-center justify-between gap-3 flex-wrap mb-4">
-              <span className={`inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[11px] font-bold bg-gradient-to-br ${topic.tint} text-white shadow-sm`}>
-                <span>{topic.emoji}</span>
-                {topic.label}
+        <div className="flex items-center justify-between gap-3 flex-wrap mb-4">
+          <span className={`inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[11px] font-bold bg-gradient-to-br ${topic.tint} text-white shadow-sm`}>
+            <span>{topic.emoji}</span>
+            {topic.label}
+          </span>
+          <div className="flex items-center gap-2">
+            {article.level && (
+              <span className={`inline-flex items-center px-2 py-0.5 text-[10px] font-bold rounded border ${levelClass}`}>
+                {article.level}
               </span>
-              <div className="flex items-center gap-2">
-                {article.level && (
-                  <span className={`inline-flex items-center px-2 py-0.5 text-[10px] font-bold rounded border ${levelClass}`}>
-                    {article.level}
-                  </span>
-                )}
-                {article.read_minutes && (
-                  <span className="text-[11px] text-surface-500 dark:text-surface-400 font-mono">
-                    ⏱ {article.read_minutes} min
-                  </span>
-                )}
-              </div>
-            </div>
-
-            <h1 className="font-editorial text-[28px] sm:text-[32px] leading-[1.15] text-surface-900 dark:text-surface-50 mb-3">
-              {article.title}
-            </h1>
-
-            {article.summary && (
-              <p className="text-[14px] text-surface-600 dark:text-surface-400 italic mb-5 pb-5 border-b border-surface-100 dark:border-surface-800">
-                {article.summary}
-              </p>
             )}
-
-            <div className="flex items-center gap-2 mb-3">
-              <AudioPlayButton text={article.article_fr} />
-              <span className="text-[11px] uppercase tracking-[0.14em] font-semibold text-surface-500 dark:text-surface-400">Écouter l'article</span>
-            </div>
-
-            <p className="text-[15px] sm:text-[16px] leading-[1.7] text-surface-800 dark:text-surface-100 whitespace-pre-line">
-              {article.article_fr}
-            </p>
-
-            {article.article_en && (
-              <>
-                <button
-                  onClick={() => setShowTranslation((v) => !v)}
-                  className="mt-5 inline-flex items-center gap-1.5 text-[12px] font-semibold text-primary-600 dark:text-primary-400 hover:gap-2 transition-all focus-ring rounded px-1 -mx-1"
-                >
-                  {showTranslation ? "Masquer la traduction" : "Voir la traduction →"}
-                </button>
-                {showTranslation && (
-                  <div className="mt-3 rounded-xl bg-primary-50/40 dark:bg-primary-900/20 border-l-4 border-primary-300 dark:border-primary-700 p-4 animate-fade-in-up">
-                    <p className="text-[13px] text-surface-700 dark:text-surface-300 leading-relaxed italic whitespace-pre-line">
-                      {article.article_en}
-                    </p>
-                  </div>
-                )}
-              </>
+            {article.read_minutes && (
+              <span className="text-[11px] text-surface-500 dark:text-surface-400 font-mono">
+                ⏱ {article.read_minutes} min
+              </span>
             )}
-          </article>
+          </div>
         </div>
 
-        {/* RIGHT — learning panel */}
-        <aside className="lg:col-span-5 lg:sticky lg:top-6 self-start">
-          <div className="card relative overflow-hidden p-5 animate-fade-in-up">
-            <div className="absolute inset-x-0 top-0 h-1 bg-gradient-to-r from-primary-500 via-purple-500 to-accent-500" />
+        <h1 className="font-editorial text-[28px] sm:text-[36px] leading-[1.15] text-surface-900 dark:text-surface-50 mb-3 max-w-[40ch]">
+          {article.title}
+        </h1>
 
-            <p className="text-[10px] uppercase tracking-[0.14em] font-semibold text-primary-600 dark:text-primary-400 mb-3">
+        {article.summary && (
+          <p className="text-[14px] text-surface-600 dark:text-surface-400 italic mb-5 pb-5 border-b border-surface-100 dark:border-surface-800 max-w-[68ch]">
+            {article.summary}
+          </p>
+        )}
+
+        <div className="flex items-center gap-2 mb-3">
+          <AudioPlayButton text={article.article_fr} />
+          <span className="text-[11px] uppercase tracking-[0.14em] font-semibold text-surface-500 dark:text-surface-400">Écouter l'article</span>
+        </div>
+
+        <p className="text-[15px] sm:text-[16px] leading-[1.75] text-surface-800 dark:text-surface-100 whitespace-pre-line max-w-[72ch]">
+          {article.article_fr}
+        </p>
+
+        {article.article_en && (
+          <>
+            <button
+              onClick={() => setShowTranslation((v) => !v)}
+              className="mt-5 inline-flex items-center gap-1.5 text-[12px] font-semibold text-primary-600 dark:text-primary-400 hover:gap-2 transition-all focus-ring rounded px-1 -mx-1"
+            >
+              {showTranslation ? "Masquer la traduction" : "Voir la traduction →"}
+            </button>
+            {showTranslation && (
+              <div className="mt-3 rounded-xl bg-primary-50/40 dark:bg-primary-900/20 border-l-4 border-primary-300 dark:border-primary-700 p-4 max-w-[72ch] animate-fade-in-up">
+                <p className="text-[13px] text-surface-700 dark:text-surface-300 leading-relaxed italic whitespace-pre-line">
+                  {article.article_en}
+                </p>
+              </div>
+            )}
+          </>
+        )}
+      </article>
+
+      {/* ─── Pratique guidée (full width, big tabs) ───────────────── */}
+      <section className="mt-6 card relative overflow-hidden p-5 sm:p-6 animate-fade-in-up">
+        <div className="absolute inset-x-0 top-0 h-1 bg-gradient-to-r from-primary-500 via-purple-500 to-accent-500" />
+
+        <div className="flex items-baseline justify-between gap-3 flex-wrap mb-4">
+          <div>
+            <p className="text-[10px] uppercase tracking-[0.14em] font-semibold text-primary-600 dark:text-primary-400">
               Pratique guidée
             </p>
-
-            {/* Tabs */}
-            <div className="flex gap-1.5 mb-4 p-1 bg-surface-50 dark:bg-surface-800/60 rounded-lg overflow-x-auto">
-              {TABS.map((t) => {
-                const active = tab === t.key;
-                const count = counts[t.key];
-                return (
-                  <button
-                    key={t.key}
-                    onClick={() => setTab(t.key)}
-                    className={`relative flex-1 inline-flex items-center justify-center gap-1.5 px-2.5 py-1.5 rounded-md text-[12px] font-semibold transition-all whitespace-nowrap focus-ring ${
-                      active
-                        ? "text-white shadow-sm"
-                        : "text-surface-600 dark:text-surface-300 hover:bg-white dark:hover:bg-surface-700"
-                    }`}
-                  >
-                    {active && <span className={`absolute inset-0 rounded-md bg-gradient-to-br ${t.tint}`} />}
-                    <span className="relative z-10">{t.emoji}</span>
-                    <span className="relative z-10">{t.label}</span>
-                    {count > 0 && (
-                      <span className={`relative z-10 inline-flex items-center justify-center min-w-[18px] h-[18px] text-[10px] font-bold rounded-full ${active ? "bg-white/25" : "bg-surface-200 dark:bg-surface-700"}`}>
-                        {count}
-                      </span>
-                    )}
-                  </button>
-                );
-              })}
-            </div>
-
-            {/* Tab content */}
-            <div className="space-y-2.5">
-              {tab === "vocabulary" && (
-                article.vocabulary?.length ? (
-                  article.vocabulary.map((v, i) => <VocabRow key={i} item={v} i={i} />)
-                ) : (
-                  <EmptyTabContent label="Aucun vocabulaire fourni pour cet article." />
-                )
-              )}
-              {tab === "expressions" && (
-                article.expressions?.length ? (
-                  article.expressions.map((e, i) => <ExpressionRow key={i} item={e} i={i} />)
-                ) : (
-                  <EmptyTabContent label="Aucune expression mise en avant pour cet article." />
-                )
-              )}
-              {tab === "grammar_points" && (
-                article.grammar_points?.length ? (
-                  article.grammar_points.map((g, i) => <GrammarRow key={i} item={g} i={i} />)
-                ) : (
-                  <EmptyTabContent label="Aucun point de grammaire pour cet article." />
-                )
-              )}
-            </div>
+            <h2 className="text-h4 text-surface-900 dark:text-surface-50">Apprenez à partir de cet article</h2>
           </div>
-        </aside>
-      </div>
+          <span className="text-[11px] font-mono uppercase tracking-[0.12em] text-surface-400 dark:text-surface-500">
+            {counts.vocabulary + counts.expressions + counts.grammar_points} éléments
+          </span>
+        </div>
+
+        {/* Big segmented tabs — generous tap targets */}
+        <div role="tablist" aria-label="Pratique guidée" className="grid grid-cols-3 gap-2 sm:gap-3 mb-5">
+          {TABS.map((t) => {
+            const active = tab === t.key;
+            const count = counts[t.key];
+            return (
+              <button
+                key={t.key}
+                role="tab"
+                aria-selected={active}
+                onClick={() => setTab(t.key)}
+                className={`relative flex flex-col sm:flex-row items-center justify-center gap-1.5 sm:gap-2.5 px-3 py-3 sm:py-4 rounded-2xl text-[13px] sm:text-[14px] font-semibold transition-all overflow-hidden focus-ring active:scale-[0.98] ${
+                  active
+                    ? "text-white shadow-card-hover"
+                    : "bg-white dark:bg-surface-900/60 border border-surface-200 dark:border-surface-700 text-surface-700 dark:text-surface-200 hover:border-primary-300 dark:hover:border-primary-700 hover:shadow-sm"
+                }`}
+              >
+                {active && <span className={`absolute inset-0 bg-gradient-to-br ${t.tint}`} />}
+                <span className="relative z-10 text-xl sm:text-base">{t.emoji}</span>
+                <span className="relative z-10 truncate">{t.label}</span>
+                {count > 0 && (
+                  <span className={`relative z-10 inline-flex items-center justify-center min-w-[22px] h-[22px] text-[11px] font-bold rounded-full ${active ? "bg-white/25" : "bg-surface-100 dark:bg-surface-800 text-surface-600 dark:text-surface-300"}`}>
+                    {count}
+                  </span>
+                )}
+              </button>
+            );
+          })}
+        </div>
+
+        {/* Tab content — multi-column grid where it makes sense */}
+        {tab === "vocabulary" && (
+          article.vocabulary?.length ? (
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
+              {article.vocabulary.map((v, i) => <VocabRow key={i} item={v} i={i} />)}
+            </div>
+          ) : (
+            <EmptyTabContent label="Aucun vocabulaire fourni pour cet article." />
+          )
+        )}
+        {tab === "expressions" && (
+          article.expressions?.length ? (
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+              {article.expressions.map((e, i) => <ExpressionRow key={i} item={e} i={i} />)}
+            </div>
+          ) : (
+            <EmptyTabContent label="Aucune expression mise en avant pour cet article." />
+          )
+        )}
+        {tab === "grammar_points" && (
+          article.grammar_points?.length ? (
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+              {article.grammar_points.map((g, i) => <GrammarRow key={i} item={g} i={i} />)}
+            </div>
+          ) : (
+            <EmptyTabContent label="Aucun point de grammaire pour cet article." />
+          )
+        )}
+      </section>
     </div>
   );
 }

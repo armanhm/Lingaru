@@ -31,6 +31,7 @@ const NAV_SECTIONS = [
   },
   {
     label: "Practice",
+    collapsible: true,
     items: [
       { to: "/practice/dictation", label: "Dictation", icon: (
         <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -92,20 +93,11 @@ const NAV_SECTIONS = [
   },
   {
     label: "Personal",
+    collapsible: true,
     items: [
       { to: "/progress", label: "Progress", icon: (
         <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
-        </svg>
-      )},
-      { to: "/progress/mistakes", label: "Mistakes", icon: (
-        <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
-        </svg>
-      )},
-      { to: "/documents", label: "Documents", icon: (
-        <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 21h10a2 2 0 002-2V9.414a1 1 0 00-.293-.707l-5.414-5.414A1 1 0 0012.586 3H7a2 2 0 00-2 2v14a2 2 0 002 2z" />
         </svg>
       )},
     ],
@@ -201,12 +193,35 @@ function UserMenu({ user, collapsed, onLogout }) {
 }
 
 // ── Layout ────────────────────────────────────────────────────────────────────
+const COLLAPSED_SECTIONS_KEY = "lingaru.sidebar.collapsedSections.v1";
+
+function loadCollapsedSections() {
+  try {
+    const raw = localStorage.getItem(COLLAPSED_SECTIONS_KEY);
+    if (!raw) return {};
+    const parsed = JSON.parse(raw);
+    return parsed && typeof parsed === "object" ? parsed : {};
+  } catch {
+    return {};
+  }
+}
+
 export default function Layout() {
   const { user, logout } = useAuth();
   const navigate = useNavigate();
   const location = useLocation();
   const [collapsed, setCollapsed] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
+  const [collapsedSections, setCollapsedSections] = useState(loadCollapsedSections);
+
+  const toggleSection = (label) => {
+    setCollapsedSections((prev) => {
+      const next = { ...prev, [label]: !prev[label] };
+      try { localStorage.setItem(COLLAPSED_SECTIONS_KEY, JSON.stringify(next)); }
+      catch { /* ignore */ }
+      return next;
+    });
+  };
 
   const isActive = (path) => {
     const [base, query] = path.split("?");
@@ -251,42 +266,67 @@ export default function Layout() {
       </div>
 
       {/* Nav */}
-      <nav className="flex-1 overflow-y-auto py-4 space-y-5 px-3">
-        {NAV_SECTIONS.map((section) => (
-          <div key={section.label ?? "main"}>
-            {section.label && !collapsed && (
-              <p className="px-3 mb-1.5 section-label">
-                {section.label}
-              </p>
-            )}
-            <div className="space-y-0.5">
-              {section.items.map((item) => {
-                const active = isActive(item.to);
-                return (
-                  <Link
-                    key={item.to}
-                    to={item.to}
-                    onClick={onNav}
-                    title={collapsed ? item.label : undefined}
-                    className={`flex items-center gap-3 px-3 py-2 rounded-xl text-sm font-medium transition-all duration-200 focus-ring ${
-                      active
-                        ? "bg-gradient-to-r from-primary-50 to-primary-100/50 dark:from-primary-900/40 dark:to-primary-900/20 text-primary-700 dark:text-primary-300 shadow-sm ring-1 ring-primary-200/50 dark:ring-primary-800/50"
-                        : "text-surface-600 dark:text-surface-400 hover:bg-surface-100 dark:hover:bg-surface-800/60 hover:text-surface-900 dark:hover:text-surface-100"
-                    } ${collapsed ? "justify-center" : ""}`}
+      <nav className="flex-1 overflow-y-auto py-4 space-y-4 px-3">
+        {NAV_SECTIONS.map((section) => {
+          const hasActive = section.items.some((it) => isActive(it.to));
+          // A section is hidden only if collapsible AND user collapsed it AND
+          // no active item lives inside it (so the user can still see where they are).
+          const userCollapsed = !!collapsedSections[section.label];
+          const sectionOpen  = !section.collapsible || !userCollapsed || hasActive;
+
+          return (
+            <div key={section.label ?? "main"}>
+              {section.label && !collapsed && (
+                section.collapsible ? (
+                  <button
+                    onClick={() => toggleSection(section.label)}
+                    className="w-full flex items-center gap-1.5 px-3 mb-1.5 group focus-ring rounded-md"
+                    aria-expanded={sectionOpen}
                   >
-                    <span className={`shrink-0 ${active ? "text-primary-500 dark:text-primary-400" : "text-surface-400 dark:text-surface-500"}`}>
-                      {item.icon}
-                    </span>
-                    {!collapsed && <span>{item.label}</span>}
-                    {active && !collapsed && (
-                      <span className="ml-auto w-1.5 h-1.5 rounded-full bg-primary-500 animate-pulse" />
-                    )}
-                  </Link>
-                );
-              })}
+                    <span className="section-label flex-1 text-left">{section.label}</span>
+                    <svg
+                      className={`w-3 h-3 text-surface-400 dark:text-surface-500 transition-transform duration-200 ${sectionOpen ? "rotate-90" : ""} group-hover:text-surface-600 dark:group-hover:text-surface-300`}
+                      fill="none" stroke="currentColor" strokeWidth={2.5} viewBox="0 0 24 24"
+                    >
+                      <path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" />
+                    </svg>
+                  </button>
+                ) : (
+                  <p className="px-3 mb-1.5 section-label">{section.label}</p>
+                )
+              )}
+
+              {sectionOpen && (
+                <div className="space-y-0.5">
+                  {section.items.map((item) => {
+                    const active = isActive(item.to);
+                    return (
+                      <Link
+                        key={item.to}
+                        to={item.to}
+                        onClick={onNav}
+                        title={collapsed ? item.label : undefined}
+                        className={`flex items-center gap-3 px-3 py-2 rounded-xl text-sm font-medium transition-all duration-200 focus-ring ${
+                          active
+                            ? "bg-gradient-to-r from-primary-50 to-primary-100/50 dark:from-primary-900/40 dark:to-primary-900/20 text-primary-700 dark:text-primary-300 shadow-sm ring-1 ring-primary-200/50 dark:ring-primary-800/50"
+                            : "text-surface-600 dark:text-surface-400 hover:bg-surface-100 dark:hover:bg-surface-800/60 hover:text-surface-900 dark:hover:text-surface-100"
+                        } ${collapsed ? "justify-center" : ""}`}
+                      >
+                        <span className={`shrink-0 ${active ? "text-primary-500 dark:text-primary-400" : "text-surface-400 dark:text-surface-500"}`}>
+                          {item.icon}
+                        </span>
+                        {!collapsed && <span>{item.label}</span>}
+                        {active && !collapsed && (
+                          <span className="ml-auto w-1.5 h-1.5 rounded-full bg-primary-500 animate-pulse" />
+                        )}
+                      </Link>
+                    );
+                  })}
+                </div>
+              )}
             </div>
-          </div>
-        ))}
+          );
+        })}
       </nav>
 
       {/* User menu */}

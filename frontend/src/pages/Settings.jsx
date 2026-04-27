@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
 import { useAuth } from "../contexts/AuthContext";
 import { useTheme } from "../contexts/ThemeContext";
 import { useToast } from "../contexts/ToastContext";
@@ -493,6 +494,15 @@ export default function Settings() {
                 Not linked. Start the Lingaru bot on Telegram and send <code className="bg-surface-100 dark:bg-surface-700 px-1.5 py-0.5 rounded text-xs font-mono">/start</code> to connect your account.
               </p>
             )}
+          </SectionCard>
+
+          <SectionCard title="Documents" description="Upload French textbooks and notes — the AI assistant uses them to give grounded answers." icon="📄" tint="from-accent-500 to-warn-500">
+            <Link to="/documents" className="btn-primary btn-md">
+              <svg className="w-4 h-4 mr-1" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" d="M7 21h10a2 2 0 002-2V9.414a1 1 0 00-.293-.707l-5.414-5.414A1 1 0 0012.586 3H7a2 2 0 00-2 2v14a2 2 0 002 2z" />
+              </svg>
+              Manage documents
+            </Link>
           </SectionCard>
 
           {/* Danger zone */}

@@ -243,43 +243,43 @@ function HybridHero({ srsDue }) {
   return (
     <div className="grid grid-cols-1 lg:grid-cols-12 gap-5">
       {/* LEFT — recommended next session */}
-      <div className="lg:col-span-7 relative overflow-hidden rounded-3xl bg-gradient-to-br from-ink-900 via-ink-800 to-primary-900 dark:from-ink-900 dark:via-primary-950 dark:to-ink-900 text-white p-6 sm:p-7 flex flex-col animate-fade-in-up">
-        <div className="absolute -top-16 -right-16 w-72 h-72 bg-primary-500/30 rounded-full blur-3xl pointer-events-none" />
-        <div className="absolute -bottom-20 -left-10 w-72 h-72 bg-accent-500/20 rounded-full blur-3xl pointer-events-none" />
+      <div className="lg:col-span-7 relative overflow-hidden rounded-3xl bg-gradient-to-br from-ink-900 via-ink-800 to-primary-900 dark:from-ink-900 dark:via-primary-950 dark:to-ink-900 text-white p-4 sm:p-5 flex flex-col animate-fade-in-up">
+        <div className="absolute -top-12 -right-12 w-56 h-56 bg-primary-500/30 rounded-full blur-3xl pointer-events-none" />
+        <div className="absolute -bottom-14 -left-8 w-56 h-56 bg-accent-500/20 rounded-full blur-3xl pointer-events-none" />
 
         <div className="relative flex flex-col h-full">
-          <div className="flex items-center gap-2 text-[10px] uppercase tracking-[0.18em] font-semibold text-primary-200">
+          <div className="flex items-center gap-2 text-[9px] uppercase tracking-[0.18em] font-semibold text-primary-200">
             <span className="w-1.5 h-1.5 rounded-full bg-accent-400 animate-pulse" />
             Recommandé · axe sélectionné · {focus.label}
           </div>
-          <h2 className="mt-2 font-editorial text-[32px] sm:text-[40px] leading-[1.02]">
+          <h2 className="mt-1.5 font-editorial text-[24px] sm:text-[30px] leading-[1.05]">
             Le subjonctif présent
-            <span className="block italic text-primary-200 text-[24px] sm:text-[28px] mt-1">— il faut que je comprenne</span>
+            <span className="block italic text-primary-200 text-[18px] sm:text-[22px] mt-0.5">— il faut que je comprenne</span>
           </h2>
-          <p className="mt-3 text-[14px] text-primary-100/85 max-w-[52ch]">
+          <p className="mt-2 text-[12.5px] text-primary-100/85 max-w-[52ch] leading-snug">
             12 minutes · 9 questions ciblées sur les verbes irréguliers (<em>aller, faire, savoir</em>).
             Vous avez fait <span className="text-accent-300 font-semibold">3 erreurs</span> sur ce point cette semaine.
           </p>
 
-          <div className="mt-auto pt-6 flex items-center gap-3 flex-wrap">
+          <div className="mt-auto pt-4 flex items-center gap-2 flex-wrap">
             <Link
               to="/grammar/topics/subjunctive-present"
-              className="flex items-center gap-2 bg-white text-ink-900 px-5 py-2.5 rounded-xl font-semibold text-[14px] hover:bg-accent-100 transition-colors shadow-lg focus-ring"
+              className="flex items-center gap-1.5 bg-white text-ink-900 px-4 py-2 rounded-lg font-semibold text-[13px] hover:bg-accent-100 transition-colors shadow-lg focus-ring"
             >
-              <Ic.play className="w-3.5 h-3.5" /> Commencer · 12 min
+              <Ic.play className="w-3 h-3" /> Commencer · 12 min
             </Link>
             <Link
               to="/grammar/library"
-              className="flex items-center gap-2 px-4 py-2.5 rounded-xl text-[13px] font-semibold text-white/90 hover:bg-white/10 transition-colors border border-white/20 focus-ring"
+              className="flex items-center gap-2 px-3 py-2 rounded-lg text-[12px] font-semibold text-white/90 hover:bg-white/10 transition-colors border border-white/20 focus-ring"
             >
               Choisir autre chose
             </Link>
-            <span className="ml-auto text-[11px] font-mono uppercase tracking-[0.14em] text-primary-200/70 hidden sm:block">
+            <span className="ml-auto text-[10px] font-mono uppercase tracking-[0.14em] text-primary-200/70 hidden sm:block">
               {focus.value}/100 · objectif {focus.target}
             </span>
           </div>
 
-          <div className="mt-5 grid grid-cols-3 gap-px bg-white/10 rounded-xl overflow-hidden">
+          <div className="mt-3 grid grid-cols-3 gap-px bg-white/10 rounded-lg overflow-hidden">
             {TODAY_PLAN.map((p) => {
               const I = Ic[p.icon] || Ic.brain;
               const done = p.status === "done";
@@ -291,14 +291,14 @@ function HybridHero({ srsDue }) {
                 <Link
                   key={p.id}
                   to={p.to}
-                  className={`px-4 py-3 ${live ? "bg-white/15" : "bg-white/5"} flex items-center gap-2 hover:bg-white/20 transition-colors focus-ring`}
+                  className={`px-3 py-2 ${live ? "bg-white/15" : "bg-white/5"} flex items-center gap-2 hover:bg-white/20 transition-colors focus-ring`}
                 >
-                  <span className={`w-7 h-7 rounded-lg flex items-center justify-center ${done ? "bg-success-500" : live ? "bg-primary-400" : "bg-white/15"}`}>
-                    {done ? <Ic.check className="w-4 h-4 text-white" /> : <I className="w-3.5 h-3.5 text-white" />}
+                  <span className={`w-6 h-6 rounded-md flex items-center justify-center shrink-0 ${done ? "bg-success-500" : live ? "bg-primary-400" : "bg-white/15"}`}>
+                    {done ? <Ic.check className="w-3 h-3 text-white" /> : <I className="w-3 h-3 text-white" />}
                   </span>
                   <div className="min-w-0">
-                    <p className="text-[10px] uppercase tracking-[0.14em] text-white/60 font-semibold">{p.label}</p>
-                    <p className="text-[12px] font-semibold truncate">{minutes} min</p>
+                    <p className="text-[9px] uppercase tracking-[0.14em] text-white/60 font-semibold">{p.label}</p>
+                    <p className="text-[11px] font-semibold truncate">{minutes} min</p>
                   </div>
                 </Link>
               );
@@ -308,22 +308,24 @@ function HybridHero({ srsDue }) {
       </div>
 
       {/* RIGHT — compass */}
-      <div className="lg:col-span-5 bg-white dark:bg-surface-900/60 border border-surface-100 dark:border-surface-800 rounded-3xl p-5 sm:p-6 animate-fade-in-up">
+      <div className="lg:col-span-5 bg-white dark:bg-surface-900/60 border border-surface-100 dark:border-surface-800 rounded-3xl p-4 sm:p-5 animate-fade-in-up">
         <div className="flex items-baseline justify-between mb-1">
           <div>
-            <p className="text-[10px] uppercase tracking-[0.14em] font-semibold text-surface-400 dark:text-surface-500">La boussole</p>
-            <h3 className="text-[15px] font-bold text-surface-900 dark:text-surface-50">Compétences · B1 vers B2</h3>
+            <p className="text-[9px] uppercase tracking-[0.14em] font-semibold text-surface-400 dark:text-surface-500">La boussole</p>
+            <h3 className="text-[13px] font-bold text-surface-900 dark:text-surface-50">Compétences · B1 vers B2</h3>
           </div>
-          <span className="hidden sm:block text-[10px] font-mono uppercase tracking-[0.14em] text-surface-400 dark:text-surface-500">
+          <span className="hidden sm:block text-[9px] font-mono uppercase tracking-[0.14em] text-surface-400 dark:text-surface-500">
             cliquez un axe
           </span>
         </div>
-        <CompassDial
-          skills={SKILLS}
-          hovered={hovered}
-          onHover={(k) => setHovered(k || "grammar")}
-          onSelect={(s) => navigate?.(s.to)}
-        />
+        <div className="max-w-[330px] mx-auto">
+          <CompassDial
+            skills={SKILLS}
+            hovered={hovered}
+            onHover={(k) => setHovered(k || "grammar")}
+            onSelect={(s) => navigate?.(s.to)}
+          />
+        </div>
       </div>
     </div>
   );

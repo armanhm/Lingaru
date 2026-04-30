@@ -11,6 +11,7 @@ import {
 } from "../api/assistant";
 import useVoiceRecorder from "../hooks/useVoiceRecorder";
 import AudioPlayButton from "../components/AudioPlayButton";
+import QuizBlock, { splitChatMessage } from "../components/QuizBlock";
 
 /** Strip markdown formatting so TTS reads clean text, not "asterisk asterisk". */
 function plainText(s) {
@@ -642,7 +643,13 @@ function ChatBubble({ msg }) {
               prose-table:my-2 prose-table:text-[12.5px] prose-table:border-collapse
               prose-th:bg-surface-50 dark:prose-th:bg-surface-800 prose-th:px-2 prose-th:py-1.5 prose-th:font-semibold prose-th:text-left prose-th:border prose-th:border-surface-200 dark:prose-th:border-surface-700
               prose-td:px-2 prose-td:py-1 prose-td:border prose-td:border-surface-200 dark:prose-td:border-surface-700">
-              <ReactMarkdown remarkPlugins={[remarkGfm]}>{msg.content || ""}</ReactMarkdown>
+              {splitChatMessage(msg.content || "").map((seg, i) =>
+                seg.type === "quiz" ? (
+                  <QuizBlock key={i} data={seg.data} />
+                ) : (
+                  <ReactMarkdown key={i} remarkPlugins={[remarkGfm]}>{seg.content}</ReactMarkdown>
+                )
+              )}
             </div>
           )}
           {/* TTS button — appears on hover, sits in the corner opposite the bubble tail */}

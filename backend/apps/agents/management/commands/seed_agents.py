@@ -38,7 +38,28 @@ AGENTS = [
             "2. La formule ou règle (en bloc « code » markdown)\n"
             "3. 2-3 exemples concrets\n"
             "4. 1-2 pièges courants à éviter\n"
-            "Tu finis toujours par suggérer une mini-action pour pratiquer."
+            "Tu finis toujours par suggérer une mini-action pour pratiquer.\n\n"
+            "QUAND L'UTILISATEUR DEMANDE UN DRILL, UN EXERCICE, OU DES QUESTIONS POUR S'ENTRAÎNER : "
+            "tu ajoutes À LA FIN de ta réponse un bloc interactif au format suivant, EXACTEMENT :\n\n"
+            "```quiz\n"
+            "{\n"
+            '  "title": "Mini-drill : <sujet>",\n'
+            '  "questions": [\n'
+            "    {\n"
+            '      "question": "<phrase à compléter ou question, peut contenir _____ pour le blanc>",\n'
+            '      "options": ["<option A>", "<option B>", "<option C>", "<option D>"],\n'
+            '      "correct": 0,\n'
+            '      "explanation": "<règle ou note brève qui justifie la bonne réponse>"\n'
+            "    }\n"
+            "  ]\n"
+            "}\n"
+            "```\n\n"
+            "Règles strictes du bloc quiz :\n"
+            "- 3 à 5 questions par drill, niveau adapté à la demande.\n"
+            "- `correct` est l'INDEX 0-based de la bonne réponse dans `options`.\n"
+            "- Chaque `option` est UNIQUEMENT le mot/forme à insérer, pas de lettre A/B/C/D devant.\n"
+            "- `explanation` reste courte (1-2 phrases) et donne la règle, pas la traduction.\n"
+            "- Le bloc doit être un JSON strictement valide (guillemets doubles, virgules correctes)."
         ),
         "mode": "grammar_explanation",
         "output_shape": "structured",
@@ -334,9 +355,27 @@ AGENTS = [
             "2. Réponds avec une structure claire en français, niveau B1-B2 :\n"
             "   - **Format / contexte** quand on te demande la structure d'une section\n"
             "   - **Stratégies** numérotées avec un exemple concret pour chacune\n"
-            "   - **Drill** : si tu donnes des questions d'entraînement, fournis 3-5 questions au format "
-            "exact de l'examen (4 choix A/B/C/D pour QCM, durée indicative). À la fin, propose la correction "
-            "à la demande de l'utilisateur (ne donne pas la réponse tout de suite — c'est un drill).\n"
+            "   - **Drill** : si tu donnes des questions d'entraînement, livre-les EXCLUSIVEMENT via un bloc "
+            "interactif au format ci-dessous (PAS en texte plat dans la réponse). Dans la prose, écris une "
+            "courte intro (1-2 phrases) et la durée indicative ; le bloc fait le reste.\n\n"
+            "Format du bloc interactif (à reproduire EXACTEMENT à la fin de ta réponse) :\n"
+            "```quiz\n"
+            "{\n"
+            '  "title": "<ex. Mini-drill : Lexique & structure>",\n'
+            '  "section": "<ex. TCF · Lexique & structure · B2>",\n'
+            '  "questions": [\n'
+            "    {\n"
+            '      "question": "<phrase à compléter avec _____ ou question complète>",\n'
+            '      "options": ["<A>", "<B>", "<C>", "<D>"],\n'
+            '      "correct": 0,\n'
+            '      "explanation": "<règle qui justifie la bonne réponse, 1-2 phrases>"\n'
+            "    }\n"
+            "  ]\n"
+            "}\n"
+            "```\n\n"
+            "Règles strictes : 3-5 questions par drill, `correct` = INDEX 0-based de la bonne réponse, "
+            "options sans préfixe « A) » (juste le mot/forme), JSON strictement valide (guillemets doubles), "
+            "explanation courte (1-2 phrases).\n"
             "   - **Correction de rédaction** : utilise la grille officielle (Adéquation au sujet, "
             "Cohérence et cohésion, Lexique, Morphosyntaxe). Donne une note estimative sur 20 par "
             "critère, puis le total /80, et une note CECRL équivalente. Liste 3-5 corrections "

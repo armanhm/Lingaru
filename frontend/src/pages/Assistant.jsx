@@ -9,6 +9,26 @@ import {
   sendVoiceChat,
 } from "../api/assistant";
 import useVoiceRecorder from "../hooks/useVoiceRecorder";
+import AudioPlayButton from "../components/AudioPlayButton";
+
+/** Strip markdown formatting so TTS reads clean text, not "asterisk asterisk". */
+function plainText(s) {
+  if (!s) return "";
+  return s
+    .replace(/```[\s\S]*?```/g, " ")        // fenced code blocks
+    .replace(/`([^`]*)`/g, "$1")             // inline code
+    .replace(/\*\*([^*]+)\*\*/g, "$1")      // bold
+    .replace(/\*([^*]+)\*/g, "$1")           // italic *…*
+    .replace(/_([^_]+)_/g, "$1")             // italic _…_
+    .replace(/~~([^~]+)~~/g, "$1")          // strikethrough
+    .replace(/^\s{0,3}#{1,6}\s+/gm, "")     // headings
+    .replace(/^\s*[-*+]\s+/gm, "")          // bullets
+    .replace(/^\s*\d+\.\s+/gm, "")           // numbered lists
+    .replace(/!\[([^\]]*)\]\([^)]*\)/g, "$1") // images
+    .replace(/\[([^\]]+)\]\([^)]*\)/g, "$1") // links
+    .replace(/\s+/g, " ")
+    .trim();
+}
 
 /* ──────────────────────────────────────────────────────────────
  * Modes & Scenarios
@@ -602,7 +622,7 @@ function ChatBubble({ msg }) {
           <img src={msg.imagePreview} alt="Uploaded" className="max-w-[280px] max-h-48 rounded-2xl mb-1.5 shadow-sm" />
         )}
 
-        <div className={`rounded-2xl px-4 py-3 text-[14px] leading-relaxed shadow-sm ${
+        <div className={`relative group/bubble rounded-2xl px-4 py-3 text-[14px] leading-relaxed shadow-sm ${
           isUser
             ? "bg-gradient-to-br from-primary-600 to-purple-700 text-white rounded-br-sm"
             : "bg-white dark:bg-surface-900/80 border border-surface-100 dark:border-surface-800 text-surface-900 dark:text-surface-50 rounded-bl-sm"
@@ -617,6 +637,14 @@ function ChatBubble({ msg }) {
               prose-strong:font-semibold prose-em:italic
               prose-code:bg-surface-100 prose-code:dark:bg-surface-700 prose-code:px-1 prose-code:rounded prose-code:text-xs">
               <ReactMarkdown>{msg.content || ""}</ReactMarkdown>
+            </div>
+          )}
+          {/* TTS button — appears on hover, sits in the corner opposite the bubble tail */}
+          {plainText(msg.content) && (
+            <div className={`absolute -bottom-2 ${isUser ? "left-1" : "right-1"} opacity-0 group-hover/bubble:opacity-100 transition-opacity`}>
+              <div className={`rounded-full ${isUser ? "bg-primary-700/90" : "bg-white dark:bg-surface-800 shadow-card border border-surface-100 dark:border-surface-700"}`}>
+                <AudioPlayButton text={plainText(msg.content)} size="xs" tone={isUser ? "on-dark" : "default"} />
+              </div>
             </div>
           )}
         </div>

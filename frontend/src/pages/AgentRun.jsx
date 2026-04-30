@@ -4,6 +4,26 @@ import ReactMarkdown from "react-markdown";
 import { getAgent, startAgentRun, getAgentRuns } from "../api/agents";
 import { sendChatMessage, getConversation } from "../api/assistant";
 import { PageHeader } from "../components/ui";
+import AudioPlayButton from "../components/AudioPlayButton";
+
+/** Strip markdown formatting so TTS reads clean text. */
+function plainText(s) {
+  if (!s) return "";
+  return s
+    .replace(/```[\s\S]*?```/g, " ")
+    .replace(/`([^`]*)`/g, "$1")
+    .replace(/\*\*([^*]+)\*\*/g, "$1")
+    .replace(/\*([^*]+)\*/g, "$1")
+    .replace(/_([^_]+)_/g, "$1")
+    .replace(/~~([^~]+)~~/g, "$1")
+    .replace(/^\s{0,3}#{1,6}\s+/gm, "")
+    .replace(/^\s*[-*+]\s+/gm, "")
+    .replace(/^\s*\d+\.\s+/gm, "")
+    .replace(/!\[([^\]]*)\]\([^)]*\)/g, "$1")
+    .replace(/\[([^\]]+)\]\([^)]*\)/g, "$1")
+    .replace(/\s+/g, " ")
+    .trim();
+}
 
 /* ──────────────────────────────────────────────────────────────
  * Inline icons
@@ -35,7 +55,7 @@ function Bubble({ msg, agent }) {
           <span>{isUser ? "Vous" : (agent?.name || "Agent")}</span>
         </div>
         <div
-          className={`rounded-2xl px-4 py-3 text-[14px] leading-relaxed shadow-sm ${
+          className={`relative group/bubble rounded-2xl px-4 py-3 text-[14px] leading-relaxed shadow-sm ${
             isUser
               ? "bg-gradient-to-br from-primary-600 to-purple-700 text-white rounded-br-sm whitespace-pre-wrap"
               : "bg-white dark:bg-surface-900/80 border border-surface-100 dark:border-surface-800 text-surface-900 dark:text-surface-50 rounded-bl-sm"
@@ -51,6 +71,13 @@ function Bubble({ msg, agent }) {
               prose-strong:font-semibold prose-em:italic
               prose-code:bg-surface-100 prose-code:dark:bg-surface-700 prose-code:px-1 prose-code:rounded prose-code:text-xs">
               <ReactMarkdown>{msg.content || ""}</ReactMarkdown>
+            </div>
+          )}
+          {plainText(msg.content) && (
+            <div className={`absolute -bottom-2 ${isUser ? "left-1" : "right-1"} opacity-0 group-hover/bubble:opacity-100 transition-opacity`}>
+              <div className={`rounded-full ${isUser ? "bg-primary-700/90" : "bg-white dark:bg-surface-800 shadow-card border border-surface-100 dark:border-surface-700"}`}>
+                <AudioPlayButton text={plainText(msg.content)} size="xs" tone={isUser ? "on-dark" : "default"} />
+              </div>
             </div>
           )}
         </div>

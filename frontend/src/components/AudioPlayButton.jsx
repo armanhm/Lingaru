@@ -3,9 +3,9 @@ import { generateTTS } from "../api/media";
 
 const API_BASE_URL = import.meta.env.VITE_API_URL || "/api";
 
-function SpeakerIcon() {
+function SpeakerIcon({ className = "w-5 h-5" }) {
   return (
-    <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+    <svg className={className} fill="none" viewBox="0 0 24 24" stroke="currentColor">
       <path
         strokeLinecap="round"
         strokeLinejoin="round"
@@ -16,9 +16,9 @@ function SpeakerIcon() {
   );
 }
 
-function LoadingIcon() {
+function LoadingIcon({ className = "w-5 h-5" }) {
   return (
-    <svg className="w-5 h-5 animate-spin" fill="none" viewBox="0 0 24 24">
+    <svg className={`${className} animate-spin`} fill="none" viewBox="0 0 24 24">
       <circle
         className="opacity-25"
         cx="12"
@@ -36,9 +36,9 @@ function LoadingIcon() {
   );
 }
 
-function PlayingIcon() {
+function PlayingIcon({ className = "w-5 h-5" }) {
   return (
-    <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+    <svg className={className} fill="none" viewBox="0 0 24 24" stroke="currentColor">
       <path
         strokeLinecap="round"
         strokeLinejoin="round"
@@ -49,7 +49,7 @@ function PlayingIcon() {
   );
 }
 
-export default function AudioPlayButton({ text, size = "sm" }) {
+export default function AudioPlayButton({ text, size = "sm", tone = "default" }) {
   const [state, setState] = useState("idle"); // idle | loading | playing
   const audioRef = useRef(null);
   const cachedUrlRef = useRef(null);
@@ -104,29 +104,38 @@ export default function AudioPlayButton({ text, size = "sm" }) {
   }, [text, state]);
 
   const sizeClasses =
-    size === "sm"
-      ? "p-1.5 rounded-lg"
-      : "p-2.5 rounded-xl";
+    size === "xs" ? "p-1 rounded-md"
+    : size === "sm" ? "p-1.5 rounded-lg"
+    : "p-2.5 rounded-xl";
 
-  const colorClasses =
-    state === "playing"
-      ? "text-primary-700 bg-primary-100"
-      : "text-surface-500 hover:text-primary-600 hover:bg-primary-50";
+  const iconClass =
+    size === "xs" ? "w-3.5 h-3.5"
+    : size === "sm" ? "w-5 h-5"
+    : "w-5 h-5";
+
+  // tone="on-dark" is for placement inside dark/gradient containers (user bubbles)
+  const colorClasses = tone === "on-dark"
+    ? (state === "playing"
+        ? "text-white bg-white/30"
+        : "text-white/80 hover:text-white hover:bg-white/15")
+    : (state === "playing"
+        ? "text-primary-700 bg-primary-100 dark:text-primary-200 dark:bg-primary-900/40"
+        : "text-surface-500 hover:text-primary-600 hover:bg-primary-50 dark:hover:bg-primary-900/20");
 
   return (
     <button
       onClick={handleClick}
       disabled={state === "loading"}
-      className={`inline-flex items-center justify-center transition-colors ${sizeClasses} ${colorClasses} disabled:opacity-60`}
-      title={state === "playing" ? "Stop" : "Listen"}
+      className={`inline-flex items-center justify-center transition-colors ${sizeClasses} ${colorClasses} disabled:opacity-60 focus-ring`}
+      title={state === "playing" ? "Stop" : "Écouter"}
       aria-label={state === "playing" ? "Stop audio" : `Listen to "${text}"`}
     >
       {state === "loading" ? (
-        <LoadingIcon />
+        <LoadingIcon className={iconClass} />
       ) : state === "playing" ? (
-        <PlayingIcon />
+        <PlayingIcon className={iconClass} />
       ) : (
-        <SpeakerIcon />
+        <SpeakerIcon className={iconClass} />
       )}
     </button>
   );

@@ -247,6 +247,8 @@ const AGENTS = [
     directive: "Donne une note culturelle française liée au sujet suivant : contexte, anecdote, mots-clés." },
   { key: "pron",      emoji: "🔊", label: "Pronunciation", hint: "Prononciation + IPA",              mode: "conversation",
     directive: "Donne la prononciation phonétique (IPA) et un conseil concret pour bien prononcer ce mot/phrase." },
+  { key: "exam",      emoji: "🎯", label: "Exam",         hint: "Coach TCF / TEF",                  mode: "conversation",
+    directive: "Tu es un coach TCF / TEF. Réponds avec : (1) format ou stratégie selon la demande, (2) un exemple concret tiré de l'examen, (3) une mini-action à faire dans les 10 prochaines minutes. Ton ferme et bienveillant. Sujet :" },
 ];
 const AGENTS_BY_KEY = Object.fromEntries(AGENTS.map((a) => [a.key, a]));
 

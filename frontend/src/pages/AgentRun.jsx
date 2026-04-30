@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState, useCallback } from "react";
 import { Link, useParams } from "react-router-dom";
 import ReactMarkdown from "react-markdown";
+import remarkGfm from "remark-gfm";
 import { getAgent, startAgentRun, getAgentRuns } from "../api/agents";
 import { sendChatMessage, getConversation } from "../api/assistant";
 import { PageHeader } from "../components/ui";
@@ -69,8 +70,11 @@ function Bubble({ msg, agent }) {
               prose-h3:text-base prose-h3:font-semibold
               prose-ul:my-1 prose-ol:my-1 prose-li:my-0.5
               prose-strong:font-semibold prose-em:italic
-              prose-code:bg-surface-100 prose-code:dark:bg-surface-700 prose-code:px-1 prose-code:rounded prose-code:text-xs">
-              <ReactMarkdown>{msg.content || ""}</ReactMarkdown>
+              prose-code:bg-surface-100 prose-code:dark:bg-surface-700 prose-code:px-1 prose-code:rounded prose-code:text-xs
+              prose-table:my-2 prose-table:text-[12.5px] prose-table:border-collapse
+              prose-th:bg-surface-50 dark:prose-th:bg-surface-800 prose-th:px-2 prose-th:py-1.5 prose-th:font-semibold prose-th:text-left prose-th:border prose-th:border-surface-200 dark:prose-th:border-surface-700
+              prose-td:px-2 prose-td:py-1 prose-td:border prose-td:border-surface-200 dark:prose-td:border-surface-700">
+              <ReactMarkdown remarkPlugins={[remarkGfm]}>{msg.content || ""}</ReactMarkdown>
             </div>
           )}
           {plainText(msg.content) && (

@@ -10,8 +10,11 @@ export default function Register() {
     passwordConfirm: "",
   });
   const [error, setError] = useState("");
+  const [pending, setPending] = useState(null); // { username, email } once submitted
   const [loading, setLoading] = useState(false);
   const { register } = useAuth();
+  // navigate kept for future flows (e.g. email confirmation), unused now
+  // eslint-disable-next-line no-unused-vars
   const navigate = useNavigate();
 
   const handleChange = (e) => {
@@ -27,8 +30,10 @@ export default function Register() {
     }
     setLoading(true);
     try {
-      await register(form.username, form.email, form.password, form.passwordConfirm);
-      navigate("/");
+      // New accounts land in a "pending admin approval" state — we don't
+      // log the user in. Show a confirmation card instead.
+      const res = await register(form.username, form.email, form.password, form.passwordConfirm);
+      setPending({ username: res?.username || form.username, email: res?.email || form.email });
     } catch (err) {
       const data = err.response?.data;
       if (data) {
@@ -102,6 +107,32 @@ export default function Register() {
             <span className="text-2xl font-extrabold text-gradient-primary">Lingaru</span>
           </div>
 
+          {pending ? (
+            <div className="space-y-5 animate-fade-in-up">
+              <div className="text-center lg:text-left">
+                <p className="eyebrow-primary mb-2">Account created</p>
+                <h1 className="text-h1 text-surface-900 dark:text-surface-100">
+                  En attente d'approbation
+                </h1>
+                <p className="text-body text-surface-500 dark:text-surface-400 mt-2">
+                  Your account <span className="font-semibold text-surface-900 dark:text-surface-100">{pending.username}</span>{" "}
+                  has been created. An administrator needs to approve it before you can log in.
+                </p>
+                <p className="text-caption text-surface-500 dark:text-surface-400 mt-3">
+                  We'll send confirmation to <span className="font-medium">{pending.email}</span>{" "}
+                  once your access is enabled.
+                </p>
+              </div>
+              <div className="rounded-xl bg-info-50 dark:bg-info-900/20 border border-info-200 dark:border-info-800 px-4 py-3 text-sm text-info-700 dark:text-info-300 flex items-start gap-2">
+                <svg className="w-4 h-4 mt-0.5 shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM9 9a1 1 0 112 0v4a1 1 0 11-2 0V9zm1-4a1 1 0 100 2 1 1 0 000-2z" clipRule="evenodd" /></svg>
+                <span>This is a private build. Sign-ups are reviewed by hand to keep the experience focused.</span>
+              </div>
+              <Link to="/login" className="btn-secondary btn-lg w-full justify-center">
+                Back to sign in
+              </Link>
+            </div>
+          ) : (
+            <>
           <div className="text-center lg:text-left">
             <p className="eyebrow-primary mb-2">Create your account</p>
             <h1 className="text-h1 text-surface-900 dark:text-surface-100">
@@ -166,6 +197,8 @@ export default function Register() {
               Sign in
             </Link>
           </p>
+            </>
+          )}
         </div>
       </div>
     </div>

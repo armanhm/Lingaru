@@ -1,5 +1,7 @@
-from rest_framework import generics, permissions
+from rest_framework import generics, permissions, status, exceptions
 from rest_framework.response import Response
+from rest_framework_simplejwt.views import TokenObtainPairView
+from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 from django.contrib.auth import get_user_model
 from .serializers import RegisterSerializer, UserSerializer
 
@@ -15,7 +17,55 @@ class RegisterView(generics.CreateAPIView):
         serializer = self.get_serializer(data=request.data)
         serializer.is_valid(raise_exception=True)
         user = serializer.save()
-        return Response(UserSerializer(user).data, status=201)
+        # Account is created inactive — admin must approve via Django admin
+        # before login is allowed. Don't return tokens or full user fields:
+        # the frontend should display a "pending approval" message instead
+        # of acting as if the user is signed in.
+        return Response(
+            {
+                "status": "pending_approval",
+                "detail": (
+                    "Your account has been created and is awaiting admin "
+                    "approval. You'll be able to log in once an administrator "
+                    "activates it."
+                ),
+                "username": user.username,
+                "email": user.email,
+            },
+            status=status.HTTP_202_ACCEPTED,
+        )
+
+
+class ApprovalAwareTokenObtainPairSerializer(TokenObtainPairSerializer):
+    """SimpleJWT login that returns a friendlier error message when the user
+    exists and the password is correct but the account is awaiting admin
+    approval (is_active=False). Falls back to default behaviour for every
+    other auth-failure case."""
+
+    def validate(self, attrs):
+        username_field = self.username_field
+        username = attrs.get(username_field)
+        password = attrs.get("password", "")
+        if username:
+            try:
+                user = User.objects.get(**{username_field: username})
+            except User.DoesNotExist:
+                user = None
+            if (
+                user is not None
+                and not user.is_active
+                and user.check_password(password)
+            ):
+                raise exceptions.AuthenticationFailed(
+                    "Your account is awaiting admin approval. "
+                    "Try again once an administrator has activated it.",
+                    code="pending_approval",
+                )
+        return super().validate(attrs)
+
+
+class ApprovalAwareTokenObtainPairView(TokenObtainPairView):
+    serializer_class = ApprovalAwareTokenObtainPairSerializer
 
 
 class MeView(generics.RetrieveUpdateAPIView):

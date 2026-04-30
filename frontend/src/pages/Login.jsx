@@ -17,8 +17,14 @@ export default function Login() {
     try {
       await login(username, password);
       navigate("/");
-    } catch {
-      setError("Invalid username or password.");
+    } catch (err) {
+      // Surface the server's message when it's specific (e.g. account
+      // pending approval), otherwise fall back to a generic line.
+      const data = err?.response?.data;
+      const msg = data?.detail
+        || (typeof data === "string" ? data : null)
+        || "Invalid username or password.";
+      setError(msg);
     } finally {
       setLoading(false);
     }

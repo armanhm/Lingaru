@@ -21,7 +21,13 @@ class RegisterSerializer(serializers.ModelSerializer):
 
     def create(self, validated_data):
         validated_data.pop("password_confirm")
+        # New sign-ups are inactive by default. An admin must approve them
+        # in Django admin (toggle `is_active`) before they can log in.
+        # Superusers / accounts created via createsuperuser are already
+        # active because that bypasses this serializer.
         user = User.objects.create_user(**validated_data)
+        user.is_active = False
+        user.save(update_fields=["is_active"])
         return user
 
 

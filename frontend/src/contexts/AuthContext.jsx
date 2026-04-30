@@ -33,13 +33,16 @@ export function AuthProvider({ children }) {
   };
 
   const register = async (username, email, password, passwordConfirm) => {
-    await client.post("/users/register/", {
+    // New accounts are created inactive — an admin must approve them
+    // before they can log in. We DO NOT call login() here.
+    const res = await client.post("/users/register/", {
       username,
       email,
       password,
       password_confirm: passwordConfirm,
     });
-    return login(username, password);
+    // Returns { status: "pending_approval", detail, username, email }
+    return res.data;
   };
 
   const logout = () => {

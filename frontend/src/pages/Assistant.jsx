@@ -1,5 +1,5 @@
 import { useState, useRef, useEffect, useCallback, useMemo } from "react";
-import { useSearchParams } from "react-router-dom";
+import { Link, useSearchParams } from "react-router-dom";
 import ReactMarkdown from "react-markdown";
 import {
   sendChatMessage,
@@ -1283,7 +1283,8 @@ export default function Assistant() {
           )}
 
           <p className="text-[10px] font-mono text-surface-400 dark:text-surface-500 text-center mt-2">
-            Entrée pour envoyer · Shift+Entrée pour une nouvelle ligne · tapez <kbd className="kbd">@</kbd> pour invoquer un agent
+            Entrée pour envoyer · Shift+Entrée pour une nouvelle ligne · tapez <kbd className="kbd">@</kbd> pour invoquer un agent ·{" "}
+            <Link to="/agents" className="text-primary-500 dark:text-primary-400 hover:underline">galerie d'agents →</Link>
           </p>
         </div>
       </div>

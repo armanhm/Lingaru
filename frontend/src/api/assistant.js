@@ -1,10 +1,11 @@
 import client from "./client";
 
-export const sendChatMessage = (message, mode = "conversation", conversationId = null) =>
+export const sendChatMessage = (message, mode = "conversation", conversationId = null, agentSlug = null) =>
   client.post("/assistant/chat/", {
     message,
     mode,
     conversation_id: conversationId,
+    agent_slug: agentSlug,
   });
 
 export const getConversations = () =>

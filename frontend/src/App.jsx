@@ -18,6 +18,8 @@ import Progress from "./pages/Progress";
 import Discover from "./pages/Discover";
 import News from "./pages/News";
 import NewsArticle from "./pages/NewsArticle";
+import Agents from "./pages/Agents";
+import AgentRun from "./pages/AgentRun";
 import SRSReview from "./pages/SRSReview";
 import MistakeJournal from "./pages/MistakeJournal";
 import ConjugationDrill from "./pages/ConjugationDrill";
@@ -71,6 +73,8 @@ export default function App() {
           <Route path="discover" element={<Discover />} />
           <Route path="news" element={<News />} />
           <Route path="news/:id" element={<NewsArticle />} />
+          <Route path="agents" element={<Agents />} />
+          <Route path="agents/:slug" element={<AgentRun />} />
           <Route path="practice/srs" element={<SRSReview />} />
           <Route path="practice/conjugation" element={<ConjugationDrill />} />
           <Route path="progress/mistakes" element={<MistakeJournal />} />

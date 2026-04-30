@@ -18,6 +18,7 @@ urlpatterns = [
     path("api/dictionary/", include("apps.dictionary.urls")),
     path("api/exam-prep/", include("apps.exam_prep.urls")),
     path("api/grammar/", include("apps.grammar.urls")),
+    path("api/agents/", include("apps.agents.urls")),
 ]
 
 if settings.DEBUG:

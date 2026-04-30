@@ -22,6 +22,7 @@ class ChatRequestSerializer(serializers.Serializer):
     message = serializers.CharField(min_length=1)
     mode = serializers.ChoiceField(choices=MODE_CHOICES, default="conversation")
     conversation_id = serializers.IntegerField(required=False, allow_null=True)
+    agent_slug = serializers.CharField(required=False, allow_null=True, allow_blank=True)
 
 
 class MessageSerializer(serializers.ModelSerializer):

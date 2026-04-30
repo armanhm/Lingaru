@@ -32,6 +32,7 @@ class ChatView(APIView):
         user_message = serializer.validated_data["message"]
         mode = serializer.validated_data["mode"]
         conversation_id = serializer.validated_data.get("conversation_id")
+        agent_slug = serializer.validated_data.get("agent_slug") or None
 
         # Resolve or create conversation
         if conversation_id:
@@ -68,12 +69,25 @@ class ChatView(APIView):
             for msg in prior_messages
         ]
 
-        # Get system prompt for the mode
-        system_prompt = SYSTEM_PROMPTS.get(mode, SYSTEM_PROMPTS["conversation"])
+        # Get system prompt — agent's prompt wins when one is supplied;
+        # otherwise fall back to the mode default.
+        agent = None
+        if agent_slug:
+            try:
+                from apps.agents.models import Agent
+                agent = Agent.objects.filter(slug=agent_slug, is_active=True).first()
+            except Exception as exc:  # pragma: no cover — defensive
+                logger.warning("Agent lookup failed for slug=%s: %s", agent_slug, exc)
+
+        if agent and agent.system_prompt:
+            system_prompt = agent.system_prompt
+        else:
+            system_prompt = SYSTEM_PROMPTS.get(mode, SYSTEM_PROMPTS["conversation"])
 
         # RAG: retrieve relevant context for conversation mode
+        # (skipped when an agent is in charge — agents have their own focused brief).
         rag_used = False
-        if mode == "conversation":
+        if mode == "conversation" and agent is None:
             try:
                 context = retrieve_context_for_query(
                     user_id=request.user.id,

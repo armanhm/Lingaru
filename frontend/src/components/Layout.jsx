@@ -79,6 +79,11 @@ const NAV_SECTIONS = [
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z" />
         </svg>
       )},
+      { to: "/agents", label: "Agents", icon: (
+        <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9.75 9.75A2.25 2.25 0 0112 7.5h0a2.25 2.25 0 012.25 2.25v.5M5.25 13.5h13.5a2.25 2.25 0 012.25 2.25v3a2.25 2.25 0 01-2.25 2.25H5.25A2.25 2.25 0 013 18.75v-3a2.25 2.25 0 012.25-2.25zM8.25 17.25h.01M15.75 17.25h.01M12 7.5V4.5" />
+        </svg>
+      )},
     ],
   },
   {

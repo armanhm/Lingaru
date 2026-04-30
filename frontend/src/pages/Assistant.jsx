@@ -556,15 +556,15 @@ function ErreursDrawer({ open, onClose, mistakes }) {
  * CorrectedText — wraps `from` substrings with wavy underline + tooltip,
  * and renders @mentions as gradient pills.
  * ────────────────────────────────────────────────────────────── */
-function CorrectedText({ text, issues }) {
-  if (!issues || !issues.length) return <MentionedText text={text} />;
+function CorrectedText({ text, issues, tone = "default" }) {
+  if (!issues || !issues.length) return <MentionedText text={text} tone={tone} />;
   const parts = [];
   let cursor = 0;
   let key = 0;
   issues.forEach((iss) => {
     const idx = text.indexOf(iss.from, cursor);
     if (idx === -1) return;
-    if (idx > cursor) parts.push(<MentionedText key={key++} text={text.slice(cursor, idx)} />);
+    if (idx > cursor) parts.push(<MentionedText key={key++} text={text.slice(cursor, idx)} tone={tone} />);
     parts.push(
       <span key={key++} className="relative group/iss inline-block">
         <span className="underline-wavy cursor-help">{iss.from}</span>
@@ -577,7 +577,7 @@ function CorrectedText({ text, issues }) {
     );
     cursor = idx + iss.from.length;
   });
-  if (cursor < text.length) parts.push(<MentionedText key={key++} text={text.slice(cursor)} />);
+  if (cursor < text.length) parts.push(<MentionedText key={key++} text={text.slice(cursor)} tone={tone} />);
   return <>{parts}</>;
 }
 
@@ -608,7 +608,7 @@ function ChatBubble({ msg }) {
             : "bg-white dark:bg-surface-900/80 border border-surface-100 dark:border-surface-800 text-surface-900 dark:text-surface-50 rounded-bl-sm"
         }`}>
           {isUser ? (
-            <CorrectedText text={msg.content} issues={msg.issues} />
+            <CorrectedText text={msg.content} issues={msg.issues} tone="on-dark" />
           ) : (
             <div className="prose prose-sm dark:prose-invert max-w-none
               prose-p:my-1 prose-headings:mt-3 prose-headings:mb-1
@@ -755,7 +755,13 @@ function MentionPopover({ open, query, onPick, onClose, activeIndex, setActiveIn
  * MentionedText — renders text with @agent tokens as gradient pills
  * Used in chat bubbles and the composer's echo strip.
  * ────────────────────────────────────────────────────────────── */
-function MentionedText({ text }) {
+function MentionedText({ text, tone = "default" }) {
+  // "default" = light pill on white/surface bubbles
+  // "on-dark" = high-contrast white pill for user (gradient) bubbles
+  const pillClass = tone === "on-dark"
+    ? "inline-flex items-center gap-1 px-1.5 py-0.5 rounded-md bg-white/25 text-white ring-1 ring-white/40 font-semibold whitespace-nowrap"
+    : "inline-flex items-center gap-1 px-1.5 py-0.5 rounded-md bg-primary-100 dark:bg-primary-900/50 text-primary-800 dark:text-primary-100 ring-1 ring-primary-300/60 dark:ring-primary-700/60 font-semibold whitespace-nowrap";
+
   const parts = [];
   const re = /(^|\s)(@[a-zA-Z]+)/g;
   let last = 0;
@@ -771,7 +777,7 @@ function MentionedText({ text }) {
     parts.push(
       <span
         key={key++}
-        className="inline-flex items-center gap-1 px-1.5 py-0.5 rounded-md bg-gradient-to-br from-primary-500/20 to-purple-500/20 text-primary-700 dark:text-primary-200 ring-1 ring-primary-300/50 dark:ring-primary-700/50 font-semibold whitespace-nowrap"
+        className={pillClass}
         title={agent.hint}
       >
         <span className="text-[11px]">{agent.emoji}</span>

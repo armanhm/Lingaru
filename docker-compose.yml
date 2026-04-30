@@ -80,7 +80,11 @@ services:
     restart: unless-stopped
 
   nginx:
-    build: ./nginx
+    build:
+      # Build from the repo root so the Dockerfile can copy ./frontend
+      # in for the multi-stage build.
+      context: .
+      dockerfile: nginx/Dockerfile
     ports:
       # Host port can be overridden via LINGARU_HTTP_PORT in .env
       # (useful when 80 is already taken by another service like HAProxy)

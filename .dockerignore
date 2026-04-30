@@ -1,0 +1,16 @@
+# Keep the nginx multi-stage build context small and reproducible.
+**/node_modules
+**/__pycache__
+**/.pytest_cache
+**/dist
+**/build
+**/.venv
+**/venv
+**/.git
+**/.env
+**/.env.*
+**/db.sqlite3
+**/.DS_Store
+**/staticfiles
+**/media
+docs/

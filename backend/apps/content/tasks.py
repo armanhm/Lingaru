@@ -22,13 +22,28 @@ def _extract_youtube_id(url: str) -> str | None:
     return None
 
 
+class TranscriptFetchError(Exception):
+    """Raised when YouTube refuses to give us captions for an environment-
+    level reason (IP blocked, video private, rate limit). Distinct from
+    `NoTranscriptFound` which means the video genuinely has no FR/EN captions."""
+
+
 def _fetch_transcript(video_id: str) -> tuple[str, str]:
     """Fetch the French transcript (and English if available).
 
-    Returns (transcript_fr, transcript_en). Falls back to auto-generated
-    captions if manual ones are not available.
+    Returns (transcript_fr, transcript_en).
+
+    Raises TranscriptFetchError with a user-friendly message if YouTube
+    blocks us (common on datacenter IPs like Hetzner) or if the video is
+    private/unavailable. Returns empty strings only when the video
+    legitimately has no captions in either language.
     """
-    from youtube_transcript_api import YouTubeTranscriptApi, NoTranscriptFound
+    from youtube_transcript_api import (
+        YouTubeTranscriptApi,
+        NoTranscriptFound,
+        TranscriptsDisabled,
+        VideoUnavailable,
+    )
 
     transcript_fr = ""
     transcript_en = ""
@@ -36,31 +51,54 @@ def _fetch_transcript(video_id: str) -> tuple[str, str]:
     try:
         api = YouTubeTranscriptApi()
         transcript_list = api.list(video_id)
+    except TranscriptsDisabled:
+        raise TranscriptFetchError(
+            "Captions are disabled for this video. Try one with captions enabled."
+        )
+    except VideoUnavailable:
+        raise TranscriptFetchError(
+            "This video is unavailable (private, removed, or region-locked)."
+        )
+    except Exception as exc:
+        # Most commonly: RequestBlocked / IpBlocked / TooManyRequests when
+        # YouTube detects datacenter IP. Surface the real error class so
+        # admins can spot the pattern in /admin/ → VideoLesson.
+        msg = str(exc) or exc.__class__.__name__
+        raise TranscriptFetchError(
+            f"YouTube refused the request — likely datacenter IP block "
+            f"or rate limit. Underlying error: {exc.__class__.__name__}: {msg[:200]}"
+        )
 
-        # Try French first (manual, then auto-generated)
-        fr_transcript = None
+    # Try French first (manual, then auto-generated)
+    fr_transcript = None
+    try:
+        fr_transcript = transcript_list.find_transcript(["fr"])
+    except NoTranscriptFound:
         try:
-            fr_transcript = transcript_list.find_transcript(["fr"])
-        except NoTranscriptFound:
-            try:
-                fr_transcript = transcript_list.find_generated_transcript(["fr"])
-            except NoTranscriptFound:
-                pass
-
-        if fr_transcript:
-            segments = fr_transcript.fetch()
-            transcript_fr = " ".join(seg.text for seg in segments)
-
-        # Try English (for translation reference)
-        try:
-            en_transcript = transcript_list.find_transcript(["en"])
-            segments = en_transcript.fetch()
-            transcript_en = " ".join(seg.text for seg in segments)
+            fr_transcript = transcript_list.find_generated_transcript(["fr"])
         except NoTranscriptFound:
             pass
 
-    except Exception as exc:
-        logger.warning("Transcript fetch failed for %s: %s", video_id, exc)
+    if fr_transcript:
+        try:
+            segments = fr_transcript.fetch()
+            transcript_fr = " ".join(seg.text for seg in segments)
+        except Exception as exc:
+            raise TranscriptFetchError(
+                f"Could not download FR transcript: {exc.__class__.__name__}: {str(exc)[:200]}"
+            )
+
+    # Try English (for translation reference)
+    try:
+        en_transcript = transcript_list.find_transcript(["en"])
+        try:
+            segments = en_transcript.fetch()
+            transcript_en = " ".join(seg.text for seg in segments)
+        except Exception:
+            # English is optional — log but don't fail the whole task
+            logger.warning("Could not download EN transcript for %s", video_id)
+    except NoTranscriptFound:
+        pass
 
     return transcript_fr, transcript_en
 

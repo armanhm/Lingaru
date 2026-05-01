@@ -131,26 +131,31 @@ function StatusBanner({ status, errorMessage }) {
 
   const config = {
     pending: {
-      bg: "bg-blue-50 dark:bg-blue-900/20 border-blue-200",
-      text: "text-blue-800",
+      bg: "bg-info-50 dark:bg-info-900/20 border-info-200 dark:border-info-800",
+      text: "text-info-800 dark:text-info-300",
       icon: "⏳",
       message: "Video is queued for processing...",
     },
     processing: {
-      bg: "bg-yellow-50 dark:bg-yellow-900/20 border-yellow-200",
-      text: "text-yellow-800 dark:text-yellow-300",
+      bg: "bg-warn-50 dark:bg-warn-900/20 border-warn-200 dark:border-warn-700",
+      text: "text-warn-800 dark:text-warn-300",
       icon: "⚙️",
       message: "Fetching transcript and extracting content — this may take a minute.",
     },
     failed: {
-      bg: "bg-red-50 dark:bg-red-900/20 border-red-200 dark:border-red-800",
-      text: "text-red-800 dark:text-red-400",
+      bg: "bg-danger-50 dark:bg-danger-900/20 border-danger-200 dark:border-danger-800",
+      text: "text-danger-800 dark:text-danger-400",
       icon: "❌",
       message: errorMessage || "Processing failed.",
     },
   };
 
   const c = config[status] || config.pending;
+  const isYouTubeBlock = (errorMessage || "").toLowerCase().includes("datacenter")
+    || (errorMessage || "").toLowerCase().includes("ip block")
+    || (errorMessage || "").toLowerCase().includes("requestblocked")
+    || (errorMessage || "").toLowerCase().includes("ipblocked")
+    || (errorMessage || "").toLowerCase().includes("rate limit");
 
   return (
     <div className={`rounded-xl border p-4 ${c.bg}`}>
@@ -159,6 +164,17 @@ function StatusBanner({ status, errorMessage }) {
       </p>
       {status !== "failed" && (
         <p className="text-xs text-surface-500 dark:text-surface-400 mt-1">Refresh the page to see the result.</p>
+      )}
+      {status === "failed" && isYouTubeBlock && (
+        <div className="mt-2 text-xs text-danger-700 dark:text-danger-300 leading-relaxed">
+          <p className="font-semibold mb-1">Why this usually happens</p>
+          <p>YouTube blocks transcript requests from datacenter IPs (Hetzner, AWS, etc.). It works fine on a residential / home connection.</p>
+          <p className="mt-1.5 font-semibold">Workarounds</p>
+          <ol className="list-decimal list-inside space-y-0.5 mt-1">
+            <li>Run video processing locally (laptop) and dump/load the resulting <code className="font-mono bg-danger-100 dark:bg-danger-900/40 px-1 rounded">VideoLesson</code> records to production.</li>
+            <li>Or proxy outbound YouTube calls through a residential proxy service.</li>
+          </ol>
+        </div>
       )}
     </div>
   );

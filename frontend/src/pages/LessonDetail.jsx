@@ -1,5 +1,7 @@
 import { useEffect, useState } from "react";
 import { useParams, Link } from "react-router-dom";
+import ReactMarkdown from "react-markdown";
+import remarkGfm from "remark-gfm";
 import { getLesson } from "../api/content";
 import { useAuth } from "../contexts/AuthContext";
 import AudioPlayButton from "../components/AudioPlayButton";
@@ -7,6 +9,28 @@ import VideoSection from "../components/VideoSection";
 import { staggerDelay } from "../hooks/useAnimations";
 
 const TYPE_ICON = { vocab: "📝", vocabulary: "📝", grammar: "📐", text: "📖", reading: "📖" };
+
+/* Markdown body for lesson rich content — supports GFM tables, lists,
+   bold/italic, inline code, and horizontal rules. Same prose styles as the
+   chat bubbles so the table treatment is consistent across the app. */
+const MD_PROSE = "prose prose-sm dark:prose-invert max-w-none " +
+  "prose-p:my-1.5 prose-p:leading-relaxed " +
+  "prose-headings:mt-3 prose-headings:mb-1 prose-h3:text-base prose-h3:font-semibold " +
+  "prose-ul:my-1.5 prose-ol:my-1.5 prose-li:my-0.5 " +
+  "prose-strong:font-semibold prose-em:italic " +
+  "prose-code:bg-surface-100 prose-code:dark:bg-surface-700 prose-code:px-1 prose-code:rounded prose-code:text-xs " +
+  "prose-table:my-3 prose-table:text-[12.5px] prose-table:border-collapse " +
+  "prose-th:bg-surface-50 dark:prose-th:bg-surface-800 prose-th:px-2 prose-th:py-1.5 prose-th:font-semibold prose-th:text-left prose-th:border prose-th:border-surface-200 dark:prose-th:border-surface-700 " +
+  "prose-td:px-2 prose-td:py-1 prose-td:border prose-td:border-surface-200 dark:prose-td:border-surface-700";
+
+function Markdown({ children }) {
+  if (!children) return null;
+  return (
+    <div className={MD_PROSE}>
+      <ReactMarkdown remarkPlugins={[remarkGfm]}>{children}</ReactMarkdown>
+    </div>
+  );
+}
 
 function SectionHeader({ icon, title, count }) {
   return (
@@ -71,7 +95,9 @@ function GrammarSection({ rules }) {
         {rules.map((rule) => (
           <div key={rule.id} className="card p-5">
             <h3 className="font-bold text-surface-900 dark:text-surface-100 mb-2">{rule.title}</h3>
-            <p className="text-sm text-surface-600 dark:text-surface-400 mb-3 leading-relaxed">{rule.explanation}</p>
+            <div className="text-sm text-surface-600 dark:text-surface-400 mb-3">
+              <Markdown>{rule.explanation}</Markdown>
+            </div>
             {rule.formula && (
               <div className="bg-gradient-to-r from-primary-50 to-violet-50 dark:from-primary-900/20 dark:to-violet-900/20 rounded-xl px-4 py-2.5 mb-3 font-mono text-sm text-primary-800 dark:text-primary-300 border border-primary-100 dark:border-primary-800/30">
                 {rule.formula}
@@ -119,9 +145,9 @@ function ReadingSection({ texts }) {
               <h3 className="font-bold text-surface-900 dark:text-surface-100 mb-3">{text.title}</h3>
             )}
             <div className="bg-surface-50 dark:bg-surface-700/30 rounded-xl p-4 mb-4">
-              <p className="text-sm text-surface-800 dark:text-surface-200 leading-relaxed whitespace-pre-line">
-                {text.content_fr}
-              </p>
+              <div className="text-sm text-surface-800 dark:text-surface-200">
+                <Markdown>{text.content_fr}</Markdown>
+              </div>
             </div>
             {text.content_en && (
               <details className="border-t border-surface-100 dark:border-surface-700/50 pt-3 group">
@@ -131,9 +157,9 @@ function ReadingSection({ texts }) {
                   </svg>
                   Show English translation
                 </summary>
-                <p className="text-sm text-surface-600 dark:text-surface-400 mt-3 leading-relaxed whitespace-pre-line pl-5">
-                  {text.content_en}
-                </p>
+                <div className="text-sm text-surface-600 dark:text-surface-400 mt-3 pl-5">
+                  <Markdown>{text.content_en}</Markdown>
+                </div>
               </details>
             )}
             {text.highlighted_vocabulary && text.highlighted_vocabulary.length > 0 && (

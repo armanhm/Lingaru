@@ -199,9 +199,35 @@ export default function NewsArticle() {
         </h1>
 
         {article.summary && (
-          <p className="text-[14px] text-surface-600 dark:text-surface-400 italic mb-5 pb-5 border-b border-surface-100 dark:border-surface-800 max-w-[68ch]">
+          <p className="text-[14px] text-surface-600 dark:text-surface-400 italic mb-4 max-w-[68ch]">
             {article.summary}
           </p>
+        )}
+
+        {(article.source_name || article.source_url) && (
+          <div className="mb-5 pb-5 border-b border-surface-100 dark:border-surface-800 flex items-center gap-2 flex-wrap">
+            <span className="text-[10px] uppercase tracking-[0.14em] font-semibold text-surface-500 dark:text-surface-400">
+              Source
+            </span>
+            {article.source_name && (
+              <span className="text-[12px] font-semibold text-surface-700 dark:text-surface-200">
+                {article.source_name}
+              </span>
+            )}
+            {article.source_url && (
+              <a
+                href={article.source_url}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-1 text-[12px] font-semibold text-primary-600 dark:text-primary-400 hover:text-primary-700 dark:hover:text-primary-300 hover:underline focus-ring rounded px-1 -mx-1"
+              >
+                Lire l'article original
+                <svg className="w-3 h-3" fill="none" stroke="currentColor" strokeWidth={2.5} viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+                </svg>
+              </a>
+            )}
+          </div>
         )}
 
         <div className="flex items-center gap-2 mb-3">

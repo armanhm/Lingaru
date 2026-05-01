@@ -23,12 +23,15 @@ class NewsListSerializer(serializers.ModelSerializer):
     seen = serializers.BooleanField(read_only=True, default=False)
     interacted = serializers.BooleanField(read_only=True, default=False)
     read_minutes = serializers.SerializerMethodField()
+    source_name = serializers.SerializerMethodField()
+    source_domain = serializers.SerializerMethodField()
 
     class Meta:
         model = DiscoverCard
         fields = (
             "id", "title", "summary", "topic", "level",
-            "source_url", "image_url", "generated_at",
+            "source_url", "source_name", "source_domain",
+            "image_url", "generated_at",
             "read_minutes", "seen", "interacted",
         )
 
@@ -37,6 +40,12 @@ class NewsListSerializer(serializers.ModelSerializer):
         words = len(article.split()) if article else 0
         # Roughly 130 words/min for B1-B2 reader
         return max(1, round(words / 130))
+
+    def get_source_name(self, obj):
+        return (obj.content_json or {}).get("source_name") or ""
+
+    def get_source_domain(self, obj):
+        return (obj.content_json or {}).get("source_domain") or ""
 
 
 class NewsDetailSerializer(serializers.ModelSerializer):
@@ -50,12 +59,15 @@ class NewsDetailSerializer(serializers.ModelSerializer):
     expressions = serializers.SerializerMethodField()
     grammar_points = serializers.SerializerMethodField()
     read_minutes = serializers.SerializerMethodField()
+    source_name = serializers.SerializerMethodField()
+    source_domain = serializers.SerializerMethodField()
 
     class Meta:
         model = DiscoverCard
         fields = (
             "id", "title", "summary", "topic", "level",
-            "source_url", "image_url", "generated_at",
+            "source_url", "source_name", "source_domain",
+            "image_url", "generated_at",
             "article_fr", "article_en",
             "vocabulary", "expressions", "grammar_points",
             "read_minutes", "seen", "interacted",
@@ -83,6 +95,12 @@ class NewsDetailSerializer(serializers.ModelSerializer):
         article = self._content(obj).get("article_fr", "")
         words = len(article.split()) if article else 0
         return max(1, round(words / 130))
+
+    def get_source_name(self, obj):
+        return self._content(obj).get("source_name") or ""
+
+    def get_source_domain(self, obj):
+        return self._content(obj).get("source_domain") or ""
 
 
 class InteractSerializer(serializers.Serializer):

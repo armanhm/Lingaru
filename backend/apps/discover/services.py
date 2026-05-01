@@ -102,11 +102,34 @@ VALID_NEWS_TOPICS = {
 
 
 def generate_news_card(topic: Optional[str] = None) -> Optional[DiscoverCard]:
-    """Generate a news article card using the LLM, with vocabulary,
-    expressions, and grammar_points payload. Falls back to a curated
-    mock article when the LLM is unavailable so the feature still
-    works in dev/offline.
+    """Generate a news card with three layers of fallback.
+
+    1. RSS-real path (preferred) \u2014 fetch one unseen item from a curated
+       French RSS feed for the requested topic, then ask the LLM to rewrite
+       it at B1-B2 with vocabulary / expressions / grammar_points. Saves
+       the original `source_url` so users can read the source.
+
+    2. LLM-synthetic path \u2014 if no RSS items are available (network down,
+       all sources already consumed, etc.) we still ask the LLM to invent
+       a plausible article. Used to be the only path; kept for resilience.
+
+    3. Curated offline mock \u2014 when the LLM is also unreachable (no API
+       keys / rate-limited), pick the hand-written article matching the
+       topic. Works fully offline.
     """
+
+    # \u2500\u2500 Layer 1: real news \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500
+    try:
+        from apps.discover.news_fetcher import fetch_one_fresh_card
+        card = fetch_one_fresh_card(topic=topic)
+        if card is not None:
+            logger.info("News card from RSS: %s [%s]", card.title[:60], card.source_url)
+            return card
+    except Exception as exc:
+        # Don't swallow this in tests \u2014 but in production we want resilience.
+        logger.warning("RSS news fetch failed, falling back to LLM-synthetic: %s", exc)
+
+    # \u2500\u2500 Layer 2: LLM synthetic \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500
     user_msg = "Generate a simplified French news article for B1-B2 learners."
     if topic and topic in VALID_NEWS_TOPICS:
         user_msg += f" Topic must be: {topic}."
@@ -120,8 +143,9 @@ def generate_news_card(topic: Optional[str] = None) -> Optional[DiscoverCard]:
         )
         data = json.loads(response.content)
     except (RuntimeError, json.JSONDecodeError, KeyError) as exc:
-        logger.warning("Falling back to curated news mock: %s", exc)
+        logger.warning("LLM-synthetic news failed, falling back to curated mock: %s", exc)
 
+    # \u2500\u2500 Layer 3: curated mock \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500
     if data is None:
         data = _curated_news_mock(topic)
 

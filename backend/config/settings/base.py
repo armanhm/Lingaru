@@ -158,10 +158,24 @@ GROQ_API_KEY = config("GROQ_API_KEY", default="")
 GROQ_MODEL = config("GROQ_MODEL", default="llama-3.3-70b-versatile")
 
 # Celery Beat schedule
+from celery.schedules import crontab  # noqa: E402
+
 CELERY_BEAT_SCHEDULE = {
     "generate-daily-discover-feed": {
         "task": "discover.generate_daily_feed",
         "schedule": 86400.0,  # every 24 hours (in seconds)
+    },
+    # Real-news pipeline runs twice a day at 07:00 and 19:00 UTC.
+    # Each run pulls ~10 fresh RSS items and rewrites them at B1-B2.
+    "fetch-real-news-morning": {
+        "task": "discover.fetch_real_news_pipeline",
+        "schedule": crontab(hour=7, minute=0),
+        "kwargs": {"max_total": 10},
+    },
+    "fetch-real-news-evening": {
+        "task": "discover.fetch_real_news_pipeline",
+        "schedule": crontab(hour=19, minute=0),
+        "kwargs": {"max_total": 10},
     },
 }
 

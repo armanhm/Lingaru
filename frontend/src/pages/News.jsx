@@ -75,14 +75,24 @@ function NewsCard({ article, i }) {
         </p>
       )}
 
-      <div className="mt-auto pt-1 flex items-center justify-between text-[11px] text-surface-500 dark:text-surface-500">
-        <span className="font-mono uppercase tracking-[0.12em]">{timeAgoFr(article.generated_at)}</span>
-        <span className="flex items-center gap-1 font-semibold text-primary-600 dark:text-primary-400 group-hover:gap-2 transition-all">
-          {article.read_minutes ? `${article.read_minutes} min` : "Lire"}
-          <svg className="w-3 h-3" fill="none" stroke="currentColor" strokeWidth={2.5} viewBox="0 0 24 24">
-            <path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" />
-          </svg>
-        </span>
+      <div className="mt-auto pt-1 space-y-1.5">
+        {(article.source_name || article.source_domain) && (
+          <div className="flex items-center gap-1.5 text-[10px] uppercase tracking-[0.1em] font-semibold text-surface-500 dark:text-surface-400">
+            <svg className="w-3 h-3 shrink-0" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" d="M19 11a7 7 0 01-7 7m0 0a7 7 0 01-7-7m7 7v4m0-11a7 7 0 017-7m-7 7a7 7 0 00-7-7m7 0V3" />
+            </svg>
+            <span className="truncate">{article.source_name || article.source_domain}</span>
+          </div>
+        )}
+        <div className="flex items-center justify-between text-[11px] text-surface-500 dark:text-surface-500">
+          <span className="font-mono uppercase tracking-[0.12em]">{timeAgoFr(article.generated_at)}</span>
+          <span className="flex items-center gap-1 font-semibold text-primary-600 dark:text-primary-400 group-hover:gap-2 transition-all">
+            {article.read_minutes ? `${article.read_minutes} min` : "Lire"}
+            <svg className="w-3 h-3" fill="none" stroke="currentColor" strokeWidth={2.5} viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" />
+            </svg>
+          </span>
+        </div>
       </div>
 
       {article.interacted && (

@@ -343,5 +343,5 @@ export function ExpandedCard({ card, onClose, onInteracted }) {
   );
 }
 
-// Default export for backwards compat — not used by new Discover page
+// Default export for backwards compat, not used by new Discover page
 export default CompactCard;

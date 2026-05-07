@@ -1,4 +1,4 @@
-"""Seed extended French learning content — Topics 9-20.
+"""Seed extended French learning content, Topics 9-20.
 
 12 new topics covering family, nature, technology, emotions, education,
 sports, weather, home, arts, politics, environment, and relationships.
@@ -49,7 +49,7 @@ class Command(BaseCommand):
             )
 
     # ─────────────────────────────────────────────────────────────────
-    # TOPIC 9 — La famille
+    # TOPIC 9, La famille
     # ─────────────────────────────────────────────────────────────────
     def _seed_topic_9(self):
         name_fr = "La famille"
@@ -156,7 +156,7 @@ class Command(BaseCommand):
             comprehension_questions=[
                 {
                     "question": "How many siblings does Sophie have?",
-                    "answer": "Three — two brothers (Léo and Hugo) and one sister (Camille).",
+                    "answer": "Three, two brothers (Léo and Hugo) and one sister (Camille).",
                 },
                 {
                     "question": "Where do the grandparents live?",
@@ -204,7 +204,7 @@ class Command(BaseCommand):
         self.stdout.write(f"  Created '{name_fr}'")
 
     # ─────────────────────────────────────────────────────────────────
-    # TOPIC 10 — La nature et l'environnement
+    # TOPIC 10, La nature et l'environnement
     # ─────────────────────────────────────────────────────────────────
     def _seed_topic_10(self):
         name_fr = "La nature et l'environnement"
@@ -416,7 +416,7 @@ class Command(BaseCommand):
         self.stdout.write(f"  Created '{name_fr}'")
 
     # ─────────────────────────────────────────────────────────────────
-    # TOPIC 11 — La technologie
+    # TOPIC 11, La technologie
     # ─────────────────────────────────────────────────────────────────
     def _seed_topic_11(self):
         name_fr = "La technologie"
@@ -555,7 +555,7 @@ class Command(BaseCommand):
         )
         GrammarRule.objects.create(
             lesson=l2,
-            title="Futur Simple — The Simple Future",
+            title="Futur Simple, The Simple Future",
             explanation="The **futur simple** expresses future actions. It is formed by adding future endings to the infinitive (for -ER and -IR verbs) or a special stem (for -RE verbs, drop the final -e).\n\n**Endings:** -ai, -as, -a, -ons, -ez, -ont\n\n| Pronoun | parler | finir | prendre |\n|---------|--------|-------|---------|\n| je | parler**ai** | finir**ai** | prendr**ai** |\n| tu | parler**as** | finir**as** | prendr**as** |\n| il/elle | parler**a** | finir**a** | prendr**a** |\n| nous | parler**ons** | finir**ons** | prendr**ons** |\n| vous | parler**ez** | finir**ez** | prendr**ez** |\n| ils/elles | parler**ont** | finir**ont** | prendr**ont** |",
             formula="infinitive (or irregular stem) + future ending",
             examples=[
@@ -628,7 +628,7 @@ class Command(BaseCommand):
         self.stdout.write(f"  Created '{name_fr}'")
 
     # ─────────────────────────────────────────────────────────────────
-    # TOPIC 12 — Les émotions et les sentiments
+    # TOPIC 12, Les émotions et les sentiments
     # ─────────────────────────────────────────────────────────────────
     def _seed_topic_12(self):
         name_fr = "Les émotions et les sentiments"
@@ -780,7 +780,7 @@ class Command(BaseCommand):
                 },
                 {
                     "question": "What made her cry?",
-                    "answer": "The surprise birthday party — she cried with joy.",
+                    "answer": "The surprise birthday party, she cried with joy.",
                 },
             ],
         )
@@ -824,7 +824,7 @@ class Command(BaseCommand):
         self.stdout.write(f"  Created '{name_fr}'")
 
     # ─────────────────────────────────────────────────────────────────
-    # TOPIC 13 — L'éducation et les études
+    # TOPIC 13, L'éducation et les études
     # ─────────────────────────────────────────────────────────────────
     def _seed_topic_13(self):
         name_fr = "L'éducation et les études"
@@ -1045,7 +1045,7 @@ class Command(BaseCommand):
         self.stdout.write(f"  Created '{name_fr}'")
 
     # ─────────────────────────────────────────────────────────────────
-    # TOPIC 14 — Le sport et le corps
+    # TOPIC 14, Le sport et le corps
     # ─────────────────────────────────────────────────────────────────
     def _seed_topic_14(self):
         name_fr = "Le sport et le corps"
@@ -1220,7 +1220,7 @@ class Command(BaseCommand):
         self.stdout.write(f"  Created '{name_fr}'")
 
     # ─────────────────────────────────────────────────────────────────
-    # TOPIC 15 — La météo et les saisons
+    # TOPIC 15, La météo et les saisons
     # ─────────────────────────────────────────────────────────────────
     def _seed_topic_15(self):
         name_fr = "La météo et les saisons"
@@ -1356,13 +1356,13 @@ class Command(BaseCommand):
         ReadingText.objects.create(
             lesson=l3,
             title="Mon saison préférée",
-            content_fr="La France a quatre saisons bien distinctes. Au printemps, il fait doux et les fleurs éclosent partout. C'est la saison idéale pour les promenades. En été, il fait chaud et ensoleillé, surtout dans le sud. Les plages sont bondées de touristes. En automne, les feuilles deviennent rouges et dorées, et il commence à pleuvoir plus souvent. L'hiver peut être rigoureux dans les Alpes et les Pyrénées, avec beaucoup de neige — parfait pour le ski. Personnellement, je préfère le printemps : pas trop chaud, pas trop froid !",
-            content_en="France has four very distinct seasons. In spring, it is mild and flowers bloom everywhere. It is the ideal season for walks. In summer, it is hot and sunny, especially in the south. The beaches are crowded with tourists. In autumn, the leaves turn red and golden, and it starts to rain more often. Winter can be harsh in the Alps and Pyrenees, with lots of snow — perfect for skiing. Personally, I prefer spring: not too hot, not too cold!",
+            content_fr="La France a quatre saisons bien distinctes. Au printemps, il fait doux et les fleurs éclosent partout. C'est la saison idéale pour les promenades. En été, il fait chaud et ensoleillé, surtout dans le sud. Les plages sont bondées de touristes. En automne, les feuilles deviennent rouges et dorées, et il commence à pleuvoir plus souvent. L'hiver peut être rigoureux dans les Alpes et les Pyrénées, avec beaucoup de neige, parfait pour le ski. Personnellement, je préfère le printemps : pas trop chaud, pas trop froid !",
+            content_en="France has four very distinct seasons. In spring, it is mild and flowers bloom everywhere. It is the ideal season for walks. In summer, it is hot and sunny, especially in the south. The beaches are crowded with tourists. In autumn, the leaves turn red and golden, and it starts to rain more often. Winter can be harsh in the Alps and Pyrenees, with lots of snow, perfect for skiing. Personally, I prefer spring: not too hot, not too cold!",
             vocabulary_highlights=["doux", "ensoleillé", "bondées", "rigoureux"],
             comprehension_questions=[
                 {
                     "question": "Which season does the writer prefer and why?",
-                    "answer": "Spring — not too hot, not too cold.",
+                    "answer": "Spring, not too hot, not too cold.",
                 },
                 {
                     "question": "What happens in the Alps in winter?",
@@ -1410,7 +1410,7 @@ class Command(BaseCommand):
         self.stdout.write(f"  Created '{name_fr}'")
 
     # ─────────────────────────────────────────────────────────────────
-    # TOPIC 16 — La maison et le logement
+    # TOPIC 16, La maison et le logement
     # ─────────────────────────────────────────────────────────────────
     def _seed_topic_16(self):
         name_fr = "La maison et le logement"
@@ -1626,7 +1626,7 @@ class Command(BaseCommand):
         self.stdout.write(f"  Created '{name_fr}'")
 
     # ─────────────────────────────────────────────────────────────────
-    # TOPIC 17 — Les arts et la culture
+    # TOPIC 17, Les arts et la culture
     # ─────────────────────────────────────────────────────────────────
     def _seed_topic_17(self):
         name_fr = "Les arts et la culture"
@@ -1773,7 +1773,7 @@ class Command(BaseCommand):
         GrammarRule.objects.create(
             lesson=l2,
             title="Relative Pronouns: qui, que, dont, où",
-            explanation="Relative pronouns link clauses and replace a noun.\n\n| Pronoun | Role | Example |\n|---------|------|---------|\n| **qui** | subject | L'artiste **qui** a peint ce tableau est célèbre. |\n| **que/qu'** | direct object | Le film **que** j'ai vu était excellent. |\n| **dont** | replaces de + noun | Le musée **dont** je te parle est à Paris. |\n| **où** | place or time | La salle **où** nous sommes est magnifique. |\n\n**Qui** is always followed by a verb.\n**Que/qu'** is followed by a subject + verb.\n**Dont** replaces *de + [noun]* — use with verbs like *parler de, avoir besoin de, se souvenir de*.",
+            explanation="Relative pronouns link clauses and replace a noun.\n\n| Pronoun | Role | Example |\n|---------|------|---------|\n| **qui** | subject | L'artiste **qui** a peint ce tableau est célèbre. |\n| **que/qu'** | direct object | Le film **que** j'ai vu était excellent. |\n| **dont** | replaces de + noun | Le musée **dont** je te parle est à Paris. |\n| **où** | place or time | La salle **où** nous sommes est magnifique. |\n\n**Qui** is always followed by a verb.\n**Que/qu'** is followed by a subject + verb.\n**Dont** replaces *de + [noun]*, use with verbs like *parler de, avoir besoin de, se souvenir de*.",
             formula="[main clause] + [qui/que/dont/où] + [subordinate clause]",
             examples=[
                 "Le roman que je lis est passionnant.",
@@ -1841,7 +1841,7 @@ class Command(BaseCommand):
         self.stdout.write(f"  Created '{name_fr}'")
 
     # ─────────────────────────────────────────────────────────────────
-    # TOPIC 18 — Les transports et la ville
+    # TOPIC 18, Les transports et la ville
     # ─────────────────────────────────────────────────────────────────
     def _seed_topic_18(self):
         name_fr = "Les transports et la ville"
@@ -1987,7 +1987,7 @@ class Command(BaseCommand):
         )
         GrammarRule.objects.create(
             lesson=l2,
-            title="L'impératif — Giving Directions and Commands",
+            title="L'impératif, Giving Directions and Commands",
             explanation="The **imperative** is used for commands, instructions, and directions. It has three forms: **tu**, **nous**, **vous**.\n\n**Formation:** Use the present tense form but **drop the subject pronoun**. For -ER verbs, also drop the -s in the **tu** form.\n\n| Verb | tu | nous | vous |\n|------|----|------|------|\n| parler | Parle ! | Parlons ! | Parlez ! |\n| finir | Finis ! | Finissons ! | Finissez ! |\n| aller | Va ! | Allons ! | Allez ! |\n| prendre | Prends ! | Prenons ! | Prenez ! |\n\n**Negative imperative:** Ne + verb + pas\n- *Ne tournez pas à gauche !*\n\n**With reflexive verbs:** pronoun comes after in affirmative:\n- *Lève-toi !* (Get up!) / *Ne te lève pas !* (Don't get up!)",
             formula="[verb in present tense, no pronoun] (+ object)",
             examples=[
@@ -2055,7 +2055,7 @@ class Command(BaseCommand):
         self.stdout.write(f"  Created '{name_fr}'")
 
     # ─────────────────────────────────────────────────────────────────
-    # TOPIC 19 — La cuisine française
+    # TOPIC 19, La cuisine française
     # ─────────────────────────────────────────────────────────────────
     def _seed_topic_19(self):
         name_fr = "La cuisine française"
@@ -2173,7 +2173,7 @@ class Command(BaseCommand):
         )
         GrammarRule.objects.create(
             lesson=l2,
-            title="La voix passive — The Passive Voice",
+            title="La voix passive, The Passive Voice",
             explanation="The passive voice shifts focus from the doer to the receiver of the action.\n\n**Formation:** être (conjugated) + past participle (agrees with subject)\n\nActive: *Le chef prépare le plat.* (The chef prepares the dish.)\nPassive: *Le plat est préparé par le chef.* (The dish is prepared by the chef.)\n\n**Tenses:**\n- Present: *Le pain est fabriqué chaque matin.*\n- Past (passé composé): *Le gâteau a été préparé hier.*\n- Future: *Le repas sera servi à 20h.*\n\n**The agent** (doer) is introduced by **par** (by) or occasionally **de** (with verbs of feeling/description):\n- *La cuisine française est aimée de tous.*",
             formula="être (conjugated) + past participle (+ par + agent)",
             examples=[
@@ -2199,7 +2199,7 @@ class Command(BaseCommand):
             comprehension_questions=[
                 {
                     "question": "What type of cheese is used in a croque-monsieur?",
-                    "answer": "Gruyère (râpé — grated).",
+                    "answer": "Gruyère (râpé, grated).",
                 },
                 {
                     "question": "How should the croque-monsieur be served?",
@@ -2247,7 +2247,7 @@ class Command(BaseCommand):
         self.stdout.write(f"  Created '{name_fr}'")
 
     # ─────────────────────────────────────────────────────────────────
-    # TOPIC 20 — Les médias et l'actualité
+    # TOPIC 20, Les médias et l'actualité
     # ─────────────────────────────────────────────────────────────────
     def _seed_topic_20(self):
         name_fr = "Les médias et l'actualité"

@@ -37,7 +37,7 @@ const Ic = {
 };
 
 /* ──────────────────────────────────────────────────────────────
- * Chat bubble (lighter than the Assistant's — no @-mention popover)
+ * Chat bubble (lighter than the Assistant's, no @-mention popover)
  * ────────────────────────────────────────────────────────────── */
 function Bubble({ msg, agent }) {
   const isUser = msg.role === "user";
@@ -67,7 +67,7 @@ function Bubble({ msg, agent }) {
             msg.content
           ) : (
             // prose-pre / prose-code overrides give us legible code blocks on
-            // BOTH light and dark backgrounds — the default tailwind-typography
+            // BOTH light and dark backgrounds, the default tailwind-typography
             // rendering is dark-on-dark in our agent bubble where the bubble
             // itself is white/dark-surface and ReactMarkdown wraps fenced code
             // in a <pre><code>.
@@ -295,7 +295,7 @@ export default function AgentRun() {
       />
 
       <div className="flex flex-col flex-1 min-h-0 space-y-5">
-        {/* Chat column (full width — sessions live in a drawer now) */}
+        {/* Chat column (full width, sessions live in a drawer now) */}
         <div className="flex flex-col flex-1 min-h-0 space-y-5">
           {/* Hero */}
           <div className="card relative overflow-hidden p-5 sm:p-6 animate-fade-in-up">
@@ -371,7 +371,7 @@ export default function AgentRun() {
             </div>
           )}
 
-          {/* Chat thread — grows to fill, composer below stays pinned */}
+          {/* Chat thread, grows to fill, composer below stays pinned */}
           {messages.length > 0 && (
             <div className="flex-1 min-h-0 overflow-y-auto space-y-5 pr-1 -mr-1">
               {messages.map((m, i) => <Bubble key={i} msg={m} agent={agent} />)}
@@ -389,7 +389,7 @@ export default function AgentRun() {
           {/* Spacer pushes composer to the bottom when the thread is empty */}
           {messages.length === 0 && <div className="flex-1" />}
 
-          {/* Composer — pinned at the bottom of the column with breathing room */}
+          {/* Composer, pinned at the bottom of the column with breathing room */}
           <div className="sticky bottom-4 mb-2 rounded-2xl border border-surface-200 dark:border-surface-700 bg-white dark:bg-surface-900 focus-within:border-primary-400 focus-within:ring-2 focus-within:ring-primary-100 dark:focus-within:ring-primary-900/40 transition-all shadow-sm">
             <textarea
               value={input}
@@ -416,7 +416,7 @@ export default function AgentRun() {
         </div>
       </div>
 
-      {/* Sessions drawer — collapsed by default. Slides in from the right.
+      {/* Sessions drawer, collapsed by default. Slides in from the right.
           Uses a fixed-position overlay so it works at every breakpoint and
           doesn't fight the new flex layout for space. */}
       {sessionsOpen && (

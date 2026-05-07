@@ -25,7 +25,7 @@ LOOKUP_SYSTEM_PROMPT = (
     '"gender": "masculine|feminine|invariable|null"}\n'
     "Include 2-3 definitions, 2-3 example sentences, up to 5 synonyms, up to 3 antonyms. "
     "etymology and gender may be null if not applicable. "
-    "Always respond with JSON only — no prose, no markdown."
+    "Always respond with JSON only, no prose, no markdown."
 )
 
 CONJUGATE_SYSTEM_PROMPT = (
@@ -45,7 +45,7 @@ CONJUGATE_SYSTEM_PROMPT = (
     '"Plus-que-parfait": {"j\'": "...", "tu": "...", "il/elle": "...", "nous": "...", "vous": "...", "ils/elles": "..."}'
     "}}\n"
     "Fill in correct conjugated forms with proper French accents. "
-    "Always respond with JSON only — no prose, no markdown."
+    "Always respond with JSON only, no prose, no markdown."
 )
 
 

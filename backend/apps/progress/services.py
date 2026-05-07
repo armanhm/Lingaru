@@ -10,7 +10,7 @@ from apps.content.models import Question
 from .models import MistakeEntry, SRSCard
 
 # ---------------------------------------------------------------------------
-# SM-2 pure algorithm (no ORM — easy to unit-test)
+# SM-2 pure algorithm (no ORM, easy to unit-test)
 # ---------------------------------------------------------------------------
 
 
@@ -39,7 +39,7 @@ def sm2_update(
     new_ef = max(new_ef, 1.3)
 
     if quality < 3:
-        # Failed — reset
+        # Failed, reset
         new_reps = 0
         new_interval = 1
     else:

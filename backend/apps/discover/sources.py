@@ -7,7 +7,7 @@ default topic if the item itself doesn't carry one.
 Notes
 - We intentionally favour publicly-available, government-friendly outlets
   with stable RSS endpoints. None of these require authentication.
-- "RFI Journal en français facile" is the gold standard for B1 learners —
+- "RFI Journal en français facile" is the gold standard for B1 learners ,
   short headlines and accessible vocabulary, already at the right level.
 - Topic mapping is best-effort. The LLM rewrite step also returns a
   `topic` field, which wins over the source default if present.

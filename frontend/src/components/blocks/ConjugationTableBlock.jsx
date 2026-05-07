@@ -1,7 +1,7 @@
 import AudioPlayButton from "../AudioPlayButton";
 
 /**
- * Conjugation table — verb + tense + pronoun/form pairs. Each form is
+ * Conjugation table, verb + tense + pronoun/form pairs. Each form is
  * playable so the user can hear how it's pronounced.
  */
 export default function ConjugationTableBlock({ block }) {

@@ -43,8 +43,8 @@ class UserBadgeSerializer(serializers.ModelSerializer):
 
 
 ACTIVITY_LABELS = {
-    "quiz_correct": "Quiz — correct answer",
-    "quiz_perfect": "Quiz — perfect score",
+    "quiz_correct": "Quiz, correct answer",
+    "quiz_perfect": "Quiz, perfect score",
     "lesson_complete": "Lesson completed",
     "streak_bonus": "Streak bonus",
     "conjugation_drill": "Conjugation drill",

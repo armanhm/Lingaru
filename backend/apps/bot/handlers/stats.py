@@ -46,7 +46,7 @@ def get_user_stats(user) -> dict:
 
 
 async def stats_command(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
-    """Handle the /stats command — show user gamification statistics."""
+    """Handle the /stats command, show user gamification statistics."""
     tg_user = update.effective_user
     user, _ = await sync_to_async(get_or_create_telegram_user)(
         telegram_id=tg_user.id,

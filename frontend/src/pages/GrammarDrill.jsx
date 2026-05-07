@@ -220,10 +220,10 @@ export default function GrammarDrill() {
     const emoji = acc === 100 ? "🌟" : acc >= 70 ? "🎉" : acc >= 50 ? "👍" : "💪";
     const headline = acc === 100 ? "Perfect drill!" : acc >= 70 ? "Strong work" : acc >= 50 ? "Keep going" : "Practice pays off";
     const subline = summary.new_status === "mastered"
-      ? "Topic mastered — it'll resurface for review in a few weeks."
+      ? "Topic mastered, it'll resurface for review in a few weeks."
       : summary.mastery_delta > 0
         ? `Mastery climbed by ${summary.mastery_delta} points. Repeat the drill to push higher.`
-        : "Repetition is the path. Try again — the next round will feel easier.";
+        : "Repetition is the path. Try again, the next round will feel easier.";
 
     return (
       <TriumphHero

@@ -106,7 +106,7 @@ export default function ListenChooseQuestion({ word, options, correctAnswer, onA
       </div>
 
       <p className="text-xs text-center text-surface-400 dark:text-surface-500 mt-3">
-        {playCount === 0 ? "Audio will play automatically" : `Played ${playCount} time${playCount > 1 ? "s" : ""} — tap to replay`}
+        {playCount === 0 ? "Audio will play automatically" : `Played ${playCount} time${playCount > 1 ? "s" : ""}, tap to replay`}
       </p>
     </div>
   );

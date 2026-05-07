@@ -60,7 +60,7 @@ export default function Topics() {
       />
 
       {topics.length === 0 ? (
-        <EmptyState icon="📚" title="No topics yet" subtitle="Content is being added — check back soon." />
+        <EmptyState icon="📚" title="No topics yet" subtitle="Content is being added, check back soon." />
       ) : (
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
           {topics.map((topic, i) => (

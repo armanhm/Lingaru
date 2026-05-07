@@ -4,7 +4,7 @@ from .models import Agent, AgentRun
 
 
 class AgentListSerializer(serializers.ModelSerializer):
-    """Lean shape for the gallery — strips the system prompt."""
+    """Lean shape for the gallery, strips the system prompt."""
 
     class Meta:
         model = Agent
@@ -22,7 +22,7 @@ class AgentListSerializer(serializers.ModelSerializer):
 
 
 class AgentDetailSerializer(serializers.ModelSerializer):
-    """Full shape for the agent detail page (no system prompt — server-side only)."""
+    """Full shape for the agent detail page (no system prompt, server-side only)."""
 
     class Meta:
         model = Agent
@@ -42,7 +42,7 @@ class AgentDetailSerializer(serializers.ModelSerializer):
 
 
 class AgentRunSerializer(serializers.ModelSerializer):
-    """A past conversation pinned to this agent — surfaced under Recent runs."""
+    """A past conversation pinned to this agent, surfaced under Recent runs."""
 
     conversation_id = serializers.IntegerField(source="conversation.id", read_only=True)
     title = serializers.CharField(source="conversation.title", read_only=True)
@@ -57,6 +57,6 @@ class AgentRunSerializer(serializers.ModelSerializer):
 
 
 class StartAgentRunSerializer(serializers.Serializer):
-    """Empty body — POST /api/agents/<slug>/start/ creates a fresh conversation."""
+    """Empty body, POST /api/agents/<slug>/start/ creates a fresh conversation."""
 
     pass

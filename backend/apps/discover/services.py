@@ -28,7 +28,7 @@ def generate_word_card() -> Optional[DiscoverCard]:
     card = DiscoverCard.objects.create(
         type="word",
         title=vocab.french,
-        summary=f"{vocab.french} — {vocab.english}",
+        summary=f"{vocab.french}, {vocab.english}",
         content_json={
             "french": vocab.french,
             "english": vocab.english,

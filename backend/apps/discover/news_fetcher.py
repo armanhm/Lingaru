@@ -1,13 +1,13 @@
 """Real-news fetch + LLM-rewrite pipeline for the News surface.
 
 Pipeline
-  1. fetch_real_news() — for each RSS source: parse, dedupe by source_url,
+  1. fetch_real_news(), for each RSS source: parse, dedupe by source_url,
      return a list of fresh items not already saved as DiscoverCard rows.
-  2. adapt_news_for_learners() — for each fresh item, send headline +
+  2. adapt_news_for_learners(), for each fresh item, send headline +
      summary to the LLM and ask for a B1-B2 rewrite + vocab + expressions
      + grammar_points JSON. Save as a DiscoverCard.
 
-Both functions are pure helpers — they don't run on a schedule on their
+Both functions are pure helpers, they don't run on a schedule on their
 own. The scheduler lives in apps/discover/tasks.py (Celery).
 """
 
@@ -174,7 +174,7 @@ ADAPT_SYSTEM_PROMPT = (
     '  "topic": "<one of: politics, sports, culture, economy, science, tech, '
     'society, environ, world>",\n'
     '  "level": "<A2 | B1 | B2>",\n'
-    '  "article_fr": "<140-180 word French rewrite at the chosen level — keep '
+    '  "article_fr": "<140-180 word French rewrite at the chosen level, keep '
     "the facts of the original, simplify vocabulary, prefer present/passé "
     'composé where natural>",\n'
     '  "article_en": "<full English translation of the rewrite>",\n'
@@ -197,7 +197,7 @@ ADAPT_SYSTEM_PROMPT = (
     "- The vocabulary entries must come from your French rewrite, not arbitrary words.\n"
     "- Use the source's default topic if it fits; otherwise pick the closest match.\n"
     "- If the headline is too thin to write a 140-word article, write a "
-    "shorter article (60-100 words is fine) — quality over length."
+    "shorter article (60-100 words is fine), quality over length."
 )
 
 
@@ -219,7 +219,7 @@ def adapt_news_for_learners(item: dict) -> Optional[dict]:
         f"Source: {item['source_name']} ({item['source_id']})\n"
         f"Default topic: {item['topic']}\n"
         f"Original headline: {item['title']}\n"
-        f"Original summary: {item['summary'] or '(none — work from headline only)'}\n\n"
+        f"Original summary: {item['summary'] or '(none, work from headline only)'}\n\n"
         f"Rewrite this for a French learner per the schema."
     )
 

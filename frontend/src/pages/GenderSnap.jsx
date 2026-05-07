@@ -322,7 +322,7 @@ export default function GenderSnap() {
             )}
           </div>
 
-          {/* Result feedback — below the word, inside the card */}
+          {/* Result feedback, below the word, inside the card */}
           {resultFlash ? (
             <div className={`mx-4 mb-5 px-4 py-3 rounded-xl text-center animate-fade-in-up ${
               resultFlash === "correct"

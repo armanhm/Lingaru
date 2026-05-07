@@ -1,4 +1,4 @@
-"""Mastery scoring for grammar topics — SM-2-flavoured spaced repetition."""
+"""Mastery scoring for grammar topics, SM-2-flavoured spaced repetition."""
 
 from datetime import timedelta
 

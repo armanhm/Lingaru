@@ -59,7 +59,7 @@ export default function ExamSection() {
         icon={sectionIcon}
       />
 
-      {/* CEFR level tabs — segmented control style */}
+      {/* CEFR level tabs, segmented control style */}
       <div className="mb-6">
         <p className="section-label mb-2">Choose level</p>
         <div className="inline-flex p-1 rounded-2xl bg-surface-100 dark:bg-surface-900 border border-surface-200 dark:border-surface-800 gap-0.5">

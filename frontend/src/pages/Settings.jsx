@@ -7,12 +7,12 @@ import client from "../api/client";
 import { PageHeader } from "../components/ui";
 
 const LEVEL_OPTIONS = [
-  { value: "A1", label: "A1 — Beginner" },
-  { value: "A2", label: "A2 — Elementary" },
-  { value: "B1", label: "B1 — Intermediate" },
-  { value: "B2", label: "B2 — Upper Intermediate" },
-  { value: "C1", label: "C1 — Advanced" },
-  { value: "C2", label: "C2 — Proficiency" },
+  { value: "A1", label: "A1, Beginner" },
+  { value: "A2", label: "A2, Elementary" },
+  { value: "B1", label: "B1, Intermediate" },
+  { value: "B2", label: "B2, Upper Intermediate" },
+  { value: "C1", label: "C1, Advanced" },
+  { value: "C2", label: "C2, Proficiency" },
 ];
 
 const LANGUAGE_OPTIONS = [
@@ -158,7 +158,7 @@ export default function Settings() {
   const [nativeLang, setNativeLang] = useState("en");
   const [profileSaving, setProfileSaving] = useState(false);
 
-  // Mode & proficiency — set during onboarding, editable here.
+  // Mode & proficiency, set during onboarding, editable here.
   const [mode, setMode] = useState("general");
   const [proficiency, setProficiency] = useState("B1");
   const [modeSaving, setModeSaving] = useState(false);
@@ -273,7 +273,7 @@ export default function Settings() {
       <PageHeader
         eyebrow="Account"
         title="Settings"
-        subtitle="Tune Lingaru to fit how you learn — profile, preferences, and account in one place."
+        subtitle="Tune Lingaru to fit how you learn, profile, preferences, and account in one place."
         icon="⚙️"
         gradient
       />
@@ -341,7 +341,7 @@ export default function Settings() {
         </SectionCard>
       )}
 
-      {/* Mode & niveau (lives under the Profile tab — same audience). */}
+      {/* Mode & niveau (lives under the Profile tab, same audience). */}
       {activeTab === "profile" && (
         <SectionCard
           title="Mode & niveau"
@@ -390,12 +390,12 @@ export default function Settings() {
               onChange={(e) => setProficiency(e.target.value)}
               className="input"
             >
-              <option value="A1">A1 — Débutant</option>
-              <option value="A2">A2 — Élémentaire</option>
-              <option value="B1">B1 — Intermédiaire</option>
-              <option value="B2">B2 — Intermédiaire avancé</option>
-              <option value="C1">C1 — Avancé</option>
-              <option value="C2">C2 — Maîtrise</option>
+              <option value="A1">A1, Débutant</option>
+              <option value="A2">A2, Élémentaire</option>
+              <option value="B1">B1, Intermédiaire</option>
+              <option value="B2">B2, Intermédiaire avancé</option>
+              <option value="C1">C1, Avancé</option>
+              <option value="C2">C2, Maîtrise</option>
               <option value="unsure">Pas sûr·e</option>
             </select>
           </div>
@@ -586,7 +586,7 @@ export default function Settings() {
             )}
           </SectionCard>
 
-          <SectionCard title="Documents" description="Upload French textbooks and notes — the AI assistant uses them to give grounded answers." icon="📄" tint="from-accent-500 to-warn-500">
+          <SectionCard title="Documents" description="Upload French textbooks and notes, the AI assistant uses them to give grounded answers." icon="📄" tint="from-accent-500 to-warn-500">
             <Link to="/documents" className="btn-primary btn-md">
               <svg className="w-4 h-4 mr-1" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" d="M7 21h10a2 2 0 002-2V9.414a1 1 0 00-.293-.707l-5.414-5.414A1 1 0 0012.586 3H7a2 2 0 00-2 2v14a2 2 0 002 2z" />

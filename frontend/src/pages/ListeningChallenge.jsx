@@ -393,7 +393,7 @@ export default function ListeningChallenge() {
             </div>
             <p className="mt-1 text-base font-bold text-surface-800 dark:text-surface-200">
               {word.french}
-              <span className="text-sm font-normal text-surface-500 dark:text-surface-400 ml-2">— {word.english}</span>
+              <span className="text-sm font-normal text-surface-500 dark:text-surface-400 ml-2">, {word.english}</span>
             </p>
             {resultState === "correct" && (
               <span className="text-xs text-success-600 dark:text-success-400 font-medium">+2 XP</span>

@@ -14,7 +14,7 @@ from .serializers import (
 
 
 class AgentListView(APIView):
-    """GET /api/agents/ — gallery payload (lean, public-ish, no system prompt)."""
+    """GET /api/agents/, gallery payload (lean, public-ish, no system prompt)."""
 
     permission_classes = (permissions.IsAuthenticated,)
 
@@ -24,7 +24,7 @@ class AgentListView(APIView):
 
 
 class AgentDetailView(APIView):
-    """GET /api/agents/<slug>/ — full payload for the run page."""
+    """GET /api/agents/<slug>/, full payload for the run page."""
 
     permission_classes = (permissions.IsAuthenticated,)
 
@@ -34,7 +34,7 @@ class AgentDetailView(APIView):
 
 
 class AgentStartRunView(APIView):
-    """POST /api/agents/<slug>/start/ — create a fresh conversation pinned to this agent."""
+    """POST /api/agents/<slug>/start/, create a fresh conversation pinned to this agent."""
 
     permission_classes = (permissions.IsAuthenticated,)
 
@@ -42,7 +42,7 @@ class AgentStartRunView(APIView):
         agent = get_object_or_404(Agent, slug=slug, is_active=True)
         conversation = Conversation.objects.create(
             user=request.user,
-            title=f"{agent.name} — nouvelle session",
+            title=f"{agent.name}, nouvelle session",
             context=f"agent:{agent.slug}",
         )
         run = AgentRun.objects.create(
@@ -61,7 +61,7 @@ class AgentStartRunView(APIView):
 
 
 class AgentRunsView(APIView):
-    """GET /api/agents/<slug>/runs/ — user's past conversations with this agent."""
+    """GET /api/agents/<slug>/runs/, user's past conversations with this agent."""
 
     permission_classes = (permissions.IsAuthenticated,)
 

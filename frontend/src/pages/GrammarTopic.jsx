@@ -28,7 +28,7 @@ export default function GrammarTopic() {
       sessionStorage.setItem(`grammar_session_${res.data.session_id}`, JSON.stringify(res.data));
       navigate(`/grammar/drill/${res.data.session_id}`);
     } catch {
-      setError("Couldn't start drill — try again.");
+      setError("Couldn't start drill, try again.");
       setStarting(false);
     }
   };

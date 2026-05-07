@@ -30,7 +30,7 @@ export default function Register() {
     }
     setLoading(true);
     try {
-      // New accounts land in a "pending admin approval" state — we don't
+      // New accounts land in a "pending admin approval" state, we don't
       // log the user in. Show a confirmation card instead.
       const res = await register(form.username, form.email, form.password, form.passwordConfirm);
       setPending({ username: res?.username || form.username, email: res?.email || form.email });
@@ -49,7 +49,7 @@ export default function Register() {
 
   return (
     <div className="min-h-screen flex bg-surface-50 dark:bg-surface-950">
-      {/* Left — gradient branding panel (hidden on mobile) */}
+      {/* Left, gradient branding panel (hidden on mobile) */}
       <div className="hidden lg:flex lg:w-1/2 relative overflow-hidden items-center justify-center p-12 bg-gradient-to-br from-primary-600 via-primary-700 to-purple-800">
         <div className="absolute inset-0 opacity-30 pointer-events-none">
           <div className="absolute top-20 right-10 w-72 h-72 bg-accent-400 rounded-full blur-3xl animate-float" />
@@ -95,7 +95,7 @@ export default function Register() {
         </div>
       </div>
 
-      {/* Right — form */}
+      {/* Right, form */}
       <div className="flex-1 flex items-center justify-center p-6 sm:p-12 relative overflow-hidden">
         <div className="absolute -top-32 -right-32 w-96 h-96 bg-primary-200/30 dark:bg-primary-700/20 rounded-full blur-3xl pointer-events-none" />
         <div className="absolute -bottom-32 -left-32 w-96 h-96 bg-accent-200/30 dark:bg-accent-700/20 rounded-full blur-3xl pointer-events-none" />

@@ -10,7 +10,7 @@ import { staggerDelay } from "../hooks/useAnimations";
 
 const TYPE_ICON = { vocab: "📝", vocabulary: "📝", grammar: "📐", text: "📖", reading: "📖" };
 
-/* Markdown body for lesson rich content — supports GFM tables, lists,
+/* Markdown body for lesson rich content, supports GFM tables, lists,
    bold/italic, inline code, and horizontal rules. Same prose styles as the
    chat bubbles so the table treatment is consistent across the app. */
 const MD_PROSE = "prose prose-sm dark:prose-invert max-w-none " +

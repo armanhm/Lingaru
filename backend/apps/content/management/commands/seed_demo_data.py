@@ -58,7 +58,7 @@ class Command(BaseCommand):
             )
 
     # ------------------------------------------------------------------ #
-    #  TOPIC 3 — Les voyages
+    #  TOPIC 3, Les voyages
     # ------------------------------------------------------------------ #
 
     def _seed_topic_3(self):
@@ -172,7 +172,7 @@ class Command(BaseCommand):
 
         GrammarRule.objects.create(
             lesson=l_gram,
-            title="Le futur simple — formation",
+            title="Le futur simple, formation",
             explanation=(
                 "The futur simple is formed by adding endings to the infinitive "
                 "(for -re verbs, drop the final -e first).\n\n"
@@ -236,7 +236,7 @@ class Command(BaseCommand):
                 "They took the TGV from Paris and the trip lasted only two hours. "
                 "Upon arrival, they dropped their suitcases at the hotel and went off "
                 "to explore Old Lyon on foot.\n\n"
-                "The neighborhood is magnificent, with its narrow alleys and traboules — "
+                "The neighborhood is magnificent, with its narrow alleys and traboules, "
                 "secret passages that run through the buildings. They had lunch in "
                 "a traditional Lyonnais bouchon where they tasted quenelles and "
                 "salade lyonnaise.\n\n"
@@ -280,7 +280,7 @@ class Command(BaseCommand):
                     "What does 'l'aéroport' mean?",
                     "airport",
                     ["airplane", "ticket", "train station"],
-                    "'L'aéroport' is masculine — the airport.",
+                    "'L'aéroport' is masculine, the airport.",
                     1,
                 ),
                 (
@@ -288,7 +288,7 @@ class Command(BaseCommand):
                     "What does 'la valise' mean?",
                     "suitcase",
                     ["passport", "ticket", "map"],
-                    "'La valise' is feminine — the suitcase.",
+                    "'La valise' is feminine, the suitcase.",
                     1,
                 ),
                 (
@@ -351,7 +351,7 @@ class Command(BaseCommand):
         self.stdout.write(self.style.SUCCESS(f"  Created topic '{name_fr}'"))
 
     # ------------------------------------------------------------------ #
-    #  TOPIC 4 — Le travail
+    #  TOPIC 4, Le travail
     # ------------------------------------------------------------------ #
 
     def _seed_topic_4(self):
@@ -470,7 +470,7 @@ class Command(BaseCommand):
         l_gram = Lesson.objects.create(
             topic=t,
             type="grammar",
-            title="Passé composé — avoir vs être",
+            title="Passé composé, avoir vs être",
             content={"intro": "Master the most important French past tense."},
             order=2,
             difficulty=2,
@@ -677,7 +677,7 @@ class Command(BaseCommand):
         self.stdout.write(self.style.SUCCESS(f"  Created topic '{name_fr}'"))
 
     # ------------------------------------------------------------------ #
-    #  TOPIC 5 — La santé
+    #  TOPIC 5, La santé
     # ------------------------------------------------------------------ #
 
     def _seed_topic_5(self):
@@ -763,7 +763,7 @@ class Command(BaseCommand):
 
         GrammarRule.objects.create(
             lesson=l_gram,
-            title="L'impératif — formation et usage",
+            title="L'impératif, formation et usage",
             explanation=(
                 "The imperative is used for commands, requests, and advice. "
                 "It exists in three forms: **tu**, **nous**, **vous**.\n\n"
@@ -780,9 +780,9 @@ class Command(BaseCommand):
             formula="present tense minus subject pronoun (-er: drop final -s for tu)",
             examples=[
                 "Prenez ce médicament deux fois par jour. (Take this medicine twice a day.)",
-                "Repose-toi bien. (Rest well. — informal)",
+                "Repose-toi bien. (Rest well., informal)",
                 "Mangeons des légumes ! (Let's eat vegetables!)",
-                "Soyez patient. (Be patient. — formal)",
+                "Soyez patient. (Be patient., formal)",
             ],
             exceptions=[
                 "être → sois, soyons, soyez (irregular)",
@@ -941,7 +941,7 @@ class Command(BaseCommand):
         self.stdout.write(self.style.SUCCESS(f"  Created topic '{name_fr}'"))
 
     # ------------------------------------------------------------------ #
-    #  TOPIC 6 — Les loisirs
+    #  TOPIC 6, Les loisirs
     # ------------------------------------------------------------------ #
 
     def _seed_topic_6(self):
@@ -1125,7 +1125,7 @@ class Command(BaseCommand):
                 "L'après-midi, Pierre fait du vélo le long de la rivière. Il trouve "
                 "que le vélo est plus relaxant que la course à pied. Parfois, il "
                 "s'arrête pour lire un livre sur un banc.\n\n"
-                "Le dimanche est plus calme. Pierre joue de la guitare le matin — "
+                "Le dimanche est plus calme. Pierre joue de la guitare le matin, "
                 "il prend des cours depuis deux ans et il joue de mieux en mieux. "
                 "Ensuite, il va au cinéma avec sa copine. Ils préfèrent les comédies, "
                 "mais ce weekend ils ont vu un film d'aventure qui était aussi "
@@ -1141,7 +1141,7 @@ class Command(BaseCommand):
                 "In the afternoon, Pierre cycles along the river. He finds "
                 "cycling more relaxing than running. Sometimes, he "
                 "stops to read a book on a bench.\n\n"
-                "Sunday is quieter. Pierre plays guitar in the morning — "
+                "Sunday is quieter. Pierre plays guitar in the morning, "
                 "he's been taking lessons for two years and plays better and better. "
                 "Then he goes to the cinema with his girlfriend. They prefer comedies, "
                 "but this weekend they saw an adventure film that was as "
@@ -1258,7 +1258,7 @@ class Command(BaseCommand):
         self.stdout.write(self.style.SUCCESS(f"  Created topic '{name_fr}'"))
 
     # ------------------------------------------------------------------ #
-    #  TOPIC 7 — La ville
+    #  TOPIC 7, La ville
     # ------------------------------------------------------------------ #
 
     def _seed_topic_7(self):
@@ -1364,15 +1364,15 @@ class Command(BaseCommand):
 
         GrammarRule.objects.create(
             lesson=l_gram,
-            title="Prépositions de lieu — à, en, au, aux, chez",
+            title="Prépositions de lieu, à, en, au, aux, chez",
             explanation=(
                 "French uses different prepositions depending on the type of place:\n\n"
-                "**à** — cities and some locations: à Paris, à la poste, à l'école\n"
-                "**en** — feminine countries, continents, and modes of transport: "
+                "**à**, cities and some locations: à Paris, à la poste, à l'école\n"
+                "**en**, feminine countries, continents, and modes of transport: "
                 "en France, en Afrique, en voiture\n"
-                "**au** — masculine countries (singular): au Japon, au Canada\n"
-                "**aux** — plural countries: aux États-Unis, aux Pays-Bas\n"
-                "**chez** — someone's place: chez le médecin, chez moi\n\n"
+                "**au**, masculine countries (singular): au Japon, au Canada\n"
+                "**aux**, plural countries: aux États-Unis, aux Pays-Bas\n"
+                "**chez**, someone's place: chez le médecin, chez moi\n\n"
                 "For 'at / to a shop', use **à la / au / à l'**: "
                 "à la boulangerie, au supermarché, à l'hôpital."
             ),
@@ -1408,13 +1408,13 @@ class Command(BaseCommand):
                 "il veut visiter le musée du Louvre, mais il s'est perdu dans le "
                 "quartier du Marais.\n\n"
                 "Il s'approche d'une dame sur le trottoir :\n"
-                "— Excusez-moi, madame. Pourriez-vous m'indiquer le chemin pour "
+                ", Excusez-moi, madame. Pourriez-vous m'indiquer le chemin pour "
                 "aller au Louvre ?\n"
-                "— Bien sûr ! Allez tout droit jusqu'au carrefour, puis tournez "
+                ", Bien sûr ! Allez tout droit jusqu'au carrefour, puis tournez "
                 "à gauche. Continuez le long de la rue de Rivoli pendant environ "
                 "dix minutes. Le musée sera sur votre droite.\n"
-                "— Est-ce que c'est loin à pied ?\n"
-                "— Non, c'est à vingt minutes environ. Sinon, vous pouvez prendre "
+                ", Est-ce que c'est loin à pied ?\n"
+                ", Non, c'est à vingt minutes environ. Sinon, vous pouvez prendre "
                 "le métro à la station Saint-Paul. C'est à deux arrêts.\n\n"
                 "Thomas remercie la dame et décide de marcher. En chemin, il passe "
                 "devant une belle église et une boulangerie où il achète un croissant. "
@@ -1425,13 +1425,13 @@ class Command(BaseCommand):
                 "he wants to visit the Louvre museum, but he got lost in the "
                 "Marais neighborhood.\n\n"
                 "He approaches a woman on the sidewalk:\n"
-                "— Excuse me, ma'am. Could you show me the way to "
+                ", Excuse me, ma'am. Could you show me the way to "
                 "the Louvre?\n"
-                "— Of course! Go straight until the intersection, then turn "
+                ", Of course! Go straight until the intersection, then turn "
                 "left. Continue along Rue de Rivoli for about "
                 "ten minutes. The museum will be on your right.\n"
-                "— Is it far on foot?\n"
-                "— No, it's about twenty minutes. Otherwise, you can take "
+                ", Is it far on foot?\n"
+                ", No, it's about twenty minutes. Otherwise, you can take "
                 "the metro at Saint-Paul station. It's two stops away.\n\n"
                 "Thomas thanks the woman and decides to walk. On the way, he passes "
                 "a beautiful church and a bakery where he buys a croissant. "
@@ -1541,7 +1541,7 @@ class Command(BaseCommand):
         self.stdout.write(self.style.SUCCESS(f"  Created topic '{name_fr}'"))
 
     # ------------------------------------------------------------------ #
-    #  TOPIC 8 — Les achats
+    #  TOPIC 8, Les achats
     # ------------------------------------------------------------------ #
 
     def _seed_topic_8(self):
@@ -1620,7 +1620,7 @@ class Command(BaseCommand):
 
         GrammarRule.objects.create(
             lesson=l_gram,
-            title="Adjectifs démonstratifs — ce, cet, cette, ces",
+            title="Adjectifs démonstratifs, ce, cet, cette, ces",
             explanation=(
                 "Demonstrative adjectives mean 'this', 'that', 'these', or 'those'. "
                 "They agree in gender and number with the noun:\n\n"
@@ -1669,7 +1669,7 @@ class Command(BaseCommand):
                 "Elles sont excellentes cette semaine ! »\n\n"
                 "Ensuite, elles passent devant un stand de vêtements. Camille "
                 "remarque une jolie écharpe bleue. « Regarde cette écharpe, maman ! "
-                "Elle n'est pas chère — seulement huit euros. » Sa mère lui dit : "
+                "Elle n'est pas chère, seulement huit euros. » Sa mère lui dit : "
                 "« D'accord, mais essaie-la d'abord. »\n\n"
                 "Avant de partir, elles achètent du fromage de chèvre et un bouquet "
                 "de fleurs. Le dimanche au marché, c'est toujours un moment de bonheur."
@@ -1684,7 +1684,7 @@ class Command(BaseCommand):
                 "They're excellent this week!'\n\n"
                 "Then, they pass a clothing stand. Camille "
                 "notices a pretty blue scarf. 'Look at this scarf, Mom! "
-                "It's not expensive — only eight euros.' Her mother tells her: "
+                "It's not expensive, only eight euros.' Her mother tells her: "
                 "'Okay, but try it on first.'\n\n"
                 "Before leaving, they buy goat cheese and a bunch "
                 "of flowers. Sunday at the market is always a moment of happiness."
@@ -1724,7 +1724,7 @@ class Command(BaseCommand):
                     "What does 'la robe' mean?",
                     "dress",
                     ["shirt", "coat", "shoes"],
-                    "'La robe' is feminine — a dress.",
+                    "'La robe' is feminine, a dress.",
                     1,
                 ),
                 (
@@ -1740,7 +1740,7 @@ class Command(BaseCommand):
                     "What does 'bon marché' mean?",
                     "cheap / inexpensive",
                     ["expensive", "on sale", "free"],
-                    "'Bon marché' is invariable — it never changes form.",
+                    "'Bon marché' is invariable, it never changes form.",
                     1,
                 ),
                 (
@@ -1807,7 +1807,7 @@ class Command(BaseCommand):
             {
                 "type": "word",
                 "title": "dépaysement",
-                "summary": "dépaysement — the disorientation felt in a foreign country",
+                "summary": "dépaysement, the disorientation felt in a foreign country",
                 "content_json": {
                     "french": "le dépaysement",
                     "english": "the feeling of disorientation when in a foreign place",
@@ -1820,7 +1820,7 @@ class Command(BaseCommand):
             {
                 "type": "word",
                 "title": "flâner",
-                "summary": "flâner — to stroll aimlessly, enjoying the surroundings",
+                "summary": "flâner, to stroll aimlessly, enjoying the surroundings",
                 "content_json": {
                     "french": "flâner",
                     "english": "to stroll aimlessly, to wander for pleasure",
@@ -1833,7 +1833,7 @@ class Command(BaseCommand):
             {
                 "type": "word",
                 "title": "retrouvailles",
-                "summary": "retrouvailles — the joy of reuniting after a long time",
+                "summary": "retrouvailles, the joy of reuniting after a long time",
                 "content_json": {
                     "french": "les retrouvailles",
                     "english": "the happiness of reuniting with someone after a long time apart",
@@ -1850,11 +1850,11 @@ class Command(BaseCommand):
                 "summary": "The pronoun 'y' replaces a place introduced by à, en, dans, sur, chez...",
                 "content_json": {
                     "explanation": "Use 'y' to replace a place you've already mentioned. "
-                    "Tu vas à Paris ? — Oui, j'y vais demain.",
+                    "Tu vas à Paris ?, Oui, j'y vais demain.",
                     "formula": "y = à / en / dans / sur / chez + place",
                     "examples": [
-                        "Tu habites en France ? — Oui, j'y habite depuis trois ans.",
-                        "Vous allez au cinéma ? — Non, nous n'y allons pas.",
+                        "Tu habites en France ?, Oui, j'y habite depuis trois ans.",
+                        "Vous allez au cinéma ?, Non, nous n'y allons pas.",
                     ],
                     "exceptions": [
                         "With people, use lui/leur instead: Je pense à Marie → Je pense à elle (not *j'y pense)."
@@ -1867,11 +1867,11 @@ class Command(BaseCommand):
                 "summary": "The pronoun 'en' replaces nouns with de, du, des, or a quantity.",
                 "content_json": {
                     "explanation": "'En' replaces a noun introduced by 'de' or a quantity expression. "
-                    "Tu veux du café ? — Oui, j'en veux.",
+                    "Tu veux du café ?, Oui, j'en veux.",
                     "formula": "en = de + noun / quantity expression",
                     "examples": [
-                        "Tu as des enfants ? — Oui, j'en ai deux.",
-                        "Il mange du chocolat ? — Non, il n'en mange pas.",
+                        "Tu as des enfants ?, Oui, j'en ai deux.",
+                        "Il mange du chocolat ?, Non, il n'en mange pas.",
                     ],
                     "exceptions": [],
                 },

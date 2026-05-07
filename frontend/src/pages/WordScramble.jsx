@@ -216,7 +216,7 @@ export default function WordScramble() {
     setAnswerLetters((prev) => prev.filter((_, i) => i !== answerIndex));
   };
 
-  // Type a letter from keyboard — accent-insensitive matching
+  // Type a letter from keyboard, accent-insensitive matching
   // Typing 'e' will match é, è, ê, ë tiles (picks accented first for better UX)
   const handleTypeLetter = useCallback((key) => {
     if (resultRef.current) return;

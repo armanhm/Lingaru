@@ -33,7 +33,7 @@ export function readActivity() {
   }
 }
 
-/** React hook — read last activity on mount. */
+/** React hook, read last activity on mount. */
 export function useLastActivity() {
   const [activity, setActivity] = useState(null);
   useEffect(() => { setActivity(readActivity()); }, []);

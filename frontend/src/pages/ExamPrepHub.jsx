@@ -60,7 +60,7 @@ export default function ExamPrepHub() {
       <PageHeader
         eyebrow="TEF / TCF exam prep"
         title="Exam Preparation"
-        subtitle="Practice the four skills of the French proficiency exams — at your own pace."
+        subtitle="Practice the four skills of the French proficiency exams, at your own pace."
         icon="🎓"
         gradient
       />
@@ -117,7 +117,7 @@ export default function ExamPrepHub() {
       {/* ── Exam comparison ──────────────────────────────────── */}
       <div className="mb-3">
         <p className="eyebrow-primary mb-1">About the exams</p>
-        <h2 className="text-h3 text-surface-900 dark:text-surface-100">TEF vs TCF — pick the right one</h2>
+        <h2 className="text-h3 text-surface-900 dark:text-surface-100">TEF vs TCF, pick the right one</h2>
         <p className="text-caption text-surface-500 dark:text-surface-400 mt-1">
           Both are official, both map to the CEFR (A1 → C2). They differ in who issues them, who accepts them, and how they're scored.
         </p>
@@ -197,7 +197,7 @@ export default function ExamPrepHub() {
 
       {/* Quick CEFR primer */}
       <div className="mt-6 rounded-2xl border border-surface-100 dark:border-surface-800 bg-surface-50/60 dark:bg-surface-900/40 p-5">
-        <p className="eyebrow-primary mb-2">CEFR levels — what each means</p>
+        <p className="eyebrow-primary mb-2">CEFR levels, what each means</p>
         <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-2">
           {[
             { level: "A1", label: "Beginner",        desc: "Basic phrases, slow speech" },

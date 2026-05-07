@@ -63,7 +63,7 @@ class ExerciseListView(APIView):
 
 
 class SessionStartView(APIView):
-    """Start a new exam session — returns exercises with content."""
+    """Start a new exam session, returns exercises with content."""
 
     permission_classes = (permissions.IsAuthenticated,)
 
@@ -248,7 +248,7 @@ class SessionRespondView(APIView):
 
 
 class SessionCompleteView(APIView):
-    """Complete an exam session — calculate score, award XP, update progress."""
+    """Complete an exam session, calculate score, award XP, update progress."""
 
     permission_classes = (permissions.IsAuthenticated,)
 

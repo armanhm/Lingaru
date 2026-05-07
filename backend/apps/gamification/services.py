@@ -1,4 +1,4 @@
-"""Gamification service — XP, streaks, badges, levels."""
+"""Gamification service, XP, streaks, badges, levels."""
 
 from datetime import date
 from typing import Optional
@@ -84,7 +84,7 @@ def check_streak(user, today: Optional[date] = None) -> UserStats:
         return stats
 
     if stats.last_active_date == today:
-        # Already active today — no change
+        # Already active today, no change
         return stats
 
     delta = (today - stats.last_active_date).days

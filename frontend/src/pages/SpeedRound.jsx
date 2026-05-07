@@ -212,7 +212,7 @@ export default function SpeedRound() {
   if (phase === "done") {
     const answered = results.length;
     const pct = answered > 0 ? Math.round((score / answered) * 100) : 0;
-    const speed = answered > 0 ? ((TIME_LIMIT - timeLeft) / answered).toFixed(1) : "—";
+    const speed = answered > 0 ? ((TIME_LIMIT - timeLeft) / answered).toFixed(1) : "-";
     return (
       <div className="max-w-xl mx-auto py-8 space-y-6 text-center">
         <div className="animate-bounce-in text-6xl mb-2">

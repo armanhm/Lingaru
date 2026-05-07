@@ -9,12 +9,12 @@ SECTION_CHOICES = [
 ]
 
 CEFR_CHOICES = [
-    ("A1", "A1 — Beginner"),
-    ("A2", "A2 — Elementary"),
-    ("B1", "B1 — Intermediate"),
-    ("B2", "B2 — Upper Intermediate"),
-    ("C1", "C1 — Advanced"),
-    ("C2", "C2 — Proficiency"),
+    ("A1", "A1, Beginner"),
+    ("A2", "A2, Elementary"),
+    ("B1", "B1, Intermediate"),
+    ("B2", "B2, Upper Intermediate"),
+    ("C1", "C1, Advanced"),
+    ("C2", "C2, Proficiency"),
 ]
 
 MODE_CHOICES = [
@@ -24,7 +24,7 @@ MODE_CHOICES = [
 
 
 class ExamExercise(models.Model):
-    """A single exam exercise — text passage + questions (CE/CO) or writing/speaking prompt (EE/EO)."""
+    """A single exam exercise, text passage + questions (CE/CO) or writing/speaking prompt (EE/EO)."""
 
     section = models.CharField(max_length=2, choices=SECTION_CHOICES)
     cefr_level = models.CharField(max_length=2, choices=CEFR_CHOICES)
@@ -69,7 +69,7 @@ class ExamSession(models.Model):
         ordering = ["-started_at"]
 
     def __str__(self):
-        return f"{self.user.username} — {self.section}/{self.cefr_level} ({self.mode})"
+        return f"{self.user.username}, {self.section}/{self.cefr_level} ({self.mode})"
 
 
 class ExamResponse(models.Model):
@@ -114,4 +114,4 @@ class ExamProgress(models.Model):
         ]
 
     def __str__(self):
-        return f"{self.user.username} — {self.section}: {self.estimated_cefr_level or 'N/A'}"
+        return f"{self.user.username}, {self.section}: {self.estimated_cefr_level or 'N/A'}"

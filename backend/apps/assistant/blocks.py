@@ -2,7 +2,7 @@
 
 The assistant's plain-text reply can be enriched with a typed payload the
 frontend renders as cards (audio, vocab, conjugation table, inline quiz,
-expression). The LLM is asked — via the agent's system prompt — to append
+expression). The LLM is asked, via the agent's system prompt, to append
 a fenced ``` ```blocks <json> ``` ``` segment after the prose. We extract
 the JSON, drop entries that don't pass per-type validation, and return
 the surviving blocks plus the prose with the fence stripped.
@@ -16,7 +16,7 @@ Design notes
 - Forward-compatible: an unknown `type` is dropped silently so older
   clients can ignore types they don't understand yet.
 - Defensive: malformed JSON, missing fields, or wrong-shaped values
-  cause that single block (or the whole batch) to be skipped — never
+  cause that single block (or the whole batch) to be skipped, never
   crash the reply or leak a stack trace into the chat.
 - Idempotent: if the model omits blocks (e.g. for a free-form chat
   agent), this returns ([], original_text) unchanged.
@@ -30,14 +30,14 @@ import re
 
 logger = logging.getLogger(__name__)
 
-# Primary fence — what we ask the agent to emit. Tolerant of whitespace
+# Primary fence, what we ask the agent to emit. Tolerant of whitespace
 # and an optional `json` qualifier after `blocks`.
 _FENCE_RE = re.compile(
     r"```\s*blocks(?:\s+json)?\s*\n(?P<json>.*?)\n?```",
     re.DOTALL | re.IGNORECASE,
 )
 
-# Fallback fence — `json`/`JSON`/no language. Models sometimes default to
+# Fallback fence, `json`/`JSON`/no language. Models sometimes default to
 # ```json regardless of the system prompt. We only treat this as a blocks
 # payload if the JSON inside *also* looks like our schema (a list of
 # objects with a known `type`), so unrelated JSON code samples in chat
@@ -212,7 +212,7 @@ ALLOWED_ACTION_ROUTES = {
 
 def _validate_action(b: dict) -> dict | None:
     """Inline call-to-action button. Renders as a chip the user can tap to
-    navigate (in-app only — `route` must be in ``ALLOWED_ACTION_ROUTES``).
+    navigate (in-app only, `route` must be in ``ALLOWED_ACTION_ROUTES``).
 
     The agent uses this when the right answer to a request is "go to that
     feature": "show me news" → `{type: "action", route: "/news",
@@ -242,7 +242,7 @@ def _validate_action(b: dict) -> dict | None:
 
 # Whitelist of widget types the chat can embed inline. Adding a new widget
 # means: a renderer in <MessageBlocks>, the matching backend slug here, AND
-# a tested embeddable component on the frontend. We're conservative — only
+# a tested embeddable component on the frontend. We're conservative, only
 # widgets that make sense in a small chat surface and don't need their own
 # layout (no full-page embeds).
 ALLOWED_FEATURE_WIDGETS = {"news", "dictation", "flashcard", "minigame"}
@@ -252,7 +252,7 @@ def _validate_feature_widget(b: dict) -> dict | None:
     """Embed an entire feature as a card inside the chat.
 
     The agent emits `{type: "feature_widget", widget: "news", config: {...}}`
-    when it wants the user to act on a feature WITHOUT leaving the chat —
+    when it wants the user to act on a feature WITHOUT leaving the chat ,
     e.g. "play me a dictation" should produce the dictation card right in
     the conversation. `config` is widget-specific and passed through to
     the renderer; we only validate the wrapper here.
@@ -314,7 +314,7 @@ def _salvage_objects(payload: str) -> list[dict]:
     array (a missing key, a stray apostrophe). Strict ``json.loads``
     rejects the whole batch; this walker scans for balanced ``{...}``
     spans at depth 1 and parses each one independently. Bad objects
-    are dropped silently — we'd rather show 7 valid conjugation tables
+    are dropped silently, we'd rather show 7 valid conjugation tables
     and skip the broken subjonctif than render nothing.
 
     Only called as a fallback after a full ``json.loads`` failure.
@@ -379,8 +379,8 @@ def extract_blocks(raw_text: str) -> tuple[str, list[dict]]:
 
     Tries two strategies:
 
-      1. Explicit ``` ```blocks ``` fence — what we ask agents to emit.
-      2. Generic ``` ```json ``` fence — fallback for models that ignore
+      1. Explicit ``` ```blocks ``` fence, what we ask agents to emit.
+      2. Generic ``` ```json ``` fence, fallback for models that ignore
          the structured-output instruction and default to ```json. We
          only adopt the fallback if the parsed JSON actually validates
          as our block schema, so unrelated JSON snippets in chat replies
@@ -400,7 +400,7 @@ def extract_blocks(raw_text: str) -> tuple[str, list[dict]]:
         try:
             data = json.loads(payload)
         except json.JSONDecodeError as exc:
-            # Strict parse failed — try to salvage individual objects so
+            # Strict parse failed, try to salvage individual objects so
             # one malformed entry doesn't kill the whole reply.
             salvaged = _salvage_objects(payload)
             if salvaged:
@@ -443,7 +443,7 @@ def extract_blocks(raw_text: str) -> tuple[str, list[dict]]:
 
     # ── Strategy 3: bare trailing array ─────────────────────────
     # Some models (notably gemini-flash and groq's 70b) put the JSON
-    # blocks inline in the prose with NO fence at all — just a bare
+    # blocks inline in the prose with NO fence at all, just a bare
     # `[{...}]` at the end of the reply. We salvage only when the array
     # is the trailing token AND it parses to objects with a known block
     # `type`. Anchored to end-of-string so a JSON array used illustratively

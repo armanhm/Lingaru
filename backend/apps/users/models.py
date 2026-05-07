@@ -20,12 +20,12 @@ class User(AbstractUser):
     MODE_CHOICES = [
         ("general", "General Learner"),
         ("exam", "Exam Prep (TCF / TEF)"),
-        ("agentic", "Agentic — assistant first"),
+        ("agentic", "Agentic, assistant first"),
     ]
 
     # Self-reported CEFR level. We accept "unsure" so a user who'd rather
     # take a placement test (Phase 4) doesn't have to guess. Distinct from
-    # `target_level` (where they want to GET to) — this is where they ARE.
+    # `target_level` (where they want to GET to), this is where they ARE.
     PROFICIENCY_CHOICES = [
         ("A1", "A1 - Beginner"),
         ("A2", "A2 - Elementary"),

@@ -8,7 +8,7 @@
      can switch in Settings; the active mode lands on <html data-mode>
      via ModeContext. The variables below are the page-chrome accents
      (top bands, hero gradients, sidebar header, dashboard hero).
-     Deep components keep their normal Tailwind tokens — this re-tints
+     Deep components keep their normal Tailwind tokens, this re-tints
      the chrome so the modes feel different without rewriting every
      card. */
   html[data-mode="general"], html:not([data-mode]) {
@@ -76,7 +76,7 @@
 }
 
 @layer components {
-  /* ── Focus ring — applied to all interactive elements ─── */
+  /* ── Focus ring, applied to all interactive elements ─── */
   .focus-ring {
     @apply focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary-500/60 focus-visible:ring-offset-2 focus-visible:ring-offset-surface-50 dark:focus-visible:ring-offset-surface-950;
   }
@@ -98,7 +98,7 @@
   .mode-shell {
     background-color: var(--mode-shell-tint);
   }
-  /* Mode chip — small label that shows which persona is active. */
+  /* Mode chip, small label that shows which persona is active. */
   .mode-chip {
     @apply inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[11px] font-bold text-white shadow-sm;
     background-image: linear-gradient(135deg, var(--mode-grad-from), var(--mode-grad-to));

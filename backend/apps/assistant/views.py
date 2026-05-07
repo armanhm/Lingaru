@@ -66,7 +66,7 @@ class ChatView(APIView):
         ).order_by("created_at")
         messages = [{"role": msg.role, "content": msg.content} for msg in prior_messages]
 
-        # Get system prompt — agent's prompt wins when one is supplied;
+        # Get system prompt, agent's prompt wins when one is supplied;
         # otherwise fall back to the mode default.
         agent = None
         if agent_slug:
@@ -74,7 +74,7 @@ class ChatView(APIView):
                 from apps.agents.models import Agent
 
                 agent = Agent.objects.filter(slug=agent_slug, is_active=True).first()
-            except Exception as exc:  # pragma: no cover — defensive
+            except Exception as exc:  # pragma: no cover, defensive
                 logger.warning("Agent lookup failed for slug=%s: %s", agent_slug, exc)
 
         if agent and agent.system_prompt:
@@ -84,7 +84,7 @@ class ChatView(APIView):
 
         # Agentic mode users get an extra footer that documents the
         # `action` and `feature_widget` block types so the LLM knows it
-        # can invoke features inline. Other modes don't see this — keeps
+        # can invoke features inline. Other modes don't see this, keeps
         # the general/exam chat focused on pedagogy, not navigation.
         if getattr(request.user, "mode", None) == "agentic":
             from apps.assistant.agentic_prompt import append_agentic_footer
@@ -92,7 +92,7 @@ class ChatView(APIView):
             system_prompt = append_agentic_footer(system_prompt)
 
         # RAG: retrieve relevant context for conversation mode
-        # (skipped when an agent is in charge — agents have their own focused brief).
+        # (skipped when an agent is in charge, agents have their own focused brief).
         rag_used = False
         if mode == "conversation" and agent is None:
             try:
@@ -124,7 +124,7 @@ class ChatView(APIView):
 
         # Extract structured render blocks (audio, vocab_card, expression,
         # conjugation_table, quiz) emitted by the LLM in a fenced segment.
-        # Falls back to (raw, []) if no fence — backwards-compatible.
+        # Falls back to (raw, []) if no fence, backwards-compatible.
         from apps.assistant.blocks import extract_blocks
 
         prose, blocks = extract_blocks(llm_response.content)

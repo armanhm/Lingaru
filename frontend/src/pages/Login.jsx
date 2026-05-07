@@ -32,7 +32,7 @@ export default function Login() {
 
   return (
     <div className="min-h-screen flex bg-surface-50 dark:bg-surface-950">
-      {/* Left — gradient branding panel (hidden on mobile) */}
+      {/* Left, gradient branding panel (hidden on mobile) */}
       <div className="hidden lg:flex lg:w-1/2 relative overflow-hidden items-center justify-center p-12 bg-gradient-to-br from-primary-600 via-primary-700 to-purple-800">
         {/* Decorative mesh blobs */}
         <div className="absolute inset-0 opacity-30 pointer-events-none">
@@ -58,7 +58,7 @@ export default function Login() {
               <span className="bg-gradient-to-r from-white via-accent-200 to-white bg-clip-text text-transparent bg-[size:200%_auto] animate-gradient-shift">one word at a time.</span>
             </h2>
             <p className="text-body-lg text-white/75 leading-relaxed">
-              Interactive lessons, AI conversations, mini games, and spaced repetition — everything you need to become fluent.
+              Interactive lessons, AI conversations, mini games, and spaced repetition, everything you need to become fluent.
             </p>
           </div>
 
@@ -78,7 +78,7 @@ export default function Login() {
         </div>
       </div>
 
-      {/* Right — form */}
+      {/* Right, form */}
       <div className="flex-1 flex items-center justify-center p-6 sm:p-12 relative overflow-hidden">
         {/* Subtle background mesh on form side */}
         <div className="absolute -top-32 -right-32 w-96 h-96 bg-primary-200/30 dark:bg-primary-700/20 rounded-full blur-3xl pointer-events-none" />

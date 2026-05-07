@@ -20,7 +20,7 @@ class UserStats(models.Model):
         verbose_name_plural = "User stats"
 
     def __str__(self):
-        return f"{self.user.username} — {self.total_xp} XP (level {self.level})"
+        return f"{self.user.username}, {self.total_xp} XP (level {self.level})"
 
 
 class XPTransaction(models.Model):
@@ -79,4 +79,4 @@ class UserBadge(models.Model):
         ]
 
     def __str__(self):
-        return f"{self.user.username} — {self.badge.name}"
+        return f"{self.user.username}, {self.badge.name}"

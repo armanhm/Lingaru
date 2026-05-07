@@ -1,4 +1,4 @@
-"""Gamification constants — XP values, level thresholds, badge definitions."""
+"""Gamification constants, XP values, level thresholds, badge definitions."""
 
 # XP values per activity type
 XP_VALUES = {
@@ -19,7 +19,7 @@ XP_VALUES = {
 
 DAILY_STREAK_CAP = 50
 
-# Level thresholds — (min_xp, level_name)
+# Level thresholds, (min_xp, level_name)
 LEVEL_THRESHOLDS = [
     (0, "Debutant"),
     (100, "Explorateur"),

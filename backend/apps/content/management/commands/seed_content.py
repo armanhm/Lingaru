@@ -177,7 +177,7 @@ class Command(BaseCommand):
 
         GrammarRule.objects.create(
             lesson=l1_2,
-            title="Etre (to be) — Present Tense",
+            title="Etre (to be), Present Tense",
             explanation=(
                 "**Etre** is one of the most important French verbs. "
                 "It is irregular and must be memorized.\n\n"
@@ -207,7 +207,7 @@ class Command(BaseCommand):
                 "Je _____ etudiant. (etre, present)",
                 "suis",
                 ["es", "est", "sommes"],
-                "Je suis — first person singular of etre.",
+                "Je suis, first person singular of etre.",
                 1,
             ),
             (
@@ -223,7 +223,7 @@ class Command(BaseCommand):
                 "Conjugate 'etre' for 'nous':",
                 "sommes",
                 ["sont", "etes", "suis"],
-                "Nous sommes — first person plural of etre.",
+                "Nous sommes, first person plural of etre.",
                 2,
             ),
         ]
@@ -243,7 +243,7 @@ class Command(BaseCommand):
         l1_3 = Lesson.objects.create(
             topic=t1,
             type="text",
-            title="At the Hotel — Checking In",
+            title="At the Hotel, Checking In",
             content={"intro": "Read a dialogue and practice comprehension."},
             order=3,
             difficulty=1,
@@ -402,7 +402,7 @@ class Command(BaseCommand):
                 "Which word means 'cheese'?",
                 "le fromage",
                 ["le poisson", "la viande", "le dessert"],
-                "'Le fromage' means cheese — France has over 400 varieties!",
+                "'Le fromage' means cheese, France has over 400 varieties!",
                 1,
             ),
             (
@@ -410,7 +410,7 @@ class Command(BaseCommand):
                 "Je voudrais du _____, s'il vous plait. (bread)",
                 "pain",
                 ["fromage", "poisson", "vin"],
-                "'Du pain' — some bread. 'Du' is the partitive article for masculine nouns.",
+                "'Du pain', some bread. 'Du' is the partitive article for masculine nouns.",
                 1,
             ),
             (
@@ -456,7 +456,7 @@ class Command(BaseCommand):
             lesson=l2_2,
             title="Partitive Articles: du, de la, de l', des",
             explanation=(
-                "Partitive articles express an unspecified quantity — 'some' or 'any'. "
+                "Partitive articles express an unspecified quantity, 'some' or 'any'. "
                 "They are required in French where English often uses no article.\n\n"
                 "| Gender | Article | Example |\n"
                 "|--------|---------|----------|\n"
@@ -588,7 +588,7 @@ class Command(BaseCommand):
                 "What does 'plat du jour' mean?",
                 "dish of the day",
                 ["dessert menu", "drink special", "appetizer"],
-                "'Plat du jour' literally means 'dish of the day' — the daily special.",
+                "'Plat du jour' literally means 'dish of the day', the daily special.",
                 1,
             ),
             (
@@ -604,7 +604,7 @@ class Command(BaseCommand):
                 "Translate: 'A carafe of water, please.'",
                 "Une carafe d'eau, s'il vous plait.",
                 [],
-                "A very useful phrase when dining in France — water is free!",
+                "A very useful phrase when dining in France, water is free!",
                 2,
             ),
         ]

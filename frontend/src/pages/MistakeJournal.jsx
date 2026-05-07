@@ -67,7 +67,7 @@ export default function MistakeJournal() {
       <PageHeader
         eyebrow="Learn from slip-ups"
         title="Mistake journal"
-        subtitle="Every mistake you've made — review them and they stop coming back."
+        subtitle="Every mistake you've made, review them and they stop coming back."
         icon="📓"
         gradient
       />
@@ -109,7 +109,7 @@ export default function MistakeJournal() {
         <div className="text-center py-16 animate-fade-in-up">
           <span className="text-5xl mb-3 block">🎉</span>
           <p className="text-lg font-medium text-surface-600 dark:text-surface-400 mb-1">No mistakes found</p>
-          <p className="text-sm text-surface-400 dark:text-surface-500">Keep practicing — you're doing great!</p>
+          <p className="text-sm text-surface-400 dark:text-surface-500">Keep practicing, you're doing great!</p>
         </div>
       ) : (
         <div className="space-y-3">

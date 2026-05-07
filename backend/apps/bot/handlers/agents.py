@@ -1,4 +1,4 @@
-"""`/agents` Telegram command — list the active assistant agents and let
+"""`/agents` Telegram command, list the active assistant agents and let
 the user run one with a single follow-up message.
 
 Conversation flow:
@@ -9,7 +9,7 @@ Conversation flow:
                             system prompt and replies with the result.
   4. user can /cancel at any step.
 
-This is intentionally lightweight — for full multi-turn chat the user
+This is intentionally lightweight, for full multi-turn chat the user
 should keep using /chat. /agents is for one-shot specialist queries
 ("correct this sentence", "explain this grammar").
 """
@@ -50,7 +50,7 @@ def _run_agent_sync(agent: Agent, user_text: str) -> str:
     The web app renders structured blocks (audio, vocab cards, quizzes)
     that the agent prompt may include in a fenced ```blocks segment.
     Telegram can't render those, so we strip the fence and only send
-    the prose. The blocks are simply discarded for now — when we want
+    the prose. The blocks are simply discarded for now, when we want
     bot-side block rendering, this is the place to map them onto
     Telegram primitives (reply_audio, formatted markdown, etc.).
     """
@@ -84,7 +84,7 @@ async def agents_command(update: Update, context: ContextTypes.DEFAULT_TYPE) -> 
     keyboard_rows = []
     row = []
     for agent in agents:
-        lines.append(f"{agent.emoji} *{agent.name}* — {agent.tagline or agent.description[:80]}")
+        lines.append(f"{agent.emoji} *{agent.name}*, {agent.tagline or agent.description[:80]}")
         row.append(
             InlineKeyboardButton(
                 f"{agent.emoji} {agent.name}",
@@ -105,7 +105,7 @@ async def agents_command(update: Update, context: ContextTypes.DEFAULT_TYPE) -> 
 
 
 async def agent_picked(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
-    """User tapped a 'Run agent' button — ask them for the input text."""
+    """User tapped a 'Run agent' button, ask them for the input text."""
     query = update.callback_query
     await query.answer()
 
@@ -117,7 +117,7 @@ async def agent_picked(update: Update, context: ContextTypes.DEFAULT_TYPE) -> in
 
     context.user_data["pending_agent_slug"] = slug
     await query.edit_message_text(
-        f"{agent.emoji} *{agent.name}* — send me the text you'd like me to run "
+        f"{agent.emoji} *{agent.name}*, send me the text you'd like me to run "
         f"this on. Use /cancel to abort.",
         parse_mode="Markdown",
     )
@@ -125,7 +125,7 @@ async def agent_picked(update: Update, context: ContextTypes.DEFAULT_TYPE) -> in
 
 
 async def agent_run(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
-    """User sent the input text — execute the agent's LLM call and reply."""
+    """User sent the input text, execute the agent's LLM call and reply."""
     slug = context.user_data.pop("pending_agent_slug", None)
     if not slug:
         await update.message.reply_text("No agent in flight. Try /agents again.")

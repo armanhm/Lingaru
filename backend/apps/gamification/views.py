@@ -89,7 +89,7 @@ class HistoryView(APIView):
 
 
 class MiniGameScoreView(APIView):
-    """POST {game, score, total} — award XP for mini-game completion."""
+    """POST {game, score, total}, award XP for mini-game completion."""
 
     permission_classes = (permissions.IsAuthenticated,)
 
@@ -191,7 +191,7 @@ class TrendReportView(APIView):
             insights.append(
                 {
                     "type": "great",
-                    "text": f"Excellent week — {total_xp_week} XP earned! Keep this momentum.",
+                    "text": f"Excellent week, {total_xp_week} XP earned! Keep this momentum.",
                 }
             )
         else:
@@ -213,14 +213,14 @@ class TrendReportView(APIView):
             insights.append(
                 {
                     "type": "ok",
-                    "text": f"{stats.current_streak}-day streak going. Don't break it — log in tomorrow!",
+                    "text": f"{stats.current_streak}-day streak going. Don't break it, log in tomorrow!",
                 }
             )
         elif stats.current_streak == 0:
             insights.append(
                 {
                     "type": "warn",
-                    "text": "Your streak reset. Start a new one today — every day counts.",
+                    "text": "Your streak reset. Start a new one today, every day counts.",
                 }
             )
 
@@ -233,7 +233,7 @@ class TrendReportView(APIView):
                 }
             )
         else:
-            insights.append({"type": "great", "text": "Zero mistakes this week — flawless!"})
+            insights.append({"type": "great", "text": "Zero mistakes this week, flawless!"})
 
         if srs_due > 5:
             insights.append(
@@ -255,7 +255,7 @@ class TrendReportView(APIView):
             insights.append(
                 {
                     "type": "tip",
-                    "text": "You've been drilling conjugations — nice! Balance it with a lesson or quiz for full coverage.",
+                    "text": "You've been drilling conjugations, nice! Balance it with a lesson or quiz for full coverage.",
                 }
             )
         elif lessons_count >= 3:

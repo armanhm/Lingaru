@@ -17,7 +17,7 @@ from .services import get_due_cards, review_card
 
 
 class SRSDueCardsView(APIView):
-    """GET /api/progress/srs/due/ — return cards due for review."""
+    """GET /api/progress/srs/due/, return cards due for review."""
 
     permission_classes = (permissions.IsAuthenticated,)
 
@@ -29,7 +29,7 @@ class SRSDueCardsView(APIView):
 
 
 class SRSReviewView(APIView):
-    """POST /api/progress/srs/review/ — submit review result for one card."""
+    """POST /api/progress/srs/review/, submit review result for one card."""
 
     permission_classes = (permissions.IsAuthenticated,)
 
@@ -63,7 +63,7 @@ class SRSReviewView(APIView):
 
 
 class MistakeListView(generics.ListAPIView):
-    """GET /api/progress/mistakes/ — paginated mistake journal with filtering."""
+    """GET /api/progress/mistakes/, paginated mistake journal with filtering."""
 
     serializer_class = MistakeEntrySerializer
     permission_classes = (permissions.IsAuthenticated,)
@@ -86,7 +86,7 @@ class MistakeListView(generics.ListAPIView):
 
 
 class MistakeMarkReviewedView(APIView):
-    """POST /api/progress/mistakes/reviewed/ — mark mistakes as reviewed."""
+    """POST /api/progress/mistakes/reviewed/, mark mistakes as reviewed."""
 
     permission_classes = (permissions.IsAuthenticated,)
 
@@ -104,7 +104,7 @@ class MistakeMarkReviewedView(APIView):
 
 
 class LessonCompleteView(APIView):
-    """POST /api/progress/lessons/<lesson_id>/complete/ — mark a lesson as complete."""
+    """POST /api/progress/lessons/<lesson_id>/complete/, mark a lesson as complete."""
 
     permission_classes = (permissions.IsAuthenticated,)
 
@@ -159,7 +159,7 @@ class LessonCompleteView(APIView):
 
 
 class TopicProgressView(APIView):
-    """GET /api/progress/topics/<topic_id>/ — lesson completion counts for a topic."""
+    """GET /api/progress/topics/<topic_id>/, lesson completion counts for a topic."""
 
     permission_classes = (permissions.IsAuthenticated,)
 
@@ -189,7 +189,7 @@ class TopicProgressView(APIView):
 
 
 class ConjugationCheckView(APIView):
-    """POST /api/progress/conjugation/check/ — check a conjugation answer.
+    """POST /api/progress/conjugation/check/, check a conjugation answer.
 
     Request body: { "verb": "manger", "tense": "present", "subject": "je", "answer": "mange" }
     """
@@ -256,7 +256,7 @@ class ConjugationCheckView(APIView):
 
 
 class ConjugationListView(APIView):
-    """GET /api/progress/conjugation/verbs/ — available verbs and tenses."""
+    """GET /api/progress/conjugation/verbs/, available verbs and tenses."""
 
     permission_classes = (permissions.IsAuthenticated,)
 

@@ -20,8 +20,11 @@ BLOCK_FENCE_INSTRUCTION = f"""
 ## Optional: structured render blocks
 
 When it would help the learner, append a fenced code segment to your
-reply that the frontend can render as cards. The fence is *optional* —
+reply that the frontend can render as cards. The fence is *optional*:
 if a plain prose answer is fine, omit it.
+
+Punctuation rule: never use the em-dash. Prefer
+« : », « , », « ; » or « . » depending on context.
 
 Format (literal):
 
@@ -61,7 +64,7 @@ Rules:
 def ensure_block_instruction(system_prompt: str) -> str:
     """Append the structured-payloads instruction if it isn't already there.
 
-    Idempotent — safe to call on a prompt that's already been processed.
+    Idempotent: safe to call on a prompt that's already been processed.
     Used by both the data migration and the ``seed_agents`` command so a
     fresh DB and a long-running production DB end up with the same prompts.
     """

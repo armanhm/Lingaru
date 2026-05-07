@@ -1,4 +1,4 @@
-"""Celery tasks for content processing — specifically YouTube video lessons."""
+"""Celery tasks for content processing, specifically YouTube video lessons."""
 
 import json
 import logging
@@ -64,7 +64,7 @@ def _fetch_transcript(video_id: str) -> tuple[str, str]:
         # admins can spot the pattern in /admin/ → VideoLesson.
         msg = str(exc) or exc.__class__.__name__
         raise TranscriptFetchError(
-            f"YouTube refused the request — likely datacenter IP block "
+            f"YouTube refused the request, likely datacenter IP block "
             f"or rate limit. Underlying error: {exc.__class__.__name__}: {msg[:200]}"
         )
 
@@ -94,7 +94,7 @@ def _fetch_transcript(video_id: str) -> tuple[str, str]:
             segments = en_transcript.fetch()
             transcript_en = " ".join(seg.text for seg in segments)
         except Exception:
-            # English is optional — log but don't fail the whole task
+            # English is optional, log but don't fail the whole task
             logger.warning("Could not download EN transcript for %s", video_id)
     except NoTranscriptFound:
         pass
@@ -112,7 +112,7 @@ def _call_llm(prompt: str) -> str:
         system_prompt=(
             "You are a French language teacher assistant. "
             "You extract learning content from French video transcripts. "
-            "Always respond with valid JSON only — no markdown, no code fences."
+            "Always respond with valid JSON only, no markdown, no code fences."
         ),
     )
     return response.content
@@ -187,7 +187,7 @@ Rules:
 - Extract 3-5 idiomatic expressions or collocations
 - Create 5-8 questions mixing mcq, translate, and fill_blank types
 - Base everything strictly on what appears in the transcript
-- Keep JSON valid — no trailing commas, no comments
+- Keep JSON valid, no trailing commas, no comments
 """
 
     raw = _call_llm(prompt)

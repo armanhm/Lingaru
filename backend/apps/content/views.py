@@ -61,8 +61,8 @@ class LessonDetailView(generics.RetrieveAPIView):
 class LessonVideoView(APIView):
     """GET/POST /api/content/lessons/<pk>/video/
 
-    GET  — return the VideoLesson for this lesson (404 if none).
-    POST — submit a YouTube URL to attach/replace the video.
+    GET , return the VideoLesson for this lesson (404 if none).
+    POST, submit a YouTube URL to attach/replace the video.
            Triggers async processing. Staff or superuser only for POST.
     """
 

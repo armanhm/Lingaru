@@ -90,7 +90,7 @@ class TestQuizSessionModel:
             lesson=sample_lesson,
             total_questions=3,
         )
-        assert str(session) == f"{user.username} — {sample_lesson.title}"
+        assert str(session) == f"{user.username}, {sample_lesson.title}"
 
     def test_complete_session(self, user, sample_lesson):
         session = QuizSession.objects.create(
@@ -173,7 +173,7 @@ class TestQuizAnswerModel:
             user_answer="hello",
             is_correct=True,
         )
-        expected = f"Q{sample_questions[0].id} — hello (correct)"
+        expected = f"Q{sample_questions[0].id}, hello (correct)"
         assert str(answer) == expected
 
     def test_incorrect_answer_str(self, user, sample_lesson, sample_questions):
@@ -188,7 +188,7 @@ class TestQuizAnswerModel:
             user_answer="goodbye",
             is_correct=False,
         )
-        expected = f"Q{sample_questions[0].id} — goodbye (wrong)"
+        expected = f"Q{sample_questions[0].id}, goodbye (wrong)"
         assert str(answer) == expected
 
     def test_answer_cascade_delete_session(self, user, sample_lesson, sample_questions):

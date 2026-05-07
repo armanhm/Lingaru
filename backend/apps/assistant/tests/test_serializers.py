@@ -114,7 +114,7 @@ class TestConversationListSerializer:
             role="assistant",
             content="Hello",
         )
-        # Must annotate for message_count — test via view or manual annotation
+        # Must annotate for message_count, test via view or manual annotation
         from django.db.models import Count
 
         conv = Conversation.objects.annotate(

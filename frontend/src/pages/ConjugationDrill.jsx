@@ -186,7 +186,7 @@ export default function ConjugationDrill() {
         <PageHeader
           eyebrow="Verb practice"
           title="Conjugation drill"
-          subtitle="Pick a verb and tense — we'll quiz all six pronouns."
+          subtitle="Pick a verb and tense, we'll quiz all six pronouns."
           icon="✏️"
           backTo="/"
           backLabel="Back to dashboard"

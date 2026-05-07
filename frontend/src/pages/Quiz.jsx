@@ -208,7 +208,7 @@ function ScoreSummary({ result, lessonId, answers }) {
 
   const { emoji, headline, subline, tone, celebrate } =
     pct === 100 ? { emoji: "🌟", headline: "Perfect!",       subline: "Flawless run. That's exam-level work.",   tone: "celebratory", celebrate: true  } :
-    pct >= 80   ? { emoji: "🎉", headline: "Great job!",     subline: "Strong performance — nearly there.",      tone: "celebratory", celebrate: true  } :
+    pct >= 80   ? { emoji: "🎉", headline: "Great job!",     subline: "Strong performance, nearly there.",      tone: "celebratory", celebrate: true  } :
     pct >= 60   ? { emoji: "👍", headline: "Good effort!",   subline: "You're building real momentum.",           tone: "neutral",     celebrate: false } :
                   { emoji: "💪", headline: "Keep practicing",subline: "Every mistake is a step forward.",         tone: "retry",       celebrate: false };
 
@@ -298,7 +298,7 @@ export default function Quiz() {
       // Enhanced question types are handled client-side (no backend question ID)
       const isEnhanced = ["match_pairs", "odd_one_out", "reorder", "error_detect", "listen_choose"].includes(question.type);
 
-      // Feedback pause — let user see selected state before verdict lands
+      // Feedback pause, let user see selected state before verdict lands
       const FEEDBACK_DELAY = 350;
 
       if (isEnhanced) {

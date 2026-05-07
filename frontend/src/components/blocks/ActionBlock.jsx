@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 
 /**
- * Inline navigation chip — the agent's way of saying "go here for that."
+ * Inline navigation chip, the agent's way of saying "go here for that."
  *
  * Backend validator rejects non-internal routes, so we always render as a
  * react-router <Link> (no `<a target="_blank">`). The button styling reads

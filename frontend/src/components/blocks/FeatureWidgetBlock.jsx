@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import client from "../../api/client";
 
 /**
- * Dispatcher for inline feature widgets — the agentic-mode bridge between
+ * Dispatcher for inline feature widgets, the agentic-mode bridge between
  * "give me X" and X actually rendering inside the conversation.
  *
  * Each widget is a small, self-contained card. Anything that can't fit
@@ -53,7 +53,7 @@ function WidgetCard({ title, emoji, ctaTo, ctaLabel, children }) {
 function NewsWidget({ config, title }) {
   // Pulls one fresh news article from /api/news/. Optional config.topic
   // narrows by topic. The agent sets this when the user says "show me
-  // news about politics" — it's a hint, not a hard filter.
+  // news about politics", it's a hint, not a hard filter.
   const [article, setArticle] = useState(null);
   const [loading, setLoading] = useState(true);
 
@@ -64,7 +64,7 @@ function NewsWidget({ config, title }) {
       .then((res) => {
         // /api/news/ ships the list inside a paginator wrapper:
         //   { count, next, previous, results: { articles: [...], topics: [...] } }
-        // Be defensive in case the wrapper changes — fall back to flat shapes.
+        // Be defensive in case the wrapper changes, fall back to flat shapes.
         const data = res.data || {};
         const list =
           data.results?.articles ||
@@ -118,7 +118,7 @@ function NewsWidget({ config, title }) {
 function DictationWidget({ title }) {
   // The dictation flow itself is a multi-step page (audio → type → grade)
   // that doesn't fit well inline. Surface a card with audio preview +
-  // deep-link instead — the agent gets credit for invoking, the user gets
+  // deep-link instead, the agent gets credit for invoking, the user gets
   // dropped into the focused page.
   return (
     <WidgetCard title={title || "Dictée express"} emoji="🎧" ctaTo="/practice/dictation" ctaLabel="Lancer la dictée →">

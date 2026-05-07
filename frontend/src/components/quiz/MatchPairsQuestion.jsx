@@ -39,7 +39,7 @@ export default function MatchPairsQuestion({ pairs, onAnswer, disabled }) {
         setTimeout(() => onAnswer(true), 400);
       }
     } else {
-      // Wrong match — flash red briefly
+      // Wrong match, flash red briefly
       setWrongFlash({ left: selectedLeft, right: rightIdx });
       setTimeout(() => {
         setWrongFlash(null);
@@ -61,7 +61,7 @@ export default function MatchPairsQuestion({ pairs, onAnswer, disabled }) {
       </p>
 
       <div className="grid grid-cols-2 gap-3">
-        {/* Left column — French */}
+        {/* Left column, French */}
         <div className="space-y-2">
           <p className="section-label mb-1">French</p>
           {pairs.map((pair, i) => {
@@ -91,7 +91,7 @@ export default function MatchPairsQuestion({ pairs, onAnswer, disabled }) {
           })}
         </div>
 
-        {/* Right column — English (shuffled) */}
+        {/* Right column, English (shuffled) */}
         <div className="space-y-2">
           <p className="section-label mb-1">English</p>
           {rightOrder.map((pairIdx, rightIdx) => {

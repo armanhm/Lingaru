@@ -10,7 +10,7 @@ import { Confetti } from "../components/ui";
 import AudioPlayButton from "../components/AudioPlayButton";
 
 /* ─────────────────────────────────────────────────────────
- * Locale helpers — French dashboard
+ * Locale helpers, French dashboard
  * ───────────────────────────────────────────────────────── */
 const FRENCH_DAYS   = ["dimanche","lundi","mardi","mercredi","jeudi","vendredi","samedi"];
 const FRENCH_MONTHS = ["janvier","février","mars","avril","mai","juin","juillet","août","septembre","octobre","novembre","décembre"];
@@ -32,15 +32,15 @@ function frenchGreeting(d = new Date()) {
 }
 
 /* ─────────────────────────────────────────────────────────
- * Curated daily quotes (French + English) — rotated daily
+ * Curated daily quotes (French + English), rotated daily
  * ───────────────────────────────────────────────────────── */
 const DAILY_QUOTES = [
   { french: "La vie est belle.", english: "Life is beautiful.", author: "Proverbe français", type: "proverb" },
   { french: "Chaque jour est une nouvelle chance de changer ta vie.", english: "Every day is a new chance to change your life.", author: "Sagesse populaire", type: "inspiration" },
-  { french: "Il n'y a pas de chemin vers le bonheur — le bonheur est le chemin.", english: "There is no path to happiness; happiness is the path.", author: "Proverbe français", type: "proverb" },
+  { french: "Il n'y a pas de chemin vers le bonheur, le bonheur est le chemin.", english: "There is no path to happiness; happiness is the path.", author: "Proverbe français", type: "proverb" },
   { french: "Sous le pont Mirabeau coule la Seine\nEt nos amours\nFaut-il qu'il m'en souvienne\nLa joie venait toujours après la peine.", english: "Under the Mirabeau Bridge flows the Seine\nAnd our loves\nMust I be reminded\nJoy always came after sorrow.", author: "Guillaume Apollinaire", type: "poem" },
   { french: "L'imagination est plus importante que la connaissance.", english: "Imagination is more important than knowledge.", author: "Albert Einstein", type: "inspiration" },
-  { french: "Il faut toujours viser la lune, car même en cas d'échec, on atterrit dans les étoiles.", english: "Always aim for the moon — even if you miss, you'll land among the stars.", author: "Oscar Wilde", type: "inspiration" },
+  { french: "Il faut toujours viser la lune, car même en cas d'échec, on atterrit dans les étoiles.", english: "Always aim for the moon, even if you miss, you'll land among the stars.", author: "Oscar Wilde", type: "inspiration" },
   { french: "Mon âme a son secret, ma vie a son mystère.", english: "My soul has its secret, my life has its mystery.", author: "Félix Arvers", type: "poem" },
   { french: "Le bonheur est la seule chose qui se double si on le partage.", english: "Happiness is the only thing that doubles when shared.", author: "Albert Schweitzer", type: "inspiration" },
   { french: "On ne voit bien qu'avec le cœur. L'essentiel est invisible pour les yeux.", english: "One sees clearly only with the heart. What is essential is invisible to the eye.", author: "Antoine de Saint-Exupéry", type: "literature" },
@@ -58,7 +58,7 @@ const QUOTE_TYPE_LABEL = {
   philosophy:  "Philosophie",
 };
 
-/* Mock skill axes for the compass — TODO: wire to /skills/snapshot when shipped */
+/* Mock skill axes for the compass, TODO: wire to /skills/snapshot when shipped */
 const SKILLS = [
   { key: "vocab",   label: "Vocabulaire",   value: 78, target: 90, delta: 4, hint: "+82 mots cette semaine",   to: "/dictionary" },
   { key: "grammar", label: "Grammaire",     value: 64, target: 85, delta: 2, hint: "Subjonctif à revoir",       to: "/grammar" },
@@ -92,7 +92,7 @@ const Ic = {
 };
 
 /* ─────────────────────────────────────────────────────────
- * CompassDial — radar SVG
+ * CompassDial, radar SVG
  * ───────────────────────────────────────────────────────── */
 function CompassDial({ skills, hovered, onHover, onSelect, level = "B1" }) {
   const size = 360, cx = size / 2, cy = size / 2;
@@ -254,7 +254,7 @@ function HybridHeader({ user, stats, animatedXP }) {
 }
 
 /* ─────────────────────────────────────────────────────────
- * HybridHero — compass + dark CTA panel
+ * HybridHero, compass + dark CTA panel
  * ───────────────────────────────────────────────────────── */
 function HybridHero({ srsDue }) {
   const navigate = useNavigate();
@@ -263,7 +263,7 @@ function HybridHero({ srsDue }) {
 
   return (
     <div className="grid grid-cols-1 lg:grid-cols-12 gap-5">
-      {/* LEFT — recommended next session */}
+      {/* LEFT, recommended next session */}
       <div className="lg:col-span-7 relative overflow-hidden rounded-3xl bg-gradient-to-br from-ink-900 via-ink-800 to-primary-900 dark:from-ink-900 dark:via-primary-950 dark:to-ink-900 text-white p-4 sm:p-5 flex flex-col animate-fade-in-up">
         <div className="absolute -top-12 -right-12 w-56 h-56 bg-primary-500/30 rounded-full blur-3xl pointer-events-none" />
         <div className="absolute -bottom-14 -left-8 w-56 h-56 bg-accent-500/20 rounded-full blur-3xl pointer-events-none" />
@@ -275,7 +275,7 @@ function HybridHero({ srsDue }) {
           </div>
           <h2 className="mt-2 font-editorial text-[28px] sm:text-[34px] leading-[1.05]">
             Le subjonctif présent
-            <span className="block italic text-primary-200 text-[20px] sm:text-[24px] mt-1">— il faut que je comprenne</span>
+            <span className="block italic text-primary-200 text-[20px] sm:text-[24px] mt-1">: il faut que je comprenne</span>
           </h2>
           <p className="mt-2.5 text-[14px] text-primary-100/85 max-w-[52ch] leading-snug">
             12 minutes · 9 questions ciblées sur les verbes irréguliers (<em>aller, faire, savoir</em>).
@@ -328,7 +328,7 @@ function HybridHero({ srsDue }) {
         </div>
       </div>
 
-      {/* RIGHT — compass */}
+      {/* RIGHT, compass */}
       <div className="lg:col-span-5 bg-white dark:bg-surface-900/60 border border-surface-100 dark:border-surface-800 rounded-3xl p-4 sm:p-5 animate-fade-in-up">
         <div className="flex items-baseline justify-between mb-1">
           <div>
@@ -353,7 +353,7 @@ function HybridHero({ srsDue }) {
 }
 
 /* ─────────────────────────────────────────────────────────
- * QuoteCard — daily inspiration phrase (rotates daily)
+ * QuoteCard, daily inspiration phrase (rotates daily)
  * ───────────────────────────────────────────────────────── */
 function QuoteCard({ quoteIndex, onShuffle }) {
   const [showTranslation, setShowTranslation] = useState(false);
@@ -395,7 +395,7 @@ function QuoteCard({ quoteIndex, onShuffle }) {
           <span className="text-[10px] font-mono uppercase tracking-[0.14em] font-semibold text-primary-700 dark:text-primary-300 bg-primary-50 dark:bg-primary-900/30 px-2 py-0.5 rounded-full">
             {QUOTE_TYPE_LABEL[quote.type] || quote.type}
           </span>
-          <span className="text-[12px] text-surface-500 dark:text-surface-400 truncate">— {quote.author}</span>
+          <span className="text-[12px] text-surface-500 dark:text-surface-400 truncate">{quote.author}</span>
         </div>
 
         <button
@@ -457,7 +457,7 @@ function ExamCountdown({ examDate, daysLeft }) {
 }
 
 /* ─────────────────────────────────────────────────────────
- * WordCard — Mot du jour (real vocab API)
+ * WordCard, Mot du jour (real vocab API)
  * ───────────────────────────────────────────────────────── */
 function WordCard({ word, loading, onShuffle }) {
   // Extract IPA-like pronunciation hint if backend provides it; else fallback.
@@ -552,7 +552,7 @@ function QuickRail({ srsDue }) {
 }
 
 /* ─────────────────────────────────────────────────────────
- * RecentActivity — pulled from trend report when available
+ * RecentActivity, pulled from trend report when available
  * ───────────────────────────────────────────────────────── */
 function timeAgoFr(iso) {
   if (!iso) return "récemment";
@@ -597,7 +597,7 @@ function RecentActivity({ trend }) {
     trend.sample_mistakes.slice(0, 2).forEach((m) => {
       events.push({
         t: timeAgoFr(m.created_at || m.timestamp),
-        txt: m.user_text ? `Erreur — « ${m.user_text} »` : (m.context || "Erreur récente"),
+        txt: m.user_text ? `Erreur, « ${m.user_text} »` : (m.context || "Erreur récente"),
         score: m.correct_text ? `→ ${m.correct_text}` : "à revoir",
         tone: "danger",
       });
@@ -616,7 +616,7 @@ function RecentActivity({ trend }) {
 
   // Fallback if backend returned nothing yet
   const display = events.length > 0 ? events : [
-    { t: "—", txt: "Aucune activité récente", score: "", tone: "primary" },
+    { t: "·", txt: "Aucune activité récente", score: "", tone: "primary" },
   ];
 
   return (
@@ -682,7 +682,7 @@ function ResumeBanner({ activity, onDismiss }) {
 }
 
 /* ─────────────────────────────────────────────────────────
- * MAIN — Dashboard
+ * MAIN, Dashboard
  * ───────────────────────────────────────────────────────── */
 export default function Dashboard() {
   const { user } = useAuth();
@@ -696,7 +696,7 @@ export default function Dashboard() {
   const [lastActivity, dismissActivity] = useLastActivity();
   const animatedXP = useCountUp(stats?.total_xp ?? 0);
 
-  // Daily quote — rotates each calendar day, shuffleable in-session
+  // Daily quote, rotates each calendar day, shuffleable in-session
   const initialQuoteIndex = useMemo(
     () => Math.floor(Date.now() / 86_400_000) % DAILY_QUOTES.length,
     []
@@ -725,7 +725,7 @@ export default function Dashboard() {
       });
   }, []);
 
-  // Word of the day — fetch a real random vocab word
+  // Word of the day, fetch a real random vocab word
   const loadWord = () => {
     setWordLoading(true);
     getRandomVocabulary(1)

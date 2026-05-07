@@ -87,7 +87,7 @@ async def _download_telegram_file(file_obj):
 
 
 async def chat_start(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
-    """Handle /chat — start an AI conversation."""
+    """Handle /chat, start an AI conversation."""
     tg_user = update.effective_user
     user, _ = await sync_to_async(get_or_create_telegram_user)(
         telegram_id=tg_user.id,
@@ -144,7 +144,7 @@ async def chat_message(update: Update, context: ContextTypes.DEFAULT_TYPE) -> in
         )
         return CHATTING
 
-    # Strip any structured-payloads fence — Telegram can't render those.
+    # Strip any structured-payloads fence, Telegram can't render those.
     # The web app gets the full reply via the assistant API; the bot only
     # needs the prose.
     from apps.assistant.blocks import extract_blocks
@@ -300,7 +300,7 @@ async def chat_voice(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
 
 
 async def chat_end(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
-    """Handle /endchat — end the AI conversation."""
+    """Handle /endchat, end the AI conversation."""
     context.user_data.pop("conversation_id", None)
     context.user_data.pop("user_id", None)
     await update.message.reply_text("Chat ended. Use /chat to start a new conversation!")

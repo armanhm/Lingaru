@@ -24,7 +24,7 @@ def _get_due_card_list(user, limit: int = 10):
 
 
 async def daily_command(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
-    """Handle /daily — send the user's due SRS review cards."""
+    """Handle /daily, send the user's due SRS review cards."""
     telegram_id = update.effective_user.id
 
     user = await sync_to_async(_get_user_by_telegram_id)(telegram_id)
@@ -41,7 +41,7 @@ async def daily_command(update: Update, context: ContextTypes.DEFAULT_TYPE) -> N
 
     lines = [f"You have {len(cards)} card(s) due for review:\n"]
     for i, card in enumerate(cards, 1):
-        lines.append(f"{i}. **{card.vocabulary.french}** — {card.vocabulary.english}")
+        lines.append(f"{i}. **{card.vocabulary.french}**, {card.vocabulary.english}")
 
     lines.append("\nVisit the app to start your review session.")
 

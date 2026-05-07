@@ -179,7 +179,7 @@ class VideoLessonAdmin(admin.ModelAdmin):
                 'style="max-width:320px;border-radius:4px;" />',
                 obj.youtube_id,
             )
-        return "—"
+        return ","
 
     def save_model(self, request, obj, form, change):
         """Trigger processing task when youtube_url is set or changed."""

@@ -169,7 +169,7 @@ export default function MissingLetter() {
     }
   }, [resultState, blanks, focusIdx, userLetters]);
 
-  // Backspace — clear current blank and move focus back
+  // Backspace, clear current blank and move focus back
   const handleBackspace = useCallback(() => {
     if (resultState) return;
     const blankIdx = blanks[focusIdx];

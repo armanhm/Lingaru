@@ -1,7 +1,7 @@
 import AudioPlayButton from "../AudioPlayButton";
 
 /**
- * Inline audio block — a single phrase the agent wants the user to hear.
+ * Inline audio block, a single phrase the agent wants the user to hear.
  * Shows the French text alongside a play button; reuses the existing TTS
  * surface so the cache + provider plumbing stays the same.
  */

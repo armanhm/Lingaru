@@ -68,7 +68,7 @@ class GrammarTopicDetailSerializer(GrammarTopicListSerializer):
 
 
 class GrammarDrillItemSerializer(serializers.ModelSerializer):
-    """Drill item — the correct_answer is INCLUDED so client can validate locally
+    """Drill item, the correct_answer is INCLUDED so client can validate locally
     after a 350ms feedback delay (consistent with Quiz pattern)."""
 
     class Meta:

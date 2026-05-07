@@ -27,7 +27,7 @@ class FeedView(APIView):
 
     def get(self, request):
         # Discover used to filter on `expires_at__gt=now` which left the
-        # surface looking near-empty after a week — generators only produce
+        # surface looking near-empty after a week, generators only produce
         # one card per type per day. Show everything that hasn't been
         # explicitly cleaned up; the `seen` ordering below pushes already-
         # consumed cards to the bottom so freshness still wins.
@@ -63,7 +63,7 @@ class FeedView(APIView):
 class GenerateMoreView(APIView):
     """Generate fresh Discover cards on demand.
 
-    POST body (optional): {"rounds": <int 1-5>} — how many times to run
+    POST body (optional): {"rounds": <int 1-5>}, how many times to run
     the generator set. Each round produces up to one word + grammar +
     trivia card, so rounds=3 yields up to 9 new cards. We cap at 5 to
     avoid LLM-budget runaways from a fast clicker.
@@ -207,7 +207,7 @@ class NewsDetailView(APIView):
         if card is None:
             return Response({"detail": "Not found."}, status=status.HTTP_404_NOT_FOUND)
 
-        # Mark as seen (no XP yet — XP is awarded on explicit interact)
+        # Mark as seen (no XP yet, XP is awarded on explicit interact)
         UserDiscoverHistory.objects.get_or_create(user=request.user, card=card)
 
         serializer = NewsDetailSerializer(card)

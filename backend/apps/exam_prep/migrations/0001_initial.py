@@ -19,7 +19,7 @@ class Migration(migrations.Migration):
             fields=[
                 ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
                 ('section', models.CharField(choices=[('CO', 'Compréhension orale'), ('CE', 'Compréhension écrite'), ('EE', 'Expression écrite'), ('EO', 'Expression orale')], max_length=2)),
-                ('cefr_level', models.CharField(choices=[('A1', 'A1 — Beginner'), ('A2', 'A2 — Elementary'), ('B1', 'B1 — Intermediate'), ('B2', 'B2 — Upper Intermediate'), ('C1', 'C1 — Advanced'), ('C2', 'C2 — Proficiency')], max_length=2)),
+                ('cefr_level', models.CharField(choices=[('A1', 'A1, Beginner'), ('A2', 'A2, Elementary'), ('B1', 'B1, Intermediate'), ('B2', 'B2, Upper Intermediate'), ('C1', 'C1, Advanced'), ('C2', 'C2, Proficiency')], max_length=2)),
                 ('title', models.CharField(max_length=300)),
                 ('instructions_fr', models.TextField(blank=True, default='')),
                 ('instructions_en', models.TextField(blank=True, default='')),
@@ -39,7 +39,7 @@ class Migration(migrations.Migration):
             fields=[
                 ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
                 ('section', models.CharField(choices=[('CO', 'Compréhension orale'), ('CE', 'Compréhension écrite'), ('EE', 'Expression écrite'), ('EO', 'Expression orale')], max_length=2)),
-                ('cefr_level', models.CharField(choices=[('A1', 'A1 — Beginner'), ('A2', 'A2 — Elementary'), ('B1', 'B1 — Intermediate'), ('B2', 'B2 — Upper Intermediate'), ('C1', 'C1 — Advanced'), ('C2', 'C2 — Proficiency')], max_length=2)),
+                ('cefr_level', models.CharField(choices=[('A1', 'A1, Beginner'), ('A2', 'A2, Elementary'), ('B1', 'B1, Intermediate'), ('B2', 'B2, Upper Intermediate'), ('C1', 'C1, Advanced'), ('C2', 'C2, Proficiency')], max_length=2)),
                 ('mode', models.CharField(choices=[('practice', 'Practice'), ('mock', 'Mock Exam')], default='practice', max_length=10)),
                 ('started_at', models.DateTimeField(auto_now_add=True)),
                 ('completed_at', models.DateTimeField(blank=True, null=True)),

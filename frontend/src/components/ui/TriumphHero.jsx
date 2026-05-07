@@ -7,7 +7,7 @@ import Confetti from "./Confetti";
  *
  * Props:
  *   emoji, headline, subline, stats: [{value, label, color?}], actions,
- *   celebrate: boolean — fire confetti burst
+ *   celebrate: boolean, fire confetti burst
  *   tone: 'celebratory' | 'neutral' | 'retry'
  */
 const TONE = {
@@ -46,12 +46,12 @@ export default function TriumphHero({
         <div className={`w-40 h-40 rounded-full bg-gradient-to-br ${toneCfg.from} ${toneCfg.via} ${toneCfg.to} opacity-20 blur-3xl`} />
       </div>
 
-      {/* Emoji — pops in first */}
+      {/* Emoji, pops in first */}
       <div className="relative text-7xl sm:text-8xl mb-4 inline-block animate-bounce-in" aria-hidden="true">
         {emoji}
       </div>
 
-      {/* Headline — fades in after emoji */}
+      {/* Headline, fades in after emoji */}
       <h2
         className={`relative text-h1 sm:text-display bg-gradient-to-r ${toneCfg.from} ${toneCfg.via} ${toneCfg.to} bg-clip-text text-transparent transition-all duration-500 ${
           step >= 1 ? "opacity-100 translate-y-0" : "opacity-0 translate-y-2"
@@ -68,7 +68,7 @@ export default function TriumphHero({
         </p>
       )}
 
-      {/* Stats — stagger in */}
+      {/* Stats, stagger in */}
       {stats.length > 0 && (
         <div className="relative mt-8 card card-elevated p-6 sm:p-8">
           <div className={`flex justify-center gap-6 sm:gap-10 flex-wrap transition-all duration-500 ${
@@ -97,7 +97,7 @@ export default function TriumphHero({
         </div>
       )}
 
-      {/* Actions — fade last */}
+      {/* Actions, fade last */}
       {actions && (
         <div className={`relative mt-6 flex items-center justify-center gap-3 flex-wrap transition-all duration-500 ${
           step >= 3 ? "opacity-100 translate-y-0" : "opacity-0 translate-y-2"

@@ -30,7 +30,7 @@ def discover_cards(db):
         summary="A fun fact about French",
         content_json={
             "fact_fr": "Les chaussettes de l'archiduchesse sont-elles seches?",
-            "fact_en": "Are the archduchess's socks dry? — a famous French tongue twister.",
+            "fact_en": "Are the archduchess's socks dry?, a famous French tongue twister.",
         },
         generated_at=now,
     )

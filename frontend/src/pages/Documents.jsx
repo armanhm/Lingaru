@@ -122,7 +122,7 @@ export default function Documents() {
       <PageHeader
         eyebrow="Your library"
         title="Documents"
-        subtitle="Upload your French textbooks and notes — the AI assistant will use them for grounded answers."
+        subtitle="Upload your French textbooks and notes, the AI assistant will use them for grounded answers."
         icon="📄"
         gradient
       />

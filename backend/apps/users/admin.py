@@ -30,7 +30,7 @@ class UserAdmin(BaseUserAdmin):
         "date_joined",
     )
     list_filter = ("is_active", "is_staff", "target_level")
-    # Pending approvals (is_active=False) come first — easy to spot.
+    # Pending approvals (is_active=False) come first, easy to spot.
     ordering = ("is_active", "-date_joined")
     list_per_page = 50
     actions = (approve_users, suspend_users)

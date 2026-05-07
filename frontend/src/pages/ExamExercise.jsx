@@ -55,7 +55,7 @@ export default function ExamExercise() {
 
   const animatedScore = useCountUp(summary ? Math.round(summary.percentage || 0) : 0, 800);
 
-  // Load session data — we re-fetch by starting a new session via the ExamSection page
+  // Load session data, we re-fetch by starting a new session via the ExamSection page
   // The session data comes from sessionStorage since we navigated here
   useEffect(() => {
     const stored = sessionStorage.getItem(`exam_session_${sessionId}`);
@@ -127,7 +127,7 @@ export default function ExamExercise() {
       return;
     }
 
-    // All done — complete session
+    // All done, complete session
     completeExamSession(sessionId)
       .then((res) => {
         setSummary(res.data);
@@ -170,7 +170,7 @@ export default function ExamExercise() {
     const pct = summary.percentage || 0;
     const emoji = pct >= 85 ? "🌟" : pct >= 65 ? "🎉" : pct >= 50 ? "👍" : "💪";
     const headline = pct >= 85 ? "Excellent!" : pct >= 65 ? "Great job!" : pct >= 50 ? "Good effort!" : "Keep practicing!";
-    const subline = pct >= 85 ? "You're performing at exam standard — nearly ready."
+    const subline = pct >= 85 ? "You're performing at exam standard, nearly ready."
       : pct >= 65 ? "Strong progress. Another session or two at this level should cement it."
       : pct >= 50 ? "Solid base. Focus on the tricky bits and try again."
       : "Each attempt teaches your brain something new. Try again when ready.";

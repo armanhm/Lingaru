@@ -140,7 +140,7 @@ function StatusBanner({ status, errorMessage }) {
       bg: "bg-warn-50 dark:bg-warn-900/20 border-warn-200 dark:border-warn-700",
       text: "text-warn-800 dark:text-warn-300",
       icon: "⚙️",
-      message: "Fetching transcript and extracting content — this may take a minute.",
+      message: "Fetching transcript and extracting content, this may take a minute.",
     },
     failed: {
       bg: "bg-danger-50 dark:bg-danger-900/20 border-danger-200 dark:border-danger-800",
@@ -198,7 +198,7 @@ function VideoUrlForm({ lessonId, onSubmitted }) {
     } catch (err) {
       const status = err.response?.status;
       let msg = err.response?.data?.detail || "Failed to submit video.";
-      if (status === 401) msg = "Session expired — please log out and log back in.";
+      if (status === 401) msg = "Session expired, please log out and log back in.";
       if (status === 403) msg = "Only staff users can add videos to lessons.";
       showToast(msg, "error");
     } finally {
@@ -212,7 +212,7 @@ function VideoUrlForm({ lessonId, onSubmitted }) {
         <span className="text-4xl">🎬</span>
         <h3 className="text-lg font-semibold text-surface-900 dark:text-surface-100 mt-2">Add a YouTube Video</h3>
         <p className="text-sm text-surface-500 dark:text-surface-400 mt-1">
-          Paste a YouTube URL — we'll extract the transcript and generate vocabulary practice automatically.
+          Paste a YouTube URL, we'll extract the transcript and generate vocabulary practice automatically.
         </p>
       </div>
       <form onSubmit={handleSubmit} className="flex gap-2">
@@ -242,10 +242,10 @@ export default function VideoSection({ video, lessonId, isStaff, lessonQuestionC
   const [currentVideo, setCurrentVideo] = useState(video);
   const [showFullTranscript, setShowFullTranscript] = useState(false);
 
-  // No video and not staff — show nothing
+  // No video and not staff, show nothing
   if (!currentVideo && !isStaff) return null;
 
-  // No video but staff — show submission form
+  // No video but staff, show submission form
   if (!currentVideo && isStaff) {
     return (
       <div className="mb-8">

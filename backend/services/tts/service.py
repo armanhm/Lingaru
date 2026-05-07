@@ -57,7 +57,7 @@ def get_or_create_audio(text: str, language: str = "fr") -> AudioClip:
         logger.debug("TTS DB cache hit: text='%s'", clean_text[:50])
         return clip
 
-    # Generate audio — prefer Gemini TTS, fall back to gTTS
+    # Generate audio, prefer Gemini TTS, fall back to gTTS
     if settings.GEMINI_API_KEY:
         try:
             provider = GeminiTTSProvider()

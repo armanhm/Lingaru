@@ -32,7 +32,7 @@ XP_DRILL_PERFECT_BONUS = 10
 
 
 class HubView(APIView):
-    """Aggregated view for /grammar — categories with topic + mastery counts,
+    """Aggregated view for /grammar, categories with topic + mastery counts,
     plus a recommended next topic based on weakest mastery / due-for-review."""
 
     permission_classes = (permissions.IsAuthenticated,)
@@ -206,7 +206,7 @@ class StartSessionView(APIView):
                 mastery_before=mastery.mastery_score,
             )
         else:
-            # diagnostic — sample one item from each of up to 12 topics at user level
+            # diagnostic, sample one item from each of up to 12 topics at user level
             level = request.user.target_level if hasattr(request.user, "target_level") else "B1"
             topics = list(GrammarTopic.objects.filter(is_active=True, cefr_level=level)[:12])
             if len(topics) < 5:
@@ -245,7 +245,7 @@ class StartSessionView(APIView):
 
 
 class SubmitAnswerView(APIView):
-    """Submit a single answer within a session. Records but doesn't grade —
+    """Submit a single answer within a session. Records but doesn't grade ,
     grading is client-side (we send correct_answer with each item)."""
 
     permission_classes = (permissions.IsAuthenticated,)

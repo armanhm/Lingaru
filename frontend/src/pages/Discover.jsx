@@ -109,7 +109,7 @@ export default function Discover() {
       <PageHeader
         eyebrow="Bite-sized cultural learning"
         title="Discover"
-        subtitle="Curated French moments — phrases, idioms, mini-stories, and culture cards."
+        subtitle="Curated French moments, phrases, idioms, mini-stories, and culture cards."
         icon="🔭"
         gradient
         actions={generateButton}

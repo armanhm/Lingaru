@@ -63,7 +63,7 @@ class GeminiTTSProvider(BaseTTSProvider):
 
         full_path.parent.mkdir(parents=True, exist_ok=True)
 
-        # Call Gemini TTS — must use a contents list with explicit user turn
+        # Call Gemini TTS, must use a contents list with explicit user turn
         response = self._client.models.generate_content(
             model=GEMINI_TTS_MODEL,
             contents=[

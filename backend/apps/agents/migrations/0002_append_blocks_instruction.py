@@ -1,5 +1,5 @@
 """Append the structured-payloads instruction to every existing agent's
-``system_prompt``. Idempotent — see ``apps.agents.prompts`` for the
+``system_prompt``. Idempotent, see ``apps.agents.prompts`` for the
 shared instruction text and marker."""
 
 from django.db import migrations
@@ -7,7 +7,7 @@ from django.db import migrations
 
 def _import_helpers():
     """Late import so the migration can be replayed even if ``prompts.py``
-    has been refactored — Django imports migrations independently of apps."""
+    has been refactored, Django imports migrations independently of apps."""
     from apps.agents.prompts import BLOCK_FENCE_INSTRUCTION_MARK, ensure_block_instruction
 
     return BLOCK_FENCE_INSTRUCTION_MARK, ensure_block_instruction

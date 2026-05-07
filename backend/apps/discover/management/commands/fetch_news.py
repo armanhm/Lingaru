@@ -1,7 +1,7 @@
 """Pull fresh news from RSS sources and rewrite via LLM.
 
 Usage:
-    # Default — up to 10 items across all sources
+    # Default, up to 10 items across all sources
     python manage.py fetch_news
 
     # Limit how many items get processed total

@@ -46,7 +46,7 @@ class PronunciationCheckView(APIView):
         expected_text = serializer.validated_data["expected_text"]
         vocabulary_id = serializer.validated_data.get("vocabulary_id")
 
-        # Transcribe — GroqWhisperProvider reads the file internally
+        # Transcribe, GroqWhisperProvider reads the file internally
         try:
             stt = GroqWhisperProvider()
             stt_result = stt.transcribe(audio_file=audio_file, language="fr")

@@ -21,7 +21,7 @@ WAITING_FOR_ANSWER = 0
 
 
 async def dictation_command(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
-    """Handle /dictation — start a dictation exercise."""
+    """Handle /dictation, start a dictation exercise."""
     vocab = await sync_to_async(
         lambda: Vocabulary.objects.exclude(example_sentence="").order_by("?").first()
     )()

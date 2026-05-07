@@ -3,7 +3,7 @@ from django.db import models
 
 
 class Agent(models.Model):
-    """A specialised assistant tool — admin-editable system prompt and surface metadata.
+    """A specialised assistant tool, admin-editable system prompt and surface metadata.
 
     Each agent backs a card in the /agents gallery and a dedicated /agents/<slug>
     run page. The chat composer's @-mention popover also routes through this
@@ -59,7 +59,7 @@ class Agent(models.Model):
 class AgentRun(models.Model):
     """Pins an assistant Conversation to a specific agent.
 
-    A user can have many AgentRuns per agent — each is a fresh conversation
+    A user can have many AgentRuns per agent, each is a fresh conversation
     thread, listed under the agent's "Recent runs" panel.
     """
 

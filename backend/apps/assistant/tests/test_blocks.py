@@ -354,7 +354,7 @@ class TestActionBlock:
         assert blocks[0]["emoji"] == "📖"
 
     def test_rejects_external_url(self):
-        # External routes can't be smuggled in — internal only.
+        # External routes can't be smuggled in, internal only.
         _, blocks = extract_blocks(
             _wrap([{"type": "action", "route": "https://example.com", "label": "Hack"}])
         )
@@ -365,7 +365,7 @@ class TestActionBlock:
         assert blocks == []
 
     def test_rejects_unknown_route(self):
-        # Model loves to translate route names — "/grammaire" instead of
+        # Model loves to translate route names, "/grammaire" instead of
         # "/grammar". Validator must reject so we don't 404 the user.
         _, blocks = extract_blocks(_wrap([{"type": "action", "route": "/grammaire", "label": "x"}]))
         assert blocks == []
@@ -377,7 +377,7 @@ class TestActionBlock:
 
 class TestBareTrailingArrayFallback:
     """Some models skip the fence entirely and just put a JSON array at
-    the very end of the prose. We salvage these — but only if they
+    the very end of the prose. We salvage these, but only if they
     validate as our schema, and only when they're at end-of-string."""
 
     def test_bare_action_array_at_end(self):
@@ -451,7 +451,7 @@ class TestSalvageMalformedArray:
     something useful."""
 
     def test_skips_one_bad_object_keeps_rest(self):
-        # Middle entry is missing the "pronoun": key — JSON parse will
+        # Middle entry is missing the "pronoun": key, JSON parse will
         # blow up. The two valid entries should still render.
         raw = (
             "Voici les conjugaisons.\n"
@@ -481,7 +481,7 @@ class TestSalvageMalformedArray:
 
 
 class TestJsonFenceFallback:
-    """Models often default to ```json — accept it if the payload validates."""
+    """Models often default to ```json, accept it if the payload validates."""
 
     def test_json_fence_with_valid_blocks_array(self):
         raw = (

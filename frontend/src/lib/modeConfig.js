@@ -6,12 +6,12 @@
  * mode changes the visible navigation, the home page, and (Phase 2) the
  * visual theme. Three modes live here:
  *
- *   general  — casual learners, full breadth of features.
- *   exam     — TCF / TEF prep. ALL features stay reachable; the dashboard
+ *   general , casual learners, full breadth of features.
+ *   exam    , TCF / TEF prep. ALL features stay reachable; the dashboard
  *              just leads with exam content. Per the spec, learners
  *              prepping for exams need vocabulary / dictation / news /
  *              etc., they just feel "in exam mode" on the home screen.
- *   agentic  — assistant-first. Most pages are reachable via in-chat
+ *   agentic , assistant-first. Most pages are reachable via in-chat
  *              invocation rather than nav. Even so, every section is
  *              still reachable from the side nav so escape hatches exist.
  *
@@ -45,7 +45,7 @@ export const MODE_CONFIG = {
 
   exam: {
     landing: "/exam-prep",
-    // Exam learners get ALL features (per spec) — exam-prep just leads
+    // Exam learners get ALL features (per spec), exam-prep just leads
     // the dashboard. Same allow-list as general PLUS exam-prep.
     visible: [
       "/", "/dashboard", "/topics", "/discover", "/news",
@@ -62,7 +62,7 @@ export const MODE_CONFIG = {
 
   agentic: {
     landing: "/assistant",
-    // Same allow-list — escape hatches stay available so a power user
+    // Same allow-list, escape hatches stay available so a power user
     // can jump to any feature directly. The personality lives in WHERE
     // they land and the visual theme.
     visible: [

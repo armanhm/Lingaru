@@ -141,7 +141,7 @@ class VideoVocabulary(models.Model):
         verbose_name_plural = "video vocabulary"
 
     def __str__(self):
-        return f"{self.french} — {self.english}"
+        return f"{self.french}, {self.english}"
 
 
 class VideoExpression(models.Model):
@@ -159,7 +159,7 @@ class VideoExpression(models.Model):
         db_table = "content_video_expressions"
 
     def __str__(self):
-        return f"{self.expression_fr} — {self.expression_en}"
+        return f"{self.expression_fr}, {self.expression_en}"
 
 
 class Question(models.Model):

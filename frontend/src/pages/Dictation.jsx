@@ -126,7 +126,7 @@ export default function Dictation() {
           <p className="eyebrow-primary mb-2">Ready when you are</p>
           <h2 className="text-h2 text-surface-900 dark:text-surface-100 mb-2">Tune your ear</h2>
           <p className="text-body text-surface-500 dark:text-surface-400 mb-6 max-w-sm mx-auto">
-            We'll play a French sentence — your job is to type it back exactly.
+            We'll play a French sentence, your job is to type it back exactly.
           </p>
           <button
             onClick={handleStart}

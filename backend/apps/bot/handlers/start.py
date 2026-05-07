@@ -48,7 +48,7 @@ def get_or_create_telegram_user(
 
 
 async def start_command(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
-    """Handle the /start command — register or link Telegram account."""
+    """Handle the /start command, register or link Telegram account."""
     tg_user = update.effective_user
     user, created = await sync_to_async(get_or_create_telegram_user)(
         telegram_id=tg_user.id,

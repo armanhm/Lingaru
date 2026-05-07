@@ -104,7 +104,7 @@ def complete_quiz_session(session: QuizSession) -> QuizSession:
 
 
 async def quiz_start(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
-    """Handle /quiz [topic] — start a new quiz conversation."""
+    """Handle /quiz [topic], start a new quiz conversation."""
     tg_user = update.effective_user
     user, _ = await sync_to_async(get_or_create_telegram_user)(
         telegram_id=tg_user.id,
@@ -205,7 +205,7 @@ async def quiz_answer(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int
 
 
 async def quiz_cancel(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
-    """Handle /cancel — abort the current quiz."""
+    """Handle /cancel, abort the current quiz."""
     session_id = context.user_data.get("quiz_session_id")
     if session_id:
 

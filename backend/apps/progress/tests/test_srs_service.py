@@ -86,6 +86,6 @@ class TestSM2Update:
                 interval_days=interval,
             )
             intervals.append(interval)
-        # Intervals: 1, 6, ~16, ~42, ~110 — strictly increasing
+        # Intervals: 1, 6, ~16, ~42, ~110, strictly increasing
         assert intervals == sorted(intervals)
         assert intervals[-1] > 30  # should be well over a month after 5 perfect reviews

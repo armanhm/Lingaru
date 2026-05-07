@@ -221,7 +221,7 @@ export default function Layout() {
   const [collapsedSections, setCollapsedSections] = useState(loadCollapsedSections);
 
   // Filter the nav by the user's mode. New signups (mode === null) get the
-  // general nav until they finish onboarding — keeps the layout stable
+  // general nav until they finish onboarding, keeps the layout stable
   // while the modal is up.
   const navSections = useMemo(
     () => filterNavForMode(NAV_SECTIONS, user?.mode || "general"),
@@ -245,7 +245,7 @@ export default function Layout() {
       const [paramKey, paramVal] = query.split("=");
       return location.pathname === base && new URLSearchParams(location.search).get(paramKey) === paramVal;
     }
-    // Exact match only — prevents /progress from lighting up when on /progress/mistakes
+    // Exact match only, prevents /progress from lighting up when on /progress/mistakes
     return location.pathname === base;
   };
 

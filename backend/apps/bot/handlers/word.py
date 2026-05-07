@@ -17,7 +17,7 @@ def get_random_vocabulary():
 
 
 async def word_command(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
-    """Handle the /word command — send a random vocabulary item."""
+    """Handle the /word command, send a random vocabulary item."""
     vocab = await sync_to_async(get_random_vocabulary)()
 
     if vocab is None:
@@ -25,7 +25,7 @@ async def word_command(update: Update, context: ContextTypes.DEFAULT_TYPE) -> No
         return
 
     parts = [
-        f"**{vocab.french}** — {vocab.english}",
+        f"**{vocab.french}**, {vocab.english}",
     ]
     if vocab.pronunciation:
         parts.append(f"Pronunciation: {vocab.pronunciation}")
@@ -40,7 +40,7 @@ async def word_command(update: Update, context: ContextTypes.DEFAULT_TYPE) -> No
     message = "\n".join(parts)
     await update.message.reply_text(message, parse_mode="Markdown")
 
-    # Send audio of the French word (TTS + ORM both sync — wrap them)
+    # Send audio of the French word (TTS + ORM both sync, wrap them)
     try:
         clip = await sync_to_async(get_or_create_audio)(text=vocab.french, language="fr")
         audio_path = clip.audio_file.path

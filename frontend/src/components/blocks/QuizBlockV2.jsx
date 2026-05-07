@@ -1,7 +1,7 @@
 import { useMemo, useState } from "react";
 
 /**
- * Polymorphic quiz block — handles all five `kind`s defined by
+ * Polymorphic quiz block, handles all five `kind`s defined by
  * apps.assistant.blocks: mcq, multi, true_false, matching, short.
  *
  * One question at a time, sequential progress dots, instant feedback +
@@ -173,7 +173,7 @@ function MatchingAnswer({ question, answer, onChange, locked }) {
               }}
               className="flex-1 rounded-lg border border-surface-200 dark:border-surface-700 bg-white dark:bg-surface-900 text-[13px] px-2 py-1.5 focus-ring disabled:opacity-60"
             >
-              <option value="">— choisir —</option>
+              <option value="">choisir...</option>
               {question.pairs.map((p, j) => (
                 <option key={j} value={j} disabled={!locked && used.has(j) && chosen !== j}>
                   {p.right}

@@ -139,7 +139,7 @@ export default function News() {
       );
       load(activeTopic);
     } catch {
-      showToast("Échec — réessayez plus tard.", "error");
+      showToast("Échec, réessayez plus tard.", "error");
     } finally {
       setGenerating(false);
     }

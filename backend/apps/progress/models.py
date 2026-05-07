@@ -37,7 +37,7 @@ class SRSCard(models.Model):
         ordering = ["next_review_at"]
 
     def __str__(self):
-        return f"SRS: {self.user.username} — {self.vocabulary.french}"
+        return f"SRS: {self.user.username}, {self.vocabulary.french}"
 
 
 class MistakeEntry(models.Model):

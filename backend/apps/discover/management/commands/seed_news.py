@@ -22,7 +22,7 @@ class Command(BaseCommand):
             deleted, _ = DiscoverCard.objects.filter(type="news").delete()
             self.stdout.write(self.style.WARNING(f"Cleared {deleted} existing news cards."))
 
-        # Skip 'misc' — the curated library doesn't have one and we don't want
+        # Skip 'misc', the curated library doesn't have one and we don't want
         # to fall through to a random pick during seeding.
         topics = sorted(t for t in VALID_NEWS_TOPICS if t != "misc")
         created = 0

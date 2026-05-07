@@ -124,7 +124,7 @@ export default function MatchPairs() {
       .catch(() => setError("Failed to load words."));
   }, []);
 
-  // Preview phase — show all cards for a few seconds, then flip them down
+  // Preview phase, show all cards for a few seconds, then flip them down
   useEffect(() => {
     if (phase !== "preview") return;
     setPreviewCountdown(PREVIEW_SECONDS);
@@ -169,7 +169,7 @@ export default function MatchPairs() {
         setMatchCount((c) => c + 1);
         setFlippedIds([]);
       } else {
-        // No match — flip back after delay
+        // No match, flip back after delay
         lockRef.current = true;
         setTimeout(() => {
           setFlippedIds([]);

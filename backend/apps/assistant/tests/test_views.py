@@ -148,7 +148,7 @@ class TestChatView:
         assert resp.data["blocks"][0]["type"] == "audio"
         assert resp.data["blocks"][1]["type"] == "vocab_card"
 
-        # Persisted message has the same shape — fence stripped from content.
+        # Persisted message has the same shape, fence stripped from content.
         assistant_msg = Message.objects.get(role="assistant")
         assert "```blocks" not in assistant_msg.content
         assert assistant_msg.content == "Voici la conjugaison."

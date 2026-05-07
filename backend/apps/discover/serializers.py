@@ -27,7 +27,7 @@ class DiscoverCardSerializer(serializers.ModelSerializer):
 
 
 class NewsListSerializer(serializers.ModelSerializer):
-    """Lean shape for the /api/news/ list — drops the heavy content_json."""
+    """Lean shape for the /api/news/ list, drops the heavy content_json."""
 
     seen = serializers.BooleanField(read_only=True, default=False)
     interacted = serializers.BooleanField(read_only=True, default=False)
@@ -67,7 +67,7 @@ class NewsListSerializer(serializers.ModelSerializer):
 
 
 class NewsDetailSerializer(serializers.ModelSerializer):
-    """Full shape for /api/news/<id>/ — includes vocab, expressions, grammar."""
+    """Full shape for /api/news/<id>/, includes vocab, expressions, grammar."""
 
     seen = serializers.BooleanField(read_only=True, default=False)
     interacted = serializers.BooleanField(read_only=True, default=False)
@@ -134,6 +134,6 @@ class NewsDetailSerializer(serializers.ModelSerializer):
 
 
 class InteractSerializer(serializers.Serializer):
-    """Empty serializer — interaction is just a POST to the card's URL."""
+    """Empty serializer, interaction is just a POST to the card's URL."""
 
     pass

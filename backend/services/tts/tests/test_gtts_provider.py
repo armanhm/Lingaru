@@ -51,7 +51,7 @@ class TestGTTSProvider:
         result = provider.synthesize("Bonjour", language="fr")
 
         assert result.provider == "gtts"
-        # gTTS should NOT be called — we hit the disk cache
+        # gTTS should NOT be called, we hit the disk cache
         MockGTTS.assert_not_called()
 
     @patch("services.tts.gtts_provider.gTTS")

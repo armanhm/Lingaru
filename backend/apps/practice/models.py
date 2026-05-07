@@ -23,7 +23,7 @@ class QuizSession(models.Model):
         ordering = ["-started_at"]
 
     def __str__(self):
-        return f"{self.user.username} — {self.lesson.title}"
+        return f"{self.user.username}, {self.lesson.title}"
 
 
 class QuizAnswer(models.Model):
@@ -52,4 +52,4 @@ class QuizAnswer(models.Model):
 
     def __str__(self):
         status = "correct" if self.is_correct else "wrong"
-        return f"Q{self.question_id} — {self.user_answer} ({status})"
+        return f"Q{self.question_id}, {self.user_answer} ({status})"

@@ -18,7 +18,7 @@ class RegisterView(generics.CreateAPIView):
         serializer = self.get_serializer(data=request.data)
         serializer.is_valid(raise_exception=True)
         user = serializer.save()
-        # Account is created inactive — admin must approve via Django admin
+        # Account is created inactive, admin must approve via Django admin
         # before login is allowed. Don't return tokens or full user fields:
         # the frontend should display a "pending approval" message instead
         # of acting as if the user is signed in.

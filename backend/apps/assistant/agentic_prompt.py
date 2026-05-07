@@ -3,8 +3,8 @@
 When the requesting user is in `agentic` mode, the assistant should be
 willing to *invoke* features for them rather than just talk about them.
 We append a footer to the active system prompt that documents the two
-new block types — `action` (deep-link button) and `feature_widget`
-(inline feature card) — and gives concrete examples of when to emit each.
+new block types, `action` (deep-link button) and `feature_widget`
+(inline feature card), and gives concrete examples of when to emit each.
 
 Centralised here so the chat view, the voice view, and any future entry
 point can opt in with a single import.
@@ -16,10 +16,13 @@ AGENTIC_INVOCATION_FOOTER = """
 
 ## En mode agent : invoque les fonctionnalités plutôt que d'en parler
 
-CRITIQUE — FORMAT OBLIGATOIRE : tout JSON DOIT être placé dans une fence
+CRITIQUE, FORMAT OBLIGATOIRE : tout JSON DOIT être placé dans une fence
 ``` ```blocks ``` à la FIN de ta réponse. Jamais de JSON nu dans la prose.
 Si tu n'utilises pas la fence, le bloc ne s'affiche pas et l'utilisateur
 voit du texte brut.
+
+Règle de ponctuation : n'utilise JAMAIS le tiret long dans ta
+prose. Préfère « : », « , », « ; » ou « . » selon le contexte.
 
 Format strict (copie ce gabarit) :
 
@@ -32,7 +35,7 @@ Quand l'utilisateur veut faire quelque chose, propose-lui le bon outil
 directement dans la conversation. Deux nouveaux blocs en plus des blocs
 habituels (audio, vocab_card, expression, conjugation_table, quiz) :
 
-### 1. `action` — bouton de navigation
+### 1. `action` : bouton de navigation
 
 ```blocks
 [{"type": "action", "route": "/news", "label": "Ouvrir les news", "emoji": "📰"}]
@@ -40,37 +43,37 @@ habituels (audio, vocab_card, expression, conjugation_table, quiz) :
 
 `route` DOIT être EXACTEMENT l'une de ces valeurs (pas de traduction,
 pas de variation) :
-- `/dashboard`           — tableau de bord
-- `/topics`              — liste des topics / leçons
-- `/discover`            — feed Discover
-- `/news`                — actualités
-- `/practice/dictation`  — dictée
-- `/practice/pronunciation` — prononciation
-- `/practice/conjugation` — conjugaison
-- `/practice/srs`        — flashcards / SRS
-- `/mini-games`          — mini-jeux
-- `/grammar`             — grammaire (PAS `/grammaire`)
-- `/exam-prep`           — préparation aux examens (PAS `/exams`)
-- `/assistant`           — chat principal
-- `/agents`              — galerie d'agents
-- `/dictionary`          — dictionnaire
-- `/progress`            — progression
-- `/settings`            — paramètres
-- `/documents`           — documents
+- `/dashboard`           : tableau de bord
+- `/topics`              : liste des topics / leçons
+- `/discover`            : feed Discover
+- `/news`                : actualités
+- `/practice/dictation`  : dictée
+- `/practice/pronunciation` : prononciation
+- `/practice/conjugation` : conjugaison
+- `/practice/srs`        : flashcards / SRS
+- `/mini-games`          : mini-jeux
+- `/grammar`             : grammaire (PAS `/grammaire`)
+- `/exam-prep`           : préparation aux examens (PAS `/exams`)
+- `/assistant`           : chat principal
+- `/agents`              : galerie d'agents
+- `/dictionary`          : dictionnaire
+- `/progress`            : progression
+- `/settings`            : paramètres
+- `/documents`           : documents
 
 Toute autre route est rejetée silencieusement.
 
-### 2. `feature_widget` — encart interactif inline
+### 2. `feature_widget` : encart interactif inline
 
 ```blocks
 [{"type": "feature_widget", "widget": "news"}]
 ```
 
 `widget` doit être l'un de :
-- `news`      — article B1-B2 récent. config.topic optionnel.
-- `dictation` — propose une dictée express.
-- `flashcard` — propose la révision SRS du jour.
-- `minigame`  — propose un mini-jeu.
+- `news`      : article B1-B2 récent. config.topic optionnel.
+- `dictation` : propose une dictée express.
+- `flashcard` : propose la révision SRS du jour.
+- `minigame`  : propose un mini-jeu.
 
 ### Règles de routage (qui choisit quoi)
 
@@ -91,7 +94,7 @@ Et encore une fois : la fence ```blocks est OBLIGATOIRE.
 def append_agentic_footer(system_prompt: str) -> str:
     """Append the agentic-mode invocation footer if it isn't already there.
 
-    Idempotent — the appended text is keyed by a marker so calling this
+    Idempotent, the appended text is keyed by a marker so calling this
     twice in a single request path is harmless. Caller chooses whether
     to apply (typically: only when ``user.mode == 'agentic'``).
     """

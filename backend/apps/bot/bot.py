@@ -49,7 +49,7 @@ def create_bot_application():
 
 
 async def _log_handler_error(update: object, context: ContextTypes.DEFAULT_TYPE) -> None:
-    """Default PTB swallows handler exceptions silently — that's why earlier
+    """Default PTB swallows handler exceptions silently, that's why earlier
     bugs surfaced as 'no response.' Log them instead so we see real stack
     traces in the bot's stdout."""
     logger.exception(

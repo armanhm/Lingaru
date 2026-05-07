@@ -1,6 +1,6 @@
 """Seed the 8 starter agents.
 
-Idempotent — running again updates existing rows by slug. Safe to re-run
+Idempotent, running again updates existing rows by slug. Safe to re-run
 after editing prompts.
 """
 
@@ -77,8 +77,8 @@ AGENTS = [
         "tint": "from-accent-500 to-warn-500",
         "tagline": "Corrige ton texte français et explique chaque erreur.",
         "description": (
-            "Le Writing Editor relit un texte que tu as écrit en français — "
-            "phrase, paragraphe ou rédaction — et le corrige en montrant ce qui "
+            "Le Writing Editor relit un texte que tu as écrit en français, "
+            "phrase, paragraphe ou rédaction, et le corrige en montrant ce qui "
             "a changé et pourquoi. Idéal pour préparer la production écrite du TCF/TEF."
         ),
         "best_for": ["Accord", "Genre", "Conjugaison", "Prépositions"],
@@ -247,7 +247,7 @@ AGENTS = [
         "capabilities": ["Sens littéral vs réel", "Registre", "Exemple d'usage", "Origine"],
         "suggested_questions": [
             "Que veut dire « avoir le cafard » ?",
-            "« Tomber dans les pommes » — d'où ça vient ?",
+            "« Tomber dans les pommes », d'où ça vient ?",
             "Quelques expressions avec « coup » ?",
             "Différence entre « ça marche » et « ça roule » ?",
         ],
@@ -336,7 +336,7 @@ AGENTS = [
         "name": "Exam Coach",
         "emoji": "🎯",
         "tint": "from-danger-500 to-accent-500",
-        "tagline": "Coach TCF / TEF — stratégie, drills ciblés, simulations.",
+        "tagline": "Coach TCF / TEF, stratégie, drills ciblés, simulations.",
         "description": (
             "L'Exam Coach t'accompagne pour le TCF (Test de connaissance du français) et "
             "le TEF Canada. Il t'explique le format d'une section, t'entraîne sur un type "
@@ -361,8 +361,8 @@ AGENTS = [
         ],
         "system_prompt": (
             "Tu es Exam Coach, un coach spécialisé dans la préparation aux examens "
-            "TCF (Test de connaissance du français — France Éducation international) "
-            "et TEF Canada (Test d'évaluation de français — CCI Paris Île-de-France).\n\n"
+            "TCF (Test de connaissance du français, France Éducation international) "
+            "et TEF Canada (Test d'évaluation de français, CCI Paris Île-de-France).\n\n"
             "Connaissances de référence :\n"
             "- TCF : 5 épreuves (Compréhension orale 39 q. / 25 min, Compréhension écrite 39 q. / 60 min, "
             "Lexique & structure 18 q. / 15 min, Expression écrite 3 tâches / 60 min, Expression orale 3 tâches / 12 min). "
@@ -404,7 +404,7 @@ AGENTS = [
             "avec un objectif par semaine et 2-3 ressources/exercices.\n"
             "3. Termine toujours par une **mini-action** concrète à faire dans les 10 prochaines minutes "
             "(« Essaie ce drill », « Lis tel article du Monde », « Enregistre 90 secondes sur ce sujet »).\n\n"
-            "Ton ferme mais bienveillant — comme un coach sportif qui croit que tu peux y arriver. "
+            "Ton ferme mais bienveillant, comme un coach sportif qui croit que tu peux y arriver. "
             "Pas de promesse irréaliste. Si l'utilisateur vise un score précis (ex. 600/699 au TCF, "
             "C1 au NCLC), donne-lui une estimation honnête du temps et de l'effort nécessaires."
         ),
@@ -416,7 +416,7 @@ AGENTS = [
 
 
 class Command(BaseCommand):
-    help = "Seed the 8 starter agents (idempotent — re-running updates by slug)."
+    help = "Seed the 8 starter agents (idempotent, re-running updates by slug)."
 
     def add_arguments(self, parser):
         parser.add_argument(

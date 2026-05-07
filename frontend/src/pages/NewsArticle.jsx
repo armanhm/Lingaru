@@ -274,7 +274,7 @@ export default function NewsArticle() {
           </span>
         </div>
 
-        {/* Big segmented tabs — generous tap targets */}
+        {/* Big segmented tabs, generous tap targets */}
         <div role="tablist" aria-label="Pratique guidée" className="grid grid-cols-3 gap-2 sm:gap-3 mb-5">
           {TABS.map((t) => {
             const active = tab === t.key;
@@ -304,7 +304,7 @@ export default function NewsArticle() {
           })}
         </div>
 
-        {/* Tab content — multi-column grid where it makes sense */}
+        {/* Tab content, multi-column grid where it makes sense */}
         {tab === "vocabulary" && (
           article.vocabulary?.length ? (
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">

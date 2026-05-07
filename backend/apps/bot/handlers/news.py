@@ -1,4 +1,4 @@
-"""`/news` Telegram command — surfaces a real French headline rewritten at
+"""`/news` Telegram command, surfaces a real French headline rewritten at
 B1-B2, sourced from the RSS pipeline first and falling back to whatever
 news/trivia DiscoverCards already exist.
 
@@ -51,7 +51,7 @@ def _format_news_card(card) -> str:
     # `key_vocabulary`. Read both so we don't break on legacy rows.
     vocab = content.get("vocabulary") or content.get("key_vocabulary") or []
     if vocab:
-        vocab_lines = [f"  • {v.get('french', '')} — {v.get('english', '')}" for v in vocab[:5]]
+        vocab_lines = [f"  • {v.get('french', '')}, {v.get('english', '')}" for v in vocab[:5]]
         parts.append("\n*Vocabulaire:*\n" + "\n".join(vocab_lines))
 
     if card.source_url:
@@ -74,12 +74,12 @@ def _format_trivia_card(card) -> str:
 
 
 async def news_command(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
-    """Handle the /news command — send the freshest news card we have."""
+    """Handle the /news command, send the freshest news card we have."""
     card = await sync_to_async(get_random_discover_card)()
 
     if card is None:
         await update.message.reply_text(
-            "No news cards yet — the RSS pipeline runs at 07:00 and 19:00 UTC. "
+            "No news cards yet, the RSS pipeline runs at 07:00 and 19:00 UTC. "
             "Try again in a bit, or run `python manage.py fetch_news` on the server."
         )
         return

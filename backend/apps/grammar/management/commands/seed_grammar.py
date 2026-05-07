@@ -10,7 +10,7 @@ CATEGORIES = [
         "name": "Tenses",
         "icon": "⏳",
         "order": 1,
-        "description": "Master French verb tenses — past, present, future, and beyond.",
+        "description": "Master French verb tenses, past, present, future, and beyond.",
     },
     {
         "slug": "pronouns",
@@ -31,7 +31,7 @@ CATEGORIES = [
         "name": "Negation",
         "icon": "🚫",
         "order": 4,
-        "description": "Saying no — ne…pas, ne…jamais, ne…rien, and more.",
+        "description": "Saying no, ne…pas, ne…jamais, ne…rien, and more.",
     },
     {
         "slug": "moods",
@@ -57,7 +57,7 @@ TOPICS = [
         "slug": "passe-compose-avoir",
         "title": "Passé composé with avoir",
         "cefr_level": "A2",
-        "summary": "The most common past tense — use avoir + past participle for most verbs.",
+        "summary": "The most common past tense, use avoir + past participle for most verbs.",
         "explanation": (
             "The **passé composé** describes completed past actions. For most verbs, it's formed with "
             "**avoir** (to have) conjugated in the present + the past participle of the main verb.\n\n"
@@ -146,13 +146,13 @@ TOPICS = [
         "slug": "passe-compose-etre",
         "title": "Passé composé with être",
         "cefr_level": "A2",
-        "summary": "Movement and reflexive verbs use être — and the participle agrees with the subject.",
+        "summary": "Movement and reflexive verbs use être, and the participle agrees with the subject.",
         "explanation": (
             "Some verbs use **être** instead of avoir to form the passé composé. These are mostly "
             "verbs of movement and state change: **aller, venir, partir, arriver, monter, descendre, "
             "entrer, sortir, naître, mourir, rester, tomber, devenir**, plus all reflexive verbs.\n\n"
             "**Crucial rule:** with être, the past participle **agrees** with the subject in gender "
-            "and number — add -e for feminine, -s for plural, -es for feminine plural."
+            "and number, add -e for feminine, -s for plural, -es for feminine plural."
         ),
         "formula": "être (present) + past participle (agrees with subject)",
         "examples": [
@@ -208,7 +208,7 @@ TOPICS = [
                 "type": "error_detect",
                 "prompt": "Find the error: « Elles sont arrivés tard. »",
                 "correct_answer": "arrivés",
-                "explanation": "Feminine plural — should be « arrivées ».",
+                "explanation": "Feminine plural, should be « arrivées ».",
             },
             {
                 "type": "fill_blank",
@@ -303,7 +303,7 @@ TOPICS = [
         "slug": "futur-simple",
         "title": "Futur simple",
         "cefr_level": "B1",
-        "summary": "The future tense — for plans, predictions, and promises.",
+        "summary": "The future tense, for plans, predictions, and promises.",
         "explanation": (
             "The **futur simple** expresses what will happen. Form it by taking the **infinitive** and "
             "adding the endings: **-ai, -as, -a, -ons, -ez, -ont** (these are the present of avoir).\n\n"
@@ -318,7 +318,7 @@ TOPICS = [
             {"fr": "Il aura 30 ans l'année prochaine.", "en": "He'll be 30 next year."},
         ],
         "exceptions": [
-            "Irregular stems must be memorised — but endings are always -ai, -as, -a, -ons, -ez, -ont.",
+            "Irregular stems must be memorised, but endings are always -ai, -as, -a, -ons, -ez, -ont.",
         ],
         "common_mistakes": [],
         "drills": [
@@ -372,7 +372,7 @@ TOPICS = [
         "slug": "direct-object-pronouns",
         "title": "Direct object pronouns (le, la, les)",
         "cefr_level": "A2",
-        "summary": "Replace direct objects with le, la, l', les — placed before the verb.",
+        "summary": "Replace direct objects with le, la, l', les, placed before the verb.",
         "explanation": (
             "Direct object pronouns replace nouns that receive the action of the verb directly "
             "(without a preposition):\n\n"
@@ -552,7 +552,7 @@ TOPICS = [
         "slug": "definite-articles",
         "title": "Definite articles (le, la, les, l')",
         "cefr_level": "A1",
-        "summary": "« The » in French — agrees with gender and number.",
+        "summary": "« The » in French, agrees with gender and number.",
         "explanation": (
             "Definite articles refer to **specific** things or general concepts:\n\n"
             "- **le** + masculine singular: le chien\n"
@@ -621,7 +621,7 @@ TOPICS = [
         "slug": "partitive-articles",
         "title": "Partitive articles (du, de la, des)",
         "cefr_level": "A2",
-        "summary": "« Some » — for unspecified quantities of food, drink, abstract things.",
+        "summary": "« Some », for unspecified quantities of food, drink, abstract things.",
         "explanation": (
             "Partitive articles express an unspecified quantity (« some »):\n\n"
             "- **du** + masculine: du pain, du café\n"
@@ -631,7 +631,7 @@ TOPICS = [
             "**After negation**, all become **de** (or d'): « Je ne mange pas **de** pain. »\n"
             "**After expressions of quantity**, also use **de**: « beaucoup **de** pain », « un kilo **de** pommes »."
         ),
-        "formula": "du / de la / de l' / des — but « de » after negation or quantity",
+        "formula": "du / de la / de l' / des, but « de » after negation or quantity",
         "examples": [
             {"fr": "Je voudrais du café, s'il vous plaît.", "en": "I'd like some coffee, please."},
             {"fr": "Elle boit de l'eau.", "en": "She drinks water."},
@@ -695,13 +695,13 @@ TOPICS = [
         "slug": "ne-pas",
         "title": "Negation: ne…pas",
         "cefr_level": "A1",
-        "summary": "The basic French negation — wraps around the verb.",
+        "summary": "The basic French negation, wraps around the verb.",
         "explanation": (
             "To make a sentence negative, place **ne** (or **n'** before a vowel) before the verb "
             "and **pas** after it.\n\n"
             "In compound tenses (passé composé etc.), **ne…pas** wraps the auxiliary verb only: "
             "« Je n'ai pas mangé. »\n\n"
-            "In casual speech, the « ne » is often dropped: « J'sais pas. » — but always write it."
+            "In casual speech, the « ne » is often dropped: « J'sais pas. », but always write it."
         ),
         "formula": "ne (n') + verb + pas",
         "examples": [
@@ -776,7 +776,7 @@ TOPICS = [
         "slug": "subjunctive-present",
         "title": "Subjunctive (present)",
         "cefr_level": "B2",
-        "summary": "The mood of doubt, emotion, and obligation — triggered by specific phrases.",
+        "summary": "The mood of doubt, emotion, and obligation, triggered by specific phrases.",
         "explanation": (
             "The **subjunctive** is used after expressions of:\n"
             "- **Necessity**: il faut que, il est important que…\n"

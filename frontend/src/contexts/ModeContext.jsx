@@ -10,7 +10,7 @@ import { useAuth } from "./AuthContext";
  *
  * The actual palette tokens live in index.css under the
  * `html[data-mode="..."]` selectors. This context is only the bridge
- * between user state and the DOM attribute. Lightweight on purpose —
+ * between user state and the DOM attribute. Lightweight on purpose ,
  * dark mode does the same trick.
  */
 

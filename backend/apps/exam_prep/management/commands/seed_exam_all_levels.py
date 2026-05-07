@@ -6,7 +6,7 @@ from apps.exam_prep.models import ExamExercise
 
 EXERCISES = [
     # ═══════════════════════════════════════════════════════════════
-    # CE — Compréhension écrite (Reading)
+    # CE, Compréhension écrite (Reading)
     # ═══════════════════════════════════════════════════════════════
     {
         "section": "CE",
@@ -128,7 +128,7 @@ EXERCISES = [
         "order": 13,
         "time_limit_seconds": 420,
         "content": {
-            "text_fr": "La gentrification, phénomène urbain consistant en la transformation de quartiers populaires par l'arrivée de populations plus aisées, suscite un débat croissant dans les métropoles françaises. À Paris, le processus est particulièrement visible dans les arrondissements du nord-est, jadis ouvriers, aujourd'hui parsemés de cafés branchés et de boutiques de créateurs.\n\nLes mécanismes sont bien identifiés : attirés par des loyers relativement bas et une authenticité culturelle, les premiers arrivants — souvent des artistes et des jeunes cadres — insufflent une dynamique nouvelle. S'ensuit une hausse des prix immobiliers qui contraint les habitants historiques, aux revenus plus modestes, à quitter le quartier.\n\nLes municipalités tentent de concilier renouvellement urbain et mixité sociale par des dispositifs tels que le logement social obligatoire. Toutefois, ces mesures peinent à endiguer un phénomène largement porté par les forces du marché. Certains sociologues plaident pour une approche plus radicale, incluant l'encadrement strict des loyers et la préemption systématique par les collectivités.",
+            "text_fr": "La gentrification, phénomène urbain consistant en la transformation de quartiers populaires par l'arrivée de populations plus aisées, suscite un débat croissant dans les métropoles françaises. À Paris, le processus est particulièrement visible dans les arrondissements du nord-est, jadis ouvriers, aujourd'hui parsemés de cafés branchés et de boutiques de créateurs.\n\nLes mécanismes sont bien identifiés : attirés par des loyers relativement bas et une authenticité culturelle, les premiers arrivants, souvent des artistes et des jeunes cadres, insufflent une dynamique nouvelle. S'ensuit une hausse des prix immobiliers qui contraint les habitants historiques, aux revenus plus modestes, à quitter le quartier.\n\nLes municipalités tentent de concilier renouvellement urbain et mixité sociale par des dispositifs tels que le logement social obligatoire. Toutefois, ces mesures peinent à endiguer un phénomène largement porté par les forces du marché. Certains sociologues plaident pour une approche plus radicale, incluant l'encadrement strict des loyers et la préemption systématique par les collectivités.",
             "questions": [
                 {
                     "prompt": "Comment le texte définit-il la gentrification ?",
@@ -180,7 +180,7 @@ EXERCISES = [
         "order": 14,
         "time_limit_seconds": 480,
         "content": {
-            "text_fr": "La question de la fidélité en traduction littéraire se pose avec une acuité renouvelée à l'ère de la mondialisation culturelle. Si les théoriciens classiques, à l'instar d'Eugène Nida, distinguaient entre équivalence formelle et équivalence dynamique, les approches contemporaines — notamment celles d'Antoine Berman et de Lawrence Venuti — ont complexifié le débat en introduisant les notions d'éthique de la traduction et de résistance à l'ethnocentrisme.\n\nBerman, dans « L'épreuve de l'étranger », argumente que toute bonne traduction doit préserver l'altérité du texte source plutôt que de le domestiquer au profit des conventions de la culture cible. Cette posture, qualifiée de « sourcière », s'oppose à la tradition « cibliste » qui privilégie la lisibilité et l'idiomaticité.\n\nLa traduction automatique neuronale, malgré ses progrès spectaculaires dans le domaine technique, demeure impuissante face aux subtilités stylistiques, aux jeux de mots et aux résonances intertextuelles qui font la substance même de la littérature. Le traducteur humain reste, pour l'heure, le seul médiateur capable de négocier entre la lettre et l'esprit d'une œuvre.",
+            "text_fr": "La question de la fidélité en traduction littéraire se pose avec une acuité renouvelée à l'ère de la mondialisation culturelle. Si les théoriciens classiques, à l'instar d'Eugène Nida, distinguaient entre équivalence formelle et équivalence dynamique, les approches contemporaines, notamment celles d'Antoine Berman et de Lawrence Venuti, ont complexifié le débat en introduisant les notions d'éthique de la traduction et de résistance à l'ethnocentrisme.\n\nBerman, dans « L'épreuve de l'étranger », argumente que toute bonne traduction doit préserver l'altérité du texte source plutôt que de le domestiquer au profit des conventions de la culture cible. Cette posture, qualifiée de « sourcière », s'oppose à la tradition « cibliste » qui privilégie la lisibilité et l'idiomaticité.\n\nLa traduction automatique neuronale, malgré ses progrès spectaculaires dans le domaine technique, demeure impuissante face aux subtilités stylistiques, aux jeux de mots et aux résonances intertextuelles qui font la substance même de la littérature. Le traducteur humain reste, pour l'heure, le seul médiateur capable de négocier entre la lettre et l'esprit d'une œuvre.",
             "questions": [
                 {
                     "prompt": "Quelle distinction classique Nida établit-il ?",
@@ -216,7 +216,7 @@ EXERCISES = [
         },
     },
     # ═══════════════════════════════════════════════════════════════
-    # CO — Compréhension orale (Listening)
+    # CO, Compréhension orale (Listening)
     # ═══════════════════════════════════════════════════════════════
     {
         "section": "CO",
@@ -372,7 +372,7 @@ EXERCISES = [
         },
     },
     # ═══════════════════════════════════════════════════════════════
-    # EE — Expression écrite (Writing)
+    # EE, Expression écrite (Writing)
     # ═══════════════════════════════════════════════════════════════
     {
         "section": "EE",
@@ -414,7 +414,7 @@ EXERCISES = [
         },
     },
     # ═══════════════════════════════════════════════════════════════
-    # EO — Expression orale (Speaking)
+    # EO, Expression orale (Speaking)
     # ═══════════════════════════════════════════════════════════════
     {
         "section": "EO",

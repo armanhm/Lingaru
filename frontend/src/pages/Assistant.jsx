@@ -40,17 +40,17 @@ const MODE_OPTIONS = [
   {
     value: "conversation", label: "Conversation", emoji: "💬",
     description: "Pratique libre avec un tuteur",
-    tagline: "Discutez librement en français — Claire vous corrigera au fil de la conversation.",
+    tagline: "Discutez librement en français, Claire vous corrigera au fil de la conversation.",
   },
   {
     value: "grammar_correction", label: "Correction", emoji: "✍️",
     description: "Faites corriger un texte français",
-    tagline: "Collez un texte français — Claire le corrigera et vous expliquera chaque erreur.",
+    tagline: "Collez un texte français, Claire le corrigera et vous expliquera chaque erreur.",
   },
   {
     value: "grammar_explanation", label: "Explication grammaire", emoji: "📚",
     description: "Comprendre un point de grammaire",
-    tagline: "Posez une question de grammaire — Claire vous l'explique avec des exemples concrets.",
+    tagline: "Posez une question de grammaire, Claire vous l'explique avec des exemples concrets.",
   },
   {
     value: "roleplay", label: "Roleplay", emoji: "🎭",
@@ -204,18 +204,18 @@ const PROMPT_TEMPLATES = {
   ],
   grammar_correction: [
     "Corrige : « Je mange beaucoup de les pommes chaque matin. »",
-    "Hier, j'ai été au cinéma — est-ce correct ?",
+    "Hier, j'ai été au cinéma, est-ce correct ?",
     "Vérifie l'accord : « La voiture est beau et rapide. »",
     "Est-ce correct : « Il faut que tu viens avec moi » ?",
   ],
   grammar_explanation: [
     "Quelle est la différence entre passé composé et imparfait ?",
     "Quand utilise-t-on le subjonctif en français ?",
-    "Explique du, de la, des, et de — avec des exemples.",
+    "Explique du, de la, des, et de, avec des exemples.",
     "Comment marchent les verbes pronominaux ?",
     "Quand utilise-t-on « y » et « en » ?",
   ],
-  // Roleplay starters are scenario-specific — see ROLEPLAY_SCENARIOS[*].starters
+  // Roleplay starters are scenario-specific, see ROLEPLAY_SCENARIOS[*].starters
 };
 
 const TUTOR = {
@@ -235,8 +235,8 @@ const TUTOR = {
 // Per-agent block-fence hints. Each string ends with a literal example of
 // the JSON we want emitted. The schema is the contract enforced by
 // apps.assistant.blocks (audio, vocab_card, expression, conjugation_table,
-// quiz). Putting the example INSIDE the directive — instead of relying on
-// the agent's bottom-of-prompt instruction — gets gemini-2.0-flash to
+// quiz). Putting the example INSIDE the directive, instead of relying on
+// the agent's bottom-of-prompt instruction, gets gemini-2.0-flash to
 // actually emit the fence; without it the model just returns prose.
 const BLOCKS_FOOTER =
   "\n\nIMPORTANT: après ta réponse en prose, ajoute UN bloc fenced ```blocks au format JSON " +
@@ -327,7 +327,7 @@ function parseMentions(text) {
   return out;
 }
 
-/** Strip @agent tokens from text — used when sending to keep the conversation clean. */
+/** Strip @agent tokens from text, used when sending to keep the conversation clean. */
 function stripMentions(text) {
   return text.replace(/(^|\s)@([a-zA-Z]+)\b/g, (full, lead, name) => {
     return AGENTS_BY_KEY[name.toLowerCase()] ? lead : full;
@@ -382,7 +382,7 @@ function Drawer({ open, onClose, side = "left", title, children }) {
 }
 
 /* ──────────────────────────────────────────────────────────────
- * History Drawer (left) — modes + scenarios + conversations
+ * History Drawer (left), modes + scenarios + conversations
  * ────────────────────────────────────────────────────────────── */
 function HistoryDrawer({
   open, onClose, mode, onModeChange, scenario, onScenarioChange,
@@ -506,7 +506,7 @@ function HistoryDrawer({
 }
 
 /* ──────────────────────────────────────────────────────────────
- * Tuteur Drawer (right) — persona + active mode/scenario
+ * Tuteur Drawer (right), persona + active mode/scenario
  * ────────────────────────────────────────────────────────────── */
 function TuteurDrawer({ open, onClose, mode, onModeChange, scenario, onScenarioChange }) {
   const sc = SCENARIOS_BY_VALUE[scenario] || ROLEPLAY_SCENARIOS[0];
@@ -585,7 +585,7 @@ function TuteurDrawer({ open, onClose, mode, onModeChange, scenario, onScenarioC
 }
 
 /* ──────────────────────────────────────────────────────────────
- * Erreurs Drawer (right) — inline mistakes from the session
+ * Erreurs Drawer (right), inline mistakes from the session
  * ────────────────────────────────────────────────────────────── */
 function ErreursDrawer({ open, onClose, mistakes }) {
   return (
@@ -598,7 +598,7 @@ function ErreursDrawer({ open, onClose, mistakes }) {
         {mistakes.length === 0 ? (
           <div className="rounded-xl border border-dashed border-surface-200 dark:border-surface-700 px-4 py-8 text-center">
             <p className="text-[12px] text-surface-500 dark:text-surface-400">
-              Pas d'erreur détectée pour l'instant. Continuez à écrire — vos corrections apparaîtront ici.
+              Pas d'erreur détectée pour l'instant. Continuez à écrire, vos corrections apparaîtront ici.
             </p>
           </div>
         ) : (
@@ -618,7 +618,7 @@ function ErreursDrawer({ open, onClose, mistakes }) {
 }
 
 /* ──────────────────────────────────────────────────────────────
- * CorrectedText — wraps `from` substrings with wavy underline + tooltip,
+ * CorrectedText, wraps `from` substrings with wavy underline + tooltip,
  * and renders @mentions as gradient pills.
  * ────────────────────────────────────────────────────────────── */
 function CorrectedText({ text, issues, tone = "default" }) {
@@ -693,7 +693,7 @@ function ChatBubble({ msg }) {
               )}
             </div>
           )}
-          {/* TTS button — appears on hover, sits in the corner opposite the bubble tail */}
+          {/* TTS button, appears on hover, sits in the corner opposite the bubble tail */}
           {plainText(msg.content) && (
             <div className={`absolute -bottom-2 ${isUser ? "left-1" : "right-1"} opacity-0 group-hover/bubble:opacity-100 transition-opacity`}>
               <div className={`rounded-full ${isUser ? "bg-primary-700/90" : "bg-white dark:bg-surface-800 shadow-card border border-surface-100 dark:border-surface-700"}`}>
@@ -780,7 +780,7 @@ function ImagePreviewBanner({ file, onRemove }) {
 }
 
 /* ──────────────────────────────────────────────────────────────
- * MentionPopover — palette of agents shown above the textarea
+ * MentionPopover, palette of agents shown above the textarea
  * ────────────────────────────────────────────────────────────── */
 function MentionPopover({ open, query, onPick, onClose, activeIndex, setActiveIndex, matches }) {
   if (!open || matches.length === 0) return null;
@@ -841,7 +841,7 @@ function MentionPopover({ open, query, onPick, onClose, activeIndex, setActiveIn
 }
 
 /* ──────────────────────────────────────────────────────────────
- * MentionedText — renders text with @agent tokens as gradient pills
+ * MentionedText, renders text with @agent tokens as gradient pills
  * Used in chat bubbles and the composer's echo strip.
  * ────────────────────────────────────────────────────────────── */
 function MentionedText({ text, tone = "default" }) {
@@ -880,7 +880,7 @@ function MentionedText({ text, tone = "default" }) {
 }
 
 /* ──────────────────────────────────────────────────────────────
- * MAIN — Assistant
+ * MAIN, Assistant
  * ────────────────────────────────────────────────────────────── */
 export default function Assistant() {
   const [searchParams] = useSearchParams();
@@ -926,7 +926,7 @@ export default function Assistant() {
     if (mentionIndex >= mentionMatches.length) setMentionIndex(0);
   }, [mentionMatches.length, mentionIndex]);
 
-  // Mistakes are derived per-message — not yet provided by the backend.
+  // Mistakes are derived per-message, not yet provided by the backend.
   // We keep the UI for future wiring.
   const mistakes = useMemo(
     () => messages.flatMap((m) => (m.role === "user" && m.issues) ? m.issues : []),
@@ -1012,7 +1012,7 @@ export default function Assistant() {
     setInput("");
 
     // If the message has agent mentions, the LAST one wins for routing
-    // — its mode overrides the session mode for this turn, and its
+    //, its mode overrides the session mode for this turn, and its
     // directive is prepended to the message body sent to the LLM.
     const mentions = parseMentions(trimmed);
     const lastAgent = mentions.length ? AGENTS_BY_KEY[mentions[mentions.length - 1].key] : null;
@@ -1119,7 +1119,7 @@ export default function Assistant() {
   }, [input, mention]);
 
   const handleKeyDown = (e) => {
-    // Mention popover is open and we have results — intercept nav keys
+    // Mention popover is open and we have results, intercept nav keys
     if (mention && mentionMatches.length > 0) {
       if (e.key === "ArrowDown") {
         e.preventDefault();
@@ -1244,7 +1244,7 @@ export default function Assistant() {
               <p className="text-[10px] uppercase tracking-[0.14em] font-semibold text-surface-400 dark:text-surface-500 mb-1">
                 {mode === "roleplay" ? "Mise en situation" : activeMode.label}
               </p>
-              <p className="font-editorial text-[18px] sm:text-[20px] text-surface-900 dark:text-surface-50 italic max-w-[60ch] mx-auto">
+              <p className="font-sans text-[15px] sm:text-[16px] text-surface-700 dark:text-surface-200 leading-relaxed max-w-[60ch] mx-auto">
                 {mode === "roleplay" ? sc.sub : activeMode.tagline}
               </p>
             </div>
@@ -1304,7 +1304,7 @@ export default function Assistant() {
             onClose={() => setMention(null)}
           />
 
-          {/* Echo strip — shows the typed message with @mentions colored, only when at least one mention is present */}
+          {/* Echo strip, shows the typed message with @mentions colored, only when at least one mention is present */}
           {parseMentions(input).length > 0 && (
             <div className="mb-1.5 px-3 py-1.5 rounded-lg bg-primary-50/40 dark:bg-primary-900/15 border border-primary-100 dark:border-primary-900/40 text-[12.5px] leading-snug text-surface-700 dark:text-surface-200 break-words">
               <span className="text-[10px] font-mono uppercase tracking-[0.14em] text-primary-600 dark:text-primary-400 font-semibold mr-2">Aperçu</span>

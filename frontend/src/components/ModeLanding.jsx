@@ -20,7 +20,7 @@ export default function ModeLanding() {
   const mode = user?.mode || "general";
   const target = landingRouteForMode(mode);
 
-  // General mode's landing IS this index route — render Dashboard inline
+  // General mode's landing IS this index route, render Dashboard inline
   // instead of looping through a redirect.
   if (target === "/dashboard" || target === "/") {
     return <Dashboard />;

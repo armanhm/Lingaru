@@ -12,7 +12,7 @@ def backfill_existing_users(apps, schema_editor):
 
 
 def noop_reverse(apps, schema_editor):
-    # Reverse: nothing to undo — the columns get dropped by the schema half
+    # Reverse: nothing to undo, the columns get dropped by the schema half
     # of this migration.
     pass
 
@@ -27,7 +27,7 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='user',
             name='mode',
-            field=models.CharField(blank=True, choices=[('general', 'General Learner'), ('exam', 'Exam Prep (TCF / TEF)'), ('agentic', 'Agentic — assistant first')], help_text="Audience persona. Null means the user hasn't been onboarded.", max_length=12, null=True),
+            field=models.CharField(blank=True, choices=[('general', 'General Learner'), ('exam', 'Exam Prep (TCF / TEF)'), ('agentic', 'Agentic, assistant first')], help_text="Audience persona. Null means the user hasn't been onboarded.", max_length=12, null=True),
         ),
         migrations.AddField(
             model_name='user',

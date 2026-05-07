@@ -43,12 +43,12 @@ const MODES = [
 ];
 
 const LEVELS = [
-  { key: "A1",      label: "A1 — Débutant" },
-  { key: "A2",      label: "A2 — Élémentaire" },
-  { key: "B1",      label: "B1 — Intermédiaire" },
-  { key: "B2",      label: "B2 — Intermédiaire avancé" },
-  { key: "C1",      label: "C1 — Avancé" },
-  { key: "C2",      label: "C2 — Maîtrise" },
+  { key: "A1",      label: "A1 : Débutant" },
+  { key: "A2",      label: "A2 : Élémentaire" },
+  { key: "B1",      label: "B1 : Intermédiaire" },
+  { key: "B2",      label: "B2 : Intermédiaire avancé" },
+  { key: "C1",      label: "C1 : Avancé" },
+  { key: "C2",      label: "C2 : Maîtrise" },
   { key: "unsure",  label: "Pas sûr·e" },
 ];
 
@@ -94,7 +94,7 @@ export default function OnboardingModal() {
           <p className="text-[13.5px] text-surface-600 dark:text-surface-400 mt-1.5">
             {step === 1
               ? "On adapte la page d'accueil et la navigation à ton objectif. Tu peux changer dans les paramètres à tout moment."
-              : "On utilise ton niveau pour calibrer le vocabulaire et les exercices. Ne te prends pas la tête — tu peux ajuster plus tard."}
+              : "On utilise ton niveau pour calibrer le vocabulaire et les exercices. Ne te prends pas la tête, tu peux ajuster plus tard."}
           </p>
         </div>
 
@@ -159,7 +159,7 @@ export default function OnboardingModal() {
                       }`}
                     >
                       <p className="text-[18px] font-extrabold text-surface-900 dark:text-surface-50 leading-none">{l.key}</p>
-                      <p className="text-[11px] text-surface-500 dark:text-surface-400 mt-1">{l.label.split(" — ")[1]}</p>
+                      <p className="text-[11px] text-surface-500 dark:text-surface-400 mt-1">{l.label.split(" : ")[1]}</p>
                     </button>
                   );
                 })}
@@ -171,7 +171,7 @@ export default function OnboardingModal() {
                     Pas sûr·e de ton niveau ?
                   </p>
                   <p className="text-[12px] text-surface-500 dark:text-surface-400 mt-0.5">
-                    Fais un test de placement (5 min) — on l'adaptera ensuite.
+                    Fais un test de placement (5 min) ; on l'adaptera ensuite.
                   </p>
                 </div>
                 <button
@@ -191,7 +191,7 @@ export default function OnboardingModal() {
                 }`}
               >
                 <p className="text-[13px] font-semibold text-surface-900 dark:text-surface-50">
-                  Pas sûr·e — décider plus tard
+                  Pas sûr·e, décider plus tard
                 </p>
                 <p className="text-[12px] text-surface-500 dark:text-surface-400 mt-0.5">
                   On commencera neutre et on ajustera selon tes réponses.
@@ -237,7 +237,7 @@ export default function OnboardingModal() {
         </div>
       </div>
 
-      {/* Placement test stub — Phase 4 will replace with the real CEFR quiz. */}
+      {/* Placement test stub, Phase 4 will replace with the real CEFR quiz. */}
       {showPlacementStub && (
         <div className="fixed inset-0 z-[110] flex items-center justify-center px-4 bg-black/60 backdrop-blur-sm">
           <div className="w-full max-w-md bg-white dark:bg-surface-900 rounded-2xl shadow-2xl border border-surface-100 dark:border-surface-700 p-6 animate-fade-in-up">
@@ -249,7 +249,7 @@ export default function OnboardingModal() {
                 Bientôt disponible
               </h3>
               <p className="text-[13px] text-surface-600 dark:text-surface-400 mt-2 leading-relaxed">
-                Le test de placement CECRL arrive bientôt. En attendant, choisis le niveau qui te paraît le plus proche — on s'adaptera à tes réponses.
+                Le test de placement CECRL arrive bientôt. En attendant, choisis le niveau qui te paraît le plus proche ; on s'adaptera à tes réponses.
               </p>
             </div>
             <button

@@ -79,7 +79,7 @@ class GrammarDrillItem(models.Model):
         db_table = "grammar_drill_items"
 
     def __str__(self):
-        return f"{self.topic.title} — {self.type}: {self.prompt[:50]}"
+        return f"{self.topic.title}, {self.type}: {self.prompt[:50]}"
 
 
 class GrammarMastery(models.Model):
@@ -108,7 +108,7 @@ class GrammarMastery(models.Model):
         ]
 
     def __str__(self):
-        return f"{self.user.username} — {self.topic.title} ({self.mastery_score:.0f})"
+        return f"{self.user.username}, {self.topic.title} ({self.mastery_score:.0f})"
 
     @property
     def status(self):
@@ -122,7 +122,7 @@ class GrammarMastery(models.Model):
 
 
 class GrammarSession(models.Model):
-    """A drill session — multiple items on a topic (or mixed for diagnostic)."""
+    """A drill session, multiple items on a topic (or mixed for diagnostic)."""
 
     MODE_CHOICES = [("drill", "Drill"), ("diagnostic", "Diagnostic")]
 
@@ -145,7 +145,7 @@ class GrammarSession(models.Model):
         ordering = ["-started_at"]
 
     def __str__(self):
-        return f"{self.user.username} — {self.mode} {self.score}/{self.total}"
+        return f"{self.user.username}, {self.mode} {self.score}/{self.total}"
 
 
 class GrammarAnswer(models.Model):

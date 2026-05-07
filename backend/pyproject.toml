@@ -13,7 +13,7 @@ extend-exclude = [
 # patterns from bugbear. Easy to tighten later (add UP, SIM, RUF when ready).
 select = ["E", "F", "I", "B", "W"]
 ignore = [
-    "E501",   # line too long — Ruff's formatter handles this
+    "E501",   # line too long, Ruff's formatter handles this
     "B008",   # function-call-in-default-argument (Django patterns trip this)
     "B904",   # raise-without-from-inside-except (verbose, low signal)
 ]

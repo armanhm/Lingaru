@@ -232,7 +232,7 @@ export default function SRSReview() {
         <EmptyState
           icon="✅"
           title="All caught up!"
-          subtitle="No cards are due right now. Come back later to keep your streak going — or take a quiz to stay sharp."
+          subtitle="No cards are due right now. Come back later to keep your streak going, or take a quiz to stay sharp."
           tone="success"
           action={
             <div className="flex gap-2">
@@ -246,7 +246,7 @@ export default function SRSReview() {
 
     const subline =
       reviewedCount >= 20 ? "Deep work. Your memory is going to thank you tomorrow."
-      : reviewedCount >= 10 ? "Solid session — consistency builds fluency."
+      : reviewedCount >= 10 ? "Solid session, consistency builds fluency."
       : reviewedCount >= 5 ? "Great pace. Every review strengthens the memory trace."
       : "Small wins compound. See you tomorrow.";
 
@@ -319,7 +319,7 @@ export default function SRSReview() {
         </div>
       )}
 
-      {/* Card wrapper — allows overflow for flying off */}
+      {/* Card wrapper, allows overflow for flying off */}
       <div className="relative overflow-visible" style={{ minHeight: 320 }}>
         <div
           ref={cardRef}
@@ -344,7 +344,7 @@ export default function SRSReview() {
             <SwipeOverlay dx={dx} dy={dy} threshold={SWIPE_THRESHOLD} />
           )}
 
-          {/* Front — always visible */}
+          {/* Front, always visible */}
           <div className="px-8 pt-10 pb-8 text-center border-b border-surface-100 dark:border-surface-700">
             <p className="section-label mb-3">French</p>
             <div className="flex items-center justify-center gap-3 flex-wrap">
@@ -356,7 +356,7 @@ export default function SRSReview() {
             )}
           </div>
 
-          {/* Back — tap to reveal */}
+          {/* Back, tap to reveal */}
           {!showAnswer ? (
             <div className="px-8 py-8 text-center">
               <button

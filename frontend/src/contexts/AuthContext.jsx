@@ -33,7 +33,7 @@ export function AuthProvider({ children }) {
   };
 
   const register = async (username, email, password, passwordConfirm) => {
-    // New accounts are created inactive — an admin must approve them
+    // New accounts are created inactive, an admin must approve them
     // before they can log in. We DO NOT call login() here.
     const res = await client.post("/users/register/", {
       username,

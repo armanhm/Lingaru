@@ -11,7 +11,7 @@ import FeatureWidgetBlock from "./FeatureWidgetBlock";
  * Mirrors the schema in backend `apps.assistant.blocks`. Adding a new block
  * type means: add a renderer here AND a validator in the backend.
  *
- * Forward-compat: an unknown `type` returns null instead of throwing — older
+ * Forward-compat: an unknown `type` returns null instead of throwing, older
  * clients should silently ignore newer block types rather than break the
  * whole chat. Locked down by `MessageBlocks.test.jsx`.
  */

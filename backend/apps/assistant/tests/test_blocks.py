@@ -351,6 +351,51 @@ class TestUnknownTypeIsForwardCompat:
         assert blocks == [{"type": "audio", "text": "salut", "lang": "fr"}]
 
 
+class TestJsonFenceFallback:
+    """Models often default to ```json — accept it if the payload validates."""
+
+    def test_json_fence_with_valid_blocks_array(self):
+        raw = (
+            "Voici la conjugaison.\n"
+            "```json\n"
+            '[{"type":"audio","text":"je vais"},'
+            ' {"type":"vocab_card","french":"aller","english":"to go"}]\n'
+            "```"
+        )
+        prose, blocks = extract_blocks(raw)
+        assert prose == "Voici la conjugaison."
+        assert len(blocks) == 2
+        assert blocks[0]["type"] == "audio"
+        assert blocks[1]["type"] == "vocab_card"
+
+    def test_json_fence_with_unrelated_payload_kept_in_prose(self):
+        # A conversational reply that contains a JSON code sample which is
+        # NOT our schema must stay rendered as a code fence.
+        raw = (
+            "Here's an example response shape:\n"
+            "```json\n"
+            '{"http_status": 200, "data": [1,2,3]}\n'
+            "```"
+        )
+        prose, blocks = extract_blocks(raw)
+        assert blocks == []
+        assert "http_status" in prose
+
+    def test_explicit_blocks_fence_still_wins(self):
+        # A reply that has BOTH a generic json fence and an explicit blocks
+        # fence: the explicit one is preferred.
+        raw = (
+            '```json\n[{"type":"audio","text":"a"}]\n```\n'
+            '```blocks\n[{"type":"vocab_card","french":"x","english":"y"}]\n```'
+        )
+        prose, blocks = extract_blocks(raw)
+        assert len(blocks) == 1
+        assert blocks[0]["type"] == "vocab_card"
+        # The unused json fence stays in the prose so the reader sees what
+        # the model also produced.
+        assert "```json" in prose
+
+
 class TestBlocksWrapperKey:
     def test_accepts_dict_with_blocks_key(self):
         raw = (

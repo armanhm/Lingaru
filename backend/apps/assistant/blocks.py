@@ -30,10 +30,20 @@ import re
 
 logger = logging.getLogger(__name__)
 
-# Match either ```blocks {...}``` or ```blocks [...]```; captures the JSON.
-# Tolerant of whitespace and an optional `json` after `blocks`.
+# Primary fence — what we ask the agent to emit. Tolerant of whitespace
+# and an optional `json` qualifier after `blocks`.
 _FENCE_RE = re.compile(
     r"```\s*blocks(?:\s+json)?\s*\n(?P<json>.*?)\n?```",
+    re.DOTALL | re.IGNORECASE,
+)
+
+# Fallback fence — `json`/`JSON`/no language. Models sometimes default to
+# ```json regardless of the system prompt. We only treat this as a blocks
+# payload if the JSON inside *also* looks like our schema (a list of
+# objects with a known `type`), so unrelated JSON code samples in chat
+# replies don't accidentally get eaten.
+_FALLBACK_FENCE_RE = re.compile(
+    r"```\s*(?:json|jsonc)?\s*\n(?P<json>[\[\{].*?)\n?```",
     re.DOTALL | re.IGNORECASE,
 )
 
@@ -186,36 +196,20 @@ BLOCK_VALIDATORS = {
 }
 
 
-def extract_blocks(raw_text: str) -> tuple[str, list[dict]]:
-    """Pull the trailing ``` ```blocks <json> ``` fence off the reply.
+def _candidates_from_payload(data) -> list | None:
+    """Coerce a parsed JSON value into a list of block-candidate dicts.
 
-    Returns ``(prose_without_fence, validated_blocks)``. If the fence is
-    absent or malformed, returns the original text and an empty list.
-    """
-    if not raw_text:
-        return "", []
-
-    match = _FENCE_RE.search(raw_text)
-    if not match:
-        return raw_text, []
-
-    payload = match.group("json").strip()
-    prose = (raw_text[: match.start()] + raw_text[match.end() :]).strip()
-
-    try:
-        data = json.loads(payload)
-    except json.JSONDecodeError as exc:
-        logger.warning("blocks fence had invalid JSON: %s", exc)
-        return raw_text, []  # leave the original text alone — visible debug
-
-    # The fence may contain either {"blocks": [...]} or just [...]
+    Accepts either {"blocks": [...]} or a bare [...]. Returns None when
+    the shape is something else (e.g. an unrelated JSON object the model
+    decided to fence)."""
     if isinstance(data, dict) and isinstance(data.get("blocks"), list):
-        candidates = data["blocks"]
-    elif isinstance(data, list):
-        candidates = data
-    else:
-        return raw_text, []
+        return data["blocks"]
+    if isinstance(data, list):
+        return data
+    return None
 
+
+def _validate_candidates(candidates: list) -> list[dict]:
     cleaned = []
     for entry in candidates:
         if not isinstance(entry, dict):
@@ -226,5 +220,60 @@ def extract_blocks(raw_text: str) -> tuple[str, list[dict]]:
         result = validator(entry)
         if result is not None:
             cleaned.append(result)
+    return cleaned[:8]
 
-    return prose, cleaned[:8]  # cap to keep replies bounded
+
+def extract_blocks(raw_text: str) -> tuple[str, list[dict]]:
+    """Pull the trailing ``` ```blocks <json> ``` fence off the reply.
+
+    Tries two strategies:
+
+      1. Explicit ``` ```blocks ``` fence — what we ask agents to emit.
+      2. Generic ``` ```json ``` fence — fallback for models that ignore
+         the structured-output instruction and default to ```json. We
+         only adopt the fallback if the parsed JSON actually validates
+         as our block schema, so unrelated JSON snippets in chat replies
+         (e.g. a code example in a conversational answer) stay visible.
+
+    Returns ``(prose_without_fence, validated_blocks)``. If neither
+    strategy yields any valid blocks, returns the original text and [].
+    """
+    if not raw_text:
+        return "", []
+
+    # ── Strategy 1: explicit ```blocks fence ────────────────────
+    match = _FENCE_RE.search(raw_text)
+    if match:
+        payload = match.group("json").strip()
+        prose = (raw_text[: match.start()] + raw_text[match.end() :]).strip()
+        try:
+            data = json.loads(payload)
+        except json.JSONDecodeError as exc:
+            logger.warning("blocks fence had invalid JSON: %s", exc)
+            return raw_text, []
+
+        candidates = _candidates_from_payload(data)
+        if candidates is None:
+            return raw_text, []
+        return prose, _validate_candidates(candidates)
+
+    # ── Strategy 2: generic ```json fallback ────────────────────
+    # Walk every fenced JSON-ish block in order; accept the first one
+    # that validates. This way a code-tutorial reply containing several
+    # JSON snippets only loses the one that's actually our schema.
+    for fb in _FALLBACK_FENCE_RE.finditer(raw_text):
+        payload = fb.group("json").strip()
+        try:
+            data = json.loads(payload)
+        except json.JSONDecodeError:
+            continue
+        candidates = _candidates_from_payload(data)
+        if candidates is None:
+            continue
+        cleaned = _validate_candidates(candidates)
+        if not cleaned:
+            continue
+        prose = (raw_text[: fb.start()] + raw_text[fb.end() :]).strip()
+        return prose, cleaned
+
+    return raw_text, []

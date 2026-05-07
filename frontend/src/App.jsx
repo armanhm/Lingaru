@@ -2,6 +2,7 @@ import { Routes, Route } from "react-router-dom";
 import { AuthProvider } from "./contexts/AuthContext";
 import { ToastProvider } from "./contexts/ToastContext";
 import { ThemeProvider } from "./contexts/ThemeContext";
+import { ModeProvider } from "./contexts/ModeContext";
 import Layout from "./components/Layout";
 import ProtectedRoute from "./components/ProtectedRoute";
 import Dashboard from "./pages/Dashboard";
@@ -48,6 +49,7 @@ export default function App() {
   return (
     <ThemeProvider>
     <AuthProvider>
+      <ModeProvider>
       <ToastProvider>
       <Routes>
         <Route path="/login" element={<Login />} />
@@ -100,6 +102,7 @@ export default function App() {
         <Route path="*" element={<NotFound />} />
       </Routes>
       </ToastProvider>
+      </ModeProvider>
     </AuthProvider>
     </ThemeProvider>
   );

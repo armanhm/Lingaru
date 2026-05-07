@@ -260,11 +260,24 @@ export default function Layout() {
 
   const SidebarInner = ({ onNav }) => (
     <div className="flex flex-col h-full">
-      {/* Logo */}
+      {/* Logo + active-mode chip. The logo tile reads the current mode's
+          gradient via CSS vars (`mode-grad-bg`) so switching modes
+          re-tints the brand instantly. */}
       <div className={`flex items-center gap-3 px-4 py-5 border-b border-surface-100 dark:border-surface-700/50 ${collapsed ? "justify-center" : ""}`}>
         <Link to="/" onClick={onNav} className="flex items-center gap-2.5 shrink-0">
-          <span className="w-8 h-8 bg-gradient-to-br from-primary-500 to-primary-700 rounded-xl flex items-center justify-center text-white font-extrabold text-sm shrink-0 shadow-sm">L</span>
-          {!collapsed && <span className="text-lg font-extrabold text-gradient-primary">Lingaru</span>}
+          <span className="mode-grad-bg w-8 h-8 rounded-xl flex items-center justify-center text-white font-extrabold text-sm shrink-0 shadow-sm">L</span>
+          {!collapsed && (
+            <div className="flex flex-col leading-tight">
+              <span className="text-lg font-extrabold text-gradient-primary">Lingaru</span>
+              {user?.mode && (
+                <span className="text-[10px] uppercase tracking-[0.14em] font-semibold mode-accent-text mt-0.5">
+                  {user.mode === "general" ? "Apprentissage" :
+                   user.mode === "exam"    ? "Prépa examen"   :
+                   user.mode === "agentic" ? "Mode agent"     : ""}
+                </span>
+              )}
+            </div>
+          )}
         </Link>
         {!onNav && !collapsed && (
           <button

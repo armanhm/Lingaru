@@ -3,6 +3,41 @@
 @tailwind utilities;
 
 @layer base {
+  /* ── Mode palettes ─────────────────────────────────────────────
+     Three audience-tailored personas of the same product. The user
+     can switch in Settings; the active mode lands on <html data-mode>
+     via ModeContext. The variables below are the page-chrome accents
+     (top bands, hero gradients, sidebar header, dashboard hero).
+     Deep components keep their normal Tailwind tokens — this re-tints
+     the chrome so the modes feel different without rewriting every
+     card. */
+  html[data-mode="general"], html:not([data-mode]) {
+    --mode-name: 'general';
+    --mode-grad-from: #6366f1;   /* primary-500   */
+    --mode-grad-to:   #7c3aed;   /* violet-700    */
+    --mode-accent:    #f07d1e;   /* coral accent  */
+    --mode-shell-tint: rgba(99, 102, 241, 0.05);
+    --mode-radius: 1rem;
+  }
+
+  html[data-mode="exam"] {
+    --mode-name: 'exam';
+    --mode-grad-from: #0369a1;   /* info-700, deep blue   */
+    --mode-grad-to:   #1e40af;   /* indigo-900            */
+    --mode-accent:    #d4a017;   /* exam-paper gold       */
+    --mode-shell-tint: rgba(3, 105, 161, 0.06);
+    --mode-radius: 0.5rem;       /* tighter, more "paper" */
+  }
+
+  html[data-mode="agentic"] {
+    --mode-name: 'agentic';
+    --mode-grad-from: #7c3aed;   /* violet-700        */
+    --mode-grad-to:   #06b6d4;   /* cyan-500          */
+    --mode-accent:    #06b6d4;
+    --mode-shell-tint: rgba(124, 58, 237, 0.07);
+    --mode-radius: 1.25rem;      /* roomier, chat-y   */
+  }
+
   html {
     font-feature-settings: "cv02", "cv03", "cv04", "cv11", "ss01";
     -webkit-font-smoothing: antialiased;
@@ -44,6 +79,29 @@
   /* ── Focus ring — applied to all interactive elements ─── */
   .focus-ring {
     @apply focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary-500/60 focus-visible:ring-offset-2 focus-visible:ring-offset-surface-50 dark:focus-visible:ring-offset-surface-950;
+  }
+
+  /* ── Mode chrome ──────────────────────────────────────────
+     Surfaces that change look per-audience-mode. Read CSS vars set
+     by html[data-mode="…"] in @layer base above. The aim is to make
+     the page feel different at navigation + dashboard level without
+     rewriting every component. */
+  .mode-grad-bg {
+    background-image: linear-gradient(135deg, var(--mode-grad-from), var(--mode-grad-to));
+  }
+  .mode-grad-band {
+    background-image: linear-gradient(90deg, var(--mode-grad-from), var(--mode-grad-to));
+  }
+  .mode-accent-text {
+    color: var(--mode-accent);
+  }
+  .mode-shell {
+    background-color: var(--mode-shell-tint);
+  }
+  /* Mode chip — small label that shows which persona is active. */
+  .mode-chip {
+    @apply inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[11px] font-bold text-white shadow-sm;
+    background-image: linear-gradient(135deg, var(--mode-grad-from), var(--mode-grad-to));
   }
 
   /* ── Cards ──────────────────────────────────────────── */

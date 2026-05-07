@@ -216,12 +216,29 @@ function HybridHeader({ user, stats, animatedXP }) {
         </p>
         <h1 className="text-[32px] sm:text-[40px] font-bold tracking-tight text-surface-900 dark:text-surface-50 leading-[1.05]">
           {frenchGreeting()},{" "}
-          <span className="bg-gradient-to-r from-primary-600 via-primary-500 to-accent-500 bg-clip-text text-transparent">
+          {/* Username gradient reads CSS vars set per-mode so the greeting
+              re-tints when the user switches mode in Settings. */}
+          <span
+            className="bg-clip-text text-transparent"
+            style={{
+              backgroundImage:
+                "linear-gradient(90deg, var(--mode-grad-from), var(--mode-grad-to))",
+            }}
+          >
             {user?.username || "vous"}
           </span>
           .
         </h1>
       </div>
+      <div className="flex items-center gap-2 flex-wrap">
+        {user?.mode && (
+          <span className="mode-chip">
+            {user.mode === "general" ? "🎒 Apprentissage"
+              : user.mode === "exam" ? "🎯 Prépa examen"
+              : user.mode === "agentic" ? "🤖 Mode agent"
+              : ""}
+          </span>
+        )}
       <div className="flex items-center gap-2 px-3 py-2 rounded-full bg-white dark:bg-surface-900/60 border border-surface-200 dark:border-surface-800 shadow-sm">
         <span className="animate-flame inline-block origin-bottom">🔥</span>
         <span className="text-[13px] font-bold text-surface-900 dark:text-surface-50 num">{stats?.current_streak ?? 0}</span>
@@ -230,6 +247,7 @@ function HybridHeader({ user, stats, animatedXP }) {
         <Ic.bolt className="w-3.5 h-3.5 text-primary-500" />
         <span className="text-[13px] font-bold text-surface-900 dark:text-surface-50 num">{Number(animatedXP).toLocaleString("fr-FR")}</span>
         <span className="text-[12px] text-surface-500 dark:text-surface-400">XP</span>
+      </div>
       </div>
     </div>
   );

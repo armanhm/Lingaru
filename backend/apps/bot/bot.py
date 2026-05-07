@@ -3,6 +3,7 @@ import logging
 from django.conf import settings
 from telegram.ext import ApplicationBuilder, CommandHandler
 
+from apps.bot.handlers.agents import agents_command, agents_conversation_handler
 from apps.bot.handlers.chat import chat_conversation_handler
 from apps.bot.handlers.daily import daily_command
 from apps.bot.handlers.dictation import dictation_conversation_handler
@@ -35,9 +36,11 @@ def create_bot_application():
     application.add_handler(CommandHandler("news", news_command))
     application.add_handler(CommandHandler("daily", daily_command))
     application.add_handler(CommandHandler("upload", upload_command))
+    application.add_handler(CommandHandler("agents", agents_command))
     application.add_handler(quiz_conversation_handler())
     application.add_handler(chat_conversation_handler())
     application.add_handler(dictation_conversation_handler())
+    application.add_handler(agents_conversation_handler())
 
     logger.info("Telegram bot application configured successfully.")
     return application

@@ -45,10 +45,21 @@ def discover_cards(db):
 
 @pytest.mark.django_db
 class TestGetRandomDiscoverCard:
-    def test_returns_news_or_trivia(self, discover_cards):
+    def test_prefers_news_over_trivia(self, discover_cards):
         card = get_random_discover_card()
         assert card is not None
-        assert card.type in ("news", "trivia")
+        # When both news and trivia exist, news always wins.
+        assert card.type == "news"
+
+    def test_falls_back_to_trivia_when_no_news(self, db):
+        DiscoverCard.objects.create(
+            type="trivia",
+            title="Trivia only",
+            content_json={"fact_fr": "x", "fact_en": "y"},
+        )
+        card = get_random_discover_card()
+        assert card is not None
+        assert card.type == "trivia"
 
     def test_returns_none_when_no_matching_cards(self, db):
         # Only word cards exist
@@ -130,3 +141,37 @@ class TestNewsCommand:
         tg_update.message.reply_text.assert_called_once()
         text = tg_update.message.reply_text.call_args[0][0]
         assert "No news" in text or "no discover" in text.lower() or "not available" in text.lower()
+
+    @pytest.mark.asyncio
+    @patch("apps.bot.handlers.news.get_random_discover_card")
+    async def test_renders_rss_pipeline_card_with_source(
+        self,
+        mock_get_card,
+        tg_update,
+        tg_context,
+    ):
+        # Cards saved by the RSS pipeline put vocab under `vocabulary`
+        # and set source_url + source_name.
+        mock_card = MagicMock()
+        mock_card.type = "news"
+        mock_card.title = "L'inflation ralentit en France"
+        mock_card.source_url = "https://www.lemonde.fr/article/x"
+        mock_card.content_json = {
+            "article_fr": "Selon l'INSEE, l'inflation a baissé...",
+            "article_en": "According to INSEE, inflation has dropped...",
+            "vocabulary": [
+                {"french": "l'inflation", "english": "inflation"},
+                {"french": "ralentir", "english": "to slow down"},
+            ],
+            "source_name": "Le Monde · Économie",
+        }
+        mock_get_card.return_value = mock_card
+
+        await news_command(tg_update, tg_context)
+
+        text = tg_update.message.reply_text.call_args[0][0]
+        assert "L'inflation ralentit en France" in text
+        assert "Le Monde · Économie" in text
+        assert "l'inflation" in text
+        assert "Lire l'article original" in text
+        assert "https://www.lemonde.fr/article/x" in text

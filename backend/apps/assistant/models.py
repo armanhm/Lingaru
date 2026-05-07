@@ -45,6 +45,11 @@ class Message(models.Model):
         blank=True,
     )
     tokens_used = models.PositiveIntegerField(default=0)
+    # Structured render blocks attached to an assistant reply (audio, vocab,
+    # conjugation tables, inline quizzes, …). Empty list means "render the
+    # plain text only". See services.assistant.blocks for the schema and the
+    # frontend's <MessageBlocks> for the renderer registry.
+    blocks = models.JSONField(default=list, blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
 
     class Meta:

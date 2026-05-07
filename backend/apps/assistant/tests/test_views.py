@@ -72,6 +72,51 @@ class TestChatView:
         assert Message.objects.count() == 2  # user + assistant
 
     @patch("apps.assistant.views.create_llm_router")
+    def test_chat_extracts_blocks_from_fenced_reply(
+        self,
+        mock_factory,
+        authenticated_client,
+    ):
+        # When the LLM returns prose + a ```blocks fence, the view should
+        # split them: prose goes to .reply, parsed blocks go to .blocks,
+        # and the fence is stripped from what's persisted on the Message.
+        from apps.assistant.models import Message
+        from services.llm.base import LLMResponse
+
+        fenced = (
+            "Voici la conjugaison.\n"
+            "```blocks\n"
+            '[{"type":"audio","text":"je vais"},'
+            ' {"type":"vocab_card","french":"aller","english":"to go"}]\n'
+            "```"
+        )
+        mock_router = MagicMock()
+        mock_router.generate.return_value = LLMResponse(
+            content=fenced,
+            provider="gemini",
+            tokens_used=12,
+        )
+        mock_factory.return_value = mock_router
+
+        resp = authenticated_client.post(
+            "/api/assistant/chat/",
+            {"message": "Conjugue 'aller'", "mode": "conversation"},
+            format="json",
+        )
+
+        assert resp.status_code == 200
+        assert resp.data["reply"] == "Voici la conjugaison."
+        assert len(resp.data["blocks"]) == 2
+        assert resp.data["blocks"][0]["type"] == "audio"
+        assert resp.data["blocks"][1]["type"] == "vocab_card"
+
+        # Persisted message has the same shape — fence stripped from content.
+        assistant_msg = Message.objects.get(role="assistant")
+        assert "```blocks" not in assistant_msg.content
+        assert assistant_msg.content == "Voici la conjugaison."
+        assert len(assistant_msg.blocks) == 2
+
+    @patch("apps.assistant.views.create_llm_router")
     def test_chat_continues_existing_conversation(
         self,
         mock_factory,

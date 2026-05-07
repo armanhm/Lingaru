@@ -29,7 +29,15 @@ class ChatRequestSerializer(serializers.Serializer):
 class MessageSerializer(serializers.ModelSerializer):
     class Meta:
         model = Message
-        fields = ("id", "role", "content", "provider", "tokens_used", "created_at")
+        fields = (
+            "id",
+            "role",
+            "content",
+            "blocks",
+            "provider",
+            "tokens_used",
+            "created_at",
+        )
 
 
 class ConversationListSerializer(serializers.ModelSerializer):

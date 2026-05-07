@@ -113,11 +113,19 @@ class ChatView(APIView):
                 status=status.HTTP_503_SERVICE_UNAVAILABLE,
             )
 
-        # Save assistant response
+        # Extract structured render blocks (audio, vocab_card, expression,
+        # conjugation_table, quiz) emitted by the LLM in a fenced segment.
+        # Falls back to (raw, []) if no fence — backwards-compatible.
+        from apps.assistant.blocks import extract_blocks
+
+        prose, blocks = extract_blocks(llm_response.content)
+
+        # Save assistant response (with blocks attached for the frontend)
         Message.objects.create(
             conversation=conversation,
             role="assistant",
-            content=llm_response.content,
+            content=prose,
+            blocks=blocks,
             provider=llm_response.provider,
             tokens_used=llm_response.tokens_used,
         )
@@ -141,7 +149,8 @@ class ChatView(APIView):
 
         return Response(
             {
-                "reply": llm_response.content,
+                "reply": prose,
+                "blocks": blocks,
                 "conversation_id": conversation.id,
                 "provider": llm_response.provider,
                 "tokens_used": llm_response.tokens_used,
@@ -328,18 +337,26 @@ class VoiceChatView(APIView):
                 status=status.HTTP_503_SERVICE_UNAVAILABLE,
             )
 
+        # Strip any block fence from the prose so the spoken audio doesn't
+        # narrate raw JSON. Voice replies don't usually emit blocks but the
+        # parser is cheap and idempotent.
+        from apps.assistant.blocks import extract_blocks
+
+        prose, blocks = extract_blocks(llm_response.content)
+
         # Save assistant message
         Message.objects.create(
             conversation=conversation,
             role="assistant",
-            content=llm_response.content,
+            content=prose,
+            blocks=blocks,
             provider=llm_response.provider,
             tokens_used=llm_response.tokens_used,
         )
 
         # 3. TTS: generate audio of the response
         try:
-            clip = get_or_create_audio(text=llm_response.content, language="fr")
+            clip = get_or_create_audio(text=prose, language="fr")
             audio_url = request.build_absolute_uri(clip.audio_file.url)
         except Exception as exc:
             logger.warning("TTS failed in voice chat: %s", exc)
@@ -364,7 +381,8 @@ class VoiceChatView(APIView):
         return Response(
             {
                 "transcription": user_text,
-                "ai_response_text": llm_response.content,
+                "ai_response_text": prose,
+                "blocks": blocks,
                 "ai_response_audio_url": audio_url,
                 "conversation_id": conversation.id,
                 "provider": llm_response.provider,

@@ -144,15 +144,22 @@ async def chat_message(update: Update, context: ContextTypes.DEFAULT_TYPE) -> in
         )
         return CHATTING
 
-    # Save assistant message
+    # Strip any structured-payloads fence — Telegram can't render those.
+    # The web app gets the full reply via the assistant API; the bot only
+    # needs the prose.
+    from apps.assistant.blocks import extract_blocks
+
+    prose, _blocks = extract_blocks(llm_response.content)
+
+    # Save assistant message (persist the cleaned prose)
     await sync_to_async(_save_assistant_message)(
         conversation,
-        llm_response.content,
+        prose,
         llm_response.provider,
         llm_response.tokens_used,
     )
 
-    await update.message.reply_text(llm_response.content)
+    await update.message.reply_text(prose)
     return CHATTING
 
 

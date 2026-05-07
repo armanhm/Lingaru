@@ -45,14 +45,25 @@ def _get_agent_by_slug(slug: str) -> Agent | None:
 
 def _run_agent_sync(agent: Agent, user_text: str) -> str:
     """Synchronous wrapper around the LLM call so we can dispatch with
-    `sync_to_async`. Returns the LLM's text reply (or a friendly error)."""
+    `sync_to_async`. Returns the LLM's text reply (or a friendly error).
+
+    The web app renders structured blocks (audio, vocab cards, quizzes)
+    that the agent prompt may include in a fenced ```blocks segment.
+    Telegram can't render those, so we strip the fence and only send
+    the prose. The blocks are simply discarded for now — when we want
+    bot-side block rendering, this is the place to map them onto
+    Telegram primitives (reply_audio, formatted markdown, etc.).
+    """
+    from apps.assistant.blocks import extract_blocks
+
     try:
         router = create_llm_router()
         response = router.generate(
             messages=[{"role": "user", "content": user_text}],
             system_prompt=agent.system_prompt,
         )
-        return (response.content or "").strip() or "(empty response)"
+        prose, _blocks = extract_blocks(response.content or "")
+        return prose.strip() or "(empty response)"
     except Exception as exc:
         logger.warning("Agent %s LLM call failed: %s", agent.slug, exc)
         return f"⚠️ Agent failed: {exc.__class__.__name__}. Try again later."

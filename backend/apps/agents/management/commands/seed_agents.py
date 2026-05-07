@@ -7,6 +7,7 @@ after editing prompts.
 from django.core.management.base import BaseCommand
 
 from apps.agents.models import Agent
+from apps.agents.prompts import ensure_block_instruction
 
 AGENTS = [
     {
@@ -431,9 +432,15 @@ class Command(BaseCommand):
 
         created = updated = 0
         for spec in AGENTS:
+            # Append the structured-payloads instruction so seeded prompts
+            # match what the data migration produces on existing installs.
+            defaults = {k: v for k, v in spec.items() if k != "slug"}
+            if "system_prompt" in defaults:
+                defaults["system_prompt"] = ensure_block_instruction(defaults["system_prompt"])
+
             obj, was_created = Agent.objects.update_or_create(
                 slug=spec["slug"],
-                defaults={k: v for k, v in spec.items() if k != "slug"},
+                defaults=defaults,
             )
             if was_created:
                 created += 1

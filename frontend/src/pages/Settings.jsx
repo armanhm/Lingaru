@@ -158,6 +158,11 @@ export default function Settings() {
   const [nativeLang, setNativeLang] = useState("en");
   const [profileSaving, setProfileSaving] = useState(false);
 
+  // Mode & proficiency — set during onboarding, editable here.
+  const [mode, setMode] = useState("general");
+  const [proficiency, setProficiency] = useState("B1");
+  const [modeSaving, setModeSaving] = useState(false);
+
   // Preferences
   const [prefs, setPrefs] = useState(DEFAULT_PREFS);
   const [prefsSaving, setPrefsSaving] = useState(false);
@@ -176,6 +181,8 @@ export default function Settings() {
       setDailyGoal(user.daily_goal_minutes || 15);
       setTargetLevel(user.target_level || "B1");
       setNativeLang(user.native_language || "en");
+      setMode(user.mode || "general");
+      setProficiency(user.proficiency_level || "B1");
       setPrefs({ ...DEFAULT_PREFS, ...(user.preferences || {}) });
     }
   }, [user]);
@@ -203,6 +210,19 @@ export default function Settings() {
       showToast(detail, "error");
     } finally {
       setProfileSaving(false);
+    }
+  };
+
+  const handleModeSave = async () => {
+    setModeSaving(true);
+    try {
+      await client.patch("/users/me/", { mode, proficiency_level: proficiency });
+      await refreshUser();
+      showToast("Mode et niveau enregistrés.", "success");
+    } catch {
+      showToast("Échec de l'enregistrement.", "error");
+    } finally {
+      setModeSaving(false);
     }
   };
 
@@ -318,6 +338,76 @@ export default function Settings() {
               {profileSaving ? "Saving…" : "Save profile"}
             </button>
           </form>
+        </SectionCard>
+      )}
+
+      {/* Mode & niveau (lives under the Profile tab — same audience). */}
+      {activeTab === "profile" && (
+        <SectionCard
+          title="Mode & niveau"
+          description="Adapte la page d'accueil et la navigation à ton objectif."
+          icon="🎯"
+          tint="from-accent-500 to-purple-600"
+        >
+          <div>
+            <p className="text-caption font-semibold text-surface-700 dark:text-surface-300 mb-2 uppercase tracking-wide">
+              Mode
+            </p>
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-2.5">
+              {[
+                { key: "general", emoji: "🎒", title: "Apprenant général",   tint: "from-primary-500 to-purple-600" },
+                { key: "exam",    emoji: "🎯", title: "Prépa examen",        tint: "from-info-500 to-primary-600"   },
+                { key: "agentic", emoji: "🤖", title: "Mode agent",          tint: "from-accent-500 to-purple-600"  },
+              ].map((m) => {
+                const active = mode === m.key;
+                return (
+                  <button
+                    key={m.key}
+                    onClick={() => setMode(m.key)}
+                    type="button"
+                    className={`relative rounded-xl border-2 px-3 py-3 text-left transition-all focus-ring ${
+                      active
+                        ? "border-primary-400 dark:border-primary-600 bg-primary-50/60 dark:bg-primary-900/25"
+                        : "border-surface-200 dark:border-surface-700 hover:border-primary-300 dark:hover:border-primary-700"
+                    }`}
+                  >
+                    <span className={`inline-flex w-8 h-8 rounded-lg bg-gradient-to-br ${m.tint} text-white items-center justify-center text-base shadow-sm`}>
+                      {m.emoji}
+                    </span>
+                    <p className="mt-2 text-[13px] font-bold text-surface-900 dark:text-surface-50">{m.title}</p>
+                  </button>
+                );
+              })}
+            </div>
+          </div>
+
+          <div className="mt-4">
+            <label className="block text-caption font-semibold text-surface-700 dark:text-surface-300 mb-1.5 uppercase tracking-wide">
+              Niveau actuel (CECRL)
+            </label>
+            <select
+              value={proficiency}
+              onChange={(e) => setProficiency(e.target.value)}
+              className="input"
+            >
+              <option value="A1">A1 — Débutant</option>
+              <option value="A2">A2 — Élémentaire</option>
+              <option value="B1">B1 — Intermédiaire</option>
+              <option value="B2">B2 — Intermédiaire avancé</option>
+              <option value="C1">C1 — Avancé</option>
+              <option value="C2">C2 — Maîtrise</option>
+              <option value="unsure">Pas sûr·e</option>
+            </select>
+          </div>
+
+          <button
+            type="button"
+            onClick={handleModeSave}
+            disabled={modeSaving}
+            className="btn-primary btn-md mt-5"
+          >
+            {modeSaving ? "Enregistrement…" : "Enregistrer mode et niveau"}
+          </button>
         </SectionCard>
       )}
 

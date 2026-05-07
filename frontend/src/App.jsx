@@ -5,6 +5,7 @@ import { ThemeProvider } from "./contexts/ThemeContext";
 import Layout from "./components/Layout";
 import ProtectedRoute from "./components/ProtectedRoute";
 import Dashboard from "./pages/Dashboard";
+import ModeLanding from "./components/ModeLanding";
 import Topics from "./pages/Topics";
 import TopicDetail from "./pages/TopicDetail";
 import LessonDetail from "./pages/LessonDetail";
@@ -59,7 +60,8 @@ export default function App() {
             </ProtectedRoute>
           }
         >
-          <Route index element={<Dashboard />} />
+          <Route index element={<ModeLanding />} />
+          <Route path="dashboard" element={<Dashboard />} />
           <Route path="topics" element={<Topics />} />
           <Route path="topics/:id" element={<TopicDetail />} />
           <Route path="lesson/:id" element={<LessonDetail />} />

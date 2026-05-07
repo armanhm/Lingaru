@@ -1,7 +1,9 @@
-import { useState, useRef, useEffect } from "react";
+import { useState, useRef, useEffect, useMemo } from "react";
 import { Link, Outlet, useNavigate, useLocation } from "react-router-dom";
 import { useAuth } from "../contexts/AuthContext";
 import { useTheme } from "../contexts/ThemeContext";
+import { filterNavForMode } from "../lib/modeConfig";
+import OnboardingModal from "./OnboardingModal";
 
 const NAV_SECTIONS = [
   {
@@ -218,6 +220,14 @@ export default function Layout() {
   const [mobileOpen, setMobileOpen] = useState(false);
   const [collapsedSections, setCollapsedSections] = useState(loadCollapsedSections);
 
+  // Filter the nav by the user's mode. New signups (mode === null) get the
+  // general nav until they finish onboarding — keeps the layout stable
+  // while the modal is up.
+  const navSections = useMemo(
+    () => filterNavForMode(NAV_SECTIONS, user?.mode || "general"),
+    [user?.mode],
+  );
+
   const toggleSection = (label) => {
     setCollapsedSections((prev) => {
       const next = { ...prev, [label]: !prev[label] };
@@ -271,7 +281,7 @@ export default function Layout() {
 
       {/* Nav */}
       <nav className="flex-1 overflow-y-auto py-4 space-y-4 px-3">
-        {NAV_SECTIONS.map((section) => {
+        {navSections.map((section) => {
           const hasActive = section.items.some((it) => isActive(it.to));
           // A section is hidden only if collapsible AND user collapsed it AND
           // no active item lives inside it (so the user can still see where they are).
@@ -399,6 +409,11 @@ export default function Layout() {
           </main>
         )}
       </div>
+
+      {/* First-time onboarding: shows when the user is logged in but has
+         no mode set yet. Existing users were backfilled to "general" by
+         a data migration so they don't see this on next login. */}
+      {user && !user.mode && <OnboardingModal />}
     </div>
   );
 }

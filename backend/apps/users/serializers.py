@@ -41,6 +41,8 @@ class UserSerializer(serializers.ModelSerializer):
             "target_level",
             "daily_goal_minutes",
             "preferences",
+            "mode",
+            "proficiency_level",
             "date_joined",
             "is_staff",
         )

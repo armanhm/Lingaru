@@ -1,5 +1,6 @@
 import logging
 
+from asgiref.sync import sync_to_async
 from telegram import Update
 from telegram.ext import ContextTypes
 
@@ -17,7 +18,7 @@ def get_random_vocabulary():
 
 async def word_command(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
     """Handle the /word command — send a random vocabulary item."""
-    vocab = get_random_vocabulary()
+    vocab = await sync_to_async(get_random_vocabulary)()
 
     if vocab is None:
         await update.message.reply_text("No vocabulary items available yet. Check back later!")
@@ -39,9 +40,9 @@ async def word_command(update: Update, context: ContextTypes.DEFAULT_TYPE) -> No
     message = "\n".join(parts)
     await update.message.reply_text(message, parse_mode="Markdown")
 
-    # Send audio of the French word
+    # Send audio of the French word (TTS + ORM both sync — wrap them)
     try:
-        clip = get_or_create_audio(text=vocab.french, language="fr")
+        clip = await sync_to_async(get_or_create_audio)(text=vocab.french, language="fr")
         audio_path = clip.audio_file.path
         with open(audio_path, "rb") as audio_file:
             await update.message.reply_audio(audio=audio_file)

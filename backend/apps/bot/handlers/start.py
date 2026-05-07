@@ -1,5 +1,6 @@
 import logging
 
+from asgiref.sync import sync_to_async
 from django.contrib.auth import get_user_model
 from telegram import Update
 from telegram.ext import ContextTypes
@@ -49,7 +50,7 @@ def get_or_create_telegram_user(
 async def start_command(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
     """Handle the /start command — register or link Telegram account."""
     tg_user = update.effective_user
-    user, created = get_or_create_telegram_user(
+    user, created = await sync_to_async(get_or_create_telegram_user)(
         telegram_id=tg_user.id,
         first_name=tg_user.first_name or "",
         username=tg_user.username,

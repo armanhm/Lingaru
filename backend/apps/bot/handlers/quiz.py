@@ -1,6 +1,7 @@
 import logging
 import random
 
+from asgiref.sync import sync_to_async
 from django.db.models import Count, Q
 from django.utils import timezone
 from telegram import Update
@@ -105,7 +106,7 @@ def complete_quiz_session(session: QuizSession) -> QuizSession:
 async def quiz_start(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
     """Handle /quiz [topic] — start a new quiz conversation."""
     tg_user = update.effective_user
-    user, _ = get_or_create_telegram_user(
+    user, _ = await sync_to_async(get_or_create_telegram_user)(
         telegram_id=tg_user.id,
         first_name=tg_user.first_name or "",
         username=tg_user.username,
@@ -115,14 +116,16 @@ async def quiz_start(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
     args = context.args
     topic_name = " ".join(args) if args else None
 
-    lesson = pick_quiz_lesson(topic_name)
+    lesson = await sync_to_async(pick_quiz_lesson)(topic_name)
     if lesson is None:
         topic_msg = f' for topic "{topic_name}"' if topic_name else ""
         await update.message.reply_text(f"No quiz available{topic_msg}. Try /quiz without a topic!")
         return ConversationHandler.END
 
-    session = create_quiz_session(user, lesson)
-    questions = list(Question.objects.filter(lesson=lesson).order_by("?"))
+    session = await sync_to_async(create_quiz_session)(user, lesson)
+    questions = await sync_to_async(
+        lambda: list(Question.objects.filter(lesson=lesson).order_by("?"))
+    )()
 
     # Store quiz state in context.user_data
     context.user_data["quiz_session_id"] = session.id
@@ -139,6 +142,8 @@ async def quiz_start(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
 
     # Send first question
     first_question = questions[0]
+    # Stash the lesson title for the cancel handler so we don't reload it
+    context.user_data["quiz_lesson_title"] = lesson.title
     await update.message.reply_text(build_question_text(first_question))
 
     return ANSWERING
@@ -151,10 +156,10 @@ async def quiz_answer(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int
     current_index = context.user_data["quiz_current_index"]
     session_id = context.user_data["quiz_session_id"]
 
-    session = QuizSession.objects.get(pk=session_id)
-    question = Question.objects.get(pk=question_ids[current_index])
+    session = await sync_to_async(QuizSession.objects.get)(pk=session_id)
+    question = await sync_to_async(Question.objects.get)(pk=question_ids[current_index])
 
-    answer = record_answer(session, question, user_answer)
+    answer = await sync_to_async(record_answer)(session, question, user_answer)
 
     if answer.is_correct:
         context.user_data["quiz_score"] += 1
@@ -171,7 +176,7 @@ async def quiz_answer(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int
 
     if next_index >= len(question_ids):
         # Quiz complete
-        completed_session = complete_quiz_session(session)
+        completed_session = await sync_to_async(complete_quiz_session)(session)
         score = completed_session.score
         total = completed_session.total_questions
 
@@ -189,7 +194,7 @@ async def quiz_answer(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int
         return ConversationHandler.END
 
     # Send next question
-    next_question = Question.objects.get(pk=question_ids[next_index])
+    next_question = await sync_to_async(Question.objects.get)(pk=question_ids[next_index])
     await update.message.reply_text(
         f"{feedback}\n\n"
         f"Question {next_index + 1}/{len(question_ids)}:\n"
@@ -203,11 +208,15 @@ async def quiz_cancel(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int
     """Handle /cancel — abort the current quiz."""
     session_id = context.user_data.get("quiz_session_id")
     if session_id:
-        try:
-            session = QuizSession.objects.get(pk=session_id)
-            complete_quiz_session(session)
-        except QuizSession.DoesNotExist:
-            pass
+
+        def _close():
+            try:
+                session = QuizSession.objects.get(pk=session_id)
+                complete_quiz_session(session)
+            except QuizSession.DoesNotExist:
+                pass
+
+        await sync_to_async(_close)()
 
     for key in ["quiz_session_id", "quiz_questions", "quiz_current_index", "quiz_score"]:
         context.user_data.pop(key, None)

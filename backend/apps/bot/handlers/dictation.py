@@ -1,5 +1,6 @@
 import logging
 
+from asgiref.sync import sync_to_async
 from telegram import Update
 from telegram.ext import (
     CommandHandler,
@@ -21,7 +22,9 @@ WAITING_FOR_ANSWER = 0
 
 async def dictation_command(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
     """Handle /dictation — start a dictation exercise."""
-    vocab = Vocabulary.objects.exclude(example_sentence="").order_by("?").first()
+    vocab = await sync_to_async(
+        lambda: Vocabulary.objects.exclude(example_sentence="").order_by("?").first()
+    )()
 
     if vocab is None:
         await update.message.reply_text(
@@ -30,7 +33,7 @@ async def dictation_command(update: Update, context: ContextTypes.DEFAULT_TYPE) 
         return ConversationHandler.END
 
     sentence = vocab.example_sentence
-    clip = get_or_create_audio(text=sentence, language="fr")
+    clip = await sync_to_async(get_or_create_audio)(text=sentence, language="fr")
 
     # Store the clip ID and expected text in context for later comparison
     context.user_data["dictation_clip_id"] = clip.id

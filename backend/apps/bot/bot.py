@@ -1,7 +1,8 @@
 import logging
 
 from django.conf import settings
-from telegram.ext import ApplicationBuilder, CommandHandler
+from telegram import Update
+from telegram.ext import ApplicationBuilder, CommandHandler, ContextTypes
 
 from apps.bot.handlers.agents import agents_command, agents_conversation_handler
 from apps.bot.handlers.chat import chat_conversation_handler
@@ -41,6 +42,18 @@ def create_bot_application():
     application.add_handler(chat_conversation_handler())
     application.add_handler(dictation_conversation_handler())
     application.add_handler(agents_conversation_handler())
+    application.add_error_handler(_log_handler_error)
 
     logger.info("Telegram bot application configured successfully.")
     return application
+
+
+async def _log_handler_error(update: object, context: ContextTypes.DEFAULT_TYPE) -> None:
+    """Default PTB swallows handler exceptions silently — that's why earlier
+    bugs surfaced as 'no response.' Log them instead so we see real stack
+    traces in the bot's stdout."""
+    logger.exception(
+        "Bot handler raised: update=%s",
+        update.update_id if isinstance(update, Update) else update,
+        exc_info=context.error,
+    )

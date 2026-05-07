@@ -1,5 +1,6 @@
 import logging
 
+from asgiref.sync import sync_to_async
 from django.contrib.auth import get_user_model
 from django.db.models import Sum
 from telegram import Update
@@ -47,13 +48,13 @@ def get_user_stats(user) -> dict:
 async def stats_command(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
     """Handle the /stats command — show user gamification statistics."""
     tg_user = update.effective_user
-    user, _ = get_or_create_telegram_user(
+    user, _ = await sync_to_async(get_or_create_telegram_user)(
         telegram_id=tg_user.id,
         first_name=tg_user.first_name or "",
         username=tg_user.username,
     )
 
-    stats = get_user_stats(user)
+    stats = await sync_to_async(get_user_stats)(user)
 
     accuracy = (
         round(stats["total_correct"] / stats["total_questions"] * 100)

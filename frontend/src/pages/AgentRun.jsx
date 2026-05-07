@@ -66,12 +66,24 @@ function Bubble({ msg, agent }) {
           {isUser ? (
             msg.content
           ) : (
+            // prose-pre / prose-code overrides give us legible code blocks on
+            // BOTH light and dark backgrounds — the default tailwind-typography
+            // rendering is dark-on-dark in our agent bubble where the bubble
+            // itself is white/dark-surface and ReactMarkdown wraps fenced code
+            // in a <pre><code>.
             <div className="prose prose-sm dark:prose-invert max-w-none
               prose-p:my-1 prose-headings:mt-3 prose-headings:mb-1
               prose-h3:text-base prose-h3:font-semibold
               prose-ul:my-1 prose-ol:my-1 prose-li:my-0.5
               prose-strong:font-semibold prose-em:italic
-              prose-code:bg-surface-100 prose-code:dark:bg-surface-700 prose-code:px-1 prose-code:rounded prose-code:text-xs
+              prose-code:bg-surface-100 dark:prose-code:bg-surface-700/70
+              prose-code:text-surface-800 dark:prose-code:text-surface-100
+              prose-code:px-1 prose-code:rounded prose-code:text-xs prose-code:font-medium
+              prose-code:before:content-none prose-code:after:content-none
+              prose-pre:bg-surface-900 dark:prose-pre:bg-surface-800
+              prose-pre:text-surface-100 prose-pre:my-2 prose-pre:rounded-lg
+              prose-pre:p-3 prose-pre:text-[12.5px] prose-pre:leading-relaxed
+              prose-pre:border prose-pre:border-surface-700
               prose-table:my-2 prose-table:text-[12.5px] prose-table:border-collapse
               prose-th:bg-surface-50 dark:prose-th:bg-surface-800 prose-th:px-2 prose-th:py-1.5 prose-th:font-semibold prose-th:text-left prose-th:border prose-th:border-surface-200 dark:prose-th:border-surface-700
               prose-td:px-2 prose-td:py-1 prose-td:border prose-td:border-surface-200 dark:prose-td:border-surface-700">
@@ -130,6 +142,7 @@ export default function AgentRun() {
   const [sending, setSending] = useState(false);
 
   const [runs, setRuns] = useState([]);
+  const [sessionsOpen, setSessionsOpen] = useState(false);
 
   const messagesEndRef = useRef(null);
 
@@ -245,27 +258,48 @@ export default function AgentRun() {
   if (!agent) return null;
 
   return (
-    <div className="max-w-6xl mx-auto">
+    // Page is a flex column so the chat thread grows to fill the viewport
+    // and the composer can lock to the bottom (Assistant pattern). The
+    // outer height calc subtracts the app shell's header so we don't need
+    // a separate scrolling region per layout breakpoint.
+    <div className="max-w-3xl mx-auto flex flex-col min-h-[calc(100vh-7rem)]">
       <PageHeader
         eyebrow={`@${agent.slug}`}
         title={agent.name}
         backTo="/agents"
         backLabel="Tous les agents"
         actions={
-          <button
-            onClick={handleNewSession}
-            className="btn-secondary btn-sm"
-            disabled={sending}
-          >
-            <Ic.refresh className="w-3.5 h-3.5 mr-1" />
-            Nouvelle session
-          </button>
+          <div className="flex items-center gap-2">
+            <button
+              onClick={() => setSessionsOpen(true)}
+              className="btn-secondary btn-sm"
+              title="Sessions précédentes"
+            >
+              <svg className="w-3.5 h-3.5 mr-1" fill="none" stroke="currentColor" strokeWidth="1.8" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+              </svg>
+              Sessions
+              {runs.length > 0 && (
+                <span className="ml-1.5 px-1.5 py-0.5 rounded-md text-[10px] font-bold bg-primary-100 dark:bg-primary-900/40 text-primary-700 dark:text-primary-300">
+                  {runs.length}
+                </span>
+              )}
+            </button>
+            <button
+              onClick={handleNewSession}
+              className="btn-secondary btn-sm"
+              disabled={sending}
+            >
+              <Ic.refresh className="w-3.5 h-3.5 mr-1" />
+              Nouvelle session
+            </button>
+          </div>
         }
       />
 
-      <div className="grid grid-cols-1 lg:grid-cols-12 gap-5">
-        {/* LEFT — hero + chat */}
-        <div className="lg:col-span-8 space-y-5">
+      <div className="flex flex-col flex-1 min-h-0 space-y-5">
+        {/* Chat column (full width — sessions live in a drawer now) */}
+        <div className="flex flex-col flex-1 min-h-0 space-y-5">
           {/* Hero */}
           <div className="card relative overflow-hidden p-5 sm:p-6 animate-fade-in-up">
             <div className={`absolute inset-x-0 top-0 h-1 bg-gradient-to-r ${agent.tint}`} />
@@ -340,9 +374,9 @@ export default function AgentRun() {
             </div>
           )}
 
-          {/* Chat thread */}
+          {/* Chat thread — grows to fill, composer below stays pinned */}
           {messages.length > 0 && (
-            <div className="space-y-5">
+            <div className="flex-1 min-h-0 overflow-y-auto space-y-5 pr-1 -mr-1">
               {messages.map((m, i) => <Bubble key={i} msg={m} agent={agent} />)}
               {sending && <TypingIndicator agent={agent} />}
               {error && (
@@ -355,8 +389,11 @@ export default function AgentRun() {
             </div>
           )}
 
-          {/* Composer */}
-          <div className="rounded-2xl border border-surface-200 dark:border-surface-700 bg-white dark:bg-surface-900 focus-within:border-primary-400 focus-within:ring-2 focus-within:ring-primary-100 dark:focus-within:ring-primary-900/40 transition-all">
+          {/* Spacer pushes composer to the bottom when the thread is empty */}
+          {messages.length === 0 && <div className="flex-1" />}
+
+          {/* Composer — pinned at the bottom of the column */}
+          <div className="sticky bottom-0 rounded-2xl border border-surface-200 dark:border-surface-700 bg-white dark:bg-surface-900 focus-within:border-primary-400 focus-within:ring-2 focus-within:ring-primary-100 dark:focus-within:ring-primary-900/40 transition-all shadow-sm">
             <textarea
               value={input}
               onChange={(e) => setInput(e.target.value)}
@@ -380,59 +417,89 @@ export default function AgentRun() {
             </div>
           </div>
         </div>
+      </div>
 
-        {/* RIGHT — recent runs */}
-        <aside className="lg:col-span-4 space-y-4">
-          <div className="card p-5 animate-fade-in-up">
-            <p className="text-[10px] uppercase tracking-[0.14em] font-semibold text-surface-400 dark:text-surface-500 mb-3">
-              Sessions récentes
-            </p>
-            {runs.length === 0 ? (
-              <div className="rounded-xl border border-dashed border-surface-200 dark:border-surface-700 px-4 py-6 text-center">
-                <p className="text-[12px] text-surface-500 dark:text-surface-400">
-                  Aucune session pour l'instant. Pose ta première question ci-contre.
+      {/* Sessions drawer — collapsed by default. Slides in from the right.
+          Uses a fixed-position overlay so it works at every breakpoint and
+          doesn't fight the new flex layout for space. */}
+      {sessionsOpen && (
+        <>
+          <div
+            className="fixed inset-0 bg-black/30 dark:bg-black/50 z-40 animate-fade-in-up"
+            onClick={() => setSessionsOpen(false)}
+            aria-hidden="true"
+          />
+          <aside
+            role="dialog"
+            aria-label="Sessions précédentes"
+            className="fixed right-0 top-0 bottom-0 w-full sm:w-[360px] bg-white dark:bg-surface-900 border-l border-surface-200 dark:border-surface-700 z-50 shadow-2xl flex flex-col animate-slide-in-right"
+          >
+            <header className="flex items-center justify-between px-5 py-4 border-b border-surface-100 dark:border-surface-800">
+              <div>
+                <p className="text-[10px] uppercase tracking-[0.14em] font-semibold text-surface-400 dark:text-surface-500">
+                  Historique
                 </p>
+                <h3 className="text-[15px] font-bold text-surface-900 dark:text-surface-50 mt-0.5">
+                  Sessions précédentes
+                </h3>
               </div>
-            ) : (
-              <ul className="space-y-1.5">
-                {runs.map((r) => {
-                  const active = r.conversation_id === conversationId;
-                  return (
-                    <li key={r.id}>
-                      <button
-                        onClick={() => handleResume(r)}
-                        className={`w-full text-left rounded-lg px-3 py-2 text-[12.5px] transition-colors ${
-                          active
-                            ? "bg-primary-50 dark:bg-primary-900/30 ring-1 ring-primary-200 dark:ring-primary-800 text-primary-700 dark:text-primary-300"
-                            : "hover:bg-surface-50 dark:hover:bg-surface-800/50 text-surface-700 dark:text-surface-200"
-                        }`}
-                      >
-                        <p className="font-semibold truncate">{r.title || "Session"}</p>
-                        <p className="text-[10.5px] text-surface-400 dark:text-surface-500 mt-0.5">
-                          {new Date(r.started_at).toLocaleDateString("fr-FR", { day: "numeric", month: "short", hour: "2-digit", minute: "2-digit" })}
-                          {" · "}
-                          {r.message_count || 0} messages
-                        </p>
-                      </button>
-                    </li>
-                  );
-                })}
-              </ul>
-            )}
-          </div>
+              <button
+                onClick={() => setSessionsOpen(false)}
+                className="p-1.5 rounded-lg hover:bg-surface-100 dark:hover:bg-surface-800 transition-colors focus-ring"
+                aria-label="Fermer"
+              >
+                <svg className="w-4 h-4" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
+                </svg>
+              </button>
+            </header>
 
-          <div className="rounded-2xl border border-dashed border-surface-200 dark:border-surface-700 p-5">
-            <p className="text-[10px] uppercase tracking-[0.14em] font-semibold text-surface-500 dark:text-surface-400 mb-1.5">
-              Dans le chat
-            </p>
-            <p className="text-[12.5px] text-surface-700 dark:text-surface-300 leading-snug">
+            <div className="flex-1 overflow-y-auto p-4">
+              {runs.length === 0 ? (
+                <div className="rounded-xl border border-dashed border-surface-200 dark:border-surface-700 px-4 py-8 text-center">
+                  <p className="text-[12px] text-surface-500 dark:text-surface-400">
+                    Aucune session pour l'instant.
+                  </p>
+                </div>
+              ) : (
+                <ul className="space-y-1.5">
+                  {runs.map((r) => {
+                    const active = r.conversation_id === conversationId;
+                    return (
+                      <li key={r.id}>
+                        <button
+                          onClick={() => {
+                            handleResume(r);
+                            setSessionsOpen(false);
+                          }}
+                          className={`w-full text-left rounded-lg px-3 py-2.5 text-[12.5px] transition-colors ${
+                            active
+                              ? "bg-primary-50 dark:bg-primary-900/30 ring-1 ring-primary-200 dark:ring-primary-800 text-primary-700 dark:text-primary-300"
+                              : "hover:bg-surface-50 dark:hover:bg-surface-800/50 text-surface-700 dark:text-surface-200"
+                          }`}
+                        >
+                          <p className="font-semibold truncate">{r.title || "Session"}</p>
+                          <p className="text-[10.5px] text-surface-400 dark:text-surface-500 mt-0.5">
+                            {new Date(r.started_at).toLocaleDateString("fr-FR", { day: "numeric", month: "short", hour: "2-digit", minute: "2-digit" })}
+                            {" · "}
+                            {r.message_count || 0} messages
+                          </p>
+                        </button>
+                      </li>
+                    );
+                  })}
+                </ul>
+              )}
+            </div>
+
+            <footer className="px-5 py-3 border-t border-surface-100 dark:border-surface-800 text-[11px] text-surface-500 dark:text-surface-400">
               Tape <code className="font-mono text-primary-600 dark:text-primary-400">@{agent.slug}</code>{" "}
               dans l'<Link to="/assistant" className="text-primary-600 dark:text-primary-400 font-semibold hover:underline">Assistant</Link>{" "}
               pour invoquer cet agent en cours de conversation.
-            </p>
-          </div>
-        </aside>
-      </div>
+            </footer>
+          </aside>
+        </>
+      )}
     </div>
   );
 }

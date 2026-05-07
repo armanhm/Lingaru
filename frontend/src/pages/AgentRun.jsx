@@ -104,9 +104,6 @@ function Bubble({ msg, agent }) {
             </div>
           )}
         </div>
-        {!isUser && msg.provider && (
-          <p className="text-[10px] text-surface-400 dark:text-surface-500 mt-1.5 uppercase tracking-wider font-medium">{msg.provider}</p>
-        )}
       </div>
     </div>
   );

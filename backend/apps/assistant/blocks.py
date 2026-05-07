@@ -47,6 +47,16 @@ _FALLBACK_FENCE_RE = re.compile(
     re.DOTALL | re.IGNORECASE,
 )
 
+# Last-ditch fallback for models that ignore both fence forms and just dump
+# a JSON array at the end of the reply. Anchored to end-of-string (with
+# optional trailing whitespace) so we only eat *trailing* arrays, not ones
+# used illustratively mid-reply. We further validate the parsed payload
+# against the block schema before stripping it from the prose.
+_BARE_TRAILING_ARRAY_RE = re.compile(
+    r"(?P<json>\[[^\[\]]*(?:\{.*?\}[^\[\]]*)+\])\s*\Z",
+    re.DOTALL,
+)
+
 
 VALID_QUIZ_KINDS = {"mcq", "multi", "true_false", "matching", "short"}
 
@@ -175,9 +185,34 @@ def _validate_quiz_question(q: dict) -> dict | None:
     return out
 
 
+# Whitelist of routes the agent is allowed to deep-link to. The model
+# loves to hallucinate French translations of route names ("/grammaire"
+# instead of "/grammar") so we lock it down to real ones; anything else
+# is dropped silently. Keep this in sync with the React Router config.
+ALLOWED_ACTION_ROUTES = {
+    "/dashboard",
+    "/topics",
+    "/discover",
+    "/news",
+    "/practice/dictation",
+    "/practice/pronunciation",
+    "/practice/conjugation",
+    "/practice/srs",
+    "/mini-games",
+    "/grammar",
+    "/exam-prep",
+    "/assistant",
+    "/agents",
+    "/dictionary",
+    "/progress",
+    "/settings",
+    "/documents",
+}
+
+
 def _validate_action(b: dict) -> dict | None:
     """Inline call-to-action button. Renders as a chip the user can tap to
-    navigate (in-app only — `route` must start with "/").
+    navigate (in-app only — `route` must be in ``ALLOWED_ACTION_ROUTES``).
 
     The agent uses this when the right answer to a request is "go to that
     feature": "show me news" → `{type: "action", route: "/news",
@@ -188,13 +223,16 @@ def _validate_action(b: dict) -> dict | None:
     label = b.get("label")
     if not (_is_str(route) and _is_str(label)):
         return None
-    # Only allow internal routes — never external URLs. The agent can't
-    # smuggle off-site links into the chat surface.
-    if not route.startswith("/"):
+    route_clean = route.strip()
+    # Internal routes only AND must be a known real route. Stops the model
+    # from sending users to /grammaire (404) when they meant /grammar.
+    if not route_clean.startswith("/"):
+        return None
+    if route_clean not in ALLOWED_ACTION_ROUTES:
         return None
     out = {
         "type": "action",
-        "route": route.strip()[:160],
+        "route": route_clean[:160],
         "label": label.strip()[:48],
     }
     if _is_str(b.get("emoji")):
@@ -402,5 +440,29 @@ def extract_blocks(raw_text: str) -> tuple[str, list[dict]]:
             continue
         prose = (raw_text[: fb.start()] + raw_text[fb.end() :]).strip()
         return prose, cleaned
+
+    # ── Strategy 3: bare trailing array ─────────────────────────
+    # Some models (notably gemini-flash and groq's 70b) put the JSON
+    # blocks inline in the prose with NO fence at all — just a bare
+    # `[{...}]` at the end of the reply. We salvage only when the array
+    # is the trailing token AND it parses to objects with a known block
+    # `type`. Anchored to end-of-string so a JSON array used illustratively
+    # mid-reply doesn't get eaten.
+    bare = _BARE_TRAILING_ARRAY_RE.search(raw_text)
+    if bare:
+        payload = bare.group("json").strip()
+        cleaned = []
+        try:
+            data = json.loads(payload)
+            candidates = _candidates_from_payload(data)
+            if candidates is not None:
+                cleaned = _validate_candidates(candidates)
+        except json.JSONDecodeError:
+            salvaged = _salvage_objects(payload)
+            cleaned = _validate_candidates(salvaged) if salvaged else []
+
+        if cleaned:
+            prose = raw_text[: bare.start()].strip()
+            return prose, cleaned
 
     return raw_text, []

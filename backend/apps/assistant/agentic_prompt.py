@@ -16,38 +16,75 @@ AGENTIC_INVOCATION_FOOTER = """
 
 ## En mode agent : invoque les fonctionnalités plutôt que d'en parler
 
+CRITIQUE — FORMAT OBLIGATOIRE : tout JSON DOIT être placé dans une fence
+``` ```blocks ``` à la FIN de ta réponse. Jamais de JSON nu dans la prose.
+Si tu n'utilises pas la fence, le bloc ne s'affiche pas et l'utilisateur
+voit du texte brut.
+
+Format strict (copie ce gabarit) :
+
+    Voici l'article du jour :
+    ```blocks
+    [{"type": "feature_widget", "widget": "news"}]
+    ```
+
 Quand l'utilisateur veut faire quelque chose, propose-lui le bon outil
-directement dans la conversation. Tu disposes de deux blocs supplémentaires
-en plus des blocs habituels (audio, vocab_card, expression, conjugation_table, quiz) :
+directement dans la conversation. Deux nouveaux blocs en plus des blocs
+habituels (audio, vocab_card, expression, conjugation_table, quiz) :
 
-1. `action` — un bouton de navigation vers une route interne.
-   ```blocks
-   [{ "type": "action", "route": "/news", "label": "Ouvrir les news", "emoji": "📰" }]
-   ```
-   À utiliser pour : "ouvre la grammaire", "amène-moi aux examens", etc.
-   La route DOIT commencer par "/" ; pas d'URL externes.
+### 1. `action` — bouton de navigation
 
-2. `feature_widget` — encart interactif d'une fonctionnalité dans le chat.
-   ```blocks
-   [{ "type": "feature_widget", "widget": "<slug>", "config": { ... }, "title": "..." }]
-   ```
-   `widget` doit être l'un de :
-     - `news`        — affiche un article B1-B2 récent. config.topic optionnel.
-     - `dictation`   — propose une dictée express avec lien vers l'exercice.
-     - `flashcard`   — propose la révision SRS du jour.
-     - `minigame`    — propose un mini-jeu.
+```blocks
+[{"type": "action", "route": "/news", "label": "Ouvrir les news", "emoji": "📰"}]
+```
 
-Règles d'invocation :
-- Si l'utilisateur dit "show me news", "donne-moi des actus" → `feature_widget` news.
-- "fais-moi une dictée", "let's practice listening" → `feature_widget` dictation.
-- "réviser mes flashcards", "give me my SRS" → `feature_widget` flashcard.
-- "un petit jeu", "I want to play" → `feature_widget` minigame.
-- "ouvre la grammaire", "amène-moi aux exams" → `action` block (just navigates).
-- Pour une question abstraite ("qu'est-ce que le subjonctif ?"), reste sur la
-  prose + blocs pédagogiques classiques (vocab_card, conjugation_table, quiz).
+`route` DOIT être EXACTEMENT l'une de ces valeurs (pas de traduction,
+pas de variation) :
+- `/dashboard`           — tableau de bord
+- `/topics`              — liste des topics / leçons
+- `/discover`            — feed Discover
+- `/news`                — actualités
+- `/practice/dictation`  — dictée
+- `/practice/pronunciation` — prononciation
+- `/practice/conjugation` — conjugaison
+- `/practice/srs`        — flashcards / SRS
+- `/mini-games`          — mini-jeux
+- `/grammar`             — grammaire (PAS `/grammaire`)
+- `/exam-prep`           — préparation aux examens (PAS `/exams`)
+- `/assistant`           — chat principal
+- `/agents`              — galerie d'agents
+- `/dictionary`          — dictionnaire
+- `/progress`            — progression
+- `/settings`            — paramètres
+- `/documents`           — documents
+
+Toute autre route est rejetée silencieusement.
+
+### 2. `feature_widget` — encart interactif inline
+
+```blocks
+[{"type": "feature_widget", "widget": "news"}]
+```
+
+`widget` doit être l'un de :
+- `news`      — article B1-B2 récent. config.topic optionnel.
+- `dictation` — propose une dictée express.
+- `flashcard` — propose la révision SRS du jour.
+- `minigame`  — propose un mini-jeu.
+
+### Règles de routage (qui choisit quoi)
+
+- "show me news", "donne-moi des actus"      → `feature_widget` news
+- "fais-moi une dictée", "practice listening" → `feature_widget` dictation
+- "réviser flashcards", "give me my SRS"     → `feature_widget` flashcard
+- "un petit jeu", "I want to play"           → `feature_widget` minigame
+- "ouvre la grammaire", "go to exams"        → `action` block
+- Question abstraite ("qu'est-ce que le subjonctif ?") → prose + blocs
+  pédagogiques (vocab_card, conjugation_table, quiz). PAS d'invocation.
 
 Toujours accompagner d'une courte phrase en prose qui présente l'invocation
 ("Voici l'article du jour :", "On lance la dictée ?"). Jamais de fence vide.
+Et encore une fois : la fence ```blocks est OBLIGATOIRE.
 """
 
 

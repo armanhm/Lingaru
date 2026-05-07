@@ -62,8 +62,16 @@ function NewsWidget({ config, title }) {
     client
       .get("/news/", { params: { topic: config.topic || undefined, page: 1 } })
       .then((res) => {
-        const list = res.data?.articles || res.data?.results || [];
-        setArticle(list[0] || null);
+        // /api/news/ ships the list inside a paginator wrapper:
+        //   { count, next, previous, results: { articles: [...], topics: [...] } }
+        // Be defensive in case the wrapper changes — fall back to flat shapes.
+        const data = res.data || {};
+        const list =
+          data.results?.articles ||
+          data.articles ||
+          data.results ||
+          [];
+        setArticle(Array.isArray(list) ? list[0] || null : null);
       })
       .catch(() => setArticle(null))
       .finally(() => setLoading(false));

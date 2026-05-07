@@ -364,9 +364,44 @@ class TestActionBlock:
         _, blocks = extract_blocks(_wrap([{"type": "action", "route": "news", "label": "x"}]))
         assert blocks == []
 
+    def test_rejects_unknown_route(self):
+        # Model loves to translate route names — "/grammaire" instead of
+        # "/grammar". Validator must reject so we don't 404 the user.
+        _, blocks = extract_blocks(_wrap([{"type": "action", "route": "/grammaire", "label": "x"}]))
+        assert blocks == []
+
     def test_drops_when_label_missing(self):
         _, blocks = extract_blocks(_wrap([{"type": "action", "route": "/news"}]))
         assert blocks == []
+
+
+class TestBareTrailingArrayFallback:
+    """Some models skip the fence entirely and just put a JSON array at
+    the very end of the prose. We salvage these — but only if they
+    validate as our schema, and only when they're at end-of-string."""
+
+    def test_bare_action_array_at_end(self):
+        # Reproduces the gemini reply we saw in the wild.
+        raw = (
+            "C'est une excellente idée pour progresser. Voici le lien :\n"
+            '[{"type": "action", "route": "/grammar", "label": "Ouvrir la grammaire", "emoji": "📖"}]'
+        )
+        prose, blocks = extract_blocks(raw)
+        assert len(blocks) == 1
+        assert blocks[0]["type"] == "action"
+        assert blocks[0]["route"] == "/grammar"
+        assert "type" not in prose
+        assert "Voici le lien" in prose
+
+    def test_bare_feature_widget_array_at_end(self):
+        raw = (
+            "On va s'amuser !\n"
+            '[{"type": "feature_widget", "widget": "minigame", "title": "Jeu amusant"}]'
+        )
+        prose, blocks = extract_blocks(raw)
+        assert len(blocks) == 1
+        assert blocks[0]["widget"] == "minigame"
+        assert prose == "On va s'amuser !"
 
 
 class TestFeatureWidgetBlock:

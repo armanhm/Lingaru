@@ -209,6 +209,60 @@ def _candidates_from_payload(data) -> list | None:
     return None
 
 
+def _salvage_objects(payload: str) -> list[dict]:
+    """When the overall JSON array is invalid, try to recover individual
+    top-level objects.
+
+    Models occasionally emit one bad object inside an otherwise-fine
+    array (a missing key, a stray apostrophe). Strict ``json.loads``
+    rejects the whole batch; this walker scans for balanced ``{...}``
+    spans at depth 1 and parses each one independently. Bad objects
+    are dropped silently — we'd rather show 7 valid conjugation tables
+    and skip the broken subjonctif than render nothing.
+
+    Only called as a fallback after a full ``json.loads`` failure.
+    """
+    out: list[dict] = []
+    depth = 0
+    start = -1
+    in_string = False
+    escape = False
+
+    for i, ch in enumerate(payload):
+        if in_string:
+            if escape:
+                escape = False
+            elif ch == "\\":
+                escape = True
+            elif ch == '"':
+                in_string = False
+            continue
+
+        if ch == '"':
+            in_string = True
+            continue
+
+        if ch == "{":
+            if depth == 0:
+                start = i
+            depth += 1
+        elif ch == "}":
+            if depth == 0:
+                continue
+            depth -= 1
+            if depth == 0 and start != -1:
+                snippet = payload[start : i + 1]
+                start = -1
+                try:
+                    obj = json.loads(snippet)
+                    if isinstance(obj, dict):
+                        out.append(obj)
+                except json.JSONDecodeError:
+                    # Skip this one, keep walking.
+                    continue
+    return out
+
+
 def _validate_candidates(candidates: list) -> list[dict]:
     cleaned = []
     for entry in candidates:
@@ -249,6 +303,16 @@ def extract_blocks(raw_text: str) -> tuple[str, list[dict]]:
         try:
             data = json.loads(payload)
         except json.JSONDecodeError as exc:
+            # Strict parse failed — try to salvage individual objects so
+            # one malformed entry doesn't kill the whole reply.
+            salvaged = _salvage_objects(payload)
+            if salvaged:
+                logger.info(
+                    "blocks fence: strict parse failed (%s); salvaged %d objects",
+                    exc,
+                    len(salvaged),
+                )
+                return prose, _validate_candidates(salvaged)
             logger.warning("blocks fence had invalid JSON: %s", exc)
             return raw_text, []
 
@@ -263,14 +327,18 @@ def extract_blocks(raw_text: str) -> tuple[str, list[dict]]:
     # JSON snippets only loses the one that's actually our schema.
     for fb in _FALLBACK_FENCE_RE.finditer(raw_text):
         payload = fb.group("json").strip()
+
+        cleaned = []
         try:
             data = json.loads(payload)
+            candidates = _candidates_from_payload(data)
+            if candidates is not None:
+                cleaned = _validate_candidates(candidates)
         except json.JSONDecodeError:
-            continue
-        candidates = _candidates_from_payload(data)
-        if candidates is None:
-            continue
-        cleaned = _validate_candidates(candidates)
+            # Try the per-object salvage even when strict parse fails.
+            salvaged = _salvage_objects(payload)
+            cleaned = _validate_candidates(salvaged) if salvaged else []
+
         if not cleaned:
             continue
         prose = (raw_text[: fb.start()] + raw_text[fb.end() :]).strip()

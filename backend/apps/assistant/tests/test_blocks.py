@@ -351,6 +351,42 @@ class TestUnknownTypeIsForwardCompat:
         assert blocks == [{"type": "audio", "text": "salut", "lang": "fr"}]
 
 
+class TestSalvageMalformedArray:
+    """When the LLM emits one bad object inside an otherwise-fine array,
+    the strict json.loads fails and we'd render nothing. The salvage
+    walker recovers the surviving objects so the user still sees
+    something useful."""
+
+    def test_skips_one_bad_object_keeps_rest(self):
+        # Middle entry is missing the "pronoun": key — JSON parse will
+        # blow up. The two valid entries should still render.
+        raw = (
+            "Voici les conjugaisons.\n"
+            "```blocks\n"
+            "[\n"
+            '  {"type":"conjugation_table","verb":"aller","tense":"présent",'
+            '"rows":[{"pronoun":"je","form":"vais"}]},\n'
+            '  {"type":"conjugation_table","verb":"aller","tense":"subjonctif",'
+            '"rows":[{"que vous","form":"alliez"}]},\n'
+            '  {"type":"conjugation_table","verb":"aller","tense":"imparfait",'
+            '"rows":[{"pronoun":"je","form":"allais"}]}\n'
+            "]\n"
+            "```"
+        )
+        prose, blocks = extract_blocks(raw)
+        assert len(blocks) == 2
+        tenses = [b["tense"] for b in blocks]
+        assert "présent" in tenses
+        assert "imparfait" in tenses
+        assert "subjonctif" not in tenses
+        assert prose == "Voici les conjugaisons."
+
+    def test_all_objects_bad_returns_empty(self):
+        raw = '```blocks\n[\n  {"type":"conjugation_table","verb":"aller","rows":[{"x"}]}\n]\n```'
+        _, blocks = extract_blocks(raw)
+        assert blocks == []
+
+
 class TestJsonFenceFallback:
     """Models often default to ```json — accept it if the payload validates."""
 

@@ -12,6 +12,7 @@ import {
 import useVoiceRecorder from "../hooks/useVoiceRecorder";
 import AudioPlayButton from "../components/AudioPlayButton";
 import QuizBlock, { splitChatMessage } from "../components/QuizBlock";
+import MessageBlocks from "../components/blocks/MessageBlocks";
 
 /** Strip markdown formatting so TTS reads clean text, not "asterisk asterisk". */
 function plainText(s) {
@@ -662,6 +663,16 @@ function ChatBubble({ msg }) {
           )}
         </div>
 
+        {/* Structured blocks (audio, vocab, conjugation table, quiz, …) emitted
+            by the agent in a fenced ```blocks segment. The plain-text prose
+            sits in the bubble above; the blocks render below as standalone
+            cards so they breathe regardless of bubble width. */}
+        {!isUser && Array.isArray(msg.blocks) && msg.blocks.length > 0 && (
+          <div className="w-full max-w-[520px]">
+            <MessageBlocks blocks={msg.blocks} />
+          </div>
+        )}
+
         {!isUser && msg.audioUrl && (
           <audio controls className="mt-2 w-full max-w-[280px]" src={msg.audioUrl}>
             Your browser does not support audio.
@@ -982,6 +993,7 @@ export default function Assistant() {
       const assistantMessage = {
         role: "assistant",
         content: res.data.reply,
+        blocks: Array.isArray(res.data.blocks) ? res.data.blocks : [],
         provider: res.data.provider,
         ragUsed: res.data.rag_used || false,
       };
@@ -1013,6 +1025,7 @@ export default function Assistant() {
         const assistantMessage = {
           role: "assistant",
           content: res.data.ai_response_text,
+          blocks: Array.isArray(res.data.blocks) ? res.data.blocks : [],
           provider: res.data.provider,
           audioUrl: res.data.ai_response_audio_url,
         };

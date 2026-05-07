@@ -392,8 +392,8 @@ export default function AgentRun() {
           {/* Spacer pushes composer to the bottom when the thread is empty */}
           {messages.length === 0 && <div className="flex-1" />}
 
-          {/* Composer — pinned at the bottom of the column */}
-          <div className="sticky bottom-0 rounded-2xl border border-surface-200 dark:border-surface-700 bg-white dark:bg-surface-900 focus-within:border-primary-400 focus-within:ring-2 focus-within:ring-primary-100 dark:focus-within:ring-primary-900/40 transition-all shadow-sm">
+          {/* Composer — pinned at the bottom of the column with breathing room */}
+          <div className="sticky bottom-4 mb-2 rounded-2xl border border-surface-200 dark:border-surface-700 bg-white dark:bg-surface-900 focus-within:border-primary-400 focus-within:ring-2 focus-within:ring-primary-100 dark:focus-within:ring-primary-900/40 transition-all shadow-sm">
             <textarea
               value={input}
               onChange={(e) => setInput(e.target.value)}

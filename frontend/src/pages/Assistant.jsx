@@ -232,25 +232,65 @@ const TUTOR = {
  * current message. Each agent can override the assistant mode for
  * that single turn and prepends a directive to the message body.
  * ────────────────────────────────────────────────────────────── */
+// Per-agent block-fence hints. Each string ends with a literal example of
+// the JSON we want emitted. The schema is the contract enforced by
+// apps.assistant.blocks (audio, vocab_card, expression, conjugation_table,
+// quiz). Putting the example INSIDE the directive — instead of relying on
+// the agent's bottom-of-prompt instruction — gets gemini-2.0-flash to
+// actually emit the fence; without it the model just returns prose.
+const BLOCKS_FOOTER =
+  "\n\nIMPORTANT: après ta réponse en prose, ajoute UN bloc fenced ```blocks au format JSON " +
+  "strict (double-quoted, pas de virgule finale). Schéma autorisé : " +
+  "{type:'audio', text, lang} · {type:'vocab_card', french, english, pos?, example_fr?} · " +
+  "{type:'expression', fr, en, note?} · {type:'conjugation_table', verb, tense, rows:[{pronoun, form}]} · " +
+  "{type:'quiz', questions:[{kind, prompt, ...}]} avec kind ∈ mcq/multi/true_false/matching/short.";
+
+const CONJUGATE_EXAMPLE =
+  BLOCKS_FOOTER +
+  "\n\nExemple pour 'aller, présent' :\n```blocks\n" +
+  '[{"type":"conjugation_table","verb":"aller","tense":"présent",' +
+  '"rows":[{"pronoun":"je","form":"vais"},{"pronoun":"tu","form":"vas"},' +
+  '{"pronoun":"il/elle","form":"va"},{"pronoun":"nous","form":"allons"},' +
+  '{"pronoun":"vous","form":"allez"},{"pronoun":"ils/elles","form":"vont"}]}]\n' +
+  "```\nÉmets une `conjugation_table` PAR temps demandé (donc plusieurs blocs).";
+
+const VOCAB_EXAMPLE =
+  BLOCKS_FOOTER +
+  "\n\nExemple pour 'marché' :\n```blocks\n" +
+  '[{"type":"vocab_card","french":"marché","english":"market","pos":"n.m.",' +
+  '"example_fr":"Je vais au marché tous les samedis."},' +
+  '{"type":"audio","text":"marché","lang":"fr"}]\n```';
+
+const IDIOM_EXAMPLE =
+  BLOCKS_FOOTER +
+  "\n\nExemple :\n```blocks\n" +
+  '[{"type":"expression","fr":"avoir le cafard","en":"to feel down",' +
+  '"note":"Littéralement : avoir le cafard. Registre : familier."}]\n```';
+
+const PRON_EXAMPLE =
+  BLOCKS_FOOTER +
+  "\n\nExemple :\n```blocks\n" +
+  '[{"type":"audio","text":"<le mot ou la phrase>","lang":"fr"}]\n```';
+
 const AGENTS = [
   { key: "grammar",   emoji: "🧠", label: "Grammar",      hint: "Explique un point de grammaire", mode: "grammar_explanation",
-    directive: "Explique le point de grammaire suivant en français, avec des exemples concrets B1-B2." },
+    directive: "Explique le point de grammaire suivant en français, avec des exemples concrets B1-B2." + BLOCKS_FOOTER },
   { key: "correct",   emoji: "✍️", label: "Correct",      hint: "Corrige un texte français",       mode: "grammar_correction",
     directive: "Corrige ce texte en français et explique chaque erreur." },
   { key: "vocab",     emoji: "📚", label: "Vocab",        hint: "Définition d'un mot",              mode: "conversation",
-    directive: "Donne la définition, le genre, la prononciation IPA et 2 exemples du mot suivant." },
+    directive: "Donne la définition, le genre, la prononciation IPA et 2 exemples du mot suivant." + VOCAB_EXAMPLE },
   { key: "conjugate", emoji: "✏️", label: "Conjugate",    hint: "Conjugue un verbe",                 mode: "conversation",
-    directive: "Conjugue le verbe suivant aux 8 temps principaux (présent, imparfait, passé composé, futur simple, conditionnel présent, subjonctif présent, impératif, plus-que-parfait)." },
+    directive: "Conjugue le verbe suivant aux 8 temps principaux (présent, imparfait, passé composé, futur simple, conditionnel présent, subjonctif présent, impératif, plus-que-parfait)." + CONJUGATE_EXAMPLE },
   { key: "translate", emoji: "🌐", label: "Translate",    hint: "Traduit FR ↔ EN",                  mode: "conversation",
-    directive: "Traduis ce texte. Détecte la langue source et donne la traduction dans l'autre langue, avec une note sur les choix difficiles." },
+    directive: "Traduis ce texte. Détecte la langue source et donne la traduction dans l'autre langue, avec une note sur les choix difficiles." + BLOCKS_FOOTER },
   { key: "idiom",     emoji: "💬", label: "Idiom",        hint: "Explique une expression française", mode: "conversation",
-    directive: "Explique cette expression idiomatique française : sens littéral, sens réel, registre, et un exemple d'usage." },
+    directive: "Explique cette expression idiomatique française : sens littéral, sens réel, registre, et un exemple d'usage." + IDIOM_EXAMPLE },
   { key: "culture",   emoji: "🇫🇷", label: "Culture",      hint: "Note culturelle sur la France",    mode: "conversation",
-    directive: "Donne une note culturelle française liée au sujet suivant : contexte, anecdote, mots-clés." },
+    directive: "Donne une note culturelle française liée au sujet suivant : contexte, anecdote, mots-clés." + BLOCKS_FOOTER },
   { key: "pron",      emoji: "🔊", label: "Pronunciation", hint: "Prononciation + IPA",              mode: "conversation",
-    directive: "Donne la prononciation phonétique (IPA) et un conseil concret pour bien prononcer ce mot/phrase." },
+    directive: "Donne la prononciation phonétique (IPA) et un conseil concret pour bien prononcer ce mot/phrase." + PRON_EXAMPLE },
   { key: "exam",      emoji: "🎯", label: "Exam",         hint: "Coach TCF / TEF",                  mode: "conversation",
-    directive: "Tu es un coach TCF / TEF. Réponds avec : (1) format ou stratégie selon la demande, (2) un exemple concret tiré de l'examen, (3) une mini-action à faire dans les 10 prochaines minutes. Ton ferme et bienveillant. Sujet :" },
+    directive: "Tu es un coach TCF / TEF. Réponds avec : (1) format ou stratégie selon la demande, (2) un exemple concret tiré de l'examen, (3) une mini-action à faire dans les 10 prochaines minutes. Ton ferme et bienveillant. Sujet :" + BLOCKS_FOOTER },
 ];
 const AGENTS_BY_KEY = Object.fromEntries(AGENTS.map((a) => [a.key, a]));
 

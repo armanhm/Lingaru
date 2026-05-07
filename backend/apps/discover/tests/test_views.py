@@ -85,7 +85,10 @@ class TestFeedEndpoint:
             last_seen_idx = max(i for i, r in enumerate(results) if r["id"] in seen_ids)
             assert first_unseen_idx < last_seen_idx
 
-    def test_excludes_expired_cards(self, auth_client, db):
+    def test_includes_expired_cards(self, auth_client, db):
+        # Discover used to filter out expired cards which left the surface
+        # near-empty after a week. Expired cards now stay visible (the
+        # `seen` ordering already pushes consumed content to the bottom).
         now = timezone.now()
         DiscoverCard.objects.create(
             type="word",
@@ -106,7 +109,7 @@ class TestFeedEndpoint:
         data = resp.json()
         titles = [r["title"] for r in data["results"]]
         assert "Active" in titles
-        assert "Expired" not in titles
+        assert "Expired" in titles
 
     def test_includes_cards_with_no_expiry(self, auth_client, db):
         DiscoverCard.objects.create(
@@ -150,8 +153,12 @@ class TestGenerateMoreEndpoint:
 
     @patch("apps.discover.views.generate_daily_cards")
     def test_generates_and_returns_cards(self, mock_generate, auth_client, db):
+        # Each call to generate_daily_cards yields up to 3 cards (word,
+        # grammar, trivia). The view now runs DEFAULT_ROUNDS rounds per
+        # request so the user gets a meaningful batch per click instead
+        # of a single trickle.
         now = timezone.now()
-        mock_cards = [
+        mock_cards_per_round = [
             DiscoverCard.objects.create(
                 type="word",
                 title="New Word",
@@ -165,14 +172,33 @@ class TestGenerateMoreEndpoint:
                 generated_at=now,
             ),
         ]
-        mock_generate.return_value = mock_cards
+        mock_generate.return_value = mock_cards_per_round
 
         resp = auth_client.post("/api/discover/generate-more/")
         assert resp.status_code == 200
         data = resp.json()
-        assert data["generated"] == 2
-        assert len(data["cards"]) == 2
-        mock_generate.assert_called_once()
+        # DEFAULT_ROUNDS=3, generator returns 2 cards per round, so 6 total.
+        assert data["rounds"] == 3
+        assert data["generated"] == 6
+        assert len(data["cards"]) == 6
+        assert mock_generate.call_count == 3
+
+    @patch("apps.discover.views.generate_daily_cards")
+    def test_respects_rounds_param(self, mock_generate, auth_client, db):
+        mock_generate.return_value = [
+            DiscoverCard.objects.create(type="word", title="W", content_json={}),
+        ]
+        resp = auth_client.post("/api/discover/generate-more/", {"rounds": 2}, format="json")
+        assert resp.status_code == 200
+        assert resp.json()["rounds"] == 2
+        assert mock_generate.call_count == 2
+
+    @patch("apps.discover.views.generate_daily_cards")
+    def test_caps_rounds_at_max(self, mock_generate, auth_client, db):
+        mock_generate.return_value = []
+        resp = auth_client.post("/api/discover/generate-more/", {"rounds": 999}, format="json")
+        assert resp.status_code == 200
+        assert resp.json()["rounds"] == 5  # MAX_ROUNDS
 
     @patch("apps.discover.views.generate_daily_cards")
     def test_returns_empty_when_generation_fails(self, mock_generate, auth_client):

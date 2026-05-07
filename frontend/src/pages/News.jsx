@@ -131,8 +131,12 @@ export default function News() {
   const handleGenerate = async () => {
     setGenerating(true);
     try {
-      await generateNews(activeTopic || undefined);
-      showToast("Nouvel article généré !", "success");
+      const res = await generateNews(activeTopic || undefined);
+      const n = res?.data?.generated ?? 1;
+      showToast(
+        n > 1 ? `${n} nouveaux articles générés !` : "Nouvel article généré !",
+        "success",
+      );
       load(activeTopic);
     } catch {
       showToast("Échec — réessayez plus tard.", "error");

@@ -26,12 +26,13 @@ class FeedView(APIView):
     permission_classes = (permissions.IsAuthenticated,)
 
     def get(self, request):
-        now = timezone.now()
-
-        # Base queryset: non-expired cards. News has its own dedicated page now.
-        qs = DiscoverCard.objects.filter(
-            models.Q(expires_at__isnull=True) | models.Q(expires_at__gt=now)
-        ).exclude(type="news")
+        # Discover used to filter on `expires_at__gt=now` which left the
+        # surface looking near-empty after a week — generators only produce
+        # one card per type per day. Show everything that hasn't been
+        # explicitly cleaned up; the `seen` ordering below pushes already-
+        # consumed cards to the bottom so freshness still wins.
+        # News keeps its own expiry filter (see NewsListView).
+        qs = DiscoverCard.objects.exclude(type="news")
 
         # Annotate with seen/interacted from user's history
         user_history = UserDiscoverHistory.objects.filter(
@@ -60,14 +61,34 @@ class FeedView(APIView):
 
 
 class GenerateMoreView(APIView):
+    """Generate fresh Discover cards on demand.
+
+    POST body (optional): {"rounds": <int 1-5>} — how many times to run
+    the generator set. Each round produces up to one word + grammar +
+    trivia card, so rounds=3 yields up to 9 new cards. We cap at 5 to
+    avoid LLM-budget runaways from a fast clicker.
+    """
+
     permission_classes = (permissions.IsAuthenticated,)
+    DEFAULT_ROUNDS = 3
+    MAX_ROUNDS = 5
 
     def post(self, request):
-        cards = generate_daily_cards()
-        serializer = DiscoverCardSerializer(cards, many=True)
+        rounds = request.data.get("rounds", self.DEFAULT_ROUNDS)
+        try:
+            rounds = max(1, min(int(rounds), self.MAX_ROUNDS))
+        except (TypeError, ValueError):
+            rounds = self.DEFAULT_ROUNDS
+
+        all_cards = []
+        for _ in range(rounds):
+            all_cards.extend(generate_daily_cards())
+
+        serializer = DiscoverCardSerializer(all_cards, many=True)
         return Response(
             {
-                "generated": len(cards),
+                "generated": len(all_cards),
+                "rounds": rounds,
                 "cards": serializer.data,
             }
         )
@@ -194,17 +215,43 @@ class NewsDetailView(APIView):
 
 
 class NewsGenerateView(APIView):
-    """Generate a fresh news card on demand."""
+    """Generate fresh news cards on demand.
+
+    POST body (optional):
+      - "topic":  filter the RSS / synthetic generator to one topic.
+      - "count":  how many cards to produce in this call (default 3, max 5).
+
+    Each call still runs the same RSS → LLM → curated-mock fallback chain
+    once per requested card, so on average you'll get N real headlines
+    when the RSS pipeline has fresh items.
+    """
 
     permission_classes = (permissions.IsAuthenticated,)
+    DEFAULT_COUNT = 3
+    MAX_COUNT = 5
 
     def post(self, request):
         topic = request.data.get("topic") or None
-        card = generate_news_card(topic=topic)
-        if card is None:
+
+        try:
+            count = max(1, min(int(request.data.get("count", self.DEFAULT_COUNT)), self.MAX_COUNT))
+        except (TypeError, ValueError):
+            count = self.DEFAULT_COUNT
+
+        cards = []
+        for _ in range(count):
+            card = generate_news_card(topic=topic)
+            if card is not None:
+                cards.append(card)
+
+        if not cards:
             return Response(
                 {"detail": "News generation failed. Try again later."},
                 status=status.HTTP_503_SERVICE_UNAVAILABLE,
             )
-        serializer = NewsDetailSerializer(card)
-        return Response(serializer.data, status=status.HTTP_201_CREATED)
+
+        serializer = NewsDetailSerializer(cards, many=True)
+        return Response(
+            {"generated": len(cards), "cards": serializer.data},
+            status=status.HTTP_201_CREATED,
+        )

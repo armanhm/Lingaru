@@ -6,8 +6,8 @@ export const getNews = ({ topic, page = 1 } = {}) =>
 export const getNewsArticle = (id) =>
   client.get(`/news/${id}/`);
 
-export const generateNews = (topic) =>
-  client.post("/news/generate/", { topic: topic || undefined });
+export const generateNews = (topic, count = 3) =>
+  client.post("/news/generate/", { topic: topic || undefined, count });
 
 export const interactWithNews = (id) =>
   client.post(`/news/${id}/interact/`);

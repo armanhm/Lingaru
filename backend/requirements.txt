@@ -21,3 +21,4 @@ PyPDF2>=3.0.0,<4.0
 youtube-transcript-api>=0.6.0,<1.0
 Pillow==10.4.0
 feedparser>=6.0.10,<7.0
+sentry-sdk[django,celery]>=2.18,<3.0

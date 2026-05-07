@@ -69,12 +69,12 @@ class TestQuizStartView:
         assert "session_id" in response.data
         assert "questions" in response.data
         assert len(response.data["questions"]) == 3
-        # Questions should not expose correct_answer
+        # correct_answer is exposed (frontend enhancer relies on it).
         for q in response.data["questions"]:
-            assert "correct_answer" not in q
             assert "id" in q
             assert "type" in q
             assert "prompt" in q
+            assert "correct_answer" in q
         assert QuizSession.objects.count() == 1
 
     def test_start_quiz_no_questions(self, authenticated_client, sample_lesson):

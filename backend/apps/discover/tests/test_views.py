@@ -58,7 +58,11 @@ class TestFeedEndpoint:
         assert resp.status_code == 200
         data = resp.json()
         assert "results" in data
-        assert len(data["results"]) == 4
+        # /api/discover/feed/ excludes news cards (news has its own surface
+        # at /api/news/), so only word + grammar + trivia are returned.
+        assert len(data["results"]) == 3
+        types = {r["type"] for r in data["results"]}
+        assert "news" not in types
 
     def test_unseen_cards_come_first(self, auth_client, user, sample_cards):
         # Mark the newest card (index 0) as seen

@@ -31,11 +31,14 @@ class TestRegisterView:
             "password_confirm": "strongpass123!",
         }
         response = api_client.post(url, data, format="json")
-        assert response.status_code == 201
+        # Registration creates an inactive user pending admin approval.
+        assert response.status_code == 202
+        assert response.data["status"] == "pending_approval"
         assert response.data["username"] == "newuser"
         assert response.data["email"] == "new@example.com"
         assert "password" not in response.data
-        assert User.objects.filter(username="newuser").exists()
+        user = User.objects.get(username="newuser")
+        assert user.is_active is False
 
     def test_register_password_mismatch(self, api_client):
         url = reverse("users:register")

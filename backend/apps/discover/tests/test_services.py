@@ -131,8 +131,11 @@ class TestGenerateTriviaCard:
 
 @pytest.mark.django_db
 class TestGenerateNewsCard:
+    @patch("apps.discover.news_fetcher.fetch_one_fresh_card")
     @patch("apps.discover.services.create_llm_router")
-    def test_creates_news_card_from_llm(self, mock_create_router):
+    def test_creates_news_card_from_llm(self, mock_create_router, mock_rss):
+        # No RSS item available -> falls through to LLM-synthetic path.
+        mock_rss.return_value = None
         mock_router = MagicMock()
         mock_router.generate.return_value = MagicMock(
             content=json.dumps({
@@ -152,47 +155,47 @@ class TestGenerateNewsCard:
         assert card is not None
         assert card.type == "news"
         assert card.content_json["article_fr"] is not None
-        assert len(card.content_json["key_vocabulary"]) == 2
+        # Service maps both `vocabulary` and `key_vocabulary` onto a single
+        # `vocabulary` key in the saved content_json.
+        assert len(card.content_json["vocabulary"]) == 2
 
+    @patch("apps.discover.news_fetcher.fetch_one_fresh_card")
     @patch("apps.discover.services.create_llm_router")
-    def test_returns_none_on_llm_error(self, mock_create_router):
+    def test_returns_curated_fallback_when_all_layers_fail(self, mock_create_router, mock_rss):
+        # When RSS and LLM both fail, the service returns a curated mock
+        # rather than None \u2014 this is the documented Layer 3 behaviour.
+        mock_rss.return_value = None
         mock_create_router.side_effect = RuntimeError("No API key")
         card = generate_news_card()
-        assert card is None
+        assert card is not None
+        assert card.type == "news"
 
 
 @pytest.mark.django_db
 class TestGenerateDailyCards:
-    @patch("apps.discover.services.generate_news_card")
+    # News has its own /api/news/ flow now; the daily Discover feed
+    # only generates word + grammar + trivia.
     @patch("apps.discover.services.generate_trivia_card")
     @patch("apps.discover.services.generate_grammar_card")
     @patch("apps.discover.services.generate_word_card")
-    def test_generates_all_card_types(
-        self, mock_word, mock_grammar, mock_trivia, mock_news,
-    ):
+    def test_generates_all_card_types(self, mock_word, mock_grammar, mock_trivia):
         mock_word.return_value = DiscoverCard(pk=1, type="word", title="w")
         mock_grammar.return_value = DiscoverCard(pk=2, type="grammar", title="g")
         mock_trivia.return_value = DiscoverCard(pk=3, type="trivia", title="t")
-        mock_news.return_value = DiscoverCard(pk=4, type="news", title="n")
 
         cards = generate_daily_cards()
-        assert len(cards) == 4
+        assert len(cards) == 3
         mock_word.assert_called_once()
         mock_grammar.assert_called_once()
         mock_trivia.assert_called_once()
-        mock_news.assert_called_once()
 
-    @patch("apps.discover.services.generate_news_card")
     @patch("apps.discover.services.generate_trivia_card")
     @patch("apps.discover.services.generate_grammar_card")
     @patch("apps.discover.services.generate_word_card")
-    def test_skips_none_results(
-        self, mock_word, mock_grammar, mock_trivia, mock_news,
-    ):
+    def test_skips_none_results(self, mock_word, mock_grammar, mock_trivia):
         mock_word.return_value = DiscoverCard(pk=1, type="word", title="w")
         mock_grammar.return_value = None  # no grammar rules in DB
         mock_trivia.return_value = None  # LLM error
-        mock_news.return_value = DiscoverCard(pk=4, type="news", title="n")
 
         cards = generate_daily_cards()
-        assert len(cards) == 2
+        assert len(cards) == 1

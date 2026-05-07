@@ -76,8 +76,9 @@ class TestQuizQuestionSerializer:
         assert "options" in data
         assert len(data["options"]) == 4  # correct + 3 wrong
         assert "hello" in data["options"]
-        # Should NOT expose correct_answer or explanation
-        assert "correct_answer" not in data
+        # correct_answer is exposed by design (the frontend quiz-enhancer
+        # needs it to render hints/explanations). Explanation stays server-side.
+        assert data["correct_answer"] == "hello"
         assert "explanation" not in data
 
     def test_fill_blank_question_no_options(self, sample_questions):

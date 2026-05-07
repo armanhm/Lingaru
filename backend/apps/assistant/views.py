@@ -82,6 +82,15 @@ class ChatView(APIView):
         else:
             system_prompt = SYSTEM_PROMPTS.get(mode, SYSTEM_PROMPTS["conversation"])
 
+        # Agentic mode users get an extra footer that documents the
+        # `action` and `feature_widget` block types so the LLM knows it
+        # can invoke features inline. Other modes don't see this — keeps
+        # the general/exam chat focused on pedagogy, not navigation.
+        if getattr(request.user, "mode", None) == "agentic":
+            from apps.assistant.agentic_prompt import append_agentic_footer
+
+            system_prompt = append_agentic_footer(system_prompt)
+
         # RAG: retrieve relevant context for conversation mode
         # (skipped when an agent is in charge — agents have their own focused brief).
         rag_used = False
@@ -322,6 +331,13 @@ class VoiceChatView(APIView):
         messages = [{"role": msg.role, "content": msg.content} for msg in prior_messages]
 
         system_prompt = SYSTEM_PROMPTS.get(mode, SYSTEM_PROMPTS["conversation"])
+
+        # Agentic mode: same footer the text chat gets, so spoken requests
+        # like "hey show me the news" can invoke widgets too.
+        if getattr(request.user, "mode", None) == "agentic":
+            from apps.assistant.agentic_prompt import append_agentic_footer
+
+            system_prompt = append_agentic_footer(system_prompt)
 
         # 2. LLM: generate response
         try:

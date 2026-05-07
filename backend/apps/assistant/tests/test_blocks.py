@@ -338,6 +338,64 @@ class TestQuizShort:
         assert blocks == []
 
 
+class TestActionBlock:
+    def test_minimal(self):
+        _, blocks = extract_blocks(
+            _wrap([{"type": "action", "route": "/news", "label": "Ouvrir les news"}])
+        )
+        assert blocks == [{"type": "action", "route": "/news", "label": "Ouvrir les news"}]
+
+    def test_with_emoji(self):
+        _, blocks = extract_blocks(
+            _wrap(
+                [{"type": "action", "route": "/dictionary", "label": "Dictionnaire", "emoji": "📖"}]
+            )
+        )
+        assert blocks[0]["emoji"] == "📖"
+
+    def test_rejects_external_url(self):
+        # External routes can't be smuggled in — internal only.
+        _, blocks = extract_blocks(
+            _wrap([{"type": "action", "route": "https://example.com", "label": "Hack"}])
+        )
+        assert blocks == []
+
+    def test_rejects_relative_path(self):
+        _, blocks = extract_blocks(_wrap([{"type": "action", "route": "news", "label": "x"}]))
+        assert blocks == []
+
+    def test_drops_when_label_missing(self):
+        _, blocks = extract_blocks(_wrap([{"type": "action", "route": "/news"}]))
+        assert blocks == []
+
+
+class TestFeatureWidgetBlock:
+    def test_minimal(self):
+        _, blocks = extract_blocks(_wrap([{"type": "feature_widget", "widget": "news"}]))
+        assert blocks == [{"type": "feature_widget", "widget": "news", "config": {}}]
+
+    def test_with_config_and_title(self):
+        _, blocks = extract_blocks(
+            _wrap(
+                [
+                    {
+                        "type": "feature_widget",
+                        "widget": "dictation",
+                        "config": {"length": "short"},
+                        "title": "Mini dictée",
+                    }
+                ]
+            )
+        )
+        assert blocks[0]["widget"] == "dictation"
+        assert blocks[0]["config"] == {"length": "short"}
+        assert blocks[0]["title"] == "Mini dictée"
+
+    def test_rejects_unknown_widget(self):
+        _, blocks = extract_blocks(_wrap([{"type": "feature_widget", "widget": "rocketship"}]))
+        assert blocks == []
+
+
 class TestUnknownTypeIsForwardCompat:
     def test_unknown_dropped_others_kept(self):
         _, blocks = extract_blocks(

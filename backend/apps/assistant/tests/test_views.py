@@ -72,6 +72,44 @@ class TestChatView:
         assert Message.objects.count() == 2  # user + assistant
 
     @patch("apps.assistant.views.create_llm_router")
+    def test_chat_appends_agentic_footer_only_for_agentic_users(
+        self,
+        mock_factory,
+        api_client,
+        user,
+        mock_llm_response,
+    ):
+        # General-mode user → footer NOT included.
+        user.mode = "general"
+        user.save(update_fields=["mode"])
+        api_client.force_authenticate(user=user)
+        mock_router = MagicMock()
+        mock_router.generate.return_value = mock_llm_response
+        mock_factory.return_value = mock_router
+
+        api_client.post(
+            "/api/assistant/chat/",
+            {"message": "hi", "mode": "conversation"},
+            format="json",
+        )
+        sys_prompt_general = mock_router.generate.call_args.kwargs["system_prompt"]
+        assert "En mode agent" not in sys_prompt_general
+
+        # Same user, switched to agentic → footer IS appended.
+        user.mode = "agentic"
+        user.save(update_fields=["mode"])
+        mock_router.generate.reset_mock()
+        api_client.post(
+            "/api/assistant/chat/",
+            {"message": "show me news", "mode": "conversation"},
+            format="json",
+        )
+        sys_prompt_agentic = mock_router.generate.call_args.kwargs["system_prompt"]
+        assert "En mode agent" in sys_prompt_agentic
+        assert "feature_widget" in sys_prompt_agentic
+        assert "action" in sys_prompt_agentic
+
+    @patch("apps.assistant.views.create_llm_router")
     def test_chat_extracts_blocks_from_fenced_reply(
         self,
         mock_factory,

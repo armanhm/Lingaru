@@ -175,6 +175,62 @@ def _validate_quiz_question(q: dict) -> dict | None:
     return out
 
 
+def _validate_action(b: dict) -> dict | None:
+    """Inline call-to-action button. Renders as a chip the user can tap to
+    navigate (in-app only — `route` must start with "/").
+
+    The agent uses this when the right answer to a request is "go to that
+    feature": "show me news" → `{type: "action", route: "/news",
+    label: "Ouvrir les news"}`. Distinct from `feature_widget` (which
+    embeds the feature inline rather than navigating to it).
+    """
+    route = b.get("route")
+    label = b.get("label")
+    if not (_is_str(route) and _is_str(label)):
+        return None
+    # Only allow internal routes — never external URLs. The agent can't
+    # smuggle off-site links into the chat surface.
+    if not route.startswith("/"):
+        return None
+    out = {
+        "type": "action",
+        "route": route.strip()[:160],
+        "label": label.strip()[:48],
+    }
+    if _is_str(b.get("emoji")):
+        out["emoji"] = b["emoji"].strip()[:8]
+    return out
+
+
+# Whitelist of widget types the chat can embed inline. Adding a new widget
+# means: a renderer in <MessageBlocks>, the matching backend slug here, AND
+# a tested embeddable component on the frontend. We're conservative — only
+# widgets that make sense in a small chat surface and don't need their own
+# layout (no full-page embeds).
+ALLOWED_FEATURE_WIDGETS = {"news", "dictation", "flashcard", "minigame"}
+
+
+def _validate_feature_widget(b: dict) -> dict | None:
+    """Embed an entire feature as a card inside the chat.
+
+    The agent emits `{type: "feature_widget", widget: "news", config: {...}}`
+    when it wants the user to act on a feature WITHOUT leaving the chat —
+    e.g. "play me a dictation" should produce the dictation card right in
+    the conversation. `config` is widget-specific and passed through to
+    the renderer; we only validate the wrapper here.
+    """
+    widget = b.get("widget")
+    if widget not in ALLOWED_FEATURE_WIDGETS:
+        return None
+    config = b.get("config", {})
+    if not isinstance(config, dict):
+        config = {}
+    out = {"type": "feature_widget", "widget": widget, "config": config}
+    if _is_str(b.get("title")):
+        out["title"] = b["title"].strip()[:80]
+    return out
+
+
 def _validate_quiz(b: dict) -> dict | None:
     questions = b.get("questions")
     if not (isinstance(questions, list) and questions):
@@ -193,6 +249,9 @@ BLOCK_VALIDATORS = {
     "expression": _validate_expression,
     "conjugation_table": _validate_conjugation_table,
     "quiz": _validate_quiz,
+    # Phase 3: agentic-mode invocation.
+    "action": _validate_action,
+    "feature_widget": _validate_feature_widget,
 }
 
 

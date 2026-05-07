@@ -3,6 +3,8 @@ import VocabCardBlock from "./VocabCardBlock";
 import ExpressionBlock from "./ExpressionBlock";
 import ConjugationTableBlock from "./ConjugationTableBlock";
 import QuizBlockV2 from "./QuizBlockV2";
+import ActionBlock from "./ActionBlock";
+import FeatureWidgetBlock from "./FeatureWidgetBlock";
 
 /**
  * Renderer registry for structured payloads attached to assistant replies.
@@ -19,6 +21,11 @@ const RENDERERS = {
   expression: ExpressionBlock,
   conjugation_table: ConjugationTableBlock,
   quiz: QuizBlockV2,
+  // Phase 3: agentic-mode in-chat invocation. `action` deep-links to a
+  // route; `feature_widget` embeds a mini version of a feature in the
+  // chat bubble.
+  action: ActionBlock,
+  feature_widget: FeatureWidgetBlock,
 };
 
 export default function MessageBlocks({ blocks }) {

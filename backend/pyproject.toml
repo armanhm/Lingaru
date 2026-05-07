@@ -1,0 +1,33 @@
+[tool.ruff]
+target-version = "py312"
+line-length = 100
+extend-exclude = [
+    "migrations",
+    "staticfiles",
+    "media",
+    ".venv",
+]
+
+[tool.ruff.lint]
+# Conservative rule set to start: pyflakes, pycodestyle, isort, plus common bug
+# patterns from bugbear. Easy to tighten later (add UP, SIM, RUF when ready).
+select = ["E", "F", "I", "B", "W"]
+ignore = [
+    "E501",   # line too long — Ruff's formatter handles this
+    "B008",   # function-call-in-default-argument (Django patterns trip this)
+    "B904",   # raise-without-from-inside-except (verbose, low signal)
+]
+
+[tool.ruff.lint.per-file-ignores]
+"**/tests/**" = ["E402", "F401", "F811", "F841", "B007", "B017"]
+"**/settings/*.py" = ["F401", "F403", "F405"]
+"**/management/commands/*.py" = ["E402", "E701", "E702"]
+"**/views.py" = ["E402"]
+"**/models.py" = ["E701"]
+"apps/grammar/views.py" = ["E701"]
+"apps/gamification/views.py" = ["F841"]
+"services/rag/**" = ["B905"]
+
+[tool.ruff.format]
+quote-style = "double"
+indent-style = "space"

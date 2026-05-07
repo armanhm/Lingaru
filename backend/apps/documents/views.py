@@ -7,9 +7,9 @@ from rest_framework.views import APIView
 
 from .models import Document, DocumentChunk
 from .serializers import (
-    DocumentUploadSerializer,
-    DocumentSerializer,
     DocumentChunkSerializer,
+    DocumentSerializer,
+    DocumentUploadSerializer,
 )
 
 logger = logging.getLogger(__name__)
@@ -38,13 +38,16 @@ class DocumentUploadView(APIView):
         # Trigger async processing
         try:
             from apps.documents.tasks import process_document_task
+
             process_document_task.delay(document.id)
         except Exception as exc:
             # If Celery is not available, process synchronously
             logger.warning(
-                "Celery unavailable, processing synchronously: %s", exc,
+                "Celery unavailable, processing synchronously: %s",
+                exc,
             )
             from services.rag.pipeline import process_document
+
             try:
                 process_document(document.id)
             except Exception as proc_exc:

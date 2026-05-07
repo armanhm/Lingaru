@@ -14,7 +14,7 @@ from telegram.ext import (
 
 from apps.bot.handlers.start import get_or_create_telegram_user
 from apps.content.models import Lesson, Question
-from apps.practice.models import QuizSession, QuizAnswer
+from apps.practice.models import QuizAnswer, QuizSession
 
 logger = logging.getLogger(__name__)
 
@@ -35,8 +35,7 @@ def pick_quiz_lesson(topic_name: str | None) -> Lesson | None:
 
     if topic_name:
         lessons = lessons.filter(
-            Q(topic__name_en__icontains=topic_name)
-            | Q(topic__name_fr__icontains=topic_name)
+            Q(topic__name_en__icontains=topic_name) | Q(topic__name_fr__icontains=topic_name)
         )
 
     lesson = lessons.order_by("?").first()
@@ -62,7 +61,7 @@ def build_question_text(question: Question) -> str:
     if question.type == "mcq" and question.wrong_answers:
         options = [question.correct_answer] + list(question.wrong_answers)
         random.shuffle(options)
-        option_lines = [f"  {i+1}. {opt}" for i, opt in enumerate(options)]
+        option_lines = [f"  {i + 1}. {opt}" for i, opt in enumerate(options)]
         text += "\n\n" + "\n".join(option_lines)
         text += "\n\nReply with the correct answer text."
 
@@ -80,7 +79,9 @@ def create_quiz_session(user, lesson: Lesson) -> QuizSession:
 
 
 def record_answer(
-    session: QuizSession, question: Question, user_answer: str,
+    session: QuizSession,
+    question: Question,
+    user_answer: str,
 ) -> QuizAnswer:
     """Record a quiz answer and return the QuizAnswer object."""
     is_correct = check_answer(user_answer, question.correct_answer)
@@ -117,9 +118,7 @@ async def quiz_start(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
     lesson = pick_quiz_lesson(topic_name)
     if lesson is None:
         topic_msg = f' for topic "{topic_name}"' if topic_name else ""
-        await update.message.reply_text(
-            f"No quiz available{topic_msg}. Try /quiz without a topic!"
-        )
+        await update.message.reply_text(f"No quiz available{topic_msg}. Try /quiz without a topic!")
         return ConversationHandler.END
 
     session = create_quiz_session(user, lesson)

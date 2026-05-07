@@ -5,9 +5,9 @@ from rest_framework.views import APIView
 
 from apps.content.models import Question
 from apps.gamification.services import award_xp, check_streak
+
 from .models import LessonCompletion, MistakeEntry, SRSCard
 from .serializers import (
-    LessonCompletionSerializer,
     MistakeEntrySerializer,
     MistakeMarkReviewedSerializer,
     SRSCardSerializer,
@@ -96,7 +96,8 @@ class MistakeMarkReviewedView(APIView):
 
         ids = serializer.validated_data["mistake_ids"]
         updated = MistakeEntry.objects.filter(
-            user=request.user, id__in=ids,
+            user=request.user,
+            id__in=ids,
         ).update(reviewed=True)
 
         return Response({"updated": updated})
@@ -139,20 +140,22 @@ class LessonCompleteView(APIView):
             check_streak(request.user)
 
         # Find the next lesson in the same topic
-        next_lesson = (
-            lesson.topic.lessons.filter(order__gt=lesson.order).order_by("order").first()
-        )
+        next_lesson = lesson.topic.lessons.filter(order__gt=lesson.order).order_by("order").first()
 
-        return Response({
-            "completed": True,
-            "first_time": created,
-            "xp_earned": 50 if created else 0,
-            "next_lesson": {
-                "id": next_lesson.id,
-                "title": next_lesson.title,
-                "type": next_lesson.type,
-            } if next_lesson else None,
-        })
+        return Response(
+            {
+                "completed": True,
+                "first_time": created,
+                "xp_earned": 50 if created else 0,
+                "next_lesson": {
+                    "id": next_lesson.id,
+                    "title": next_lesson.title,
+                    "type": next_lesson.type,
+                }
+                if next_lesson
+                else None,
+            }
+        )
 
 
 class TopicProgressView(APIView):
@@ -175,12 +178,14 @@ class TopicProgressView(APIView):
             ).values_list("lesson_id", flat=True)
         )
 
-        return Response({
-            "topic_id": topic_id,
-            "total_lessons": len(lesson_ids),
-            "completed_lessons": len(completed_ids),
-            "completed_lesson_ids": list(completed_ids),
-        })
+        return Response(
+            {
+                "topic_id": topic_id,
+                "total_lessons": len(lesson_ids),
+                "completed_lessons": len(completed_ids),
+                "completed_lesson_ids": list(completed_ids),
+            }
+        )
 
 
 class ConjugationCheckView(APIView):
@@ -222,6 +227,7 @@ class ConjugationCheckView(APIView):
 
         if not is_correct:
             from apps.progress.services import record_mistake
+
             record_mistake(
                 user=request.user,
                 question=question,
@@ -240,11 +246,13 @@ class ConjugationCheckView(APIView):
             )
             check_streak(request.user)
 
-        return Response({
-            "is_correct": is_correct,
-            "correct_answer": question.correct_answer,
-            "explanation": question.explanation,
-        })
+        return Response(
+            {
+                "is_correct": is_correct,
+                "correct_answer": question.correct_answer,
+                "explanation": question.explanation,
+            }
+        )
 
 
 class ConjugationListView(APIView):
@@ -253,8 +261,6 @@ class ConjugationListView(APIView):
     permission_classes = (permissions.IsAuthenticated,)
 
     def get(self, request):
-        from django.db.models import Count
-
         questions = Question.objects.filter(type="conjugation")
 
         # Extract unique verbs from prompts (format: "Conjugate {verb} (...)")
@@ -269,7 +275,9 @@ class ConjugationListView(APIView):
                 verbs.add(verb_part)
                 tenses.add(tense_part)
 
-        return Response({
-            "verbs": sorted(verbs),
-            "tenses": sorted(tenses),
-        })
+        return Response(
+            {
+                "verbs": sorted(verbs),
+                "tenses": sorted(tenses),
+            }
+        )

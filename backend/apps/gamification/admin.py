@@ -5,7 +5,14 @@ from .models import Badge, UserBadge, UserStats, XPTransaction
 
 @admin.register(UserStats)
 class UserStatsAdmin(admin.ModelAdmin):
-    list_display = ("user", "total_xp", "level", "current_streak", "longest_streak", "last_active_date")
+    list_display = (
+        "user",
+        "total_xp",
+        "level",
+        "current_streak",
+        "longest_streak",
+        "last_active_date",
+    )
     list_filter = ("level",)
     search_fields = ("user__username",)
     readonly_fields = ("user",)

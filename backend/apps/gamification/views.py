@@ -1,15 +1,14 @@
-from collections import defaultdict
+from datetime import timedelta
 
 from django.db.models import Avg, Count, Sum
 from django.utils import timezone
-from datetime import timedelta
-
 from rest_framework import permissions, status
 from rest_framework.pagination import PageNumberPagination
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
 from apps.progress.models import LessonCompletion, MistakeEntry, SRSCard
+
 from .models import Badge, UserBadge, UserStats, XPTransaction
 from .serializers import (
     BadgeSerializer,
@@ -39,17 +38,23 @@ class BadgesView(APIView):
     permission_classes = (permissions.IsAuthenticated,)
 
     def get(self, request):
-        earned_qs = UserBadge.objects.filter(
-            user=request.user,
-        ).select_related("badge").order_by("-earned_at")
+        earned_qs = (
+            UserBadge.objects.filter(
+                user=request.user,
+            )
+            .select_related("badge")
+            .order_by("-earned_at")
+        )
 
         earned_ids = set(earned_qs.values_list("badge_id", flat=True))
         available_qs = Badge.objects.exclude(id__in=earned_ids)
 
-        return Response({
-            "earned": UserBadgeSerializer(earned_qs, many=True).data,
-            "available": BadgeSerializer(available_qs, many=True).data,
-        })
+        return Response(
+            {
+                "earned": UserBadgeSerializer(earned_qs, many=True).data,
+                "available": BadgeSerializer(available_qs, many=True).data,
+            }
+        )
 
 
 class LeaderboardPagination(PageNumberPagination):
@@ -85,6 +90,7 @@ class HistoryView(APIView):
 
 class MiniGameScoreView(APIView):
     """POST {game, score, total} — award XP for mini-game completion."""
+
     permission_classes = (permissions.IsAuthenticated,)
 
     VALID_GAMES = {"word_scramble", "match_pairs", "gender_snap", "speed_round", "missing_letter"}
@@ -134,8 +140,10 @@ class TrendReportView(APIView):
             day = txn["created_at"].date().isoformat()
             daily_xp[day] = daily_xp.get(day, 0) + txn["xp_amount"]
         daily_xp_list = [
-            {"date": (now - timedelta(days=i)).date().isoformat(),
-             "xp": daily_xp.get((now - timedelta(days=i)).date().isoformat(), 0)}
+            {
+                "date": (now - timedelta(days=i)).date().isoformat(),
+                "xp": daily_xp.get((now - timedelta(days=i)).date().isoformat(), 0),
+            }
             for i in range(6, -1, -1)
         ]
 
@@ -152,9 +160,7 @@ class TrendReportView(APIView):
         mistakes_week = MistakeEntry.objects.filter(user=user, created_at__gte=week_ago)
         mistakes_count = mistakes_week.count()
         mistake_types = list(
-            mistakes_week.values("mistake_type")
-            .annotate(n=Count("id"))
-            .order_by("-n")[:3]
+            mistakes_week.values("mistake_type").annotate(n=Count("id")).order_by("-n")[:3]
         )
         # Get a sample mistake detail for coaching tip
         sample_mistakes = list(
@@ -175,53 +181,110 @@ class TrendReportView(APIView):
         insights = []
 
         if total_xp_week == 0:
-            insights.append({"type": "warn", "text": "No activity this week. Even 10 minutes a day makes a difference!"})
+            insights.append(
+                {
+                    "type": "warn",
+                    "text": "No activity this week. Even 10 minutes a day makes a difference!",
+                }
+            )
         elif total_xp_week >= 200:
-            insights.append({"type": "great", "text": f"Excellent week — {total_xp_week} XP earned! Keep this momentum."})
+            insights.append(
+                {
+                    "type": "great",
+                    "text": f"Excellent week — {total_xp_week} XP earned! Keep this momentum.",
+                }
+            )
         else:
-            insights.append({"type": "ok", "text": f"You earned {total_xp_week} XP this week. Try to hit 200 XP for a strong week."})
+            insights.append(
+                {
+                    "type": "ok",
+                    "text": f"You earned {total_xp_week} XP this week. Try to hit 200 XP for a strong week.",
+                }
+            )
 
         if stats.current_streak >= 7:
-            insights.append({"type": "great", "text": f"{stats.current_streak}-day streak! Consistency is the fastest path to fluency."})
+            insights.append(
+                {
+                    "type": "great",
+                    "text": f"{stats.current_streak}-day streak! Consistency is the fastest path to fluency.",
+                }
+            )
         elif stats.current_streak >= 3:
-            insights.append({"type": "ok", "text": f"{stats.current_streak}-day streak going. Don't break it — log in tomorrow!"})
+            insights.append(
+                {
+                    "type": "ok",
+                    "text": f"{stats.current_streak}-day streak going. Don't break it — log in tomorrow!",
+                }
+            )
         elif stats.current_streak == 0:
-            insights.append({"type": "warn", "text": "Your streak reset. Start a new one today — every day counts."})
+            insights.append(
+                {
+                    "type": "warn",
+                    "text": "Your streak reset. Start a new one today — every day counts.",
+                }
+            )
 
         if mistakes_count > 0:
             top_type = mistake_types[0]["mistake_type"] if mistake_types else "grammar"
-            insights.append({"type": "tip", "text": f"You made {mistakes_count} mistake{'s' if mistakes_count != 1 else ''} this week, mostly in {top_type.replace('_', ' ')}. Review them in the Mistakes journal."})
+            insights.append(
+                {
+                    "type": "tip",
+                    "text": f"You made {mistakes_count} mistake{'s' if mistakes_count != 1 else ''} this week, mostly in {top_type.replace('_', ' ')}. Review them in the Mistakes journal.",
+                }
+            )
         else:
             insights.append({"type": "great", "text": "Zero mistakes this week — flawless!"})
 
         if srs_due > 5:
-            insights.append({"type": "warn", "text": f"{srs_due} SRS cards are due for review. Don't let them pile up!"})
+            insights.append(
+                {
+                    "type": "warn",
+                    "text": f"{srs_due} SRS cards are due for review. Don't let them pile up!",
+                }
+            )
         elif srs_mastered > 0:
-            insights.append({"type": "great", "text": f"{srs_mastered} SRS card{'s' if srs_mastered != 1 else ''} mastered (21+ day interval). Great long-term retention!"})
+            insights.append(
+                {
+                    "type": "great",
+                    "text": f"{srs_mastered} SRS card{'s' if srs_mastered != 1 else ''} mastered (21+ day interval). Great long-term retention!",
+                }
+            )
 
         dominant = xp_by_type[0]["activity_type"] if xp_by_type else None
         if dominant and lessons_count == 0 and dominant == "conjugation_drill":
-            insights.append({"type": "tip", "text": "You've been drilling conjugations — nice! Balance it with a lesson or quiz for full coverage."})
+            insights.append(
+                {
+                    "type": "tip",
+                    "text": "You've been drilling conjugations — nice! Balance it with a lesson or quiz for full coverage.",
+                }
+            )
         elif lessons_count >= 3:
-            insights.append({"type": "great", "text": f"{lessons_count} lessons completed this week. Solid learning pace!"})
+            insights.append(
+                {
+                    "type": "great",
+                    "text": f"{lessons_count} lessons completed this week. Solid learning pace!",
+                }
+            )
 
-        return Response({
-            "week": {
-                "total_xp": total_xp_week,
-                "lessons_completed": lessons_count,
-                "avg_score_pct": avg_score_pct,
-                "mistakes": mistakes_count,
-                "daily_xp": daily_xp_list,
-            },
-            "srs": {
-                "total": srs_total,
-                "due": srs_due,
-                "mastered": srs_mastered,
-            },
-            "streak": stats.current_streak,
-            "level": stats.level,
-            "top_activities": xp_by_type[:4],
-            "top_mistake_types": mistake_types,
-            "sample_mistakes": sample_mistakes,
-            "insights": insights,
-        })
+        return Response(
+            {
+                "week": {
+                    "total_xp": total_xp_week,
+                    "lessons_completed": lessons_count,
+                    "avg_score_pct": avg_score_pct,
+                    "mistakes": mistakes_count,
+                    "daily_xp": daily_xp_list,
+                },
+                "srs": {
+                    "total": srs_total,
+                    "due": srs_due,
+                    "mastered": srs_mastered,
+                },
+                "streak": stats.current_streak,
+                "level": stats.level,
+                "top_activities": xp_by_type[:4],
+                "top_mistake_types": mistake_types,
+                "sample_mistakes": sample_mistakes,
+                "insights": insights,
+            }
+        )

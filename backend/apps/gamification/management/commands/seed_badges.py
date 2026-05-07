@@ -24,7 +24,6 @@ class Command(BaseCommand):
 
         self.stdout.write(
             self.style.SUCCESS(
-                f"Seeded {created_count} new badges "
-                f"({len(DEFAULT_BADGES)} total defined)"
+                f"Seeded {created_count} new badges ({len(DEFAULT_BADGES)} total defined)"
             )
         )

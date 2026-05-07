@@ -1,9 +1,11 @@
-import pytest
 from datetime import timedelta
+
+import pytest
 from django.contrib.auth import get_user_model
 from django.utils import timezone
 from rest_framework.test import APIClient
-from apps.content.models import Topic, Lesson, Vocabulary
+
+from apps.content.models import Lesson, Topic, Vocabulary
 from apps.progress.models import SRSCard
 
 User = get_user_model()
@@ -17,7 +19,9 @@ def api_client():
 @pytest.fixture
 def user(db):
     return User.objects.create_user(
-        username="srsuser", email="srs@example.com", password="testpass123!",
+        username="srsuser",
+        email="srs@example.com",
+        password="testpass123!",
     )
 
 
@@ -30,17 +34,29 @@ def authenticated_client(api_client, user):
 @pytest.fixture
 def vocab_item(db):
     topic = Topic.objects.create(
-        name_fr="Nourriture", name_en="Food",
-        description="Food vocab", icon="fork", order=1, difficulty_level=1,
+        name_fr="Nourriture",
+        name_en="Food",
+        description="Food vocab",
+        icon="fork",
+        order=1,
+        difficulty_level=1,
     )
     lesson = Lesson.objects.create(
-        topic=topic, type="vocab", title="Fruits",
-        content={}, order=1, difficulty=1,
+        topic=topic,
+        type="vocab",
+        title="Fruits",
+        content={},
+        order=1,
+        difficulty=1,
     )
     return Vocabulary.objects.create(
-        lesson=lesson, french="pomme", english="apple",
-        pronunciation="/pom/", example_sentence="Je mange une pomme.",
-        gender="f", part_of_speech="noun",
+        lesson=lesson,
+        french="pomme",
+        english="apple",
+        pronunciation="/pom/",
+        example_sentence="Je mange une pomme.",
+        gender="f",
+        part_of_speech="noun",
     )
 
 
@@ -66,7 +82,8 @@ class TestSRSDueCards:
 
     def test_excludes_future_cards(self, authenticated_client, user, vocab_item):
         SRSCard.objects.create(
-            user=user, vocabulary=vocab_item,
+            user=user,
+            vocabulary=vocab_item,
             next_review_at=timezone.now() + timedelta(days=5),
         )
         response = authenticated_client.get("/api/progress/srs/due/")

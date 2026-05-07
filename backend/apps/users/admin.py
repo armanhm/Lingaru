@@ -1,5 +1,6 @@
 from django.contrib import admin, messages
 from django.contrib.auth.admin import UserAdmin as BaseUserAdmin
+
 from .models import User
 
 
@@ -19,16 +20,24 @@ def suspend_users(modeladmin, request, queryset):
 
 @admin.register(User)
 class UserAdmin(BaseUserAdmin):
-    list_display  = (
-        "username", "email", "is_active", "is_staff",
-        "target_level", "telegram_id", "date_joined",
+    list_display = (
+        "username",
+        "email",
+        "is_active",
+        "is_staff",
+        "target_level",
+        "telegram_id",
+        "date_joined",
     )
-    list_filter   = ("is_active", "is_staff", "target_level")
+    list_filter = ("is_active", "is_staff", "target_level")
     # Pending approvals (is_active=False) come first — easy to spot.
-    ordering      = ("is_active", "-date_joined")
+    ordering = ("is_active", "-date_joined")
     list_per_page = 50
-    actions       = (approve_users, suspend_users)
+    actions = (approve_users, suspend_users)
 
     fieldsets = BaseUserAdmin.fieldsets + (
-        ("Lingaru", {"fields": ("telegram_id", "native_language", "target_level", "daily_goal_minutes")}),
+        (
+            "Lingaru",
+            {"fields": ("telegram_id", "native_language", "target_level", "daily_goal_minutes")},
+        ),
     )

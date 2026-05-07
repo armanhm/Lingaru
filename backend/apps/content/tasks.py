@@ -5,7 +5,6 @@ import logging
 import re
 
 from celery import shared_task
-from decouple import config
 
 logger = logging.getLogger(__name__)
 
@@ -39,10 +38,10 @@ def _fetch_transcript(video_id: str) -> tuple[str, str]:
     legitimately has no captions in either language.
     """
     from youtube_transcript_api import (
-        YouTubeTranscriptApi,
         NoTranscriptFound,
         TranscriptsDisabled,
         VideoUnavailable,
+        YouTubeTranscriptApi,
     )
 
     transcript_fr = ""
@@ -106,6 +105,7 @@ def _fetch_transcript(video_id: str) -> tuple[str, str]:
 def _call_llm(prompt: str) -> str:
     """Call the configured LLM and return the text response."""
     from services.llm.factory import create_llm_router
+
     router = create_llm_router()
     response = router.generate(
         messages=[{"role": "user", "content": prompt}],
@@ -197,7 +197,7 @@ Rules:
 @shared_task(name="content.process_video_lesson", bind=True, max_retries=2)
 def process_video_lesson(self, video_lesson_id: int) -> None:
     """Process a VideoLesson: fetch transcript, extract content via LLM, save records."""
-    from apps.content.models import VideoLesson, VideoVocabulary, VideoExpression, Question
+    from apps.content.models import Question, VideoExpression, VideoLesson, VideoVocabulary
 
     try:
         video = VideoLesson.objects.select_related("lesson").get(pk=video_lesson_id)
@@ -269,7 +269,15 @@ def process_video_lesson(self, video_lesson_id: int) -> None:
         # Save questions (prefixed so they can be identified/removed later)
         for item in extracted.get("questions", []):
             q_type = item.get("type", "mcq")
-            if q_type not in ("mcq", "fill_blank", "translate", "match", "listen", "cloze", "conjugation"):
+            if q_type not in (
+                "mcq",
+                "fill_blank",
+                "translate",
+                "match",
+                "listen",
+                "cloze",
+                "conjugation",
+            ):
                 q_type = "mcq"
             Question.objects.create(
                 lesson=video.lesson,

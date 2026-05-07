@@ -32,7 +32,9 @@ class GroqProvider(BaseProvider):
         tokens_used = getattr(response.usage, "total_tokens", 0)
 
         logger.info(
-            "Groq response: model=%s, tokens=%d", self.model, tokens_used,
+            "Groq response: model=%s, tokens=%d",
+            self.model,
+            tokens_used,
         )
 
         return LLMResponse(

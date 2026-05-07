@@ -50,15 +50,15 @@ def generate_feedback(accuracy: float, expected: str, transcription: str) -> str
     elif accuracy >= 0.8:
         return (
             f"Good job! Most words were correct. "
-            f"Expected: \"{expected}\" — You said: \"{transcription}\""
+            f'Expected: "{expected}" — You said: "{transcription}"'
         )
     elif accuracy >= 0.5:
         return (
             f"Keep practicing! Some words need work. "
-            f"Expected: \"{expected}\" — You said: \"{transcription}\""
+            f'Expected: "{expected}" — You said: "{transcription}"'
         )
     else:
         return (
             f"Let's try again. Listen carefully and repeat. "
-            f"Expected: \"{expected}\" — You said: \"{transcription}\""
+            f'Expected: "{expected}" — You said: "{transcription}"'
         )

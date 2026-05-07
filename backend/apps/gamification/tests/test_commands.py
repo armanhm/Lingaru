@@ -1,8 +1,8 @@
 import pytest
 from django.core.management import call_command
 
-from apps.gamification.models import Badge
 from apps.gamification.constants import DEFAULT_BADGES
+from apps.gamification.models import Badge
 
 
 @pytest.mark.django_db

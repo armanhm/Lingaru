@@ -14,9 +14,8 @@ from services.tts.service import get_or_create_audio
 from .models import Conversation, Message
 from .serializers import (
     ChatRequestSerializer,
-    MessageSerializer,
-    ConversationListSerializer,
     ConversationDetailSerializer,
+    ConversationListSerializer,
 )
 
 logger = logging.getLogger(__name__)
@@ -38,7 +37,8 @@ class ChatView(APIView):
         if conversation_id:
             try:
                 conversation = Conversation.objects.get(
-                    pk=conversation_id, user=request.user,
+                    pk=conversation_id,
+                    user=request.user,
                 )
             except Conversation.DoesNotExist:
                 return Response(
@@ -64,10 +64,7 @@ class ChatView(APIView):
         prior_messages = Message.objects.filter(
             conversation=conversation,
         ).order_by("created_at")
-        messages = [
-            {"role": msg.role, "content": msg.content}
-            for msg in prior_messages
-        ]
+        messages = [{"role": msg.role, "content": msg.content} for msg in prior_messages]
 
         # Get system prompt — agent's prompt wins when one is supplied;
         # otherwise fall back to the mode default.
@@ -75,6 +72,7 @@ class ChatView(APIView):
         if agent_slug:
             try:
                 from apps.agents.models import Agent
+
                 agent = Agent.objects.filter(slug=agent_slug, is_active=True).first()
             except Exception as exc:  # pragma: no cover — defensive
                 logger.warning("Agent lookup failed for slug=%s: %s", agent_slug, exc)
@@ -126,11 +124,13 @@ class ChatView(APIView):
 
         # --- Gamification: award XP for 5+ exchange conversations ---
         user_message_count = Message.objects.filter(
-            conversation=conversation, role="user",
+            conversation=conversation,
+            role="user",
         ).count()
         if user_message_count == 5:
             # Award exactly once when hitting the 5-message threshold
             from apps.gamification.services import award_xp, check_streak
+
             award_xp(
                 request.user,
                 activity_type="ai_conversation",
@@ -139,13 +139,15 @@ class ChatView(APIView):
             )
             check_streak(request.user)
 
-        return Response({
-            "reply": llm_response.content,
-            "conversation_id": conversation.id,
-            "provider": llm_response.provider,
-            "tokens_used": llm_response.tokens_used,
-            "rag_used": rag_used,
-        })
+        return Response(
+            {
+                "reply": llm_response.content,
+                "conversation_id": conversation.id,
+                "provider": llm_response.provider,
+                "tokens_used": llm_response.tokens_used,
+                "rag_used": rag_used,
+            }
+        )
 
 
 class ImageQueryView(APIView):
@@ -166,7 +168,8 @@ class ImageQueryView(APIView):
         if conversation_id:
             try:
                 conversation = Conversation.objects.get(
-                    pk=conversation_id, user=request.user,
+                    pk=conversation_id,
+                    user=request.user,
                 )
             except Conversation.DoesNotExist:
                 return Response(
@@ -207,6 +210,7 @@ class ImageQueryView(APIView):
 
         # Save ImageQuery record
         from .models import ImageQuery
+
         image_query = ImageQuery.objects.create(
             user=request.user,
             conversation=conversation,
@@ -237,13 +241,15 @@ class ImageQueryView(APIView):
             tokens_used=llm_response.tokens_used,
         )
 
-        return Response({
-            "image_query_id": image_query.id,
-            "ai_response": llm_response.content,
-            "conversation_id": conversation.id,
-            "provider": llm_response.provider,
-            "tokens_used": llm_response.tokens_used,
-        })
+        return Response(
+            {
+                "image_query_id": image_query.id,
+                "ai_response": llm_response.content,
+                "conversation_id": conversation.id,
+                "provider": llm_response.provider,
+                "tokens_used": llm_response.tokens_used,
+            }
+        )
 
 
 class VoiceChatView(APIView):
@@ -278,7 +284,8 @@ class VoiceChatView(APIView):
         if conversation_id:
             try:
                 conversation = Conversation.objects.get(
-                    pk=conversation_id, user=request.user,
+                    pk=conversation_id,
+                    user=request.user,
                 )
             except Conversation.DoesNotExist:
                 return Response(
@@ -303,10 +310,7 @@ class VoiceChatView(APIView):
         prior_messages = Message.objects.filter(
             conversation=conversation,
         ).order_by("created_at")
-        messages = [
-            {"role": msg.role, "content": msg.content}
-            for msg in prior_messages
-        ]
+        messages = [{"role": msg.role, "content": msg.content} for msg in prior_messages]
 
         system_prompt = SYSTEM_PROMPTS.get(mode, SYSTEM_PROMPTS["conversation"])
 
@@ -343,10 +347,12 @@ class VoiceChatView(APIView):
 
         # Gamification: XP for voice conversation at 5+ exchanges
         user_msg_count = Message.objects.filter(
-            conversation=conversation, role="user",
+            conversation=conversation,
+            role="user",
         ).count()
         if user_msg_count == 5:
             from apps.gamification.services import award_xp, check_streak
+
             award_xp(
                 request.user,
                 activity_type="ai_conversation",
@@ -355,14 +361,16 @@ class VoiceChatView(APIView):
             )
             check_streak(request.user)
 
-        return Response({
-            "transcription": user_text,
-            "ai_response_text": llm_response.content,
-            "ai_response_audio_url": audio_url,
-            "conversation_id": conversation.id,
-            "provider": llm_response.provider,
-            "tokens_used": llm_response.tokens_used,
-        })
+        return Response(
+            {
+                "transcription": user_text,
+                "ai_response_text": llm_response.content,
+                "ai_response_audio_url": audio_url,
+                "conversation_id": conversation.id,
+                "provider": llm_response.provider,
+                "tokens_used": llm_response.tokens_used,
+            }
+        )
 
 
 class ConversationListView(generics.ListAPIView):

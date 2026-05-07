@@ -1,5 +1,6 @@
-import pytest
 from datetime import date
+
+import pytest
 from django.contrib.auth import get_user_model
 from rest_framework.test import APIClient
 
@@ -16,7 +17,9 @@ def api_client():
 @pytest.fixture
 def user(db):
     return User.objects.create_user(
-        username="testuser", email="test@example.com", password="testpass123",
+        username="testuser",
+        email="test@example.com",
+        password="testpass123",
     )
 
 
@@ -44,8 +47,11 @@ class TestStatsEndpoint:
 
     def test_returns_existing_stats(self, auth_client, user):
         UserStats.objects.create(
-            user=user, total_xp=500, level=2,
-            current_streak=5, longest_streak=10,
+            user=user,
+            total_xp=500,
+            level=2,
+            current_streak=5,
+            longest_streak=10,
             last_active_date=date(2026, 4, 4),
         )
         resp = auth_client.get("/api/gamification/stats/")
@@ -66,12 +72,18 @@ class TestStatsEndpoint:
 class TestBadgesEndpoint:
     def test_returns_earned_and_available(self, auth_client, user):
         b1 = Badge.objects.create(
-            name="Earned Badge", description="d", icon="star",
-            criteria_type="total_xp", criteria_value=0,
+            name="Earned Badge",
+            description="d",
+            icon="star",
+            criteria_type="total_xp",
+            criteria_value=0,
         )
         b2 = Badge.objects.create(
-            name="Locked Badge", description="d", icon="lock",
-            criteria_type="total_xp", criteria_value=9999,
+            name="Locked Badge",
+            description="d",
+            icon="lock",
+            criteria_type="total_xp",
+            criteria_value=9999,
         )
         UserBadge.objects.create(user=user, badge=b1)
 
@@ -89,7 +101,8 @@ class TestLeaderboardEndpoint:
     def test_returns_top_users(self, auth_client):
         for i in range(5):
             u = User.objects.create_user(
-                username=f"leader{i}", email=f"leader{i}@example.com",
+                username=f"leader{i}",
+                email=f"leader{i}@example.com",
                 password="testpass123",
             )
             UserStats.objects.create(user=u, total_xp=(5 - i) * 100)
@@ -111,7 +124,9 @@ class TestHistoryEndpoint:
     def test_returns_recent_transactions(self, auth_client, user):
         for i in range(3):
             XPTransaction.objects.create(
-                user=user, activity_type="quiz_correct", xp_amount=5,
+                user=user,
+                activity_type="quiz_correct",
+                xp_amount=5,
             )
         resp = auth_client.get("/api/gamification/history/")
         assert resp.status_code == 200

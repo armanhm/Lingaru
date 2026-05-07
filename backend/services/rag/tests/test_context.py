@@ -1,4 +1,4 @@
-from unittest.mock import patch, MagicMock
+from unittest.mock import MagicMock, patch
 
 from django.core.files.base import ContentFile
 from django.test import TestCase
@@ -13,7 +13,8 @@ class TestRetrieveContextForQuery(TestCase):
 
     def setUp(self):
         self.user = User.objects.create_user(
-            username="testuser", password="testpass123",
+            username="testuser",
+            password="testpass123",
         )
         self.document = Document.objects.create(
             user=self.user,
@@ -25,7 +26,9 @@ class TestRetrieveContextForQuery(TestCase):
     def test_returns_none_when_no_documents(self):
         """No processed documents returns None."""
         other_user = User.objects.create_user(
-            username="other", email="other@test.com", password="testpass123",
+            username="other",
+            email="other@test.com",
+            password="testpass123",
         )
 
         result = retrieve_context_for_query(other_user.id, "some query")
@@ -62,7 +65,8 @@ class TestRetrieveContextForQuery(TestCase):
         mock_embedder_cls.return_value = mock_embedder
 
         result = retrieve_context_for_query(
-            self.user.id, "How do I use the subjunctive?",
+            self.user.id,
+            "How do I use the subjunctive?",
         )
 
         self.assertIsNotNone(result)

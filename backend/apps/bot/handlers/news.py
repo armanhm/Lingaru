@@ -10,9 +10,13 @@ logger = logging.getLogger(__name__)
 
 def get_random_discover_card():
     """Return a random news or trivia DiscoverCard, or None."""
-    card = DiscoverCard.objects.filter(
-        type__in=["news", "trivia"],
-    ).order_by("?").first()
+    card = (
+        DiscoverCard.objects.filter(
+            type__in=["news", "trivia"],
+        )
+        .order_by("?")
+        .first()
+    )
     return card
 
 
@@ -26,10 +30,7 @@ def _format_news_card(card) -> str:
     if content.get("article_en"):
         parts.append(f"\n_{content['article_en']}_")
     if content.get("key_vocabulary"):
-        vocab_lines = [
-            f"  {v['french']} — {v['english']}"
-            for v in content["key_vocabulary"][:5]
-        ]
+        vocab_lines = [f"  {v['french']} — {v['english']}" for v in content["key_vocabulary"][:5]]
         parts.append("\nVocabulary:\n" + "\n".join(vocab_lines))
 
     return "\n".join(parts)

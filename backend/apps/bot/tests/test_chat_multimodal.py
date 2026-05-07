@@ -1,15 +1,18 @@
+from unittest.mock import AsyncMock, MagicMock, patch
+
 import pytest
 from asgiref.sync import sync_to_async
-from unittest.mock import AsyncMock, MagicMock, patch
-from telegram import Update, User as TGUser, Message as TGMessage, Chat, PhotoSize, Voice
+from telegram import Chat, PhotoSize, Update, Voice
+from telegram import Message as TGMessage
+from telegram import User as TGUser
 
-from apps.bot.handlers.chat import (
-    chat_photo,
-    chat_voice,
-    chat_start,
-    CHATTING,
-)
 from apps.assistant.models import Conversation, ImageQuery, Message
+from apps.bot.handlers.chat import (
+    CHATTING,
+    chat_photo,
+    chat_start,
+    chat_voice,
+)
 from services.llm.base import LLMResponse
 from services.stt.base import STTResult
 
@@ -98,9 +101,7 @@ class TestChatPhoto:
         )
         mock_factory.return_value = mock_router
 
-        photo_update = make_update_with_photo(
-            user_id=111222, caption="What does this say?"
-        )
+        photo_update = make_update_with_photo(user_id=111222, caption="What does this say?")
 
         result = await chat_photo(photo_update, context)
 
@@ -110,9 +111,7 @@ class TestChatPhoto:
         assert call_kwargs.kwargs["image_data"] == b"fake-image-bytes"
 
         # Should reply with "Analyzing..." then the AI response
-        reply_texts = [
-            call.args[0] for call in photo_update.message.reply_text.call_args_list
-        ]
+        reply_texts = [call.args[0] for call in photo_update.message.reply_text.call_args_list]
         assert "Analyzing your image..." in reply_texts
         assert any("Interdit" in t for t in reply_texts)
 
@@ -133,7 +132,9 @@ class TestChatPhoto:
 
         mock_router = MagicMock()
         mock_router.generate_with_image.return_value = LLMResponse(
-            content="A French menu.", provider="gemini", tokens_used=50,
+            content="A French menu.",
+            provider="gemini",
+            tokens_used=50,
         )
         mock_factory.return_value = mock_router
 
@@ -142,7 +143,8 @@ class TestChatPhoto:
 
         iq_exists = await sync_to_async(
             ImageQuery.objects.filter(
-                question="Menu?", ai_response="A French menu.",
+                question="Menu?",
+                ai_response="A French menu.",
             ).exists
         )()
         assert iq_exists
@@ -181,9 +183,7 @@ class TestChatPhoto:
         result = await chat_photo(photo_update, context)
 
         assert result == CHATTING
-        reply_texts = [
-            call.args[0] for call in photo_update.message.reply_text.call_args_list
-        ]
+        reply_texts = [call.args[0] for call in photo_update.message.reply_text.call_args_list]
         assert any("unavailable" in t.lower() for t in reply_texts)
 
 
@@ -196,7 +196,10 @@ class TestChatVoice:
     @patch("apps.bot.handlers.chat.create_llm_router")
     @patch("apps.bot.handlers.chat.GroqWhisperProvider")
     async def test_voice_message_full_pipeline(
-        self, mock_stt_cls, mock_factory, mock_tts,
+        self,
+        mock_stt_cls,
+        mock_factory,
+        mock_tts,
     ):
         """Voice in chat: download -> STT -> LLM -> TTS -> reply."""
         # Start chat
@@ -214,7 +217,9 @@ class TestChatVoice:
         # Setup mocks
         mock_stt = MagicMock()
         mock_stt.transcribe.return_value = STTResult(
-            transcription="Bonjour", provider="groq_whisper", language="fr",
+            transcription="Bonjour",
+            provider="groq_whisper",
+            language="fr",
         )
         mock_stt_cls.return_value = mock_stt
 
@@ -240,9 +245,7 @@ class TestChatVoice:
         mock_router.generate.assert_called_once()
 
         # Should have "I heard" and the LLM response in replies
-        reply_texts = [
-            call.args[0] for call in voice_update.message.reply_text.call_args_list
-        ]
+        reply_texts = [call.args[0] for call in voice_update.message.reply_text.call_args_list]
         assert any("Bonjour" in t for t in reply_texts)
         assert any("Comment" in t for t in reply_texts)
 
@@ -269,9 +272,7 @@ class TestChatVoice:
         result = await chat_voice(voice_update, context)
 
         assert result == CHATTING
-        reply_texts = [
-            call.args[0] for call in voice_update.message.reply_text.call_args_list
-        ]
+        reply_texts = [call.args[0] for call in voice_update.message.reply_text.call_args_list]
         assert any("couldn't understand" in t.lower() for t in reply_texts)
 
     @pytest.mark.asyncio
@@ -290,7 +291,10 @@ class TestChatVoice:
     @patch("apps.bot.handlers.chat.create_llm_router")
     @patch("apps.bot.handlers.chat.GroqWhisperProvider")
     async def test_voice_saves_messages(
-        self, mock_stt_cls, mock_factory, mock_tts,
+        self,
+        mock_stt_cls,
+        mock_factory,
+        mock_tts,
     ):
         """Voice handler saves user and assistant messages."""
         start_update = MagicMock(spec=Update)
@@ -332,12 +336,16 @@ class TestChatVoice:
         conversation_id = context.user_data["conversation_id"]
         user_msg_exists = await sync_to_async(
             Message.objects.filter(
-                conversation_id=conversation_id, role="user", content="Comment allez-vous?",
+                conversation_id=conversation_id,
+                role="user",
+                content="Comment allez-vous?",
             ).exists
         )()
         assistant_msg_exists = await sync_to_async(
             Message.objects.filter(
-                conversation_id=conversation_id, role="assistant", content="Je vais bien, merci!",
+                conversation_id=conversation_id,
+                role="assistant",
+                content="Je vais bien, merci!",
             ).exists
         )()
         assert user_msg_exists
@@ -348,7 +356,10 @@ class TestChatVoice:
     @patch("apps.bot.handlers.chat.create_llm_router")
     @patch("apps.bot.handlers.chat.GroqWhisperProvider")
     async def test_voice_tts_failure_still_sends_text(
-        self, mock_stt_cls, mock_factory, mock_tts,
+        self,
+        mock_stt_cls,
+        mock_factory,
+        mock_tts,
     ):
         """If TTS fails, the text response is still sent."""
         start_update = MagicMock(spec=Update)
@@ -364,7 +375,9 @@ class TestChatVoice:
 
         mock_stt = MagicMock()
         mock_stt.transcribe.return_value = STTResult(
-            transcription="Salut", provider="groq_whisper", language="fr",
+            transcription="Salut",
+            provider="groq_whisper",
+            language="fr",
         )
         mock_stt_cls.return_value = mock_stt
 
@@ -384,7 +397,5 @@ class TestChatVoice:
 
         assert result == CHATTING
         # Text response should still be sent even if TTS fails
-        reply_texts = [
-            call.args[0] for call in voice_update.message.reply_text.call_args_list
-        ]
+        reply_texts = [call.args[0] for call in voice_update.message.reply_text.call_args_list]
         assert any("Tout va bien" in t for t in reply_texts)

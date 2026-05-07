@@ -6,7 +6,7 @@ from telegram import Update
 from telegram.ext import ContextTypes
 
 from apps.bot.handlers.start import get_or_create_telegram_user
-from apps.gamification.models import UserBadge, UserStats
+from apps.gamification.models import UserBadge
 from apps.gamification.services import get_level, get_or_create_stats
 from apps.practice.models import QuizSession
 
@@ -57,7 +57,8 @@ async def stats_command(update: Update, context: ContextTypes.DEFAULT_TYPE) -> N
 
     accuracy = (
         round(stats["total_correct"] / stats["total_questions"] * 100)
-        if stats["total_questions"] > 0 else 0
+        if stats["total_questions"] > 0
+        else 0
     )
 
     message = (

@@ -1,6 +1,6 @@
 """Gamification service — XP, streaks, badges, levels."""
 
-from datetime import date, timedelta
+from datetime import date
 from typing import Optional
 
 from django.contrib.auth import get_user_model
@@ -108,9 +108,7 @@ def check_badges(user) -> list[UserBadge]:
     Returns a list of newly created UserBadge instances.
     """
     stats = get_or_create_stats(user)
-    already_earned = set(
-        UserBadge.objects.filter(user=user).values_list("badge_id", flat=True)
-    )
+    already_earned = set(UserBadge.objects.filter(user=user).values_list("badge_id", flat=True))
     all_badges = Badge.objects.exclude(id__in=already_earned)
 
     new_badges = []
@@ -140,25 +138,39 @@ def _evaluate_badge(badge: Badge, stats: UserStats, user) -> bool:
 
     if ct == "quizzes_completed":
         from apps.practice.models import QuizSession
+
         count = QuizSession.objects.filter(
-            user=user, completed_at__isnull=False,
+            user=user,
+            completed_at__isnull=False,
         ).count()
         return count >= cv
 
     if ct == "perfect_quizzes":
         from apps.practice.models import QuizSession
-        count = QuizSession.objects.filter(
-            user=user,
-            completed_at__isnull=False,
-        ).extra(where=["score = total_questions"]).count()
+
+        count = (
+            QuizSession.objects.filter(
+                user=user,
+                completed_at__isnull=False,
+            )
+            .extra(where=["score = total_questions"])
+            .count()
+        )
         return count >= cv
 
     if ct == "ai_conversations":
-        from apps.assistant.models import Conversation
         from django.db.models import Count
-        count = Conversation.objects.filter(user=user).annotate(
-            msg_count=Count("messages"),
-        ).filter(msg_count__gte=5).count()
+
+        from apps.assistant.models import Conversation
+
+        count = (
+            Conversation.objects.filter(user=user)
+            .annotate(
+                msg_count=Count("messages"),
+            )
+            .filter(msg_count__gte=5)
+            .count()
+        )
         return count >= cv
 
     return False

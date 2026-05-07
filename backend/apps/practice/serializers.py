@@ -1,7 +1,10 @@
 import random
+
 from rest_framework import serializers
+
 from apps.content.models import Lesson, Question
-from .models import QuizSession, QuizAnswer
+
+from .models import QuizAnswer, QuizSession
 
 
 class QuizStartSerializer(serializers.Serializer):
@@ -50,8 +53,12 @@ class QuizCompleteSerializer(serializers.ModelSerializer):
     class Meta:
         model = QuizSession
         fields = (
-            "id", "lesson_title", "score", "total_questions",
-            "started_at", "completed_at",
+            "id",
+            "lesson_title",
+            "score",
+            "total_questions",
+            "started_at",
+            "completed_at",
         )
 
 
@@ -62,6 +69,11 @@ class QuizHistorySerializer(serializers.ModelSerializer):
     class Meta:
         model = QuizSession
         fields = (
-            "id", "lesson_id", "lesson_title", "score",
-            "total_questions", "started_at", "completed_at",
+            "id",
+            "lesson_id",
+            "lesson_title",
+            "score",
+            "total_questions",
+            "started_at",
+            "completed_at",
         )

@@ -46,7 +46,9 @@ class AgentStartRunView(APIView):
             context=f"agent:{agent.slug}",
         )
         run = AgentRun.objects.create(
-            user=request.user, agent=agent, conversation=conversation,
+            user=request.user,
+            agent=agent,
+            conversation=conversation,
         )
         return Response(
             {
@@ -66,8 +68,7 @@ class AgentRunsView(APIView):
     def get(self, request, slug):
         agent = get_object_or_404(Agent, slug=slug, is_active=True)
         runs = (
-            AgentRun.objects
-            .filter(user=request.user, agent=agent)
+            AgentRun.objects.filter(user=request.user, agent=agent)
             .select_related("conversation")
             .order_by("-started_at")[:20]
         )

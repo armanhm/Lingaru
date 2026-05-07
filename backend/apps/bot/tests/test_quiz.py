@@ -1,15 +1,16 @@
 import pytest
 from django.contrib.auth import get_user_model
-from apps.content.models import Topic, Lesson, Question
-from apps.practice.models import QuizSession, QuizAnswer
+
 from apps.bot.handlers.quiz import (
-    pick_quiz_lesson,
-    check_answer,
     build_question_text,
-    create_quiz_session,
-    record_answer,
+    check_answer,
     complete_quiz_session,
+    create_quiz_session,
+    pick_quiz_lesson,
+    record_answer,
 )
+from apps.content.models import Lesson, Question, Topic
+from apps.practice.models import QuizAnswer, QuizSession
 
 User = get_user_model()
 
@@ -17,35 +18,57 @@ User = get_user_model()
 @pytest.fixture
 def user(db):
     return User.objects.create_user(
-        username="quizbot_user", email="quizbot@example.com",
-        password="testpass123!", telegram_id=999888777,
+        username="quizbot_user",
+        email="quizbot@example.com",
+        password="testpass123!",
+        telegram_id=999888777,
     )
 
 
 @pytest.fixture
 def topic_with_lessons(db):
     topic = Topic.objects.create(
-        name_fr="Les salutations", name_en="Greetings",
-        description="Basic greetings", icon="wave", order=1, difficulty_level=1,
+        name_fr="Les salutations",
+        name_en="Greetings",
+        description="Basic greetings",
+        icon="wave",
+        order=1,
+        difficulty_level=1,
     )
     lesson = Lesson.objects.create(
-        topic=topic, type="vocab", title="Hello & Goodbye",
-        content={}, order=1, difficulty=1,
+        topic=topic,
+        type="vocab",
+        title="Hello & Goodbye",
+        content={},
+        order=1,
+        difficulty=1,
     )
     Question.objects.create(
-        lesson=lesson, type="mcq", prompt="What does 'bonjour' mean?",
-        correct_answer="hello", wrong_answers=["goodbye", "thanks", "please"],
-        explanation="Bonjour means hello.", difficulty=1,
+        lesson=lesson,
+        type="mcq",
+        prompt="What does 'bonjour' mean?",
+        correct_answer="hello",
+        wrong_answers=["goodbye", "thanks", "please"],
+        explanation="Bonjour means hello.",
+        difficulty=1,
     )
     Question.objects.create(
-        lesson=lesson, type="fill_blank", prompt="___jour!",
-        correct_answer="Bon", wrong_answers=[],
-        explanation="Bonjour = good day.", difficulty=1,
+        lesson=lesson,
+        type="fill_blank",
+        prompt="___jour!",
+        correct_answer="Bon",
+        wrong_answers=[],
+        explanation="Bonjour = good day.",
+        difficulty=1,
     )
     Question.objects.create(
-        lesson=lesson, type="translate", prompt="Translate: goodbye",
-        correct_answer="au revoir", wrong_answers=[],
-        explanation="Au revoir means goodbye.", difficulty=1,
+        lesson=lesson,
+        type="translate",
+        prompt="Translate: goodbye",
+        correct_answer="au revoir",
+        wrong_answers=[],
+        explanation="Au revoir means goodbye.",
+        difficulty=1,
     )
     return topic, lesson
 
@@ -53,8 +76,12 @@ def topic_with_lessons(db):
 @pytest.fixture
 def empty_topic(db):
     topic = Topic.objects.create(
-        name_fr="Vide", name_en="Empty",
-        description="No lessons", icon="x", order=2, difficulty_level=1,
+        name_fr="Vide",
+        name_en="Empty",
+        description="No lessons",
+        icon="x",
+        order=2,
+        difficulty_level=1,
     )
     return topic
 

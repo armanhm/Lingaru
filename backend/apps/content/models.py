@@ -104,9 +104,7 @@ class VideoLesson(models.Model):
         ("failed", "Failed"),
     ]
 
-    lesson = models.OneToOneField(
-        Lesson, on_delete=models.CASCADE, related_name="video"
-    )
+    lesson = models.OneToOneField(Lesson, on_delete=models.CASCADE, related_name="video")
     youtube_url = models.URLField(max_length=500)
     youtube_id = models.CharField(max_length=20, blank=True, default="")
     title = models.CharField(max_length=500, blank=True, default="")

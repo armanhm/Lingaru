@@ -1,5 +1,6 @@
 from rest_framework import serializers
-from .models import ExamExercise, ExamSession, ExamResponse
+
+from .models import ExamExercise, ExamResponse, ExamSession
 
 
 class ExerciseListSerializer(serializers.ModelSerializer):
@@ -17,8 +18,16 @@ class ExerciseListSerializer(serializers.ModelSerializer):
 class ExerciseDetailSerializer(serializers.ModelSerializer):
     class Meta:
         model = ExamExercise
-        fields = ("id", "title", "section", "cefr_level", "instructions_fr", "instructions_en",
-                  "content", "time_limit_seconds")
+        fields = (
+            "id",
+            "title",
+            "section",
+            "cefr_level",
+            "instructions_fr",
+            "instructions_en",
+            "content",
+            "time_limit_seconds",
+        )
 
 
 class SessionStartSerializer(serializers.Serializer):
@@ -45,8 +54,18 @@ class SessionCompleteSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = ExamSession
-        fields = ("id", "section", "cefr_level", "mode", "score", "max_score",
-                  "percentage", "cefr_estimate", "started_at", "completed_at")
+        fields = (
+            "id",
+            "section",
+            "cefr_level",
+            "mode",
+            "score",
+            "max_score",
+            "percentage",
+            "cefr_estimate",
+            "started_at",
+            "completed_at",
+        )
 
     def get_percentage(self, obj):
         if obj.max_score and obj.max_score > 0:
@@ -55,6 +74,7 @@ class SessionCompleteSerializer(serializers.ModelSerializer):
 
     def get_cefr_estimate(self, obj):
         from .scoring import score_to_cefr
+
         pct = self.get_percentage(obj)
         return score_to_cefr(pct)
 
@@ -64,8 +84,17 @@ class SessionHistorySerializer(serializers.ModelSerializer):
 
     class Meta:
         model = ExamSession
-        fields = ("id", "section", "cefr_level", "mode", "score", "max_score",
-                  "percentage", "started_at", "completed_at")
+        fields = (
+            "id",
+            "section",
+            "cefr_level",
+            "mode",
+            "score",
+            "max_score",
+            "percentage",
+            "started_at",
+            "completed_at",
+        )
 
     def get_percentage(self, obj):
         if obj.max_score and obj.max_score > 0:

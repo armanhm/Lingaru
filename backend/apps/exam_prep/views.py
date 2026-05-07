@@ -4,38 +4,51 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 
 from apps.gamification.services import award_xp, check_streak
-from .models import ExamExercise, ExamSession, ExamResponse, ExamProgress
-from .scoring import score_to_cefr, XP_EXAM_PRACTICE, XP_EXAM_MOCK_COMPLETE, XP_EXAM_PERFECT
+
+from .models import ExamExercise, ExamProgress, ExamResponse, ExamSession
+from .scoring import XP_EXAM_MOCK_COMPLETE, XP_EXAM_PERFECT, XP_EXAM_PRACTICE, score_to_cefr
 from .serializers import (
-    ExerciseListSerializer, ExerciseDetailSerializer,
-    SessionStartSerializer, RespondSerializer, ResponseResultSerializer,
-    SessionCompleteSerializer, SessionHistorySerializer,
+    ExerciseDetailSerializer,
+    ExerciseListSerializer,
+    RespondSerializer,
+    ResponseResultSerializer,
+    SessionCompleteSerializer,
+    SessionHistorySerializer,
+    SessionStartSerializer,
 )
 
 
 class HubView(APIView):
     """Returns per-section progress for the exam prep hub page."""
+
     permission_classes = (permissions.IsAuthenticated,)
 
     def get(self, request):
         sections = []
-        for code, label in [("CO", "Compréhension orale"), ("CE", "Compréhension écrite"),
-                            ("EE", "Expression écrite"), ("EO", "Expression orale")]:
+        for code, label in [
+            ("CO", "Compréhension orale"),
+            ("CE", "Compréhension écrite"),
+            ("EE", "Expression écrite"),
+            ("EO", "Expression orale"),
+        ]:
             exercise_count = ExamExercise.objects.filter(section=code, is_active=True).count()
             progress = ExamProgress.objects.filter(user=request.user, section=code).first()
-            sections.append({
-                "code": code,
-                "label": label,
-                "exercise_count": exercise_count,
-                "sessions_completed": progress.sessions_completed if progress else 0,
-                "best_score_pct": progress.best_score_pct if progress else 0,
-                "estimated_cefr": progress.estimated_cefr_level if progress else "",
-            })
+            sections.append(
+                {
+                    "code": code,
+                    "label": label,
+                    "exercise_count": exercise_count,
+                    "sessions_completed": progress.sessions_completed if progress else 0,
+                    "best_score_pct": progress.best_score_pct if progress else 0,
+                    "estimated_cefr": progress.estimated_cefr_level if progress else "",
+                }
+            )
         return Response({"sections": sections})
 
 
 class ExerciseListView(APIView):
     """List exercises filtered by section and optional CEFR level."""
+
     permission_classes = (permissions.IsAuthenticated,)
 
     def get(self, request):
@@ -51,6 +64,7 @@ class ExerciseListView(APIView):
 
 class SessionStartView(APIView):
     """Start a new exam session — returns exercises with content."""
+
     permission_classes = (permissions.IsAuthenticated,)
 
     def post(self, request):
@@ -74,13 +88,16 @@ class SessionStartView(APIView):
         # For CO exercises, generate audio URLs
         if section == "CO":
             from services.tts.service import get_or_create_audio
+
             for ex in exercises:
                 passage = ex.content.get("passage_fr", "")
                 if passage and "audio_url" not in ex.content:
                     try:
                         clip = get_or_create_audio(passage, language="fr")
                         if clip and hasattr(clip, "audio_file"):
-                            ex.content["audio_url"] = request.build_absolute_uri(clip.audio_file.url)
+                            ex.content["audio_url"] = request.build_absolute_uri(
+                                clip.audio_file.url
+                            )
                     except Exception:
                         pass  # TTS failure is non-fatal
 
@@ -101,18 +118,22 @@ class SessionStartView(APIView):
             max_score=total_max,
         )
 
-        return Response({
-            "session_id": session.id,
-            "section": section,
-            "cefr_level": level,
-            "mode": mode,
-            "time_limit_seconds": total_time,
-            "exercises": ExerciseDetailSerializer(exercises, many=True).data,
-        }, status=status.HTTP_201_CREATED)
+        return Response(
+            {
+                "session_id": session.id,
+                "section": section,
+                "cefr_level": level,
+                "mode": mode,
+                "time_limit_seconds": total_time,
+                "exercises": ExerciseDetailSerializer(exercises, many=True).data,
+            },
+            status=status.HTTP_201_CREATED,
+        )
 
 
 class SessionRespondView(APIView):
     """Submit an answer for one question in an exam session."""
+
     permission_classes = (permissions.IsAuthenticated,)
 
     def post(self, request, session_id):
@@ -122,7 +143,9 @@ class SessionRespondView(APIView):
             return Response({"detail": "Session not found."}, status=status.HTTP_404_NOT_FOUND)
 
         if session.completed_at:
-            return Response({"detail": "Session already completed."}, status=status.HTTP_400_BAD_REQUEST)
+            return Response(
+                {"detail": "Session already completed."}, status=status.HTTP_400_BAD_REQUEST
+            )
 
         serializer = RespondSerializer(data=request.data)
         serializer.is_valid(raise_exception=True)
@@ -140,7 +163,9 @@ class SessionRespondView(APIView):
         if session.section in ("CE", "CO"):
             questions = exercise.content.get("questions", [])
             if question_index >= len(questions):
-                return Response({"detail": "Invalid question index."}, status=status.HTTP_400_BAD_REQUEST)
+                return Response(
+                    {"detail": "Invalid question index."}, status=status.HTTP_400_BAD_REQUEST
+                )
 
             question = questions[question_index]
             correct_answer = question.get("correct_answer", "")
@@ -163,7 +188,9 @@ class SessionRespondView(APIView):
 
         # AI-graded sections (EE, EO)
         if session.section in ("EE", "EO"):
-            import json, re
+            import json
+            import re
+
             from services.llm.factory import create_llm_router
             from services.llm.prompts import SYSTEM_PROMPTS
 
@@ -191,7 +218,12 @@ class SessionRespondView(APIView):
                 text = re.sub(r"\s*```$", "", text)
                 grading = json.loads(text)
             except Exception:
-                grading = {"score": 0, "max_score": 20, "feedback_en": "Grading failed. Please try again.", "feedback_fr": ""}
+                grading = {
+                    "score": 0,
+                    "max_score": 20,
+                    "feedback_en": "Grading failed. Please try again.",
+                    "feedback_fr": "",
+                }
 
             ai_score = grading.get("score", 0)
             ai_max = grading.get("max_score", 20)
@@ -217,6 +249,7 @@ class SessionRespondView(APIView):
 
 class SessionCompleteView(APIView):
     """Complete an exam session — calculate score, award XP, update progress."""
+
     permission_classes = (permissions.IsAuthenticated,)
 
     def post(self, request, session_id):
@@ -226,7 +259,9 @@ class SessionCompleteView(APIView):
             return Response({"detail": "Session not found."}, status=status.HTTP_404_NOT_FOUND)
 
         if session.completed_at:
-            return Response({"detail": "Session already completed."}, status=status.HTTP_400_BAD_REQUEST)
+            return Response(
+                {"detail": "Session already completed."}, status=status.HTTP_400_BAD_REQUEST
+            )
 
         # Calculate score
         responses = session.responses.all()
@@ -261,6 +296,7 @@ class SessionCompleteView(APIView):
 
 class SessionHistoryView(APIView):
     """List past exam sessions for the authenticated user."""
+
     permission_classes = (permissions.IsAuthenticated,)
 
     def get(self, request):

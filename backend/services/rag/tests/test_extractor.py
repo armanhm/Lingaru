@@ -1,9 +1,9 @@
 import io
-from unittest.mock import patch, MagicMock
+from unittest.mock import MagicMock, patch
 
 from django.test import TestCase
 
-from services.rag.extractor import extract_text, UnsupportedFileTypeError
+from services.rag.extractor import UnsupportedFileTypeError, extract_text
 
 
 class TestTextExtraction(TestCase):

@@ -6,12 +6,13 @@ from typing import Optional
 from django.utils import timezone
 
 from apps.content.models import Question
-from .models import MistakeEntry, SRSCard
 
+from .models import MistakeEntry, SRSCard
 
 # ---------------------------------------------------------------------------
 # SM-2 pure algorithm (no ORM — easy to unit-test)
 # ---------------------------------------------------------------------------
+
 
 def sm2_update(
     quality: int,
@@ -57,14 +58,13 @@ def sm2_update(
 # Django-level helpers
 # ---------------------------------------------------------------------------
 
+
 def get_due_cards(user, limit: int = 20):
     """Return SRSCards due for review, oldest first."""
     now = timezone.now()
-    return (
-        SRSCard.objects
-        .filter(user=user, next_review_at__lte=now)
-        .select_related("vocabulary")[:limit]
-    )
+    return SRSCard.objects.filter(user=user, next_review_at__lte=now).select_related("vocabulary")[
+        :limit
+    ]
 
 
 def review_card(card: SRSCard, quality: int) -> SRSCard:
@@ -102,6 +102,7 @@ def get_or_create_card(user, vocabulary) -> SRSCard:
 # ---------------------------------------------------------------------------
 # Mistake recording
 # ---------------------------------------------------------------------------
+
 
 def classify_mistake(question: Optional[Question]) -> str:
     """Infer mistake_type from the question type."""

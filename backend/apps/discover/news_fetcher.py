@@ -33,11 +33,12 @@ logger = logging.getLogger(__name__)
 # ── Tunables ────────────────────────────────────────────────────────
 NEWS_CARD_LIFETIME_DAYS = 7
 MAX_ITEMS_PER_SOURCE_DEFAULT = 1
-MAX_ITEMS_PREFERRED_SOURCE   = 3   # RFI is "preferred" → fetch more
-SUMMARY_TRIM_CHARS = 1200          # cap text we send to the LLM
+MAX_ITEMS_PREFERRED_SOURCE = 3  # RFI is "preferred" → fetch more
+SUMMARY_TRIM_CHARS = 1200  # cap text we send to the LLM
 
 
 # ── RSS fetch ───────────────────────────────────────────────────────
+
 
 def _strip_html(value: str) -> str:
     if not value:
@@ -85,8 +86,12 @@ def fetch_real_news(
     out: list[dict] = []
 
     for src in sources:
-        per_source = limit_per_source if limit_per_source is not None else (
-            MAX_ITEMS_PREFERRED_SOURCE if src.get("preferred") else MAX_ITEMS_PER_SOURCE_DEFAULT
+        per_source = (
+            limit_per_source
+            if limit_per_source is not None
+            else (
+                MAX_ITEMS_PREFERRED_SOURCE if src.get("preferred") else MAX_ITEMS_PER_SOURCE_DEFAULT
+            )
         )
 
         try:
@@ -96,8 +101,7 @@ def fetch_real_news(
                 src["url"],
                 request_headers={
                     "User-Agent": (
-                        "Mozilla/5.0 (compatible; LingaruBot/1.0; "
-                        "+https://app.armanflower.shop)"
+                        "Mozilla/5.0 (compatible; LingaruBot/1.0; +https://app.armanflower.shop)"
                     ),
                     "Accept": "application/rss+xml, application/xml, text/xml, */*",
                 },
@@ -129,22 +133,25 @@ def fetch_real_news(
                 t = entry.get(key)
                 if t:
                     from datetime import datetime
+
                     try:
                         published = datetime(*t[:6])
                     except Exception:
                         pass
                     break
 
-            out.append({
-                "source_id":   src["id"],
-                "source_name": src["name"],
-                "topic":       src.get("topic", "misc"),
-                "level":       src.get("level", "B1"),
-                "title":       title[:280],
-                "summary":     summary[:SUMMARY_TRIM_CHARS],
-                "source_url":  link,
-                "published":   published,
-            })
+            out.append(
+                {
+                    "source_id": src["id"],
+                    "source_name": src["name"],
+                    "topic": src.get("topic", "misc"),
+                    "level": src.get("level", "B1"),
+                    "title": title[:280],
+                    "summary": summary[:SUMMARY_TRIM_CHARS],
+                    "source_url": link,
+                    "published": published,
+                }
+            )
             seen.add(link)
             picked += 1
 
@@ -168,20 +175,20 @@ ADAPT_SYSTEM_PROMPT = (
     'society, environ, world>",\n'
     '  "level": "<A2 | B1 | B2>",\n'
     '  "article_fr": "<140-180 word French rewrite at the chosen level — keep '
-    'the facts of the original, simplify vocabulary, prefer present/passé '
+    "the facts of the original, simplify vocabulary, prefer present/passé "
     'composé where natural>",\n'
     '  "article_en": "<full English translation of the rewrite>",\n'
     '  "vocabulary": [\n'
     '    {"french": "...", "english": "...", "pos": "...", "example_fr": "..."},\n'
-    '    ... 6 entries total\n'
+    "    ... 6 entries total\n"
     "  ],\n"
     '  "expressions": [\n'
     '    {"fr": "...", "en": "...", "note": "..."},\n'
-    '    ... 3 entries total\n'
+    "    ... 3 entries total\n"
     "  ],\n"
     '  "grammar_points": [\n'
     '    {"title": "...", "explanation": "...", "example_fr": "..."},\n'
-    '    ... 2 entries total\n'
+    "    ... 2 entries total\n"
     "  ]\n"
     "}\n"
     "Rules:\n"
@@ -231,7 +238,9 @@ def adapt_news_for_learners(item: dict) -> Optional[dict]:
     except (json.JSONDecodeError, AttributeError) as exc:
         logger.warning(
             "LLM returned unparseable JSON for %s: %s\nRaw: %s",
-            item["source_id"], exc, (response.content or "")[:300],
+            item["source_id"],
+            exc,
+            (response.content or "")[:300],
         )
         return None
 
@@ -239,8 +248,16 @@ def adapt_news_for_learners(item: dict) -> Optional[dict]:
 # ── Persist ─────────────────────────────────────────────────────────
 
 VALID_TOPICS = {
-    "politics", "sports", "culture", "economy", "science",
-    "tech", "society", "environ", "world", "misc",
+    "politics",
+    "sports",
+    "culture",
+    "economy",
+    "science",
+    "tech",
+    "society",
+    "environ",
+    "world",
+    "misc",
 }
 
 
@@ -264,14 +281,14 @@ def save_adapted_card(item: dict, adapted: dict) -> Optional[DiscoverCard]:
         level=level,
         source_url=item["source_url"],
         content_json={
-            "article_fr":     adapted.get("article_fr", ""),
-            "article_en":     adapted.get("article_en", ""),
-            "vocabulary":     adapted.get("vocabulary", []),
-            "expressions":    adapted.get("expressions", []),
+            "article_fr": adapted.get("article_fr", ""),
+            "article_en": adapted.get("article_en", ""),
+            "vocabulary": adapted.get("vocabulary", []),
+            "expressions": adapted.get("expressions", []),
             "grammar_points": adapted.get("grammar_points", []),
-            "source_name":    item["source_name"],
-            "source_id":      item["source_id"],
-            "source_domain":  _domain_of(item["source_url"]),
+            "source_name": item["source_name"],
+            "source_id": item["source_id"],
+            "source_domain": _domain_of(item["source_url"]),
         },
         generated_at=now,
         expires_at=now + timedelta(days=NEWS_CARD_LIFETIME_DAYS),
@@ -280,6 +297,7 @@ def save_adapted_card(item: dict, adapted: dict) -> Optional[DiscoverCard]:
 
 
 # ── Top-level orchestrator ──────────────────────────────────────────
+
 
 def run_news_pipeline(
     sources: Optional[list[dict]] = None,
@@ -323,6 +341,7 @@ def fetch_one_fresh_card(topic: Optional[str] = None) -> Optional[DiscoverCard]:
     further fallback to synthetic / curated.
     """
     from apps.discover.sources import sources_for_topic
+
     items = fetch_real_news(
         sources=sources_for_topic(topic) if topic else None,
         limit_per_source=1,

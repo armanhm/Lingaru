@@ -26,16 +26,18 @@ DEBUG = False
 # Each entry MUST include the scheme. Examples:
 #   CSRF_TRUSTED_ORIGINS=http://37.27.222.155:8080,https://lingaru.app
 CSRF_TRUSTED_ORIGINS = [
-    o.strip()
-    for o in os.environ.get("CSRF_TRUSTED_ORIGINS", "").split(",")
-    if o.strip()
+    o.strip() for o in os.environ.get("CSRF_TRUSTED_ORIGINS", "").split(",") if o.strip()
 ]
 
 # ── Cookie security ──────────────────────────────────────────────
 # Default False so HTTP works out-of-the-box; set =True in .env once
 # you're behind HTTPS (Let's Encrypt, Cloudflare, or a tunnel).
-SESSION_COOKIE_SECURE = os.environ.get("SESSION_COOKIE_SECURE", "False").lower() in ("1", "true", "yes")
-CSRF_COOKIE_SECURE    = os.environ.get("CSRF_COOKIE_SECURE",    "False").lower() in ("1", "true", "yes")
+SESSION_COOKIE_SECURE = os.environ.get("SESSION_COOKIE_SECURE", "False").lower() in (
+    "1",
+    "true",
+    "yes",
+)
+CSRF_COOKIE_SECURE = os.environ.get("CSRF_COOKIE_SECURE", "False").lower() in ("1", "true", "yes")
 
 # ── Behind a reverse proxy ───────────────────────────────────────
 # nginx forwards X-Forwarded-Proto so Django knows the original scheme.
@@ -54,8 +56,8 @@ X_FRAME_OPTIONS = "DENY"
 SENTRY_DSN = os.environ.get("SENTRY_DSN", "").strip()
 if SENTRY_DSN:
     import sentry_sdk
-    from sentry_sdk.integrations.django import DjangoIntegration
     from sentry_sdk.integrations.celery import CeleryIntegration
+    from sentry_sdk.integrations.django import DjangoIntegration
     from sentry_sdk.integrations.logging import LoggingIntegration
 
     sentry_sdk.init(

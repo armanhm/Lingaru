@@ -24,7 +24,9 @@ class TestDiscoverCardSerializer:
 
     def test_seen_and_interacted_default_false(self):
         card = DiscoverCard.objects.create(
-            type="trivia", title="Fact", content_json={},
+            type="trivia",
+            title="Fact",
+            content_json={},
         )
         data = DiscoverCardSerializer(card).data
         assert data["seen"] is False

@@ -1,5 +1,6 @@
+from unittest.mock import MagicMock, patch
+
 import pytest
-from unittest.mock import patch, MagicMock
 
 from services.stt.base import BaseSTTProvider, STTResult
 from services.stt.groq_whisper import GroqWhisperProvider
@@ -8,7 +9,9 @@ from services.stt.groq_whisper import GroqWhisperProvider
 class TestSTTResult:
     def test_fields(self):
         result = STTResult(
-            transcription="bonjour", provider="groq_whisper", language="fr",
+            transcription="bonjour",
+            provider="groq_whisper",
+            language="fr",
         )
         assert result.transcription == "bonjour"
         assert result.provider == "groq_whisper"
@@ -30,7 +33,8 @@ class TestGroqWhisperProvider:
 
         provider = GroqWhisperProvider(api_key="fake-key")
         result = provider.transcribe(
-            audio_file=MagicMock(), language="fr",
+            audio_file=MagicMock(),
+            language="fr",
         )
 
         assert result.transcription == "Bonjour le monde"

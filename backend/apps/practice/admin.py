@@ -1,5 +1,6 @@
 from django.contrib import admin
-from .models import QuizSession, QuizAnswer
+
+from .models import QuizAnswer, QuizSession
 
 
 class QuizAnswerInline(admin.TabularInline):

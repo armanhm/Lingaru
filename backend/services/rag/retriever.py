@@ -58,6 +58,8 @@ def rank_chunks(
     results = scored[:top_k]
     logger.info(
         "Ranked %d chunks, returning top %d (min_sim=%.2f)",
-        len(chunks), len(results), min_similarity,
+        len(chunks),
+        len(results),
+        min_similarity,
     )
     return results

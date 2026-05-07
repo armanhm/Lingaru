@@ -1,11 +1,12 @@
 import pytest
 from django.contrib.auth import get_user_model
+
 from apps.assistant.models import Conversation, Message
 from apps.assistant.serializers import (
     ChatRequestSerializer,
-    MessageSerializer,
-    ConversationListSerializer,
     ConversationDetailSerializer,
+    ConversationListSerializer,
+    MessageSerializer,
 )
 
 User = get_user_model()
@@ -14,7 +15,9 @@ User = get_user_model()
 @pytest.fixture
 def user(db):
     return User.objects.create_user(
-        username="seruser", email="ser@example.com", password="testpass123!",
+        username="seruser",
+        email="ser@example.com",
+        password="testpass123!",
     )
 
 
@@ -75,8 +78,11 @@ class TestChatRequestSerializer:
 class TestMessageSerializer:
     def test_serializes_message(self, conversation):
         msg = Message.objects.create(
-            conversation=conversation, role="assistant",
-            content="Bonjour!", provider="gemini", tokens_used=10,
+            conversation=conversation,
+            role="assistant",
+            content="Bonjour!",
+            provider="gemini",
+            tokens_used=10,
         )
         data = MessageSerializer(msg).data
         assert data["role"] == "assistant"
@@ -99,13 +105,18 @@ class TestConversationListSerializer:
 
     def test_message_count(self, conversation):
         Message.objects.create(
-            conversation=conversation, role="user", content="Hi",
+            conversation=conversation,
+            role="user",
+            content="Hi",
         )
         Message.objects.create(
-            conversation=conversation, role="assistant", content="Hello",
+            conversation=conversation,
+            role="assistant",
+            content="Hello",
         )
         # Must annotate for message_count — test via view or manual annotation
         from django.db.models import Count
+
         conv = Conversation.objects.annotate(
             message_count=Count("messages"),
         ).get(pk=conversation.pk)
@@ -117,11 +128,16 @@ class TestConversationListSerializer:
 class TestConversationDetailSerializer:
     def test_includes_messages(self, conversation):
         Message.objects.create(
-            conversation=conversation, role="user", content="Bonjour",
+            conversation=conversation,
+            role="user",
+            content="Bonjour",
         )
         Message.objects.create(
-            conversation=conversation, role="assistant", content="Salut!",
-            provider="gemini", tokens_used=15,
+            conversation=conversation,
+            role="assistant",
+            content="Salut!",
+            provider="gemini",
+            tokens_used=15,
         )
         data = ConversationDetailSerializer(conversation).data
         assert data["id"] == conversation.id

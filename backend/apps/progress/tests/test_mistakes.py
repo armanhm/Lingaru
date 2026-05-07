@@ -1,7 +1,8 @@
 import pytest
 from django.contrib.auth import get_user_model
 from rest_framework.test import APIClient
-from apps.content.models import Topic, Lesson, Question
+
+from apps.content.models import Lesson, Question, Topic
 from apps.progress.models import MistakeEntry
 
 User = get_user_model()
@@ -15,7 +16,9 @@ def api_client():
 @pytest.fixture
 def user(db):
     return User.objects.create_user(
-        username="mistakeuser", email="mistakes@example.com", password="testpass123!",
+        username="mistakeuser",
+        email="mistakes@example.com",
+        password="testpass123!",
     )
 
 
@@ -28,29 +31,50 @@ def authenticated_client(api_client, user):
 @pytest.fixture
 def sample_mistakes(user, db):
     topic = Topic.objects.create(
-        name_fr="Grammaire", name_en="Grammar",
-        description="", icon="book", order=1, difficulty_level=1,
+        name_fr="Grammaire",
+        name_en="Grammar",
+        description="",
+        icon="book",
+        order=1,
+        difficulty_level=1,
     )
     lesson = Lesson.objects.create(
-        topic=topic, type="grammar", title="Les articles",
-        content={}, order=1, difficulty=1,
+        topic=topic,
+        type="grammar",
+        title="Les articles",
+        content={},
+        order=1,
+        difficulty=1,
     )
     q = Question.objects.create(
-        lesson=lesson, type="fill_blank", prompt="__ chat est noir.",
-        correct_answer="Le", wrong_answers=[], explanation="Le = masculine article.",
+        lesson=lesson,
+        type="fill_blank",
+        prompt="__ chat est noir.",
+        correct_answer="Le",
+        wrong_answers=[],
+        explanation="Le = masculine article.",
         difficulty=1,
     )
     m1 = MistakeEntry.objects.create(
-        user=user, question=q, user_answer="La",
-        correct_answer="Le", mistake_type="gender",
+        user=user,
+        question=q,
+        user_answer="La",
+        correct_answer="Le",
+        mistake_type="gender",
     )
     m2 = MistakeEntry.objects.create(
-        user=user, question=q, user_answer="Les",
-        correct_answer="Le", mistake_type="gender",
+        user=user,
+        question=q,
+        user_answer="Les",
+        correct_answer="Le",
+        mistake_type="gender",
     )
     m3 = MistakeEntry.objects.create(
-        user=user, question=None, user_answer="mangez",
-        correct_answer="mange", mistake_type="conjugation",
+        user=user,
+        question=None,
+        user_answer="mangez",
+        correct_answer="mange",
+        mistake_type="conjugation",
     )
     return [m1, m2, m3]
 
@@ -91,17 +115,29 @@ class TestMistakeAutoRecording:
 
     def test_wrong_answer_creates_mistake(self, authenticated_client, user):
         topic = Topic.objects.create(
-            name_fr="Test", name_en="Test",
-            description="", icon="t", order=1, difficulty_level=1,
+            name_fr="Test",
+            name_en="Test",
+            description="",
+            icon="t",
+            order=1,
+            difficulty_level=1,
         )
         lesson = Lesson.objects.create(
-            topic=topic, type="vocab", title="Test Lesson",
-            content={}, order=1, difficulty=1,
+            topic=topic,
+            type="vocab",
+            title="Test Lesson",
+            content={},
+            order=1,
+            difficulty=1,
         )
         question = Question.objects.create(
-            lesson=lesson, type="mcq", prompt="What is bonjour?",
-            correct_answer="hello", wrong_answers=["bye", "thanks", "please"],
-            explanation="Bonjour = hello.", difficulty=1,
+            lesson=lesson,
+            type="mcq",
+            prompt="What is bonjour?",
+            correct_answer="hello",
+            wrong_answers=["bye", "thanks", "please"],
+            explanation="Bonjour = hello.",
+            difficulty=1,
         )
 
         # Start quiz

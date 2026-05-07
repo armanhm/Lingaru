@@ -32,8 +32,6 @@ def create_llm_router() -> ProviderRouter:
         fallback = None
 
     if primary is None:
-        raise RuntimeError(
-            "No LLM API keys configured. Set GEMINI_API_KEY or GROQ_API_KEY."
-        )
+        raise RuntimeError("No LLM API keys configured. Set GEMINI_API_KEY or GROQ_API_KEY.")
 
     return ProviderRouter(primary=primary, fallback=fallback)

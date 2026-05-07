@@ -1,4 +1,5 @@
 from django.urls import path
+
 from . import views
 
 app_name = "assistant"
@@ -8,5 +9,9 @@ urlpatterns = [
     path("image-query/", views.ImageQueryView.as_view(), name="image-query"),
     path("voice-chat/", views.VoiceChatView.as_view(), name="voice-chat"),
     path("conversations/", views.ConversationListView.as_view(), name="conversation-list"),
-    path("conversations/<int:pk>/", views.ConversationDetailView.as_view(), name="conversation-detail"),
+    path(
+        "conversations/<int:pk>/",
+        views.ConversationDetailView.as_view(),
+        name="conversation-detail",
+    ),
 ]

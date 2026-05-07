@@ -33,7 +33,9 @@ def retrieve_context_for_query(user_id: int, query: str) -> str | None:
         embedder = GeminiEmbedder(
             api_key=settings.GEMINI_API_KEY,
             model=getattr(
-                settings, "GEMINI_EMBEDDING_MODEL", "models/text-embedding-004",
+                settings,
+                "GEMINI_EMBEDDING_MODEL",
+                "models/text-embedding-004",
             ),
         )
         query_embedding = embedder.embed_query(query)
@@ -42,9 +44,7 @@ def retrieve_context_for_query(user_id: int, query: str) -> str | None:
         return None
 
     # Load chunks with embeddings into memory for ranking
-    chunk_data = list(
-        user_chunks.values("id", "content", "embedding", "document__title")
-    )
+    chunk_data = list(user_chunks.values("id", "content", "embedding", "document__title"))
 
     # Rank by similarity
     top_k = getattr(settings, "RAG_TOP_K", 5)
@@ -64,13 +64,13 @@ def retrieve_context_for_query(user_id: int, query: str) -> str | None:
     context_parts = []
     for i, chunk in enumerate(ranked, 1):
         source = chunk.get("document__title", "Document")
-        context_parts.append(
-            f"[Excerpt {i} from \"{source}\"]:\n{chunk['content']}"
-        )
+        context_parts.append(f'[Excerpt {i} from "{source}"]:\n{chunk["content"]}')
 
     context = "\n\n".join(context_parts)
     logger.info(
         "Retrieved %d RAG chunks for user %d (query: %.50s...)",
-        len(ranked), user_id, query,
+        len(ranked),
+        user_id,
+        query,
     )
     return context

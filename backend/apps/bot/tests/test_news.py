@@ -1,11 +1,11 @@
-import pytest
 from unittest.mock import AsyncMock, MagicMock, patch
 
+import pytest
 from django.contrib.auth import get_user_model
 from django.utils import timezone
 
-from apps.discover.models import DiscoverCard
 from apps.bot.handlers.news import get_random_discover_card, news_command
+from apps.discover.models import DiscoverCard
 
 User = get_user_model()
 
@@ -53,7 +53,9 @@ class TestGetRandomDiscoverCard:
     def test_returns_none_when_no_matching_cards(self, db):
         # Only word cards exist
         DiscoverCard.objects.create(
-            type="word", title="Bonjour", content_json={},
+            type="word",
+            title="Bonjour",
+            content_json={},
         )
         card = get_random_discover_card()
         assert card is None

@@ -1,12 +1,12 @@
-import pytest
 from datetime import timedelta
 from unittest.mock import AsyncMock, MagicMock, patch
 
+import pytest
 from django.contrib.auth import get_user_model
 from django.utils import timezone
 
-from apps.bot.handlers.daily import daily_command, _get_user_by_telegram_id, _get_due_card_list
-from apps.content.models import Topic, Lesson, Vocabulary
+from apps.bot.handlers.daily import _get_due_card_list, _get_user_by_telegram_id, daily_command
+from apps.content.models import Lesson, Topic, Vocabulary
 from apps.progress.models import SRSCard
 
 User = get_user_model()
@@ -15,31 +15,46 @@ User = get_user_model()
 @pytest.fixture
 def user(db):
     return User.objects.create_user(
-        username="botdaily", email="daily@example.com",
-        password="testpass123!", telegram_id=12345,
+        username="botdaily",
+        email="daily@example.com",
+        password="testpass123!",
+        telegram_id=12345,
     )
 
 
 @pytest.fixture
 def vocab(db):
     topic = Topic.objects.create(
-        name_fr="Test", name_en="Test",
-        description="", icon="t", order=1, difficulty_level=1,
+        name_fr="Test",
+        name_en="Test",
+        description="",
+        icon="t",
+        order=1,
+        difficulty_level=1,
     )
     lesson = Lesson.objects.create(
-        topic=topic, type="vocab", title="Test",
-        content={}, order=1, difficulty=1,
+        topic=topic,
+        type="vocab",
+        title="Test",
+        content={},
+        order=1,
+        difficulty=1,
     )
     return Vocabulary.objects.create(
-        lesson=lesson, french="bonjour", english="hello",
-        pronunciation="/bɔ̃ʒuʁ/", gender="a", part_of_speech="interjection",
+        lesson=lesson,
+        french="bonjour",
+        english="hello",
+        pronunciation="/bɔ̃ʒuʁ/",
+        gender="a",
+        part_of_speech="interjection",
     )
 
 
 @pytest.fixture
 def due_card(user, vocab):
     return SRSCard.objects.create(
-        user=user, vocabulary=vocab,
+        user=user,
+        vocabulary=vocab,
         next_review_at=timezone.now() - timedelta(hours=1),
     )
 
@@ -74,7 +89,8 @@ class TestDailyHelpers:
 
     def test_get_due_card_list_excludes_future(self, user, vocab):
         SRSCard.objects.create(
-            user=user, vocabulary=vocab,
+            user=user,
+            vocabulary=vocab,
             next_review_at=timezone.now() + timedelta(days=1),
         )
         cards = _get_due_card_list(user)

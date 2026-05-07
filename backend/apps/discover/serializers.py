@@ -1,6 +1,6 @@
 from rest_framework import serializers
 
-from .models import DiscoverCard, UserDiscoverHistory
+from .models import DiscoverCard
 
 
 class DiscoverCardSerializer(serializers.ModelSerializer):
@@ -10,10 +10,19 @@ class DiscoverCardSerializer(serializers.ModelSerializer):
     class Meta:
         model = DiscoverCard
         fields = (
-            "id", "type", "title", "summary", "content_json",
-            "source_url", "image_url", "generated_at", "expires_at",
-            "topic", "level",
-            "seen", "interacted",
+            "id",
+            "type",
+            "title",
+            "summary",
+            "content_json",
+            "source_url",
+            "image_url",
+            "generated_at",
+            "expires_at",
+            "topic",
+            "level",
+            "seen",
+            "interacted",
         )
 
 
@@ -29,10 +38,19 @@ class NewsListSerializer(serializers.ModelSerializer):
     class Meta:
         model = DiscoverCard
         fields = (
-            "id", "title", "summary", "topic", "level",
-            "source_url", "source_name", "source_domain",
-            "image_url", "generated_at",
-            "read_minutes", "seen", "interacted",
+            "id",
+            "title",
+            "summary",
+            "topic",
+            "level",
+            "source_url",
+            "source_name",
+            "source_domain",
+            "image_url",
+            "generated_at",
+            "read_minutes",
+            "seen",
+            "interacted",
         )
 
     def get_read_minutes(self, obj):
@@ -65,12 +83,24 @@ class NewsDetailSerializer(serializers.ModelSerializer):
     class Meta:
         model = DiscoverCard
         fields = (
-            "id", "title", "summary", "topic", "level",
-            "source_url", "source_name", "source_domain",
-            "image_url", "generated_at",
-            "article_fr", "article_en",
-            "vocabulary", "expressions", "grammar_points",
-            "read_minutes", "seen", "interacted",
+            "id",
+            "title",
+            "summary",
+            "topic",
+            "level",
+            "source_url",
+            "source_name",
+            "source_domain",
+            "image_url",
+            "generated_at",
+            "article_fr",
+            "article_en",
+            "vocabulary",
+            "expressions",
+            "grammar_points",
+            "read_minutes",
+            "seen",
+            "interacted",
         )
 
     def _content(self, obj):
@@ -105,4 +135,5 @@ class NewsDetailSerializer(serializers.ModelSerializer):
 
 class InteractSerializer(serializers.Serializer):
     """Empty serializer — interaction is just a POST to the card's URL."""
+
     pass

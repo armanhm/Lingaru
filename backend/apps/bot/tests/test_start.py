@@ -1,5 +1,6 @@
 import pytest
 from django.contrib.auth import get_user_model
+
 from apps.bot.handlers.start import get_or_create_telegram_user
 
 User = get_user_model()

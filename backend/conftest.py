@@ -1,8 +1,8 @@
 import pytest
 from django.contrib.auth import get_user_model
 
-
 User = get_user_model()
+
 
 @pytest.fixture
 def user_data():
@@ -11,6 +11,7 @@ def user_data():
         "email": "test@example.com",
         "password": "testpass123!",
     }
+
 
 @pytest.fixture
 def create_user(db, user_data):

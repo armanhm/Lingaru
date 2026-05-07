@@ -1,5 +1,6 @@
 from django.contrib import admin
-from .models import ExamExercise, ExamSession, ExamResponse, ExamProgress
+
+from .models import ExamExercise, ExamProgress, ExamResponse, ExamSession
 
 
 @admin.register(ExamExercise)
@@ -12,7 +13,16 @@ class ExamExerciseAdmin(admin.ModelAdmin):
 
 @admin.register(ExamSession)
 class ExamSessionAdmin(admin.ModelAdmin):
-    list_display = ("user", "section", "cefr_level", "mode", "score", "max_score", "started_at", "completed_at")
+    list_display = (
+        "user",
+        "section",
+        "cefr_level",
+        "mode",
+        "score",
+        "max_score",
+        "started_at",
+        "completed_at",
+    )
     list_filter = ("section", "cefr_level", "mode")
     raw_id_fields = ("user",)
 
@@ -25,6 +35,12 @@ class ExamResponseAdmin(admin.ModelAdmin):
 
 @admin.register(ExamProgress)
 class ExamProgressAdmin(admin.ModelAdmin):
-    list_display = ("user", "section", "best_score_pct", "sessions_completed", "estimated_cefr_level")
+    list_display = (
+        "user",
+        "section",
+        "best_score_pct",
+        "sessions_completed",
+        "estimated_cefr_level",
+    )
     list_filter = ("section",)
     raw_id_fields = ("user",)

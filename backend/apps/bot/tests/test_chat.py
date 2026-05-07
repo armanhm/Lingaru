@@ -1,12 +1,15 @@
-import pytest
 from unittest.mock import AsyncMock, MagicMock, patch
-from telegram import Update, User as TGUser, Message as TGMessage, Chat
+
+import pytest
+from telegram import Chat, Update
+from telegram import Message as TGMessage
+from telegram import User as TGUser
 
 from apps.bot.handlers.chat import (
-    chat_start,
-    chat_message,
-    chat_end,
     CHATTING,
+    chat_end,
+    chat_message,
+    chat_start,
 )
 from services.llm.base import LLMResponse
 

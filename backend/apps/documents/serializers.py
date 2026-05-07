@@ -2,7 +2,6 @@ from rest_framework import serializers
 
 from .models import Document, DocumentChunk
 
-
 ALLOWED_EXTENSIONS = {"pdf", "txt"}
 EXTENSION_TO_TYPE = {
     "pdf": "pdf",
@@ -39,8 +38,14 @@ class DocumentSerializer(serializers.ModelSerializer):
     class Meta:
         model = Document
         fields = (
-            "id", "title", "file_type", "page_count",
-            "uploaded_at", "processed", "processing_error", "chunk_count",
+            "id",
+            "title",
+            "file_type",
+            "page_count",
+            "uploaded_at",
+            "processed",
+            "processing_error",
+            "chunk_count",
         )
 
 

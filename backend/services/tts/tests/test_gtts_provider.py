@@ -1,6 +1,7 @@
 import hashlib
+from unittest.mock import MagicMock, patch
+
 import pytest
-from unittest.mock import patch, MagicMock
 
 from services.tts.base import BaseTTSProvider, TTSResult
 from services.tts.gtts_provider import GTTSProvider

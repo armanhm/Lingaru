@@ -31,9 +31,11 @@ class Command(BaseCommand):
             if card is None:
                 self.stdout.write(self.style.ERROR(f"Failed to seed news for topic={topic}"))
                 continue
-            self.stdout.write(self.style.SUCCESS(
-                f"  + [{card.topic}] {card.title}  ({card.level}, {len((card.content_json or {}).get('vocabulary', []))} vocab)"
-            ))
+            self.stdout.write(
+                self.style.SUCCESS(
+                    f"  + [{card.topic}] {card.title}  ({card.level}, {len((card.content_json or {}).get('vocabulary', []))} vocab)"
+                )
+            )
             created += 1
 
         self.stdout.write(self.style.SUCCESS(f"\nSeeded {created} news articles."))

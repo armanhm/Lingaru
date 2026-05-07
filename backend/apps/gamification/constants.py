@@ -10,7 +10,7 @@ XP_VALUES = {
     "writing_practice": 20,
     "ai_conversation": 15,
     "srs_review": 10,
-    "daily_streak": 5,       # multiplied by streak_days, capped at 50
+    "daily_streak": 5,  # multiplied by streak_days, capped at 50
     "word_of_day": 3,
     "dictation": 15,
     "conjugation_drill": 10,

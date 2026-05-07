@@ -30,6 +30,7 @@ def get_or_create_telegram_user(
 
     if User.objects.filter(username=base_username).exists():
         import uuid
+
         suffix = uuid.uuid4().hex[:6]
         final_username = f"{base_username}_{suffix}"
 

@@ -1,16 +1,19 @@
-import pytest
 from datetime import date, timedelta
 from unittest.mock import patch
 
+import pytest
 from django.contrib.auth import get_user_model
 
 from apps.gamification.models import (
-    XPTransaction, UserStats, Badge, UserBadge,
+    Badge,
+    UserBadge,
+    UserStats,
+    XPTransaction,
 )
 from apps.gamification.services import (
     award_xp,
-    check_streak,
     check_badges,
+    check_streak,
     get_level,
     get_or_create_stats,
 )

@@ -1,8 +1,16 @@
 from django.contrib import admin
 from django.utils.html import format_html
+
 from .models import (
-    GrammarRule, Lesson, Question, ReadingText, Topic, Vocabulary,
-    VideoExpression, VideoLesson, VideoVocabulary,
+    GrammarRule,
+    Lesson,
+    Question,
+    ReadingText,
+    Topic,
+    VideoExpression,
+    VideoLesson,
+    VideoVocabulary,
+    Vocabulary,
 )
 
 
@@ -37,7 +45,13 @@ class GrammarRuleInline(admin.StackedInline):
 class ReadingTextInline(admin.StackedInline):
     model = ReadingText
     extra = 0
-    fields = ("title", "content_fr", "content_en", "vocabulary_highlights", "comprehension_questions")
+    fields = (
+        "title",
+        "content_fr",
+        "content_en",
+        "vocabulary_highlights",
+        "comprehension_questions",
+    )
 
 
 class QuestionInline(admin.TabularInline):
@@ -50,7 +64,14 @@ class VideoLessonInline(admin.StackedInline):
     model = VideoLesson
     extra = 0
     fields = ("youtube_url", "status", "title", "transcript_fr", "transcript_en", "error_message")
-    readonly_fields = ("status", "title", "thumbnail_url", "duration_seconds", "youtube_id", "error_message")
+    readonly_fields = (
+        "status",
+        "title",
+        "thumbnail_url",
+        "duration_seconds",
+        "youtube_id",
+        "error_message",
+    )
     can_delete = True
 
 
@@ -60,7 +81,13 @@ class LessonAdmin(admin.ModelAdmin):
     list_filter = ("type", "difficulty", "topic")
     search_fields = ("title",)
     ordering = ("topic__order", "order")
-    inlines = [VocabularyInline, GrammarRuleInline, ReadingTextInline, QuestionInline, VideoLessonInline]
+    inlines = [
+        VocabularyInline,
+        GrammarRuleInline,
+        ReadingTextInline,
+        QuestionInline,
+        VideoLessonInline,
+    ]
 
     @admin.display(description="Video", boolean=True)
     def has_video(self, obj):
@@ -114,16 +141,33 @@ class VideoLessonAdmin(admin.ModelAdmin):
     list_display = ("lesson", "title", "status", "youtube_preview", "created_at")
     list_filter = ("status",)
     search_fields = ("lesson__title", "title", "youtube_url")
-    readonly_fields = ("youtube_id", "title", "thumbnail_url", "duration_seconds", "status",
-                       "transcript_fr", "transcript_en", "error_message", "youtube_preview",
-                       "created_at", "updated_at")
-    fields = (
-        "lesson", "youtube_url",
+    readonly_fields = (
+        "youtube_id",
+        "title",
+        "thumbnail_url",
+        "duration_seconds",
+        "status",
+        "transcript_fr",
+        "transcript_en",
+        "error_message",
         "youtube_preview",
-        "youtube_id", "title", "thumbnail_url", "duration_seconds",
-        "status", "error_message",
-        "transcript_fr", "transcript_en",
-        "created_at", "updated_at",
+        "created_at",
+        "updated_at",
+    )
+    fields = (
+        "lesson",
+        "youtube_url",
+        "youtube_preview",
+        "youtube_id",
+        "title",
+        "thumbnail_url",
+        "duration_seconds",
+        "status",
+        "error_message",
+        "transcript_fr",
+        "transcript_en",
+        "created_at",
+        "updated_at",
     )
     inlines = [VideoVocabularyInline, VideoExpressionInline]
 
@@ -143,4 +187,5 @@ class VideoLessonAdmin(admin.ModelAdmin):
         super().save_model(request, obj, form, change)
         if is_new_url and obj.youtube_url:
             from apps.content.tasks import process_video_lesson
+
             process_video_lesson.delay(obj.pk)

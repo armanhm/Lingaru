@@ -1,6 +1,5 @@
 import hashlib
 import logging
-import struct
 import wave
 from io import BytesIO
 from pathlib import Path
@@ -19,7 +18,9 @@ GEMINI_TTS_MODEL = "gemini-2.5-flash-preview-tts"
 VOICE_NAME = "Aoede"
 
 
-def _pcm_to_wav(pcm_data: bytes, sample_rate: int = 24000, channels: int = 1, sample_width: int = 2) -> bytes:
+def _pcm_to_wav(
+    pcm_data: bytes, sample_rate: int = 24000, channels: int = 1, sample_width: int = 2
+) -> bytes:
     """Wrap raw PCM bytes in a WAV container."""
     buf = BytesIO()
     with wave.open(buf, "wb") as wf:

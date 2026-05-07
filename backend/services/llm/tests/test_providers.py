@@ -1,5 +1,6 @@
-import pytest
 from unittest.mock import MagicMock, patch
+
+import pytest
 
 from services.llm.base import BaseProvider, LLMResponse
 from services.llm.gemini import GeminiProvider
@@ -102,7 +103,9 @@ class TestProviderRouter:
     def test_generate_uses_primary(self):
         primary = MagicMock()
         primary.generate.return_value = LLMResponse(
-            content="From primary", provider="gemini", tokens_used=10,
+            content="From primary",
+            provider="gemini",
+            tokens_used=10,
         )
         fallback = MagicMock()
 
@@ -122,7 +125,9 @@ class TestProviderRouter:
         primary.generate.side_effect = Exception("Rate limit")
         fallback = MagicMock()
         fallback.generate.return_value = LLMResponse(
-            content="From fallback", provider="groq", tokens_used=20,
+            content="From fallback",
+            provider="groq",
+            tokens_used=20,
         )
 
         router = ProviderRouter(primary=primary, fallback=fallback)
@@ -152,7 +157,9 @@ class TestProviderRouter:
     def test_generate_works_without_fallback(self):
         primary = MagicMock()
         primary.generate.return_value = LLMResponse(
-            content="Solo", provider="gemini", tokens_used=5,
+            content="Solo",
+            provider="gemini",
+            tokens_used=5,
         )
 
         router = ProviderRouter(primary=primary, fallback=None)

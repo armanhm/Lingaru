@@ -1,14 +1,15 @@
 import pytest
 from django.contrib.auth import get_user_model
-from apps.content.models import Topic, Lesson, Question
-from apps.practice.models import QuizSession, QuizAnswer
+
+from apps.content.models import Lesson, Question, Topic
+from apps.practice.models import QuizAnswer, QuizSession
 from apps.practice.serializers import (
-    QuizStartSerializer,
-    QuizQuestionSerializer,
-    AnswerSubmitSerializer,
     AnswerResultSerializer,
+    AnswerSubmitSerializer,
     QuizCompleteSerializer,
     QuizHistorySerializer,
+    QuizQuestionSerializer,
+    QuizStartSerializer,
 )
 
 User = get_user_model()
@@ -17,33 +18,51 @@ User = get_user_model()
 @pytest.fixture
 def user(db):
     return User.objects.create_user(
-        username="quizuser", email="quiz@example.com", password="testpass123!",
+        username="quizuser",
+        email="quiz@example.com",
+        password="testpass123!",
     )
 
 
 @pytest.fixture
 def sample_lesson(db):
     topic = Topic.objects.create(
-        name_fr="Les salutations", name_en="Greetings",
-        description="Basic greetings", icon="wave", order=1, difficulty_level=1,
+        name_fr="Les salutations",
+        name_en="Greetings",
+        description="Basic greetings",
+        icon="wave",
+        order=1,
+        difficulty_level=1,
     )
     return Lesson.objects.create(
-        topic=topic, type="vocab", title="Hello & Goodbye",
-        content={}, order=1, difficulty=1,
+        topic=topic,
+        type="vocab",
+        title="Hello & Goodbye",
+        content={},
+        order=1,
+        difficulty=1,
     )
 
 
 @pytest.fixture
 def sample_questions(sample_lesson):
     q1 = Question.objects.create(
-        lesson=sample_lesson, type="mcq", prompt="What does bonjour mean?",
-        correct_answer="hello", wrong_answers=["goodbye", "thanks", "please"],
-        explanation="Bonjour means hello.", difficulty=1,
+        lesson=sample_lesson,
+        type="mcq",
+        prompt="What does bonjour mean?",
+        correct_answer="hello",
+        wrong_answers=["goodbye", "thanks", "please"],
+        explanation="Bonjour means hello.",
+        difficulty=1,
     )
     q2 = Question.objects.create(
-        lesson=sample_lesson, type="fill_blank", prompt="___jour!",
-        correct_answer="Bon", wrong_answers=[],
-        explanation="Bonjour = good day.", difficulty=1,
+        lesson=sample_lesson,
+        type="fill_blank",
+        prompt="___jour!",
+        correct_answer="Bon",
+        wrong_answers=[],
+        explanation="Bonjour = good day.",
+        difficulty=1,
     )
     return [q1, q2]
 
@@ -92,10 +111,12 @@ class TestQuizQuestionSerializer:
 @pytest.mark.django_db
 class TestAnswerSubmitSerializer:
     def test_valid_answer(self, sample_questions):
-        serializer = AnswerSubmitSerializer(data={
-            "question_id": sample_questions[0].id,
-            "answer": "hello",
-        })
+        serializer = AnswerSubmitSerializer(
+            data={
+                "question_id": sample_questions[0].id,
+                "answer": "hello",
+            }
+        )
         assert serializer.is_valid()
 
     def test_missing_fields(self):
@@ -109,11 +130,15 @@ class TestAnswerSubmitSerializer:
 class TestAnswerResultSerializer:
     def test_serializes_result(self, user, sample_lesson, sample_questions):
         session = QuizSession.objects.create(
-            user=user, lesson=sample_lesson, total_questions=2,
+            user=user,
+            lesson=sample_lesson,
+            total_questions=2,
         )
         answer = QuizAnswer.objects.create(
-            session=session, question=sample_questions[0],
-            user_answer="hello", is_correct=True,
+            session=session,
+            question=sample_questions[0],
+            user_answer="hello",
+            is_correct=True,
         )
         serializer = AnswerResultSerializer(answer)
         data = serializer.data
@@ -126,7 +151,10 @@ class TestAnswerResultSerializer:
 class TestQuizCompleteSerializer:
     def test_serializes_completed_session(self, user, sample_lesson):
         session = QuizSession.objects.create(
-            user=user, lesson=sample_lesson, total_questions=5, score=4,
+            user=user,
+            lesson=sample_lesson,
+            total_questions=5,
+            score=4,
         )
         serializer = QuizCompleteSerializer(session)
         data = serializer.data
@@ -140,7 +168,10 @@ class TestQuizCompleteSerializer:
 class TestQuizHistorySerializer:
     def test_serializes_history(self, user, sample_lesson):
         session = QuizSession.objects.create(
-            user=user, lesson=sample_lesson, total_questions=5, score=3,
+            user=user,
+            lesson=sample_lesson,
+            total_questions=5,
+            score=3,
         )
         serializer = QuizHistorySerializer(session)
         data = serializer.data

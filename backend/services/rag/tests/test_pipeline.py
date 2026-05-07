@@ -1,5 +1,5 @@
 import io
-from unittest.mock import patch, MagicMock
+from unittest.mock import MagicMock, patch
 
 from django.core.files.base import ContentFile
 from django.test import TestCase
@@ -14,14 +14,14 @@ class TestProcessDocumentPipeline(TestCase):
 
     def setUp(self):
         self.user = User.objects.create_user(
-            username="testuser", password="testpass123",
+            username="testuser",
+            password="testpass123",
         )
         self.document = Document.objects.create(
             user=self.user,
             title="Test Document",
             file=ContentFile(
-                b"This is a test document with some French content. "
-                b"Bonjour le monde.",
+                b"This is a test document with some French content. Bonjour le monde.",
                 name="test.txt",
             ),
             file_type="txt",

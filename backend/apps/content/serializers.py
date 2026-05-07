@@ -1,13 +1,30 @@
 from rest_framework import serializers
-from .models import Topic, Lesson, Vocabulary, GrammarRule, ReadingText, Question, VideoLesson, VideoVocabulary, VideoExpression
+
+from .models import (
+    GrammarRule,
+    Lesson,
+    Question,
+    ReadingText,
+    Topic,
+    VideoExpression,
+    VideoLesson,
+    VideoVocabulary,
+    Vocabulary,
+)
 
 
 class VocabularySerializer(serializers.ModelSerializer):
     class Meta:
         model = Vocabulary
         fields = (
-            "id", "french", "english", "pronunciation",
-            "example_sentence", "gender", "part_of_speech", "audio_url",
+            "id",
+            "french",
+            "english",
+            "pronunciation",
+            "example_sentence",
+            "gender",
+            "part_of_speech",
+            "audio_url",
         )
 
 
@@ -15,7 +32,12 @@ class GrammarRuleSerializer(serializers.ModelSerializer):
     class Meta:
         model = GrammarRule
         fields = (
-            "id", "title", "explanation", "formula", "examples", "exceptions",
+            "id",
+            "title",
+            "explanation",
+            "formula",
+            "examples",
+            "exceptions",
         )
 
 
@@ -23,8 +45,12 @@ class ReadingTextSerializer(serializers.ModelSerializer):
     class Meta:
         model = ReadingText
         fields = (
-            "id", "title", "content_fr", "content_en",
-            "vocabulary_highlights", "comprehension_questions",
+            "id",
+            "title",
+            "content_fr",
+            "content_en",
+            "vocabulary_highlights",
+            "comprehension_questions",
         )
 
 
@@ -32,8 +58,13 @@ class QuestionSerializer(serializers.ModelSerializer):
     class Meta:
         model = Question
         fields = (
-            "id", "type", "prompt", "correct_answer",
-            "wrong_answers", "explanation", "difficulty",
+            "id",
+            "type",
+            "prompt",
+            "correct_answer",
+            "wrong_answers",
+            "explanation",
+            "difficulty",
         )
 
 
@@ -66,15 +97,32 @@ class LessonDetailSerializer(serializers.ModelSerializer):
     class Meta:
         model = Lesson
         fields = (
-            "id", "topic", "type", "title", "content", "order", "difficulty",
-            "vocabulary", "grammar_rules", "reading_texts", "questions", "video",
+            "id",
+            "topic",
+            "type",
+            "title",
+            "content",
+            "order",
+            "difficulty",
+            "vocabulary",
+            "grammar_rules",
+            "reading_texts",
+            "questions",
+            "video",
         )
 
 
 class VideoVocabularySerializer(serializers.ModelSerializer):
     class Meta:
         model = VideoVocabulary
-        fields = ("id", "french", "english", "pronunciation", "example_sentence", "timestamp_seconds")
+        fields = (
+            "id",
+            "french",
+            "english",
+            "pronunciation",
+            "example_sentence",
+            "timestamp_seconds",
+        )
 
 
 class VideoExpressionSerializer(serializers.ModelSerializer):
@@ -90,14 +138,30 @@ class VideoLessonSerializer(serializers.ModelSerializer):
     class Meta:
         model = VideoLesson
         fields = (
-            "id", "youtube_url", "youtube_id", "title", "thumbnail_url",
-            "duration_seconds", "transcript_fr", "transcript_en",
-            "status", "error_message", "vocabulary", "expressions",
+            "id",
+            "youtube_url",
+            "youtube_id",
+            "title",
+            "thumbnail_url",
+            "duration_seconds",
+            "transcript_fr",
+            "transcript_en",
+            "status",
+            "error_message",
+            "vocabulary",
+            "expressions",
         )
         read_only_fields = (
-            "youtube_id", "title", "thumbnail_url", "duration_seconds",
-            "transcript_fr", "transcript_en", "status", "error_message",
-            "vocabulary", "expressions",
+            "youtube_id",
+            "title",
+            "thumbnail_url",
+            "duration_seconds",
+            "transcript_fr",
+            "transcript_en",
+            "status",
+            "error_message",
+            "vocabulary",
+            "expressions",
         )
 
 
@@ -107,8 +171,14 @@ class TopicListSerializer(serializers.ModelSerializer):
     class Meta:
         model = Topic
         fields = (
-            "id", "name_fr", "name_en", "description",
-            "icon", "order", "difficulty_level", "lesson_count",
+            "id",
+            "name_fr",
+            "name_en",
+            "description",
+            "icon",
+            "order",
+            "difficulty_level",
+            "lesson_count",
         )
 
 
@@ -118,6 +188,12 @@ class TopicDetailSerializer(serializers.ModelSerializer):
     class Meta:
         model = Topic
         fields = (
-            "id", "name_fr", "name_en", "description",
-            "icon", "order", "difficulty_level", "lessons",
+            "id",
+            "name_fr",
+            "name_en",
+            "description",
+            "icon",
+            "order",
+            "difficulty_level",
+            "lessons",
         )

@@ -37,7 +37,9 @@ class GeminiProvider(BaseProvider):
             tokens_used = getattr(response.usage_metadata, "total_token_count", 0)
 
         logger.info(
-            "Gemini response: model=%s, tokens=%d", self.model, tokens_used,
+            "Gemini response: model=%s, tokens=%d",
+            self.model,
+            tokens_used,
         )
 
         return LLMResponse(
@@ -59,9 +61,7 @@ class GeminiProvider(BaseProvider):
         blob alongside any user text.
         """
         # Build content parts: image first, then the latest user text
-        image_part = types.Part(
-            inline_data=types.Blob(mime_type=image_mime_type, data=image_data)
-        )
+        image_part = types.Part(inline_data=types.Blob(mime_type=image_mime_type, data=image_data))
 
         user_text = messages[-1].get("content", "") if messages else ""
         parts = [image_part]
@@ -79,7 +79,9 @@ class GeminiProvider(BaseProvider):
             tokens_used = getattr(response.usage_metadata, "total_token_count", 0)
 
         logger.info(
-            "Gemini vision response: model=%s, tokens=%d", self.model, tokens_used,
+            "Gemini vision response: model=%s, tokens=%d",
+            self.model,
+            tokens_used,
         )
 
         return LLMResponse(

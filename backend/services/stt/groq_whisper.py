@@ -35,7 +35,8 @@ class GroqWhisperProvider(BaseSTTProvider):
 
         logger.info(
             "STT transcription: language=%s, length=%d chars",
-            language, len(transcription),
+            language,
+            len(transcription),
         )
 
         return STTResult(

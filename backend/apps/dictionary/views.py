@@ -94,7 +94,9 @@ class DictionaryLookupView(APIView):
                     status=status.HTTP_502_BAD_GATEWAY,
                 )
             DictionaryCache.objects.update_or_create(
-                kind=DictionaryCache.LOOKUP, key=word, defaults={"result": data},
+                kind=DictionaryCache.LOOKUP,
+                key=word,
+                defaults={"result": data},
             )
             return Response({"result": data, "provider": llm_result.provider})
         except Exception as e:
@@ -133,7 +135,9 @@ class VerbConjugatorView(APIView):
                     status=status.HTTP_502_BAD_GATEWAY,
                 )
             DictionaryCache.objects.update_or_create(
-                kind=DictionaryCache.CONJUGATION, key=verb, defaults={"result": data},
+                kind=DictionaryCache.CONJUGATION,
+                key=verb,
+                defaults={"result": data},
             )
             return Response({"result": data, "provider": llm_result.provider})
         except Exception as e:

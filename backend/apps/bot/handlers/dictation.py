@@ -2,16 +2,16 @@ import logging
 
 from telegram import Update
 from telegram.ext import (
-    ContextTypes,
     CommandHandler,
+    ContextTypes,
     ConversationHandler,
     MessageHandler,
     filters,
 )
 
 from apps.content.models import Vocabulary
-from services.tts.service import get_or_create_audio
 from services.stt.scoring import calculate_accuracy, generate_feedback
+from services.tts.service import get_or_create_audio
 
 logger = logging.getLogger(__name__)
 
@@ -38,9 +38,7 @@ async def dictation_command(update: Update, context: ContextTypes.DEFAULT_TYPE) 
 
     # Send audio file
     audio_path = clip.audio_file.path
-    await update.message.reply_text(
-        "Listen to the following sentence and type what you hear:"
-    )
+    await update.message.reply_text("Listen to the following sentence and type what you hear:")
     with open(audio_path, "rb") as audio_file:
         await update.message.reply_audio(audio=audio_file)
 

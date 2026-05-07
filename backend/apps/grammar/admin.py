@@ -1,7 +1,12 @@
 from django.contrib import admin
+
 from .models import (
-    GrammarCategory, GrammarTopic, GrammarDrillItem,
-    GrammarMastery, GrammarSession, GrammarAnswer,
+    GrammarAnswer,
+    GrammarCategory,
+    GrammarDrillItem,
+    GrammarMastery,
+    GrammarSession,
+    GrammarTopic,
 )
 
 

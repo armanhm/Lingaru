@@ -1,13 +1,14 @@
-import pytest
 from unittest.mock import AsyncMock, MagicMock, patch
 
+import pytest
+from telegram.ext import ConversationHandler
+
 from apps.bot.handlers.dictation import (
-    dictation_command,
+    WAITING_FOR_ANSWER,
     dictation_answer,
     dictation_cancel,
-    WAITING_FOR_ANSWER,
+    dictation_command,
 )
-from telegram.ext import ConversationHandler
 
 
 @pytest.fixture

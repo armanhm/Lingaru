@@ -1,5 +1,6 @@
+from unittest.mock import MagicMock, patch
+
 import pytest
-from unittest.mock import patch, MagicMock
 
 from apps.media.models import AudioClip
 from services.tts.service import get_or_create_audio
@@ -25,7 +26,8 @@ class TestGetOrCreateAudio:
         assert clip.provider == "gtts"
         assert clip.audio_file.name == "audio/abc123.mp3"
         mock_instance.synthesize.assert_called_once_with(
-            text="Bonjour", language="fr",
+            text="Bonjour",
+            language="fr",
         )
 
     @patch("services.tts.service.GTTSProvider")

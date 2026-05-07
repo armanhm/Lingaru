@@ -1,7 +1,8 @@
 import pytest
 from django.contrib.auth import get_user_model
 from rest_framework.test import APIClient
-from apps.content.models import Topic, Lesson, Question
+
+from apps.content.models import Lesson, Question, Topic
 from apps.progress.models import MistakeEntry
 
 User = get_user_model()
@@ -15,7 +16,9 @@ def api_client():
 @pytest.fixture
 def user(db):
     return User.objects.create_user(
-        username="conjuser", email="conj@example.com", password="testpass123!",
+        username="conjuser",
+        email="conj@example.com",
+        password="testpass123!",
     )
 
 
@@ -28,24 +31,38 @@ def authenticated_client(api_client, user):
 @pytest.fixture
 def conjugation_questions(db):
     topic = Topic.objects.create(
-        name_fr="Conjugaison", name_en="Conjugation",
-        description="", icon="pen", order=1, difficulty_level=2,
+        name_fr="Conjugaison",
+        name_en="Conjugation",
+        description="",
+        icon="pen",
+        order=1,
+        difficulty_level=2,
     )
     lesson = Lesson.objects.create(
-        topic=topic, type="grammar", title="Verb Drills",
-        content={}, order=1, difficulty=2,
+        topic=topic,
+        type="grammar",
+        title="Verb Drills",
+        content={},
+        order=1,
+        difficulty=2,
     )
     q1 = Question.objects.create(
-        lesson=lesson, type="conjugation",
+        lesson=lesson,
+        type="conjugation",
         prompt="Conjugate manger (present, je)",
-        correct_answer="mange", wrong_answers=[],
-        explanation="je mange (manger, present)", difficulty=2,
+        correct_answer="mange",
+        wrong_answers=[],
+        explanation="je mange (manger, present)",
+        difficulty=2,
     )
     q2 = Question.objects.create(
-        lesson=lesson, type="conjugation",
+        lesson=lesson,
+        type="conjugation",
         prompt="Conjugate avoir (present, nous)",
-        correct_answer="avons", wrong_answers=[],
-        explanation="nous avons (avoir, present)", difficulty=2,
+        correct_answer="avons",
+        wrong_answers=[],
+        explanation="nous avons (avoir, present)",
+        difficulty=2,
     )
     return [q1, q2]
 

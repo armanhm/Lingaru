@@ -1,5 +1,6 @@
 import pytest
 from django.contrib.auth import get_user_model
+
 from apps.assistant.models import Conversation, Message
 
 User = get_user_model()
@@ -8,7 +9,9 @@ User = get_user_model()
 @pytest.fixture
 def user(db):
     return User.objects.create_user(
-        username="aiuser", email="ai@example.com", password="testpass123!",
+        username="aiuser",
+        email="ai@example.com",
+        password="testpass123!",
     )
 
 
@@ -32,7 +35,9 @@ class TestConversation:
 
     def test_create_conversation_with_context(self, user):
         conv = Conversation.objects.create(
-            user=user, title="Lesson chat", context="lesson:42",
+            user=user,
+            title="Lesson chat",
+            context="lesson:42",
         )
         assert conv.context == "lesson:42"
 
@@ -81,16 +86,22 @@ class TestMessage:
 
     def test_message_str(self, conversation):
         msg = Message.objects.create(
-            conversation=conversation, role="user", content="Salut!",
+            conversation=conversation,
+            role="user",
+            content="Salut!",
         )
         assert "user" in str(msg)
 
     def test_message_ordering(self, conversation):
         m1 = Message.objects.create(
-            conversation=conversation, role="user", content="First",
+            conversation=conversation,
+            role="user",
+            content="First",
         )
         m2 = Message.objects.create(
-            conversation=conversation, role="assistant", content="Second",
+            conversation=conversation,
+            role="assistant",
+            content="Second",
         )
         msgs = list(Message.objects.filter(conversation=conversation))
         # Chronological order (oldest first)
@@ -99,7 +110,9 @@ class TestMessage:
 
     def test_message_conversation_cascade(self, conversation):
         Message.objects.create(
-            conversation=conversation, role="user", content="Test",
+            conversation=conversation,
+            role="user",
+            content="Test",
         )
         conversation.delete()
         assert Message.objects.count() == 0
@@ -108,6 +121,8 @@ class TestMessage:
         # Valid roles should work
         for role in ("user", "assistant"):
             msg = Message.objects.create(
-                conversation=conversation, role=role, content="test",
+                conversation=conversation,
+                role=role,
+                content="test",
             )
             assert msg.role == role

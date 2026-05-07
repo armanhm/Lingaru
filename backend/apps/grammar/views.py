@@ -8,16 +8,23 @@ from rest_framework.views import APIView
 from apps.gamification.services import award_xp, check_streak
 
 from .models import (
-    GrammarCategory, GrammarTopic, GrammarDrillItem,
-    GrammarMastery, GrammarSession, GrammarAnswer,
+    GrammarAnswer,
+    GrammarCategory,
+    GrammarDrillItem,
+    GrammarMastery,
+    GrammarSession,
+    GrammarTopic,
 )
-from .scoring import update_mastery, status_for
+from .scoring import status_for, update_mastery
 from .serializers import (
-    GrammarCategorySerializer, GrammarTopicListSerializer, GrammarTopicDetailSerializer,
-    GrammarDrillItemSerializer, StartSessionSerializer, SubmitAnswerSerializer,
     CompleteSessionSerializer,
+    GrammarCategorySerializer,
+    GrammarDrillItemSerializer,
+    GrammarTopicDetailSerializer,
+    GrammarTopicListSerializer,
+    StartSessionSerializer,
+    SubmitAnswerSerializer,
 )
-
 
 # ── XP for grammar drills ───────────────────────────────────────
 XP_PER_CORRECT_DRILL = 3
@@ -27,6 +34,7 @@ XP_DRILL_PERFECT_BONUS = 10
 class HubView(APIView):
     """Aggregated view for /grammar — categories with topic + mastery counts,
     plus a recommended next topic based on weakest mastery / due-for-review."""
+
     permission_classes = (permissions.IsAuthenticated,)
 
     def get(self, request):
@@ -40,30 +48,47 @@ class HubView(APIView):
 
         for cat in categories:
             topics = list(cat.topics.filter(is_active=True))
-            if not topics: continue
+            if not topics:
+                continue
             mastered = sum(
-                1 for t in topics
+                1
+                for t in topics
                 if (m := all_user_mastery.get(t.id)) and status_for(m) == "mastered"
             )
             avg_mastery = (
-                sum((all_user_mastery.get(t.id).mastery_score if all_user_mastery.get(t.id) else 0) for t in topics)
-                / len(topics)
-            ) if topics else 0
-            category_payload.append({
-                "id": cat.id,
-                "name": cat.name,
-                "slug": cat.slug,
-                "icon": cat.icon,
-                "topic_count": len(topics),
-                "mastered_count": mastered,
-                "avg_mastery": round(avg_mastery, 1),
-            })
+                (
+                    sum(
+                        (
+                            all_user_mastery.get(t.id).mastery_score
+                            if all_user_mastery.get(t.id)
+                            else 0
+                        )
+                        for t in topics
+                    )
+                    / len(topics)
+                )
+                if topics
+                else 0
+            )
+            category_payload.append(
+                {
+                    "id": cat.id,
+                    "name": cat.name,
+                    "slug": cat.slug,
+                    "icon": cat.icon,
+                    "topic_count": len(topics),
+                    "mastered_count": mastered,
+                    "avg_mastery": round(avg_mastery, 1),
+                }
+            )
 
         # Recommend next topic: due-for-review first, else weakest, else first not-started
         now = timezone.now()
-        due_records = GrammarMastery.objects.filter(
-            user=request.user, next_review_at__lte=now
-        ).select_related("topic").order_by("next_review_at")
+        due_records = (
+            GrammarMastery.objects.filter(user=request.user, next_review_at__lte=now)
+            .select_related("topic")
+            .order_by("next_review_at")
+        )
 
         recommended = None
         if due_records.exists():
@@ -77,17 +102,27 @@ class HubView(APIView):
             else:
                 # first not-started
                 started_ids = set(all_user_mastery.keys())
-                first_new = GrammarTopic.objects.filter(is_active=True).exclude(id__in=started_ids).first()
+                first_new = (
+                    GrammarTopic.objects.filter(is_active=True).exclude(id__in=started_ids).first()
+                )
                 if first_new:
                     recommended = first_new
 
-        return Response({
-            "categories": category_payload,
-            "recommended_topic": GrammarTopicListSerializer(recommended, context={"request": request}).data if recommended else None,
-            "total_topics": GrammarTopic.objects.filter(is_active=True).count(),
-            "total_mastered": sum(1 for m in all_user_mastery.values() if status_for(m) == "mastered"),
-            "due_for_review": due_records.count(),
-        })
+        return Response(
+            {
+                "categories": category_payload,
+                "recommended_topic": GrammarTopicListSerializer(
+                    recommended, context={"request": request}
+                ).data
+                if recommended
+                else None,
+                "total_topics": GrammarTopic.objects.filter(is_active=True).count(),
+                "total_mastered": sum(
+                    1 for m in all_user_mastery.values() if status_for(m) == "mastered"
+                ),
+                "due_for_review": due_records.count(),
+            }
+        )
 
 
 class CategoryListView(APIView):
@@ -100,6 +135,7 @@ class CategoryListView(APIView):
 
 class TopicListView(APIView):
     """List topics, filterable by category and CEFR level."""
+
     permission_classes = (permissions.IsAuthenticated,)
 
     def get(self, request):
@@ -126,13 +162,12 @@ class TopicDetailView(APIView):
             topic = GrammarTopic.objects.select_related("category").get(slug=slug, is_active=True)
         except GrammarTopic.DoesNotExist:
             return Response({"detail": "Topic not found."}, status=status.HTTP_404_NOT_FOUND)
-        return Response(
-            GrammarTopicDetailSerializer(topic, context={"request": request}).data
-        )
+        return Response(GrammarTopicDetailSerializer(topic, context={"request": request}).data)
 
 
 class StartSessionView(APIView):
     """Start a drill session for a topic. Returns 8-12 drill items."""
+
     permission_classes = (permissions.IsAuthenticated,)
 
     def post(self, request):
@@ -144,7 +179,10 @@ class StartSessionView(APIView):
 
         if mode == "drill":
             if not topic_id:
-                return Response({"detail": "topic_id required for drill mode."}, status=status.HTTP_400_BAD_REQUEST)
+                return Response(
+                    {"detail": "topic_id required for drill mode."},
+                    status=status.HTTP_400_BAD_REQUEST,
+                )
             try:
                 topic = GrammarTopic.objects.get(id=topic_id, is_active=True)
             except GrammarTopic.DoesNotExist:
@@ -152,14 +190,20 @@ class StartSessionView(APIView):
 
             drills = list(topic.drills.all())
             if not drills:
-                return Response({"detail": "No drills available for this topic yet."}, status=status.HTTP_400_BAD_REQUEST)
+                return Response(
+                    {"detail": "No drills available for this topic yet."},
+                    status=status.HTTP_400_BAD_REQUEST,
+                )
             random.shuffle(drills)
             drills = drills[:10]
 
             mastery, _ = GrammarMastery.objects.get_or_create(user=request.user, topic=topic)
             session = GrammarSession.objects.create(
-                user=request.user, topic=topic, mode="drill",
-                total=len(drills), mastery_before=mastery.mastery_score,
+                user=request.user,
+                topic=topic,
+                mode="drill",
+                total=len(drills),
+                mastery_before=mastery.mastery_score,
             )
         else:
             # diagnostic — sample one item from each of up to 12 topics at user level
@@ -174,23 +218,36 @@ class StartSessionView(APIView):
                 if items:
                     drills.append(random.choice(items))
             if not drills:
-                return Response({"detail": "No drills available yet."}, status=status.HTTP_400_BAD_REQUEST)
+                return Response(
+                    {"detail": "No drills available yet."}, status=status.HTTP_400_BAD_REQUEST
+                )
 
             session = GrammarSession.objects.create(
-                user=request.user, topic=None, mode="diagnostic", total=len(drills),
+                user=request.user,
+                topic=None,
+                mode="diagnostic",
+                total=len(drills),
             )
 
-        return Response({
-            "session_id": session.id,
-            "mode": mode,
-            "topic": GrammarTopicListSerializer(session.topic, context={"request": request}).data if session.topic else None,
-            "items": GrammarDrillItemSerializer(drills, many=True).data,
-        }, status=status.HTTP_201_CREATED)
+        return Response(
+            {
+                "session_id": session.id,
+                "mode": mode,
+                "topic": GrammarTopicListSerializer(
+                    session.topic, context={"request": request}
+                ).data
+                if session.topic
+                else None,
+                "items": GrammarDrillItemSerializer(drills, many=True).data,
+            },
+            status=status.HTTP_201_CREATED,
+        )
 
 
 class SubmitAnswerView(APIView):
     """Submit a single answer within a session. Records but doesn't grade —
     grading is client-side (we send correct_answer with each item)."""
+
     permission_classes = (permissions.IsAuthenticated,)
 
     def post(self, request, session_id):
@@ -199,12 +256,16 @@ class SubmitAnswerView(APIView):
         except GrammarSession.DoesNotExist:
             return Response({"detail": "Session not found."}, status=status.HTTP_404_NOT_FOUND)
         if session.completed_at:
-            return Response({"detail": "Session already completed."}, status=status.HTTP_400_BAD_REQUEST)
+            return Response(
+                {"detail": "Session already completed."}, status=status.HTTP_400_BAD_REQUEST
+            )
 
         serializer = SubmitAnswerSerializer(data=request.data)
         serializer.is_valid(raise_exception=True)
 
-        drill = GrammarDrillItem.objects.filter(id=serializer.validated_data["drill_item_id"]).first()
+        drill = GrammarDrillItem.objects.filter(
+            id=serializer.validated_data["drill_item_id"]
+        ).first()
         is_correct = serializer.validated_data["is_correct"]
 
         GrammarAnswer.objects.create(
@@ -222,6 +283,7 @@ class SubmitAnswerView(APIView):
 
 class CompleteSessionView(APIView):
     """Mark session complete, update mastery, award XP."""
+
     permission_classes = (permissions.IsAuthenticated,)
 
     def post(self, request, session_id):
@@ -235,7 +297,9 @@ class CompleteSessionView(APIView):
         session.completed_at = timezone.now()
 
         if session.topic:
-            mastery, _ = GrammarMastery.objects.get_or_create(user=request.user, topic=session.topic)
+            mastery, _ = GrammarMastery.objects.get_or_create(
+                user=request.user, topic=session.topic
+            )
             update_mastery(mastery, session.score, session.total)
             session.mastery_after = mastery.mastery_score
 

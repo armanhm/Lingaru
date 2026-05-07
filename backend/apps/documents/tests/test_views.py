@@ -15,7 +15,8 @@ class TestDocumentUploadView(TestCase):
     def setUp(self):
         self.client = APIClient()
         self.user = User.objects.create_user(
-            username="testuser", password="testpass123",
+            username="testuser",
+            password="testpass123",
         )
         self.client.force_authenticate(user=self.user)
 
@@ -93,20 +94,27 @@ class TestDocumentListView(TestCase):
     def setUp(self):
         self.client = APIClient()
         self.user = User.objects.create_user(
-            username="testuser", password="testpass123",
+            username="testuser",
+            password="testpass123",
         )
         self.client.force_authenticate(user=self.user)
 
     def test_list_own_documents(self):
         """User sees only their own documents."""
         Document.objects.create(
-            user=self.user, title="Doc 1", file_type="txt",
+            user=self.user,
+            title="Doc 1",
+            file_type="txt",
         )
         other_user = User.objects.create_user(
-            username="other", email="other@test.com", password="testpass123",
+            username="other",
+            email="other@test.com",
+            password="testpass123",
         )
         Document.objects.create(
-            user=other_user, title="Other Doc", file_type="txt",
+            user=other_user,
+            title="Other Doc",
+            file_type="txt",
         )
 
         response = self.client.get("/api/documents/")
@@ -122,14 +130,17 @@ class TestDocumentDeleteView(TestCase):
     def setUp(self):
         self.client = APIClient()
         self.user = User.objects.create_user(
-            username="testuser", password="testpass123",
+            username="testuser",
+            password="testpass123",
         )
         self.client.force_authenticate(user=self.user)
 
     def test_delete_own_document(self):
         """User can delete their own document."""
         doc = Document.objects.create(
-            user=self.user, title="To Delete", file_type="txt",
+            user=self.user,
+            title="To Delete",
+            file_type="txt",
         )
 
         response = self.client.delete(f"/api/documents/{doc.id}/")
@@ -140,10 +151,14 @@ class TestDocumentDeleteView(TestCase):
     def test_cannot_delete_other_users_document(self):
         """User cannot delete another user's document."""
         other_user = User.objects.create_user(
-            username="other", email="other@test.com", password="testpass123",
+            username="other",
+            email="other@test.com",
+            password="testpass123",
         )
         doc = Document.objects.create(
-            user=other_user, title="Not Mine", file_type="txt",
+            user=other_user,
+            title="Not Mine",
+            file_type="txt",
         )
 
         response = self.client.delete(f"/api/documents/{doc.id}/")

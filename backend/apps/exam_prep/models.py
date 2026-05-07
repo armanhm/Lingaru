@@ -1,7 +1,6 @@
 from django.conf import settings
 from django.db import models
 
-
 SECTION_CHOICES = [
     ("CO", "Compréhension orale"),
     ("CE", "Compréhension écrite"),
@@ -53,7 +52,9 @@ class ExamExercise(models.Model):
 class ExamSession(models.Model):
     """A user's attempt at a set of exam exercises."""
 
-    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name="exam_sessions")
+    user = models.ForeignKey(
+        settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name="exam_sessions"
+    )
     section = models.CharField(max_length=2, choices=SECTION_CHOICES)
     cefr_level = models.CharField(max_length=2, choices=CEFR_CHOICES)
     mode = models.CharField(max_length=10, choices=MODE_CHOICES, default="practice")
@@ -94,7 +95,9 @@ class ExamResponse(models.Model):
 class ExamProgress(models.Model):
     """Aggregated progress per user per section."""
 
-    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name="exam_progress")
+    user = models.ForeignKey(
+        settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name="exam_progress"
+    )
     section = models.CharField(max_length=2, choices=SECTION_CHOICES)
     best_score_pct = models.FloatField(default=0)
     exercises_completed = models.PositiveIntegerField(default=0)
@@ -105,7 +108,9 @@ class ExamProgress(models.Model):
     class Meta:
         db_table = "exam_prep_progress"
         constraints = [
-            models.UniqueConstraint(fields=["user", "section"], name="unique_exam_progress_per_section"),
+            models.UniqueConstraint(
+                fields=["user", "section"], name="unique_exam_progress_per_section"
+            ),
         ]
 
     def __str__(self):

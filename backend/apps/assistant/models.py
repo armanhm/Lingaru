@@ -39,7 +39,10 @@ class Message(models.Model):
     role = models.CharField(max_length=10, choices=ROLE_CHOICES)
     content = models.TextField()
     provider = models.CharField(
-        max_length=10, choices=PROVIDER_CHOICES, null=True, blank=True,
+        max_length=10,
+        choices=PROVIDER_CHOICES,
+        null=True,
+        blank=True,
     )
     tokens_used = models.PositiveIntegerField(default=0)
     created_at = models.DateTimeField(auto_now_add=True)

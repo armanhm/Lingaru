@@ -1,5 +1,6 @@
 import pytest
-from services.stt.scoring import normalize_text, calculate_accuracy, generate_feedback
+
+from services.stt.scoring import calculate_accuracy, generate_feedback, normalize_text
 
 
 class TestNormalizeText:

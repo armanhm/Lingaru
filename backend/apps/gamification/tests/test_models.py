@@ -1,8 +1,9 @@
-import pytest
 from datetime import date
+
+import pytest
 from django.contrib.auth import get_user_model
 
-from apps.gamification.models import XPTransaction, UserStats, Badge, UserBadge
+from apps.gamification.models import Badge, UserBadge, UserStats, XPTransaction
 
 User = get_user_model()
 

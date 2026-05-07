@@ -8,22 +8,26 @@ from django.core.management.base import BaseCommand
 
 from apps.agents.models import Agent
 
-
 AGENTS = [
     {
-        "slug":  "grammar-coach",
-        "name":  "Grammar Coach",
+        "slug": "grammar-coach",
+        "name": "Grammar Coach",
         "emoji": "🧠",
-        "tint":  "from-primary-500 to-purple-600",
-        "tagline":     "Explique un point de grammaire avec des exemples B1-B2.",
+        "tint": "from-primary-500 to-purple-600",
+        "tagline": "Explique un point de grammaire avec des exemples B1-B2.",
         "description": (
             "Le Grammar Coach démêle un point de grammaire à la fois. "
             "Donne-lui un concept (le subjonctif, l'imparfait vs passé composé, "
             "les pronoms COD/COI) et il te répond avec une explication claire, "
             "une formule, des exemples et 2-3 pièges classiques à éviter."
         ),
-        "best_for":     ["Subjonctif", "Passé composé", "Pronoms COD/COI", "Articles"],
-        "capabilities": ["Explique une règle", "Donne des exemples", "Liste les exceptions", "Suggère un drill"],
+        "best_for": ["Subjonctif", "Passé composé", "Pronoms COD/COI", "Articles"],
+        "capabilities": [
+            "Explique une règle",
+            "Donne des exemples",
+            "Liste les exceptions",
+            "Suggère un drill",
+        ],
         "suggested_questions": [
             "Quand utiliser le subjonctif présent ?",
             "Différence entre passé composé et imparfait ?",
@@ -66,18 +70,23 @@ AGENTS = [
         "order": 10,
     },
     {
-        "slug":  "writing-editor",
-        "name":  "Writing Editor",
+        "slug": "writing-editor",
+        "name": "Writing Editor",
         "emoji": "✍️",
-        "tint":  "from-accent-500 to-warn-500",
-        "tagline":     "Corrige ton texte français et explique chaque erreur.",
+        "tint": "from-accent-500 to-warn-500",
+        "tagline": "Corrige ton texte français et explique chaque erreur.",
         "description": (
             "Le Writing Editor relit un texte que tu as écrit en français — "
             "phrase, paragraphe ou rédaction — et le corrige en montrant ce qui "
             "a changé et pourquoi. Idéal pour préparer la production écrite du TCF/TEF."
         ),
-        "best_for":     ["Accord", "Genre", "Conjugaison", "Prépositions"],
-        "capabilities": ["Corrige un texte", "Explique chaque erreur", "Note CEFR", "Suggère une reformulation"],
+        "best_for": ["Accord", "Genre", "Conjugaison", "Prépositions"],
+        "capabilities": [
+            "Corrige un texte",
+            "Explique chaque erreur",
+            "Note CEFR",
+            "Suggère une reformulation",
+        ],
         "suggested_questions": [
             "Corrige : « Hier j'ai été au cinéma et j'ai regardé un bon film. »",
             "Vérifie : « La voiture est beau et rapide. »",
@@ -98,19 +107,24 @@ AGENTS = [
         "order": 20,
     },
     {
-        "slug":  "verb-studio",
-        "name":  "Verb Studio",
+        "slug": "verb-studio",
+        "name": "Verb Studio",
         "emoji": "✏️",
-        "tint":  "from-info-500 to-primary-600",
-        "tagline":     "Conjugue n'importe quel verbe sur les 8 temps principaux.",
+        "tint": "from-info-500 to-primary-600",
+        "tagline": "Conjugue n'importe quel verbe sur les 8 temps principaux.",
         "description": (
             "Le Verb Studio te donne la table de conjugaison complète d'un verbe : "
             "présent, imparfait, passé composé, futur simple, conditionnel présent, "
             "subjonctif présent, impératif et plus-que-parfait. Indique aussi "
             "l'auxiliaire et le participe passé."
         ),
-        "best_for":     ["Verbes irréguliers", "Subjonctif", "Auxiliaires", "Participes"],
-        "capabilities": ["Table complète 8 temps", "Auxiliaire et participe", "Exemples d'usage", "Pièges fréquents"],
+        "best_for": ["Verbes irréguliers", "Subjonctif", "Auxiliaires", "Participes"],
+        "capabilities": [
+            "Table complète 8 temps",
+            "Auxiliaire et participe",
+            "Exemples d'usage",
+            "Pièges fréquents",
+        ],
         "suggested_questions": [
             "Conjugue « être ».",
             "Conjugue « aller » au subjonctif présent.",
@@ -150,16 +164,16 @@ AGENTS = [
         "order": 30,
     },
     {
-        "slug":  "vocab-explorer",
-        "name":  "Vocab Explorer",
+        "slug": "vocab-explorer",
+        "name": "Vocab Explorer",
         "emoji": "📚",
-        "tint":  "from-success-500 to-info-500",
-        "tagline":     "Définition complète d'un mot : sens, genre, IPA, exemples.",
+        "tint": "from-success-500 to-info-500",
+        "tagline": "Définition complète d'un mot : sens, genre, IPA, exemples.",
         "description": (
             "Le Vocab Explorer creuse un mot français pour toi : définition, genre, "
             "prononciation IPA, registre, synonymes, faux amis et exemples concrets."
         ),
-        "best_for":     ["Définitions", "Genre", "Faux amis", "Synonymes"],
+        "best_for": ["Définitions", "Genre", "Faux amis", "Synonymes"],
         "capabilities": ["Définition", "Genre + IPA", "Synonymes / antonymes", "Faux amis"],
         "suggested_questions": [
             "Que veut dire « flâner » ?",
@@ -181,18 +195,23 @@ AGENTS = [
         "order": 40,
     },
     {
-        "slug":  "translation-lab",
-        "name":  "Translation Lab",
+        "slug": "translation-lab",
+        "name": "Translation Lab",
         "emoji": "🌐",
-        "tint":  "from-info-500 to-purple-600",
-        "tagline":     "Traduit FR ↔ EN avec le contexte et les nuances.",
+        "tint": "from-info-500 to-purple-600",
+        "tagline": "Traduit FR ↔ EN avec le contexte et les nuances.",
         "description": (
             "Le Translation Lab traduit dans les deux sens. Il détecte la langue "
             "source, propose plusieurs alternatives quand c'est utile, et explique "
             "les choix de traduction difficiles."
         ),
-        "best_for":     ["FR → EN", "EN → FR", "Idiomes", "Registre"],
-        "capabilities": ["Traduction FR ↔ EN", "Alternatives", "Notes sur les choix", "Détection automatique"],
+        "best_for": ["FR → EN", "EN → FR", "Idiomes", "Registre"],
+        "capabilities": [
+            "Traduction FR ↔ EN",
+            "Alternatives",
+            "Notes sur les choix",
+            "Détection automatique",
+        ],
         "suggested_questions": [
             "Traduis : « I'd like to make a reservation for two ».",
             "Traduis : « C'est pas de la tarte ! ».",
@@ -213,17 +232,17 @@ AGENTS = [
         "order": 50,
     },
     {
-        "slug":  "idiom-hunter",
-        "name":  "Idiom Hunter",
+        "slug": "idiom-hunter",
+        "name": "Idiom Hunter",
         "emoji": "💬",
-        "tint":  "from-warn-500 to-accent-500",
-        "tagline":     "Décrypte une expression française : sens, registre, exemples.",
+        "tint": "from-warn-500 to-accent-500",
+        "tagline": "Décrypte une expression française : sens, registre, exemples.",
         "description": (
             "L'Idiom Hunter t'explique les expressions idiomatiques françaises : "
             "sens littéral, sens réel, registre, et un exemple naturel d'usage. "
             "Pratique pour ne plus se faire piéger par « avoir le cafard » ou « tomber dans les pommes »."
         ),
-        "best_for":     ["Expressions", "Argot", "Niveaux de langue", "Histoire des mots"],
+        "best_for": ["Expressions", "Argot", "Niveaux de langue", "Histoire des mots"],
         "capabilities": ["Sens littéral vs réel", "Registre", "Exemple d'usage", "Origine"],
         "suggested_questions": [
             "Que veut dire « avoir le cafard » ?",
@@ -246,18 +265,18 @@ AGENTS = [
         "order": 60,
     },
     {
-        "slug":  "culture-guide",
-        "name":  "Culture Guide",
+        "slug": "culture-guide",
+        "name": "Culture Guide",
         "emoji": "🇫🇷",
-        "tint":  "from-primary-500 to-info-500",
-        "tagline":     "Notes culturelles sur la France : usages, anecdotes, repères.",
+        "tint": "from-primary-500 to-info-500",
+        "tagline": "Notes culturelles sur la France : usages, anecdotes, repères.",
         "description": (
             "Le Culture Guide te donne les repères culturels qui ne sont pas dans "
             "les manuels : pourquoi on dit « bonjour » à un boulanger, pourquoi le "
             "14 juillet, comment fonctionne la rentrée, ce qu'on offre à un dîner. "
             "Pratique pour les apprenants qui préparent un séjour ou un examen oral."
         ),
-        "best_for":     ["Étiquette", "Fêtes", "Quotidien", "Régions"],
+        "best_for": ["Étiquette", "Fêtes", "Quotidien", "Régions"],
         "capabilities": ["Contexte culturel", "Anecdotes", "Mots-clés", "Comparaisons FR/EN"],
         "suggested_questions": [
             "Comment se passe un dîner chez des Français ?",
@@ -279,17 +298,17 @@ AGENTS = [
         "order": 70,
     },
     {
-        "slug":  "pronunciation-buddy",
-        "name":  "Pronunciation Buddy",
+        "slug": "pronunciation-buddy",
+        "name": "Pronunciation Buddy",
         "emoji": "🔊",
-        "tint":  "from-accent-500 to-purple-500",
-        "tagline":     "Prononciation IPA + conseils concrets pour bien dire un mot.",
+        "tint": "from-accent-500 to-purple-500",
+        "tagline": "Prononciation IPA + conseils concrets pour bien dire un mot.",
         "description": (
             "Le Pronunciation Buddy t'aide à dire correctement un mot ou une phrase : "
             "transcription IPA, découpage syllabique, conseil sur le « r » guttural, "
             "les nasales, les liaisons et les e muets."
         ),
-        "best_for":     ["IPA", "Liaisons", "Nasales", "R guttural"],
+        "best_for": ["IPA", "Liaisons", "Nasales", "R guttural"],
         "capabilities": ["IPA", "Découpage syllabique", "Conseil articulatoire", "Liaisons"],
         "suggested_questions": [
             "Comment prononcer « grenouille » ?",
@@ -312,11 +331,11 @@ AGENTS = [
         "order": 80,
     },
     {
-        "slug":  "exam-coach",
-        "name":  "Exam Coach",
+        "slug": "exam-coach",
+        "name": "Exam Coach",
         "emoji": "🎯",
-        "tint":  "from-danger-500 to-accent-500",
-        "tagline":     "Coach TCF / TEF — stratégie, drills ciblés, simulations.",
+        "tint": "from-danger-500 to-accent-500",
+        "tagline": "Coach TCF / TEF — stratégie, drills ciblés, simulations.",
         "description": (
             "L'Exam Coach t'accompagne pour le TCF (Test de connaissance du français) et "
             "le TEF Canada. Il t'explique le format d'une section, t'entraîne sur un type "
@@ -324,7 +343,7 @@ AGENTS = [
             "(Compréhension orale, Compréhension écrite, Lexique & grammaire, Expression écrite, "
             "Expression orale), et corrige tes productions selon les grilles officielles."
         ),
-        "best_for":     ["TCF", "TEF Canada", "Stratégies", "Simulations"],
+        "best_for": ["TCF", "TEF Canada", "Stratégies", "Simulations"],
         "capabilities": [
             "Format de chaque section",
             "Drill sur un type de question",
@@ -423,6 +442,6 @@ class Command(BaseCommand):
                 updated += 1
                 self.stdout.write(f"  ~ {obj.emoji} {obj.name} ({obj.slug})")
 
-        self.stdout.write(self.style.SUCCESS(
-            f"\nSeeded {created} new + updated {updated} existing agents."
-        ))
+        self.stdout.write(
+            self.style.SUCCESS(f"\nSeeded {created} new + updated {updated} existing agents.")
+        )

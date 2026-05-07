@@ -12,16 +12,16 @@ class DiscoverCard(models.Model):
     ]
 
     NEWS_TOPICS = [
-        ("politics",  "Politics"),
-        ("sports",    "Sports"),
-        ("culture",   "Culture"),
-        ("economy",   "Economy"),
-        ("science",   "Science"),
-        ("tech",      "Technology"),
-        ("society",   "Society"),
-        ("environ",   "Environment"),
-        ("world",     "World"),
-        ("misc",      "Miscellaneous"),
+        ("politics", "Politics"),
+        ("sports", "Sports"),
+        ("culture", "Culture"),
+        ("economy", "Economy"),
+        ("science", "Science"),
+        ("tech", "Technology"),
+        ("society", "Society"),
+        ("environ", "Environment"),
+        ("world", "World"),
+        ("misc", "Miscellaneous"),
     ]
 
     type = models.CharField(max_length=10, choices=TYPE_CHOICES)

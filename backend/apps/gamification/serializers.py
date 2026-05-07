@@ -1,6 +1,5 @@
 from rest_framework import serializers
 
-from .constants import LEVEL_THRESHOLDS
 from .models import Badge, UserBadge, UserStats, XPTransaction
 from .services import get_level
 
@@ -12,9 +11,13 @@ class UserStatsSerializer(serializers.ModelSerializer):
     class Meta:
         model = UserStats
         fields = (
-            "total_xp", "level", "level_name",
-            "current_streak", "longest_streak",
-            "streak_freeze_available", "last_active_date",
+            "total_xp",
+            "level",
+            "level_name",
+            "current_streak",
+            "longest_streak",
+            "streak_freeze_available",
+            "last_active_date",
             "rank",
         )
 

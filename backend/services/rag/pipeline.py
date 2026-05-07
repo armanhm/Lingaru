@@ -3,9 +3,9 @@ import logging
 from django.conf import settings
 
 from apps.documents.models import Document, DocumentChunk
-from services.rag.extractor import extract_text
 from services.rag.chunker import chunk_text
 from services.rag.embedder import GeminiEmbedder
+from services.rag.extractor import extract_text
 
 logger = logging.getLogger(__name__)
 
@@ -30,7 +30,9 @@ def process_document(document_id: int) -> None:
         # 1. Extract text
         document.file.open("rb")
         text, page_count = extract_text(
-            document.file, file_type=document.file_type, return_page_count=True,
+            document.file,
+            file_type=document.file_type,
+            return_page_count=True,
         )
         document.file.close()
         document.page_count = page_count
@@ -54,7 +56,9 @@ def process_document(document_id: int) -> None:
         embedder = GeminiEmbedder(
             api_key=settings.GEMINI_API_KEY,
             model=getattr(
-                settings, "GEMINI_EMBEDDING_MODEL", "models/text-embedding-004",
+                settings,
+                "GEMINI_EMBEDDING_MODEL",
+                "models/text-embedding-004",
             ),
         )
 
@@ -89,7 +93,8 @@ def process_document(document_id: int) -> None:
 
         logger.info(
             "Document %d processed: %d chunks created",
-            document.id, len(chunk_objects),
+            document.id,
+            len(chunk_objects),
         )
 
     except Exception as exc:

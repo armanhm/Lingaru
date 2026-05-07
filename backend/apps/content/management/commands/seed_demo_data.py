@@ -78,33 +78,96 @@ class Command(BaseCommand):
 
         # -- Vocab lesson ------------------------------------------------
         l_vocab = Lesson.objects.create(
-            topic=t, type="vocab",
+            topic=t,
+            type="vocab",
             title="Airport, Hotel & Directions",
             content={"intro": "Essential words for getting around while travelling."},
-            order=1, difficulty=2,
+            order=1,
+            difficulty=2,
         )
 
-        self._bulk_vocab(l_vocab, [
-            ("l'aéroport", "airport", "la.e.ʁɔ.pɔʁ", "Nous arrivons à l'aéroport à midi.", "m", "noun"),
-            ("l'avion", "airplane", "la.vjɔ̃", "L'avion décolle dans une heure.", "m", "noun"),
-            ("le billet", "ticket", "lə bi.jɛ", "J'ai acheté un billet aller-retour.", "m", "noun"),
-            ("la valise", "suitcase", "la va.liz", "Ma valise est trop lourde.", "f", "noun"),
-            ("le passeport", "passport", "lə pas.pɔʁ", "N'oubliez pas votre passeport.", "m", "noun"),
-            ("l'hôtel", "hotel", "lo.tɛl", "Nous avons réservé un hôtel au centre-ville.", "m", "noun"),
-            ("la chambre", "room", "la ʃɑ̃bʁ", "La chambre donne sur la mer.", "f", "noun"),
-            ("la gare", "train station", "la ɡaʁ", "Le train part de la gare de Lyon.", "f", "noun"),
-            ("le plan", "map / plan", "lə plɑ̃", "Avez-vous un plan de la ville ?", "m", "noun"),
-            ("tout droit", "straight ahead", "tu dʁwa", "Allez tout droit pendant deux cents mètres.", "a", "adverb"),
-            ("à gauche", "to the left", "a ɡoʃ", "Tournez à gauche au feu rouge.", "a", "adverb"),
-            ("à droite", "to the right", "a dʁwat", "La pharmacie est à droite.", "a", "adverb"),
-        ])
+        self._bulk_vocab(
+            l_vocab,
+            [
+                (
+                    "l'aéroport",
+                    "airport",
+                    "la.e.ʁɔ.pɔʁ",
+                    "Nous arrivons à l'aéroport à midi.",
+                    "m",
+                    "noun",
+                ),
+                ("l'avion", "airplane", "la.vjɔ̃", "L'avion décolle dans une heure.", "m", "noun"),
+                (
+                    "le billet",
+                    "ticket",
+                    "lə bi.jɛ",
+                    "J'ai acheté un billet aller-retour.",
+                    "m",
+                    "noun",
+                ),
+                ("la valise", "suitcase", "la va.liz", "Ma valise est trop lourde.", "f", "noun"),
+                (
+                    "le passeport",
+                    "passport",
+                    "lə pas.pɔʁ",
+                    "N'oubliez pas votre passeport.",
+                    "m",
+                    "noun",
+                ),
+                (
+                    "l'hôtel",
+                    "hotel",
+                    "lo.tɛl",
+                    "Nous avons réservé un hôtel au centre-ville.",
+                    "m",
+                    "noun",
+                ),
+                ("la chambre", "room", "la ʃɑ̃bʁ", "La chambre donne sur la mer.", "f", "noun"),
+                (
+                    "la gare",
+                    "train station",
+                    "la ɡaʁ",
+                    "Le train part de la gare de Lyon.",
+                    "f",
+                    "noun",
+                ),
+                ("le plan", "map / plan", "lə plɑ̃", "Avez-vous un plan de la ville ?", "m", "noun"),
+                (
+                    "tout droit",
+                    "straight ahead",
+                    "tu dʁwa",
+                    "Allez tout droit pendant deux cents mètres.",
+                    "a",
+                    "adverb",
+                ),
+                (
+                    "à gauche",
+                    "to the left",
+                    "a ɡoʃ",
+                    "Tournez à gauche au feu rouge.",
+                    "a",
+                    "adverb",
+                ),
+                (
+                    "à droite",
+                    "to the right",
+                    "a dʁwat",
+                    "La pharmacie est à droite.",
+                    "a",
+                    "adverb",
+                ),
+            ],
+        )
 
         # -- Grammar lesson -----------------------------------------------
         l_gram = Lesson.objects.create(
-            topic=t, type="grammar",
+            topic=t,
+            type="grammar",
             title="Le futur simple",
             content={"intro": "How to talk about future plans and events."},
-            order=2, difficulty=2,
+            order=2,
+            difficulty=2,
         )
 
         GrammarRule.objects.create(
@@ -144,10 +207,12 @@ class Command(BaseCommand):
 
         # -- Reading text -------------------------------------------------
         l_text = Lesson.objects.create(
-            topic=t, type="text",
+            topic=t,
+            type="text",
             title="Un voyage à Lyon",
             content={"intro": "Read about a trip to Lyon and test your comprehension."},
-            order=3, difficulty=2,
+            order=3,
+            difficulty=2,
         )
 
         ReadingText.objects.create(
@@ -181,50 +246,107 @@ class Command(BaseCommand):
                 "city. We'll come back for sure!'"
             ),
             vocabulary_highlights=[
-                "TGV", "traboules", "bouchon lyonnais", "quenelles",
-                "pralines roses", "berges", "ruelles",
+                "TGV",
+                "traboules",
+                "bouchon lyonnais",
+                "quenelles",
+                "pralines roses",
+                "berges",
+                "ruelles",
             ],
             comprehension_questions=[
-                {"question": "How did Sophie and Marc travel to Lyon?", "answer": "By TGV (high-speed train) from Paris"},
-                {"question": "What are traboules?", "answer": "Secret passages that run through buildings in Vieux Lyon"},
-                {"question": "What did they eat at the bouchon?", "answer": "Quenelles and salade lyonnaise"},
+                {
+                    "question": "How did Sophie and Marc travel to Lyon?",
+                    "answer": "By TGV (high-speed train) from Paris",
+                },
+                {
+                    "question": "What are traboules?",
+                    "answer": "Secret passages that run through buildings in Vieux Lyon",
+                },
+                {
+                    "question": "What did they eat at the bouchon?",
+                    "answer": "Quenelles and salade lyonnaise",
+                },
                 {"question": "What local specialty did Sophie buy?", "answer": "Pralines roses"},
             ],
         )
 
         # -- Questions (spread across lessons) ----------------------------
-        self._bulk_questions(l_vocab, [
-            ("mcq", "What does 'l'aéroport' mean?", "airport",
-             ["airplane", "ticket", "train station"],
-             "'L'aéroport' is masculine — the airport.", 1),
-            ("mcq", "What does 'la valise' mean?", "suitcase",
-             ["passport", "ticket", "map"],
-             "'La valise' is feminine — the suitcase.", 1),
-            ("fill_blank", "Tournez _____ au feu rouge. (to the left)", "à gauche",
-             ["à droite", "tout droit", "au sud"],
-             "'À gauche' means to the left.", 1),
-            ("translate", "Translate: 'Don't forget your passport.'",
-             "N'oubliez pas votre passeport.",
-             [], "Negation wraps the verb: n'oubliez pas.", 2),
-        ])
+        self._bulk_questions(
+            l_vocab,
+            [
+                (
+                    "mcq",
+                    "What does 'l'aéroport' mean?",
+                    "airport",
+                    ["airplane", "ticket", "train station"],
+                    "'L'aéroport' is masculine — the airport.",
+                    1,
+                ),
+                (
+                    "mcq",
+                    "What does 'la valise' mean?",
+                    "suitcase",
+                    ["passport", "ticket", "map"],
+                    "'La valise' is feminine — the suitcase.",
+                    1,
+                ),
+                (
+                    "fill_blank",
+                    "Tournez _____ au feu rouge. (to the left)",
+                    "à gauche",
+                    ["à droite", "tout droit", "au sud"],
+                    "'À gauche' means to the left.",
+                    1,
+                ),
+                (
+                    "translate",
+                    "Translate: 'Don't forget your passport.'",
+                    "N'oubliez pas votre passeport.",
+                    [],
+                    "Negation wraps the verb: n'oubliez pas.",
+                    2,
+                ),
+            ],
+        )
 
-        self._bulk_questions(l_gram, [
-            ("fill_blank", "Je _____ en France cet été. (voyager, futur simple)",
-             "voyagerai",
-             ["voyage", "voyagé", "voyageais"],
-             "Futur simple of voyager: voyager + ai = voyagerai.", 2),
-            ("conjugation", "Conjugate 'avoir' in futur simple for 'nous':",
-             "aurons",
-             ["avons", "aurez", "auront"],
-             "Avoir is irregular in futur simple: nous aurons.", 2),
-            ("mcq", "Which is the correct futur simple of 'être' for 'je'?",
-             "serai",
-             ["suis", "serais", "étais"],
-             "Être is irregular: je serai (not 'serais' which is conditional).", 2),
-            ("translate", "Translate: 'They will arrive tomorrow morning.'",
-             "Ils arriveront demain matin.",
-             [], "Futur simple of arriver + demain matin.", 2),
-        ])
+        self._bulk_questions(
+            l_gram,
+            [
+                (
+                    "fill_blank",
+                    "Je _____ en France cet été. (voyager, futur simple)",
+                    "voyagerai",
+                    ["voyage", "voyagé", "voyageais"],
+                    "Futur simple of voyager: voyager + ai = voyagerai.",
+                    2,
+                ),
+                (
+                    "conjugation",
+                    "Conjugate 'avoir' in futur simple for 'nous':",
+                    "aurons",
+                    ["avons", "aurez", "auront"],
+                    "Avoir is irregular in futur simple: nous aurons.",
+                    2,
+                ),
+                (
+                    "mcq",
+                    "Which is the correct futur simple of 'être' for 'je'?",
+                    "serai",
+                    ["suis", "serais", "étais"],
+                    "Être is irregular: je serai (not 'serais' which is conditional).",
+                    2,
+                ),
+                (
+                    "translate",
+                    "Translate: 'They will arrive tomorrow morning.'",
+                    "Ils arriveront demain matin.",
+                    [],
+                    "Futur simple of arriver + demain matin.",
+                    2,
+                ),
+            ],
+        )
 
         self.stdout.write(self.style.SUCCESS(f"  Created topic '{name_fr}'"))
 
@@ -249,32 +371,109 @@ class Command(BaseCommand):
 
         # -- Vocab --------------------------------------------------------
         l_vocab = Lesson.objects.create(
-            topic=t, type="vocab",
+            topic=t,
+            type="vocab",
             title="Office & Job Vocabulary",
             content={"intro": "Words for the workplace and professional life."},
-            order=1, difficulty=2,
+            order=1,
+            difficulty=2,
         )
 
-        self._bulk_vocab(l_vocab, [
-            ("le bureau", "office / desk", "lə by.ʁo", "Je travaille dans un grand bureau.", "m", "noun"),
-            ("l'entreprise", "company", "lɑ̃.tʁə.pʁiz", "Elle dirige une petite entreprise.", "f", "noun"),
-            ("le patron", "boss", "lə pa.tʁɔ̃", "Le patron organise une réunion.", "m", "noun"),
-            ("la réunion", "meeting", "la ʁe.y.njɔ̃", "La réunion commence à quatorze heures.", "f", "noun"),
-            ("l'ordinateur", "computer", "lɔʁ.di.na.tœʁ", "Mon ordinateur est lent aujourd'hui.", "m", "noun"),
-            ("le salaire", "salary", "lə sa.lɛʁ", "Il a reçu une augmentation de salaire.", "m", "noun"),
-            ("un emploi", "a job", "ɛ̃.n‿ɑ̃.plwa", "Elle cherche un emploi à Paris.", "m", "noun"),
-            ("le collègue", "colleague", "lə kɔ.lɛɡ", "Mon collègue est très sympathique.", "m", "noun"),
-            ("travailler", "to work", "tʁa.va.je", "Je travaille du lundi au vendredi.", "a", "verb"),
-            ("embaucher", "to hire", "ɑ̃.bo.ʃe", "L'entreprise va embaucher dix personnes.", "a", "verb"),
-            ("démissionner", "to resign", "de.mi.sjɔ.ne", "Il a démissionné la semaine dernière.", "a", "verb"),
-        ])
+        self._bulk_vocab(
+            l_vocab,
+            [
+                (
+                    "le bureau",
+                    "office / desk",
+                    "lə by.ʁo",
+                    "Je travaille dans un grand bureau.",
+                    "m",
+                    "noun",
+                ),
+                (
+                    "l'entreprise",
+                    "company",
+                    "lɑ̃.tʁə.pʁiz",
+                    "Elle dirige une petite entreprise.",
+                    "f",
+                    "noun",
+                ),
+                ("le patron", "boss", "lə pa.tʁɔ̃", "Le patron organise une réunion.", "m", "noun"),
+                (
+                    "la réunion",
+                    "meeting",
+                    "la ʁe.y.njɔ̃",
+                    "La réunion commence à quatorze heures.",
+                    "f",
+                    "noun",
+                ),
+                (
+                    "l'ordinateur",
+                    "computer",
+                    "lɔʁ.di.na.tœʁ",
+                    "Mon ordinateur est lent aujourd'hui.",
+                    "m",
+                    "noun",
+                ),
+                (
+                    "le salaire",
+                    "salary",
+                    "lə sa.lɛʁ",
+                    "Il a reçu une augmentation de salaire.",
+                    "m",
+                    "noun",
+                ),
+                (
+                    "un emploi",
+                    "a job",
+                    "ɛ̃.n‿ɑ̃.plwa",
+                    "Elle cherche un emploi à Paris.",
+                    "m",
+                    "noun",
+                ),
+                (
+                    "le collègue",
+                    "colleague",
+                    "lə kɔ.lɛɡ",
+                    "Mon collègue est très sympathique.",
+                    "m",
+                    "noun",
+                ),
+                (
+                    "travailler",
+                    "to work",
+                    "tʁa.va.je",
+                    "Je travaille du lundi au vendredi.",
+                    "a",
+                    "verb",
+                ),
+                (
+                    "embaucher",
+                    "to hire",
+                    "ɑ̃.bo.ʃe",
+                    "L'entreprise va embaucher dix personnes.",
+                    "a",
+                    "verb",
+                ),
+                (
+                    "démissionner",
+                    "to resign",
+                    "de.mi.sjɔ.ne",
+                    "Il a démissionné la semaine dernière.",
+                    "a",
+                    "verb",
+                ),
+            ],
+        )
 
         # -- Grammar ------------------------------------------------------
         l_gram = Lesson.objects.create(
-            topic=t, type="grammar",
+            topic=t,
+            type="grammar",
             title="Passé composé — avoir vs être",
             content={"intro": "Master the most important French past tense."},
-            order=2, difficulty=2,
+            order=2,
+            difficulty=2,
         )
 
         GrammarRule.objects.create(
@@ -329,10 +528,12 @@ class Command(BaseCommand):
 
         # -- Reading text -------------------------------------------------
         l_text = Lesson.objects.create(
-            topic=t, type="text",
+            topic=t,
+            type="text",
             title="Mon premier jour au bureau",
             content={"intro": "Read about someone's first day at work."},
-            order=3, difficulty=2,
+            order=3,
+            difficulty=2,
         )
 
         ReadingText.objects.create(
@@ -368,52 +569,110 @@ class Command(BaseCommand):
                 "her about my day. She was very proud of me."
             ),
             vocabulary_highlights=[
-                "agence de communication", "responsable", "graphistes",
-                "rédacteurs", "directeur commercial", "réunion", "collègues",
+                "agence de communication",
+                "responsable",
+                "graphistes",
+                "rédacteurs",
+                "directeur commercial",
+                "réunion",
+                "collègues",
             ],
             comprehension_questions=[
-                {"question": "Where is the new job located?", "answer": "At a communications agency in Bordeaux"},
-                {"question": "Who welcomed the narrator?", "answer": "Claire, the manager (responsable)"},
-                {"question": "What happened at the meeting?", "answer": "They discussed a new project for an important client"},
-                {"question": "What did the narrator do at lunchtime?", "answer": "Went to a small restaurant near the office with colleagues"},
+                {
+                    "question": "Where is the new job located?",
+                    "answer": "At a communications agency in Bordeaux",
+                },
+                {
+                    "question": "Who welcomed the narrator?",
+                    "answer": "Claire, the manager (responsable)",
+                },
+                {
+                    "question": "What happened at the meeting?",
+                    "answer": "They discussed a new project for an important client",
+                },
+                {
+                    "question": "What did the narrator do at lunchtime?",
+                    "answer": "Went to a small restaurant near the office with colleagues",
+                },
             ],
         )
 
         # -- Questions ----------------------------------------------------
-        self._bulk_questions(l_vocab, [
-            ("mcq", "What does 'le bureau' mean?", "office / desk",
-             ["boss", "meeting", "salary"],
-             "'Le bureau' can mean both 'office' and 'desk'.", 1),
-            ("mcq", "What does 'embaucher' mean?", "to hire",
-             ["to fire", "to resign", "to work"],
-             "'Embaucher' means to hire. The opposite is 'licencier' (to fire).", 1),
-            ("fill_blank", "La _____ commence à quatorze heures. (meeting)",
-             "réunion",
-             ["bureau", "entreprise", "salaire"],
-             "'La réunion' means the meeting.", 1),
-            ("translate", "Translate: 'She is looking for a job in Paris.'",
-             "Elle cherche un emploi à Paris.",
-             [], "'Chercher' means to look for (no preposition needed in French).", 2),
-        ])
+        self._bulk_questions(
+            l_vocab,
+            [
+                (
+                    "mcq",
+                    "What does 'le bureau' mean?",
+                    "office / desk",
+                    ["boss", "meeting", "salary"],
+                    "'Le bureau' can mean both 'office' and 'desk'.",
+                    1,
+                ),
+                (
+                    "mcq",
+                    "What does 'embaucher' mean?",
+                    "to hire",
+                    ["to fire", "to resign", "to work"],
+                    "'Embaucher' means to hire. The opposite is 'licencier' (to fire).",
+                    1,
+                ),
+                (
+                    "fill_blank",
+                    "La _____ commence à quatorze heures. (meeting)",
+                    "réunion",
+                    ["bureau", "entreprise", "salaire"],
+                    "'La réunion' means the meeting.",
+                    1,
+                ),
+                (
+                    "translate",
+                    "Translate: 'She is looking for a job in Paris.'",
+                    "Elle cherche un emploi à Paris.",
+                    [],
+                    "'Chercher' means to look for (no preposition needed in French).",
+                    2,
+                ),
+            ],
+        )
 
-        self._bulk_questions(l_gram, [
-            ("fill_blank", "Elle _____ allée au bureau. (être, passé composé)",
-             "est",
-             ["a", "avait", "était"],
-             "'Aller' uses être in the passé composé: elle est allée.", 2),
-            ("mcq", "Which verb uses 'être' in the passé composé?",
-             "partir",
-             ["manger", "travailler", "finir"],
-             "'Partir' is a verb of motion and uses être.", 2),
-            ("conjugation", "Passé composé of 'finir' for 'nous':",
-             "avons fini",
-             ["sommes finis", "avons finir", "ont fini"],
-             "'Finir' uses avoir: nous avons fini.", 2),
-            ("fill_blank", "Ils _____ partis à huit heures. (être, passé composé)",
-             "sont",
-             ["ont", "étaient", "avaient"],
-             "'Partir' uses être: ils sont partis.", 2),
-        ])
+        self._bulk_questions(
+            l_gram,
+            [
+                (
+                    "fill_blank",
+                    "Elle _____ allée au bureau. (être, passé composé)",
+                    "est",
+                    ["a", "avait", "était"],
+                    "'Aller' uses être in the passé composé: elle est allée.",
+                    2,
+                ),
+                (
+                    "mcq",
+                    "Which verb uses 'être' in the passé composé?",
+                    "partir",
+                    ["manger", "travailler", "finir"],
+                    "'Partir' is a verb of motion and uses être.",
+                    2,
+                ),
+                (
+                    "conjugation",
+                    "Passé composé of 'finir' for 'nous':",
+                    "avons fini",
+                    ["sommes finis", "avons finir", "ont fini"],
+                    "'Finir' uses avoir: nous avons fini.",
+                    2,
+                ),
+                (
+                    "fill_blank",
+                    "Ils _____ partis à huit heures. (être, passé composé)",
+                    "sont",
+                    ["ont", "étaient", "avaient"],
+                    "'Partir' uses être: ils sont partis.",
+                    2,
+                ),
+            ],
+        )
 
         self.stdout.write(self.style.SUCCESS(f"  Created topic '{name_fr}'"))
 
@@ -438,33 +697,68 @@ class Command(BaseCommand):
 
         # -- Vocab --------------------------------------------------------
         l_vocab = Lesson.objects.create(
-            topic=t, type="vocab",
+            topic=t,
+            type="vocab",
             title="Body, Symptoms & Doctor Visits",
             content={"intro": "Essential health vocabulary for everyday situations."},
-            order=1, difficulty=2,
+            order=1,
+            difficulty=2,
         )
 
-        self._bulk_vocab(l_vocab, [
-            ("la tête", "head", "la tɛt", "J'ai mal à la tête.", "f", "noun"),
-            ("le bras", "arm", "lə bʁɑ", "Il s'est cassé le bras.", "m", "noun"),
-            ("la jambe", "leg", "la ʒɑ̃b", "Elle a une douleur à la jambe.", "f", "noun"),
-            ("le ventre", "stomach / belly", "lə vɑ̃tʁ", "J'ai mal au ventre.", "m", "noun"),
-            ("le dos", "back", "lə do", "Mon dos me fait souffrir.", "m", "noun"),
-            ("la fièvre", "fever", "la fjɛvʁ", "Le patient a de la fièvre.", "f", "noun"),
-            ("la toux", "cough", "la tu", "Cette toux dure depuis une semaine.", "f", "noun"),
-            ("le rhume", "cold", "lə ʁym", "J'ai attrapé un rhume.", "m", "noun"),
-            ("le médecin", "doctor", "lə med.sɛ̃", "Je dois aller chez le médecin.", "m", "noun"),
-            ("l'ordonnance", "prescription", "lɔʁ.dɔ.nɑ̃s", "Le médecin m'a donné une ordonnance.", "f", "noun"),
-            ("la pharmacie", "pharmacy", "la faʁ.ma.si", "La pharmacie est ouverte le dimanche.", "f", "noun"),
-            ("le médicament", "medicine / medication", "lə me.di.ka.mɑ̃", "Prenez ce médicament trois fois par jour.", "m", "noun"),
-        ])
+        self._bulk_vocab(
+            l_vocab,
+            [
+                ("la tête", "head", "la tɛt", "J'ai mal à la tête.", "f", "noun"),
+                ("le bras", "arm", "lə bʁɑ", "Il s'est cassé le bras.", "m", "noun"),
+                ("la jambe", "leg", "la ʒɑ̃b", "Elle a une douleur à la jambe.", "f", "noun"),
+                ("le ventre", "stomach / belly", "lə vɑ̃tʁ", "J'ai mal au ventre.", "m", "noun"),
+                ("le dos", "back", "lə do", "Mon dos me fait souffrir.", "m", "noun"),
+                ("la fièvre", "fever", "la fjɛvʁ", "Le patient a de la fièvre.", "f", "noun"),
+                ("la toux", "cough", "la tu", "Cette toux dure depuis une semaine.", "f", "noun"),
+                ("le rhume", "cold", "lə ʁym", "J'ai attrapé un rhume.", "m", "noun"),
+                (
+                    "le médecin",
+                    "doctor",
+                    "lə med.sɛ̃",
+                    "Je dois aller chez le médecin.",
+                    "m",
+                    "noun",
+                ),
+                (
+                    "l'ordonnance",
+                    "prescription",
+                    "lɔʁ.dɔ.nɑ̃s",
+                    "Le médecin m'a donné une ordonnance.",
+                    "f",
+                    "noun",
+                ),
+                (
+                    "la pharmacie",
+                    "pharmacy",
+                    "la faʁ.ma.si",
+                    "La pharmacie est ouverte le dimanche.",
+                    "f",
+                    "noun",
+                ),
+                (
+                    "le médicament",
+                    "medicine / medication",
+                    "lə me.di.ka.mɑ̃",
+                    "Prenez ce médicament trois fois par jour.",
+                    "m",
+                    "noun",
+                ),
+            ],
+        )
 
         # -- Grammar ------------------------------------------------------
         l_gram = Lesson.objects.create(
-            topic=t, type="grammar",
+            topic=t,
+            type="grammar",
             title="L'impératif",
             content={"intro": "Giving commands, instructions, and advice."},
-            order=2, difficulty=2,
+            order=2,
+            difficulty=2,
         )
 
         GrammarRule.objects.create(
@@ -500,10 +794,12 @@ class Command(BaseCommand):
 
         # -- Reading text -------------------------------------------------
         l_text = Lesson.objects.create(
-            topic=t, type="text",
+            topic=t,
+            type="text",
             title="Chez le médecin",
             content={"intro": "A dialogue at the doctor's office."},
-            order=3, difficulty=2,
+            order=3,
+            difficulty=2,
         )
 
         ReadingText.objects.create(
@@ -542,50 +838,105 @@ class Command(BaseCommand):
                 "within a week, come back and see me."
             ),
             vocabulary_highlights=[
-                "symptômes", "gorge", "fièvre", "examiner",
-                "angine virale", "ordonnance", "sirop", "paracétamol",
+                "symptômes",
+                "gorge",
+                "fièvre",
+                "examiner",
+                "angine virale",
+                "ordonnance",
+                "sirop",
+                "paracétamol",
             ],
             comprehension_questions=[
                 {"question": "How long has the patient been sick?", "answer": "Three days"},
                 {"question": "What temperature did the patient have?", "answer": "38 degrees"},
-                {"question": "What is the diagnosis?", "answer": "A viral throat infection (angine virale)"},
-                {"question": "What does the doctor prescribe?", "answer": "Paracetamol for fever and cough syrup"},
+                {
+                    "question": "What is the diagnosis?",
+                    "answer": "A viral throat infection (angine virale)",
+                },
+                {
+                    "question": "What does the doctor prescribe?",
+                    "answer": "Paracetamol for fever and cough syrup",
+                },
             ],
         )
 
         # -- Questions ----------------------------------------------------
-        self._bulk_questions(l_vocab, [
-            ("mcq", "What does 'la fièvre' mean?", "fever",
-             ["cough", "cold", "headache"],
-             "'La fièvre' means fever.", 1),
-            ("fill_blank", "J'ai mal à la _____. (head)", "tête",
-             ["bras", "jambe", "dos"],
-             "'J'ai mal à la tête' means 'I have a headache'.", 1),
-            ("translate", "Translate: 'I caught a cold.'",
-             "J'ai attrapé un rhume.",
-             [], "'Attraper un rhume' is the French expression for catching a cold.", 2),
-            ("mcq", "What is 'l'ordonnance'?", "prescription",
-             ["pharmacy", "medicine", "appointment"],
-             "'L'ordonnance' is a prescription from the doctor.", 1),
-        ])
+        self._bulk_questions(
+            l_vocab,
+            [
+                (
+                    "mcq",
+                    "What does 'la fièvre' mean?",
+                    "fever",
+                    ["cough", "cold", "headache"],
+                    "'La fièvre' means fever.",
+                    1,
+                ),
+                (
+                    "fill_blank",
+                    "J'ai mal à la _____. (head)",
+                    "tête",
+                    ["bras", "jambe", "dos"],
+                    "'J'ai mal à la tête' means 'I have a headache'.",
+                    1,
+                ),
+                (
+                    "translate",
+                    "Translate: 'I caught a cold.'",
+                    "J'ai attrapé un rhume.",
+                    [],
+                    "'Attraper un rhume' is the French expression for catching a cold.",
+                    2,
+                ),
+                (
+                    "mcq",
+                    "What is 'l'ordonnance'?",
+                    "prescription",
+                    ["pharmacy", "medicine", "appointment"],
+                    "'L'ordonnance' is a prescription from the doctor.",
+                    1,
+                ),
+            ],
+        )
 
-        self._bulk_questions(l_gram, [
-            ("fill_blank", "_____ ce médicament deux fois par jour. (prendre, impératif vous)",
-             "Prenez",
-             ["Prends", "Prenons", "Prend"],
-             "Imperative vous form of prendre: prenez.", 2),
-            ("mcq", "What is the tu imperative of 'parler'?",
-             "parle",
-             ["parles", "parlons", "parlez"],
-             "For -er verbs, drop the -s: parle (not parles).", 2),
-            ("conjugation", "Give the imperative (vous) of 'être':",
-             "soyez",
-             ["êtes", "serez", "étiez"],
-             "Être is irregular in the imperative: soyez.", 2),
-            ("translate", "Translate: 'Rest well!' (informal)",
-             "Repose-toi bien !",
-             [], "Reflexive imperative: verb + hyphen + toi.", 2),
-        ])
+        self._bulk_questions(
+            l_gram,
+            [
+                (
+                    "fill_blank",
+                    "_____ ce médicament deux fois par jour. (prendre, impératif vous)",
+                    "Prenez",
+                    ["Prends", "Prenons", "Prend"],
+                    "Imperative vous form of prendre: prenez.",
+                    2,
+                ),
+                (
+                    "mcq",
+                    "What is the tu imperative of 'parler'?",
+                    "parle",
+                    ["parles", "parlons", "parlez"],
+                    "For -er verbs, drop the -s: parle (not parles).",
+                    2,
+                ),
+                (
+                    "conjugation",
+                    "Give the imperative (vous) of 'être':",
+                    "soyez",
+                    ["êtes", "serez", "étiez"],
+                    "Être is irregular in the imperative: soyez.",
+                    2,
+                ),
+                (
+                    "translate",
+                    "Translate: 'Rest well!' (informal)",
+                    "Repose-toi bien !",
+                    [],
+                    "Reflexive imperative: verb + hyphen + toi.",
+                    2,
+                ),
+            ],
+        )
 
         self.stdout.write(self.style.SUCCESS(f"  Created topic '{name_fr}'"))
 
@@ -610,32 +961,102 @@ class Command(BaseCommand):
 
         # -- Vocab --------------------------------------------------------
         l_vocab = Lesson.objects.create(
-            topic=t, type="vocab",
+            topic=t,
+            type="vocab",
             title="Sports, Music & Arts",
             content={"intro": "Talk about your hobbies and leisure activities."},
-            order=1, difficulty=1,
+            order=1,
+            difficulty=1,
         )
 
-        self._bulk_vocab(l_vocab, [
-            ("le football", "soccer / football", "lə fut.bol", "Je joue au football le samedi.", "m", "noun"),
-            ("la natation", "swimming", "la na.ta.sjɔ̃", "La natation est bonne pour le dos.", "f", "noun"),
-            ("le vélo", "cycling / bicycle", "lə ve.lo", "Je fais du vélo tous les matins.", "m", "noun"),
-            ("la lecture", "reading", "la lɛk.tyʁ", "La lecture est mon passe-temps préféré.", "f", "noun"),
-            ("la musique", "music", "la my.zik", "J'écoute de la musique en travaillant.", "f", "noun"),
-            ("la peinture", "painting", "la pɛ̃.tyʁ", "Elle fait de la peinture le dimanche.", "f", "noun"),
-            ("le cinéma", "cinema / movies", "lə si.ne.ma", "On va au cinéma ce soir ?", "m", "noun"),
-            ("la danse", "dance", "la dɑ̃s", "Elle prend des cours de danse.", "f", "noun"),
-            ("la randonnée", "hiking", "la ʁɑ̃.dɔ.ne", "Nous faisons de la randonnée en montagne.", "f", "noun"),
-            ("le jardinage", "gardening", "lə ʒaʁ.di.naʒ", "Mon père adore le jardinage.", "m", "noun"),
-            ("jouer", "to play", "ʒu.e", "Les enfants jouent dans le parc.", "a", "verb"),
-        ])
+        self._bulk_vocab(
+            l_vocab,
+            [
+                (
+                    "le football",
+                    "soccer / football",
+                    "lə fut.bol",
+                    "Je joue au football le samedi.",
+                    "m",
+                    "noun",
+                ),
+                (
+                    "la natation",
+                    "swimming",
+                    "la na.ta.sjɔ̃",
+                    "La natation est bonne pour le dos.",
+                    "f",
+                    "noun",
+                ),
+                (
+                    "le vélo",
+                    "cycling / bicycle",
+                    "lə ve.lo",
+                    "Je fais du vélo tous les matins.",
+                    "m",
+                    "noun",
+                ),
+                (
+                    "la lecture",
+                    "reading",
+                    "la lɛk.tyʁ",
+                    "La lecture est mon passe-temps préféré.",
+                    "f",
+                    "noun",
+                ),
+                (
+                    "la musique",
+                    "music",
+                    "la my.zik",
+                    "J'écoute de la musique en travaillant.",
+                    "f",
+                    "noun",
+                ),
+                (
+                    "la peinture",
+                    "painting",
+                    "la pɛ̃.tyʁ",
+                    "Elle fait de la peinture le dimanche.",
+                    "f",
+                    "noun",
+                ),
+                (
+                    "le cinéma",
+                    "cinema / movies",
+                    "lə si.ne.ma",
+                    "On va au cinéma ce soir ?",
+                    "m",
+                    "noun",
+                ),
+                ("la danse", "dance", "la dɑ̃s", "Elle prend des cours de danse.", "f", "noun"),
+                (
+                    "la randonnée",
+                    "hiking",
+                    "la ʁɑ̃.dɔ.ne",
+                    "Nous faisons de la randonnée en montagne.",
+                    "f",
+                    "noun",
+                ),
+                (
+                    "le jardinage",
+                    "gardening",
+                    "lə ʒaʁ.di.naʒ",
+                    "Mon père adore le jardinage.",
+                    "m",
+                    "noun",
+                ),
+                ("jouer", "to play", "ʒu.e", "Les enfants jouent dans le parc.", "a", "verb"),
+            ],
+        )
 
         # -- Grammar ------------------------------------------------------
         l_gram = Lesson.objects.create(
-            topic=t, type="grammar",
+            topic=t,
+            type="grammar",
             title="Comparatif et superlatif",
             content={"intro": "How to compare things and express extremes."},
-            order=2, difficulty=1,
+            order=2,
+            difficulty=1,
         )
 
         GrammarRule.objects.create(
@@ -685,10 +1106,12 @@ class Command(BaseCommand):
 
         # -- Reading text -------------------------------------------------
         l_text = Lesson.objects.create(
-            topic=t, type="text",
+            topic=t,
+            type="text",
             title="Le weekend de Pierre",
             content={"intro": "Read about Pierre's weekend activities."},
-            order=3, difficulty=1,
+            order=3,
+            difficulty=1,
         )
 
         ReadingText.objects.create(
@@ -727,52 +1150,110 @@ class Command(BaseCommand):
                 "It's the perfect end to a successful weekend."
             ),
             vocabulary_highlights=[
-                "football", "vélo", "course à pied", "guitare",
-                "cinéma", "comédies", "dessin animé",
+                "football",
+                "vélo",
+                "course à pied",
+                "guitare",
+                "cinéma",
+                "comédies",
+                "dessin animé",
             ],
             comprehension_questions=[
-                {"question": "What does Pierre do on Saturday mornings?", "answer": "Plays soccer with friends in the park"},
-                {"question": "What does Pierre find more relaxing than running?", "answer": "Cycling (le vélo)"},
-                {"question": "How long has Pierre been taking guitar lessons?", "answer": "Two years"},
-                {"question": "What type of film did they see this weekend?", "answer": "An adventure film"},
+                {
+                    "question": "What does Pierre do on Saturday mornings?",
+                    "answer": "Plays soccer with friends in the park",
+                },
+                {
+                    "question": "What does Pierre find more relaxing than running?",
+                    "answer": "Cycling (le vélo)",
+                },
+                {
+                    "question": "How long has Pierre been taking guitar lessons?",
+                    "answer": "Two years",
+                },
+                {
+                    "question": "What type of film did they see this weekend?",
+                    "answer": "An adventure film",
+                },
             ],
         )
 
         # -- Questions ----------------------------------------------------
-        self._bulk_questions(l_vocab, [
-            ("mcq", "What does 'la natation' mean?", "swimming",
-             ["hiking", "dancing", "cycling"],
-             "'La natation' means swimming.", 1),
-            ("fill_blank", "Je fais du _____ tous les matins. (cycling)",
-             "vélo",
-             ["football", "cinéma", "jardinage"],
-             "'Faire du vélo' means to go cycling.", 1),
-            ("translate", "Translate: 'I play soccer on Saturdays.'",
-             "Je joue au football le samedi.",
-             [], "'Jouer au' + sport. Note 'le samedi' means 'on Saturdays' (habitual).", 1),
-        ])
+        self._bulk_questions(
+            l_vocab,
+            [
+                (
+                    "mcq",
+                    "What does 'la natation' mean?",
+                    "swimming",
+                    ["hiking", "dancing", "cycling"],
+                    "'La natation' means swimming.",
+                    1,
+                ),
+                (
+                    "fill_blank",
+                    "Je fais du _____ tous les matins. (cycling)",
+                    "vélo",
+                    ["football", "cinéma", "jardinage"],
+                    "'Faire du vélo' means to go cycling.",
+                    1,
+                ),
+                (
+                    "translate",
+                    "Translate: 'I play soccer on Saturdays.'",
+                    "Je joue au football le samedi.",
+                    [],
+                    "'Jouer au' + sport. Note 'le samedi' means 'on Saturdays' (habitual).",
+                    1,
+                ),
+            ],
+        )
 
-        self._bulk_questions(l_gram, [
-            ("fill_blank", "Le football est _____ populaire que le tennis. (more)",
-             "plus",
-             ["moins", "aussi", "très"],
-             "Comparative of superiority: plus ... que.", 1),
-            ("mcq", "What is the correct comparative of 'bon'?",
-             "meilleur",
-             ["plus bon", "plus bien", "mieux"],
-             "'Bon' becomes 'meilleur' (not 'plus bon'). 'Mieux' is for 'bien'.", 1),
-            ("fill_blank", "C'est le sport le plus populaire _____ monde. (in the)",
-             "du",
-             ["de", "au", "dans le"],
-             "Superlative + de + group: du monde (de + le = du).", 2),
-            ("translate", "Translate: 'She sings better than me.'",
-             "Elle chante mieux que moi.",
-             [], "'Bien' → 'mieux' (not 'plus bien').", 2),
-            ("mcq", "What does 'le moins intéressant' mean?",
-             "the least interesting",
-             ["the most interesting", "less interesting", "not interesting"],
-             "'Le moins + adjective' = the least + adjective.", 1),
-        ])
+        self._bulk_questions(
+            l_gram,
+            [
+                (
+                    "fill_blank",
+                    "Le football est _____ populaire que le tennis. (more)",
+                    "plus",
+                    ["moins", "aussi", "très"],
+                    "Comparative of superiority: plus ... que.",
+                    1,
+                ),
+                (
+                    "mcq",
+                    "What is the correct comparative of 'bon'?",
+                    "meilleur",
+                    ["plus bon", "plus bien", "mieux"],
+                    "'Bon' becomes 'meilleur' (not 'plus bon'). 'Mieux' is for 'bien'.",
+                    1,
+                ),
+                (
+                    "fill_blank",
+                    "C'est le sport le plus populaire _____ monde. (in the)",
+                    "du",
+                    ["de", "au", "dans le"],
+                    "Superlative + de + group: du monde (de + le = du).",
+                    2,
+                ),
+                (
+                    "translate",
+                    "Translate: 'She sings better than me.'",
+                    "Elle chante mieux que moi.",
+                    [],
+                    "'Bien' → 'mieux' (not 'plus bien').",
+                    2,
+                ),
+                (
+                    "mcq",
+                    "What does 'le moins intéressant' mean?",
+                    "the least interesting",
+                    ["the most interesting", "less interesting", "not interesting"],
+                    "'Le moins + adjective' = the least + adjective.",
+                    1,
+                ),
+            ],
+        )
 
         self.stdout.write(self.style.SUCCESS(f"  Created topic '{name_fr}'"))
 
@@ -797,32 +1278,88 @@ class Command(BaseCommand):
 
         # -- Vocab --------------------------------------------------------
         l_vocab = Lesson.objects.create(
-            topic=t, type="vocab",
+            topic=t,
+            type="vocab",
             title="Places & Asking Directions",
             content={"intro": "Know the key places in a city and how to ask your way."},
-            order=1, difficulty=2,
+            order=1,
+            difficulty=2,
         )
 
-        self._bulk_vocab(l_vocab, [
-            ("la boulangerie", "bakery", "la bu.lɑ̃ʒ.ʁi", "J'achète du pain à la boulangerie.", "f", "noun"),
-            ("la bibliothèque", "library", "la bi.bli.jɔ.tɛk", "La bibliothèque ferme à dix-huit heures.", "f", "noun"),
-            ("la mairie", "town hall", "la mɛ.ʁi", "La mairie est sur la place principale.", "f", "noun"),
-            ("le marché", "market", "lə maʁ.ʃe", "Le marché a lieu le dimanche matin.", "m", "noun"),
-            ("le musée", "museum", "lə my.ze", "Le musée d'Orsay est magnifique.", "m", "noun"),
-            ("la poste", "post office", "la pɔst", "Je dois aller à la poste.", "f", "noun"),
-            ("l'église", "church", "le.ɡliz", "L'église date du douzième siècle.", "f", "noun"),
-            ("le pont", "bridge", "lə pɔ̃", "Traversez le pont pour arriver au parc.", "m", "noun"),
-            ("le carrefour", "crossroads / intersection", "lə kaʁ.fuʁ", "Tournez à droite au carrefour.", "m", "noun"),
-            ("le trottoir", "sidewalk", "lə tʁɔ.twaʁ", "Restez sur le trottoir.", "m", "noun"),
-            ("le quartier", "neighborhood", "lə kaʁ.tje", "C'est un quartier très animé.", "m", "noun"),
-        ])
+        self._bulk_vocab(
+            l_vocab,
+            [
+                (
+                    "la boulangerie",
+                    "bakery",
+                    "la bu.lɑ̃ʒ.ʁi",
+                    "J'achète du pain à la boulangerie.",
+                    "f",
+                    "noun",
+                ),
+                (
+                    "la bibliothèque",
+                    "library",
+                    "la bi.bli.jɔ.tɛk",
+                    "La bibliothèque ferme à dix-huit heures.",
+                    "f",
+                    "noun",
+                ),
+                (
+                    "la mairie",
+                    "town hall",
+                    "la mɛ.ʁi",
+                    "La mairie est sur la place principale.",
+                    "f",
+                    "noun",
+                ),
+                (
+                    "le marché",
+                    "market",
+                    "lə maʁ.ʃe",
+                    "Le marché a lieu le dimanche matin.",
+                    "m",
+                    "noun",
+                ),
+                ("le musée", "museum", "lə my.ze", "Le musée d'Orsay est magnifique.", "m", "noun"),
+                ("la poste", "post office", "la pɔst", "Je dois aller à la poste.", "f", "noun"),
+                ("l'église", "church", "le.ɡliz", "L'église date du douzième siècle.", "f", "noun"),
+                (
+                    "le pont",
+                    "bridge",
+                    "lə pɔ̃",
+                    "Traversez le pont pour arriver au parc.",
+                    "m",
+                    "noun",
+                ),
+                (
+                    "le carrefour",
+                    "crossroads / intersection",
+                    "lə kaʁ.fuʁ",
+                    "Tournez à droite au carrefour.",
+                    "m",
+                    "noun",
+                ),
+                ("le trottoir", "sidewalk", "lə tʁɔ.twaʁ", "Restez sur le trottoir.", "m", "noun"),
+                (
+                    "le quartier",
+                    "neighborhood",
+                    "lə kaʁ.tje",
+                    "C'est un quartier très animé.",
+                    "m",
+                    "noun",
+                ),
+            ],
+        )
 
         # -- Grammar ------------------------------------------------------
         l_gram = Lesson.objects.create(
-            topic=t, type="grammar",
+            topic=t,
+            type="grammar",
             title="Prépositions de lieu",
             content={"intro": "Master à, en, au, aux, and chez for places."},
-            order=2, difficulty=2,
+            order=2,
+            difficulty=2,
         )
 
         GrammarRule.objects.create(
@@ -855,10 +1392,12 @@ class Command(BaseCommand):
 
         # -- Reading text -------------------------------------------------
         l_text = Lesson.objects.create(
-            topic=t, type="text",
+            topic=t,
+            type="text",
             title="Perdu dans Paris",
             content={"intro": "Read about a tourist lost in Paris asking for directions."},
-            order=3, difficulty=2,
+            order=3,
+            difficulty=2,
         )
 
         ReadingText.objects.create(
@@ -899,51 +1438,105 @@ class Command(BaseCommand):
                 "Finally, he arrives at the Louvre just in time for opening."
             ),
             vocabulary_highlights=[
-                "trottoir", "carrefour", "tout droit", "à gauche",
-                "rue de Rivoli", "métro", "station", "boulangerie",
+                "trottoir",
+                "carrefour",
+                "tout droit",
+                "à gauche",
+                "rue de Rivoli",
+                "métro",
+                "station",
+                "boulangerie",
             ],
             comprehension_questions=[
                 {"question": "Where does Thomas want to go?", "answer": "The Louvre museum"},
                 {"question": "In which neighborhood is he lost?", "answer": "Le Marais"},
-                {"question": "What are the two options to get to the Louvre?", "answer": "Walk (20 minutes) or take the metro from Saint-Paul (2 stops)"},
-                {"question": "What does Thomas buy on the way?", "answer": "A croissant from a bakery"},
+                {
+                    "question": "What are the two options to get to the Louvre?",
+                    "answer": "Walk (20 minutes) or take the metro from Saint-Paul (2 stops)",
+                },
+                {
+                    "question": "What does Thomas buy on the way?",
+                    "answer": "A croissant from a bakery",
+                },
             ],
         )
 
         # -- Questions ----------------------------------------------------
-        self._bulk_questions(l_vocab, [
-            ("mcq", "What does 'la boulangerie' mean?", "bakery",
-             ["library", "post office", "market"],
-             "'La boulangerie' is where you buy bread and pastries.", 1),
-            ("fill_blank", "La _____ ferme à dix-huit heures. (library)",
-             "bibliothèque",
-             ["boulangerie", "mairie", "poste"],
-             "'La bibliothèque' means the library.", 1),
-            ("mcq", "What is 'le carrefour'?", "intersection / crossroads",
-             ["bridge", "sidewalk", "neighborhood"],
-             "'Le carrefour' is where two or more roads cross.", 1),
-            ("translate", "Translate: 'Cross the bridge to reach the park.'",
-             "Traversez le pont pour arriver au parc.",
-             [], "'Traverser' means to cross. Imperative vous form.", 2),
-        ])
+        self._bulk_questions(
+            l_vocab,
+            [
+                (
+                    "mcq",
+                    "What does 'la boulangerie' mean?",
+                    "bakery",
+                    ["library", "post office", "market"],
+                    "'La boulangerie' is where you buy bread and pastries.",
+                    1,
+                ),
+                (
+                    "fill_blank",
+                    "La _____ ferme à dix-huit heures. (library)",
+                    "bibliothèque",
+                    ["boulangerie", "mairie", "poste"],
+                    "'La bibliothèque' means the library.",
+                    1,
+                ),
+                (
+                    "mcq",
+                    "What is 'le carrefour'?",
+                    "intersection / crossroads",
+                    ["bridge", "sidewalk", "neighborhood"],
+                    "'Le carrefour' is where two or more roads cross.",
+                    1,
+                ),
+                (
+                    "translate",
+                    "Translate: 'Cross the bridge to reach the park.'",
+                    "Traversez le pont pour arriver au parc.",
+                    [],
+                    "'Traverser' means to cross. Imperative vous form.",
+                    2,
+                ),
+            ],
+        )
 
-        self._bulk_questions(l_gram, [
-            ("fill_blank", "J'habite _____ Lyon. (preposition)", "à",
-             ["en", "au", "chez"],
-             "For cities, use 'à': à Paris, à Lyon, à Marseille.", 1),
-            ("mcq", "Which preposition is used with feminine countries?",
-             "en",
-             ["à", "au", "chez"],
-             "Feminine countries use 'en': en France, en Espagne, en Italie.", 1),
-            ("fill_blank", "Il travaille _____ Canada. (preposition)",
-             "au",
-             ["en", "à", "aux"],
-             "Canada is masculine singular: au Canada.", 2),
-            ("fill_blank", "Je vais _____ le dentiste. (preposition)",
-             "chez",
-             ["à", "en", "au"],
-             "'Chez' is used for people and professionals: chez le dentiste.", 2),
-        ])
+        self._bulk_questions(
+            l_gram,
+            [
+                (
+                    "fill_blank",
+                    "J'habite _____ Lyon. (preposition)",
+                    "à",
+                    ["en", "au", "chez"],
+                    "For cities, use 'à': à Paris, à Lyon, à Marseille.",
+                    1,
+                ),
+                (
+                    "mcq",
+                    "Which preposition is used with feminine countries?",
+                    "en",
+                    ["à", "au", "chez"],
+                    "Feminine countries use 'en': en France, en Espagne, en Italie.",
+                    1,
+                ),
+                (
+                    "fill_blank",
+                    "Il travaille _____ Canada. (preposition)",
+                    "au",
+                    ["en", "à", "aux"],
+                    "Canada is masculine singular: au Canada.",
+                    2,
+                ),
+                (
+                    "fill_blank",
+                    "Je vais _____ le dentiste. (preposition)",
+                    "chez",
+                    ["à", "en", "au"],
+                    "'Chez' is used for people and professionals: chez le dentiste.",
+                    2,
+                ),
+            ],
+        )
 
         self.stdout.write(self.style.SUCCESS(f"  Created topic '{name_fr}'"))
 
@@ -968,33 +1561,61 @@ class Command(BaseCommand):
 
         # -- Vocab --------------------------------------------------------
         l_vocab = Lesson.objects.create(
-            topic=t, type="vocab",
+            topic=t,
+            type="vocab",
             title="Clothing, Colors & Prices",
             content={"intro": "Everything you need for a shopping trip in France."},
-            order=1, difficulty=1,
+            order=1,
+            difficulty=1,
         )
 
-        self._bulk_vocab(l_vocab, [
-            ("la robe", "dress", "la ʁɔb", "Cette robe rouge est très élégante.", "f", "noun"),
-            ("le pantalon", "trousers / pants", "lə pɑ̃.ta.lɔ̃", "Ce pantalon est trop long.", "m", "noun"),
-            ("la chemise", "shirt", "la ʃə.miz", "Il porte une chemise blanche.", "f", "noun"),
-            ("les chaussures", "shoes", "le ʃo.syʁ", "Ces chaussures sont en solde.", "f", "noun"),
-            ("le manteau", "coat", "lə mɑ̃.to", "Mets ton manteau, il fait froid.", "m", "noun"),
-            ("la taille", "size", "la taj", "Quelle est votre taille ?", "f", "noun"),
-            ("le prix", "price", "lə pʁi", "Quel est le prix de cette jupe ?", "m", "noun"),
-            ("cher / chère", "expensive", "ʃɛʁ", "Ce magasin est trop cher.", "a", "adjective"),
-            ("bon marché", "cheap / inexpensive", "bɔ̃ maʁ.ʃe", "Les fruits sont bon marché au marché.", "a", "adjective"),
-            ("rouge", "red", "ʁuʒ", "Je préfère la robe rouge.", "a", "adjective"),
-            ("bleu(e)", "blue", "blø", "Le ciel est bleu aujourd'hui.", "a", "adjective"),
-            ("noir(e)", "black", "nwaʁ", "Elle porte un manteau noir.", "a", "adjective"),
-        ])
+        self._bulk_vocab(
+            l_vocab,
+            [
+                ("la robe", "dress", "la ʁɔb", "Cette robe rouge est très élégante.", "f", "noun"),
+                (
+                    "le pantalon",
+                    "trousers / pants",
+                    "lə pɑ̃.ta.lɔ̃",
+                    "Ce pantalon est trop long.",
+                    "m",
+                    "noun",
+                ),
+                ("la chemise", "shirt", "la ʃə.miz", "Il porte une chemise blanche.", "f", "noun"),
+                (
+                    "les chaussures",
+                    "shoes",
+                    "le ʃo.syʁ",
+                    "Ces chaussures sont en solde.",
+                    "f",
+                    "noun",
+                ),
+                ("le manteau", "coat", "lə mɑ̃.to", "Mets ton manteau, il fait froid.", "m", "noun"),
+                ("la taille", "size", "la taj", "Quelle est votre taille ?", "f", "noun"),
+                ("le prix", "price", "lə pʁi", "Quel est le prix de cette jupe ?", "m", "noun"),
+                ("cher / chère", "expensive", "ʃɛʁ", "Ce magasin est trop cher.", "a", "adjective"),
+                (
+                    "bon marché",
+                    "cheap / inexpensive",
+                    "bɔ̃ maʁ.ʃe",
+                    "Les fruits sont bon marché au marché.",
+                    "a",
+                    "adjective",
+                ),
+                ("rouge", "red", "ʁuʒ", "Je préfère la robe rouge.", "a", "adjective"),
+                ("bleu(e)", "blue", "blø", "Le ciel est bleu aujourd'hui.", "a", "adjective"),
+                ("noir(e)", "black", "nwaʁ", "Elle porte un manteau noir.", "a", "adjective"),
+            ],
+        )
 
         # -- Grammar ------------------------------------------------------
         l_gram = Lesson.objects.create(
-            topic=t, type="grammar",
+            topic=t,
+            type="grammar",
             title="Les adjectifs démonstratifs",
             content={"intro": "Point things out with ce, cet, cette, and ces."},
-            order=2, difficulty=1,
+            order=2,
+            difficulty=1,
         )
 
         GrammarRule.objects.create(
@@ -1027,10 +1648,12 @@ class Command(BaseCommand):
 
         # -- Reading text -------------------------------------------------
         l_text = Lesson.objects.create(
-            topic=t, type="text",
+            topic=t,
+            type="text",
             title="Au marché du dimanche",
             content={"intro": "Read about a Sunday morning at a French market."},
-            order=3, difficulty=1,
+            order=3,
+            difficulty=1,
         )
 
         ReadingText.objects.create(
@@ -1067,50 +1690,107 @@ class Command(BaseCommand):
                 "of flowers. Sunday at the market is always a moment of happiness."
             ),
             vocabulary_highlights=[
-                "marché", "maraîcher", "tomates", "courgettes",
-                "écharpe", "fromage de chèvre", "bouquet de fleurs",
+                "marché",
+                "maraîcher",
+                "tomates",
+                "courgettes",
+                "écharpe",
+                "fromage de chèvre",
+                "bouquet de fleurs",
             ],
             comprehension_questions=[
-                {"question": "How often do Camille and her mother go to the market?", "answer": "Every Sunday"},
+                {
+                    "question": "How often do Camille and her mother go to the market?",
+                    "answer": "Every Sunday",
+                },
                 {"question": "How much do the apples cost?", "answer": "Two euros per kilo"},
-                {"question": "What does Camille want to buy at the clothing stand?", "answer": "A blue scarf for eight euros"},
-                {"question": "What do they buy before leaving?", "answer": "Goat cheese and a bunch of flowers"},
+                {
+                    "question": "What does Camille want to buy at the clothing stand?",
+                    "answer": "A blue scarf for eight euros",
+                },
+                {
+                    "question": "What do they buy before leaving?",
+                    "answer": "Goat cheese and a bunch of flowers",
+                },
             ],
         )
 
         # -- Questions ----------------------------------------------------
-        self._bulk_questions(l_vocab, [
-            ("mcq", "What does 'la robe' mean?", "dress",
-             ["shirt", "coat", "shoes"],
-             "'La robe' is feminine — a dress.", 1),
-            ("fill_blank", "Quelle est votre _____ ? (size)", "taille",
-             ["prix", "couleur", "robe"],
-             "'La taille' means size.", 1),
-            ("mcq", "What does 'bon marché' mean?", "cheap / inexpensive",
-             ["expensive", "on sale", "free"],
-             "'Bon marché' is invariable — it never changes form.", 1),
-            ("translate", "Translate: 'These shoes are on sale.'",
-             "Ces chaussures sont en solde.",
-             [], "'En solde' means on sale.", 1),
-        ])
+        self._bulk_questions(
+            l_vocab,
+            [
+                (
+                    "mcq",
+                    "What does 'la robe' mean?",
+                    "dress",
+                    ["shirt", "coat", "shoes"],
+                    "'La robe' is feminine — a dress.",
+                    1,
+                ),
+                (
+                    "fill_blank",
+                    "Quelle est votre _____ ? (size)",
+                    "taille",
+                    ["prix", "couleur", "robe"],
+                    "'La taille' means size.",
+                    1,
+                ),
+                (
+                    "mcq",
+                    "What does 'bon marché' mean?",
+                    "cheap / inexpensive",
+                    ["expensive", "on sale", "free"],
+                    "'Bon marché' is invariable — it never changes form.",
+                    1,
+                ),
+                (
+                    "translate",
+                    "Translate: 'These shoes are on sale.'",
+                    "Ces chaussures sont en solde.",
+                    [],
+                    "'En solde' means on sale.",
+                    1,
+                ),
+            ],
+        )
 
-        self._bulk_questions(l_gram, [
-            ("fill_blank", "_____ homme est grand. (demonstrative, masc. vowel)",
-             "Cet",
-             ["Ce", "Cette", "Ces"],
-             "'Homme' starts with a silent h, so use 'cet'.", 1),
-            ("mcq", "Which demonstrative adjective is used with feminine singular nouns?",
-             "cette",
-             ["ce", "cet", "ces"],
-             "'Cette' for feminine singular: cette robe, cette maison.", 1),
-            ("fill_blank", "_____ chaussures coûtent cinquante euros. (demonstrative, pl.)",
-             "Ces",
-             ["Ce", "Cet", "Cette"],
-             "'Ces' is used for all plural nouns.", 1),
-            ("translate", "Translate: 'I prefer this dress, not that one.'",
-             "Je préfère cette robe-ci, pas cette robe-là.",
-             [], "Add -ci (this) and -là (that) to distinguish proximity.", 2),
-        ])
+        self._bulk_questions(
+            l_gram,
+            [
+                (
+                    "fill_blank",
+                    "_____ homme est grand. (demonstrative, masc. vowel)",
+                    "Cet",
+                    ["Ce", "Cette", "Ces"],
+                    "'Homme' starts with a silent h, so use 'cet'.",
+                    1,
+                ),
+                (
+                    "mcq",
+                    "Which demonstrative adjective is used with feminine singular nouns?",
+                    "cette",
+                    ["ce", "cet", "ces"],
+                    "'Cette' for feminine singular: cette robe, cette maison.",
+                    1,
+                ),
+                (
+                    "fill_blank",
+                    "_____ chaussures coûtent cinquante euros. (demonstrative, pl.)",
+                    "Ces",
+                    ["Ce", "Cet", "Cette"],
+                    "'Ces' is used for all plural nouns.",
+                    1,
+                ),
+                (
+                    "translate",
+                    "Translate: 'I prefer this dress, not that one.'",
+                    "Je préfère cette robe-ci, pas cette robe-là.",
+                    [],
+                    "Add -ci (this) and -là (that) to distinguish proximity.",
+                    2,
+                ),
+            ],
+        )
 
         self.stdout.write(self.style.SUCCESS(f"  Created topic '{name_fr}'"))
 
@@ -1170,13 +1850,15 @@ class Command(BaseCommand):
                 "summary": "The pronoun 'y' replaces a place introduced by à, en, dans, sur, chez...",
                 "content_json": {
                     "explanation": "Use 'y' to replace a place you've already mentioned. "
-                                   "Tu vas à Paris ? — Oui, j'y vais demain.",
+                    "Tu vas à Paris ? — Oui, j'y vais demain.",
                     "formula": "y = à / en / dans / sur / chez + place",
                     "examples": [
                         "Tu habites en France ? — Oui, j'y habite depuis trois ans.",
                         "Vous allez au cinéma ? — Non, nous n'y allons pas.",
                     ],
-                    "exceptions": ["With people, use lui/leur instead: Je pense à Marie → Je pense à elle (not *j'y pense)."],
+                    "exceptions": [
+                        "With people, use lui/leur instead: Je pense à Marie → Je pense à elle (not *j'y pense)."
+                    ],
                 },
             },
             {
@@ -1185,7 +1867,7 @@ class Command(BaseCommand):
                 "summary": "The pronoun 'en' replaces nouns with de, du, des, or a quantity.",
                 "content_json": {
                     "explanation": "'En' replaces a noun introduced by 'de' or a quantity expression. "
-                                   "Tu veux du café ? — Oui, j'en veux.",
+                    "Tu veux du café ? — Oui, j'en veux.",
                     "formula": "en = de + noun / quantity expression",
                     "examples": [
                         "Tu as des enfants ? — Oui, j'en ai deux.",
@@ -1207,7 +1889,9 @@ class Command(BaseCommand):
                         "Nous n'habitons plus à Paris. (We no longer live in Paris.)",
                         "Elle ne connaît personne ici. (She knows nobody here.)",
                     ],
-                    "exceptions": ["Personne and rien can be subjects: Personne n'est venu. Rien n'est impossible."],
+                    "exceptions": [
+                        "Personne and rien can be subjects: Personne n'est venu. Rien n'est impossible."
+                    ],
                 },
             },
             # -- trivia cards ---------------------------------------------
@@ -1218,7 +1902,7 @@ class Command(BaseCommand):
                 "content_json": {
                     "fact_fr": "Le français est la langue officielle de 29 pays répartis sur les cinq continents.",
                     "fact_en": "French is the official language of 29 countries spread across five continents, "
-                               "making it one of the most geographically widespread languages in the world.",
+                    "making it one of the most geographically widespread languages in the world.",
                 },
             },
             {
@@ -1228,7 +1912,7 @@ class Command(BaseCommand):
                 "content_json": {
                     "fact_fr": "Le mot 'anticonstitutionnellement' (25 lettres) est souvent cité comme le plus long mot français.",
                     "fact_en": "'Anticonstitutionnellement' (meaning 'unconstitutionally') with 25 letters "
-                               "is often cited as the longest French word in standard dictionaries.",
+                    "is often cited as the longest French word in standard dictionaries.",
                 },
             },
             {
@@ -1238,7 +1922,7 @@ class Command(BaseCommand):
                 "content_json": {
                     "fact_fr": "L'Académie française, fondée en 1635, est chargée de veiller sur la langue française et de publier le dictionnaire officiel.",
                     "fact_en": "The Académie française, founded in 1635 by Cardinal Richelieu, is the official authority "
-                               "on the French language. Its 40 members are called 'les Immortels'.",
+                    "on the French language. Its 40 members are called 'les Immortels'.",
                 },
             },
             # -- news cards -----------------------------------------------
@@ -1336,9 +2020,11 @@ class Command(BaseCommand):
             )
             created_count += 1
 
-        self.stdout.write(self.style.SUCCESS(
-            f"  Created {created_count} discover cards (skipped {len(cards) - created_count})"
-        ))
+        self.stdout.write(
+            self.style.SUCCESS(
+                f"  Created {created_count} discover cards (skipped {len(cards) - created_count})"
+            )
+        )
 
     # ------------------------------------------------------------------ #
     #  main handle
@@ -1355,13 +2041,16 @@ class Command(BaseCommand):
         self._seed_topic_8()
         self._seed_discover_cards()
 
-        self.stdout.write("\n" + self.style.SUCCESS(
-            f"Done! Totals: "
-            f"{Topic.objects.count()} topics, "
-            f"{Lesson.objects.count()} lessons, "
-            f"{Vocabulary.objects.count()} vocab items, "
-            f"{GrammarRule.objects.count()} grammar rules, "
-            f"{ReadingText.objects.count()} reading texts, "
-            f"{Question.objects.count()} questions, "
-            f"{DiscoverCard.objects.count()} discover cards."
-        ))
+        self.stdout.write(
+            "\n"
+            + self.style.SUCCESS(
+                f"Done! Totals: "
+                f"{Topic.objects.count()} topics, "
+                f"{Lesson.objects.count()} lessons, "
+                f"{Vocabulary.objects.count()} vocab items, "
+                f"{GrammarRule.objects.count()} grammar rules, "
+                f"{ReadingText.objects.count()} reading texts, "
+                f"{Question.objects.count()} questions, "
+                f"{DiscoverCard.objects.count()} discover cards."
+            )
+        )

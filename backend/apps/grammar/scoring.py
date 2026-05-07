@@ -1,7 +1,8 @@
 """Mastery scoring for grammar topics — SM-2-flavoured spaced repetition."""
-from datetime import timedelta
-from django.utils import timezone
 
+from datetime import timedelta
+
+from django.utils import timezone
 
 # Mastery score: 0-100
 CORRECT_GAIN = 5
@@ -42,8 +43,7 @@ def update_mastery(mastery, num_correct: int, num_total: int):
 
     # Update ease factor
     mastery.ease_factor = max(
-        1.3,
-        mastery.ease_factor + (0.1 - (5 - quality) * (0.08 + (5 - quality) * 0.02))
+        1.3, mastery.ease_factor + (0.1 - (5 - quality) * (0.08 + (5 - quality) * 0.02))
     )
 
     now = timezone.now()

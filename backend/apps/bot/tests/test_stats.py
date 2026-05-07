@@ -1,10 +1,12 @@
-import pytest
 from datetime import date
+
+import pytest
 from django.contrib.auth import get_user_model
-from apps.content.models import Topic, Lesson, Question
+
+from apps.bot.handlers.stats import get_user_stats
+from apps.content.models import Lesson, Question, Topic
 from apps.gamification.models import Badge, UserBadge, UserStats
 from apps.practice.models import QuizSession
-from apps.bot.handlers.stats import get_user_stats
 
 User = get_user_model()
 
@@ -12,25 +14,42 @@ User = get_user_model()
 @pytest.fixture
 def user_with_quizzes(db):
     user = User.objects.create_user(
-        username="statsuser", email="stats@example.com",
-        password="testpass123!", telegram_id=111222333,
+        username="statsuser",
+        email="stats@example.com",
+        password="testpass123!",
+        telegram_id=111222333,
     )
     topic = Topic.objects.create(
-        name_fr="Grammaire", name_en="Grammar",
-        description="Grammar basics", icon="book", order=1, difficulty_level=1,
+        name_fr="Grammaire",
+        name_en="Grammar",
+        description="Grammar basics",
+        icon="book",
+        order=1,
+        difficulty_level=1,
     )
     lesson = Lesson.objects.create(
-        topic=topic, type="grammar", title="Conjugation",
-        content={}, order=1, difficulty=1,
+        topic=topic,
+        type="grammar",
+        title="Conjugation",
+        content={},
+        order=1,
+        difficulty=1,
     )
     from django.utils import timezone
+
     QuizSession.objects.create(
-        user=user, lesson=lesson, total_questions=5,
-        score=4, completed_at=timezone.now(),
+        user=user,
+        lesson=lesson,
+        total_questions=5,
+        score=4,
+        completed_at=timezone.now(),
     )
     QuizSession.objects.create(
-        user=user, lesson=lesson, total_questions=5,
-        score=3, completed_at=timezone.now(),
+        user=user,
+        lesson=lesson,
+        total_questions=5,
+        score=3,
+        completed_at=timezone.now(),
     )
     return user
 
@@ -45,8 +64,10 @@ class TestGetUserStats:
 
     def test_returns_zeroes_for_user_without_quizzes(self, db):
         user = User.objects.create_user(
-            username="newuser", email="new@example.com",
-            password="testpass123!", telegram_id=444555666,
+            username="newuser",
+            email="new@example.com",
+            password="testpass123!",
+            telegram_id=444555666,
         )
         stats = get_user_stats(user)
         assert stats["quizzes_completed"] == 0
@@ -67,7 +88,8 @@ class TestGetUserStats:
 
     def test_includes_gamification_data(self):
         user = User.objects.create_user(
-            username="tguser", password="testpass123",
+            username="tguser",
+            password="testpass123",
         )
         UserStats.objects.create(
             user=user,
@@ -95,7 +117,8 @@ class TestGetUserStats:
 
     def test_new_user_gets_defaults(self):
         user = User.objects.create_user(
-            username="newuser2", password="testpass123",
+            username="newuser2",
+            password="testpass123",
         )
         stats = get_user_stats(user)
         assert stats["total_xp"] == 0

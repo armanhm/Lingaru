@@ -1,4 +1,5 @@
 from unittest.mock import MagicMock, patch
+
 from django.test import TestCase
 
 from services.llm.base import LLMResponse
@@ -90,7 +91,9 @@ class TestProviderRouterVision(TestCase):
         """Router delegates to primary provider's generate_with_image."""
         mock_primary = MagicMock()
         mock_primary.generate_with_image.return_value = LLMResponse(
-            content="analyzed", provider="gemini", tokens_used=100,
+            content="analyzed",
+            provider="gemini",
+            tokens_used=100,
         )
 
         router = ProviderRouter(primary=mock_primary, fallback=None)
@@ -115,8 +118,10 @@ class TestProviderRouterVision(TestCase):
 
         with self.assertRaises(NotImplementedError):
             router.generate_with_image(
-                messages=[], image_data=b"bytes",
-                image_mime_type="image/jpeg", system_prompt="Analyze.",
+                messages=[],
+                image_data=b"bytes",
+                image_mime_type="image/jpeg",
+                system_prompt="Analyze.",
             )
 
     def test_router_does_not_fallback_for_vision(self):
@@ -129,8 +134,10 @@ class TestProviderRouterVision(TestCase):
 
         with self.assertRaises(Exception):
             router.generate_with_image(
-                messages=[], image_data=b"bytes",
-                image_mime_type="image/jpeg", system_prompt="Analyze.",
+                messages=[],
+                image_data=b"bytes",
+                image_mime_type="image/jpeg",
+                system_prompt="Analyze.",
             )
 
         # Fallback should NOT be called for vision

@@ -1,4 +1,5 @@
 import pytest
+
 from apps.practice.views import answers_match
 
 
@@ -43,16 +44,16 @@ class TestAnswersMatch:
 
     # Single-char typo tolerance (word ≥ 4 chars)
     def test_one_char_typo_accepted(self):
-        assert answers_match("reunon", "réunion")    # missing 'i'
-        assert answers_match("bojour", "bonjour")    # missing 'n'
-        assert answers_match("bonjoors", "bonjours") # extra char
+        assert answers_match("reunon", "réunion")  # missing 'i'
+        assert answers_match("bojour", "bonjour")  # missing 'n'
+        assert answers_match("bonjoors", "bonjours")  # extra char
 
     def test_two_char_typo_rejected(self):
         assert not answers_match("bonjouur", "réunion")
 
     # Short answers are not fuzzy-matched
     def test_short_wrong_answer_rejected(self):
-        assert not answers_match("ou", "et")   # both 2 chars, different
+        assert not answers_match("ou", "et")  # both 2 chars, different
 
     # Completely wrong answers
     def test_wrong_answer_rejected(self):

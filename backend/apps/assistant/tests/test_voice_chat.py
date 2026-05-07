@@ -1,4 +1,4 @@
-from unittest.mock import patch, MagicMock
+from unittest.mock import MagicMock, patch
 
 from django.core.files.uploadedfile import SimpleUploadedFile
 from django.test import TestCase
@@ -16,7 +16,8 @@ class TestVoiceChatAPI(TestCase):
 
     def setUp(self):
         self.user = User.objects.create_user(
-            username="voiceuser", password="testpass123",
+            username="voiceuser",
+            password="testpass123",
         )
         self.client = APIClient()
         self.client.force_authenticate(user=self.user)
@@ -51,7 +52,9 @@ class TestVoiceChatAPI(TestCase):
         mock_tts.return_value = mock_clip
 
         audio = SimpleUploadedFile(
-            "voice.webm", b"fake-audio-data", content_type="audio/webm",
+            "voice.webm",
+            b"fake-audio-data",
+            content_type="audio/webm",
         )
         response = self.client.post(
             self.url,
@@ -69,20 +72,27 @@ class TestVoiceChatAPI(TestCase):
     @patch("apps.assistant.views.create_llm_router")
     @patch("apps.assistant.views.GroqWhisperProvider")
     def test_voice_chat_with_existing_conversation(
-        self, mock_stt_cls, mock_create_router, mock_tts,
+        self,
+        mock_stt_cls,
+        mock_create_router,
+        mock_tts,
     ):
         """Voice chat can continue an existing conversation."""
         conv = Conversation.objects.create(user=self.user, title="Voice chat")
 
         mock_stt = MagicMock()
         mock_stt.transcribe.return_value = STTResult(
-            transcription="Merci", provider="groq_whisper", language="fr",
+            transcription="Merci",
+            provider="groq_whisper",
+            language="fr",
         )
         mock_stt_cls.return_value = mock_stt
 
         mock_router = MagicMock()
         mock_router.generate.return_value = LLMResponse(
-            content="De rien!", provider="gemini", tokens_used=20,
+            content="De rien!",
+            provider="gemini",
+            tokens_used=20,
         )
         mock_create_router.return_value = mock_router
 
@@ -91,7 +101,9 @@ class TestVoiceChatAPI(TestCase):
         mock_tts.return_value = mock_clip
 
         audio = SimpleUploadedFile(
-            "voice.webm", b"fake-audio", content_type="audio/webm",
+            "voice.webm",
+            b"fake-audio",
+            content_type="audio/webm",
         )
         response = self.client.post(
             self.url,
@@ -121,10 +133,14 @@ class TestVoiceChatAPI(TestCase):
         mock_stt_cls.return_value = mock_stt
 
         audio = SimpleUploadedFile(
-            "voice.webm", b"fake", content_type="audio/webm",
+            "voice.webm",
+            b"fake",
+            content_type="audio/webm",
         )
         response = self.client.post(
-            self.url, {"audio": audio}, format="multipart",
+            self.url,
+            {"audio": audio},
+            format="multipart",
         )
 
         self.assertEqual(response.status_code, status.HTTP_503_SERVICE_UNAVAILABLE)
@@ -133,7 +149,9 @@ class TestVoiceChatAPI(TestCase):
         """Unauthenticated request returns 401."""
         anon = APIClient()
         audio = SimpleUploadedFile(
-            "voice.webm", b"fake", content_type="audio/webm",
+            "voice.webm",
+            b"fake",
+            content_type="audio/webm",
         )
         response = anon.post(self.url, {"audio": audio}, format="multipart")
         self.assertEqual(response.status_code, status.HTTP_401_UNAUTHORIZED)

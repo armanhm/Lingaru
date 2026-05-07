@@ -1,7 +1,9 @@
 """Tests for video lesson task helpers."""
+
 import json
-import pytest
 from unittest.mock import MagicMock, patch
+
+import pytest
 
 from apps.content.tasks import _extract_youtube_id, _parse_json_response
 
@@ -20,7 +22,10 @@ class TestExtractYoutubeId:
         assert _extract_youtube_id("https://www.youtube.com/shorts/dQw4w9WgXcQ") == "dQw4w9WgXcQ"
 
     def test_url_with_extra_params(self):
-        assert _extract_youtube_id("https://www.youtube.com/watch?v=dQw4w9WgXcQ&t=42s") == "dQw4w9WgXcQ"
+        assert (
+            _extract_youtube_id("https://www.youtube.com/watch?v=dQw4w9WgXcQ&t=42s")
+            == "dQw4w9WgXcQ"
+        )
 
     def test_invalid_url_returns_none(self):
         assert _extract_youtube_id("https://vimeo.com/123456") is None
@@ -45,7 +50,7 @@ class TestParseJsonResponse:
         assert result == {"key": "value"}
 
     def test_json_array(self):
-        result = _parse_json_response('[1, 2, 3]')
+        result = _parse_json_response("[1, 2, 3]")
         assert result == [1, 2, 3]
 
     def test_invalid_json_raises(self):

@@ -1,5 +1,6 @@
-import pytest
 from datetime import timedelta
+
+import pytest
 from django.contrib.auth import get_user_model
 from django.db import IntegrityError
 from django.utils import timezone
@@ -64,37 +65,49 @@ class TestDiscoverCard:
 
     def test_str_representation(self):
         card = DiscoverCard.objects.create(
-            type="word", title="Bonjour", content_json={},
+            type="word",
+            title="Bonjour",
+            content_json={},
         )
         assert "[word] Bonjour" in str(card)
 
     def test_is_expired_false_when_no_expiry(self):
         card = DiscoverCard.objects.create(
-            type="trivia", title="Fact", content_json={},
+            type="trivia",
+            title="Fact",
+            content_json={},
         )
         assert card.is_expired is False
 
     def test_is_expired_false_when_future(self):
         card = DiscoverCard.objects.create(
-            type="trivia", title="Fact", content_json={},
+            type="trivia",
+            title="Fact",
+            content_json={},
             expires_at=timezone.now() + timedelta(days=1),
         )
         assert card.is_expired is False
 
     def test_is_expired_true_when_past(self):
         card = DiscoverCard.objects.create(
-            type="trivia", title="Fact", content_json={},
+            type="trivia",
+            title="Fact",
+            content_json={},
             expires_at=timezone.now() - timedelta(hours=1),
         )
         assert card.is_expired is True
 
     def test_ordering_is_newest_first(self):
         c1 = DiscoverCard.objects.create(
-            type="word", title="First", content_json={},
+            type="word",
+            title="First",
+            content_json={},
             generated_at=timezone.now() - timedelta(hours=2),
         )
         c2 = DiscoverCard.objects.create(
-            type="word", title="Second", content_json={},
+            type="word",
+            title="Second",
+            content_json={},
             generated_at=timezone.now() - timedelta(hours=1),
         )
         cards = list(DiscoverCard.objects.all())
@@ -107,18 +120,22 @@ class TestUserDiscoverHistory:
     @pytest.fixture
     def user(self):
         return User.objects.create_user(
-            username="discover_user", password="testpass123",
+            username="discover_user",
+            password="testpass123",
         )
 
     @pytest.fixture
     def card(self):
         return DiscoverCard.objects.create(
-            type="word", title="Bonjour", content_json={},
+            type="word",
+            title="Bonjour",
+            content_json={},
         )
 
     def test_create_history_entry(self, user, card):
         history = UserDiscoverHistory.objects.create(
-            user=user, card=card,
+            user=user,
+            card=card,
         )
         assert history.pk is not None
         assert history.interacted is False
@@ -126,7 +143,8 @@ class TestUserDiscoverHistory:
 
     def test_mark_as_interacted(self, user, card):
         history = UserDiscoverHistory.objects.create(
-            user=user, card=card,
+            user=user,
+            card=card,
         )
         history.interacted = True
         history.save()

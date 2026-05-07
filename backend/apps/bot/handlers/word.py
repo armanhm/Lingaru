@@ -20,9 +20,7 @@ async def word_command(update: Update, context: ContextTypes.DEFAULT_TYPE) -> No
     vocab = get_random_vocabulary()
 
     if vocab is None:
-        await update.message.reply_text(
-            "No vocabulary items available yet. Check back later!"
-        )
+        await update.message.reply_text("No vocabulary items available yet. Check back later!")
         return
 
     parts = [

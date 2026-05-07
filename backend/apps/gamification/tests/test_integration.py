@@ -3,9 +3,9 @@ from django.contrib.auth import get_user_model
 from django.utils import timezone
 from rest_framework.test import APIClient
 
-from apps.content.models import Topic, Lesson, Question
-from apps.practice.models import QuizSession, QuizAnswer
+from apps.content.models import Lesson, Question, Topic
 from apps.gamification.models import UserStats, XPTransaction
+from apps.practice.models import QuizAnswer, QuizSession
 
 User = get_user_model()
 
@@ -13,7 +13,9 @@ User = get_user_model()
 @pytest.fixture
 def user(db):
     return User.objects.create_user(
-        username="quizzer", email="q@example.com", password="testpass123",
+        username="quizzer",
+        email="q@example.com",
+        password="testpass123",
     )
 
 
@@ -27,21 +29,32 @@ def auth_client(user):
 @pytest.fixture
 def lesson_with_questions(db):
     topic = Topic.objects.create(
-        name_fr="Sujet Test", name_en="Test Topic",
-        order=1, difficulty_level=1,
+        name_fr="Sujet Test",
+        name_en="Test Topic",
+        order=1,
+        difficulty_level=1,
     )
     lesson = Lesson.objects.create(
-        topic=topic, type="vocab", title="Test Lesson",
-        order=1, difficulty=1,
+        topic=topic,
+        type="vocab",
+        title="Test Lesson",
+        order=1,
+        difficulty=1,
     )
     q1 = Question.objects.create(
-        lesson=lesson, type="mcq", prompt="Q1?",
-        correct_answer="oui", wrong_answers=["non", "peut-etre"],
+        lesson=lesson,
+        type="mcq",
+        prompt="Q1?",
+        correct_answer="oui",
+        wrong_answers=["non", "peut-etre"],
         difficulty=1,
     )
     q2 = Question.objects.create(
-        lesson=lesson, type="mcq", prompt="Q2?",
-        correct_answer="bonjour", wrong_answers=["au revoir", "merci"],
+        lesson=lesson,
+        type="mcq",
+        prompt="Q2?",
+        correct_answer="bonjour",
+        wrong_answers=["au revoir", "merci"],
         difficulty=1,
     )
     return lesson, [q1, q2]

@@ -1,7 +1,7 @@
-import pytest
 from datetime import timedelta
-from unittest.mock import patch, MagicMock
+from unittest.mock import MagicMock, patch
 
+import pytest
 from django.contrib.auth import get_user_model
 from django.utils import timezone
 from rest_framework.test import APIClient
@@ -20,7 +20,9 @@ def api_client():
 @pytest.fixture
 def user(db):
     return User.objects.create_user(
-        username="testuser", email="test@example.com", password="testpass123",
+        username="testuser",
+        email="test@example.com",
+        password="testpass123",
     )
 
 
@@ -79,23 +81,23 @@ class TestFeedEndpoint:
 
         # Unseen cards appear before seen cards
         if unseen_results and seen_results:
-            first_unseen_idx = next(
-                i for i, r in enumerate(results) if r["id"] not in seen_ids
-            )
-            last_seen_idx = max(
-                i for i, r in enumerate(results) if r["id"] in seen_ids
-            )
+            first_unseen_idx = next(i for i, r in enumerate(results) if r["id"] not in seen_ids)
+            last_seen_idx = max(i for i, r in enumerate(results) if r["id"] in seen_ids)
             assert first_unseen_idx < last_seen_idx
 
     def test_excludes_expired_cards(self, auth_client, db):
         now = timezone.now()
         DiscoverCard.objects.create(
-            type="word", title="Expired", content_json={},
+            type="word",
+            title="Expired",
+            content_json={},
             generated_at=now - timedelta(hours=48),
             expires_at=now - timedelta(hours=1),
         )
         DiscoverCard.objects.create(
-            type="word", title="Active", content_json={},
+            type="word",
+            title="Active",
+            content_json={},
             generated_at=now,
             expires_at=now + timedelta(hours=24),
         )
@@ -108,7 +110,9 @@ class TestFeedEndpoint:
 
     def test_includes_cards_with_no_expiry(self, auth_client, db):
         DiscoverCard.objects.create(
-            type="trivia", title="No Expiry", content_json={},
+            type="trivia",
+            title="No Expiry",
+            content_json={},
             expires_at=None,
         )
         resp = auth_client.get("/api/discover/feed/")
@@ -117,10 +121,14 @@ class TestFeedEndpoint:
 
     def test_marks_seen_and_interacted_fields(self, auth_client, user, sample_cards):
         UserDiscoverHistory.objects.create(
-            user=user, card=sample_cards[0], interacted=False,
+            user=user,
+            card=sample_cards[0],
+            interacted=False,
         )
         UserDiscoverHistory.objects.create(
-            user=user, card=sample_cards[1], interacted=True,
+            user=user,
+            card=sample_cards[1],
+            interacted=True,
         )
 
         resp = auth_client.get("/api/discover/feed/")
@@ -145,11 +153,15 @@ class TestGenerateMoreEndpoint:
         now = timezone.now()
         mock_cards = [
             DiscoverCard.objects.create(
-                type="word", title="New Word", content_json={},
+                type="word",
+                title="New Word",
+                content_json={},
                 generated_at=now,
             ),
             DiscoverCard.objects.create(
-                type="trivia", title="New Trivia", content_json={},
+                type="trivia",
+                title="New Trivia",
+                content_json={},
                 generated_at=now,
             ),
         ]

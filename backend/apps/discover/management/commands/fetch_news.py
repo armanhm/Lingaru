@@ -46,15 +46,21 @@ class Command(BaseCommand):
         created, skipped = run_news_pipeline(max_total=options["max"])
 
         if created:
-            self.stdout.write(self.style.SUCCESS(
-                f"Fetched & rewrote {created} fresh news article(s) "
-                f"({skipped} skipped due to LLM/save failures)."
-            ))
-            for card in DiscoverCard.objects.filter(type="news").order_by("-generated_at")[:created]:
+            self.stdout.write(
+                self.style.SUCCESS(
+                    f"Fetched & rewrote {created} fresh news article(s) "
+                    f"({skipped} skipped due to LLM/save failures)."
+                )
+            )
+            for card in DiscoverCard.objects.filter(type="news").order_by("-generated_at")[
+                :created
+            ]:
                 self.stdout.write(f"  · [{card.topic}] {card.title[:70]}")
         else:
-            self.stdout.write(self.style.WARNING(
-                f"No new articles created. {skipped} skipped. "
-                f"This usually means the LLM is unavailable or every fresh "
-                f"item was already saved."
-            ))
+            self.stdout.write(
+                self.style.WARNING(
+                    f"No new articles created. {skipped} skipped. "
+                    f"This usually means the LLM is unavailable or every fresh "
+                    f"item was already saved."
+                )
+            )

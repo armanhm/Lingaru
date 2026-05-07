@@ -9,7 +9,8 @@ class TestDocumentModel(TestCase):
 
     def setUp(self):
         self.user = User.objects.create_user(
-            username="testuser", password="testpass123",
+            username="testuser",
+            password="testpass123",
         )
 
     def test_create_document(self):
@@ -36,7 +37,9 @@ class TestDocumentModel(TestCase):
     def test_document_user_cascade_delete(self):
         """Deleting user deletes their documents."""
         Document.objects.create(
-            user=self.user, title="Test", file_type="txt",
+            user=self.user,
+            title="Test",
+            file_type="txt",
         )
         self.user.delete()
         self.assertEqual(Document.objects.count(), 0)
@@ -47,10 +50,13 @@ class TestDocumentChunkModel(TestCase):
 
     def setUp(self):
         self.user = User.objects.create_user(
-            username="testuser", password="testpass123",
+            username="testuser",
+            password="testpass123",
         )
         self.document = Document.objects.create(
-            user=self.user, title="Test Doc", file_type="txt",
+            user=self.user,
+            title="Test Doc",
+            file_type="txt",
         )
 
     def test_create_chunk(self):
@@ -78,12 +84,16 @@ class TestDocumentChunkModel(TestCase):
     def test_chunk_ordering(self):
         """Chunks are ordered by chunk_index."""
         DocumentChunk.objects.create(
-            document=self.document, content="Second",
-            chunk_index=1, embedding=[],
+            document=self.document,
+            content="Second",
+            chunk_index=1,
+            embedding=[],
         )
         DocumentChunk.objects.create(
-            document=self.document, content="First",
-            chunk_index=0, embedding=[],
+            document=self.document,
+            content="First",
+            chunk_index=0,
+            embedding=[],
         )
 
         chunks = list(DocumentChunk.objects.filter(document=self.document))

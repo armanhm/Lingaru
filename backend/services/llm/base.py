@@ -51,6 +51,4 @@ class BaseProvider(ABC):
         Returns:
             LLMResponse with the generated content, provider name, and token usage.
         """
-        raise NotImplementedError(
-            f"{self.__class__.__name__} does not support vision/image input."
-        )
+        raise NotImplementedError(f"{self.__class__.__name__} does not support vision/image input.")

@@ -1,6 +1,6 @@
 from django.test import TestCase
 
-from services.rag.chunker import chunk_text, Chunk
+from services.rag.chunker import Chunk, chunk_text
 
 
 class TestTextChunking(TestCase):

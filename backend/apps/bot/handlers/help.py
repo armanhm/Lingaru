@@ -1,7 +1,6 @@
 from telegram import Update
 from telegram.ext import ContextTypes
 
-
 HELP_TEXT = (
     "Lingaru Bot — French Learning\n\n"
     "Available commands:\n"

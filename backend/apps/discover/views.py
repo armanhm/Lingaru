@@ -1,5 +1,5 @@
 from django.db import models
-from django.db.models import BooleanField, Case, Exists, OuterRef, Subquery, Value, When
+from django.db.models import BooleanField, Case, Exists, OuterRef, Value, When
 from django.shortcuts import get_object_or_404
 from django.utils import timezone
 from rest_framework import permissions, status
@@ -35,7 +35,8 @@ class FeedView(APIView):
 
         # Annotate with seen/interacted from user's history
         user_history = UserDiscoverHistory.objects.filter(
-            user=request.user, card=OuterRef("pk"),
+            user=request.user,
+            card=OuterRef("pk"),
         )
         qs = qs.annotate(
             seen=Exists(user_history),
@@ -64,10 +65,12 @@ class GenerateMoreView(APIView):
     def post(self, request):
         cards = generate_daily_cards()
         serializer = DiscoverCardSerializer(cards, many=True)
-        return Response({
-            "generated": len(cards),
-            "cards": serializer.data,
-        })
+        return Response(
+            {
+                "generated": len(cards),
+                "cards": serializer.data,
+            }
+        )
 
 
 class InteractView(APIView):
@@ -83,10 +86,12 @@ class InteractView(APIView):
         )
 
         if not created and history.interacted:
-            return Response({
-                "already_interacted": True,
-                "xp_awarded": 0,
-            })
+            return Response(
+                {
+                    "already_interacted": True,
+                    "xp_awarded": 0,
+                }
+            )
 
         if not history.interacted:
             history.interacted = True
@@ -100,11 +105,13 @@ class InteractView(APIView):
             source_id=str(card.pk),
         )
 
-        return Response({
-            "already_interacted": False,
-            "xp_awarded": 3,
-            "total_xp": stats.total_xp,
-        })
+        return Response(
+            {
+                "already_interacted": False,
+                "xp_awarded": 3,
+                "total_xp": stats.total_xp,
+            }
+        )
 
 
 # ── News ────────────────────────────────────────────────────────────
@@ -112,7 +119,8 @@ class InteractView(APIView):
 
 def _annotate_user_history(qs, user):
     user_history = UserDiscoverHistory.objects.filter(
-        user=user, card=OuterRef("pk"),
+        user=user,
+        card=OuterRef("pk"),
     )
     return qs.annotate(
         seen=Exists(user_history),
@@ -140,9 +148,7 @@ class NewsListView(APIView):
         now = timezone.now()
         qs = DiscoverCard.objects.filter(
             type="news",
-        ).filter(
-            models.Q(expires_at__isnull=True) | models.Q(expires_at__gt=now)
-        )
+        ).filter(models.Q(expires_at__isnull=True) | models.Q(expires_at__gt=now))
 
         topic = request.query_params.get("topic")
         if topic:
@@ -156,14 +162,18 @@ class NewsListView(APIView):
 
         # Surface available topics + counts so the frontend can render filter chips.
         topic_counts = list(
-            DiscoverCard.objects.filter(type="news").values("topic")
-            .annotate(count=models.Count("id")).order_by("-count")
+            DiscoverCard.objects.filter(type="news")
+            .values("topic")
+            .annotate(count=models.Count("id"))
+            .order_by("-count")
         )
 
-        return paginator.get_paginated_response({
-            "articles": serializer.data,
-            "topics": topic_counts,
-        })
+        return paginator.get_paginated_response(
+            {
+                "articles": serializer.data,
+                "topics": topic_counts,
+            }
+        )
 
 
 class NewsDetailView(APIView):

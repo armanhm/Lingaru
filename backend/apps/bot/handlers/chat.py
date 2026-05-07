@@ -11,8 +11,8 @@ from telegram.ext import (
     filters,
 )
 
-from apps.bot.handlers.start import get_or_create_telegram_user
 from apps.assistant.models import Conversation, ImageQuery, Message
+from apps.bot.handlers.start import get_or_create_telegram_user
 from services.llm.factory import create_llm_router
 from services.llm.prompts import SYSTEM_PROMPTS
 from services.stt.groq_whisper import GroqWhisperProvider
@@ -63,10 +63,7 @@ def _get_message_history(conversation):
     prior_messages = Message.objects.filter(
         conversation=conversation,
     ).order_by("created_at")
-    return [
-        {"role": msg.role, "content": msg.content}
-        for msg in prior_messages
-    ]
+    return [{"role": msg.role, "content": msg.content} for msg in prior_messages]
 
 
 def _save_image_query(user, conversation, image_data, caption, ai_response):
@@ -118,9 +115,7 @@ async def chat_message(update: Update, context: ContextTypes.DEFAULT_TYPE) -> in
     conversation_id = context.user_data.get("conversation_id")
 
     if not conversation_id:
-        await update.message.reply_text(
-            "No active chat. Use /chat to start one."
-        )
+        await update.message.reply_text("No active chat. Use /chat to start one.")
         return ConversationHandler.END
 
     try:
@@ -145,15 +140,16 @@ async def chat_message(update: Update, context: ContextTypes.DEFAULT_TYPE) -> in
     except Exception as exc:
         logger.error("LLM call failed in Telegram chat: %s", exc)
         await update.message.reply_text(
-            "Sorry, the AI assistant is temporarily unavailable. "
-            "Please try again in a moment."
+            "Sorry, the AI assistant is temporarily unavailable. Please try again in a moment."
         )
         return CHATTING
 
     # Save assistant message
     await sync_to_async(_save_assistant_message)(
-        conversation, llm_response.content,
-        llm_response.provider, llm_response.tokens_used,
+        conversation,
+        llm_response.content,
+        llm_response.provider,
+        llm_response.tokens_used,
     )
 
     await update.message.reply_text(llm_response.content)
@@ -196,9 +192,7 @@ async def chat_photo(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
         )
     except Exception as exc:
         logger.error("Vision LLM failed in Telegram: %s", exc)
-        await update.message.reply_text(
-            "Sorry, image analysis is temporarily unavailable."
-        )
+        await update.message.reply_text("Sorry, image analysis is temporarily unavailable.")
         return CHATTING
 
     # Save records
@@ -206,14 +200,20 @@ async def chat_photo(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
 
     user = await sync_to_async(User.objects.get)(pk=context.user_data.get("user_id"))
     await sync_to_async(_save_image_query)(
-        user, conversation, image_data, caption, llm_response.content,
+        user,
+        conversation,
+        image_data,
+        caption,
+        llm_response.content,
     )
 
     content_label = f"[Image] {caption}" if caption else "[Image uploaded]"
     await sync_to_async(_save_user_message)(conversation, content_label)
     await sync_to_async(_save_assistant_message)(
-        conversation, llm_response.content,
-        llm_response.provider, llm_response.tokens_used,
+        conversation,
+        llm_response.content,
+        llm_response.provider,
+        llm_response.tokens_used,
     )
 
     await update.message.reply_text(llm_response.content)
@@ -247,9 +247,7 @@ async def chat_voice(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
         stt_result = stt.transcribe(audio_file=audio_io, language="fr")
     except Exception as exc:
         logger.error("STT failed in Telegram voice chat: %s", exc)
-        await update.message.reply_text(
-            "Sorry, I couldn't understand the audio. Please try again."
-        )
+        await update.message.reply_text("Sorry, I couldn't understand the audio. Please try again.")
         return CHATTING
 
     user_text = stt_result.transcription
@@ -268,20 +266,21 @@ async def chat_voice(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
         )
     except Exception as exc:
         logger.error("LLM failed in Telegram voice chat: %s", exc)
-        await update.message.reply_text(
-            "Sorry, the AI assistant is temporarily unavailable."
-        )
+        await update.message.reply_text("Sorry, the AI assistant is temporarily unavailable.")
         return CHATTING
 
     await sync_to_async(_save_assistant_message)(
-        conversation, llm_response.content,
-        llm_response.provider, llm_response.tokens_used,
+        conversation,
+        llm_response.content,
+        llm_response.provider,
+        llm_response.tokens_used,
     )
 
     # TTS: generate audio response
     try:
         clip = await sync_to_async(get_or_create_audio)(
-            text=llm_response.content, language="fr",
+            text=llm_response.content,
+            language="fr",
         )
         with open(clip.audio_file.path, "rb") as audio_file:
             await update.message.reply_voice(voice=audio_file)
@@ -297,9 +296,7 @@ async def chat_end(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
     """Handle /endchat — end the AI conversation."""
     context.user_data.pop("conversation_id", None)
     context.user_data.pop("user_id", None)
-    await update.message.reply_text(
-        "Chat ended. Use /chat to start a new conversation!"
-    )
+    await update.message.reply_text("Chat ended. Use /chat to start a new conversation!")
     return ConversationHandler.END
 
 

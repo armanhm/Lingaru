@@ -1,8 +1,9 @@
-from rest_framework import generics, permissions, status, exceptions
-from rest_framework.response import Response
-from rest_framework_simplejwt.views import TokenObtainPairView
-from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 from django.contrib.auth import get_user_model
+from rest_framework import exceptions, generics, permissions, status
+from rest_framework.response import Response
+from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
+from rest_framework_simplejwt.views import TokenObtainPairView
+
 from .serializers import RegisterSerializer, UserSerializer
 
 User = get_user_model()
@@ -51,11 +52,7 @@ class ApprovalAwareTokenObtainPairSerializer(TokenObtainPairSerializer):
                 user = User.objects.get(**{username_field: username})
             except User.DoesNotExist:
                 user = None
-            if (
-                user is not None
-                and not user.is_active
-                and user.check_password(password)
-            ):
+            if user is not None and not user.is_active and user.check_password(password):
                 raise exceptions.AuthenticationFailed(
                     "Your account is awaiting admin approval. "
                     "Try again once an administrator has activated it.",

@@ -1,5 +1,6 @@
 from rest_framework import serializers
-from .models import GrammarCategory, GrammarTopic, GrammarDrillItem, GrammarMastery, GrammarSession
+
+from .models import GrammarCategory, GrammarDrillItem, GrammarMastery, GrammarSession, GrammarTopic
 from .scoring import status_for
 
 
@@ -25,9 +26,18 @@ class GrammarTopicListSerializer(serializers.ModelSerializer):
     class Meta:
         model = GrammarTopic
         fields = (
-            "id", "title", "slug", "summary", "cefr_level", "formula",
-            "category_name", "category_slug", "category_icon",
-            "drill_count", "mastery", "status",
+            "id",
+            "title",
+            "slug",
+            "summary",
+            "cefr_level",
+            "formula",
+            "category_name",
+            "category_slug",
+            "category_icon",
+            "drill_count",
+            "mastery",
+            "status",
         )
 
     def get_drill_count(self, obj):
@@ -50,13 +60,17 @@ class GrammarTopicListSerializer(serializers.ModelSerializer):
 class GrammarTopicDetailSerializer(GrammarTopicListSerializer):
     class Meta(GrammarTopicListSerializer.Meta):
         fields = GrammarTopicListSerializer.Meta.fields + (
-            "explanation", "examples", "exceptions", "common_mistakes",
+            "explanation",
+            "examples",
+            "exceptions",
+            "common_mistakes",
         )
 
 
 class GrammarDrillItemSerializer(serializers.ModelSerializer):
     """Drill item — the correct_answer is INCLUDED so client can validate locally
     after a 350ms feedback delay (consistent with Quiz pattern)."""
+
     class Meta:
         model = GrammarDrillItem
         fields = ("id", "type", "prompt", "correct_answer", "options", "explanation", "difficulty")
@@ -81,8 +95,15 @@ class CompleteSessionSerializer(serializers.ModelSerializer):
     class Meta:
         model = GrammarSession
         fields = (
-            "id", "mode", "score", "total", "accuracy",
-            "mastery_before", "mastery_after", "mastery_delta", "new_status",
+            "id",
+            "mode",
+            "score",
+            "total",
+            "accuracy",
+            "mastery_before",
+            "mastery_after",
+            "mastery_delta",
+            "new_status",
             "completed_at",
         )
 

@@ -1,13 +1,14 @@
 from rest_framework import generics, permissions, status
 from rest_framework.response import Response
 from rest_framework.views import APIView
-from .models import Topic, Lesson, Vocabulary, VideoLesson
+
+from .models import Lesson, Topic, VideoLesson, Vocabulary
 from .serializers import (
-    TopicListSerializer,
-    TopicDetailSerializer,
     LessonDetailSerializer,
-    VocabularySerializer,
+    TopicDetailSerializer,
+    TopicListSerializer,
     VideoLessonSerializer,
+    VocabularySerializer,
 )
 
 
@@ -46,8 +47,12 @@ class RandomVocabularyView(APIView):
 
 class LessonDetailView(generics.RetrieveAPIView):
     queryset = Lesson.objects.select_related("topic", "video").prefetch_related(
-        "vocabulary", "grammar_rules", "reading_texts", "questions",
-        "video__vocabulary", "video__expressions",
+        "vocabulary",
+        "grammar_rules",
+        "reading_texts",
+        "questions",
+        "video__vocabulary",
+        "video__expressions",
     )
     serializer_class = LessonDetailSerializer
     permission_classes = (permissions.IsAuthenticated,)
@@ -72,7 +77,9 @@ class LessonVideoView(APIView):
         try:
             video = lesson.video
         except VideoLesson.DoesNotExist:
-            return Response({"detail": "No video attached to this lesson."}, status=status.HTTP_404_NOT_FOUND)
+            return Response(
+                {"detail": "No video attached to this lesson."}, status=status.HTTP_404_NOT_FOUND
+            )
 
         return Response(VideoLessonSerializer(video).data)
 
@@ -85,7 +92,9 @@ class LessonVideoView(APIView):
 
         youtube_url = request.data.get("youtube_url", "").strip()
         if not youtube_url:
-            return Response({"detail": "youtube_url is required."}, status=status.HTTP_400_BAD_REQUEST)
+            return Response(
+                {"detail": "youtube_url is required."}, status=status.HTTP_400_BAD_REQUEST
+            )
 
         try:
             lesson = Lesson.objects.get(pk=pk)
@@ -109,6 +118,7 @@ class LessonVideoView(APIView):
 
         # Trigger async processing
         from apps.content.tasks import process_video_lesson
+
         process_video_lesson.delay(video.pk)
 
         return Response(

@@ -4,8 +4,8 @@ from asgiref.sync import sync_to_async
 from telegram import Update
 from telegram.ext import ContextTypes
 
-from apps.users.models import User
 from apps.progress.services import get_due_cards
+from apps.users.models import User
 
 logger = logging.getLogger(__name__)
 
@@ -30,17 +30,13 @@ async def daily_command(update: Update, context: ContextTypes.DEFAULT_TYPE) -> N
     user = await sync_to_async(_get_user_by_telegram_id)(telegram_id)
 
     if user is None:
-        await update.message.reply_text(
-            "You haven't linked your account yet. Use /start first."
-        )
+        await update.message.reply_text("You haven't linked your account yet. Use /start first.")
         return
 
     cards = await sync_to_async(_get_due_card_list)(user)
 
     if not cards:
-        await update.message.reply_text(
-            "No cards due for review today. You're all caught up!"
-        )
+        await update.message.reply_text("No cards due for review today. You're all caught up!")
         return
 
     lines = [f"You have {len(cards)} card(s) due for review:\n"]

@@ -1,7 +1,7 @@
 """Create SRS flashcards for all vocabulary items for every user (or a specific user)."""
 
-from django.core.management.base import BaseCommand
 from django.contrib.auth import get_user_model
+from django.core.management.base import BaseCommand
 from django.utils import timezone
 
 from apps.content.models import Vocabulary
@@ -27,7 +27,9 @@ class Command(BaseCommand):
         vocab_qs = Vocabulary.objects.select_related("lesson").all()
 
         if not vocab_qs.exists():
-            self.stdout.write(self.style.WARNING("No vocabulary items found. Run content seeds first."))
+            self.stdout.write(
+                self.style.WARNING("No vocabulary items found. Run content seeds first.")
+            )
             return
 
         created_total = 0
@@ -49,4 +51,8 @@ class Command(BaseCommand):
             self.stdout.write(f"  {user.username}: {created} new flashcards")
             created_total += created
 
-        self.stdout.write(self.style.SUCCESS(f"Done. Created {created_total} flashcard(s) across {users.count()} user(s)."))
+        self.stdout.write(
+            self.style.SUCCESS(
+                f"Done. Created {created_total} flashcard(s) across {users.count()} user(s)."
+            )
+        )

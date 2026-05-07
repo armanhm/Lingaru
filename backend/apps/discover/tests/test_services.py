@@ -1,19 +1,19 @@
 import json
-import pytest
 from datetime import timedelta
 from unittest.mock import MagicMock, patch
 
+import pytest
 from django.contrib.auth import get_user_model
 from django.utils import timezone
 
 from apps.content.models import GrammarRule, Lesson, Topic, Vocabulary
 from apps.discover.models import DiscoverCard
 from apps.discover.services import (
+    generate_daily_cards,
     generate_grammar_card,
     generate_news_card,
     generate_trivia_card,
     generate_word_card,
-    generate_daily_cards,
 )
 
 User = get_user_model()
@@ -23,25 +23,41 @@ User = get_user_model()
 def content_data(db):
     """Create a topic, lesson, vocabulary item, and grammar rule."""
     topic = Topic.objects.create(
-        name_fr="Les bases", name_en="Basics",
-        description="Basic French", icon="book", order=1, difficulty_level=1,
+        name_fr="Les bases",
+        name_en="Basics",
+        description="Basic French",
+        icon="book",
+        order=1,
+        difficulty_level=1,
     )
     lesson = Lesson.objects.create(
-        topic=topic, type="vocab", title="Greetings",
-        content={}, order=1, difficulty=1,
+        topic=topic,
+        type="vocab",
+        title="Greetings",
+        content={},
+        order=1,
+        difficulty=1,
     )
     vocab = Vocabulary.objects.create(
-        lesson=lesson, french="bonjour", english="hello",
+        lesson=lesson,
+        french="bonjour",
+        english="hello",
         pronunciation="/bo\u0303.\u0292u\u0281/",
         example_sentence="Bonjour, comment allez-vous?",
-        gender="a", part_of_speech="interjection",
+        gender="a",
+        part_of_speech="interjection",
     )
     grammar_lesson = Lesson.objects.create(
-        topic=topic, type="grammar", title="Articles",
-        content={}, order=2, difficulty=1,
+        topic=topic,
+        type="grammar",
+        title="Articles",
+        content={},
+        order=2,
+        difficulty=1,
     )
     grammar = GrammarRule.objects.create(
-        lesson=grammar_lesson, title="Les articles d\u00e9finis",
+        lesson=grammar_lesson,
+        title="Les articles d\u00e9finis",
         explanation="Le, la, les are definite articles.",
         formula="le (m) / la (f) / les (pl)",
         examples=["le chat", "la maison", "les enfants"],
@@ -98,12 +114,14 @@ class TestGenerateTriviaCard:
     def test_creates_trivia_card_from_llm(self, mock_create_router):
         mock_router = MagicMock()
         mock_router.generate.return_value = MagicMock(
-            content=json.dumps({
-                "title": "French in Africa",
-                "summary": "More people speak French in Africa than in Europe.",
-                "fact_fr": "Plus de gens parlent fran\u00e7ais en Afrique qu'en Europe.",
-                "fact_en": "More people speak French in Africa than in Europe.",
-            })
+            content=json.dumps(
+                {
+                    "title": "French in Africa",
+                    "summary": "More people speak French in Africa than in Europe.",
+                    "fact_fr": "Plus de gens parlent fran\u00e7ais en Afrique qu'en Europe.",
+                    "fact_en": "More people speak French in Africa than in Europe.",
+                }
+            )
         )
         mock_create_router.return_value = mock_router
 
@@ -138,16 +156,18 @@ class TestGenerateNewsCard:
         mock_rss.return_value = None
         mock_router = MagicMock()
         mock_router.generate.return_value = MagicMock(
-            content=json.dumps({
-                "title": "La France gagne la Coupe du Monde",
-                "summary": "France wins the World Cup in a thrilling final.",
-                "article_fr": "La France a remport\u00e9 la Coupe du Monde...",
-                "article_en": "France has won the World Cup...",
-                "key_vocabulary": [
-                    {"french": "gagner", "english": "to win"},
-                    {"french": "la coupe", "english": "the cup"},
-                ],
-            })
+            content=json.dumps(
+                {
+                    "title": "La France gagne la Coupe du Monde",
+                    "summary": "France wins the World Cup in a thrilling final.",
+                    "article_fr": "La France a remport\u00e9 la Coupe du Monde...",
+                    "article_en": "France has won the World Cup...",
+                    "key_vocabulary": [
+                        {"french": "gagner", "english": "to win"},
+                        {"french": "la coupe", "english": "the cup"},
+                    ],
+                }
+            )
         )
         mock_create_router.return_value = mock_router
 

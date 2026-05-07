@@ -1,13 +1,13 @@
 import io
-from unittest.mock import patch, MagicMock
+from unittest.mock import MagicMock, patch
 
-from PIL import Image
 from django.core.files.uploadedfile import SimpleUploadedFile
 from django.test import TestCase
+from PIL import Image
 from rest_framework import status
 from rest_framework.test import APIClient
 
-from apps.assistant.models import ImageQuery, Conversation
+from apps.assistant.models import Conversation, ImageQuery
 from apps.users.models import User
 from services.llm.base import LLMResponse
 
@@ -26,7 +26,8 @@ class TestImageQueryModel(TestCase):
 
     def setUp(self):
         self.user = User.objects.create_user(
-            username="imguser", password="testpass123",
+            username="imguser",
+            password="testpass123",
         )
 
     def test_create_image_query_without_conversation(self):
@@ -34,7 +35,9 @@ class TestImageQueryModel(TestCase):
         query = ImageQuery.objects.create(
             user=self.user,
             image_file=SimpleUploadedFile(
-                "test.jpg", b"fake-image-data", content_type="image/jpeg",
+                "test.jpg",
+                b"fake-image-data",
+                content_type="image/jpeg",
             ),
             extracted_text="Plat du jour",
             ai_response="This means 'dish of the day'.",
@@ -50,7 +53,9 @@ class TestImageQueryModel(TestCase):
             user=self.user,
             conversation=conv,
             image_file=SimpleUploadedFile(
-                "menu.jpg", b"fake-image", content_type="image/jpeg",
+                "menu.jpg",
+                b"fake-image",
+                content_type="image/jpeg",
             ),
             ai_response="French menu analysis.",
         )
@@ -61,7 +66,9 @@ class TestImageQueryModel(TestCase):
         query = ImageQuery.objects.create(
             user=self.user,
             image_file=SimpleUploadedFile(
-                "test.jpg", b"data", content_type="image/jpeg",
+                "test.jpg",
+                b"data",
+                content_type="image/jpeg",
             ),
             ai_response="Some response.",
         )
@@ -73,7 +80,8 @@ class TestImageQueryAPI(TestCase):
 
     def setUp(self):
         self.user = User.objects.create_user(
-            username="imgapi", password="testpass123",
+            username="imgapi",
+            password="testpass123",
         )
         self.client = APIClient()
         self.client.force_authenticate(user=self.user)
@@ -112,7 +120,9 @@ class TestImageQueryAPI(TestCase):
         """Image query linked to an existing conversation."""
         mock_router = MagicMock()
         mock_router.generate_with_image.return_value = LLMResponse(
-            content="A French menu.", provider="gemini", tokens_used=80,
+            content="A French menu.",
+            provider="gemini",
+            tokens_used=80,
         )
         mock_create_router.return_value = mock_router
 
@@ -138,13 +148,17 @@ class TestImageQueryAPI(TestCase):
         """Image without question text still works (pure image analysis)."""
         mock_router = MagicMock()
         mock_router.generate_with_image.return_value = LLMResponse(
-            content="French text found in image.", provider="gemini", tokens_used=90,
+            content="French text found in image.",
+            provider="gemini",
+            tokens_used=90,
         )
         mock_create_router.return_value = mock_router
 
         image = _make_image_file("page.png", fmt="PNG")
         response = self.client.post(
-            self.url, {"image": image}, format="multipart",
+            self.url,
+            {"image": image},
+            format="multipart",
         )
 
         self.assertEqual(response.status_code, status.HTTP_200_OK)
@@ -158,7 +172,9 @@ class TestImageQueryAPI(TestCase):
 
         image = _make_image_file("test.jpg")
         response = self.client.post(
-            self.url, {"image": image}, format="multipart",
+            self.url,
+            {"image": image},
+            format="multipart",
         )
 
         self.assertEqual(response.status_code, status.HTTP_503_SERVICE_UNAVAILABLE)
@@ -168,6 +184,8 @@ class TestImageQueryAPI(TestCase):
         anon_client = APIClient()
         image = _make_image_file("test.jpg")
         response = anon_client.post(
-            self.url, {"image": image}, format="multipart",
+            self.url,
+            {"image": image},
+            format="multipart",
         )
         self.assertEqual(response.status_code, status.HTTP_401_UNAUTHORIZED)

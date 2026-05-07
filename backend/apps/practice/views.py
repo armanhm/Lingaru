@@ -1,21 +1,20 @@
 import unicodedata
 
+from django.db.models import Count
 from django.utils import timezone
 from rest_framework import generics, permissions, status
 from rest_framework.response import Response
 from rest_framework.views import APIView
-from django.db.models import Count
+
 from apps.content.models import Lesson, Question
 from apps.gamification.services import award_xp, check_streak
-from .models import QuizSession, QuizAnswer
+
+from .models import QuizAnswer, QuizSession
 
 
 def _strip_accents(text: str) -> str:
     """Remove diacritics: réunion → reunion, café → cafe."""
-    return "".join(
-        c for c in unicodedata.normalize("NFD", text)
-        if unicodedata.category(c) != "Mn"
-    )
+    return "".join(c for c in unicodedata.normalize("NFD", text) if unicodedata.category(c) != "Mn")
 
 
 def _levenshtein(a: str, b: str) -> int:
@@ -40,12 +39,13 @@ def answers_match(user_answer: str, correct_answer: str) -> bool:
     - missing or wrong accents (réunion ≈ reunion)
     - a single-character typo (Levenshtein distance ≤ 1) for words 4+ chars
     """
+
     def normalise(s: str) -> str:
         s = s.strip().lower()
         # Strip leading articles so "la réunion" matches "réunion"
         for article in ("l'", "le ", "la ", "les ", "un ", "une "):
             if s.startswith(article):
-                s = s[len(article):]
+                s = s[len(article) :]
                 break
         return s
 
@@ -68,13 +68,15 @@ def answers_match(user_answer: str, correct_answer: str) -> bool:
         return True
 
     return False
+
+
 from .serializers import (
-    QuizStartSerializer,
-    QuizQuestionSerializer,
-    AnswerSubmitSerializer,
     AnswerResultSerializer,
+    AnswerSubmitSerializer,
     QuizCompleteSerializer,
     QuizHistorySerializer,
+    QuizQuestionSerializer,
+    QuizStartSerializer,
 )
 
 
@@ -115,7 +117,8 @@ class QuizAnswerView(APIView):
     def post(self, request, session_id):
         try:
             session = QuizSession.objects.get(
-                pk=session_id, user=request.user,
+                pk=session_id,
+                user=request.user,
             )
         except QuizSession.DoesNotExist:
             return Response(
@@ -161,6 +164,7 @@ class QuizAnswerView(APIView):
         # Record mistake if wrong
         if not is_correct:
             from apps.progress.services import record_mistake
+
             record_mistake(
                 user=request.user,
                 question=question,
@@ -177,7 +181,8 @@ class QuizCompleteView(APIView):
     def post(self, request, session_id):
         try:
             session = QuizSession.objects.select_related("lesson").get(
-                pk=session_id, user=request.user,
+                pk=session_id,
+                user=request.user,
             )
         except QuizSession.DoesNotExist:
             return Response(
@@ -225,6 +230,7 @@ class QuizCompleteView(APIView):
 
 class RandomQuizLessonView(APIView):
     """Return a random lesson ID that has questions."""
+
     permission_classes = (permissions.IsAuthenticated,)
 
     def get(self, request):

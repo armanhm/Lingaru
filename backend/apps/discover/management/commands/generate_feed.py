@@ -9,8 +9,5 @@ class Command(BaseCommand):
     def handle(self, *args, **options):
         cards = generate_daily_cards()
         self.stdout.write(
-            self.style.SUCCESS(
-                f"Generated {len(cards)} discover cards: "
-                f"{[c.type for c in cards]}"
-            )
+            self.style.SUCCESS(f"Generated {len(cards)} discover cards: {[c.type for c in cards]}")
         )

@@ -1,5 +1,5 @@
-from rest_framework import serializers
 from django.contrib.auth import get_user_model
+from rest_framework import serializers
 
 User = get_user_model()
 
@@ -14,9 +14,7 @@ class RegisterSerializer(serializers.ModelSerializer):
 
     def validate(self, attrs):
         if attrs["password"] != attrs["password_confirm"]:
-            raise serializers.ValidationError(
-                {"password_confirm": "Passwords do not match."}
-            )
+            raise serializers.ValidationError({"password_confirm": "Passwords do not match."})
         return attrs
 
     def create(self, validated_data):
@@ -35,8 +33,15 @@ class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
         fields = (
-            "id", "username", "email", "telegram_id",
-            "native_language", "target_level", "daily_goal_minutes",
-            "preferences", "date_joined", "is_staff",
+            "id",
+            "username",
+            "email",
+            "telegram_id",
+            "native_language",
+            "target_level",
+            "daily_goal_minutes",
+            "preferences",
+            "date_joined",
+            "is_staff",
         )
         read_only_fields = ("id", "date_joined", "is_staff")

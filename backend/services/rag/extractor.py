@@ -53,6 +53,4 @@ def extract_text(
             return text, page_count
         return text
 
-    raise UnsupportedFileTypeError(
-        f"Unsupported file type: {file_type}. Supported: pdf, txt"
-    )
+    raise UnsupportedFileTypeError(f"Unsupported file type: {file_type}. Supported: pdf, txt")

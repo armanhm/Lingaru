@@ -652,12 +652,7 @@ function CorrectedText({ text, issues, tone = "default" }) {
 function ChatBubble({ msg }) {
   const isUser = msg.role === "user";
   return (
-    <div className={`flex gap-3 ${isUser ? "flex-row-reverse" : ""} animate-fade-in-up`}>
-      <span className={`shrink-0 w-9 h-9 rounded-full flex items-center justify-center text-[16px] shadow-sm ${
-        isUser
-          ? "bg-gradient-to-br from-accent-500 to-warn-500 text-white"
-          : "bg-gradient-to-br from-primary-500 to-purple-600 text-white"
-      }`}>{isUser ? "🧑" : TUTOR.emoji}</span>
+    <div className={`flex ${isUser ? "justify-end" : "justify-start"} animate-fade-in-up`}>
       <div className={`max-w-[78%] flex flex-col ${isUser ? "items-end" : "items-start"}`}>
         <div className="flex items-center gap-2 text-[10px] uppercase tracking-[0.14em] font-semibold text-surface-400 dark:text-surface-500 mb-1">
           <span>{isUser ? "Vous" : TUTOR.name}</span>
@@ -669,7 +664,7 @@ function ChatBubble({ msg }) {
 
         <div className={`relative group/bubble rounded-2xl px-4 py-3 text-[14px] leading-relaxed shadow-sm ${
           isUser
-            ? "bg-gradient-to-br from-primary-600 to-purple-700 text-white rounded-br-sm"
+            ? "bg-gradient-to-br from-surface-700 to-surface-800 text-white rounded-br-sm"
             : "bg-white dark:bg-surface-900/80 border border-surface-100 dark:border-surface-800 text-surface-900 dark:text-surface-50 rounded-bl-sm"
         }`}>
           {isUser ? (
@@ -708,7 +703,10 @@ function ChatBubble({ msg }) {
             sits in the bubble above; the blocks render below as standalone
             cards so they breathe regardless of bubble width. */}
         {!isUser && Array.isArray(msg.blocks) && msg.blocks.length > 0 && (
-          <div className="w-full max-w-[520px]">
+          // Match the bubble's own width so the card aligns visually
+          // with the prose above it. The flex column already caps at
+          // max-w-[78%] (line 661).
+          <div className="w-full mt-2">
             <MessageBlocks blocks={msg.blocks} />
           </div>
         )}
@@ -942,6 +940,20 @@ export default function Assistant() {
       .catch(() => {});
   }, [conversationId]);
 
+  // Auto-resume the most recent conversation on first mount so the user
+  // doesn't lose context after a page reload. Skipped when the user
+  // explicitly hit "Nouvelle conversation" (startNewChat clears
+  // resumedRef) or when they followed a /assistant/<id> deep-link.
+  const resumedRef = useRef(false);
+  useEffect(() => {
+    if (resumedRef.current || conversationId) return;
+    if (!conversations.length) return;
+    resumedRef.current = true;
+    const latest = conversations[0]; // backend orders by -updated_at
+    if (latest?.id) loadConversation(latest.id);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [conversations]);
+
   const loadConversation = useCallback(async (id) => {
     try {
       const res = await getConversation(id);
@@ -958,6 +970,9 @@ export default function Assistant() {
     setConversationId(null);
     setError(null);
     setImageFile(null);
+    // Mark resume as done so the auto-resume effect doesn't immediately
+    // pull the previous conversation back when the list refreshes.
+    resumedRef.current = true;
   }, []);
 
   // Image upload

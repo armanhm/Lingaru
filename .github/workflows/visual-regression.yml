@@ -1,0 +1,49 @@
+name: Visual regression
+
+on:
+  pull_request:
+    branches: [main, dev]
+  workflow_dispatch:
+
+# Visual regression is intentionally PR-only. Failures are usually
+# intentional UI changes that need a baseline update; we don't want
+# them blocking deploys to main.
+jobs:
+  playwright:
+    name: Playwright snapshots
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: frontend
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+          cache: npm
+          cache-dependency-path: frontend/package-lock.json
+
+      - name: Install dependencies
+        run: npm ci --legacy-peer-deps
+
+      - name: Install Playwright browsers
+        run: npx playwright install --with-deps chromium
+
+      - name: Build production bundle
+        run: npm run build
+
+      - name: Run visual tests
+        run: npm run test:visual
+
+      # Upload the HTML report + any diff PNGs on failure so the PR
+      # author can inspect what changed.
+      - name: Upload Playwright report
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: playwright-report
+          path: frontend/playwright-report/
+          retention-days: 14

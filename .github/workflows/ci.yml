@@ -64,7 +64,20 @@ jobs:
         run: python manage.py makemigrations --check --dry-run
 
       - name: Run pytest
-        run: pytest --tb=short -q
+        run: pytest --tb=short -q --cov=apps --cov=services --cov-report=xml --cov-report=term
+
+      # PR coverage comment, free / no signup. Reads the coverage.xml
+      # written by pytest-cov above and posts a comment with totals
+      # plus diff vs. base branch. Skipped on push events.
+      - name: Coverage comment on PR
+        if: github.event_name == 'pull_request'
+        uses: MishaKav/pytest-coverage-comment@v1.1.52
+        with:
+          pytest-xml-coverage-path: backend/coverage.xml
+          title: Backend test coverage
+          badge-title: coverage
+          hide-badge: false
+          hide-report: false
 
   frontend-lint:
     name: Frontend lint (ESLint)
@@ -107,3 +120,37 @@ jobs:
 
       - name: Build
         run: npm run build
+
+  security-scan:
+    name: Security scan (Trivy)
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      security-events: write
+    steps:
+      - uses: actions/checkout@v4
+
+      # Build the backend image so Trivy can scan the actual artifact
+      # we ship, not just the requirements.txt. Skipping `--push`, this
+      # is a throwaway image local to the runner.
+      - name: Build backend image
+        run: docker build -t lingaru-backend:scan ./backend
+
+      - name: Run Trivy vulnerability scanner
+        uses: aquasecurity/trivy-action@0.28.0
+        with:
+          image-ref: lingaru-backend:scan
+          format: sarif
+          output: trivy-results.sarif
+          severity: CRITICAL,HIGH
+          exit-code: '0'           # don't fail the job yet; surface findings via SARIF
+          ignore-unfixed: true     # only flag issues with a known fix
+
+      # SARIF upload puts findings in GitHub's "Security" tab so they
+      # show up next to CodeQL alerts.
+      - name: Upload Trivy results to GitHub Security
+        if: always()
+        uses: github/codeql-action/upload-sarif@v3
+        with:
+          sarif_file: trivy-results.sarif
+          category: trivy-backend

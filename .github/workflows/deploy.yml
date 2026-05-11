@@ -28,6 +28,21 @@ jobs:
           chmod 600 ~/.ssh/id_ed25519
           ssh-keyscan -H "$SSH_HOST" >> ~/.ssh/known_hosts 2>/dev/null
 
+      # Record the SHA currently live on the server so we can roll back
+      # later if migrations or the smoke test fail. Stored as a step
+      # output for downstream steps to reference.
+      - name: Capture previous SHA (for rollback)
+        id: prev
+        env:
+          SSH_HOST: ${{ secrets.HETZNER_HOST }}
+          SSH_USER: ${{ secrets.HETZNER_USER }}
+          DEPLOY_PATH: ${{ secrets.HETZNER_DEPLOY_PATH }}
+        run: |
+          PREV=$(ssh -i ~/.ssh/id_ed25519 -o StrictHostKeyChecking=accept-new \
+            "$SSH_USER@$SSH_HOST" "cd $DEPLOY_PATH && git rev-parse HEAD")
+          echo "Previous live SHA: $PREV"
+          echo "sha=$PREV" >> "$GITHUB_OUTPUT"
+
       - name: Pull + rebuild on server
         env:
           SSH_HOST: ${{ secrets.HETZNER_HOST }}
@@ -38,10 +53,22 @@ jobs:
             "$SSH_USER@$SSH_HOST" \
             "cd $DEPLOY_PATH && git fetch origin main && git reset --hard origin/main && docker compose up -d --build && docker compose ps"
 
-      - name: Wait for app to come up
+      - name: Wait for django to come up
         run: sleep 15
 
+      - name: Run database migrations
+        id: migrate
+        env:
+          SSH_HOST: ${{ secrets.HETZNER_HOST }}
+          SSH_USER: ${{ secrets.HETZNER_USER }}
+          DEPLOY_PATH: ${{ secrets.HETZNER_DEPLOY_PATH }}
+        run: |
+          ssh -i ~/.ssh/id_ed25519 -o StrictHostKeyChecking=accept-new \
+            "$SSH_USER@$SSH_HOST" \
+            "cd $DEPLOY_PATH && docker compose exec -T django python manage.py migrate --noinput"
+
       - name: Smoke test (health endpoint)
+        id: smoke
         env:
           HEALTH_URL: ${{ secrets.HEALTH_URL }}
         run: |
@@ -58,3 +85,29 @@ jobs:
           done
           echo "Health check failed after 5 attempts"
           exit 1
+
+      # Self-healing rollback. Fires only when the migrate or smoke-test
+      # step above failed. Resets the server to the SHA that was live
+      # before this deploy, rebuilds, and re-checks health. The job
+      # itself still ends as failed so you get notified, but the live
+      # site is restored to a known-good state.
+      - name: Rollback on failure
+        if: failure() && steps.prev.outputs.sha != ''
+        env:
+          SSH_HOST: ${{ secrets.HETZNER_HOST }}
+          SSH_USER: ${{ secrets.HETZNER_USER }}
+          DEPLOY_PATH: ${{ secrets.HETZNER_DEPLOY_PATH }}
+          PREV_SHA: ${{ steps.prev.outputs.sha }}
+          HEALTH_URL: ${{ secrets.HEALTH_URL }}
+        run: |
+          echo "::warning::Deploy failed, rolling back to $PREV_SHA"
+          ssh -i ~/.ssh/id_ed25519 -o StrictHostKeyChecking=accept-new \
+            "$SSH_USER@$SSH_HOST" \
+            "cd $DEPLOY_PATH && git reset --hard $PREV_SHA && docker compose up -d --build && docker compose ps"
+          sleep 15
+          URL="${HEALTH_URL:-https://app.armanflower.shop/api/health/}"
+          if curl -fsS --max-time 10 "$URL" | grep -q '"status": "ok"'; then
+            echo "Rollback verified: $URL is healthy on $PREV_SHA"
+          else
+            echo "::error::Rollback completed but health check still failing. Manual intervention required."
+          fi

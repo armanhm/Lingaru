@@ -32,6 +32,11 @@ node_modules/
 frontend/dist/
 frontend/build/
 
+# Playwright artifacts (keep e2e/__screenshots__/ committed for visual regression)
+frontend/playwright-report/
+frontend/test-results/
+frontend/.playwright/
+
 # Docker
 docker-compose.override.yml
 

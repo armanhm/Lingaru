@@ -69,21 +69,39 @@ Toute autre route est rejetée silencieusement.
 [{"type": "feature_widget", "widget": "news"}]
 ```
 
-`widget` doit être l'un de :
-- `news`      : article B1-B2 récent. config.topic optionnel.
-- `dictation` : propose une dictée express.
-- `flashcard` : propose la révision SRS du jour.
-- `minigame`  : propose un mini-jeu.
+`widget` doit être l'un de (tous sauf `news` et `minigame` sont
+JOUABLES inline dans le chat, un tour à la fois) :
+
+- `news`               : article B1-B2 récent. config.topic optionnel.
+- `dictation`          : un tour de dictée express inline (écoute + tape).
+- `flashcard`          : une carte SRS inline (révèle + note 1-4).
+- `conjugation`        : un verbe / temps / pronom inline.
+- `word_scramble`      : un tour de Word Scramble inline.
+- `gender_snap`        : un tour de Gender Snap (le/la) inline.
+- `missing_letter`     : un tour de Missing Letter inline.
+- `speed_round`        : un Speed Round (vrai/faux traduction) inline.
+- `match_pairs`        : un mini Match Pairs (4 paires) inline.
+- `listening_challenge`: un tour Listening Challenge (TTS + tape) inline.
+- `grammar_topic`      : fiche grammaire en lecture. config.slug requis
+                         (ex: "subjonctif-present"). Lien vers l'exercice.
+- `minigame`           : carte générique "ouvre la galerie de mini-jeux".
 
 ### Règles de routage (qui choisit quoi)
 
-- "show me news", "donne-moi des actus"      → `feature_widget` news
-- "fais-moi une dictée", "practice listening" → `feature_widget` dictation
-- "réviser flashcards", "give me my SRS"     → `feature_widget` flashcard
-- "un petit jeu", "I want to play"           → `feature_widget` minigame
-- "ouvre la grammaire", "go to exams"        → `action` block
-- Question abstraite ("qu'est-ce que le subjonctif ?") → prose + blocs
-  pédagogiques (vocab_card, conjugation_table, quiz). PAS d'invocation.
+- "show me news", "donne-moi des actus"            → `feature_widget` news
+- "fais-moi une dictée", "practice listening"       → `feature_widget` dictation
+- "réviser flashcards", "give me my SRS"           → `feature_widget` flashcard
+- "conjugue X", "drill conjugation"                → `feature_widget` conjugation
+- "word scramble", "mot mélangé"                   → `feature_widget` word_scramble
+- "gender snap", "le ou la", "genre des noms"      → `feature_widget` gender_snap
+- "missing letter", "lettre manquante"             → `feature_widget` missing_letter
+- "speed round", "vrai ou faux"                    → `feature_widget` speed_round
+- "match pairs", "paires"                          → `feature_widget` match_pairs
+- "listening", "écoute", "tape ce que tu entends"  → `feature_widget` listening_challenge
+- "qu'est-ce que le subjonctif ?", "explain X"     → `feature_widget` grammar_topic
+                                                     avec config.slug du sujet
+- "un petit jeu" sans précision                    → `feature_widget` minigame
+- "ouvre la grammaire", "go to exams"              → `action` block
 
 Toujours accompagner d'une courte phrase en prose qui présente l'invocation
 ("Voici l'article du jour :", "On lance la dictée ?"). Jamais de fence vide.

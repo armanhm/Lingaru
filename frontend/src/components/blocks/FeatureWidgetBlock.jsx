@@ -1,6 +1,16 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import client from "../../api/client";
+import WordScrambleInline from "./inline/WordScrambleInline";
+import GenderSnapInline from "./inline/GenderSnapInline";
+import MissingLetterInline from "./inline/MissingLetterInline";
+import SpeedRoundInline from "./inline/SpeedRoundInline";
+import DictationInline from "./inline/DictationInline";
+import MatchPairsInline from "./inline/MatchPairsInline";
+import ListeningChallengeInline from "./inline/ListeningChallengeInline";
+import ConjugationInline from "./inline/ConjugationInline";
+import FlashcardsInline from "./inline/FlashcardsInline";
+import GrammarTopicInline from "./inline/GrammarTopicInline";
 
 /**
  * Dispatcher for inline feature widgets, the agentic-mode bridge between
@@ -13,10 +23,25 @@ import client from "../../api/client";
  * something the LLM made up.
  */
 
+// The inline widgets manage their own card chrome via InlineRoundWidget,
+// so they show up here as plain functional components ignoring the
+// `config`/`title` props the older preview-only widgets used.
 const REGISTRY = {
+  // News is bespoke (no "round" semantics; just shows an article).
   news: NewsWidget,
-  dictation: DictationWidget,
-  flashcard: FlashcardWidget,
+  // Inline practice widgets (Tier 1, mutate-in-place, one round per invocation).
+  // These supersede the older preview cards for the same concept.
+  dictation:           () => <DictationInline />,
+  flashcard:           () => <FlashcardsInline />,
+  conjugation:         () => <ConjugationInline />,
+  word_scramble:       () => <WordScrambleInline />,
+  gender_snap:         () => <GenderSnapInline />,
+  missing_letter:      () => <MissingLetterInline />,
+  speed_round:         () => <SpeedRoundInline />,
+  match_pairs:         () => <MatchPairsInline />,
+  listening_challenge: () => <ListeningChallengeInline />,
+  grammar_topic:       (props) => <GrammarTopicInline {...props} />,
+  // Generic "pick a mini-game" fallback (preview card → deep link).
   minigame: MiniGameWidget,
 };
 

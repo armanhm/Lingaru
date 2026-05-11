@@ -263,7 +263,7 @@ export default function Layout() {
             <div className="flex flex-col leading-tight">
               <span className="text-lg font-extrabold mode-grad-text">Lingaru</span>
               {user?.mode && (
-                <span className="text-[10px] uppercase tracking-[0.14em] font-semibold mode-accent-text mt-0.5">
+                <span className="text-[9px] uppercase tracking-[0.18em] font-bold mode-grad-text mt-0.5">
                   {t(`modes.${user.mode}.shortLabel`)}
                 </span>
               )}

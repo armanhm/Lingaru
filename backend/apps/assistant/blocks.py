@@ -245,7 +245,15 @@ def _validate_action(b: dict) -> dict | None:
 # a tested embeddable component on the frontend. We're conservative, only
 # widgets that make sense in a small chat surface and don't need their own
 # layout (no full-page embeds).
-ALLOWED_FEATURE_WIDGETS = {"news", "dictation", "flashcard", "minigame"}
+ALLOWED_FEATURE_WIDGETS = {
+    # Bespoke (news has its own shape, minigame is a generic preview)
+    "news", "minigame",
+    # Inline practice widgets (1 round, mutate-in-place inside the chat)
+    "dictation", "flashcard", "conjugation",
+    "word_scramble", "gender_snap", "missing_letter",
+    "speed_round", "match_pairs", "listening_challenge",
+    "grammar_topic",
+}
 
 
 def _validate_feature_widget(b: dict) -> dict | None:

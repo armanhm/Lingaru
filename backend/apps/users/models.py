@@ -56,6 +56,22 @@ class User(AbstractUser):
         blank=True,
         help_text="Self-reported CEFR level. Distinct from target_level.",
     )
+    UI_LANGUAGE_CHOICES = [
+        ("en", "English"),
+        ("fr", "Français"),
+    ]
+    ui_language = models.CharField(
+        max_length=4,
+        choices=UI_LANGUAGE_CHOICES,
+        null=True,
+        blank=True,
+        help_text=(
+            "Language for the app chrome (nav, settings, buttons). Distinct "
+            "from native_language (the language the user thinks in) and from "
+            "the language being learned (always French). Null means: detect "
+            "from the browser on first load."
+        ),
+    )
 
     class Meta:
         db_table = "users"

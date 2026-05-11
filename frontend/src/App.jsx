@@ -3,6 +3,7 @@ import { AuthProvider } from "./contexts/AuthContext";
 import { ToastProvider } from "./contexts/ToastContext";
 import { ThemeProvider } from "./contexts/ThemeContext";
 import { ModeProvider } from "./contexts/ModeContext";
+import { LanguageProvider } from "./contexts/LanguageContext";
 import Layout from "./components/Layout";
 import ProtectedRoute from "./components/ProtectedRoute";
 import Dashboard from "./pages/Dashboard";
@@ -49,6 +50,7 @@ export default function App() {
   return (
     <ThemeProvider>
     <AuthProvider>
+      <LanguageProvider>
       <ModeProvider>
       <ToastProvider>
       <Routes>
@@ -103,6 +105,7 @@ export default function App() {
       </Routes>
       </ToastProvider>
       </ModeProvider>
+      </LanguageProvider>
     </AuthProvider>
     </ThemeProvider>
   );

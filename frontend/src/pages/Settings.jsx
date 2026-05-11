@@ -1,10 +1,16 @@
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 import { useAuth } from "../contexts/AuthContext";
 import { useTheme } from "../contexts/ThemeContext";
 import { useToast } from "../contexts/ToastContext";
 import client from "../api/client";
 import { PageHeader } from "../components/ui";
+
+const UI_LANGUAGE_OPTIONS = [
+  { value: "en", label: "English",   flag: "🇬🇧" },
+  { value: "fr", label: "Français",  flag: "🇫🇷" },
+];
 
 const LEVEL_OPTIONS = [
   { value: "A1", label: "A1, Beginner" },
@@ -50,11 +56,39 @@ const DEFAULT_PREFS = {
 };
 
 const TABS = [
-  { id: "profile",    label: "Profile",    icon: "👤", tint: "from-primary-500 to-purple-600" },
-  { id: "appearance", label: "Appearance", icon: "🎨", tint: "from-accent-500 to-warn-500" },
-  { id: "learning",   label: "Learning",   icon: "📚", tint: "from-info-500 to-primary-600" },
-  { id: "games",      label: "Mini Games", icon: "🎮", tint: "from-success-500 to-info-500" },
-  { id: "security",   label: "Security",   icon: "🔒", tint: "from-danger-500 to-accent-600" },
+  { id: "profile",    labelKey: "settings.tabs.profile",    icon: "👤", tint: "from-primary-500 to-purple-600" },
+  { id: "appearance", labelKey: "settings.tabs.appearance", icon: "🎨", tint: "from-accent-500 to-warn-500" },
+  { id: "learning",   labelKey: "settings.tabs.learning",   icon: "📚", tint: "from-info-500 to-primary-600" },
+  { id: "games",      labelKey: "settings.tabs.games",      icon: "🎮", tint: "from-success-500 to-info-500" },
+  { id: "security",   labelKey: "settings.tabs.security",   icon: "🔒", tint: "from-danger-500 to-accent-600" },
+  { id: "mode",       labelKey: "settings.tabs.mode",       icon: "🧭", tint: "from-rose-500 to-purple-600" },
+];
+
+const MODE_CARDS = [
+  {
+    key: "general",
+    initial: "G",
+    accent: "#6366f1",                                 // matches html[data-mode=general] --mode-grad-from
+    glow: "rgba(99, 102, 241, 0.35)",
+    gradient: "from-indigo-500 via-violet-500 to-purple-600",
+    chip: "Indigo · Violet",
+  },
+  {
+    key: "exam",
+    initial: "E",
+    accent: "#dc2626",                                 // red-600
+    glow: "rgba(225, 29, 72, 0.4)",
+    gradient: "from-rose-600 via-red-600 to-red-700",
+    chip: "Rouge · Examen",
+  },
+  {
+    key: "agentic",
+    initial: "A",
+    accent: "#ca8a04",                                 // yellow-600
+    glow: "rgba(217, 119, 6, 0.45)",
+    gradient: "from-amber-500 via-yellow-500 to-amber-700",
+    chip: "Ambre · Doré",
+  },
 ];
 
 function SectionCard({ title, description, icon, tint = "from-primary-500 to-purple-600", children }) {
@@ -147,6 +181,7 @@ export default function Settings() {
   const { user, refreshUser } = useAuth();
   const { dark, toggle: toggleTheme } = useTheme();
   const { showToast } = useToast();
+  const { t, i18n } = useTranslation();
 
   const [activeTab, setActiveTab] = useState("profile");
 
@@ -162,6 +197,11 @@ export default function Settings() {
   const [mode, setMode] = useState("general");
   const [proficiency, setProficiency] = useState("B1");
   const [modeSaving, setModeSaving] = useState(false);
+  const [modeCelebration, setModeCelebration] = useState(null); // { card } when firing
+
+  // UI language (en / fr). Stored on the user, applied via LanguageProvider.
+  const [uiLanguage, setUiLanguage] = useState(i18n.language?.split("-")[0] || "en");
+  const [uiLanguageSaving, setUiLanguageSaving] = useState(false);
 
   // Preferences
   const [prefs, setPrefs] = useState(DEFAULT_PREFS);
@@ -183,6 +223,7 @@ export default function Settings() {
       setNativeLang(user.native_language || "en");
       setMode(user.mode || "general");
       setProficiency(user.proficiency_level || "B1");
+      setUiLanguage(user.ui_language || i18n.language?.split("-")[0] || "en");
       setPrefs({ ...DEFAULT_PREFS, ...(user.preferences || {}) });
     }
   }, [user]);
@@ -218,11 +259,31 @@ export default function Settings() {
     try {
       await client.patch("/users/me/", { mode, proficiency_level: proficiency });
       await refreshUser();
-      showToast("Mode et niveau enregistrés.", "success");
+      const card = MODE_CARDS.find((m) => m.key === mode);
+      setModeCelebration({ card });
+      window.setTimeout(() => setModeCelebration(null), 1900);
     } catch {
-      showToast("Échec de l'enregistrement.", "error");
+      showToast(t("settings.mode.errorToast"), "error");
     } finally {
       setModeSaving(false);
+    }
+  };
+
+  const handleLanguageChange = async (next) => {
+    if (next === uiLanguage) return;
+    setUiLanguage(next);
+    // Apply immediately so the user sees the change before the request
+    // returns. LanguageProvider will reconcile after refreshUser() too.
+    i18n.changeLanguage(next);
+    setUiLanguageSaving(true);
+    try {
+      await client.patch("/users/me/", { ui_language: next });
+      await refreshUser();
+      showToast(t("settings.language.savedToast"), "success");
+    } catch {
+      showToast(t("settings.language.errorToast"), "error");
+    } finally {
+      setUiLanguageSaving(false);
     }
   };
 
@@ -271,9 +332,9 @@ export default function Settings() {
   return (
     <div className="max-w-3xl mx-auto">
       <PageHeader
-        eyebrow="Account"
-        title="Settings"
-        subtitle="Tune Lingaru to fit how you learn, profile, preferences, and account in one place."
+        eyebrow={t("settings.pageEyebrow")}
+        title={t("settings.pageTitle")}
+        subtitle={t("settings.pageSubtitle")}
         icon="⚙️"
         gradient
       />
@@ -295,7 +356,7 @@ export default function Settings() {
               >
                 {isActive && <span className={`absolute inset-0 rounded-lg bg-gradient-to-br ${tab.tint}`} />}
                 <span className="relative z-10 text-base">{tab.icon}</span>
-                <span className="relative z-10">{tab.label}</span>
+                <span className="relative z-10">{t(tab.labelKey)}</span>
               </button>
             );
           })}
@@ -341,74 +402,168 @@ export default function Settings() {
         </SectionCard>
       )}
 
-      {/* Mode & niveau (lives under the Profile tab, same audience). */}
+      {/* Interface language — applies instantly via i18next + LanguageProvider. */}
       {activeTab === "profile" && (
         <SectionCard
-          title="Mode & niveau"
-          description="Adapte la page d'accueil et la navigation à ton objectif."
-          icon="🎯"
-          tint="from-accent-500 to-purple-600"
+          title={t("settings.language.title")}
+          description={t("settings.language.description")}
+          icon="🌐"
+          tint="from-info-500 to-primary-600"
         >
-          <div>
-            <p className="text-caption font-semibold text-surface-700 dark:text-surface-300 mb-2 uppercase tracking-wide">
-              Mode
-            </p>
-            <div className="grid grid-cols-1 sm:grid-cols-3 gap-2.5">
-              {[
-                { key: "general", emoji: "🎒", title: "Apprenant général",   tint: "from-primary-500 to-purple-600" },
-                { key: "exam",    emoji: "🎯", title: "Prépa examen",        tint: "from-info-500 to-primary-600"   },
-                { key: "agentic", emoji: "🤖", title: "Mode agent",          tint: "from-accent-500 to-purple-600"  },
-              ].map((m) => {
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 max-w-md">
+            {UI_LANGUAGE_OPTIONS.map((opt) => {
+              const active = uiLanguage === opt.value;
+              return (
+                <button
+                  key={opt.value}
+                  type="button"
+                  disabled={uiLanguageSaving}
+                  onClick={() => handleLanguageChange(opt.value)}
+                  className={`flex items-center gap-3 px-4 py-3 rounded-xl border-2 transition-all focus-ring text-left disabled:opacity-60 ${
+                    active
+                      ? "border-primary-400 dark:border-primary-600 bg-primary-50/60 dark:bg-primary-900/25"
+                      : "border-surface-200 dark:border-surface-700 hover:border-primary-300 dark:hover:border-primary-700"
+                  }`}
+                >
+                  <span className="text-2xl">{opt.flag}</span>
+                  <span className="flex-1">
+                    <span className="block text-[14px] font-bold text-surface-900 dark:text-surface-50">{opt.label}</span>
+                    <span className="block text-[11px] font-mono uppercase tracking-wider text-surface-500 dark:text-surface-400 mt-0.5">{opt.value}</span>
+                  </span>
+                  {active && (
+                    <span className="w-5 h-5 rounded-full bg-primary-500 text-white flex items-center justify-center">
+                      <svg className="w-3 h-3" fill="none" stroke="currentColor" strokeWidth={3} viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
+                      </svg>
+                    </span>
+                  )}
+                </button>
+              );
+            })}
+          </div>
+        </SectionCard>
+      )}
+
+      {/* Dedicated Mode tab. Cards repaint the whole app via html[data-mode]. */}
+      {activeTab === "mode" && (
+        <>
+          <SectionCard
+            title={t("settings.mode.title")}
+            description={t("settings.mode.description")}
+            icon="🧭"
+            tint="from-rose-500 to-purple-600"
+          >
+            <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
+              {MODE_CARDS.map((m) => {
                 const active = mode === m.key;
                 return (
                   <button
                     key={m.key}
-                    onClick={() => setMode(m.key)}
                     type="button"
-                    className={`relative rounded-xl border-2 px-3 py-3 text-left transition-all focus-ring ${
+                    onClick={() => setMode(m.key)}
+                    style={{
+                      "--card-accent": m.accent,
+                      "--card-glow": m.glow,
+                    }}
+                    className={`mode-card group relative text-left rounded-2xl border-2 px-5 py-5 overflow-hidden transition-all duration-300 ease-out focus-ring will-change-transform ${
                       active
-                        ? "border-primary-400 dark:border-primary-600 bg-primary-50/60 dark:bg-primary-900/25"
-                        : "border-surface-200 dark:border-surface-700 hover:border-primary-300 dark:hover:border-primary-700"
+                        ? "border-[color:var(--card-accent)] bg-white dark:bg-surface-900 shadow-[0_22px_48px_-18px_var(--card-glow)] ring-2 ring-[color:var(--card-accent)]/25"
+                        : "border-surface-200 dark:border-surface-700 bg-white dark:bg-surface-900 hover:-translate-y-1 hover:border-[color:var(--card-accent)]/70 hover:shadow-[0_22px_48px_-18px_var(--card-glow)] hover:ring-2 hover:ring-[color:var(--card-accent)]/20"
                     }`}
                   >
-                    <span className={`inline-flex w-8 h-8 rounded-lg bg-gradient-to-br ${m.tint} text-white items-center justify-center text-base shadow-sm`}>
-                      {m.emoji}
-                    </span>
-                    <p className="mt-2 text-[13px] font-bold text-surface-900 dark:text-surface-50">{m.title}</p>
+                    {/* Animated gradient accent bar */}
+                    <div className={`absolute inset-x-0 top-0 h-1.5 bg-gradient-to-r ${m.gradient} transition-opacity duration-300 ${active ? "opacity-100" : "opacity-50 group-hover:opacity-100"}`} />
+
+                    {/* Soft tint wash on hover/active */}
+                    <div
+                      aria-hidden
+                      className={`pointer-events-none absolute -right-10 -bottom-10 w-44 h-44 rounded-full blur-3xl transition-opacity duration-500 ${active ? "opacity-30" : "opacity-0 group-hover:opacity-25"}`}
+                      style={{ background: `radial-gradient(circle, ${m.accent} 0%, transparent 70%)` }}
+                    />
+
+                    {/* Active checkmark */}
+                    {active && (
+                      <span
+                        className="absolute top-3.5 right-3.5 w-7 h-7 rounded-full text-white flex items-center justify-center shadow-md animate-fade-in-up"
+                        style={{ backgroundColor: m.accent }}
+                      >
+                        <svg className="w-4 h-4" fill="none" stroke="currentColor" strokeWidth={3} viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
+                        </svg>
+                      </span>
+                    )}
+
+                    {/* Centered identity block: puck + title + tagline */}
+                    <div className="flex flex-col items-center text-center">
+                      <span
+                        className={`relative inline-flex w-14 h-14 rounded-2xl bg-gradient-to-br ${m.gradient} text-white items-center justify-center text-2xl font-extrabold shadow-lg transition-transform duration-300 ease-out ${active ? "scale-105" : "group-hover:scale-110 group-hover:rotate-[-4deg]"}`}
+                      >
+                        {m.initial}
+                      </span>
+
+                      <h3 className="mt-3.5 text-[16px] font-extrabold text-surface-900 dark:text-surface-50 leading-tight">
+                        {t(`modes.${m.key}.title`)}
+                      </h3>
+                      <p
+                        className="text-[12px] font-semibold uppercase tracking-wider mt-0.5"
+                        style={{ color: m.accent }}
+                      >
+                        {t(`modes.${m.key}.tagline`)}
+                      </p>
+                    </div>
+
+                    <p className="text-[13px] text-surface-600 dark:text-surface-300 leading-snug mt-3 max-w-[34ch]">
+                      {t(`modes.${m.key}.description`)}
+                    </p>
+
+                    {/* Palette chip */}
+                    <div className="mt-4 flex items-center gap-2">
+                      <span className="flex -space-x-1">
+                        <span className="w-3.5 h-3.5 rounded-full ring-2 ring-white dark:ring-surface-900" style={{ backgroundColor: m.accent }} />
+                        <span className={`w-3.5 h-3.5 rounded-full ring-2 ring-white dark:ring-surface-900 bg-gradient-to-br ${m.gradient}`} />
+                      </span>
+                      <span className="text-[10px] font-mono uppercase tracking-wider text-surface-500 dark:text-surface-400">
+                        {m.chip}
+                      </span>
+                    </div>
                   </button>
                 );
               })}
             </div>
-          </div>
+          </SectionCard>
 
-          <div className="mt-4">
-            <label className="block text-caption font-semibold text-surface-700 dark:text-surface-300 mb-1.5 uppercase tracking-wide">
-              Niveau actuel (CECRL)
-            </label>
+          <SectionCard
+            title={t("settings.mode.currentLevelTitle")}
+            description={t("settings.mode.currentLevelDescription")}
+            icon="📐"
+            tint="from-info-500 to-primary-600"
+          >
             <select
               value={proficiency}
               onChange={(e) => setProficiency(e.target.value)}
-              className="input"
+              className="input max-w-md"
             >
-              <option value="A1">A1, Débutant</option>
-              <option value="A2">A2, Élémentaire</option>
-              <option value="B1">B1, Intermédiaire</option>
-              <option value="B2">B2, Intermédiaire avancé</option>
-              <option value="C1">C1, Avancé</option>
-              <option value="C2">C2, Maîtrise</option>
-              <option value="unsure">Pas sûr·e</option>
+              <option value="A1">{t("levels.A1")}</option>
+              <option value="A2">{t("levels.A2")}</option>
+              <option value="B1">{t("levels.B1")}</option>
+              <option value="B2">{t("levels.B2")}</option>
+              <option value="C1">{t("levels.C1")}</option>
+              <option value="C2">{t("levels.C2")}</option>
+              <option value="unsure">{t("levels.unsure")}</option>
             </select>
-          </div>
 
-          <button
-            type="button"
-            onClick={handleModeSave}
-            disabled={modeSaving}
-            className="btn-primary btn-md mt-5"
-          >
-            {modeSaving ? "Enregistrement…" : "Enregistrer mode et niveau"}
-          </button>
-        </SectionCard>
+            <div className="flex justify-end pt-1">
+              <button
+                type="button"
+                onClick={handleModeSave}
+                disabled={modeSaving}
+                className="btn-primary btn-md"
+              >
+                {modeSaving ? t("common.saving") : t("settings.mode.saveButton")}
+              </button>
+            </div>
+          </SectionCard>
+        </>
       )}
 
       {/* Appearance tab */}
@@ -620,6 +775,56 @@ export default function Settings() {
           </div>
         </>
       )}
+
+      {modeCelebration && <ModeCelebration card={modeCelebration.card} />}
+    </div>
+  );
+}
+
+/**
+ * Full-viewport one-shot celebration: emoji puck pops in, label slides up,
+ * dual radial rings ripple outward in the new mode's accent color, all
+ * fading out at ~1.9s. Pointer-events disabled so it never blocks the UI.
+ */
+function ModeCelebration({ card }) {
+  const { t } = useTranslation();
+  if (!card) return null;
+  return (
+    <div className="fixed inset-0 z-[120] pointer-events-none flex items-center justify-center overflow-hidden">
+      {/* Soft full-screen color wash */}
+      <div
+        className="absolute inset-0 animate-mode-wash"
+        style={{ background: `radial-gradient(circle at 50% 45%, ${card.glow} 0%, transparent 55%)` }}
+      />
+
+      {/* Outer ripple ring */}
+      <span
+        className="absolute w-32 h-32 rounded-full border-[3px] animate-mode-ripple-1"
+        style={{ borderColor: card.accent }}
+      />
+      {/* Inner ripple ring (delayed) */}
+      <span
+        className="absolute w-32 h-32 rounded-full border-[3px] animate-mode-ripple-2"
+        style={{ borderColor: card.accent }}
+      />
+
+      {/* Center pop card */}
+      <div className="relative flex flex-col items-center animate-mode-pop">
+        <span
+          className={`w-24 h-24 rounded-3xl bg-gradient-to-br ${card.gradient} text-white flex items-center justify-center text-5xl font-extrabold shadow-2xl`}
+          style={{ boxShadow: `0 24px 60px -12px ${card.glow}` }}
+        >
+          {card.initial}
+        </span>
+        <div className="mt-4 px-5 py-2.5 rounded-full bg-white dark:bg-surface-900 border border-surface-200 dark:border-surface-700 shadow-lg">
+          <p className="text-[11px] font-mono uppercase tracking-[0.18em] font-bold" style={{ color: card.accent }}>
+            {t("settings.mode.celebrationLabel")}
+          </p>
+          <p className="text-[15px] font-extrabold text-surface-900 dark:text-surface-50 mt-0.5">
+            {t(`modes.${card.key}.title`)}
+          </p>
+        </div>
+      </div>
     </div>
   );
 }

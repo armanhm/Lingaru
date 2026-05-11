@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useTranslation } from "react-i18next";
 import { useAuth } from "../contexts/AuthContext";
 import client from "../api/client";
 
@@ -16,44 +17,16 @@ import client from "../api/client";
  */
 
 const MODES = [
-  {
-    key: "general",
-    title: "Apprenant général",
-    emoji: "🎒",
-    tagline: "Apprendre le français à mon rythme",
-    desc: "Leçons, vocabulaire, grammaire, jeux, news. Le parcours complet, sans pression d'examen.",
-    tint: "from-primary-500 to-purple-600",
-  },
-  {
-    key: "exam",
-    title: "Préparation TCF / TEF",
-    emoji: "🎯",
-    tagline: "Je passe un examen bientôt",
-    desc: "Tableau de bord centré sur l'examen, drills ciblés, simulations chronométrées. Toutes les autres ressources restent disponibles.",
-    tint: "from-info-500 to-primary-600",
-  },
-  {
-    key: "agentic",
-    title: "Mode agent",
-    emoji: "🤖",
-    tagline: "Conversation d'abord, navigation après",
-    desc: "L'assistant IA est ma page d'accueil. J'invoque les fonctionnalités directement dans le chat.",
-    tint: "from-accent-500 to-purple-600",
-  },
+  { key: "general", emoji: "🎒", tint: "from-primary-500 to-purple-600" },
+  { key: "exam",    emoji: "🎯", tint: "from-info-500 to-primary-600" },
+  { key: "agentic", emoji: "🤖", tint: "from-accent-500 to-purple-600" },
 ];
 
-const LEVELS = [
-  { key: "A1",      label: "A1 : Débutant" },
-  { key: "A2",      label: "A2 : Élémentaire" },
-  { key: "B1",      label: "B1 : Intermédiaire" },
-  { key: "B2",      label: "B2 : Intermédiaire avancé" },
-  { key: "C1",      label: "C1 : Avancé" },
-  { key: "C2",      label: "C2 : Maîtrise" },
-  { key: "unsure",  label: "Pas sûr·e" },
-];
+const LEVEL_KEYS = ["A1", "A2", "B1", "B2", "C1", "C2"];
 
 export default function OnboardingModal() {
   const { refreshUser } = useAuth();
+  const { t } = useTranslation();
   const [step, setStep] = useState(1);
   const [mode, setMode] = useState(null);
   const [level, setLevel] = useState(null);
@@ -73,7 +46,7 @@ export default function OnboardingModal() {
       await refreshUser();
       // Modal disappears on its own once user.mode is set.
     } catch (err) {
-      setError(err.response?.data?.detail || "Échec de l'enregistrement, réessayez.");
+      setError(err.response?.data?.detail || t("onboarding.saveError"));
       setSubmitting(false);
     }
   };
@@ -84,17 +57,13 @@ export default function OnboardingModal() {
         {/* Header */}
         <div className="px-7 py-6 border-b border-surface-100 dark:border-surface-800">
           <p className="text-[10px] uppercase tracking-[0.18em] font-bold text-primary-600 dark:text-primary-400">
-            Bienvenue · étape {step} / 2
+            {t("onboarding.step", { step })}
           </p>
           <h2 className="font-editorial text-[26px] sm:text-[30px] leading-tight text-surface-900 dark:text-surface-50 mt-1">
-            {step === 1
-              ? "Comment veux-tu apprendre ?"
-              : "Quel est ton niveau actuel ?"}
+            {step === 1 ? t("onboarding.step1Title") : t("onboarding.step2Title")}
           </h2>
           <p className="text-[13.5px] text-surface-600 dark:text-surface-400 mt-1.5">
-            {step === 1
-              ? "On adapte la page d'accueil et la navigation à ton objectif. Tu peux changer dans les paramètres à tout moment."
-              : "On utilise ton niveau pour calibrer le vocabulaire et les exercices. Ne te prends pas la tête, tu peux ajuster plus tard."}
+            {step === 1 ? t("onboarding.step1Subtitle") : t("onboarding.step2Subtitle")}
           </p>
         </div>
 
@@ -121,14 +90,14 @@ export default function OnboardingModal() {
                       <div className="flex-1 min-w-0">
                         <div className="flex items-baseline gap-2 flex-wrap">
                           <h3 className="text-[15.5px] font-bold text-surface-900 dark:text-surface-50">
-                            {m.title}
+                            {t(`modes.${m.key}.title`)}
                           </h3>
                           <p className="text-[12px] text-surface-500 dark:text-surface-400 italic">
-                            {m.tagline}
+                            {t(`modes.${m.key}.tagline`)}
                           </p>
                         </div>
                         <p className="text-[13px] text-surface-700 dark:text-surface-300 leading-snug mt-1">
-                          {m.desc}
+                          {t(`modes.${m.key}.description`)}
                         </p>
                       </div>
                       {active && (
@@ -146,20 +115,25 @@ export default function OnboardingModal() {
           ) : (
             <div className="space-y-4">
               <div className="grid grid-cols-2 sm:grid-cols-3 gap-2.5">
-                {LEVELS.slice(0, 6).map((l) => {
-                  const active = level === l.key;
+                {LEVEL_KEYS.map((key) => {
+                  const active = level === key;
+                  // levels.A1 = "A1: Beginner". The descriptor is the part after ": "
+                  const fullLabel = t(`levels.${key}`);
+                  const descriptor = fullLabel.includes(": ")
+                    ? fullLabel.split(": ")[1]
+                    : fullLabel;
                   return (
                     <button
-                      key={l.key}
-                      onClick={() => setLevel(l.key)}
+                      key={key}
+                      onClick={() => setLevel(key)}
                       className={`relative rounded-xl border-2 px-3 py-3 text-center transition-all focus-ring ${
                         active
                           ? "border-primary-400 dark:border-primary-600 bg-primary-50/60 dark:bg-primary-900/25"
                           : "border-surface-200 dark:border-surface-700 bg-white dark:bg-surface-900 hover:border-primary-300 dark:hover:border-primary-700"
                       }`}
                     >
-                      <p className="text-[18px] font-extrabold text-surface-900 dark:text-surface-50 leading-none">{l.key}</p>
-                      <p className="text-[11px] text-surface-500 dark:text-surface-400 mt-1">{l.label.split(" : ")[1]}</p>
+                      <p className="text-[18px] font-extrabold text-surface-900 dark:text-surface-50 leading-none">{key}</p>
+                      <p className="text-[11px] text-surface-500 dark:text-surface-400 mt-1">{descriptor}</p>
                     </button>
                   );
                 })}
@@ -168,17 +142,17 @@ export default function OnboardingModal() {
               <div className="rounded-xl border-2 border-dashed border-surface-200 dark:border-surface-700 px-4 py-3.5 flex items-center justify-between gap-3 flex-wrap">
                 <div>
                   <p className="text-[13px] font-semibold text-surface-900 dark:text-surface-50">
-                    Pas sûr·e de ton niveau ?
+                    {t("onboarding.placementTitle")}
                   </p>
                   <p className="text-[12px] text-surface-500 dark:text-surface-400 mt-0.5">
-                    Fais un test de placement (5 min) ; on l'adaptera ensuite.
+                    {t("onboarding.placementSubtitle")}
                   </p>
                 </div>
                 <button
                   onClick={() => setShowPlacementStub(true)}
                   className="text-[12px] font-bold text-primary-600 dark:text-primary-400 hover:text-primary-700 dark:hover:text-primary-300 hover:underline focus-ring rounded px-1"
                 >
-                  Faire le test →
+                  {t("onboarding.placementCta")} →
                 </button>
               </div>
 
@@ -191,10 +165,7 @@ export default function OnboardingModal() {
                 }`}
               >
                 <p className="text-[13px] font-semibold text-surface-900 dark:text-surface-50">
-                  Pas sûr·e, décider plus tard
-                </p>
-                <p className="text-[12px] text-surface-500 dark:text-surface-400 mt-0.5">
-                  On commencera neutre et on ajustera selon tes réponses.
+                  {t("onboarding.placementUnsureLabel")}
                 </p>
               </button>
             </div>
@@ -214,7 +185,7 @@ export default function OnboardingModal() {
             disabled={step === 1 || submitting}
             className="text-[12.5px] font-semibold text-surface-500 dark:text-surface-400 hover:text-primary-600 dark:hover:text-primary-400 disabled:opacity-40 disabled:cursor-not-allowed"
           >
-            ← Retour
+            ← {t("onboarding.back")}
           </button>
 
           {step === 1 ? (
@@ -223,7 +194,7 @@ export default function OnboardingModal() {
               disabled={!mode}
               className="px-5 py-2 rounded-xl text-[13px] font-bold bg-gradient-to-br from-primary-600 to-purple-700 text-white shadow-sm hover:shadow-glow-primary active:scale-95 transition-all disabled:opacity-50 disabled:cursor-not-allowed focus-ring"
             >
-              Continuer →
+              {t("onboarding.next")} →
             </button>
           ) : (
             <button
@@ -231,7 +202,7 @@ export default function OnboardingModal() {
               disabled={!level || submitting}
               className="px-5 py-2 rounded-xl text-[13px] font-bold bg-gradient-to-br from-primary-600 to-purple-700 text-white shadow-sm hover:shadow-glow-primary active:scale-95 transition-all disabled:opacity-50 disabled:cursor-not-allowed focus-ring"
             >
-              {submitting ? "Enregistrement…" : "C'est parti"}
+              {submitting ? t("common.saving") : t("onboarding.save")}
             </button>
           )}
         </div>
@@ -246,17 +217,17 @@ export default function OnboardingModal() {
                 🧪
               </span>
               <h3 className="font-editorial text-[22px] mt-4 text-surface-900 dark:text-surface-50">
-                Bientôt disponible
+                {t("onboarding.placementTitle")}
               </h3>
               <p className="text-[13px] text-surface-600 dark:text-surface-400 mt-2 leading-relaxed">
-                Le test de placement CECRL arrive bientôt. En attendant, choisis le niveau qui te paraît le plus proche ; on s'adaptera à tes réponses.
+                {t("onboarding.placementStubBody")}
               </p>
             </div>
             <button
               onClick={() => setShowPlacementStub(false)}
               className="mt-5 w-full px-4 py-2.5 rounded-xl text-[13px] font-bold bg-gradient-to-br from-primary-600 to-purple-700 text-white shadow-sm hover:shadow-glow-primary active:scale-95 transition-all focus-ring"
             >
-              Compris
+              {t("common.close")}
             </button>
           </div>
         </div>

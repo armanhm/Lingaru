@@ -43,6 +43,7 @@ class UserSerializer(serializers.ModelSerializer):
             "preferences",
             "mode",
             "proficiency_level",
+            "ui_language",
             "date_joined",
             "is_staff",
         )

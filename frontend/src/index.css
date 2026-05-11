@@ -22,20 +22,20 @@
 
   html[data-mode="exam"] {
     --mode-name: 'exam';
-    --mode-grad-from: #0369a1;   /* info-700, deep blue   */
-    --mode-grad-to:   #1e40af;   /* indigo-900            */
-    --mode-accent:    #d4a017;   /* exam-paper gold       */
-    --mode-shell-tint: rgba(3, 105, 161, 0.06);
-    --mode-radius: 0.5rem;       /* tighter, more "paper" */
+    --mode-grad-from: #e11d48;   /* rose-600, red gradient start */
+    --mode-grad-to:   #b91c1c;   /* red-700, deep red            */
+    --mode-accent:    #dc2626;   /* red-600, signal red          */
+    --mode-shell-tint: rgba(225, 29, 72, 0.06);
+    --mode-radius: 0.5rem;       /* tighter, more "paper"        */
   }
 
   html[data-mode="agentic"] {
     --mode-name: 'agentic';
-    --mode-grad-from: #7c3aed;   /* violet-700        */
-    --mode-grad-to:   #06b6d4;   /* cyan-500          */
-    --mode-accent:    #06b6d4;
-    --mode-shell-tint: rgba(124, 58, 237, 0.07);
-    --mode-radius: 1.25rem;      /* roomier, chat-y   */
+    --mode-grad-from: #d97706;   /* amber-600, deep yellow */
+    --mode-grad-to:   #b45309;   /* amber-700, dark amber  */
+    --mode-accent:    #ca8a04;   /* yellow-600, signal     */
+    --mode-shell-tint: rgba(217, 119, 6, 0.07);
+    --mode-radius: 1.25rem;      /* roomier, chat-y        */
   }
 
   html {
@@ -94,6 +94,16 @@
   }
   .mode-accent-text {
     color: var(--mode-accent);
+  }
+  /* Gradient-clipped text in the active mode's palette. Use for the
+     wordmark and any branded display text that should re-tint with the
+     mode swap. */
+  .mode-grad-text {
+    background-image: linear-gradient(135deg, var(--mode-grad-from), var(--mode-grad-to));
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    -webkit-text-fill-color: transparent;
   }
   .mode-shell {
     background-color: var(--mode-shell-tint);

@@ -95,6 +95,27 @@ export default {
           '0%, 100%': { opacity: '0.6' },
           '50%':      { opacity: '1' },
         },
+        'mode-pop': {
+          '0%':   { opacity: '0', transform: 'scale(0.55) translateY(12px)' },
+          '55%':  { opacity: '1', transform: 'scale(1.08) translateY(0)' },
+          '70%':  { transform: 'scale(0.97)' },
+          '85%':  { opacity: '1', transform: 'scale(1)' },
+          '100%': { opacity: '0', transform: 'scale(1) translateY(-6px)' },
+        },
+        'mode-ripple-1': {
+          '0%':   { opacity: '0.65', transform: 'scale(0.6)' },
+          '100%': { opacity: '0', transform: 'scale(4.2)' },
+        },
+        'mode-ripple-2': {
+          '0%, 30%': { opacity: '0', transform: 'scale(0.6)' },
+          '40%':     { opacity: '0.55', transform: 'scale(0.7)' },
+          '100%':    { opacity: '0', transform: 'scale(3.6)' },
+        },
+        'mode-wash': {
+          '0%':   { opacity: '0' },
+          '30%':  { opacity: '1' },
+          '100%': { opacity: '0' },
+        },
       },
       animation: {
         'fade-in': 'fade-in 0.3s ease-out',
@@ -118,6 +139,10 @@ export default {
         'spin-slow': 'spin-slow 22s linear infinite',
         'flame':     'flame 1.6s ease-in-out infinite',
         'pulse-soft':'pulse-soft 2.4s ease-in-out infinite',
+        'mode-pop':      'mode-pop 1.9s cubic-bezier(.36,1.2,.5,1) forwards',
+        'mode-ripple-1': 'mode-ripple-1 1.5s ease-out forwards',
+        'mode-ripple-2': 'mode-ripple-2 1.7s ease-out forwards',
+        'mode-wash':     'mode-wash 1.9s ease-out forwards',
       },
       fontFamily: {
         sans: ['"Inter"', 'ui-sans-serif', 'system-ui', '-apple-system', 'BlinkMacSystemFont', '"Segoe UI"', 'Roboto', '"Helvetica Neue"', 'Arial', 'sans-serif'],

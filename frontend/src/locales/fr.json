@@ -1,0 +1,256 @@
+{
+  "_meta": {
+    "name": "Français",
+    "code": "fr"
+  },
+
+  "common": {
+    "save": "Enregistrer",
+    "saving": "Enregistrement…",
+    "cancel": "Annuler",
+    "loading": "Chargement…",
+    "error": "Erreur",
+    "retry": "Réessayer",
+    "back": "Retour",
+    "next": "Suivant",
+    "close": "Fermer",
+    "submit": "Envoyer",
+    "delete": "Supprimer",
+    "edit": "Modifier",
+    "yes": "Oui",
+    "no": "Non",
+    "language": "Langue"
+  },
+
+  "nav": {
+    "dashboard": "Tableau de bord",
+    "topics": "Sujets",
+    "discover": "Découvrir",
+    "news": "Actualités",
+    "assistant": "Assistant",
+    "agents": "Agents",
+    "home": "Accueil",
+    "dictionary": "Dictionnaire",
+    "progress": "Progression",
+    "practice": "Entraînement",
+    "dictation": "Dictée",
+    "pronunciation": "Prononciation",
+    "conjugation": "Conjugaison",
+    "flashcards": "Cartes mémoire",
+    "miniGames": "Mini-jeux",
+    "grammarBooster": "Booster grammaire",
+    "examPrep": "Prépa examen",
+    "settings": "Paramètres",
+    "logout": "Déconnexion"
+  },
+
+  "settings": {
+    "pageTitle": "Paramètres",
+    "pageEyebrow": "Compte",
+    "pageSubtitle": "Configure Lingaru selon ta façon d'apprendre : profil, préférences et compte au même endroit.",
+    "tabs": {
+      "profile": "Profil",
+      "appearance": "Apparence",
+      "learning": "Apprentissage",
+      "games": "Mini-jeux",
+      "security": "Sécurité",
+      "mode": "Mode"
+    },
+    "profile": {
+      "title": "Profil",
+      "description": "Comment tu apparais dans l'application et tes objectifs d'apprentissage par défaut",
+      "username": "Nom d'utilisateur",
+      "email": "E-mail",
+      "nativeLanguage": "Langue maternelle",
+      "targetLevel": "Niveau visé",
+      "dailyGoal": "Objectif quotidien (min)",
+      "saveButton": "Enregistrer le profil",
+      "savedToast": "Profil enregistré !"
+    },
+    "language": {
+      "title": "Langue de l'interface",
+      "description": "Change la langue de l'interface (menu, paramètres, boutons). La langue apprise reste toujours le français.",
+      "savedToast": "Langue enregistrée",
+      "errorToast": "Échec de l'enregistrement de la langue"
+    },
+    "mode": {
+      "title": "Choisis ton mode",
+      "description": "Le mode adapte la page d'accueil, la navigation et la palette de couleurs de toute l'application.",
+      "currentLevelTitle": "Niveau actuel (CECRL)",
+      "currentLevelDescription": "On utilise ton niveau pour calibrer le vocabulaire et la difficulté des exercices.",
+      "saveButton": "Enregistrer mode et niveau",
+      "celebrationLabel": "Mode activé",
+      "errorToast": "Échec de l'enregistrement"
+    },
+    "appearance": {
+      "title": "Apparence",
+      "description": "Thème et préférences visuelles",
+      "theme": "Thème",
+      "themeDescription": "Bascule entre mode clair et mode sombre",
+      "darkMode": "Mode sombre",
+      "lightMode": "Mode clair",
+      "darkLabel": "Sombre",
+      "lightLabel": "Clair"
+    },
+    "security": {
+      "passwordTitle": "Changer le mot de passe",
+      "passwordDescription": "Choisis un mot de passe fort que tu ne réutilises pas",
+      "currentPassword": "Mot de passe actuel",
+      "newPassword": "Nouveau mot de passe",
+      "confirmPassword": "Confirmer le mot de passe",
+      "changePasswordButton": "Changer le mot de passe",
+      "changingPassword": "Modification…",
+      "telegramTitle": "Bot Telegram",
+      "telegramDescription": "Reçois des rappels et un entraînement rapide sur Telegram",
+      "telegramLinked": "Lié",
+      "telegramNotLinked": "Non lié. Lance le bot Lingaru sur Telegram et envoie /start pour connecter ton compte.",
+      "documentsTitle": "Documents",
+      "documentsDescription": "Téléverse des manuels et des notes en français : l'assistant IA s'en sert pour donner des réponses ancrées.",
+      "manageDocuments": "Gérer les documents",
+      "dangerZone": "Zone dangereuse",
+      "dangerZoneDescription": "Actions irréversibles sur le compte",
+      "deleteAccountWarning": "Une fois le compte supprimé, toutes les données sont effacées définitivement.",
+      "deleteAccountButton": "Supprimer le compte (bientôt)"
+    }
+  },
+
+  "onboarding": {
+    "step": "Bienvenue · étape {{step}} / 2",
+    "step1Title": "Comment veux-tu apprendre ?",
+    "step1Subtitle": "On adapte la page d'accueil et la navigation à ton objectif. Tu peux changer dans les paramètres à tout moment.",
+    "step2Title": "Quel est ton niveau actuel ?",
+    "step2Subtitle": "On utilise ton niveau pour calibrer le vocabulaire et les exercices. Ne te prends pas la tête, tu peux ajuster plus tard.",
+    "placementTitle": "Pas sûr·e de ton niveau ?",
+    "placementSubtitle": "Fais un test de placement (5 min) ; on l'adaptera ensuite.",
+    "placementCta": "Faire le test",
+    "placementUnsureLabel": "Pas sûr·e, décider plus tard",
+    "placementStubBody": "Le test de placement CECRL arrive bientôt. En attendant, choisis le niveau qui te paraît le plus proche ; on s'adaptera à tes réponses.",
+    "saveError": "Échec de l'enregistrement, réessaye.",
+    "next": "Continuer",
+    "back": "Retour",
+    "save": "C'est parti"
+  },
+
+  "modes": {
+    "general": {
+      "title": "Apprenant général",
+      "tagline": "Apprendre à mon rythme",
+      "description": "Leçons, vocabulaire, grammaire, jeux, actualités. Le parcours complet, sans pression d'examen.",
+      "chip": "Général",
+      "shortLabel": "Apprentissage"
+    },
+    "exam": {
+      "title": "Préparation TCF / TEF",
+      "tagline": "Je passe un examen bientôt",
+      "description": "Tableau de bord centré sur l'examen, exercices ciblés, simulations chronométrées. Toutes les autres ressources restent disponibles.",
+      "chip": "Prépa examen",
+      "shortLabel": "Prépa examen"
+    },
+    "agentic": {
+      "title": "Mode agent",
+      "tagline": "Conversation d'abord, navigation après",
+      "description": "L'assistant IA est ma page d'accueil. J'invoque les fonctionnalités directement dans le chat.",
+      "chip": "Mode agent",
+      "shortLabel": "Mode agent"
+    }
+  },
+
+  "levels": {
+    "A1": "A1 : Débutant",
+    "A2": "A2 : Élémentaire",
+    "B1": "B1 : Intermédiaire",
+    "B2": "B2 : Intermédiaire avancé",
+    "C1": "C1 : Avancé",
+    "C2": "C2 : Maîtrise",
+    "unsure": "Pas sûr·e"
+  },
+
+  "auth": {
+    "loginTitle": "Bon retour",
+    "loginSubtitle": "Connecte-toi pour continuer à progresser en français",
+    "registerTitle": "Crée ton compte",
+    "registerSubtitle": "Quelques infos et c'est parti",
+    "username": "Nom d'utilisateur",
+    "email": "E-mail",
+    "password": "Mot de passe",
+    "confirmPassword": "Confirmer le mot de passe",
+    "loginButton": "Se connecter",
+    "registerButton": "Créer un compte",
+    "loggingIn": "Connexion…",
+    "creatingAccount": "Création du compte…",
+    "noAccount": "Pas de compte ?",
+    "haveAccount": "Tu as déjà un compte ?",
+    "signUp": "S'inscrire",
+    "signIn": "Se connecter",
+    "logout": "Se déconnecter"
+  },
+
+  "assistant": {
+    "title": "Conversation",
+    "subtitle": "Discute librement en français, Claire te corrige au fil de la conversation.",
+    "newChat": "Nouvelle conversation",
+    "placeholder": "Pose ta question en français…",
+    "send": "Envoyer",
+    "thinking": "Réflexion…",
+    "recentSessions": "Récents",
+    "noSessions": "Aucune conversation pour l'instant"
+  },
+
+  "agents": {
+    "pageTitle": "Agents",
+    "pageSubtitle": "Tuteurs IA spécialisés en grammaire, écriture, vocabulaire et plus.",
+    "empty": "Aucun agent disponible pour l'instant. L'administrateur peut en ajouter via le panneau Django.",
+    "tryIt": "Essayer"
+  },
+
+  "dashboard": {
+    "welcomeBack": "Bon retour, {{name}}",
+    "todayLabel": "Aujourd'hui",
+    "noActivity": "Aucune activité récente"
+  },
+
+  "news": {
+    "pageTitle": "Actualités",
+    "pageSubtitle": "Articles quotidiens calibrés à ton niveau.",
+    "loadMore": "Charger plus",
+    "generating": "Génération…",
+    "empty": "Aucune actualité pour l'instant"
+  },
+
+  "discover": {
+    "pageTitle": "Découvrir",
+    "pageSubtitle": "Du français en petites doses, rafraîchi chaque jour.",
+    "generateMore": "Générer plus",
+    "generating": "Génération…"
+  },
+
+  "dictionary": {
+    "pageTitle": "Dictionnaire",
+    "pageSubtitle": "Cherche des mots français : définitions, exemples, prononciations.",
+    "searchPlaceholder": "Cherche un mot français…"
+  },
+
+  "progress": {
+    "pageTitle": "Progression",
+    "pageSubtitle": "Ta série, les mots maîtrisés et le temps investi."
+  },
+
+  "practice": {
+    "dictation": {
+      "title": "Dictée",
+      "subtitle": "Écoute et tape ce que tu entends."
+    },
+    "pronunciation": {
+      "title": "Prononciation",
+      "subtitle": "Lis à voix haute et reçois un score sur ta prononciation."
+    },
+    "conjugation": {
+      "title": "Conjugaison",
+      "subtitle": "Entraîne-toi à conjuguer les verbes à différents temps."
+    },
+    "srs": {
+      "title": "Cartes mémoire",
+      "subtitle": "Répétition espacée pour le vocabulaire déjà rencontré."
+    }
+  }
+}

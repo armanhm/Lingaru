@@ -1,3 +1,5 @@
+import { createElement } from "react";
+
 /**
  * Per-mode configuration: which nav items are visible, where the user
  * lands by default, and a short label for the mode chip.
@@ -84,12 +86,43 @@ export function filterNavForMode(sections, mode) {
   const cfg = MODE_CONFIG[mode] || MODE_CONFIG.general;
   const allow = new Set(cfg.visible);
 
-  return sections
+  let filtered = sections
     .map((section) => ({
       ...section,
       items: (section.items || []).filter((it) => allow.has(it.to)),
     }))
     .filter((section) => section.items.length > 0);
+
+  // Agentic mode: the Assistant IS the home page, so collapse Dashboard +
+  // Assistant into one "Home" item pointing at /assistant. Otherwise clicking
+  // Dashboard briefly flashes Dashboard then redirects to Assistant which
+  // looks like a glitch.
+  if (mode === "agentic") {
+    const homeIcon = createElement(
+      "svg",
+      { className: "w-5 h-5", fill: "none", stroke: "currentColor", viewBox: "0 0 24 24" },
+      createElement("path", {
+        strokeLinecap: "round",
+        strokeLinejoin: "round",
+        strokeWidth: 2,
+        d: "M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6",
+      }),
+    );
+    filtered = filtered.map((section) => {
+      const items = section.items
+        .filter((it) => it.to !== "/" && it.to !== "/dashboard")
+        .map((it) => (it.to === "/assistant" ? { ...it, labelKey: "nav.home", icon: homeIcon } : it));
+      // Hoist Home to the top of whichever section it lives in.
+      const homeIdx = items.findIndex((it) => it.to === "/assistant");
+      if (homeIdx > 0) {
+        const [home] = items.splice(homeIdx, 1);
+        items.unshift(home);
+      }
+      return { ...section, items };
+    });
+  }
+
+  return filtered;
 }
 
 /** Where should "/" redirect for this mode? */

@@ -1,0 +1,256 @@
+{
+  "_meta": {
+    "name": "English",
+    "code": "en"
+  },
+
+  "common": {
+    "save": "Save",
+    "saving": "Saving…",
+    "cancel": "Cancel",
+    "loading": "Loading…",
+    "error": "Error",
+    "retry": "Retry",
+    "back": "Back",
+    "next": "Next",
+    "close": "Close",
+    "submit": "Submit",
+    "delete": "Delete",
+    "edit": "Edit",
+    "yes": "Yes",
+    "no": "No",
+    "language": "Language"
+  },
+
+  "nav": {
+    "dashboard": "Dashboard",
+    "topics": "Topics",
+    "discover": "Discover",
+    "news": "News",
+    "assistant": "Assistant",
+    "agents": "Agents",
+    "home": "Home",
+    "dictionary": "Dictionary",
+    "progress": "Progress",
+    "practice": "Practice",
+    "dictation": "Dictation",
+    "pronunciation": "Pronunciation",
+    "conjugation": "Conjugation",
+    "flashcards": "Flashcards",
+    "miniGames": "Mini Games",
+    "grammarBooster": "Grammar Booster",
+    "examPrep": "Exam Prep",
+    "settings": "Settings",
+    "logout": "Log out"
+  },
+
+  "settings": {
+    "pageTitle": "Settings",
+    "pageEyebrow": "Account",
+    "pageSubtitle": "Tune Lingaru to fit how you learn, profile, preferences, and account in one place.",
+    "tabs": {
+      "profile": "Profile",
+      "appearance": "Appearance",
+      "learning": "Learning",
+      "games": "Mini Games",
+      "security": "Security",
+      "mode": "Mode"
+    },
+    "profile": {
+      "title": "Profile",
+      "description": "How you appear in the app and your default learning targets",
+      "username": "Username",
+      "email": "Email",
+      "nativeLanguage": "Native language",
+      "targetLevel": "Target level",
+      "dailyGoal": "Daily goal (min)",
+      "saveButton": "Save profile",
+      "savedToast": "Profile saved!"
+    },
+    "language": {
+      "title": "Interface language",
+      "description": "Switch the language of the app chrome (nav, settings, buttons). The language being learned is always French.",
+      "savedToast": "Language saved",
+      "errorToast": "Failed to save language"
+    },
+    "mode": {
+      "title": "Choose your mode",
+      "description": "Mode tailors the home page, navigation, and color palette of the entire app.",
+      "currentLevelTitle": "Current level (CEFR)",
+      "currentLevelDescription": "We use your level to calibrate vocabulary and exercise difficulty.",
+      "saveButton": "Save mode and level",
+      "celebrationLabel": "Mode activated",
+      "errorToast": "Failed to save"
+    },
+    "appearance": {
+      "title": "Appearance",
+      "description": "Theme and visual preferences",
+      "theme": "Theme",
+      "themeDescription": "Switch between light and dark mode",
+      "darkMode": "Dark mode",
+      "lightMode": "Light mode",
+      "darkLabel": "Dark",
+      "lightLabel": "Light"
+    },
+    "security": {
+      "passwordTitle": "Change password",
+      "passwordDescription": "Pick a strong password you don't reuse",
+      "currentPassword": "Current password",
+      "newPassword": "New password",
+      "confirmPassword": "Confirm password",
+      "changePasswordButton": "Change password",
+      "changingPassword": "Changing…",
+      "telegramTitle": "Telegram bot",
+      "telegramDescription": "Get reminders and quick practice on Telegram",
+      "telegramLinked": "Linked",
+      "telegramNotLinked": "Not linked. Start the Lingaru bot on Telegram and send /start to connect your account.",
+      "documentsTitle": "Documents",
+      "documentsDescription": "Upload French textbooks and notes, the AI assistant uses them to give grounded answers.",
+      "manageDocuments": "Manage documents",
+      "dangerZone": "Danger zone",
+      "dangerZoneDescription": "Irreversible account actions",
+      "deleteAccountWarning": "Once you delete your account all data is permanently removed.",
+      "deleteAccountButton": "Delete account (coming soon)"
+    }
+  },
+
+  "onboarding": {
+    "step": "Welcome · step {{step}} / 2",
+    "step1Title": "How do you want to learn?",
+    "step1Subtitle": "We tailor the home page and navigation to your goal. You can change this in Settings any time.",
+    "step2Title": "What's your current level?",
+    "step2Subtitle": "We use your level to calibrate vocabulary and exercises. Don't sweat it, you can adjust later.",
+    "placementTitle": "Not sure of your level?",
+    "placementSubtitle": "Take a 5-minute placement test; we'll adapt as you go.",
+    "placementCta": "Take placement test",
+    "placementUnsureLabel": "Not sure, decide later",
+    "placementStubBody": "The CEFR placement test is coming soon. For now, pick the level closest to where you are; we'll adapt to your answers.",
+    "saveError": "Save failed, please try again.",
+    "next": "Continue",
+    "back": "Back",
+    "save": "Save and continue"
+  },
+
+  "modes": {
+    "general": {
+      "title": "General learner",
+      "tagline": "Learn at my own pace",
+      "description": "Lessons, vocabulary, grammar, games, news. The full path, with no exam pressure.",
+      "chip": "General",
+      "shortLabel": "Learning"
+    },
+    "exam": {
+      "title": "Exam prep (TCF / TEF)",
+      "tagline": "I have an exam coming up",
+      "description": "Exam-focused dashboard, targeted drills, timed simulations. All other resources stay available.",
+      "chip": "Exam prep",
+      "shortLabel": "Exam prep"
+    },
+    "agentic": {
+      "title": "Agent mode",
+      "tagline": "Conversation first, navigation second",
+      "description": "The AI assistant is my home page. I invoke features directly from chat.",
+      "chip": "Agent mode",
+      "shortLabel": "Agent mode"
+    }
+  },
+
+  "levels": {
+    "A1": "A1: Beginner",
+    "A2": "A2: Elementary",
+    "B1": "B1: Intermediate",
+    "B2": "B2: Upper Intermediate",
+    "C1": "C1: Advanced",
+    "C2": "C2: Proficiency",
+    "unsure": "Not sure"
+  },
+
+  "auth": {
+    "loginTitle": "Welcome back",
+    "loginSubtitle": "Sign in to keep building your French",
+    "registerTitle": "Create your account",
+    "registerSubtitle": "A few details and you're in",
+    "username": "Username",
+    "email": "Email",
+    "password": "Password",
+    "confirmPassword": "Confirm password",
+    "loginButton": "Log in",
+    "registerButton": "Create account",
+    "loggingIn": "Logging in…",
+    "creatingAccount": "Creating account…",
+    "noAccount": "No account?",
+    "haveAccount": "Already have an account?",
+    "signUp": "Sign up",
+    "signIn": "Sign in",
+    "logout": "Log out"
+  },
+
+  "assistant": {
+    "title": "Conversation",
+    "subtitle": "Speak freely in French, Claire will correct you as you chat.",
+    "newChat": "New chat",
+    "placeholder": "Ask anything in French…",
+    "send": "Send",
+    "thinking": "Thinking…",
+    "recentSessions": "Recent",
+    "noSessions": "No conversations yet"
+  },
+
+  "agents": {
+    "pageTitle": "Agents",
+    "pageSubtitle": "Specialized AI tutors for grammar, writing, vocabulary and more.",
+    "empty": "No agents available yet. The administrator can add some via the Django panel.",
+    "tryIt": "Try it"
+  },
+
+  "dashboard": {
+    "welcomeBack": "Welcome back, {{name}}",
+    "todayLabel": "Today",
+    "noActivity": "No recent activity"
+  },
+
+  "news": {
+    "pageTitle": "News",
+    "pageSubtitle": "Daily articles tuned to your level.",
+    "loadMore": "Load more",
+    "generating": "Generating…",
+    "empty": "No news yet"
+  },
+
+  "discover": {
+    "pageTitle": "Discover",
+    "pageSubtitle": "Bite-sized French content, refreshed daily.",
+    "generateMore": "Generate more",
+    "generating": "Generating…"
+  },
+
+  "dictionary": {
+    "pageTitle": "Dictionary",
+    "pageSubtitle": "Look up French words, get definitions, examples, and pronunciations.",
+    "searchPlaceholder": "Look up a French word…"
+  },
+
+  "progress": {
+    "pageTitle": "Progress",
+    "pageSubtitle": "Your learning streak, mastered words, and time invested."
+  },
+
+  "practice": {
+    "dictation": {
+      "title": "Dictation",
+      "subtitle": "Listen and type what you hear."
+    },
+    "pronunciation": {
+      "title": "Pronunciation",
+      "subtitle": "Read aloud and get scored on your pronunciation."
+    },
+    "conjugation": {
+      "title": "Conjugation",
+      "subtitle": "Drill verb conjugations across tenses."
+    },
+    "srs": {
+      "title": "Flashcards",
+      "subtitle": "Spaced repetition for vocabulary you've seen."
+    }
+  }
+}

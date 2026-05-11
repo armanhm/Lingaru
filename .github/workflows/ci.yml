@@ -137,7 +137,7 @@ jobs:
         run: docker build -t lingaru-backend:scan ./backend
 
       - name: Run Trivy vulnerability scanner
-        uses: aquasecurity/trivy-action@0.36.0
+        uses: aquasecurity/trivy-action@master
         with:
           image-ref: lingaru-backend:scan
           format: sarif

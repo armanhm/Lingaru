@@ -18,7 +18,11 @@ export default function GenderSnapInline() {
     setPicked(null);
     try {
       const { data } = await getRandomVocabulary(1, { singleWord: true, gendered: true });
-      const list = Array.isArray(data) ? data : data?.results || [];
+      // count=1 returns a bare vocab object; count>1 returns an array;
+      // some endpoints wrap in {results: [...]}. Cover all three.
+      const list = data && data.french
+        ? [data]
+        : Array.isArray(data) ? data : data?.results || [];
       const vocab = list[0] || null;
       if (!vocab || !vocab.french || !vocab.gender) {
         setWord(null);
@@ -43,7 +47,10 @@ export default function GenderSnapInline() {
       emoji="⚧"
       loading={loading}
       empty={!word && !loading}
-      emptyMessage="Pas de noms genrés disponibles."
+      emptyMessage="Pas encore de noms genrés à pratiquer."
+      emptyHint="Les noms avec genre marqué (le/la) débloqueront ce jeu."
+      emptyCtaTo="/topics"
+      emptyCtaLabel="Voir les sujets →"
       score={picked ? { correct: correct ? 1 : 0, total: 1 } : null}
       onAgain={picked ? loadRound : null}
       fullSessionTo="/mini-games/gender-snap"

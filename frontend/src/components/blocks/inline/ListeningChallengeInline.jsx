@@ -36,7 +36,11 @@ export default function ListeningChallengeInline() {
     setAudioUrl(null);
     try {
       const { data } = await getRandomVocabulary(1, { singleWord: true });
-      const list = Array.isArray(data) ? data : data?.results || [];
+      // count=1 returns a bare vocab object; count>1 returns an array;
+      // some endpoints wrap in {results: [...]}. Cover all three.
+      const list = data && data.french
+        ? [data]
+        : Array.isArray(data) ? data : data?.results || [];
       const vocab = list[0];
       if (!vocab?.french) {
         setWord(null);
@@ -93,7 +97,10 @@ export default function ListeningChallengeInline() {
       emoji="🔊"
       loading={loading}
       empty={!word && !loading}
-      emptyMessage="Pas de mots disponibles pour l'écoute."
+      emptyMessage="Pas encore de mots à écouter."
+      emptyHint="Apprends du vocabulaire pour débloquer l'exercice d'écoute."
+      emptyCtaTo="/topics"
+      emptyCtaLabel="Voir les sujets →"
       score={result ? { correct: result === "correct" ? 1 : 0, total: 1 } : null}
       onAgain={result ? loadRound : null}
       fullSessionTo="/mini-games/listening-challenge"

@@ -33,7 +33,11 @@ export default function MissingLetterInline() {
     setGuess("");
     try {
       const { data } = await getRandomVocabulary(1, { singleWord: true });
-      const list = Array.isArray(data) ? data : data?.results || [];
+      // count=1 returns a bare vocab object; count>1 returns an array;
+      // some endpoints wrap in {results: [...]}. Cover all three.
+      const list = data && data.french
+        ? [data]
+        : Array.isArray(data) ? data : data?.results || [];
       const vocab = list[0] || null;
       if (!vocab || !vocab.french) {
         setWord(null);
@@ -72,7 +76,10 @@ export default function MissingLetterInline() {
       emoji="🔡"
       loading={loading}
       empty={!word && !loading}
-      emptyMessage="Pas de mots disponibles."
+      emptyMessage="Pas encore de mots à compléter."
+      emptyHint="Apprends quelques mots dans les leçons et reviens jouer."
+      emptyCtaTo="/topics"
+      emptyCtaLabel="Voir les sujets →"
       score={result ? { correct: result === "correct" ? 1 : 0, total: 1 } : null}
       onAgain={result ? loadRound : null}
       fullSessionTo="/mini-games/missing-letter"

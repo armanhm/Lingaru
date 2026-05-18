@@ -19,7 +19,20 @@
     "edit": "Modifier",
     "yes": "Oui",
     "no": "Non",
-    "language": "Langue"
+    "language": "Langue",
+    "comingSoon": "Bientôt disponible",
+    "comingSoonForEnglish": "Bientôt disponible pour l'anglais",
+    "askAssistantInstead": "Pour l'instant, demande à l'assistant."
+  },
+
+  "languages": {
+    "fr": "Français",
+    "en": "Anglais"
+  },
+
+  "layout": {
+    "learningLanguageAria": "Apprentissage en cours : {{language}}",
+    "learningLanguageTooltip": "Tu apprends {{language}}. Change dans les Réglages."
   },
 
   "nav": {
@@ -64,6 +77,13 @@
       "username": "Nom d'utilisateur",
       "email": "E-mail",
       "nativeLanguage": "Langue maternelle",
+      "targetLanguage": "Langue cible",
+      "targetLanguageDescription": "La langue que tu apprends. Différente de la langue de l'interface.",
+      "switchLanguageConfirmTitle": "Passer à {{language}} ?",
+      "switchLanguageConfirmBody": "Ta progression en {{currentLanguage}} est conservée. La plupart des fonctionnalités en {{language}} affichent 'bientôt' pour l'instant.",
+      "switchLanguageConfirmYes": "Changer",
+      "switchLanguageConfirmCancel": "Annuler",
+      "targetLanguageErrorToast": "Impossible d'enregistrer la langue cible.",
       "targetLevel": "Niveau visé",
       "dailyGoal": "Objectif quotidien (min)",
       "saveButton": "Enregistrer le profil",

@@ -19,7 +19,20 @@
     "edit": "Edit",
     "yes": "Yes",
     "no": "No",
-    "language": "Language"
+    "language": "Language",
+    "comingSoon": "Coming soon",
+    "comingSoonForEnglish": "Coming soon for English",
+    "askAssistantInstead": "For now, ask the assistant about this."
+  },
+
+  "languages": {
+    "fr": "French",
+    "en": "English"
+  },
+
+  "layout": {
+    "learningLanguageAria": "Currently learning {{language}}",
+    "learningLanguageTooltip": "Learning {{language}}. Change in Settings."
   },
 
   "nav": {
@@ -64,6 +77,13 @@
       "username": "Username",
       "email": "Email",
       "nativeLanguage": "Native language",
+      "targetLanguage": "Target language",
+      "targetLanguageDescription": "The language you're learning. Different from the app's interface language.",
+      "switchLanguageConfirmTitle": "Switch to {{language}}?",
+      "switchLanguageConfirmBody": "Your {{currentLanguage}} progress is preserved. Most {{language}} features show 'coming soon' for now.",
+      "switchLanguageConfirmYes": "Switch",
+      "switchLanguageConfirmCancel": "Cancel",
+      "targetLanguageErrorToast": "Could not save target language.",
       "targetLevel": "Target level",
       "dailyGoal": "Daily goal (min)",
       "saveButton": "Save profile",

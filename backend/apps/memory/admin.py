@@ -16,6 +16,10 @@ class MemoryNoteAdmin(admin.ModelAdmin):
 class MemoryExtractionLogAdmin(admin.ModelAdmin):
     list_display = ("id", "user", "extracted", "note", "message", "created_at")
     list_filter = ("extracted",)
-    search_fields = ("user__username", "raw_output")
+    # raw_output is an unindexed TextField that can grow large; admin
+    # search would force a full-table scan. Restricted to user__username
+    # so the admin index stays fast; raw_output still shows in the detail
+    # view for debugging.
+    search_fields = ("user__username",)
     autocomplete_fields = ("user", "note", "message")
     readonly_fields = ("created_at",)

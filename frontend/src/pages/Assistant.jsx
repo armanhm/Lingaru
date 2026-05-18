@@ -664,7 +664,7 @@ function ChatBubble({ msg }) {
 
         <div className={`relative group/bubble rounded-2xl px-4 py-3 text-[14px] leading-relaxed shadow-sm ${
           isUser
-            ? "bg-gradient-to-br from-surface-700 to-surface-800 text-white rounded-br-sm"
+            ? "bg-gradient-to-br from-purple-800 to-surface-700 text-white rounded-br-sm"
             : "bg-white dark:bg-surface-900/80 border border-surface-100 dark:border-surface-800 text-surface-900 dark:text-surface-50 rounded-bl-sm"
         }`}>
           {isUser ? (

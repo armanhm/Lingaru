@@ -129,6 +129,13 @@
       "sourceUser": "Ajoutée manuellement",
       "sourceAssistant": "Détectée depuis le chat",
       "empty": "Aucune note pour l'instant. Ajoutez-en une ci-dessus, ou demandez à l'assistant de retenir quelque chose.",
+      "relativeTime": {
+        "justNow": "à l'instant",
+        "minutesAgo": "il y a {{count}} min",
+        "hoursAgo": "il y a {{count}} h",
+        "daysAgo": "il y a {{count}} j"
+      },
+      "placeholderExample": "ex : Je confonds toujours depuis et pendant",
       "categories": {
         "goal": "Objectifs",
         "preference": "Préférences",

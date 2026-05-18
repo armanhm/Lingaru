@@ -258,10 +258,10 @@ function MemoryPanel() {
 
   const formatRelative = (iso) => {
     const seconds = Math.floor((Date.now() - new Date(iso).getTime()) / 1000);
-    if (seconds < 60) return "just now";
-    if (seconds < 3600) return `${Math.floor(seconds / 60)}m ago`;
-    if (seconds < 86400) return `${Math.floor(seconds / 3600)}h ago`;
-    return `${Math.floor(seconds / 86400)}d ago`;
+    if (seconds < 60) return t("settings.memory.relativeTime.justNow");
+    if (seconds < 3600) return t("settings.memory.relativeTime.minutesAgo", { count: Math.floor(seconds / 60) });
+    if (seconds < 86400) return t("settings.memory.relativeTime.hoursAgo", { count: Math.floor(seconds / 3600) });
+    return t("settings.memory.relativeTime.daysAgo", { count: Math.floor(seconds / 86400) });
   };
 
   const CATEGORIES = ["goal", "preference", "background", "weakness", "other"];
@@ -305,7 +305,7 @@ function MemoryPanel() {
             onChange={(e) => setDraft({ ...draft, content: e.target.value })}
             maxLength={500}
             rows={3}
-            placeholder="e.g. Always confuse depuis and pendant"
+            placeholder={t("settings.memory.placeholderExample")}
             className="w-full rounded-md border border-surface-200 dark:border-surface-700 bg-white dark:bg-surface-950 px-3 py-2 text-sm"
           />
           <div className="flex justify-end gap-2">

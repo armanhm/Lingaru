@@ -129,6 +129,13 @@
       "sourceUser": "Added manually",
       "sourceAssistant": "Detected from chat",
       "empty": "No notes yet. Add one above, or ask the assistant to remember something.",
+      "relativeTime": {
+        "justNow": "just now",
+        "minutesAgo": "{{count}}m ago",
+        "hoursAgo": "{{count}}h ago",
+        "daysAgo": "{{count}}d ago"
+      },
+      "placeholderExample": "e.g. Always confuse depuis and pendant",
       "categories": {
         "goal": "Goals",
         "preference": "Preferences",

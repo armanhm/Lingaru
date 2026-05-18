@@ -37,6 +37,7 @@ INSTALLED_APPS = [
     "apps.exam_prep",
     "apps.grammar",
     "apps.agents",
+    "apps.memory",
 ]
 
 MIDDLEWARE = [

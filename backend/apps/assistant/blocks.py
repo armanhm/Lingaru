@@ -247,11 +247,18 @@ def _validate_action(b: dict) -> dict | None:
 # layout (no full-page embeds).
 ALLOWED_FEATURE_WIDGETS = {
     # Bespoke (news has its own shape, minigame is a generic preview)
-    "news", "minigame",
+    "news",
+    "minigame",
     # Inline practice widgets (1 round, mutate-in-place inside the chat)
-    "dictation", "flashcard", "conjugation",
-    "word_scramble", "gender_snap", "missing_letter",
-    "speed_round", "match_pairs", "listening_challenge",
+    "dictation",
+    "flashcard",
+    "conjugation",
+    "word_scramble",
+    "gender_snap",
+    "missing_letter",
+    "speed_round",
+    "match_pairs",
+    "listening_challenge",
     "grammar_topic",
 }
 

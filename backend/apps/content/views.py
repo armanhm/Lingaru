@@ -13,15 +13,21 @@ from .serializers import (
 
 
 class TopicListView(generics.ListAPIView):
-    queryset = Topic.objects.all()
     serializer_class = TopicListSerializer
     permission_classes = (permissions.IsAuthenticated,)
 
+    def get_queryset(self):
+        return Topic.objects.filter(language=self.request.user.target_language).order_by("order")
+
 
 class TopicDetailView(generics.RetrieveAPIView):
-    queryset = Topic.objects.prefetch_related("lessons")
     serializer_class = TopicDetailSerializer
     permission_classes = (permissions.IsAuthenticated,)
+
+    def get_queryset(self):
+        return Topic.objects.filter(language=self.request.user.target_language).prefetch_related(
+            "lessons"
+        )
 
 
 class RandomVocabularyView(APIView):
@@ -31,7 +37,7 @@ class RandomVocabularyView(APIView):
         count = min(int(request.query_params.get("count", 1)), 20)
         single_word = request.query_params.get("single_word", "").lower() == "true"
         gendered = request.query_params.get("gendered", "").lower() == "true"
-        qs = Vocabulary.objects.all()
+        qs = Vocabulary.objects.filter(language=request.user.target_language)
         if single_word:
             qs = qs.exclude(french__contains=" ").filter(french__regex=r"^.{3,}$")
         if gendered:
@@ -46,16 +52,22 @@ class RandomVocabularyView(APIView):
 
 
 class LessonDetailView(generics.RetrieveAPIView):
-    queryset = Lesson.objects.select_related("topic", "video").prefetch_related(
-        "vocabulary",
-        "grammar_rules",
-        "reading_texts",
-        "questions",
-        "video__vocabulary",
-        "video__expressions",
-    )
     serializer_class = LessonDetailSerializer
     permission_classes = (permissions.IsAuthenticated,)
+
+    def get_queryset(self):
+        return (
+            Lesson.objects.filter(language=self.request.user.target_language)
+            .select_related("topic", "video")
+            .prefetch_related(
+                "vocabulary",
+                "grammar_rules",
+                "reading_texts",
+                "questions",
+                "video__vocabulary",
+                "video__expressions",
+            )
+        )
 
 
 class LessonVideoView(APIView):

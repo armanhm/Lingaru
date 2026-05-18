@@ -162,7 +162,11 @@ GROQ_MODEL = config("GROQ_MODEL", default="llama-3.3-70b-versatile")
 # /api/memory/ REST endpoints still work as a personal note bank, but
 # ChatView does not inject learner context or auto-extract notes. Set
 # to "true"/"1" in production to enable.
-LINGARU_MEMORY_ENABLED = os.environ.get("LINGARU_MEMORY_ENABLED", "").lower() in ("1", "true", "yes")
+LINGARU_MEMORY_ENABLED = os.environ.get("LINGARU_MEMORY_ENABLED", "").lower() in (
+    "1",
+    "true",
+    "yes",
+)
 
 # Celery Beat schedule
 from celery.schedules import crontab  # noqa: E402

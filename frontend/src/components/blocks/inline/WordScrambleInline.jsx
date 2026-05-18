@@ -1,5 +1,5 @@
 import { useState, useEffect, useCallback } from "react";
-import { getRandomVocabulary } from "../../../api/content";
+import { getRandomVocabulary, normalizeVocabResponse } from "../../../api/content";
 import InlineRoundWidget from "../InlineRoundWidget";
 
 /**
@@ -39,7 +39,7 @@ export default function WordScrambleInline() {
     setSlots([]);
     try {
       const { data } = await getRandomVocabulary(1, { singleWord: true });
-      const vocab = Array.isArray(data) ? data[0] : data?.results?.[0] || null;
+      const vocab = normalizeVocabResponse(data)[0] || null;
       if (!vocab || !vocab.french) {
         setWord(null);
       } else {
@@ -95,7 +95,10 @@ export default function WordScrambleInline() {
       emoji="🔤"
       loading={loading}
       empty={!word && !loading}
-      emptyMessage="Pas de vocabulaire à mélanger pour l'instant."
+      emptyMessage="Pas de mot à mélanger pour le moment."
+      emptyHint="Complète une leçon ou ajoute du vocabulaire pour débloquer ce jeu."
+      emptyCtaTo="/topics"
+      emptyCtaLabel="Voir les sujets →"
       score={phase === "correct" || phase === "wrong" ? { correct: phase === "correct" ? 1 : 0, total: 1 } : null}
       onAgain={phase === "correct" || phase === "wrong" ? loadRound : null}
       fullSessionTo="/mini-games/word-scramble"

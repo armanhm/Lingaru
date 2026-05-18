@@ -20,6 +20,10 @@ export default function InlineRoundWidget({
   loading = false,
   empty = false,
   emptyMessage = "Aucune donnée disponible pour l'instant.",
+  emptyEmoji = "🌱",
+  emptyHint,                     // optional second-line nudge (e.g. "Try Topics")
+  emptyCtaTo,                    // optional deep-link for the empty state CTA
+  emptyCtaLabel,
   score = null,                  // { correct, total } when showing a result
   fullSessionTo,                 // deep-link route (e.g. "/mini-games/word-scramble")
   fullSessionLabel = "Ouvrir session complète →",
@@ -59,7 +63,25 @@ export default function InlineRoundWidget({
             Chargement…
           </div>
         ) : empty ? (
-          <p className="text-[13px] text-surface-500 dark:text-surface-400">{emptyMessage}</p>
+          <div className="py-3 flex flex-col items-center text-center gap-2">
+            <span className="text-2xl" aria-hidden>{emptyEmoji}</span>
+            <p className="text-[13px] text-surface-700 dark:text-surface-200 font-medium">
+              {emptyMessage}
+            </p>
+            {emptyHint && (
+              <p className="text-[12px] text-surface-500 dark:text-surface-400 max-w-xs">
+                {emptyHint}
+              </p>
+            )}
+            {emptyCtaTo && emptyCtaLabel && (
+              <Link
+                to={emptyCtaTo}
+                className="mt-1 inline-flex items-center gap-1 text-[12px] font-bold mode-accent-text hover:underline focus-ring rounded px-2 py-1"
+              >
+                {emptyCtaLabel}
+              </Link>
+            )}
+          </div>
         ) : (
           children
         )}

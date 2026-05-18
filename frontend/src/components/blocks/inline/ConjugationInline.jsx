@@ -76,7 +76,11 @@ export default function ConjugationInline() {
       emoji="📝"
       loading={loading}
       empty={(!verbs.length || !tenses.length) && !loading}
-      emptyMessage={error || "Pas de verbes disponibles pour la conjugaison."}
+      emptyMessage={error || "Pas de verbe à conjuguer pour le moment."}
+      emptyEmoji={error ? "⚠️" : "📝"}
+      emptyHint={error ? undefined : "Les verbes seront ajoutés au fur et à mesure de tes leçons."}
+      emptyCtaTo={error ? undefined : "/practice/conjugation"}
+      emptyCtaLabel={error ? undefined : "Aller à Conjugaison →"}
       score={feedback ? { correct: feedback.is_correct ? 1 : 0, total: 1 } : null}
       onAgain={feedback ? newRound : null}
       fullSessionTo="/practice/conjugation"

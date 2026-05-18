@@ -114,9 +114,21 @@ function NewsWidget({ config, title }) {
           Chargement…
         </p>
       ) : !article ? (
-        <p className="text-[13px] text-surface-500 dark:text-surface-400">
-          Aucune actualité pour l'instant.
-        </p>
+        <div className="py-3 flex flex-col items-center text-center gap-2">
+          <span className="text-2xl" aria-hidden>📰</span>
+          <p className="text-[13px] text-surface-700 dark:text-surface-200 font-medium">
+            Pas d&apos;actualité du jour pour le moment.
+          </p>
+          <p className="text-[12px] text-surface-500 dark:text-surface-400 max-w-xs">
+            De nouveaux articles sont publiés régulièrement. Reviens dans la journée.
+          </p>
+          <Link
+            to="/news"
+            className="mt-1 inline-flex items-center gap-1 text-[12px] font-bold mode-accent-text hover:underline focus-ring rounded px-2 py-1"
+          >
+            Voir toutes les news →
+          </Link>
+        </div>
       ) : (
         <Link
           to={`/news/${article.id}`}

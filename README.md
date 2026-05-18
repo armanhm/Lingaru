@@ -29,6 +29,7 @@ A comprehensive French language learning application targeting B1 to B2 progress
 | 19 - Agents | Admin-editable specialised assistants (slug, system prompt, mode, suggested questions). `/agents` gallery + dedicated run pages, plus `@-mention` routing from the main chat composer. |
 | 20 - Agentic Mode | Inline practice widgets in chat: the assistant emits `action` / `feature_widget` blocks (quiz, conjugate, dictionary lookup, grammar drill, mini-game, news, SRS) that mutate-in-place inside the chat bubble. |
 | 21 - Observability | Sentry (backend + frontend), health probe (`/api/health/`), CI (Ruff + pytest + ESLint + Playwright + Lighthouse + Trivy + coverage), auto-deploy to Hetzner with migration rollback. |
+| 22 - Multi-language | English alongside French. Per-user `target_language`; admin-editable EN agent prompts; per-language LLM routing; flag indicator next to logo. v2.0.0. |
 
 ## Tech Stack
 
@@ -150,6 +151,8 @@ Lingaru/
 ```
 
 ## API Endpoints
+
+> **v2.0.0 note:** all content-listing endpoints filter by the authenticated user's `target_language`. Detail / slug endpoints return 404 on cross-language access; list endpoints return 200 with an empty payload.
 
 ### Users (`/api/users/`)
 

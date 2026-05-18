@@ -1,0 +1,31 @@
+import pytest
+from django.contrib.auth import get_user_model
+
+from apps.memory.models import MemoryNote
+
+User = get_user_model()
+
+
+@pytest.mark.django_db
+def test_memory_note_defaults():
+    user = User.objects.create_user(username="u1", email="u1@example.com", password="x")
+    note = MemoryNote.objects.create(user=user, content="Prepping for TCF on June 15")
+
+    assert note.category == "other"
+    assert note.source == "user"
+    assert note.is_active is True
+    assert note.created_at is not None
+    assert note.updated_at is not None
+
+
+@pytest.mark.django_db
+def test_memory_note_ordering_by_most_recent_update():
+    user = User.objects.create_user(username="u2", email="u2@example.com", password="x")
+    first = MemoryNote.objects.create(user=user, content="first")
+    second = MemoryNote.objects.create(user=user, content="second")
+    first.content = "first edited"
+    first.save()
+
+    notes = list(MemoryNote.objects.filter(user=user))
+    assert notes[0].pk == first.pk
+    assert notes[1].pk == second.pk

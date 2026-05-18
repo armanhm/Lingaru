@@ -533,3 +533,358 @@ class TestBlocksWrapperKey:
         prose, blocks = extract_blocks(raw)
         assert prose == "Hi."
         assert len(blocks) == 1
+
+
+class TestSingleBlockObject:
+    """LLMs (notably gemini-flash on @-mention agents) sometimes emit a
+    SINGLE block as a bare object inside the fence instead of wrapping it
+    in a list. Regression coverage for the @grammar imparfait quiz bug
+    where this caused the JSON to render as a code block in the UI."""
+
+    def test_unrelated_fenced_json_dict_not_adopted(self):
+        # Guard: an arbitrary JSON dict without a known `type` should NOT
+        # be wrapped into a one-element list. The fence stays in the
+        # prose, blocks comes back empty. Without this guard, any random
+        # ```blocks {...} ``` payload would silently be eaten.
+        raw = (
+            "Here is some JSON.\n```blocks\n"
+            + json.dumps({"foo": "bar", "baz": 42})
+            + "\n```\nMore text."
+        )
+        prose, blocks = extract_blocks(raw)
+        assert blocks == []
+        # Fence kept in the prose so the developer sees what came through.
+        assert "```blocks" in prose
+
+    def test_single_block_object_treated_as_one_element_list(self):
+        raw = (
+            "Here's a quiz.\n```blocks\n"
+            + json.dumps(
+                {
+                    "type": "quiz",
+                    "questions": [
+                        {
+                            "kind": "mcq",
+                            "prompt": "Choisis la bonne forme.",
+                            "options": ["a", "b", "c"],
+                            "correct": 1,
+                        }
+                    ],
+                }
+            )
+            + "\n```"
+        )
+        prose, blocks = extract_blocks(raw)
+        assert prose == "Here's a quiz."
+        assert len(blocks) == 1
+        assert blocks[0]["type"] == "quiz"
+
+    def test_single_block_object_via_fallback_json_fence(self):
+        # Same shape but the model used ```json instead of ```blocks.
+        raw = (
+            "Here's a vocab card.\n```json\n"
+            + json.dumps({"type": "vocab_card", "french": "chat", "english": "cat"})
+            + "\n```"
+        )
+        prose, blocks = extract_blocks(raw)
+        assert prose == "Here's a vocab card."
+        assert len(blocks) == 1
+        assert blocks[0]["type"] == "vocab_card"
+
+
+class TestQuizAnswerCorrectAlias:
+    """Loosen quiz validation: when the LLM writes `answer` instead of
+    `correct`, accept it. For MCQ, allow `answer` to be either the index
+    (int) or the option string (we resolve it to the index). For
+    true_false, allow `answer` as a bool."""
+
+    def test_mcq_with_answer_as_string_option(self):
+        raw = _wrap(
+            [
+                {
+                    "type": "quiz",
+                    "questions": [
+                        {
+                            "kind": "mcq",
+                            "prompt": "Forme pour 'Nous' de 'Manger' à l'imparfait.",
+                            "options": ["Mangions", "Mangaisons", "Mangeons"],
+                            "answer": "Mangions",
+                        }
+                    ],
+                }
+            ]
+        )
+        _, blocks = extract_blocks(raw)
+        assert len(blocks) == 1
+        assert blocks[0]["questions"][0]["correct"] == 0
+
+    def test_mcq_with_answer_as_int_index(self):
+        raw = _wrap(
+            [
+                {
+                    "type": "quiz",
+                    "questions": [
+                        {
+                            "kind": "mcq",
+                            "prompt": "p",
+                            "options": ["a", "b", "c"],
+                            "answer": 2,
+                        }
+                    ],
+                }
+            ]
+        )
+        _, blocks = extract_blocks(raw)
+        assert len(blocks) == 1
+        assert blocks[0]["questions"][0]["correct"] == 2
+
+    def test_mcq_answer_string_not_in_options_rejected(self):
+        # If the model emits a string that isn't one of the options,
+        # we cannot recover an index; drop the question.
+        raw = _wrap(
+            [
+                {
+                    "type": "quiz",
+                    "questions": [
+                        {
+                            "kind": "mcq",
+                            "prompt": "p",
+                            "options": ["a", "b"],
+                            "answer": "z",
+                        }
+                    ],
+                }
+            ]
+        )
+        _, blocks = extract_blocks(raw)
+        assert blocks == []
+
+    def test_true_false_with_answer_alias(self):
+        raw = _wrap(
+            [
+                {
+                    "type": "quiz",
+                    "questions": [
+                        {
+                            "kind": "true_false",
+                            "prompt": "L'imparfait sert aux actions précises.",
+                            "answer": False,
+                        }
+                    ],
+                }
+            ]
+        )
+        _, blocks = extract_blocks(raw)
+        assert len(blocks) == 1
+        assert blocks[0]["questions"][0]["correct"] is False
+
+    def test_mcq_answer_int_out_of_range_rejected(self):
+        # Defensive: an int answer outside the options range should drop
+        # the question, not silently leak a bad index to the renderer.
+        raw = _wrap(
+            [
+                {
+                    "type": "quiz",
+                    "questions": [
+                        {
+                            "kind": "mcq",
+                            "prompt": "p",
+                            "options": ["a", "b", "c"],
+                            "answer": 7,
+                        }
+                    ],
+                }
+            ]
+        )
+        _, blocks = extract_blocks(raw)
+        assert blocks == []
+
+    def test_multi_with_answer_as_string_options(self):
+        raw = _wrap(
+            [
+                {
+                    "type": "quiz",
+                    "questions": [
+                        {
+                            "kind": "multi",
+                            "prompt": "Quels sont masculins ?",
+                            "options": ["le chat", "la table", "le chien", "la voiture"],
+                            "answer": ["le chat", "le chien"],
+                        }
+                    ],
+                }
+            ]
+        )
+        _, blocks = extract_blocks(raw)
+        assert len(blocks) == 1
+        # Sorted + deduped indices of "le chat" (0) and "le chien" (2).
+        assert blocks[0]["questions"][0]["correct"] == [0, 2]
+
+    def test_multi_with_answer_as_int_indices(self):
+        raw = _wrap(
+            [
+                {
+                    "type": "quiz",
+                    "questions": [
+                        {
+                            "kind": "multi",
+                            "prompt": "p",
+                            "options": ["a", "b", "c", "d"],
+                            "answer": [3, 1, 1],  # dupes get deduped, then sorted
+                        }
+                    ],
+                }
+            ]
+        )
+        _, blocks = extract_blocks(raw)
+        assert len(blocks) == 1
+        assert blocks[0]["questions"][0]["correct"] == [1, 3]
+
+    def test_correct_field_still_wins_when_both_present(self):
+        # If a future LLM emits BOTH `correct` and `answer`, the explicit
+        # `correct` should take precedence.
+        raw = _wrap(
+            [
+                {
+                    "type": "quiz",
+                    "questions": [
+                        {
+                            "kind": "mcq",
+                            "prompt": "p",
+                            "options": ["a", "b", "c"],
+                            "correct": 0,
+                            "answer": "c",
+                        }
+                    ],
+                }
+            ]
+        )
+        _, blocks = extract_blocks(raw)
+        assert blocks[0]["questions"][0]["correct"] == 0
+
+
+class TestMultipleFences:
+    """Compound replies sometimes contain multiple separate ```blocks
+    fences -- "here's news" + news widget, then "and play this" +
+    word_scramble widget. The parser must aggregate them all, not just
+    the first one (which left the second fence in the prose as an ugly
+    code block in production -- see message #86 in the dev DB)."""
+
+    def test_two_blocks_fences_both_extracted(self):
+        raw = (
+            "Voici les actualités du jour :\n"
+            '```blocks\n[{"type": "feature_widget", "widget": "news"}]\n```\n\n'
+            "Et voici ton exercice de mots mélangés :\n"
+            '```blocks\n[{"type": "feature_widget", "widget": "word_scramble"}]\n```'
+        )
+        prose, blocks = extract_blocks(raw)
+        assert "```" not in prose
+        assert len(blocks) == 2
+        widgets = sorted(b["widget"] for b in blocks)
+        assert widgets == ["news", "word_scramble"]
+
+    def test_three_fences_with_mixed_types(self):
+        raw = (
+            "Salut !\n"
+            '```blocks\n[{"type":"audio","text":"Bonjour"}]\n```\n'
+            "Voici un mot :\n"
+            '```blocks\n[{"type":"vocab_card","french":"chat","english":"cat"}]\n```\n'
+            "Et un widget :\n"
+            '```blocks\n[{"type":"feature_widget","widget":"news"}]\n```'
+        )
+        prose, blocks = extract_blocks(raw)
+        assert "```" not in prose
+        assert len(blocks) == 3
+        types = sorted(b["type"] for b in blocks)
+        assert types == ["audio", "feature_widget", "vocab_card"]
+
+    def test_two_fences_one_invalid_other_still_extracts(self):
+        # First fence has unknown type (dropped); second fence is valid.
+        raw = (
+            "First:\n"
+            '```blocks\n[{"type":"unknown_type","foo":"bar"}]\n```\n'
+            "Second:\n"
+            '```blocks\n[{"type":"vocab_card","french":"chat","english":"cat"}]\n```'
+        )
+        prose, blocks = extract_blocks(raw)
+        # Both fences stripped (we found valid JSON in both, even if one
+        # had no valid blocks after validation).
+        assert "```" not in prose
+        assert len(blocks) == 1
+        assert blocks[0]["type"] == "vocab_card"
+
+    def test_two_fences_one_malformed_json_other_works(self):
+        raw = (
+            "First:\n"
+            "```blocks\n{not valid json at all\n```\n"
+            "Second:\n"
+            '```blocks\n[{"type":"vocab_card","french":"chat","english":"cat"}]\n```'
+        )
+        prose, blocks = extract_blocks(raw)
+        # The valid second fence still gets extracted.
+        assert len(blocks) == 1
+        assert blocks[0]["type"] == "vocab_card"
+
+    def test_news_then_word_scramble_from_message_86(self):
+        """Verbatim payload from dev DB message #86 -- the bug screenshot:
+        'show me some news' triggered news + word_scramble in two fences,
+        but only news got extracted and word_scramble rendered as a code
+        block in the chat bubble."""
+        raw = (
+            "Voici les actualités du jour :\n"
+            "\n"
+            '```blocks\n[{"type": "feature_widget", "widget": "news"}]\n```\n'
+            "\n"
+            "Et voici ton exercice de mots mélangés :\n"
+            "\n"
+            '```blocks\n[{"type": "feature_widget", "widget": "word_scramble"}]\n```'
+        )
+        prose, blocks = extract_blocks(raw)
+        assert "```" not in prose
+        assert "Voici les actualités du jour" in prose
+        assert "Et voici ton exercice" in prose
+        assert len(blocks) == 2
+        widgets = sorted(b["widget"] for b in blocks)
+        assert widgets == ["news", "word_scramble"]
+
+
+class TestSingleQuizFromImparfaitBug:
+    """End-to-end regression for the exact LLM output from production:
+    a single quiz block (not wrapped in a list) with `answer` (not
+    `correct`) on questions. Both fixes have to compose."""
+
+    def test_imparfait_quiz_payload_extracts_cleanly(self):
+        # Verbatim shape from Message #78 in the dev database.
+        raw = (
+            "L'imparfait est le temps du récit.\n"
+            "```blocks\n"
+            + json.dumps(
+                {
+                    "type": "quiz",
+                    "questions": [
+                        {
+                            "kind": "mcq",
+                            "prompt": "Choisis la bonne forme pour 'Nous' au verbe 'Manger' à l'imparfait.",
+                            "options": ["Mangions", "Mangaisons", "Mangeons"],
+                            "answer": "Mangions",
+                        },
+                        {
+                            "kind": "true_false",
+                            "prompt": "L'imparfait est utilisé pour décrire des actions précises et terminées.",
+                            "answer": False,
+                        },
+                    ],
+                }
+            )
+            + "\n```"
+        )
+        prose, blocks = extract_blocks(raw)
+        assert "L'imparfait" in prose
+        assert "```" not in prose  # fence stripped
+        assert len(blocks) == 1
+        quiz = blocks[0]
+        assert quiz["type"] == "quiz"
+        assert len(quiz["questions"]) == 2
+        mcq, tf = quiz["questions"]
+        assert mcq["correct"] == 0
+        assert tf["correct"] is False

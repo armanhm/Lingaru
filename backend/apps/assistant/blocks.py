@@ -131,35 +131,62 @@ def _validate_quiz_question(q: dict) -> dict | None:
     if _is_str(q.get("explanation")):
         out["explanation"] = q["explanation"].strip()[:400]
 
+    # Loose alias: LLMs often say `answer` where our schema says `correct`.
+    # Accept either; explicit `correct` always wins so a future model that
+    # picks up the canonical name doesn't get downgraded.
+    raw_correct = q.get("correct") if "correct" in q else q.get("answer")
+
     if kind == "mcq":
         opts = q.get("options")
-        correct = q.get("correct")
         if not (_is_list_of_str(opts) and 2 <= len(opts) <= 6):
             return None
-        if not (isinstance(correct, int) and 0 <= correct < len(opts)):
+        # Strip options once and reuse for both resolution and output.
+        stripped_opts = [s.strip() for s in opts]
+        # `answer` may be either an int index or the option string itself
+        # (e.g. "Mangions" instead of 0). Resolve strings to indices.
+        if isinstance(raw_correct, str):
+            try:
+                correct = stripped_opts.index(raw_correct.strip())
+            except ValueError:
+                return None
+        elif isinstance(raw_correct, int) and not isinstance(raw_correct, bool):
+            correct = raw_correct
+        else:
             return None
-        out["options"] = [s.strip() for s in opts]
+        if not (0 <= correct < len(stripped_opts)):
+            return None
+        out["options"] = stripped_opts
         out["correct"] = correct
 
     elif kind == "multi":
         opts = q.get("options")
-        correct = q.get("correct")
         if not (_is_list_of_str(opts) and 2 <= len(opts) <= 6):
             return None
-        if not (
-            isinstance(correct, list)
-            and all(isinstance(i, int) and 0 <= i < len(opts) for i in correct)
-            and correct
-        ):
+        # Strip options once and reuse for both resolution and output.
+        stripped_opts = [s.strip() for s in opts]
+        # `answer` may be a list of strings (option labels) or a list of
+        # int indices. Resolve strings to their indices.
+        if not (isinstance(raw_correct, list) and raw_correct):
             return None
-        out["options"] = [s.strip() for s in opts]
+        if all(isinstance(x, str) for x in raw_correct):
+            try:
+                correct = [stripped_opts.index(s.strip()) for s in raw_correct]
+            except ValueError:
+                return None
+        elif all(
+            isinstance(i, int) and not isinstance(i, bool) and 0 <= i < len(stripped_opts)
+            for i in raw_correct
+        ):
+            correct = list(raw_correct)
+        else:
+            return None
+        out["options"] = stripped_opts
         out["correct"] = sorted(set(correct))
 
     elif kind == "true_false":
-        correct = q.get("correct")
-        if not isinstance(correct, bool):
+        if not isinstance(raw_correct, bool):
             return None
-        out["correct"] = correct
+        out["correct"] = raw_correct
 
     elif kind == "matching":
         pairs = q.get("pairs")
@@ -311,13 +338,23 @@ BLOCK_VALIDATORS = {
 def _candidates_from_payload(data) -> list | None:
     """Coerce a parsed JSON value into a list of block-candidate dicts.
 
-    Accepts either {"blocks": [...]} or a bare [...]. Returns None when
-    the shape is something else (e.g. an unrelated JSON object the model
-    decided to fence)."""
+    Accepts:
+      - {"blocks": [...]}            -- explicit wrapper key
+      - [...]                        -- bare array of blocks
+      - {"type": "...", ...}         -- single block object; models often
+                                        emit one block this way instead
+                                        of as a one-element list
+
+    Returns None when the shape is something else (e.g. an unrelated
+    JSON object the model decided to fence)."""
     if isinstance(data, dict) and isinstance(data.get("blocks"), list):
         return data["blocks"]
     if isinstance(data, list):
         return data
+    # Single bare block object: wrap it. Recognise by the presence of a
+    # known `type` so unrelated JSON dicts don't get adopted.
+    if isinstance(data, dict) and data.get("type") in BLOCK_VALIDATORS:
+        return [data]
     return None
 
 
@@ -407,31 +444,53 @@ def extract_blocks(raw_text: str) -> tuple[str, list[dict]]:
     if not raw_text:
         return "", []
 
-    # ── Strategy 1: explicit ```blocks fence ────────────────────
-    match = _FENCE_RE.search(raw_text)
-    if match:
-        payload = match.group("json").strip()
-        prose = (raw_text[: match.start()] + raw_text[match.end() :]).strip()
-        try:
-            data = json.loads(payload)
-        except json.JSONDecodeError as exc:
-            # Strict parse failed, try to salvage individual objects so
-            # one malformed entry doesn't kill the whole reply.
-            salvaged = _salvage_objects(payload)
-            if salvaged:
-                logger.info(
-                    "blocks fence: strict parse failed (%s); salvaged %d objects",
-                    exc,
-                    len(salvaged),
-                )
-                return prose, _validate_candidates(salvaged)
-            logger.warning("blocks fence had invalid JSON: %s", exc)
+    # ── Strategy 1: explicit ```blocks fence (one or many) ──────
+    # Compound replies sometimes contain multiple separate ```blocks
+    # fences -- e.g. "here's the news" + news widget, then "and play this"
+    # + word_scramble widget. We aggregate all of them and strip every
+    # fenced span from the prose so the chat bubble shows just the text.
+    fence_matches = list(_FENCE_RE.finditer(raw_text))
+    if fence_matches:
+        all_candidates: list[dict] = []
+        any_recovered = False
+        for fm in fence_matches:
+            payload = fm.group("json").strip()
+            try:
+                data = json.loads(payload)
+            except json.JSONDecodeError as exc:
+                # Strict parse failed; salvage individual objects so one
+                # malformed entry doesn't kill the whole batch.
+                salvaged = _salvage_objects(payload)
+                if salvaged:
+                    logger.info(
+                        "blocks fence: strict parse failed (%s); salvaged %d objects",
+                        exc,
+                        len(salvaged),
+                    )
+                    all_candidates.extend(salvaged)
+                    any_recovered = True
+                else:
+                    logger.warning("blocks fence had invalid JSON: %s", exc)
+                continue
+            candidates = _candidates_from_payload(data)
+            if candidates is not None:
+                all_candidates.extend(candidates)
+                any_recovered = True
+
+        # If we couldn't salvage anything from any fence, leave the text
+        # untouched so the user at least sees what the model produced.
+        if not any_recovered:
             return raw_text, []
 
-        candidates = _candidates_from_payload(data)
-        if candidates is None:
-            return raw_text, []
-        return prose, _validate_candidates(candidates)
+        # Strip every fenced span from the prose.
+        prose_parts: list[str] = []
+        cursor = 0
+        for fm in fence_matches:
+            prose_parts.append(raw_text[cursor : fm.start()])
+            cursor = fm.end()
+        prose_parts.append(raw_text[cursor:])
+        prose = "".join(prose_parts).strip()
+        return prose, _validate_candidates(all_candidates)
 
     # ── Strategy 2: generic ```json fallback ────────────────────
     # Walk every fenced JSON-ish block in order; accept the first one

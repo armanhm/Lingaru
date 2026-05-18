@@ -140,10 +140,11 @@ def _validate_quiz_question(q: dict) -> dict | None:
         opts = q.get("options")
         if not (_is_list_of_str(opts) and 2 <= len(opts) <= 6):
             return None
+        # Strip options once and reuse for both resolution and output.
+        stripped_opts = [s.strip() for s in opts]
         # `answer` may be either an int index or the option string itself
         # (e.g. "Mangions" instead of 0). Resolve strings to indices.
         if isinstance(raw_correct, str):
-            stripped_opts = [s.strip() for s in opts]
             try:
                 correct = stripped_opts.index(raw_correct.strip())
             except ValueError:
@@ -152,38 +153,34 @@ def _validate_quiz_question(q: dict) -> dict | None:
             correct = raw_correct
         else:
             return None
-        if not (0 <= correct < len(opts)):
+        if not (0 <= correct < len(stripped_opts)):
             return None
-        out["options"] = [s.strip() for s in opts]
+        out["options"] = stripped_opts
         out["correct"] = correct
 
     elif kind == "multi":
         opts = q.get("options")
         if not (_is_list_of_str(opts) and 2 <= len(opts) <= 6):
             return None
-        # `answer` may be a list of strings; resolve each to an index.
-        if (
-            isinstance(raw_correct, list)
-            and raw_correct
-            and all(isinstance(x, str) for x in raw_correct)
-        ):
-            stripped_opts = [s.strip() for s in opts]
+        # Strip options once and reuse for both resolution and output.
+        stripped_opts = [s.strip() for s in opts]
+        # `answer` may be a list of strings (option labels) or a list of
+        # int indices. Resolve strings to their indices.
+        if not (isinstance(raw_correct, list) and raw_correct):
+            return None
+        if all(isinstance(x, str) for x in raw_correct):
             try:
                 correct = [stripped_opts.index(s.strip()) for s in raw_correct]
             except ValueError:
                 return None
-        elif (
-            isinstance(raw_correct, list)
-            and all(
-                isinstance(i, int) and not isinstance(i, bool) and 0 <= i < len(opts)
-                for i in raw_correct
-            )
-            and raw_correct
+        elif all(
+            isinstance(i, int) and not isinstance(i, bool) and 0 <= i < len(stripped_opts)
+            for i in raw_correct
         ):
-            correct = raw_correct
+            correct = list(raw_correct)
         else:
             return None
-        out["options"] = [s.strip() for s in opts]
+        out["options"] = stripped_opts
         out["correct"] = sorted(set(correct))
 
     elif kind == "true_false":

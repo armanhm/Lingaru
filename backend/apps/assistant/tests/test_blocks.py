@@ -541,6 +541,21 @@ class TestSingleBlockObject:
     in a list. Regression coverage for the @grammar imparfait quiz bug
     where this caused the JSON to render as a code block in the UI."""
 
+    def test_unrelated_fenced_json_dict_not_adopted(self):
+        # Guard: an arbitrary JSON dict without a known `type` should NOT
+        # be wrapped into a one-element list. The fence stays in the
+        # prose, blocks comes back empty. Without this guard, any random
+        # ```blocks {...} ``` payload would silently be eaten.
+        raw = (
+            "Here is some JSON.\n```blocks\n"
+            + json.dumps({"foo": "bar", "baz": 42})
+            + "\n```\nMore text."
+        )
+        prose, blocks = extract_blocks(raw)
+        assert blocks == []
+        # Fence kept in the prose so the developer sees what came through.
+        assert "```blocks" in prose
+
     def test_single_block_object_treated_as_one_element_list(self):
         raw = (
             "Here's a quiz.\n```blocks\n"
@@ -662,6 +677,68 @@ class TestQuizAnswerCorrectAlias:
         _, blocks = extract_blocks(raw)
         assert len(blocks) == 1
         assert blocks[0]["questions"][0]["correct"] is False
+
+    def test_mcq_answer_int_out_of_range_rejected(self):
+        # Defensive: an int answer outside the options range should drop
+        # the question, not silently leak a bad index to the renderer.
+        raw = _wrap(
+            [
+                {
+                    "type": "quiz",
+                    "questions": [
+                        {
+                            "kind": "mcq",
+                            "prompt": "p",
+                            "options": ["a", "b", "c"],
+                            "answer": 7,
+                        }
+                    ],
+                }
+            ]
+        )
+        _, blocks = extract_blocks(raw)
+        assert blocks == []
+
+    def test_multi_with_answer_as_string_options(self):
+        raw = _wrap(
+            [
+                {
+                    "type": "quiz",
+                    "questions": [
+                        {
+                            "kind": "multi",
+                            "prompt": "Quels sont masculins ?",
+                            "options": ["le chat", "la table", "le chien", "la voiture"],
+                            "answer": ["le chat", "le chien"],
+                        }
+                    ],
+                }
+            ]
+        )
+        _, blocks = extract_blocks(raw)
+        assert len(blocks) == 1
+        # Sorted + deduped indices of "le chat" (0) and "le chien" (2).
+        assert blocks[0]["questions"][0]["correct"] == [0, 2]
+
+    def test_multi_with_answer_as_int_indices(self):
+        raw = _wrap(
+            [
+                {
+                    "type": "quiz",
+                    "questions": [
+                        {
+                            "kind": "multi",
+                            "prompt": "p",
+                            "options": ["a", "b", "c", "d"],
+                            "answer": [3, 1, 1],  # dupes get deduped, then sorted
+                        }
+                    ],
+                }
+            ]
+        )
+        _, blocks = extract_blocks(raw)
+        assert len(blocks) == 1
+        assert blocks[0]["questions"][0]["correct"] == [1, 3]
 
     def test_correct_field_still_wins_when_both_present(self):
         # If a future LLM emits BOTH `correct` and `answer`, the explicit

@@ -1,5 +1,5 @@
 import { useState, useEffect, useCallback } from "react";
-import { getRandomVocabulary } from "../../../api/content";
+import { getRandomVocabulary, normalizeVocabResponse } from "../../../api/content";
 import InlineRoundWidget from "../InlineRoundWidget";
 
 /**
@@ -39,15 +39,7 @@ export default function WordScrambleInline() {
     setSlots([]);
     try {
       const { data } = await getRandomVocabulary(1, { singleWord: true });
-      // The endpoint returns a bare vocab object when count=1, an array
-      // when count>1, and is sometimes wrapped in {results: [...]}.
-      // Cover all three shapes defensively.
-      const vocab =
-        data && data.french
-          ? data
-          : Array.isArray(data)
-            ? data[0]
-            : data?.results?.[0] || null;
+      const vocab = normalizeVocabResponse(data)[0] || null;
       if (!vocab || !vocab.french) {
         setWord(null);
       } else {

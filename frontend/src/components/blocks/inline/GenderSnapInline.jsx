@@ -1,5 +1,5 @@
 import { useState, useEffect, useCallback } from "react";
-import { getRandomVocabulary } from "../../../api/content";
+import { getRandomVocabulary, normalizeVocabResponse } from "../../../api/content";
 import InlineRoundWidget from "../InlineRoundWidget";
 
 /**
@@ -18,12 +18,7 @@ export default function GenderSnapInline() {
     setPicked(null);
     try {
       const { data } = await getRandomVocabulary(1, { singleWord: true, gendered: true });
-      // count=1 returns a bare vocab object; count>1 returns an array;
-      // some endpoints wrap in {results: [...]}. Cover all three.
-      const list = data && data.french
-        ? [data]
-        : Array.isArray(data) ? data : data?.results || [];
-      const vocab = list[0] || null;
+      const vocab = normalizeVocabResponse(data)[0] || null;
       if (!vocab || !vocab.french || !vocab.gender) {
         setWord(null);
       } else {

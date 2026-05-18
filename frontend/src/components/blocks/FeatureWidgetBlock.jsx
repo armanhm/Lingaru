@@ -124,7 +124,7 @@ function NewsWidget({ config, title }) {
           </p>
           <Link
             to="/news"
-            className="mt-1 inline-flex items-center gap-1 text-[12px] font-bold text-primary-600 dark:text-primary-400 hover:underline px-2 py-1"
+            className="mt-1 inline-flex items-center gap-1 text-[12px] font-bold mode-accent-text hover:underline focus-ring rounded px-2 py-1"
           >
             Voir toutes les news →
           </Link>

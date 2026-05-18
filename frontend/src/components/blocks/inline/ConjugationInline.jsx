@@ -21,20 +21,6 @@ export default function ConjugationInline() {
   const { user } = useAuth();
   const { t } = useTranslation();
 
-  // EN target users see "coming soon" -- the API would return 400 anyway.
-  if (user?.target_language === "en") {
-    return (
-      <InlineRoundWidget
-        title="Conjugation"
-        emoji="📝"
-        empty
-        emptyEmoji="🇬🇧"
-        emptyMessage={t("common.comingSoonForEnglish")}
-        emptyHint={t("common.askAssistantInstead")}
-      />
-    );
-  }
-
   const [verbs, setVerbs] = useState([]);
   const [tenses, setTenses] = useState([]);
   const [verb, setVerb] = useState(null);
@@ -71,6 +57,20 @@ export default function ConjugationInline() {
   }, [verbs, tenses]);
 
   useEffect(() => { newRound(); }, [newRound]);
+
+  // EN target users see "coming soon" -- the API would return 400 anyway.
+  if (user?.target_language === "en") {
+    return (
+      <InlineRoundWidget
+        title="Conjugation"
+        emoji="📝"
+        empty
+        emptyEmoji="🇬🇧"
+        emptyMessage={t("common.comingSoonForEnglish")}
+        emptyHint={t("common.askAssistantInstead")}
+      />
+    );
+  }
 
   const submit = async () => {
     if (!answer.trim() || feedback || submitting) return;

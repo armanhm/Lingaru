@@ -13,20 +13,6 @@ export default function GenderSnapInline() {
   const { user } = useAuth();
   const { t } = useTranslation();
 
-  // EN target users see "coming soon" -- gender snap doesn't apply to English.
-  if (user?.target_language === "en") {
-    return (
-      <InlineRoundWidget
-        title="Gender Snap"
-        emoji="⚧"
-        empty
-        emptyEmoji="🇬🇧"
-        emptyMessage={t("common.comingSoonForEnglish")}
-        emptyHint={t("common.askAssistantInstead")}
-      />
-    );
-  }
-
   const [word, setWord] = useState(null);
   const [loading, setLoading] = useState(true);
   const [picked, setPicked] = useState(null);     // 'm' | 'f' | null
@@ -54,6 +40,20 @@ export default function GenderSnapInline() {
   }, []);
 
   useEffect(() => { loadRound(); }, [loadRound]);
+
+  // EN target users see "coming soon" -- gender snap doesn't apply to English.
+  if (user?.target_language === "en") {
+    return (
+      <InlineRoundWidget
+        title="Gender Snap"
+        emoji="⚧"
+        empty
+        emptyEmoji="🇬🇧"
+        emptyMessage={t("common.comingSoonForEnglish")}
+        emptyHint={t("common.askAssistantInstead")}
+      />
+    );
+  }
 
   return (
     <InlineRoundWidget

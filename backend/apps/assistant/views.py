@@ -96,19 +96,6 @@ class ChatView(APIView):
 
             system_prompt = append_agentic_footer(system_prompt)
 
-        # Memory layer (Phase B): prepend the user's LEARNER CONTEXT block.
-        # Defensive: assemble_user_context never raises, returns '' on failure.
-        # Gated on LINGARU_MEMORY_ENABLED so deploying this code does not
-        # change behaviour for projects that have not opted in.
-        if is_memory_enabled():
-            try:
-                learner_context = assemble_user_context(request.user)
-            except Exception as exc:
-                logger.warning("assemble_user_context unexpectedly raised: %s", exc)
-                learner_context = ""
-            if learner_context:
-                system_prompt = f"{learner_context}\n\n{system_prompt}"
-
         # RAG: retrieve relevant context for conversation mode
         # (skipped when an agent is in charge, agents have their own focused brief).
         rag_used = False
@@ -125,6 +112,23 @@ class ChatView(APIView):
                     rag_used = True
             except Exception as exc:
                 logger.warning("RAG retrieval failed, using standard prompt: %s", exc)
+
+        # Memory layer (Phase B): prepend the user's LEARNER CONTEXT block.
+        # Placed AFTER the RAG block so that when RAG fires (which fully
+        # replaces system_prompt with the rag_conversation template) the
+        # memory context is preserved on top, not overwritten.
+        # The call-site try/except is a deliberate belt-and-suspenders
+        # guard: assemble_user_context already swallows internally, but
+        # "memory cannot break a chat turn" is a hard invariant pinned by
+        # test_assembler_failure_does_not_break_chat. Gated on the flag.
+        if is_memory_enabled():
+            try:
+                learner_context = assemble_user_context(request.user)
+            except Exception as exc:
+                logger.warning("assemble_user_context unexpectedly raised: %s", exc)
+                learner_context = ""
+            if learner_context:
+                system_prompt = f"{learner_context}\n\n{system_prompt}"
 
         # Call LLM
         try:
@@ -148,7 +152,7 @@ class ChatView(APIView):
         prose, blocks = extract_blocks(llm_response.content)
 
         # Save assistant response (with blocks attached for the frontend)
-        Message.objects.create(
+        assistant_message = Message.objects.create(
             conversation=conversation,
             role="assistant",
             content=prose,
@@ -162,11 +166,6 @@ class ChatView(APIView):
         # exceptions and writes a MemoryExtractionLog row instead.
         memory_saved = None
         if is_memory_enabled():
-            assistant_message = (
-                Message.objects.filter(conversation=conversation, role="assistant")
-                .order_by("-created_at")
-                .first()
-            )
             try:
                 note = maybe_extract_note(
                     user=request.user,

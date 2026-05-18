@@ -181,3 +181,43 @@ def test_assembler_failure_does_not_break_chat(authed_client, user):
 
     assert response.status_code == 200
     assert response.json()["reply"] == "Reply intact."
+
+
+@pytest.mark.django_db
+@override_settings(LINGARU_MEMORY_ENABLED=True)
+def test_memory_context_survives_rag_template_replacement(authed_client, user):
+    """Regression: when RAG fires it fully replaces system_prompt with the
+    rag_conversation template; an earlier-prepended LEARNER CONTEXT block
+    must NOT be wiped. We assert the chat router sees both the RAG context
+    and the LEARNER CONTEXT in the same system_prompt."""
+    MemoryNote.objects.create(user=user, content="Prepping for TCF June 15", category="goal")
+
+    fake_chat_router = mock.Mock()
+    fake_chat_router.generate.return_value = _llm("Reply.")
+    fake_extract_router = mock.Mock()
+    fake_extract_router.generate.return_value = _llm('{"remember": false}')
+
+    with (
+        mock.patch("apps.assistant.views.create_llm_router", return_value=fake_chat_router),
+        mock.patch(
+            "apps.assistant.views.retrieve_context_for_query",
+            return_value="Document excerpt about French verbs",
+        ),
+        mock.patch("services.memory.extractor._build_router", return_value=fake_extract_router),
+    ):
+        response = authed_client.post(
+            "/api/assistant/chat/",
+            {"message": "How do I conjugate aller?", "mode": "conversation"},
+            format="json",
+        )
+
+    assert response.status_code == 200
+    assert response.json()["rag_used"] is True
+    _, call_kwargs = fake_chat_router.generate.call_args
+    sp = call_kwargs["system_prompt"]
+    # Both must be present: RAG provides domain context, memory provides
+    # user context. The bug was that RAG's template replacement wiped the
+    # memory injection.
+    assert "Document excerpt about French verbs" in sp
+    assert "LEARNER CONTEXT" in sp
+    assert "Prepping for TCF June 15" in sp

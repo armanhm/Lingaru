@@ -80,7 +80,11 @@ export default function DictationInline() {
       emoji="🎧"
       loading={loading}
       empty={!clip && !loading}
-      emptyMessage={error || "Pas de dictée disponible."}
+      emptyMessage={error || "Pas de dictée pour le moment."}
+      emptyEmoji={error ? "⚠️" : "🎧"}
+      emptyHint={error ? undefined : "Les dictées sont générées au fur et à mesure de tes leçons."}
+      emptyCtaTo={error ? undefined : "/practice/dictation"}
+      emptyCtaLabel={error ? undefined : "Aller à Dictée →"}
       score={result ? { correct: result.correct ? 1 : 0, total: 1 } : null}
       onAgain={result ? loadRound : null}
       fullSessionTo="/practice/dictation"

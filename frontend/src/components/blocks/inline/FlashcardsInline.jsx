@@ -62,7 +62,9 @@ export default function FlashcardsInline() {
       emoji="🃏"
       loading={loading}
       empty={!card && !loading}
-      emptyMessage={error || "Aucune carte à réviser pour l'instant. Reviens plus tard !"}
+      emptyMessage={error || "Aucune carte à réviser pour le moment."}
+      emptyEmoji={error ? "⚠️" : "✨"}
+      emptyHint={error ? undefined : "Tes prochaines révisions arriveront bientôt."}
       // No score on flashcards (it's a review loop, not a quiz)
       onAgain={null}
       fullSessionTo="/practice/srs"

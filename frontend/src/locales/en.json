@@ -150,7 +150,11 @@
   },
 
   "onboarding": {
-    "step": "Welcome · step {{step}} / 2",
+    "step": "Welcome · step {{step}} / 3",
+    "languageTitle": "What language do you want to learn?",
+    "languageSubtitle": "We'll tailor your lessons and assistant to this language. You can change it in Settings.",
+    "languageFrLabel": "Français",
+    "languageEnLabel": "English",
     "step1Title": "How do you want to learn?",
     "step1Subtitle": "We tailor the home page and navigation to your goal. You can change this in Settings any time.",
     "step2Title": "What's your current level?",

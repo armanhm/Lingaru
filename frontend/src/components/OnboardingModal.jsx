@@ -28,6 +28,7 @@ export default function OnboardingModal() {
   const { refreshUser } = useAuth();
   const { t } = useTranslation();
   const [step, setStep] = useState(1);
+  const [targetLanguage, setTargetLanguage] = useState("fr");
   const [mode, setMode] = useState(null);
   const [level, setLevel] = useState(null);
   const [showPlacementStub, setShowPlacementStub] = useState(false);
@@ -40,6 +41,7 @@ export default function OnboardingModal() {
     setError(null);
     try {
       await client.patch("/users/me/", {
+        target_language: targetLanguage,
         mode,
         proficiency_level: level,
       });
@@ -60,16 +62,42 @@ export default function OnboardingModal() {
             {t("onboarding.step", { step })}
           </p>
           <h2 className="font-editorial text-[26px] sm:text-[30px] leading-tight text-surface-900 dark:text-surface-50 mt-1">
-            {step === 1 ? t("onboarding.step1Title") : t("onboarding.step2Title")}
+            {step === 1 ? t("onboarding.languageTitle") : step === 2 ? t("onboarding.step1Title") : t("onboarding.step2Title")}
           </h2>
           <p className="text-[13.5px] text-surface-600 dark:text-surface-400 mt-1.5">
-            {step === 1 ? t("onboarding.step1Subtitle") : t("onboarding.step2Subtitle")}
+            {step === 1 ? t("onboarding.languageSubtitle") : step === 2 ? t("onboarding.step1Subtitle") : t("onboarding.step2Subtitle")}
           </p>
         </div>
 
         {/* Body */}
         <div className="px-7 py-6 max-h-[55vh] overflow-y-auto">
-          {step === 1 ? (
+          {step === 1 && (
+            <div className="grid grid-cols-2 gap-4">
+              {[
+                { code: "fr", flag: "🇫🇷", labelKey: "onboarding.languageFrLabel" },
+                { code: "en", flag: "🇬🇧", labelKey: "onboarding.languageEnLabel" },
+              ].map((opt) => {
+                const selected = targetLanguage === opt.code;
+                return (
+                  <button
+                    key={opt.code}
+                    type="button"
+                    onClick={() => setTargetLanguage(opt.code)}
+                    className={`p-6 rounded-xl border-2 transition-all focus-ring ${
+                      selected
+                        ? "border-primary-500 bg-primary-50 dark:bg-primary-900/30"
+                        : "border-surface-200 dark:border-surface-700 hover:border-surface-300"
+                    }`}
+                  >
+                    <div aria-hidden="true" className="text-5xl mb-2">{opt.flag}</div>
+                    <div className="font-bold">{t(opt.labelKey)}</div>
+                  </button>
+                );
+              })}
+            </div>
+          )}
+
+          {step === 2 && (
             <div className="grid grid-cols-1 gap-3">
               {MODES.map((m) => {
                 const active = mode === m.key;
@@ -112,7 +140,9 @@ export default function OnboardingModal() {
                 );
               })}
             </div>
-          ) : (
+          )}
+
+          {step === 3 && (
             <div className="space-y-4">
               <div className="grid grid-cols-2 sm:grid-cols-3 gap-2.5">
                 {LEVEL_KEYS.map((key) => {
@@ -121,6 +151,8 @@ export default function OnboardingModal() {
                   const fullLabel = t(`levels.${key}`);
                   const descriptor = fullLabel.includes(": ")
                     ? fullLabel.split(": ")[1]
+                    : fullLabel.includes(" : ")
+                    ? fullLabel.split(" : ")[1]
                     : fullLabel;
                   return (
                     <button
@@ -181,22 +213,33 @@ export default function OnboardingModal() {
         {/* Footer */}
         <div className="px-7 py-4 border-t border-surface-100 dark:border-surface-800 flex items-center justify-between bg-surface-50/60 dark:bg-surface-900/60">
           <button
-            onClick={() => setStep(1)}
+            onClick={() => setStep((s) => s - 1)}
             disabled={step === 1 || submitting}
             className="text-[12.5px] font-semibold text-surface-500 dark:text-surface-400 hover:text-primary-600 dark:hover:text-primary-400 disabled:opacity-40 disabled:cursor-not-allowed"
           >
             ← {t("onboarding.back")}
           </button>
 
-          {step === 1 ? (
+          {step === 1 && (
             <button
               onClick={() => setStep(2)}
+              className="px-5 py-2 rounded-xl text-[13px] font-bold bg-gradient-to-br from-primary-600 to-purple-700 text-white shadow-sm hover:shadow-glow-primary active:scale-95 transition-all focus-ring"
+            >
+              {t("onboarding.next")} →
+            </button>
+          )}
+
+          {step === 2 && (
+            <button
+              onClick={() => setStep(3)}
               disabled={!mode}
               className="px-5 py-2 rounded-xl text-[13px] font-bold bg-gradient-to-br from-primary-600 to-purple-700 text-white shadow-sm hover:shadow-glow-primary active:scale-95 transition-all disabled:opacity-50 disabled:cursor-not-allowed focus-ring"
             >
               {t("onboarding.next")} →
             </button>
-          ) : (
+          )}
+
+          {step === 3 && (
             <button
               onClick={submit}
               disabled={!level || submitting}

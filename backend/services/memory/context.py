@@ -89,9 +89,9 @@ def _fetch_identity(user) -> str:
 
 
 def _fetch_goal_notes(user) -> str:
-    notes = MemoryNote.objects.filter(user=user, category="goal", is_active=True).order_by(
-        "created_at"
-    )
+    notes = MemoryNote.objects.filter(
+        user=user, category="goal", is_active=True, language=user.target_language
+    ).order_by("created_at")
     contents = [n.content for n in notes]
     if not contents:
         return ""
@@ -172,7 +172,9 @@ def _fetch_preference_weakness_background_notes(user) -> str:
     out_chunks: list[str] = []
     for cat, heading in headings.items():
         contents = list(
-            MemoryNote.objects.filter(user=user, category=cat, is_active=True)
+            MemoryNote.objects.filter(
+                user=user, category=cat, is_active=True, language=user.target_language
+            )
             .order_by("created_at")
             .values_list("content", flat=True)
         )

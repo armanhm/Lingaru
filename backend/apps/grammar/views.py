@@ -38,7 +38,8 @@ class HubView(APIView):
     permission_classes = (permissions.IsAuthenticated,)
 
     def get(self, request):
-        categories = GrammarCategory.objects.prefetch_related("topics").all()
+        lang = request.user.target_language
+        categories = GrammarCategory.objects.filter(language=lang).prefetch_related("topics")
 
         category_payload = []
         all_user_mastery = {
@@ -47,7 +48,7 @@ class HubView(APIView):
         }
 
         for cat in categories:
-            topics = list(cat.topics.filter(is_active=True))
+            topics = list(cat.topics.filter(is_active=True, language=lang))
             if not topics:
                 continue
             mastered = sum(
@@ -103,7 +104,9 @@ class HubView(APIView):
                 # first not-started
                 started_ids = set(all_user_mastery.keys())
                 first_new = (
-                    GrammarTopic.objects.filter(is_active=True).exclude(id__in=started_ids).first()
+                    GrammarTopic.objects.filter(is_active=True, language=lang)
+                    .exclude(id__in=started_ids)
+                    .first()
                 )
                 if first_new:
                     recommended = first_new
@@ -116,7 +119,7 @@ class HubView(APIView):
                 ).data
                 if recommended
                 else None,
-                "total_topics": GrammarTopic.objects.filter(is_active=True).count(),
+                "total_topics": GrammarTopic.objects.filter(is_active=True, language=lang).count(),
                 "total_mastered": sum(
                     1 for m in all_user_mastery.values() if status_for(m) == "mastered"
                 ),
@@ -129,7 +132,7 @@ class CategoryListView(APIView):
     permission_classes = (permissions.IsAuthenticated,)
 
     def get(self, request):
-        cats = GrammarCategory.objects.all()
+        cats = GrammarCategory.objects.filter(language=request.user.target_language)
         return Response(GrammarCategorySerializer(cats, many=True).data)
 
 
@@ -139,7 +142,9 @@ class TopicListView(APIView):
     permission_classes = (permissions.IsAuthenticated,)
 
     def get(self, request):
-        qs = GrammarTopic.objects.filter(is_active=True).select_related("category")
+        qs = GrammarTopic.objects.filter(
+            is_active=True, language=request.user.target_language
+        ).select_related("category")
 
         category_slug = request.query_params.get("category")
         if category_slug:
@@ -159,7 +164,9 @@ class TopicDetailView(APIView):
 
     def get(self, request, slug):
         try:
-            topic = GrammarTopic.objects.select_related("category").get(slug=slug, is_active=True)
+            topic = GrammarTopic.objects.select_related("category").get(
+                slug=slug, is_active=True, language=request.user.target_language
+            )
         except GrammarTopic.DoesNotExist:
             return Response({"detail": "Topic not found."}, status=status.HTTP_404_NOT_FOUND)
         return Response(GrammarTopicDetailSerializer(topic, context={"request": request}).data)
@@ -184,7 +191,9 @@ class StartSessionView(APIView):
                     status=status.HTTP_400_BAD_REQUEST,
                 )
             try:
-                topic = GrammarTopic.objects.get(id=topic_id, is_active=True)
+                topic = GrammarTopic.objects.get(
+                    id=topic_id, is_active=True, language=request.user.target_language
+                )
             except GrammarTopic.DoesNotExist:
                 return Response({"detail": "Topic not found."}, status=status.HTTP_404_NOT_FOUND)
 
@@ -208,10 +217,15 @@ class StartSessionView(APIView):
         else:
             # diagnostic, sample one item from each of up to 12 topics at user level
             level = request.user.target_level if hasattr(request.user, "target_level") else "B1"
-            topics = list(GrammarTopic.objects.filter(is_active=True, cefr_level=level)[:12])
+            lang = request.user.target_language
+            topics = list(
+                GrammarTopic.objects.filter(is_active=True, cefr_level=level, language=lang)[:12]
+            )
             if len(topics) < 5:
                 # fall back: any level
-                topics = list(GrammarTopic.objects.filter(is_active=True).order_by("?")[:12])
+                topics = list(
+                    GrammarTopic.objects.filter(is_active=True, language=lang).order_by("?")[:12]
+                )
             drills = []
             for t in topics:
                 items = list(t.drills.all())

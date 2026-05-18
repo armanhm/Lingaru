@@ -32,7 +32,7 @@ class FeedView(APIView):
         # explicitly cleaned up; the `seen` ordering below pushes already-
         # consumed cards to the bottom so freshness still wins.
         # News keeps its own expiry filter (see NewsListView).
-        qs = DiscoverCard.objects.exclude(type="news")
+        qs = DiscoverCard.objects.filter(language=request.user.target_language).exclude(type="news")
 
         # Annotate with seen/interacted from user's history
         user_history = UserDiscoverHistory.objects.filter(
@@ -98,7 +98,7 @@ class InteractView(APIView):
     permission_classes = (permissions.IsAuthenticated,)
 
     def post(self, request, card_id):
-        card = get_object_or_404(DiscoverCard, pk=card_id)
+        card = get_object_or_404(DiscoverCard, pk=card_id, language=request.user.target_language)
 
         history, created = UserDiscoverHistory.objects.get_or_create(
             user=request.user,
@@ -167,8 +167,10 @@ class NewsListView(APIView):
 
     def get(self, request):
         now = timezone.now()
+        lang = request.user.target_language
         qs = DiscoverCard.objects.filter(
             type="news",
+            language=lang,
         ).filter(models.Q(expires_at__isnull=True) | models.Q(expires_at__gt=now))
 
         topic = request.query_params.get("topic")
@@ -183,7 +185,7 @@ class NewsListView(APIView):
 
         # Surface available topics + counts so the frontend can render filter chips.
         topic_counts = list(
-            DiscoverCard.objects.filter(type="news")
+            DiscoverCard.objects.filter(type="news", language=lang)
             .values("topic")
             .annotate(count=models.Count("id"))
             .order_by("-count")
@@ -201,7 +203,7 @@ class NewsDetailView(APIView):
     permission_classes = (permissions.IsAuthenticated,)
 
     def get(self, request, pk):
-        qs = DiscoverCard.objects.filter(type="news", pk=pk)
+        qs = DiscoverCard.objects.filter(type="news", pk=pk, language=request.user.target_language)
         qs = _annotate_user_history(qs, request.user)
         card = qs.first()
         if card is None:

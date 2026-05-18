@@ -24,6 +24,7 @@ class HubView(APIView):
     permission_classes = (permissions.IsAuthenticated,)
 
     def get(self, request):
+        lang = request.user.target_language
         sections = []
         for code, label in [
             ("CO", "Compréhension orale"),
@@ -31,7 +32,9 @@ class HubView(APIView):
             ("EE", "Expression écrite"),
             ("EO", "Expression orale"),
         ]:
-            exercise_count = ExamExercise.objects.filter(section=code, is_active=True).count()
+            exercise_count = ExamExercise.objects.filter(
+                section=code, is_active=True, language=lang
+            ).count()
             progress = ExamProgress.objects.filter(user=request.user, section=code).first()
             sections.append(
                 {
@@ -54,7 +57,7 @@ class ExerciseListView(APIView):
     def get(self, request):
         section = request.query_params.get("section", "")
         level = request.query_params.get("level", "")
-        qs = ExamExercise.objects.filter(is_active=True)
+        qs = ExamExercise.objects.filter(is_active=True, language=request.user.target_language)
         if section:
             qs = qs.filter(section=section)
         if level:
@@ -76,7 +79,10 @@ class SessionStartView(APIView):
         mode = serializer.validated_data.get("mode", "practice")
 
         exercises = ExamExercise.objects.filter(
-            section=section, cefr_level=level, is_active=True
+            section=section,
+            cefr_level=level,
+            is_active=True,
+            language=request.user.target_language,
         ).order_by("order")
 
         if not exercises.exists():
@@ -155,7 +161,9 @@ class SessionRespondView(APIView):
         user_answer = serializer.validated_data["answer"]
 
         try:
-            exercise = ExamExercise.objects.get(pk=exercise_id)
+            exercise = ExamExercise.objects.get(
+                pk=exercise_id, language=request.user.target_language
+            )
         except ExamExercise.DoesNotExist:
             return Response({"detail": "Exercise not found."}, status=status.HTTP_404_NOT_FOUND)
 

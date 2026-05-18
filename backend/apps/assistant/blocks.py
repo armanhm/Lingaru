@@ -447,31 +447,53 @@ def extract_blocks(raw_text: str) -> tuple[str, list[dict]]:
     if not raw_text:
         return "", []
 
-    # ── Strategy 1: explicit ```blocks fence ────────────────────
-    match = _FENCE_RE.search(raw_text)
-    if match:
-        payload = match.group("json").strip()
-        prose = (raw_text[: match.start()] + raw_text[match.end() :]).strip()
-        try:
-            data = json.loads(payload)
-        except json.JSONDecodeError as exc:
-            # Strict parse failed, try to salvage individual objects so
-            # one malformed entry doesn't kill the whole reply.
-            salvaged = _salvage_objects(payload)
-            if salvaged:
-                logger.info(
-                    "blocks fence: strict parse failed (%s); salvaged %d objects",
-                    exc,
-                    len(salvaged),
-                )
-                return prose, _validate_candidates(salvaged)
-            logger.warning("blocks fence had invalid JSON: %s", exc)
+    # ── Strategy 1: explicit ```blocks fence (one or many) ──────
+    # Compound replies sometimes contain multiple separate ```blocks
+    # fences -- e.g. "here's the news" + news widget, then "and play this"
+    # + word_scramble widget. We aggregate all of them and strip every
+    # fenced span from the prose so the chat bubble shows just the text.
+    fence_matches = list(_FENCE_RE.finditer(raw_text))
+    if fence_matches:
+        all_candidates: list[dict] = []
+        any_recovered = False
+        for fm in fence_matches:
+            payload = fm.group("json").strip()
+            try:
+                data = json.loads(payload)
+            except json.JSONDecodeError as exc:
+                # Strict parse failed; salvage individual objects so one
+                # malformed entry doesn't kill the whole batch.
+                salvaged = _salvage_objects(payload)
+                if salvaged:
+                    logger.info(
+                        "blocks fence: strict parse failed (%s); salvaged %d objects",
+                        exc,
+                        len(salvaged),
+                    )
+                    all_candidates.extend(salvaged)
+                    any_recovered = True
+                else:
+                    logger.warning("blocks fence had invalid JSON: %s", exc)
+                continue
+            candidates = _candidates_from_payload(data)
+            if candidates is not None:
+                all_candidates.extend(candidates)
+                any_recovered = True
+
+        # If we couldn't salvage anything from any fence, leave the text
+        # untouched so the user at least sees what the model produced.
+        if not any_recovered:
             return raw_text, []
 
-        candidates = _candidates_from_payload(data)
-        if candidates is None:
-            return raw_text, []
-        return prose, _validate_candidates(candidates)
+        # Strip every fenced span from the prose.
+        prose_parts: list[str] = []
+        cursor = 0
+        for fm in fence_matches:
+            prose_parts.append(raw_text[cursor : fm.start()])
+            cursor = fm.end()
+        prose_parts.append(raw_text[cursor:])
+        prose = "".join(prose_parts).strip()
+        return prose, _validate_candidates(all_candidates)
 
     # ── Strategy 2: generic ```json fallback ────────────────────
     # Walk every fenced JSON-ish block in order; accept the first one

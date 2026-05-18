@@ -686,6 +686,91 @@ class TestQuizAnswerCorrectAlias:
         assert blocks[0]["questions"][0]["correct"] == 0
 
 
+class TestMultipleFences:
+    """Compound replies sometimes contain multiple separate ```blocks
+    fences -- "here's news" + news widget, then "and play this" +
+    word_scramble widget. The parser must aggregate them all, not just
+    the first one (which left the second fence in the prose as an ugly
+    code block in production -- see message #86 in the dev DB)."""
+
+    def test_two_blocks_fences_both_extracted(self):
+        raw = (
+            "Voici les actualités du jour :\n"
+            '```blocks\n[{"type": "feature_widget", "widget": "news"}]\n```\n\n'
+            "Et voici ton exercice de mots mélangés :\n"
+            '```blocks\n[{"type": "feature_widget", "widget": "word_scramble"}]\n```'
+        )
+        prose, blocks = extract_blocks(raw)
+        assert "```" not in prose
+        assert len(blocks) == 2
+        widgets = sorted(b["widget"] for b in blocks)
+        assert widgets == ["news", "word_scramble"]
+
+    def test_three_fences_with_mixed_types(self):
+        raw = (
+            "Salut !\n"
+            '```blocks\n[{"type":"audio","text":"Bonjour"}]\n```\n'
+            "Voici un mot :\n"
+            '```blocks\n[{"type":"vocab_card","french":"chat","english":"cat"}]\n```\n'
+            "Et un widget :\n"
+            '```blocks\n[{"type":"feature_widget","widget":"news"}]\n```'
+        )
+        prose, blocks = extract_blocks(raw)
+        assert "```" not in prose
+        assert len(blocks) == 3
+        types = sorted(b["type"] for b in blocks)
+        assert types == ["audio", "feature_widget", "vocab_card"]
+
+    def test_two_fences_one_invalid_other_still_extracts(self):
+        # First fence has unknown type (dropped); second fence is valid.
+        raw = (
+            "First:\n"
+            '```blocks\n[{"type":"unknown_type","foo":"bar"}]\n```\n'
+            "Second:\n"
+            '```blocks\n[{"type":"vocab_card","french":"chat","english":"cat"}]\n```'
+        )
+        prose, blocks = extract_blocks(raw)
+        # Both fences stripped (we found valid JSON in both, even if one
+        # had no valid blocks after validation).
+        assert "```" not in prose
+        assert len(blocks) == 1
+        assert blocks[0]["type"] == "vocab_card"
+
+    def test_two_fences_one_malformed_json_other_works(self):
+        raw = (
+            "First:\n"
+            "```blocks\n{not valid json at all\n```\n"
+            "Second:\n"
+            '```blocks\n[{"type":"vocab_card","french":"chat","english":"cat"}]\n```'
+        )
+        prose, blocks = extract_blocks(raw)
+        # The valid second fence still gets extracted.
+        assert len(blocks) == 1
+        assert blocks[0]["type"] == "vocab_card"
+
+    def test_news_then_word_scramble_from_message_86(self):
+        """Verbatim payload from dev DB message #86 -- the bug screenshot:
+        'show me some news' triggered news + word_scramble in two fences,
+        but only news got extracted and word_scramble rendered as a code
+        block in the chat bubble."""
+        raw = (
+            "Voici les actualités du jour :\n"
+            "\n"
+            '```blocks\n[{"type": "feature_widget", "widget": "news"}]\n```\n'
+            "\n"
+            "Et voici ton exercice de mots mélangés :\n"
+            "\n"
+            '```blocks\n[{"type": "feature_widget", "widget": "word_scramble"}]\n```'
+        )
+        prose, blocks = extract_blocks(raw)
+        assert "```" not in prose
+        assert "Voici les actualités du jour" in prose
+        assert "Et voici ton exercice" in prose
+        assert len(blocks) == 2
+        widgets = sorted(b["widget"] for b in blocks)
+        assert widgets == ["news", "word_scramble"]
+
+
 class TestSingleQuizFromImparfaitBug:
     """End-to-end regression for the exact LLM output from production:
     a single quiz block (not wrapped in a list) with `answer` (not

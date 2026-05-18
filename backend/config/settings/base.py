@@ -1,4 +1,3 @@
-import os
 from datetime import timedelta
 from pathlib import Path
 
@@ -162,11 +161,11 @@ GROQ_MODEL = config("GROQ_MODEL", default="llama-3.3-70b-versatile")
 # /api/memory/ REST endpoints still work as a personal note bank, but
 # ChatView does not inject learner context or auto-extract notes. Set
 # to "true"/"1" in production to enable.
-LINGARU_MEMORY_ENABLED = os.environ.get("LINGARU_MEMORY_ENABLED", "").lower() in (
-    "1",
-    "true",
-    "yes",
-)
+#
+# Uses python-decouple `config(...)` (not os.environ) so the value can
+# come from .env -- consistent with every other env-driven setting
+# above. os.environ.get would have ignored .env entries silently.
+LINGARU_MEMORY_ENABLED = config("LINGARU_MEMORY_ENABLED", default=False, cast=bool)
 
 # Celery Beat schedule
 from celery.schedules import crontab  # noqa: E402

@@ -54,7 +54,8 @@
       "learning": "Learning",
       "games": "Mini Games",
       "security": "Security",
-      "mode": "Mode"
+      "mode": "Mode",
+      "memory": "Memory"
     },
     "profile": {
       "title": "Profile",
@@ -111,6 +112,30 @@
       "dangerZoneDescription": "Irreversible account actions",
       "deleteAccountWarning": "Once you delete your account all data is permanently removed.",
       "deleteAccountButton": "Delete account (coming soon)"
+    },
+    "memory": {
+      "title": "What the assistant remembers",
+      "subtitle": "Notes here are injected into every assistant conversation. The assistant cannot delete or edit these, only you can.",
+      "addNote": "Add a new note",
+      "categoryLabel": "Category",
+      "contentLabel": "Content",
+      "save": "Save",
+      "cancel": "Cancel",
+      "edit": "Edit",
+      "delete": "Delete",
+      "undo": "Undo",
+      "removed": "Note removed",
+      "showInactive": "Show inactive notes",
+      "sourceUser": "Added manually",
+      "sourceAssistant": "Detected from chat",
+      "empty": "No notes yet. Add one above, or ask the assistant to remember something.",
+      "categories": {
+        "goal": "Goals",
+        "preference": "Preferences",
+        "background": "Background",
+        "weakness": "Weaknesses",
+        "other": "Other"
+      }
     }
   },
 

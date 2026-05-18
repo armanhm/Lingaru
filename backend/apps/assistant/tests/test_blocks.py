@@ -533,3 +533,196 @@ class TestBlocksWrapperKey:
         prose, blocks = extract_blocks(raw)
         assert prose == "Hi."
         assert len(blocks) == 1
+
+
+class TestSingleBlockObject:
+    """LLMs (notably gemini-flash on @-mention agents) sometimes emit a
+    SINGLE block as a bare object inside the fence instead of wrapping it
+    in a list. Regression coverage for the @grammar imparfait quiz bug
+    where this caused the JSON to render as a code block in the UI."""
+
+    def test_single_block_object_treated_as_one_element_list(self):
+        raw = (
+            "Here's a quiz.\n```blocks\n"
+            + json.dumps(
+                {
+                    "type": "quiz",
+                    "questions": [
+                        {
+                            "kind": "mcq",
+                            "prompt": "Choisis la bonne forme.",
+                            "options": ["a", "b", "c"],
+                            "correct": 1,
+                        }
+                    ],
+                }
+            )
+            + "\n```"
+        )
+        prose, blocks = extract_blocks(raw)
+        assert prose == "Here's a quiz."
+        assert len(blocks) == 1
+        assert blocks[0]["type"] == "quiz"
+
+    def test_single_block_object_via_fallback_json_fence(self):
+        # Same shape but the model used ```json instead of ```blocks.
+        raw = (
+            "Here's a vocab card.\n```json\n"
+            + json.dumps({"type": "vocab_card", "french": "chat", "english": "cat"})
+            + "\n```"
+        )
+        prose, blocks = extract_blocks(raw)
+        assert prose == "Here's a vocab card."
+        assert len(blocks) == 1
+        assert blocks[0]["type"] == "vocab_card"
+
+
+class TestQuizAnswerCorrectAlias:
+    """Loosen quiz validation: when the LLM writes `answer` instead of
+    `correct`, accept it. For MCQ, allow `answer` to be either the index
+    (int) or the option string (we resolve it to the index). For
+    true_false, allow `answer` as a bool."""
+
+    def test_mcq_with_answer_as_string_option(self):
+        raw = _wrap(
+            [
+                {
+                    "type": "quiz",
+                    "questions": [
+                        {
+                            "kind": "mcq",
+                            "prompt": "Forme pour 'Nous' de 'Manger' à l'imparfait.",
+                            "options": ["Mangions", "Mangaisons", "Mangeons"],
+                            "answer": "Mangions",
+                        }
+                    ],
+                }
+            ]
+        )
+        _, blocks = extract_blocks(raw)
+        assert len(blocks) == 1
+        assert blocks[0]["questions"][0]["correct"] == 0
+
+    def test_mcq_with_answer_as_int_index(self):
+        raw = _wrap(
+            [
+                {
+                    "type": "quiz",
+                    "questions": [
+                        {
+                            "kind": "mcq",
+                            "prompt": "p",
+                            "options": ["a", "b", "c"],
+                            "answer": 2,
+                        }
+                    ],
+                }
+            ]
+        )
+        _, blocks = extract_blocks(raw)
+        assert len(blocks) == 1
+        assert blocks[0]["questions"][0]["correct"] == 2
+
+    def test_mcq_answer_string_not_in_options_rejected(self):
+        # If the model emits a string that isn't one of the options,
+        # we cannot recover an index; drop the question.
+        raw = _wrap(
+            [
+                {
+                    "type": "quiz",
+                    "questions": [
+                        {
+                            "kind": "mcq",
+                            "prompt": "p",
+                            "options": ["a", "b"],
+                            "answer": "z",
+                        }
+                    ],
+                }
+            ]
+        )
+        _, blocks = extract_blocks(raw)
+        assert blocks == []
+
+    def test_true_false_with_answer_alias(self):
+        raw = _wrap(
+            [
+                {
+                    "type": "quiz",
+                    "questions": [
+                        {
+                            "kind": "true_false",
+                            "prompt": "L'imparfait sert aux actions précises.",
+                            "answer": False,
+                        }
+                    ],
+                }
+            ]
+        )
+        _, blocks = extract_blocks(raw)
+        assert len(blocks) == 1
+        assert blocks[0]["questions"][0]["correct"] is False
+
+    def test_correct_field_still_wins_when_both_present(self):
+        # If a future LLM emits BOTH `correct` and `answer`, the explicit
+        # `correct` should take precedence.
+        raw = _wrap(
+            [
+                {
+                    "type": "quiz",
+                    "questions": [
+                        {
+                            "kind": "mcq",
+                            "prompt": "p",
+                            "options": ["a", "b", "c"],
+                            "correct": 0,
+                            "answer": "c",
+                        }
+                    ],
+                }
+            ]
+        )
+        _, blocks = extract_blocks(raw)
+        assert blocks[0]["questions"][0]["correct"] == 0
+
+
+class TestSingleQuizFromImparfaitBug:
+    """End-to-end regression for the exact LLM output from production:
+    a single quiz block (not wrapped in a list) with `answer` (not
+    `correct`) on questions. Both fixes have to compose."""
+
+    def test_imparfait_quiz_payload_extracts_cleanly(self):
+        # Verbatim shape from Message #78 in the dev database.
+        raw = (
+            "L'imparfait est le temps du récit.\n"
+            "```blocks\n"
+            + json.dumps(
+                {
+                    "type": "quiz",
+                    "questions": [
+                        {
+                            "kind": "mcq",
+                            "prompt": "Choisis la bonne forme pour 'Nous' au verbe 'Manger' à l'imparfait.",
+                            "options": ["Mangions", "Mangaisons", "Mangeons"],
+                            "answer": "Mangions",
+                        },
+                        {
+                            "kind": "true_false",
+                            "prompt": "L'imparfait est utilisé pour décrire des actions précises et terminées.",
+                            "answer": False,
+                        },
+                    ],
+                }
+            )
+            + "\n```"
+        )
+        prose, blocks = extract_blocks(raw)
+        assert "L'imparfait" in prose
+        assert "```" not in prose  # fence stripped
+        assert len(blocks) == 1
+        quiz = blocks[0]
+        assert quiz["type"] == "quiz"
+        assert len(quiz["questions"]) == 2
+        mcq, tf = quiz["questions"]
+        assert mcq["correct"] == 0
+        assert tf["correct"] is False

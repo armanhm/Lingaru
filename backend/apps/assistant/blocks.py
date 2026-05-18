@@ -131,35 +131,65 @@ def _validate_quiz_question(q: dict) -> dict | None:
     if _is_str(q.get("explanation")):
         out["explanation"] = q["explanation"].strip()[:400]
 
+    # Loose alias: LLMs often say `answer` where our schema says `correct`.
+    # Accept either; explicit `correct` always wins so a future model that
+    # picks up the canonical name doesn't get downgraded.
+    raw_correct = q.get("correct") if "correct" in q else q.get("answer")
+
     if kind == "mcq":
         opts = q.get("options")
-        correct = q.get("correct")
         if not (_is_list_of_str(opts) and 2 <= len(opts) <= 6):
             return None
-        if not (isinstance(correct, int) and 0 <= correct < len(opts)):
+        # `answer` may be either an int index or the option string itself
+        # (e.g. "Mangions" instead of 0). Resolve strings to indices.
+        if isinstance(raw_correct, str):
+            stripped_opts = [s.strip() for s in opts]
+            try:
+                correct = stripped_opts.index(raw_correct.strip())
+            except ValueError:
+                return None
+        elif isinstance(raw_correct, int) and not isinstance(raw_correct, bool):
+            correct = raw_correct
+        else:
+            return None
+        if not (0 <= correct < len(opts)):
             return None
         out["options"] = [s.strip() for s in opts]
         out["correct"] = correct
 
     elif kind == "multi":
         opts = q.get("options")
-        correct = q.get("correct")
         if not (_is_list_of_str(opts) and 2 <= len(opts) <= 6):
             return None
-        if not (
-            isinstance(correct, list)
-            and all(isinstance(i, int) and 0 <= i < len(opts) for i in correct)
-            and correct
+        # `answer` may be a list of strings; resolve each to an index.
+        if (
+            isinstance(raw_correct, list)
+            and raw_correct
+            and all(isinstance(x, str) for x in raw_correct)
         ):
+            stripped_opts = [s.strip() for s in opts]
+            try:
+                correct = [stripped_opts.index(s.strip()) for s in raw_correct]
+            except ValueError:
+                return None
+        elif (
+            isinstance(raw_correct, list)
+            and all(
+                isinstance(i, int) and not isinstance(i, bool) and 0 <= i < len(opts)
+                for i in raw_correct
+            )
+            and raw_correct
+        ):
+            correct = raw_correct
+        else:
             return None
         out["options"] = [s.strip() for s in opts]
         out["correct"] = sorted(set(correct))
 
     elif kind == "true_false":
-        correct = q.get("correct")
-        if not isinstance(correct, bool):
+        if not isinstance(raw_correct, bool):
             return None
-        out["correct"] = correct
+        out["correct"] = raw_correct
 
     elif kind == "matching":
         pairs = q.get("pairs")
@@ -311,13 +341,23 @@ BLOCK_VALIDATORS = {
 def _candidates_from_payload(data) -> list | None:
     """Coerce a parsed JSON value into a list of block-candidate dicts.
 
-    Accepts either {"blocks": [...]} or a bare [...]. Returns None when
-    the shape is something else (e.g. an unrelated JSON object the model
-    decided to fence)."""
+    Accepts:
+      - {"blocks": [...]}            -- explicit wrapper key
+      - [...]                        -- bare array of blocks
+      - {"type": "...", ...}         -- single block object; models often
+                                        emit one block this way instead
+                                        of as a one-element list
+
+    Returns None when the shape is something else (e.g. an unrelated
+    JSON object the model decided to fence)."""
     if isinstance(data, dict) and isinstance(data.get("blocks"), list):
         return data["blocks"]
     if isinstance(data, list):
         return data
+    # Single bare block object: wrap it. Recognise by the presence of a
+    # known `type` so unrelated JSON dicts don't get adopted.
+    if isinstance(data, dict) and data.get("type") in BLOCK_VALIDATORS:
+        return [data]
     return None
 
 

@@ -48,6 +48,7 @@
     "pageTitle": "Paramètres",
     "pageEyebrow": "Compte",
     "pageSubtitle": "Configure Lingaru selon ta façon d'apprendre : profil, préférences et compte au même endroit.",
+    "openTabPicker": "Ouvrir le menu des réglages",
     "tabs": {
       "profile": "Profil",
       "appearance": "Apparence",

@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { Link } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { useAuth } from "../contexts/AuthContext";
@@ -310,7 +310,7 @@ function MemoryPanel() {
     <div className="space-y-8">
       {/* Panel header with brain mark for visual anchor */}
       <div className="flex items-start gap-3">
-        <div className="hidden sm:flex shrink-0 w-10 h-10 items-center justify-center rounded-lg bg-gradient-to-br from-info-500 to-emerald-500 text-white text-lg">
+        <div aria-hidden="true" className="hidden sm:flex shrink-0 w-10 h-10 items-center justify-center rounded-lg bg-gradient-to-br from-info-500 to-emerald-500 text-white text-lg">
           🧠
         </div>
         <div>
@@ -377,7 +377,7 @@ function MemoryPanel() {
         <div className="text-sm text-surface-500">…</div>
       ) : notes.length === 0 ? (
         <div className="rounded-xl border border-dashed border-surface-200 dark:border-surface-800 px-6 py-8 text-center">
-          <div className="text-3xl mb-2">📝</div>
+          <div aria-hidden="true" className="text-3xl mb-2">📝</div>
           <p className="text-sm text-surface-600 dark:text-surface-300 max-w-sm mx-auto">
             {t("settings.memory.empty")}
           </p>
@@ -511,6 +511,68 @@ export default function Settings() {
   const [activeTab, setActiveTab] = useState("profile");
   const [mobileNavOpen, setMobileNavOpen] = useState(false);
   const activeTabConfig = useMemo(() => TABS.find((t) => t.id === activeTab), [activeTab]);
+
+  // Refs for the mobile drawer's accessibility plumbing.
+  const mobileTriggerRef = useRef(null); // the button that opens the drawer
+  const mobileDrawerRef = useRef(null);  // the drawer panel itself, for focus trap
+
+  // When the mobile drawer opens: lock body scroll, listen for Escape,
+  // focus the first interactive element inside it, trap Tab/Shift+Tab.
+  // On close: restore body scroll, return focus to the trigger.
+  useEffect(() => {
+    if (!mobileNavOpen) return undefined;
+
+    const previouslyFocused = document.activeElement;
+    const originalOverflow = document.body.style.overflow;
+    // Capture the trigger ref into a closure so the cleanup uses the
+    // node we had when the effect ran, not whatever it has at cleanup
+    // time. Quiets react-hooks/exhaustive-deps and is correct.
+    const triggerOnOpen = mobileTriggerRef.current;
+    document.body.style.overflow = "hidden";
+
+    // Focus the close button on open (first focusable in the drawer).
+    const focusables = () =>
+      mobileDrawerRef.current
+        ? Array.from(
+            mobileDrawerRef.current.querySelectorAll(
+              "button, [href], input, select, textarea, [tabindex]:not([tabindex='-1'])"
+            )
+          ).filter((el) => !el.hasAttribute("disabled"))
+        : [];
+    const first = focusables()[0];
+    if (first) first.focus();
+
+    const handleKey = (e) => {
+      if (e.key === "Escape") {
+        e.preventDefault();
+        setMobileNavOpen(false);
+        return;
+      }
+      if (e.key !== "Tab") return;
+      const items = focusables();
+      if (items.length === 0) return;
+      const firstEl = items[0];
+      const lastEl = items[items.length - 1];
+      if (e.shiftKey && document.activeElement === firstEl) {
+        e.preventDefault();
+        lastEl.focus();
+      } else if (!e.shiftKey && document.activeElement === lastEl) {
+        e.preventDefault();
+        firstEl.focus();
+      }
+    };
+    document.addEventListener("keydown", handleKey);
+
+    return () => {
+      document.removeEventListener("keydown", handleKey);
+      document.body.style.overflow = originalOverflow;
+      if (previouslyFocused && typeof previouslyFocused.focus === "function") {
+        previouslyFocused.focus();
+      } else if (triggerOnOpen) {
+        triggerOnOpen.focus();
+      }
+    };
+  }, [mobileNavOpen]);
 
   // Profile
   const [username, setUsername] = useState("");
@@ -669,13 +731,16 @@ export default function Settings() {
       {/* Mobile: tab picker button (opens drawer). Hidden on md+ where the
           sidebar is always visible. */}
       <button
+        ref={mobileTriggerRef}
         type="button"
         onClick={() => setMobileNavOpen(true)}
         className="md:hidden card w-full flex items-center justify-between p-3 mb-4 text-left"
-        aria-label={t("settings.openTabPicker", { defaultValue: "Open settings menu" })}
+        aria-label={t("settings.openTabPicker")}
+        aria-expanded={mobileNavOpen}
+        aria-haspopup="dialog"
       >
         <span className="flex items-center gap-2 text-sm font-semibold">
-          <span className="text-base">{activeTabConfig?.icon}</span>
+          <span aria-hidden="true" className="text-base">{activeTabConfig?.icon}</span>
           <span>{activeTabConfig ? t(activeTabConfig.labelKey) : ""}</span>
         </span>
         <svg className="w-5 h-5 text-surface-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -685,15 +750,27 @@ export default function Settings() {
 
       {/* Mobile drawer */}
       {mobileNavOpen && (
-        <div className="md:hidden fixed inset-0 z-50" role="dialog" aria-modal="true">
+        <div
+          className="md:hidden fixed inset-0 z-50"
+          role="dialog"
+          aria-modal="true"
+          aria-labelledby="settings-mobile-nav-title"
+        >
           <div
             className="absolute inset-0 bg-black/50"
             onClick={() => setMobileNavOpen(false)}
+            aria-hidden="true"
           />
-          <div className="absolute left-0 top-0 bottom-0 w-72 max-w-[85%] bg-white dark:bg-surface-900 shadow-xl p-4 overflow-y-auto">
+          <div
+            ref={mobileDrawerRef}
+            className="absolute left-0 top-0 bottom-0 w-72 max-w-[85%] bg-white dark:bg-surface-900 shadow-xl p-4 overflow-y-auto"
+          >
             <div className="flex items-center justify-between mb-4">
-              <h3 className="text-sm font-semibold text-surface-600 dark:text-surface-300 uppercase tracking-wider">
-                {t("settings.title", { defaultValue: "Settings" })}
+              <h3
+                id="settings-mobile-nav-title"
+                className="text-sm font-semibold text-surface-600 dark:text-surface-300 uppercase tracking-wider"
+              >
+                {t("settings.pageTitle")}
               </h3>
               <button
                 type="button"
@@ -701,7 +778,7 @@ export default function Settings() {
                 className="p-1 rounded-md text-surface-500 hover:bg-surface-100 dark:hover:bg-surface-800"
                 aria-label={t("common.close")}
               >
-                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <svg aria-hidden="true" className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
                 </svg>
               </button>
@@ -720,7 +797,7 @@ export default function Settings() {
                     }`}
                   >
                     {isActive && <span className={`absolute inset-0 rounded-lg bg-gradient-to-br ${tab.tint}`} />}
-                    <span className="relative z-10 text-base">{tab.icon}</span>
+                    <span aria-hidden="true" className="relative z-10 text-base">{tab.icon}</span>
                     <span className="relative z-10">{t(tab.labelKey)}</span>
                   </button>
                 );
@@ -734,7 +811,7 @@ export default function Settings() {
         {/* Desktop sidebar (md+) */}
         <aside
           className="hidden md:flex md:flex-col gap-1 w-[220px] shrink-0 sticky top-4 self-start card p-2"
-          aria-label={t("settings.title", { defaultValue: "Settings" })}
+          aria-label={t("settings.pageTitle")}
         >
           {TABS.map((tab) => {
             const isActive = activeTab === tab.id;

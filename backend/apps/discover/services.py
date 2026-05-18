@@ -129,19 +129,26 @@ def generate_news_card(topic: Optional[str] = None, language: str = "fr") -> Opt
     """
 
     # \u2500\u2500 Layer 1: real news \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500
-    try:
-        from apps.discover.news_fetcher import fetch_one_fresh_card
+    # RSS feeds are French-curated; only consult them for FR users.
+    # EN (and future languages) skip directly to layer 2.
+    if language == "fr":
+        try:
+            from apps.discover.news_fetcher import fetch_one_fresh_card
 
-        card = fetch_one_fresh_card(topic=topic)
-        if card is not None:
-            logger.info("News card from RSS: %s [%s]", card.title[:60], card.source_url)
-            return card
-    except Exception as exc:
-        # Don't swallow this in tests \u2014 but in production we want resilience.
-        logger.warning("RSS news fetch failed, falling back to LLM-synthetic: %s", exc)
+            card = fetch_one_fresh_card(topic=topic)
+            if card is not None:
+                logger.info("News card from RSS: %s [%s]", card.title[:60], card.source_url)
+                return card
+        except Exception as exc:
+            # Don't swallow this in tests \u2014 but in production we want resilience.
+            logger.warning("RSS news fetch failed, falling back to LLM-synthetic: %s", exc)
 
     # \u2500\u2500 Layer 2: LLM synthetic \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500
-    user_msg = "Generate a simplified French news article for B1-B2 learners."
+    user_msg = (
+        "Generate a simplified English news article for B1-B2 learners."
+        if language == "en"
+        else "Generate a simplified French news article for B1-B2 learners."
+    )
     if topic and topic in VALID_NEWS_TOPICS:
         user_msg += f" Topic must be: {topic}."
 
@@ -178,6 +185,7 @@ def generate_news_card(topic: Optional[str] = None, language: str = "fr") -> Opt
             "expressions": data.get("expressions", []),
             "grammar_points": data.get("grammar_points", []),
         },
+        language=language,
         generated_at=now,
         expires_at=now + timedelta(hours=CARD_EXPIRY_HOURS * 7),  # news lives for a week
     )

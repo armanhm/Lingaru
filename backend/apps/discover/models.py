@@ -2,6 +2,8 @@ from django.conf import settings
 from django.db import models
 from django.utils import timezone
 
+from apps.users.constants import LANGUAGE_CHOICES
+
 
 class DiscoverCard(models.Model):
     TYPE_CHOICES = [
@@ -36,6 +38,12 @@ class DiscoverCard(models.Model):
     # News-specific (also reusable for other types)
     topic = models.CharField(max_length=12, choices=NEWS_TOPICS, blank=True, default="")
     level = models.CharField(max_length=2, blank=True, default="")  # A1..C2
+    language = models.CharField(
+        max_length=8,
+        choices=LANGUAGE_CHOICES,
+        default="fr",
+        db_index=True,
+    )
 
     class Meta:
         db_table = "discover_cards"

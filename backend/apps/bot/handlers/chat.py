@@ -14,7 +14,7 @@ from telegram.ext import (
 from apps.assistant.models import Conversation, ImageQuery, Message
 from apps.bot.handlers.start import get_or_create_telegram_user
 from services.llm.factory import create_llm_router
-from services.llm.prompts import SYSTEM_PROMPTS
+from services.llm.prompts import get_system_prompt
 from services.stt.groq_whisper import GroqWhisperProvider
 from services.tts.service import get_or_create_audio
 
@@ -130,12 +130,17 @@ async def chat_message(update: Update, context: ContextTypes.DEFAULT_TYPE) -> in
     # Build message history
     messages = await sync_to_async(_get_message_history)(conversation)
 
+    # Resolve the Django user to get their target language
+    from apps.users.models import User
+
+    user = await sync_to_async(User.objects.get)(pk=context.user_data.get("user_id"))
+
     # Call LLM
     try:
         router = create_llm_router()
         llm_response = router.generate(
             messages=messages,
-            system_prompt=SYSTEM_PROMPTS["conversation"],
+            system_prompt=get_system_prompt(user.target_language, "conversation"),
         )
     except Exception as exc:
         logger.error("LLM call failed in Telegram chat: %s", exc)
@@ -189,13 +194,18 @@ async def chat_photo(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
     if caption:
         messages.append({"role": "user", "content": caption})
 
+    # Resolve the Django user to get their target language
+    from apps.users.models import User
+
+    user = await sync_to_async(User.objects.get)(pk=context.user_data.get("user_id"))
+
     try:
         router = create_llm_router()
         llm_response = router.generate_with_image(
             messages=messages,
             image_data=image_data,
             image_mime_type=mime_type,
-            system_prompt=SYSTEM_PROMPTS["image_query"],
+            system_prompt=get_system_prompt(user.target_language, "image_query"),
         )
     except Exception as exc:
         logger.error("Vision LLM failed in Telegram: %s", exc)
@@ -203,9 +213,6 @@ async def chat_photo(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
         return CHATTING
 
     # Save records
-    from apps.users.models import User
-
-    user = await sync_to_async(User.objects.get)(pk=context.user_data.get("user_id"))
     await sync_to_async(_save_image_query)(
         user,
         conversation,
@@ -264,12 +271,17 @@ async def chat_voice(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
     await sync_to_async(_save_user_message)(conversation, user_text)
     messages = await sync_to_async(_get_message_history)(conversation)
 
+    # Resolve the Django user to get their target language
+    from apps.users.models import User
+
+    user = await sync_to_async(User.objects.get)(pk=context.user_data.get("user_id"))
+
     # LLM: generate response
     try:
         router = create_llm_router()
         llm_response = router.generate(
             messages=messages,
-            system_prompt=SYSTEM_PROMPTS["conversation"],
+            system_prompt=get_system_prompt(user.target_language, "conversation"),
         )
     except Exception as exc:
         logger.error("LLM failed in Telegram voice chat: %s", exc)

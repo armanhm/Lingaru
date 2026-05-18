@@ -4,6 +4,7 @@ import { useTranslation } from "react-i18next";
 import { useAuth } from "../contexts/AuthContext";
 import { useTheme } from "../contexts/ThemeContext";
 import { filterNavForMode } from "../lib/modeConfig";
+import { LearningLanguageFlag } from "./ui/LearningLanguageFlag";
 import OnboardingModal from "./OnboardingModal";
 
 const NAV_SECTIONS = [
@@ -261,7 +262,10 @@ export default function Layout() {
           <span className="mode-grad-bg w-8 h-8 rounded-xl flex items-center justify-center text-white font-extrabold text-sm shrink-0 shadow-sm">L</span>
           {!collapsed && (
             <div className="flex flex-col leading-tight">
-              <span className="text-lg font-extrabold mode-grad-text">Lingaru</span>
+              <div className="flex items-center gap-2">
+                <span className="text-lg font-extrabold mode-grad-text">Lingaru</span>
+                {user && <LearningLanguageFlag language={user.target_language} />}
+              </div>
               {user?.mode && (
                 <span className="text-[9px] uppercase tracking-[0.18em] font-bold mode-grad-text mt-0.5">
                   {t(`modes.${user.mode}.shortLabel`)}

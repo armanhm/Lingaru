@@ -10,14 +10,14 @@ from django.utils import timezone
 from apps.content.models import GrammarRule, Vocabulary
 from apps.discover.models import DiscoverCard
 from services.llm.factory import create_llm_router
-from services.llm.prompts import SYSTEM_PROMPTS
+from services.llm.prompts import get_system_prompt
 
 logger = logging.getLogger(__name__)
 
 CARD_EXPIRY_HOURS = 24
 
 
-def generate_word_card() -> Optional[DiscoverCard]:
+def generate_word_card(language: str = "fr") -> Optional[DiscoverCard]:
     """Generate a Word of the Day card from a random Vocabulary entry."""
     vocab = Vocabulary.objects.order_by("?").first()
     if vocab is None:
@@ -37,13 +37,14 @@ def generate_word_card() -> Optional[DiscoverCard]:
             "gender": vocab.gender,
             "part_of_speech": vocab.part_of_speech,
         },
+        language=language,
         generated_at=now,
         expires_at=now + timedelta(hours=CARD_EXPIRY_HOURS),
     )
     return card
 
 
-def generate_grammar_card() -> Optional[DiscoverCard]:
+def generate_grammar_card(language: str = "fr") -> Optional[DiscoverCard]:
     """Generate a Grammar Tip card from a random GrammarRule entry."""
     rule = GrammarRule.objects.order_by("?").first()
     if rule is None:
@@ -61,19 +62,20 @@ def generate_grammar_card() -> Optional[DiscoverCard]:
             "examples": rule.examples,
             "exceptions": rule.exceptions,
         },
+        language=language,
         generated_at=now,
         expires_at=now + timedelta(hours=CARD_EXPIRY_HOURS),
     )
     return card
 
 
-def generate_trivia_card() -> Optional[DiscoverCard]:
+def generate_trivia_card(language: str = "fr") -> Optional[DiscoverCard]:
     """Generate a trivia card using the LLM."""
     try:
         router = create_llm_router()
         response = router.generate(
             messages=[{"role": "user", "content": "Generate a French trivia fact."}],
-            system_prompt=SYSTEM_PROMPTS["trivia_generator"],
+            system_prompt=get_system_prompt(language, "trivia_generator"),
         )
         data = json.loads(response.content)
     except (RuntimeError, json.JSONDecodeError, KeyError) as exc:
@@ -109,7 +111,7 @@ VALID_NEWS_TOPICS = {
 }
 
 
-def generate_news_card(topic: Optional[str] = None) -> Optional[DiscoverCard]:
+def generate_news_card(topic: Optional[str] = None, language: str = "fr") -> Optional[DiscoverCard]:
     """Generate a news card with three layers of fallback.
 
     1. RSS-real path (preferred) \u2014 fetch one unseen item from a curated
@@ -127,19 +129,26 @@ def generate_news_card(topic: Optional[str] = None) -> Optional[DiscoverCard]:
     """
 
     # \u2500\u2500 Layer 1: real news \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500
-    try:
-        from apps.discover.news_fetcher import fetch_one_fresh_card
+    # RSS feeds are French-curated; only consult them for FR users.
+    # EN (and future languages) skip directly to layer 2.
+    if language == "fr":
+        try:
+            from apps.discover.news_fetcher import fetch_one_fresh_card
 
-        card = fetch_one_fresh_card(topic=topic)
-        if card is not None:
-            logger.info("News card from RSS: %s [%s]", card.title[:60], card.source_url)
-            return card
-    except Exception as exc:
-        # Don't swallow this in tests \u2014 but in production we want resilience.
-        logger.warning("RSS news fetch failed, falling back to LLM-synthetic: %s", exc)
+            card = fetch_one_fresh_card(topic=topic)
+            if card is not None:
+                logger.info("News card from RSS: %s [%s]", card.title[:60], card.source_url)
+                return card
+        except Exception as exc:
+            # Don't swallow this in tests \u2014 but in production we want resilience.
+            logger.warning("RSS news fetch failed, falling back to LLM-synthetic: %s", exc)
 
     # \u2500\u2500 Layer 2: LLM synthetic \u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500
-    user_msg = "Generate a simplified French news article for B1-B2 learners."
+    user_msg = (
+        "Generate a simplified English news article for B1-B2 learners."
+        if language == "en"
+        else "Generate a simplified French news article for B1-B2 learners."
+    )
     if topic and topic in VALID_NEWS_TOPICS:
         user_msg += f" Topic must be: {topic}."
 
@@ -148,7 +157,7 @@ def generate_news_card(topic: Optional[str] = None) -> Optional[DiscoverCard]:
         router = create_llm_router()
         response = router.generate(
             messages=[{"role": "user", "content": user_msg}],
-            system_prompt=SYSTEM_PROMPTS["news_generator"],
+            system_prompt=get_system_prompt(language, "news_generator"),
         )
         data = json.loads(response.content)
     except (RuntimeError, json.JSONDecodeError, KeyError) as exc:
@@ -176,6 +185,7 @@ def generate_news_card(topic: Optional[str] = None) -> Optional[DiscoverCard]:
             "expressions": data.get("expressions", []),
             "grammar_points": data.get("grammar_points", []),
         },
+        language=language,
         generated_at=now,
         expires_at=now + timedelta(hours=CARD_EXPIRY_HOURS * 7),  # news lives for a week
     )
@@ -975,23 +985,28 @@ def _curated_news_mock(topic: Optional[str]) -> dict:
 
 
 def generate_daily_cards() -> list[DiscoverCard]:
-    """Generate one card of each type for the daily feed.
+    """Generate the day's word + grammar + trivia cards per active target_language.
 
-    Returns a list of successfully created cards (skips any that failed).
+    Iterates over the distinct set of target_languages across all users
+    and generates one card of each type per language. With only FR users,
+    runs FR generation; once EN users exist, EN cards are generated too.
     """
-    # News is generated through the dedicated /api/news/ flow now;
-    # the Discover feed only shows word/grammar/trivia.
-    generators = [
-        generate_word_card,
-        generate_grammar_card,
-        generate_trivia_card,
-    ]
+    from django.contrib.auth import get_user_model
 
-    cards = []
-    for gen_fn in generators:
-        card = gen_fn()
-        if card is not None:
-            cards.append(card)
+    User = get_user_model()
+    active_languages = list(User.objects.values_list("target_language", flat=True).distinct())
+    if not active_languages:
+        active_languages = ["fr"]  # safety default; shouldn't fire in practice
+
+    cards: list[DiscoverCard] = []
+    for language in active_languages:
+        for fn in (generate_word_card, generate_grammar_card, generate_trivia_card):
+            try:
+                card = fn(language=language)
+                if card is not None:
+                    cards.append(card)
+            except Exception as exc:
+                logger.warning("%s failed for language=%s: %s", fn.__name__, language, exc)
 
     logger.info("Daily feed generated: %d cards created.", len(cards))
     return cards

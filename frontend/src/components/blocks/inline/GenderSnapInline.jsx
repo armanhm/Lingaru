@@ -1,4 +1,6 @@
 import { useState, useEffect, useCallback } from "react";
+import { useTranslation } from "react-i18next";
+import { useAuth } from "../../../contexts/AuthContext";
 import { getRandomVocabulary, normalizeVocabResponse } from "../../../api/content";
 import InlineRoundWidget from "../InlineRoundWidget";
 
@@ -8,6 +10,9 @@ import InlineRoundWidget from "../InlineRoundWidget";
  * buttons so it works one-handed on mobile and is keyboard-friendly.
  */
 export default function GenderSnapInline() {
+  const { user } = useAuth();
+  const { t } = useTranslation();
+
   const [word, setWord] = useState(null);
   const [loading, setLoading] = useState(true);
   const [picked, setPicked] = useState(null);     // 'm' | 'f' | null
@@ -35,6 +40,20 @@ export default function GenderSnapInline() {
   }, []);
 
   useEffect(() => { loadRound(); }, [loadRound]);
+
+  // EN target users see "coming soon" -- gender snap doesn't apply to English.
+  if (user?.target_language === "en") {
+    return (
+      <InlineRoundWidget
+        title="Gender Snap"
+        emoji="⚧"
+        empty
+        emptyEmoji="🇬🇧"
+        emptyMessage={t("common.comingSoonForEnglish")}
+        emptyHint={t("common.askAssistantInstead")}
+      />
+    );
+  }
 
   return (
     <InlineRoundWidget

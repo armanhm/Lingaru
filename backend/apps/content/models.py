@@ -1,5 +1,7 @@
 from django.db import models
 
+from apps.users.constants import LANGUAGE_CHOICES
+
 
 class Topic(models.Model):
     name_fr = models.CharField(max_length=200)
@@ -8,6 +10,12 @@ class Topic(models.Model):
     icon = models.CharField(max_length=100, blank=True, default="")
     order = models.PositiveIntegerField()
     difficulty_level = models.PositiveIntegerField()
+    language = models.CharField(
+        max_length=8,
+        choices=LANGUAGE_CHOICES,
+        default="fr",
+        db_index=True,
+    )
 
     class Meta:
         db_table = "content_topics"
@@ -30,6 +38,12 @@ class Lesson(models.Model):
     content = models.JSONField(default=dict, blank=True)
     order = models.PositiveIntegerField()
     difficulty = models.PositiveIntegerField()
+    language = models.CharField(
+        max_length=8,
+        choices=LANGUAGE_CHOICES,
+        default="fr",
+        db_index=True,
+    )
 
     class Meta:
         db_table = "content_lessons"
@@ -55,6 +69,12 @@ class Vocabulary(models.Model):
     gender = models.CharField(max_length=1, choices=GENDER_CHOICES, default="a")
     part_of_speech = models.CharField(max_length=50, blank=True, default="")
     audio_url = models.URLField(max_length=500, null=True, blank=True)
+    language = models.CharField(
+        max_length=8,
+        choices=LANGUAGE_CHOICES,
+        default="fr",
+        db_index=True,
+    )
 
     class Meta:
         db_table = "content_vocabulary"
@@ -71,6 +91,12 @@ class GrammarRule(models.Model):
     formula = models.CharField(max_length=500, blank=True, default="")
     examples = models.JSONField(default=list, blank=True)
     exceptions = models.JSONField(default=list, blank=True)
+    language = models.CharField(
+        max_length=8,
+        choices=LANGUAGE_CHOICES,
+        default="fr",
+        db_index=True,
+    )
 
     class Meta:
         db_table = "content_grammar_rules"
@@ -86,6 +112,12 @@ class ReadingText(models.Model):
     content_en = models.TextField()
     vocabulary_highlights = models.JSONField(default=list, blank=True)
     comprehension_questions = models.JSONField(default=list, blank=True)
+    language = models.CharField(
+        max_length=8,
+        choices=LANGUAGE_CHOICES,
+        default="fr",
+        db_index=True,
+    )
 
     class Meta:
         db_table = "content_reading_texts"
@@ -114,6 +146,12 @@ class VideoLesson(models.Model):
     transcript_en = models.TextField(blank=True, default="")
     status = models.CharField(max_length=12, choices=STATUS_CHOICES, default="pending")
     error_message = models.TextField(blank=True, default="")
+    language = models.CharField(
+        max_length=8,
+        choices=LANGUAGE_CHOICES,
+        default="fr",
+        db_index=True,
+    )
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
@@ -180,6 +218,12 @@ class Question(models.Model):
     wrong_answers = models.JSONField(default=list, blank=True)
     explanation = models.TextField(blank=True, default="")
     difficulty = models.PositiveIntegerField()
+    language = models.CharField(
+        max_length=8,
+        choices=LANGUAGE_CHOICES,
+        default="fr",
+        db_index=True,
+    )
 
     class Meta:
         db_table = "content_questions"

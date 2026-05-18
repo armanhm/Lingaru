@@ -38,6 +38,11 @@ class Agent(models.Model):
     system_prompt = models.TextField(
         help_text="System prompt sent to the LLM for every turn of this agent.",
     )
+    system_prompt_en = models.TextField(
+        blank=True,
+        default="",
+        help_text="System prompt for EN learners. Falls back to system_prompt if empty.",
+    )
     mode = models.CharField(max_length=24, choices=MODE_CHOICES, default="conversation")
     output_shape = models.CharField(
         max_length=12, choices=OUTPUT_SHAPE_CHOICES, default="free_text"

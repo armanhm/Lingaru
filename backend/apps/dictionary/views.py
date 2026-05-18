@@ -11,7 +11,7 @@ from services.llm.factory import create_llm_router
 
 logger = logging.getLogger(__name__)
 
-LOOKUP_SYSTEM_PROMPT = (
+LOOKUP_SYSTEM_PROMPT_FR = (
     "You are a French-English dictionary assistant. "
     "Given a French word or phrase, respond ONLY with valid JSON (no markdown, no extra text) "
     "in this exact structure:\n"
@@ -27,6 +27,9 @@ LOOKUP_SYSTEM_PROMPT = (
     "etymology and gender may be null if not applicable. "
     "Always respond with JSON only, no prose, no markdown."
 )
+
+# Keep backward-compatible name used in older code paths / tests.
+LOOKUP_SYSTEM_PROMPT = LOOKUP_SYSTEM_PROMPT_FR
 
 CONJUGATE_SYSTEM_PROMPT = (
     "You are a French verb conjugation engine. "
@@ -81,11 +84,31 @@ class DictionaryLookupView(APIView):
         if cached:
             return Response({"result": cached.result, "provider": "cache"})
 
+        if request.user.target_language == "en":
+            system_prompt = (
+                "You are an English dictionary assistant. "
+                "Given an English word or phrase, respond ONLY with valid JSON "
+                "(no markdown, no extra text) in this exact structure:\n"
+                '{"word": "...", "part_of_speech": "noun|verb|adjective|adverb|pronoun|preposition|conjunction|interjection", '
+                '"definitions": [{"fr": "...", "en": "..."}], '
+                '"examples": [{"fr": "...", "en": "..."}], '
+                '"synonyms": ["...", "..."], '
+                '"antonyms": ["...", "..."], '
+                '"etymology": "...", '
+                '"register": "formal|informal|neutral|slang", '
+                '"gender": null}\n'
+                "Include 2-3 definitions, 2-3 example sentences, up to 5 synonyms, up to 3 antonyms. "
+                "etymology may be null if not applicable. gender is always null for English. "
+                "Always respond with JSON only, no prose, no markdown."
+            )
+        else:
+            system_prompt = LOOKUP_SYSTEM_PROMPT_FR
+
         try:
             router = create_llm_router()
             llm_result = router.generate(
                 messages=[{"role": "user", "content": word}],
-                system_prompt=LOOKUP_SYSTEM_PROMPT,
+                system_prompt=system_prompt,
             )
             data = _parse_json_response(llm_result.content)
             if data is None:
@@ -111,6 +134,15 @@ class VerbConjugatorView(APIView):
     permission_classes = (permissions.IsAuthenticated,)
 
     def post(self, request):
+        if request.user.target_language == "en":
+            return Response(
+                {
+                    "detail": "Conjugation drills are not yet available for English.",
+                    "code": "feature_unavailable_for_language",
+                },
+                status=status.HTTP_400_BAD_REQUEST,
+            )
+
         verb = (request.data.get("verb") or "").strip().lower()
         if not verb:
             return Response({"detail": "verb is required."}, status=status.HTTP_400_BAD_REQUEST)

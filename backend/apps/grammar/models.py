@@ -1,6 +1,8 @@
 from django.conf import settings
 from django.db import models
 
+from apps.users.constants import LANGUAGE_CHOICES
+
 CEFR_CHOICES = [
     ("A1", "A1"),
     ("A2", "A2"),
@@ -27,6 +29,12 @@ class GrammarCategory(models.Model):
     description = models.TextField(blank=True, default="")
     icon = models.CharField(max_length=10, blank=True, default="")  # emoji
     order = models.PositiveIntegerField(default=0)
+    language = models.CharField(
+        max_length=8,
+        choices=LANGUAGE_CHOICES,
+        default="fr",
+        db_index=True,
+    )
 
     class Meta:
         db_table = "grammar_categories"
@@ -55,6 +63,12 @@ class GrammarTopic(models.Model):
     order = models.PositiveIntegerField(default=0)
     is_active = models.BooleanField(default=True)
     created_at = models.DateTimeField(auto_now_add=True)
+    language = models.CharField(
+        max_length=8,
+        choices=LANGUAGE_CHOICES,
+        default="fr",
+        db_index=True,
+    )
 
     class Meta:
         db_table = "grammar_topics"
@@ -74,6 +88,12 @@ class GrammarDrillItem(models.Model):
     options = models.JSONField(default=list, blank=True)  # for MCQ
     explanation = models.TextField(blank=True, default="")
     difficulty = models.PositiveSmallIntegerField(default=1)  # 1-5
+    language = models.CharField(
+        max_length=8,
+        choices=LANGUAGE_CHOICES,
+        default="fr",
+        db_index=True,
+    )
 
     class Meta:
         db_table = "grammar_drill_items"

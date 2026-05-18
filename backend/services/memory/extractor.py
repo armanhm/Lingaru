@@ -119,6 +119,7 @@ def maybe_extract_note(
         content=content,
         category=category,
         source="assistant_detected",
+        language=user.target_language,
     )
     MemoryExtractionLog.objects.create(
         user=user,

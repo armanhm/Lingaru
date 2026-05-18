@@ -580,6 +580,8 @@ export default function Settings() {
   const [dailyGoal, setDailyGoal] = useState(15);
   const [targetLevel, setTargetLevel] = useState("B1");
   const [nativeLang, setNativeLang] = useState("en");
+  const [targetLanguage, setTargetLanguage] = useState("fr");
+  const [pendingLanguage, setPendingLanguage] = useState(null);
   const [profileSaving, setProfileSaving] = useState(false);
 
   // Mode & proficiency, set during onboarding, editable here.
@@ -610,6 +612,7 @@ export default function Settings() {
       setDailyGoal(user.daily_goal_minutes || 15);
       setTargetLevel(user.target_level || "B1");
       setNativeLang(user.native_language || "en");
+      setTargetLanguage(user.target_language || "fr");
       setMode(user.mode || "general");
       setProficiency(user.proficiency_level || "B1");
       setUiLanguage(user.ui_language || i18n.language?.split("-")[0] || "en");
@@ -675,6 +678,25 @@ export default function Settings() {
       setUiLanguageSaving(false);
     }
   };
+
+  const handleTargetLanguageChange = (newLang) => {
+    if (newLang === targetLanguage) return;
+    setPendingLanguage(newLang);
+  };
+
+  const confirmLanguageSwitch = async () => {
+    if (!pendingLanguage) return;
+    try {
+      await client.patch("/users/me/", { target_language: pendingLanguage });
+      // Soft reload so all content lists refetch with the new language.
+      window.location.reload();
+    } catch {
+      showToast(t("settings.profile.targetLanguageErrorToast"), "error");
+      setPendingLanguage(null);
+    }
+  };
+
+  const cancelLanguageSwitch = () => setPendingLanguage(null);
 
   const handlePrefsSave = async () => {
     setPrefsSaving(true);
@@ -864,11 +886,25 @@ export default function Settings() {
                 </select>
               </div>
               <div>
+                <label className="block text-caption font-semibold text-surface-700 dark:text-surface-300 mb-1.5 uppercase tracking-wide">{t("settings.profile.targetLanguage")}</label>
+                <p className="text-xs text-surface-500 dark:text-surface-500 mb-1.5">{t("settings.profile.targetLanguageDescription")}</p>
+                <select
+                  value={targetLanguage}
+                  onChange={(e) => handleTargetLanguageChange(e.target.value)}
+                  className="input"
+                >
+                  <option value="fr">🇫🇷 {t("languages.fr")}</option>
+                  <option value="en">🇬🇧 {t("languages.en")}</option>
+                </select>
+              </div>
+              <div>
                 <label className="block text-caption font-semibold text-surface-700 dark:text-surface-300 mb-1.5 uppercase tracking-wide">Target level</label>
                 <select value={targetLevel} onChange={(e) => setTargetLevel(e.target.value)} className="input">
                   {LEVEL_OPTIONS.map((l) => <option key={l.value} value={l.value}>{l.label}</option>)}
                 </select>
               </div>
+            </div>
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
               <div>
                 <label className="block text-caption font-semibold text-surface-700 dark:text-surface-300 mb-1.5 uppercase tracking-wide">Daily goal (min)</label>
                 <input type="number" min={5} max={180} value={dailyGoal} onChange={(e) => setDailyGoal(Number(e.target.value))} className="input" />
@@ -1260,6 +1296,40 @@ export default function Settings() {
       </div>
 
       {modeCelebration && <ModeCelebration card={modeCelebration.card} />}
+
+      {pendingLanguage && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 p-4">
+          <div className="bg-white dark:bg-surface-900 rounded-xl p-6 max-w-md w-full shadow-xl">
+            <h3 className="text-lg font-bold">
+              {t("settings.profile.switchLanguageConfirmTitle", {
+                language: t(`languages.${pendingLanguage}`),
+              })}
+            </h3>
+            <p className="mt-2 text-surface-600 dark:text-surface-300 text-sm">
+              {t("settings.profile.switchLanguageConfirmBody", {
+                currentLanguage: t(`languages.${targetLanguage}`),
+                language: t(`languages.${pendingLanguage}`),
+              })}
+            </p>
+            <div className="mt-4 flex justify-end gap-2">
+              <button
+                type="button"
+                onClick={cancelLanguageSwitch}
+                className="px-3 py-1.5 rounded-md text-sm hover:bg-surface-100 dark:hover:bg-surface-800"
+              >
+                {t("settings.profile.switchLanguageConfirmCancel")}
+              </button>
+              <button
+                type="button"
+                onClick={confirmLanguageSwitch}
+                className="px-3 py-1.5 rounded-md bg-primary-600 text-white text-sm font-bold hover:bg-primary-700"
+              >
+                {t("settings.profile.switchLanguageConfirmYes")}
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

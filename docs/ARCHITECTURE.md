@@ -120,6 +120,7 @@ Routes are 1:1 with files in `pages/`. New surface? Add a page, register the rou
 - **SM-2 / SRS:** the SRS scheduler in `apps/progress/services/srs.py` is the canonical implementation; the Grammar Booster's mastery scheduler shares the same algorithm. Don't fork it.
 - **Em-dashes:** the codebase has been purged of em-dashes (the unicode `—` character) in user-facing strings and commit messages. Use ` -- ` or `:` instead.
 - **Comments:** none unless the *why* is non-obvious. Identifiers should carry intent.
+- **Multi-language target.** Every content table (`Topic`, `Lesson`, `Vocabulary`, `GrammarRule`, `ReadingText`, `Question`, `VideoLesson`, `GrammarCategory`, `GrammarTopic`, `GrammarDrillItem`, `DiscoverCard`, `ExamExercise`, `MemoryNote`) has a `language` discriminator. Queries filter by `request.user.target_language`. LLM prompts dispatch on the same axis. Agents have a `system_prompt_en` fallback. See [`docs/superpowers/specs/2026-05-18-multi-language-target-design.md`](superpowers/specs/2026-05-18-multi-language-target-design.md).
 
 ## Request Lifecycle (Typical Chat Turn)
 

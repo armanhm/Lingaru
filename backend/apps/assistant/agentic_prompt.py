@@ -1,10 +1,8 @@
-"""Agentic-mode prompt extensions.
+"""Footer appended to system prompts when the user's mode is 'agentic'.
 
-When the requesting user is in `agentic` mode, the assistant should be
-willing to *invoke* features for them rather than just talk about them.
-We append a footer to the active system prompt that documents the two
-new block types, `action` (deep-link button) and `feature_widget`
-(inline feature card), and gives concrete examples of when to emit each.
+The footer documents the action / feature_widget block types so the
+LLM knows it can invoke features inline. Per-language because the
+footer's instructions are in the user's target_language.
 
 Centralised here so the chat view, the voice view, and any future entry
 point can opt in with a single import.
@@ -12,7 +10,7 @@ point can opt in with a single import.
 
 from __future__ import annotations
 
-AGENTIC_INVOCATION_FOOTER = """
+_FR_FOOTER = """
 
 ## En mode agent : invoque les fonctionnalités plutôt que d'en parler
 
@@ -138,15 +136,32 @@ JOUABLES inline dans le chat, un tour à la fois) :
 La fence ```blocks reste OBLIGATOIRE quand tu emets un bloc structuré.
 """
 
+_FOOTERS = {
+    "fr": _FR_FOOTER,
+    "en": (
+        "\n\nWhen the user asks to practice or play, you may emit a fenced "
+        "```blocks JSON segment with action or feature_widget objects. "
+        'Action: `{"type": "action", "route": "/path", "label": "Label"}`. '
+        'Feature widget: `{"type": "feature_widget", "widget": "name", "config": {}}`. '
+        "Use them when the user explicitly asks for the feature."
+    ),
+}
 
-def append_agentic_footer(system_prompt: str) -> str:
-    """Append the agentic-mode invocation footer if it isn't already there.
 
-    Idempotent, the appended text is keyed by a marker so calling this
+def append_agentic_footer(system_prompt: str, language: str = "fr") -> str:
+    """Append the language-specific agentic footer to a system prompt.
+
+    Idempotent -- the appended text is keyed by a marker so calling this
     twice in a single request path is harmless. Caller chooses whether
     to apply (typically: only when ``user.mode == 'agentic'``).
     """
-    marker = "## En mode agent : invoque les fonctionnalités"
+    footer = _FOOTERS.get(language) or _FOOTERS["fr"]
+    # Use a stable marker from the FR footer for idempotency check;
+    # for EN we use a shorter unique prefix.
+    if language == "en":
+        marker = "you may emit a fenced"
+    else:
+        marker = "## En mode agent : invoque les fonctionnalités"
     if marker in (system_prompt or ""):
         return system_prompt
-    return (system_prompt or "").rstrip() + AGENTIC_INVOCATION_FOOTER
+    return (system_prompt or "").rstrip() + footer

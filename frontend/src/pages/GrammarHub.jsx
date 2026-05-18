@@ -3,6 +3,9 @@ import { Link } from "react-router-dom";
 import { getGrammarHub } from "../api/grammar";
 import { staggerDelay } from "../hooks/useAnimations";
 import { PageHeader, SkeletonCard, EmptyState } from "../components/ui";
+import { useAuth } from "../contexts/AuthContext";
+import { ComingSoonBadge } from "../components/ui/ComingSoonBadge";
+import { isAvailable } from "../lib/featureAvailability";
 
 const CATEGORY_TINTS = {
   tenses:    "from-primary-500 to-purple-600",
@@ -32,6 +35,7 @@ function MasteryRing({ pct, size = 56 }) {
 }
 
 export default function GrammarHub() {
+  const { user } = useAuth();
   const [hub, setHub] = useState(null);
   const [loading, setLoading] = useState(true);
 
@@ -66,6 +70,8 @@ export default function GrammarHub() {
         icon="🧠"
         gradient
       />
+
+      <ComingSoonBadge available={isAvailable("grammar_booster", user?.target_language)}>
 
       {/* Stats row */}
       <div className="grid grid-cols-3 gap-3 mb-6">
@@ -156,6 +162,8 @@ export default function GrammarHub() {
           Browse all topics →
         </Link>
       </div>
+
+      </ComingSoonBadge>
     </div>
   );
 }

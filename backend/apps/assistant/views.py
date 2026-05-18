@@ -6,7 +6,7 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 
 from services.llm.factory import create_llm_router
-from services.llm.prompts import SYSTEM_PROMPTS
+from services.llm.prompts import get_system_prompt
 from services.memory import (
     assemble_user_context,
     is_memory_enabled,
@@ -72,7 +72,7 @@ class ChatView(APIView):
         messages = [{"role": msg.role, "content": msg.content} for msg in prior_messages]
 
         # Get system prompt, agent's prompt wins when one is supplied;
-        # otherwise fall back to the mode default.
+        # otherwise fall back to the language+mode default.
         agent = None
         if agent_slug:
             try:
@@ -82,10 +82,21 @@ class ChatView(APIView):
             except Exception as exc:  # pragma: no cover, defensive
                 logger.warning("Agent lookup failed for slug=%s: %s", agent_slug, exc)
 
-        if agent and agent.system_prompt:
-            system_prompt = agent.system_prompt
+        if agent:
+            # When the user is learning EN AND the agent has an EN prompt,
+            # use the EN one. Otherwise fall back to the agent's primary
+            # (FR) prompt. If even that is empty, use the mode default.
+            agent_prompt = (
+                agent.system_prompt_en
+                if request.user.target_language == "en" and agent.system_prompt_en
+                else agent.system_prompt
+            )
+            if agent_prompt:
+                system_prompt = agent_prompt
+            else:
+                system_prompt = get_system_prompt(request.user.target_language, mode)
         else:
-            system_prompt = SYSTEM_PROMPTS.get(mode, SYSTEM_PROMPTS["conversation"])
+            system_prompt = get_system_prompt(request.user.target_language, mode)
 
         # Agentic mode users get an extra footer that documents the
         # `action` and `feature_widget` block types so the LLM knows it
@@ -94,7 +105,7 @@ class ChatView(APIView):
         if getattr(request.user, "mode", None) == "agentic":
             from apps.assistant.agentic_prompt import append_agentic_footer
 
-            system_prompt = append_agentic_footer(system_prompt)
+            system_prompt = append_agentic_footer(system_prompt, request.user.target_language)
 
         # RAG: retrieve relevant context for conversation mode
         # (skipped when an agent is in charge, agents have their own focused brief).
@@ -106,9 +117,9 @@ class ChatView(APIView):
                     query=user_message,
                 )
                 if context:
-                    system_prompt = SYSTEM_PROMPTS["rag_conversation"].format(
-                        context=context,
-                    )
+                    system_prompt = get_system_prompt(
+                        request.user.target_language, "rag_conversation"
+                    ).format(context=context)
                     rag_used = True
             except Exception as exc:
                 logger.warning("RAG retrieval failed, using standard prompt: %s", exc)
@@ -262,7 +273,7 @@ class ImageQueryView(APIView):
                 messages=messages,
                 image_data=image_data,
                 image_mime_type=image_mime_type,
-                system_prompt=SYSTEM_PROMPTS["image_query"],
+                system_prompt=get_system_prompt(request.user.target_language, "image_query"),
             )
         except Exception as exc:
             logger.error("Vision LLM call failed: %s", exc)
@@ -375,14 +386,14 @@ class VoiceChatView(APIView):
         ).order_by("created_at")
         messages = [{"role": msg.role, "content": msg.content} for msg in prior_messages]
 
-        system_prompt = SYSTEM_PROMPTS.get(mode, SYSTEM_PROMPTS["conversation"])
+        system_prompt = get_system_prompt(request.user.target_language, mode)
 
         # Agentic mode: same footer the text chat gets, so spoken requests
         # like "hey show me the news" can invoke widgets too.
         if getattr(request.user, "mode", None) == "agentic":
             from apps.assistant.agentic_prompt import append_agentic_footer
 
-            system_prompt = append_agentic_footer(system_prompt)
+            system_prompt = append_agentic_footer(system_prompt, request.user.target_language)
 
         # 2. LLM: generate response
         try:

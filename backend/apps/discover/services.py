@@ -10,7 +10,7 @@ from django.utils import timezone
 from apps.content.models import GrammarRule, Vocabulary
 from apps.discover.models import DiscoverCard
 from services.llm.factory import create_llm_router
-from services.llm.prompts import SYSTEM_PROMPTS
+from services.llm.prompts import get_system_prompt
 
 logger = logging.getLogger(__name__)
 
@@ -67,13 +67,13 @@ def generate_grammar_card() -> Optional[DiscoverCard]:
     return card
 
 
-def generate_trivia_card() -> Optional[DiscoverCard]:
+def generate_trivia_card(language: str = "fr") -> Optional[DiscoverCard]:
     """Generate a trivia card using the LLM."""
     try:
         router = create_llm_router()
         response = router.generate(
             messages=[{"role": "user", "content": "Generate a French trivia fact."}],
-            system_prompt=SYSTEM_PROMPTS["trivia_generator"],
+            system_prompt=get_system_prompt(language, "trivia_generator"),
         )
         data = json.loads(response.content)
     except (RuntimeError, json.JSONDecodeError, KeyError) as exc:
@@ -109,7 +109,7 @@ VALID_NEWS_TOPICS = {
 }
 
 
-def generate_news_card(topic: Optional[str] = None) -> Optional[DiscoverCard]:
+def generate_news_card(topic: Optional[str] = None, language: str = "fr") -> Optional[DiscoverCard]:
     """Generate a news card with three layers of fallback.
 
     1. RSS-real path (preferred) \u2014 fetch one unseen item from a curated
@@ -148,7 +148,7 @@ def generate_news_card(topic: Optional[str] = None) -> Optional[DiscoverCard]:
         router = create_llm_router()
         response = router.generate(
             messages=[{"role": "user", "content": user_msg}],
-            system_prompt=SYSTEM_PROMPTS["news_generator"],
+            system_prompt=get_system_prompt(language, "news_generator"),
         )
         data = json.loads(response.content)
     except (RuntimeError, json.JSONDecodeError, KeyError) as exc:

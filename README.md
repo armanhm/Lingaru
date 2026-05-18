@@ -351,6 +351,9 @@ The bot shares the same Django codebase and database -- it calls Django models d
 | `SENTRY_ENVIRONMENT` | Sentry environment tag (e.g. `production`, `staging`) | No (default: `production`) |
 | `SENTRY_TRACES_SAMPLE_RATE` | Performance trace sample rate (0.0 – 1.0) | No (default: `0.1`) |
 | `SENTRY_RELEASE` | Release identifier (typically the git SHA, set in CI) | No |
+| `LINGARU_MEMORY_ENABLED` | Enable chat-side memory layer: inject learner context + auto-detect remember intent. Defaults to off; set to `true`/`1` to enable. | No (default: off) |
+
+**`LINGARU_MEMORY_ENABLED` is a kill switch only for the chat-side memory wiring.** The `/api/memory/notes/` REST endpoints and the Settings → Memory tab work regardless.
 
 ## Testing
 

@@ -142,7 +142,9 @@
         "background": "Background",
         "weakness": "Weaknesses",
         "other": "Other"
-      }
+      },
+      "errorToast": "Could not save memory note. Please try again.",
+      "saving": "Saving..."
     }
   },
 

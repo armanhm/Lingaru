@@ -113,6 +113,25 @@ def test_patch_edits_content_and_category(user, client_for):
 
 
 @pytest.mark.django_db
+def test_patch_cannot_change_source(user, client_for):
+    """PATCH must not let a client claim a note was assistant-detected
+    (or vice versa). `source` is read-only at the serializer layer; this
+    test pins that invariant against future serializer changes."""
+    note = MemoryNote.objects.create(user=user, content="x", source="user")
+
+    response = client_for(user).patch(
+        f"/api/memory/notes/{note.pk}/",
+        {"content": "y", "source": "assistant_detected"},
+        format="json",
+    )
+
+    assert response.status_code == 200
+    note.refresh_from_db()
+    assert note.source == "user"
+    assert note.content == "y"
+
+
+@pytest.mark.django_db
 def test_patch_other_users_note_returns_404(user, other_user, client_for):
     note = MemoryNote.objects.create(user=other_user, content="bob's")
 

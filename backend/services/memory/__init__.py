@@ -10,11 +10,14 @@
     source="assistant_detected".
 
 Both functions are no-ops when LINGARU_MEMORY_ENABLED is False. The
-REST endpoints in apps/memory still work independently of this flag,
+REST endpoints in apps/memory still work independently of this flag;
 the flag only controls chat-side wiring.
 """
 
 from django.conf import settings
+
+from .context import assemble_user_context
+from .extractor import maybe_extract_note
 
 
 def is_memory_enabled() -> bool:
@@ -22,4 +25,4 @@ def is_memory_enabled() -> bool:
     return bool(getattr(settings, "LINGARU_MEMORY_ENABLED", False))
 
 
-__all__ = ["is_memory_enabled"]
+__all__ = ["assemble_user_context", "is_memory_enabled", "maybe_extract_note"]

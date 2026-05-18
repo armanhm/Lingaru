@@ -1,6 +1,8 @@
 from django.conf import settings
 from django.db import models
 
+from apps.users.constants import LANGUAGE_CHOICES
+
 SECTION_CHOICES = [
     ("CO", "Compréhension orale"),
     ("CE", "Compréhension écrite"),
@@ -40,6 +42,12 @@ class ExamExercise(models.Model):
     order = models.PositiveIntegerField(default=0)
     is_active = models.BooleanField(default=True)
     created_at = models.DateTimeField(auto_now_add=True)
+    language = models.CharField(
+        max_length=8,
+        choices=LANGUAGE_CHOICES,
+        default="fr",
+        db_index=True,
+    )
 
     class Meta:
         db_table = "exam_prep_exercises"

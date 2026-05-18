@@ -142,7 +142,9 @@
         "background": "Parcours",
         "weakness": "Difficultés",
         "other": "Autres"
-      }
+      },
+      "errorToast": "Impossible d'enregistrer la note. Veuillez réessayer.",
+      "saving": "Enregistrement..."
     }
   },
 

@@ -1,4 +1,4 @@
-import { useState, useEffect, useMemo } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import { Link } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { useAuth } from "../contexts/AuthContext";
@@ -186,28 +186,39 @@ function GroupHeader({ icon, title }) {
 
 function MemoryPanel() {
   const { t } = useTranslation();
+  const { showToast } = useToast();
   const [notes, setNotes] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [saving, setSaving] = useState(false);
   const [includeInactive, setIncludeInactive] = useState(false);
   const [editingId, setEditingId] = useState(null);
   const [draft, setDraft] = useState({ content: "", category: "other" });
   const [adding, setAdding] = useState(false);
   const [recentlyDeleted, setRecentlyDeleted] = useState(null);
 
-  const refresh = async (opts = {}) => {
+  const refresh = useCallback(async (opts = {}) => {
     setLoading(true);
     try {
       const res = await listMemoryNotes({ includeInactive: opts.includeInactive ?? includeInactive });
       setNotes(res.data || []);
+    } catch {
+      showToast(t("settings.memory.errorToast"), "error");
     } finally {
       setLoading(false);
     }
-  };
+  }, [includeInactive, showToast, t]);
 
   useEffect(() => {
     refresh({ includeInactive });
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [includeInactive]);
+  }, [refresh, includeInactive]);
+
+  // Clear any pending undo-toast timer if the component unmounts while
+  // the 5s window is still open, avoiding setState on an unmounted tree.
+  useEffect(() => {
+    return () => {
+      if (recentlyDeleted?.timeoutId) clearTimeout(recentlyDeleted.timeoutId);
+    };
+  }, [recentlyDeleted]);
 
   const grouped = useMemo(() => {
     const acc = { goal: [], preference: [], background: [], weakness: [], other: [] };
@@ -219,35 +230,64 @@ function MemoryPanel() {
   }, [notes]);
 
   const handleAdd = async () => {
-    if (!draft.content.trim()) return;
-    await createMemoryNote({ content: draft.content.trim(), category: draft.category });
-    setDraft({ content: "", category: "other" });
-    setAdding(false);
-    refresh();
+    if (!draft.content.trim() || saving) return;
+    setSaving(true);
+    try {
+      await createMemoryNote({ content: draft.content.trim(), category: draft.category });
+      setDraft({ content: "", category: "other" });
+      setAdding(false);
+      await refresh();
+    } catch {
+      showToast(t("settings.memory.errorToast"), "error");
+    } finally {
+      setSaving(false);
+    }
   };
 
   const handleSaveEdit = async (id) => {
-    if (!draft.content.trim()) return;
-    await updateMemoryNote(id, { content: draft.content.trim(), category: draft.category });
-    setEditingId(null);
-    setDraft({ content: "", category: "other" });
-    refresh();
+    if (!draft.content.trim() || saving) return;
+    setSaving(true);
+    try {
+      await updateMemoryNote(id, { content: draft.content.trim(), category: draft.category });
+      setEditingId(null);
+      setDraft({ content: "", category: "other" });
+      await refresh();
+    } catch {
+      showToast(t("settings.memory.errorToast"), "error");
+    } finally {
+      setSaving(false);
+    }
   };
 
   const handleDelete = async (note) => {
-    await deleteMemoryNote(note.id);
-    if (recentlyDeleted?.timeoutId) clearTimeout(recentlyDeleted.timeoutId);
-    const timeoutId = setTimeout(() => setRecentlyDeleted(null), 5000);
-    setRecentlyDeleted({ note, timeoutId });
-    refresh();
+    if (saving) return;
+    setSaving(true);
+    try {
+      await deleteMemoryNote(note.id);
+      if (recentlyDeleted?.timeoutId) clearTimeout(recentlyDeleted.timeoutId);
+      const timeoutId = setTimeout(() => setRecentlyDeleted(null), 5000);
+      setRecentlyDeleted({ note, timeoutId });
+      await refresh();
+    } catch {
+      showToast(t("settings.memory.errorToast"), "error");
+    } finally {
+      setSaving(false);
+    }
   };
 
   const handleUndo = async () => {
-    if (!recentlyDeleted) return;
-    await updateMemoryNote(recentlyDeleted.note.id, { is_active: true });
-    if (recentlyDeleted.timeoutId) clearTimeout(recentlyDeleted.timeoutId);
-    setRecentlyDeleted(null);
-    refresh();
+    if (!recentlyDeleted || saving) return;
+    setSaving(true);
+    try {
+      await updateMemoryNote(recentlyDeleted.note.id, { is_active: true });
+      if (recentlyDeleted.timeoutId) clearTimeout(recentlyDeleted.timeoutId);
+      setRecentlyDeleted(null);
+      await refresh();
+    } catch {
+      showToast(t("settings.memory.errorToast"), "error");
+    } finally {
+      setSaving(false);
+    }
   };
 
   const startEdit = (note) => {
@@ -317,10 +357,10 @@ function MemoryPanel() {
             </button>
             <button
               onClick={handleAdd}
-              disabled={!draft.content.trim()}
+              disabled={!draft.content.trim() || saving}
               className="rounded-md bg-primary-600 px-3 py-1.5 text-sm font-medium text-white hover:bg-primary-700 disabled:opacity-50"
             >
-              {t("settings.memory.save")}
+              {saving ? t("settings.memory.saving") : t("settings.memory.save")}
             </button>
           </div>
         </div>
@@ -372,10 +412,10 @@ function MemoryPanel() {
                           </button>
                           <button
                             onClick={() => handleSaveEdit(note.id)}
-                            disabled={!draft.content.trim()}
+                            disabled={!draft.content.trim() || saving}
                             className="rounded-md bg-primary-600 px-3 py-1 text-xs font-medium text-white hover:bg-primary-700 disabled:opacity-50"
                           >
-                            {t("settings.memory.save")}
+                            {saving ? t("settings.memory.saving") : t("settings.memory.save")}
                           </button>
                         </div>
                       </div>
@@ -399,7 +439,8 @@ function MemoryPanel() {
                           {note.is_active && (
                             <button
                               onClick={() => handleDelete(note)}
-                              className="rounded-md px-2 py-1 text-xs text-danger-600 hover:bg-danger-50 dark:hover:bg-danger-900/20"
+                              disabled={saving}
+                              className="rounded-md px-2 py-1 text-xs text-danger-600 hover:bg-danger-50 dark:hover:bg-danger-900/20 disabled:opacity-50"
                             >
                               {t("settings.memory.delete")}
                             </button>
@@ -433,7 +474,8 @@ function MemoryPanel() {
           <span>{t("settings.memory.removed")}</span>
           <button
             onClick={handleUndo}
-            className="font-medium underline underline-offset-2"
+            disabled={saving}
+            className="font-medium underline underline-offset-2 disabled:opacity-50"
           >
             {t("settings.memory.undo")}
           </button>

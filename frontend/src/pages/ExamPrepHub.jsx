@@ -3,6 +3,9 @@ import { Link } from "react-router-dom";
 import { getExamHub } from "../api/examPrep";
 import { staggerDelay } from "../hooks/useAnimations";
 import { PageHeader, SkeletonCard } from "../components/ui";
+import { useAuth } from "../contexts/AuthContext";
+import { ComingSoonBadge } from "../components/ui/ComingSoonBadge";
+import { isAvailable } from "../lib/featureAvailability";
 
 const SECTION_CONFIG = {
   CO: { name: "Compréhension orale", sub: "Listening Comprehension", emoji: "🎧", gradient: "from-info-500 via-info-600 to-primary-600" },
@@ -31,6 +34,7 @@ function CEFRBar({ level }) {
 }
 
 export default function ExamPrepHub() {
+  const { user } = useAuth();
   const [hub, setHub] = useState(null);
   const [loading, setLoading] = useState(true);
 
@@ -64,6 +68,8 @@ export default function ExamPrepHub() {
         icon="🎓"
         gradient
       />
+
+      <ComingSoonBadge available={isAvailable("exam_prep", user?.target_language)}>
 
       {/* Section cards */}
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-8">
@@ -217,6 +223,8 @@ export default function ExamPrepHub() {
           ))}
         </div>
       </div>
+
+      </ComingSoonBadge>
     </div>
   );
 }

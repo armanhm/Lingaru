@@ -1,6 +1,9 @@
 import { Link } from "react-router-dom";
 import { staggerDelay } from "../hooks/useAnimations";
 import { PageHeader } from "../components/ui";
+import { useAuth } from "../contexts/AuthContext";
+import { ComingSoonBadge } from "../components/ui/ComingSoonBadge";
+import { isAvailable } from "../lib/featureAvailability";
 
 const GAMES = [
   { id: "word-scramble",       name: "Word Scramble",       description: "Unscramble the letters to spell the French word",        emoji: "🔤", gradient: "from-violet-500 via-primary-500 to-primary-700",   to: "/mini-games/word-scramble",       ready: true, tag: "Vocabulary" },
@@ -12,6 +15,7 @@ const GAMES = [
 ];
 
 export default function MiniGames() {
+  const { user } = useAuth();
   return (
     <div className="max-w-5xl mx-auto">
       <PageHeader
@@ -23,44 +27,61 @@ export default function MiniGames() {
       />
 
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-        {GAMES.map((game, i) => (
-          <Link
-            key={game.id}
-            to={game.to}
-            className="group relative overflow-hidden card card-hover focus-ring animate-fade-in-up p-0"
-            style={staggerDelay(i, 60)}
-          >
-            {/* Gradient top band */}
-            <div className={`h-1.5 bg-gradient-to-r ${game.gradient}`} />
+        {GAMES.map((game, i) => {
+          const cardInner = (
+            <>
+              {/* Gradient top band */}
+              <div className={`h-1.5 bg-gradient-to-r ${game.gradient}`} />
 
-            <div className="p-5">
-              <div className="flex items-start justify-between mb-3">
-                <div className={`w-14 h-14 bg-gradient-to-br ${game.gradient} rounded-2xl flex items-center justify-center text-3xl shadow-lg group-hover:scale-110 group-hover:rotate-3 transition-all duration-300`}>
-                  {game.emoji}
+              <div className="p-5">
+                <div className="flex items-start justify-between mb-3">
+                  <div className={`w-14 h-14 bg-gradient-to-br ${game.gradient} rounded-2xl flex items-center justify-center text-3xl shadow-lg group-hover:scale-110 group-hover:rotate-3 transition-all duration-300`}>
+                    {game.emoji}
+                  </div>
+                  <span className="badge-neutral !text-[10px]">{game.tag}</span>
                 </div>
-                <span className="badge-neutral !text-[10px]">{game.tag}</span>
-              </div>
 
-              <h3 className="text-h4 text-surface-900 dark:text-surface-100 mb-1 group-hover:text-primary-600 dark:group-hover:text-primary-400 transition-colors">
-                {game.name}
-              </h3>
-              <p className="text-caption text-surface-500 dark:text-surface-400 leading-relaxed">
-                {game.description}
-              </p>
+                <h3 className="text-h4 text-surface-900 dark:text-surface-100 mb-1 group-hover:text-primary-600 dark:group-hover:text-primary-400 transition-colors">
+                  {game.name}
+                </h3>
+                <p className="text-caption text-surface-500 dark:text-surface-400 leading-relaxed">
+                  {game.description}
+                </p>
 
-              <div className="mt-4 pt-4 border-t border-surface-100 dark:border-surface-800/50 flex items-center justify-between">
-                <span className="text-caption font-semibold text-primary-600 dark:text-primary-400">
-                  Play now
-                </span>
-                <span className="text-primary-500 group-hover:translate-x-1 transition-transform">
-                  <svg className="w-4 h-4" fill="none" strokeWidth={2.5} viewBox="0 0 24 24" stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" />
-                  </svg>
-                </span>
+                <div className="mt-4 pt-4 border-t border-surface-100 dark:border-surface-800/50 flex items-center justify-between">
+                  <span className="text-caption font-semibold text-primary-600 dark:text-primary-400">
+                    Play now
+                  </span>
+                  <span className="text-primary-500 group-hover:translate-x-1 transition-transform">
+                    <svg className="w-4 h-4" fill="none" strokeWidth={2.5} viewBox="0 0 24 24" stroke="currentColor">
+                      <path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" />
+                    </svg>
+                  </span>
+                </div>
               </div>
-            </div>
-          </Link>
-        ))}
+            </>
+          );
+
+          const linkCard = (
+            <Link
+              key={game.id}
+              to={game.to}
+              className="group relative overflow-hidden card card-hover focus-ring animate-fade-in-up p-0"
+              style={staggerDelay(i, 60)}
+            >
+              {cardInner}
+            </Link>
+          );
+
+          if (game.id === "gender-snap") {
+            return (
+              <ComingSoonBadge key={game.id} available={isAvailable("gender_snap", user?.target_language)}>
+                {linkCard}
+              </ComingSoonBadge>
+            );
+          }
+          return linkCard;
+        })}
       </div>
     </div>
   );

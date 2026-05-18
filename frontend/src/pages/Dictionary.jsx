@@ -4,6 +4,9 @@ import { lookupWord, conjugateVerb } from "../api/dictionary";
 import AudioPlayButton from "../components/AudioPlayButton";
 import { staggerDelay } from "../hooks/useAnimations";
 import { PageHeader } from "../components/ui";
+import { useAuth } from "../contexts/AuthContext";
+import { ComingSoonBadge } from "../components/ui/ComingSoonBadge";
+import { isAvailable } from "../lib/featureAvailability";
 
 const TENSE_ORDER = [
   "Présent",
@@ -285,6 +288,7 @@ function ConjugationResult({ result }) {
 }
 
 export default function Dictionary() {
+  const { user } = useAuth();
   const [searchParams] = useSearchParams();
   const [tab, setTab] = useState(searchParams.get("tab") === "conjugator" ? "conjugator" : "dictionary");
 
@@ -496,6 +500,7 @@ export default function Dictionary() {
 
       {/* Conjugator tab */}
       {tab === "conjugator" && (
+        <ComingSoonBadge available={isAvailable("conjugation", user?.target_language)}>
         <div className="space-y-5">
           <SearchBar
             value={conjInput}
@@ -548,6 +553,7 @@ export default function Dictionary() {
             </div>
           )}
         </div>
+        </ComingSoonBadge>
       )}
     </div>
   );

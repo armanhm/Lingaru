@@ -20,12 +20,12 @@ A comprehensive French language learning application targeting B1 to B2 progress
 | 10 - Multimodal | Image queries (Gemini vision), voice conversation practice |
 | 11 - RAG | Document upload, PDF indexing, context-aware AI answers |
 | 12 - Dictionary | French dictionary lookups + verb conjugator (cached LLM-generated entries) |
-| 13 - Mini Games | 6 mini-games — Word Scramble, Match Pairs, Gender Snap, Missing Letter, Speed Round, Listening Challenge |
-| 14 - Exam Prep | TCF / TEF practice — diagnostic, week-by-week plan, section-by-section drills, mocks history |
+| 13 - Mini Games | 6 mini-games -- Word Scramble, Match Pairs, Gender Snap, Missing Letter, Speed Round, Listening Challenge |
+| 14 - Exam Prep | TCF / TEF practice -- diagnostic, week-by-week plan, section-by-section drills, mocks history |
 | 15 - Grammar Booster | Dedicated grammar app: 6 categories, 11 topics, 90 drill items, SM-2 mastery scoring |
-| 16 - News | Standalone `/news` page — articles by topic with vocab, expressions, and grammar tabs |
+| 16 - News | Standalone `/news` page -- articles by topic with vocab, expressions, and grammar tabs |
 | 17 - UI Overhaul | Premium token system (Inter + Instrument Serif + JetBrains Mono), Hybride dashboard (compass + recommended session), redesigned Assistant (single-column chat with drawers), gradient top-band cards across all pages |
-| 18 - i18n | App-chrome translations (EN/FR) — `i18next` + `react-i18next`, persisted per-user via `user.ui_language`. French stays the learning target; UI chrome is localizable. |
+| 18 - i18n | App-chrome translations (EN/FR) -- `i18next` + `react-i18next`, persisted per-user via `user.ui_language`. French stays the learning target; UI chrome is localizable. |
 | 19 - Agents | Admin-editable specialised assistants (slug, system prompt, mode, suggested questions). `/agents` gallery + dedicated run pages, plus `@-mention` routing from the main chat composer. |
 | 20 - Agentic Mode | Inline practice widgets in chat: the assistant emits `action` / `feature_widget` blocks (quiz, conjugate, dictionary lookup, grammar drill, mini-game, news, SRS) that mutate-in-place inside the chat bubble. |
 | 21 - Observability | Sentry (backend + frontend), health probe (`/api/health/`), CI (Ruff + pytest + ESLint + Playwright + Lighthouse + Trivy + coverage), auto-deploy to Hetzner with migration rollback. |
@@ -123,8 +123,8 @@ Lingaru/
 │   │   ├── discover/       # Explore feed, daily cards, dedicated News API
 │   │   ├── documents/      # PDF upload, RAG indexing
 │   │   ├── dictionary/     # French dictionary lookups + verb conjugator
-│   │   ├── exam_prep/      # TCF/TEF prep — exercises, sessions, history
-│   │   ├── grammar/        # Grammar Booster — categories, topics, drills, mastery (SM-2)
+│   │   ├── exam_prep/      # TCF/TEF prep -- exercises, sessions, history
+│   │   ├── grammar/        # Grammar Booster -- categories, topics, drills, mastery (SM-2)
 │   │   ├── agents/         # Specialised assistants (admin-editable), agent runs
 │   │   └── bot/            # Telegram bot handlers
 │   ├── config/             # Django settings, URLs, WSGI, Celery
@@ -229,7 +229,7 @@ The Discover feed surfaces short word, grammar, and trivia cards. **News has its
 
 ### News (`/api/news/`)
 
-A dedicated practice surface — French news articles with vocabulary, expressions, and grammar points pulled out for guided study. Falls back to a curated 9-topic offline mock library when the LLM is unavailable.
+A dedicated practice surface -- French news articles with vocabulary, expressions, and grammar points pulled out for guided study. Falls back to a curated 9-topic offline mock library when the LLM is unavailable.
 
 | Method | Endpoint | Description |
 |--------|----------|-------------|
@@ -265,7 +265,7 @@ A dedicated practice surface — French news articles with vocabulary, expressio
 
 | Method | Endpoint | Description |
 |--------|----------|-------------|
-| POST | `/api/dictionary/lookup/` | Look up a French word — POS, gender, definitions, examples, synonyms, antonyms, etymology |
+| POST | `/api/dictionary/lookup/` | Look up a French word -- POS, gender, definitions, examples, synonyms, antonyms, etymology |
 | POST | `/api/dictionary/conjugate/` | Conjugate a verb across 8 tenses |
 
 ### Documents (`/api/documents/`)
@@ -283,7 +283,7 @@ Specialised assistants, each with their own system prompt, suggested questions, 
 
 | Method | Endpoint | Description |
 |--------|----------|-------------|
-| GET | `/api/agents/` | Gallery payload (lean — no system prompt) |
+| GET | `/api/agents/` | Gallery payload (lean -- no system prompt) |
 | GET | `/api/agents/{slug}/` | Full agent detail for the run page |
 | POST | `/api/agents/{slug}/start/` | Create a fresh conversation pinned to this agent |
 | GET | `/api/agents/{slug}/runs/` | User's recent conversations with this agent (last 20) |
@@ -374,7 +374,7 @@ Dependabot (`.github/dependabot.yml`) groups weekly PRs across pip, npm, GitHub 
 
 ## Internationalization
 
-The app supports **EN / FR** for the UI chrome (nav, settings, buttons, toasts). French remains the *learning target* — chrome-language and learning-language are independent.
+The app supports **EN / FR** for the UI chrome (nav, settings, buttons, toasts). French remains the *learning target* -- chrome-language and learning-language are independent.
 
 - **Frontend:** `i18next` + `react-i18next` + browser language detector. Strings live in `frontend/src/locales/{en,fr}.json`.
 - **Persistence:** the user's preference is stored in `localStorage` (`lingaru-ui-language`) and mirrored to `user.ui_language` on the server, so it follows them across devices.
@@ -426,12 +426,12 @@ docker compose exec django python manage.py migrate
 
 Deeper docs live in [`docs/`](docs/):
 
-- [`docs/ARCHITECTURE.md`](docs/ARCHITECTURE.md) — system overview, request lifecycle, key conventions
-- [`docs/superpowers/specs/2026-04-04-lingaru-system-design.md`](docs/superpowers/specs/2026-04-04-lingaru-system-design.md) — full original system design
-- [`docs/superpowers/plans/`](docs/superpowers/plans/) — per-phase implementation plans (1 through 17)
-- [`CONTRIBUTING.md`](CONTRIBUTING.md) — dev workflow, commit conventions, how to run tests/lint locally
-- [`SECURITY.md`](SECURITY.md) — vulnerability disclosure policy
+- [`docs/ARCHITECTURE.md`](docs/ARCHITECTURE.md) -- system overview, request lifecycle, key conventions
+- [`docs/superpowers/specs/2026-04-04-lingaru-system-design.md`](docs/superpowers/specs/2026-04-04-lingaru-system-design.md) -- full original system design
+- [`docs/superpowers/plans/`](docs/superpowers/plans/) -- per-phase implementation plans (phases 1 through 17 are written up; 18 through 21 are documented inline in the features table and commit history)
+- [`CONTRIBUTING.md`](CONTRIBUTING.md) -- dev workflow, commit conventions, how to run tests/lint locally
+- [`SECURITY.md`](SECURITY.md) -- vulnerability disclosure policy
 
 ## License
 
-[MIT](LICENSE) — see the `LICENSE` file.
+[MIT](LICENSE) -- see the `LICENSE` file.

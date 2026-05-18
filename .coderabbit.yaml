@@ -1,0 +1,69 @@
+# yaml-language-server: $schema=https://coderabbit.ai/integrations/schema.v2.json
+#
+# CodeRabbit configuration for Lingaru.
+# Docs: https://docs.coderabbit.ai/guides/configure-coderabbit
+#
+# To activate, install the CodeRabbit GitHub App for this repo:
+#   https://github.com/apps/coderabbitai
+# CodeRabbit will pick up this file automatically on the next PR.
+
+language: en-US
+early_access: false
+
+reviews:
+  profile: chill              # less aggressive than "assertive"; matches our PR style
+  request_changes_workflow: false
+  high_level_summary: true
+  high_level_summary_placeholder: "@coderabbitai summary"
+  poem: false                 # no PR poetry
+  review_status: true
+  collapse_walkthrough: false
+
+  auto_review:
+    enabled: true
+    drafts: false             # skip drafts; review on "ready for review"
+    base_branches:
+      - main
+      - dev
+
+  # Trim noise. CodeRabbit shouldn't waste cycles on lockfiles, generated
+  # assets, screenshot baselines, or migrations (they're machine-written).
+  path_filters:
+    - "!**/package-lock.json"
+    - "!**/node_modules/**"
+    - "!**/dist/**"
+    - "!**/__pycache__/**"
+    - "!**/migrations/0*.py"
+    - "!frontend/e2e/__screenshots__/**"
+    - "!**/*.png"
+    - "!**/*.jpg"
+    - "!**/*.svg"
+
+  # Per-area review focus. Keys are glob patterns; values are guidance
+  # passed to CodeRabbit when reviewing files that match.
+  path_instructions:
+    - path: "backend/**/*.py"
+      instructions: |
+        Follow Django + DRF conventions. Lingaru rules:
+        - No comments unless the WHY is non-obvious.
+        - No em-dashes (the unicode "—" character) in user-facing strings.
+        - SRS / SM-2 logic lives in apps/progress/services/srs.py and must not be forked.
+        - LLM calls go through services/llm/router.ProviderRouter; never call providers directly from a view.
+        - Code is formatted by Ruff; flag formatting only if `ruff format --check` would fail.
+    - path: "frontend/**/*.{js,jsx}"
+      instructions: |
+        React 18 + Vite + Tailwind. Lingaru rules:
+        - UI chrome strings must live in src/locales/{en,fr}.json and be looked up via useTranslation().
+        - No em-dashes in user-facing strings.
+        - Routes go in src/pages/ and register in App.jsx.
+        - Axios calls use the shared src/api/ client (it handles JWT refresh).
+    - path: ".github/workflows/**"
+      instructions: |
+        Watch for command injection: never interpolate ${{ github.event.* }} fields
+        directly into `run:` blocks; route them through `env:` and quote.
+    - path: "docs/**/*.md"
+      instructions: |
+        Documentation. No em-dashes. Internal links should resolve.
+
+chat:
+  auto_reply: true

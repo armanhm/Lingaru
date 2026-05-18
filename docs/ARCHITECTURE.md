@@ -1,4 +1,4 @@
-# Lingaru — Architecture
+# Lingaru -- Architecture
 
 A short tour of how the moving parts fit together. Pair this with the original system design in [`superpowers/specs/2026-04-04-lingaru-system-design.md`](superpowers/specs/2026-04-04-lingaru-system-design.md) and the per-phase plans under [`superpowers/plans/`](superpowers/plans/).
 
@@ -39,7 +39,7 @@ A short tour of how the moving parts fit together. Pair this with the original s
                                             └────────────────────────────────┘
 ```
 
-All Django-derived services (`django`, `celery`, `celery-beat`, `bot`) are built from the same image and the same code — only the entrypoint command differs. This means a migration deployed for the API is *automatically* available to the bot and to background workers.
+All Django-derived services (`django`, `celery`, `celery-beat`, `bot`) are built from the same image and the same code -- only the entrypoint command differs. This means a migration deployed for the API is *automatically* available to the bot and to background workers.
 
 ## Backend Layout
 
@@ -101,7 +101,7 @@ frontend/src/
 ├── contexts/        # AuthContext, theme/locale wiring
 ├── hooks/           # useAuth, useToast, etc.
 ├── i18n.js          # i18next bootstrap (EN/FR)
-├── locales/         # en.json, fr.json — UI chrome strings
+├── locales/         # en.json, fr.json -- UI chrome strings
 ├── lib/             # framework-agnostic helpers
 ├── pages/           # one file per route
 ├── sentry.js        # Sentry init (no-op if VITE_SENTRY_DSN is empty)
@@ -116,9 +116,9 @@ Routes are 1:1 with files in `pages/`. New surface? Add a page, register the rou
 
 - **Auth:** JWT (Simple JWT). The Axios client refreshes on 401. The Telegram bot identifies users by their `telegram_chat_id` field on the `User` model, set on `/start`.
 - **Time zones:** all timestamps are stored UTC; the frontend formats locally. Don't store local-time strings.
-- **i18n:** Only the UI chrome is translated. The *learning content* (vocab, lessons, grammar explanations) stays in French — that's the point of the app. UI chrome strings go in `locales/{en,fr}.json` and are looked up via `useTranslation()`.
+- **i18n:** Only the UI chrome is translated. The *learning content* (vocab, lessons, grammar explanations) stays in French -- that's the point of the app. UI chrome strings go in `locales/{en,fr}.json` and are looked up via `useTranslation()`.
 - **SM-2 / SRS:** the SRS scheduler in `apps/progress/services/srs.py` is the canonical implementation; the Grammar Booster's mastery scheduler shares the same algorithm. Don't fork it.
-- **Em-dashes:** the codebase has been purged of `—` in user-facing strings and commit messages. Use ` -- ` or `:` instead.
+- **Em-dashes:** the codebase has been purged of em-dashes (the unicode `—` character) in user-facing strings and commit messages. Use ` -- ` or `:` instead.
 - **Comments:** none unless the *why* is non-obvious. Identifiers should carry intent.
 
 ## Request Lifecycle (Typical Chat Turn)
@@ -140,7 +140,7 @@ Routes are 1:1 with files in `pages/`. New surface? Add a page, register the rou
 - Streak rollover checks at midnight UTC.
 - Periodic warm-up of LLM-cached entries (dictionary, conjugations) where worthwhile.
 
-Synchronous user-triggered LLM calls go inline in the request — they're already async-friendly (the client is non-blocking from the user's perspective because the page shows a spinner) and going through Celery would add a polling round-trip.
+Synchronous user-triggered LLM calls go inline in the request -- they're already async-friendly (the client is non-blocking from the user's perspective because the page shows a spinner) and going through Celery would add a polling round-trip.
 
 Anything that's slow *and* can be deferred (TTS generation for a whole vocab list, RAG indexing a fresh PDF) goes through Celery.
 
@@ -161,7 +161,7 @@ Lighthouse and visual-regression workflows gate PRs that touch the frontend.
 | You want to... | Touch... |
 |----------------|----------|
 | Add a new REST endpoint | Pick the right app under `apps/`, add a view + URL, document it in `README.md#api-endpoints`. |
-| Add a new specialised assistant | `/admin/agents/agent/` — no code change needed. Edit `apps/agents/management/commands/` if you want it seeded. |
+| Add a new specialised assistant | `/admin/agents/agent/` -- no code change needed. Edit `apps/agents/management/commands/` if you want it seeded. |
 | Add a new locale | Drop a file in `frontend/src/locales/`, add it to `SUPPORTED_LANGUAGES` in `frontend/src/i18n.js`. |
 | Add a new LLM provider | Implement `BaseProvider` in `services/llm/`, wire it through `factory.py`. |
 | Add a new frontend route | One file in `frontend/src/pages/`, register in `App.jsx`. |

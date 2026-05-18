@@ -45,7 +45,7 @@ In scope:
 Out of scope:
 
 - Third-party services we integrate with (Google Gemini, Groq, Sentry, Telegram). Report those directly to the provider.
-- Denial-of-service via brute-force or volumetric attacks (we expect Nginx / hosting-level rate limits to absorb these — but if you find a logic bug that lets a single request exhaust resources, that *is* in scope).
+- Denial-of-service via brute-force or volumetric attacks (we expect Nginx / hosting-level rate limits to absorb these -- but if you find a logic bug that lets a single request exhaust resources, that *is* in scope).
 - Social-engineering attacks against the maintainer or users.
 - Issues that require physical access to a user's already-unlocked device.
 
@@ -57,7 +57,7 @@ If you fork or self-host Lingaru, please do the following before exposing it to 
 - Generate a strong `DJANGO_SECRET_KEY` (e.g. `python -c "import secrets; print(secrets.token_urlsafe(64))"`) and keep it out of source control.
 - Front Nginx with HTTPS (Let's Encrypt via Certbot is the documented path).
 - Rotate API keys (`GEMINI_API_KEY`, `GROQ_API_KEY`, `TELEGRAM_BOT_TOKEN`) if they have ever been committed or pasted into a chat.
-- Keep the Docker images current — Dependabot opens weekly PRs against the base images and Python/Node dependencies; merge them.
+- Keep the Docker images current -- Dependabot opens weekly PRs against the base images and Python/Node dependencies; merge them.
 - Restrict Django admin (`/admin/`) by IP at the Nginx level, or behind a VPN, if you can.
 
 Thank you for helping keep Lingaru and its users safe.

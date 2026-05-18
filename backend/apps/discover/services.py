@@ -17,7 +17,7 @@ logger = logging.getLogger(__name__)
 CARD_EXPIRY_HOURS = 24
 
 
-def generate_word_card() -> Optional[DiscoverCard]:
+def generate_word_card(language: str = "fr") -> Optional[DiscoverCard]:
     """Generate a Word of the Day card from a random Vocabulary entry."""
     vocab = Vocabulary.objects.order_by("?").first()
     if vocab is None:
@@ -37,13 +37,14 @@ def generate_word_card() -> Optional[DiscoverCard]:
             "gender": vocab.gender,
             "part_of_speech": vocab.part_of_speech,
         },
+        language=language,
         generated_at=now,
         expires_at=now + timedelta(hours=CARD_EXPIRY_HOURS),
     )
     return card
 
 
-def generate_grammar_card() -> Optional[DiscoverCard]:
+def generate_grammar_card(language: str = "fr") -> Optional[DiscoverCard]:
     """Generate a Grammar Tip card from a random GrammarRule entry."""
     rule = GrammarRule.objects.order_by("?").first()
     if rule is None:
@@ -61,6 +62,7 @@ def generate_grammar_card() -> Optional[DiscoverCard]:
             "examples": rule.examples,
             "exceptions": rule.exceptions,
         },
+        language=language,
         generated_at=now,
         expires_at=now + timedelta(hours=CARD_EXPIRY_HOURS),
     )
@@ -975,23 +977,28 @@ def _curated_news_mock(topic: Optional[str]) -> dict:
 
 
 def generate_daily_cards() -> list[DiscoverCard]:
-    """Generate one card of each type for the daily feed.
+    """Generate the day's word + grammar + trivia cards per active target_language.
 
-    Returns a list of successfully created cards (skips any that failed).
+    Iterates over the distinct set of target_languages across all users
+    and generates one card of each type per language. With only FR users,
+    runs FR generation; once EN users exist, EN cards are generated too.
     """
-    # News is generated through the dedicated /api/news/ flow now;
-    # the Discover feed only shows word/grammar/trivia.
-    generators = [
-        generate_word_card,
-        generate_grammar_card,
-        generate_trivia_card,
-    ]
+    from django.contrib.auth import get_user_model
 
-    cards = []
-    for gen_fn in generators:
-        card = gen_fn()
-        if card is not None:
-            cards.append(card)
+    User = get_user_model()
+    active_languages = list(User.objects.values_list("target_language", flat=True).distinct())
+    if not active_languages:
+        active_languages = ["fr"]  # safety default; shouldn't fire in practice
+
+    cards: list[DiscoverCard] = []
+    for language in active_languages:
+        for fn in (generate_word_card, generate_grammar_card, generate_trivia_card):
+            try:
+                card = fn(language=language)
+                if card is not None:
+                    cards.append(card)
+            except Exception as exc:
+                logger.warning("%s failed for language=%s: %s", fn.__name__, language, exc)
 
     logger.info("Daily feed generated: %d cards created.", len(cards))
     return cards

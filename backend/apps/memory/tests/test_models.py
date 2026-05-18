@@ -53,3 +53,17 @@ def test_memory_extraction_log_can_link_to_note_and_message():
     assert log_success.note == note
     assert log_null.note is None
     assert log_null.message is None
+
+
+@pytest.mark.django_db
+def test_memory_note_language_defaults_to_fr():
+    user = User.objects.create_user(username="lang_user", email="lu@x.com", password="x")
+    note = MemoryNote.objects.create(user=user, content="x")
+    assert note.language == "fr"
+
+
+@pytest.mark.django_db
+def test_memory_note_can_be_en():
+    user = User.objects.create_user(username="lang_user2", email="lu2@x.com", password="x")
+    note = MemoryNote.objects.create(user=user, content="x", language="en")
+    assert note.language == "en"

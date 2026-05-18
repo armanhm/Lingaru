@@ -1,6 +1,8 @@
 from django.conf import settings
 from django.db import models
 
+from apps.users.constants import LANGUAGE_CHOICES
+
 # Maximum length for MemoryNote.content. Enforced at the serializer
 # layer for the REST API and at the extractor for auto-detected notes
 # so both paths produce notes that fit on a single card in the UI.
@@ -38,13 +40,22 @@ class MemoryNote(models.Model):
     category = models.CharField(max_length=16, choices=CATEGORY_CHOICES, default="other")
     source = models.CharField(max_length=24, choices=SOURCE_CHOICES, default="user")
     is_active = models.BooleanField(default=True)
+    language = models.CharField(
+        max_length=8,
+        choices=LANGUAGE_CHOICES,
+        default="fr",
+        db_index=True,
+    )
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
     class Meta:
         db_table = "memory_notes"
         ordering = ["-updated_at"]
-        indexes = [models.Index(fields=["user", "is_active", "-updated_at"])]
+        indexes = [
+            models.Index(fields=["user", "is_active", "-updated_at"]),  # existing
+            models.Index(fields=["user", "language", "is_active"]),  # new
+        ]
 
     def __str__(self):
         return f"{self.user_id}: {self.content[:60]}"

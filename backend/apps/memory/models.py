@@ -1,6 +1,11 @@
 from django.conf import settings
 from django.db import models
 
+# Maximum length for MemoryNote.content. Enforced at the serializer
+# layer for the REST API and at the extractor for auto-detected notes
+# so both paths produce notes that fit on a single card in the UI.
+MAX_NOTE_CONTENT_LENGTH = 500
+
 
 class MemoryNote(models.Model):
     """A single fact the user wants the assistant to remember.

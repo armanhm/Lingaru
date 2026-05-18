@@ -1324,13 +1324,13 @@ export default function Assistant() {
                   />
                   <div
                     role="dialog"
-                    aria-label="Active memory notes"
+                    aria-label={t("assistant.memory.popoverLabel")}
                     className="absolute right-0 z-50 mt-2 w-80 rounded-lg border border-surface-200 dark:border-surface-800 bg-white dark:bg-surface-900 p-3 shadow-lg"
                     onClick={(e) => e.stopPropagation()}
                   >
                     <div className="space-y-2 max-h-64 overflow-y-auto">
                       {memoryPopoverNotes.length === 0 ? (
-                        <p className="text-xs text-surface-500">No notes</p>
+                        <p className="text-xs text-surface-500">{t("assistant.memory.noNotes")}</p>
                       ) : (
                         memoryPopoverNotes.map((n) => (
                           <div key={n.id} className="text-xs">
@@ -1345,7 +1345,7 @@ export default function Assistant() {
                         onClick={() => setMemoryPopoverOpen(false)}
                         className="text-xs text-surface-500 hover:text-surface-700 dark:hover:text-surface-200"
                       >
-                        Close
+                        {t("common.close")}
                       </button>
                       <a
                         href="/settings"

@@ -232,7 +232,9 @@
       "removed": "Removed from memory",
       "notesActive": "{{count}} note active",
       "notesActive_plural": "{{count}} notes active",
-      "manage": "Manage in Settings"
+      "manage": "Manage in Settings",
+      "popoverLabel": "Active memory notes",
+      "noNotes": "No notes"
     }
   },
 

@@ -232,7 +232,9 @@
       "removed": "Supprimé de la mémoire",
       "notesActive": "{{count}} note active",
       "notesActive_plural": "{{count}} notes actives",
-      "manage": "Gérer dans les Réglages"
+      "manage": "Gérer dans les Réglages",
+      "popoverLabel": "Notes de mémoire actives",
+      "noNotes": "Aucune note"
     }
   },
 

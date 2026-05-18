@@ -19,7 +19,7 @@ from datetime import timedelta
 from django.conf import settings
 from django.utils import timezone
 
-from apps.memory.models import MemoryExtractionLog, MemoryNote
+from apps.memory.models import MAX_NOTE_CONTENT_LENGTH, MemoryExtractionLog, MemoryNote
 from services.llm.base import BaseProvider
 from services.llm.gemini import GeminiProvider
 from services.llm.groq_provider import GroqProvider
@@ -112,7 +112,7 @@ def maybe_extract_note(
         category = "other"
 
     # Cap content to the same limit the serializer enforces.
-    content = content[:500]
+    content = content[:MAX_NOTE_CONTENT_LENGTH]
 
     note = MemoryNote.objects.create(
         user=user,

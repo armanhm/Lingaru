@@ -1,10 +1,19 @@
 """Build the LEARNER CONTEXT block prepended to the assistant's system
 prompt on every text-chat turn. Read-only.
 
-Resilience: each section is wrapped in its own try/except so a missing
-table or schema change in one subsystem cannot kill the chat turn. If
-the outer function itself raises, callers receive an empty string and
-chat proceeds with the unaugmented system prompt.
+Resilience: error handling lives in TWO places, intentionally:
+
+1. The section loop in `assemble_user_context` wraps each `_fetch_*` call
+   in try/except. This is the load-bearing layer: a failing section is
+   logged at WARNING and skipped, the rest of the context still renders.
+2. The outer try/except in `assemble_user_context` catches anything that
+   blows up outside the section loop (e.g. user object mid-deletion).
+   Logged at ERROR, returns "".
+
+We deliberately removed the inner `_safe` decorator on each helper to
+avoid double-logging on failures and to keep the per-section helpers
+readable. The loop's try/except is the single source of resilience for
+section-level errors.
 """
 
 from __future__ import annotations
@@ -58,23 +67,10 @@ def assemble_user_context(user) -> str:
 
 
 # -------- Per-section helpers --------
-# Each wraps its own try/except. Returns either a markdown chunk or ''.
+# Each returns either a markdown chunk or ''. Exceptions propagate to
+# the loop in assemble_user_context, which handles them uniformly.
 
 
-def _safe(fn):
-    """Decorator: wrap a section-builder so it returns '' on any error."""
-
-    def wrapper(user):
-        try:
-            return fn(user)
-        except Exception as exc:
-            logger.warning("memory.context.%s failed: %s", fn.__name__, exc)
-            return ""
-
-    return wrapper
-
-
-@_safe
 def _fetch_identity(user) -> str:
     parts: list[str] = []
     if getattr(user, "target_level", None):
@@ -92,7 +88,6 @@ def _fetch_identity(user) -> str:
     return "**Profile:** " + " . ".join(parts)
 
 
-@_safe
 def _fetch_goal_notes(user) -> str:
     notes = MemoryNote.objects.filter(user=user, category="goal", is_active=True).order_by(
         "created_at"
@@ -103,7 +98,6 @@ def _fetch_goal_notes(user) -> str:
     return "**Goals:**\n" + "\n".join(f"- {c}" for c in contents)
 
 
-@_safe
 def _fetch_recent_mistakes(user) -> str:
     """Top 3 mistake types from the last 7 days, grouped by type."""
     from collections import Counter
@@ -122,7 +116,6 @@ def _fetch_recent_mistakes(user) -> str:
     return f"**Recent mistakes (last 7 days):** {formatted}"
 
 
-@_safe
 def _fetch_weakest_topics(user) -> str:
     """Bottom 3 GrammarMastery rows by mastery_score, only topics the user has touched."""
     from apps.grammar.models import GrammarMastery
@@ -138,7 +131,6 @@ def _fetch_weakest_topics(user) -> str:
     return "**Weakest grammar topics:** " + ", ".join(parts)
 
 
-@_safe
 def _fetch_recent_activity(user) -> str:
     """One-line summary of activity in the last 7 days."""
     from apps.exam_prep.models import ExamSession
@@ -170,7 +162,6 @@ def _fetch_recent_activity(user) -> str:
     return "**This week:** " + ", ".join(parts)
 
 
-@_safe
 def _fetch_preference_weakness_background_notes(user) -> str:
     """All active MemoryNote rows in preference/weakness/background, grouped."""
     headings = {

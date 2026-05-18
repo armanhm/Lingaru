@@ -48,6 +48,7 @@
     "pageTitle": "Settings",
     "pageEyebrow": "Account",
     "pageSubtitle": "Tune Lingaru to fit how you learn, profile, preferences, and account in one place.",
+    "openTabPicker": "Open settings menu",
     "tabs": {
       "profile": "Profile",
       "appearance": "Appearance",

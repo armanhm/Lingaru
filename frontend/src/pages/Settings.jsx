@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { Link } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { useAuth } from "../contexts/AuthContext";
@@ -307,25 +307,32 @@ function MemoryPanel() {
   const CATEGORIES = ["goal", "preference", "background", "weakness", "other"];
 
   return (
-    <div className="space-y-6">
-      <div>
-        <h2 className="text-lg font-semibold text-surface-900 dark:text-surface-50">
-          {t("settings.memory.title")}
-        </h2>
-        <p className="mt-1 text-sm text-surface-600 dark:text-surface-300">
-          {t("settings.memory.subtitle")}
-        </p>
+    <div className="space-y-8">
+      {/* Panel header with brain mark for visual anchor */}
+      <div className="flex items-start gap-3">
+        <div aria-hidden="true" className="hidden sm:flex shrink-0 w-10 h-10 items-center justify-center rounded-lg bg-gradient-to-br from-info-500 to-emerald-500 text-white text-lg">
+          🧠
+        </div>
+        <div>
+          <h2 className="text-xl font-bold text-surface-900 dark:text-surface-50 leading-tight">
+            {t("settings.memory.title")}
+          </h2>
+          <p className="mt-1 text-sm text-surface-600 dark:text-surface-300 max-w-xl">
+            {t("settings.memory.subtitle")}
+          </p>
+        </div>
       </div>
 
       {!adding ? (
         <button
           onClick={() => { setAdding(true); setEditingId(null); setDraft({ content: "", category: "other" }); }}
-          className="rounded-lg border border-dashed border-surface-300 dark:border-surface-700 px-4 py-3 text-sm font-medium text-surface-700 dark:text-surface-200 hover:bg-surface-50 dark:hover:bg-surface-900/50"
+          className="w-full sm:w-auto flex items-center justify-center gap-1.5 rounded-lg border-2 border-dashed border-surface-300 dark:border-surface-700 px-5 py-3 text-sm font-semibold text-surface-700 dark:text-surface-200 hover:border-primary-400 hover:bg-primary-50/50 dark:hover:border-primary-600 dark:hover:bg-primary-900/10 transition-colors"
         >
-          + {t("settings.memory.addNote")}
+          <span className="text-base leading-none">+</span>
+          <span>{t("settings.memory.addNote")}</span>
         </button>
       ) : (
-        <div className="rounded-lg border border-surface-200 dark:border-surface-800 bg-white dark:bg-surface-900/50 p-4 space-y-3">
+        <div className="rounded-xl border border-surface-200 dark:border-surface-800 bg-surface-50/50 dark:bg-surface-900/40 p-4 space-y-3">
           <div className="flex items-center gap-2">
             <label className="text-xs font-medium text-surface-600 dark:text-surface-300">
               {t("settings.memory.categoryLabel")}
@@ -369,7 +376,12 @@ function MemoryPanel() {
       {loading ? (
         <div className="text-sm text-surface-500">…</div>
       ) : notes.length === 0 ? (
-        <p className="text-sm text-surface-500">{t("settings.memory.empty")}</p>
+        <div className="rounded-xl border border-dashed border-surface-200 dark:border-surface-800 px-6 py-8 text-center">
+          <div aria-hidden="true" className="text-3xl mb-2">📝</div>
+          <p className="text-sm text-surface-600 dark:text-surface-300 max-w-sm mx-auto">
+            {t("settings.memory.empty")}
+          </p>
+        </div>
       ) : (
         CATEGORIES.map((cat) => {
           const items = grouped[cat];
@@ -456,16 +468,21 @@ function MemoryPanel() {
         })
       )}
 
-      <div className="flex items-center gap-2 border-t border-surface-200 dark:border-surface-800 pt-4">
-        <input
-          type="checkbox"
-          id="memory-show-inactive"
-          checked={includeInactive}
-          onChange={(e) => setIncludeInactive(e.target.checked)}
-          className="rounded"
-        />
-        <label htmlFor="memory-show-inactive" className="text-sm text-surface-700 dark:text-surface-200">
-          {t("settings.memory.showInactive")}
+      <div className="border-t border-surface-200 dark:border-surface-800 pt-4">
+        <label
+          htmlFor="memory-show-inactive"
+          className="inline-flex items-center gap-2.5 cursor-pointer select-none px-3 py-2 -mx-3 rounded-lg hover:bg-surface-100 dark:hover:bg-surface-800 transition-colors"
+        >
+          <input
+            type="checkbox"
+            id="memory-show-inactive"
+            checked={includeInactive}
+            onChange={(e) => setIncludeInactive(e.target.checked)}
+            className="w-4 h-4 rounded border-surface-300 dark:border-surface-600 text-primary-600 focus:ring-2 focus:ring-primary-500 focus:ring-offset-0"
+          />
+          <span className="text-sm text-surface-700 dark:text-surface-200">
+            {t("settings.memory.showInactive")}
+          </span>
         </label>
       </div>
 
@@ -492,6 +509,70 @@ export default function Settings() {
   const { t, i18n } = useTranslation();
 
   const [activeTab, setActiveTab] = useState("profile");
+  const [mobileNavOpen, setMobileNavOpen] = useState(false);
+  const activeTabConfig = useMemo(() => TABS.find((t) => t.id === activeTab), [activeTab]);
+
+  // Refs for the mobile drawer's accessibility plumbing.
+  const mobileTriggerRef = useRef(null); // the button that opens the drawer
+  const mobileDrawerRef = useRef(null);  // the drawer panel itself, for focus trap
+
+  // When the mobile drawer opens: lock body scroll, listen for Escape,
+  // focus the first interactive element inside it, trap Tab/Shift+Tab.
+  // On close: restore body scroll, return focus to the trigger.
+  useEffect(() => {
+    if (!mobileNavOpen) return undefined;
+
+    const previouslyFocused = document.activeElement;
+    const originalOverflow = document.body.style.overflow;
+    // Capture the trigger ref into a closure so the cleanup uses the
+    // node we had when the effect ran, not whatever it has at cleanup
+    // time. Quiets react-hooks/exhaustive-deps and is correct.
+    const triggerOnOpen = mobileTriggerRef.current;
+    document.body.style.overflow = "hidden";
+
+    // Focus the close button on open (first focusable in the drawer).
+    const focusables = () =>
+      mobileDrawerRef.current
+        ? Array.from(
+            mobileDrawerRef.current.querySelectorAll(
+              "button, [href], input, select, textarea, [tabindex]:not([tabindex='-1'])"
+            )
+          ).filter((el) => !el.hasAttribute("disabled"))
+        : [];
+    const first = focusables()[0];
+    if (first) first.focus();
+
+    const handleKey = (e) => {
+      if (e.key === "Escape") {
+        e.preventDefault();
+        setMobileNavOpen(false);
+        return;
+      }
+      if (e.key !== "Tab") return;
+      const items = focusables();
+      if (items.length === 0) return;
+      const firstEl = items[0];
+      const lastEl = items[items.length - 1];
+      if (e.shiftKey && document.activeElement === firstEl) {
+        e.preventDefault();
+        lastEl.focus();
+      } else if (!e.shiftKey && document.activeElement === lastEl) {
+        e.preventDefault();
+        firstEl.focus();
+      }
+    };
+    document.addEventListener("keydown", handleKey);
+
+    return () => {
+      document.removeEventListener("keydown", handleKey);
+      document.body.style.overflow = originalOverflow;
+      if (previouslyFocused && typeof previouslyFocused.focus === "function") {
+        previouslyFocused.focus();
+      } else if (triggerOnOpen) {
+        triggerOnOpen.focus();
+      }
+    };
+  }, [mobileNavOpen]);
 
   // Profile
   const [username, setUsername] = useState("");
@@ -647,32 +728,122 @@ export default function Settings() {
         gradient
       />
 
-      {/* Segmented tabs */}
-      <div className="card p-1.5 mb-6 sticky top-0 z-20 backdrop-blur-md bg-white/90 dark:bg-surface-800/90 overflow-x-auto">
-        <div className="flex gap-1 min-w-max">
+      {/* Mobile: tab picker button (opens drawer). Hidden on md+ where the
+          sidebar is always visible. */}
+      <button
+        ref={mobileTriggerRef}
+        type="button"
+        onClick={() => setMobileNavOpen(true)}
+        className="md:hidden card w-full flex items-center justify-between p-3 mb-4 text-left"
+        aria-label={t("settings.openTabPicker")}
+        aria-expanded={mobileNavOpen}
+        aria-haspopup="dialog"
+      >
+        <span className="flex items-center gap-2 text-sm font-semibold">
+          <span aria-hidden="true" className="text-base">{activeTabConfig?.icon}</span>
+          <span>{activeTabConfig ? t(activeTabConfig.labelKey) : ""}</span>
+        </span>
+        <svg className="w-5 h-5 text-surface-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
+        </svg>
+      </button>
+
+      {/* Mobile drawer */}
+      {mobileNavOpen && (
+        <div
+          className="md:hidden fixed inset-0 z-50"
+          role="dialog"
+          aria-modal="true"
+          aria-labelledby="settings-mobile-nav-title"
+        >
+          <div
+            className="absolute inset-0 bg-black/50"
+            onClick={() => setMobileNavOpen(false)}
+            aria-hidden="true"
+          />
+          <div
+            ref={mobileDrawerRef}
+            className="absolute left-0 top-0 bottom-0 w-72 max-w-[85%] bg-white dark:bg-surface-900 shadow-xl p-4 overflow-y-auto"
+          >
+            <div className="flex items-center justify-between mb-4">
+              <h3
+                id="settings-mobile-nav-title"
+                className="text-sm font-semibold text-surface-600 dark:text-surface-300 uppercase tracking-wider"
+              >
+                {t("settings.pageTitle")}
+              </h3>
+              <button
+                type="button"
+                onClick={() => setMobileNavOpen(false)}
+                className="p-1 rounded-md text-surface-500 hover:bg-surface-100 dark:hover:bg-surface-800"
+                aria-label={t("common.close")}
+              >
+                <svg aria-hidden="true" className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                </svg>
+              </button>
+            </div>
+            <nav className="flex flex-col gap-1">
+              {TABS.map((tab) => {
+                const isActive = activeTab === tab.id;
+                return (
+                  <button
+                    key={tab.id}
+                    onClick={() => { setActiveTab(tab.id); setMobileNavOpen(false); }}
+                    className={`relative flex items-center gap-2 px-3 py-2 rounded-lg text-sm font-semibold transition-all text-left ${
+                      isActive
+                        ? "text-white shadow-sm"
+                        : "text-surface-600 dark:text-surface-300 hover:bg-surface-100 dark:hover:bg-surface-800"
+                    }`}
+                  >
+                    {isActive && <span className={`absolute inset-0 rounded-lg bg-gradient-to-br ${tab.tint}`} />}
+                    <span aria-hidden="true" className="relative z-10 text-base">{tab.icon}</span>
+                    <span className="relative z-10">{t(tab.labelKey)}</span>
+                  </button>
+                );
+              })}
+            </nav>
+          </div>
+        </div>
+      )}
+
+      <div className="md:flex md:gap-6 md:items-start">
+        {/* Desktop sidebar (md+) */}
+        <aside
+          className="hidden md:flex md:flex-col gap-1 w-[220px] shrink-0 sticky top-4 self-start card p-2"
+          aria-label={t("settings.pageTitle")}
+        >
           {TABS.map((tab) => {
             const isActive = activeTab === tab.id;
             return (
               <button
                 key={tab.id}
                 onClick={() => setActiveTab(tab.id)}
-                className={`relative flex items-center gap-2 px-3.5 py-2 rounded-lg text-sm font-semibold transition-all whitespace-nowrap ${
+                className={`group relative flex items-center gap-2.5 pl-4 pr-3 py-2.5 rounded-lg text-sm font-semibold transition-all text-left ${
                   isActive
                     ? "text-white shadow-sm"
-                    : "text-surface-600 dark:text-surface-300 hover:bg-surface-100 dark:hover:bg-surface-700"
+                    : "text-surface-600 dark:text-surface-300 hover:bg-surface-100/70 dark:hover:bg-surface-800/70"
                 }`}
               >
+                {/* Active gradient pill */}
                 {isActive && <span className={`absolute inset-0 rounded-lg bg-gradient-to-br ${tab.tint}`} />}
-                <span className="relative z-10 text-base">{tab.icon}</span>
+                {/* Hover accent bar (idle items only; sits in the gap reserved by pl-4) */}
+                {!isActive && (
+                  <span
+                    aria-hidden
+                    className={`absolute left-1 top-2 bottom-2 w-[3px] rounded-full bg-gradient-to-b ${tab.tint} opacity-0 group-hover:opacity-100 transition-opacity`}
+                  />
+                )}
+                <span className="relative z-10 text-base transition-transform group-hover:scale-110">{tab.icon}</span>
                 <span className="relative z-10">{t(tab.labelKey)}</span>
               </button>
             );
           })}
-        </div>
-      </div>
+        </aside>
 
-      {/* Profile tab */}
-      {activeTab === "profile" && (
+        <div className="flex-1 min-w-0">
+          {/* Profile tab */}
+          {activeTab === "profile" && (
         <SectionCard title="Profile" description="Your account information and learning goals" icon="👤" tint="from-primary-500 to-purple-600">
           <form onSubmit={handleProfileSave} className="space-y-4">
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
@@ -1084,7 +1255,9 @@ export default function Settings() {
         </>
       )}
 
-      {activeTab === "memory" && <MemoryPanel />}
+          {activeTab === "memory" && <MemoryPanel />}
+        </div>
+      </div>
 
       {modeCelebration && <ModeCelebration card={modeCelebration.card} />}
     </div>

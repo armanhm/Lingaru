@@ -38,6 +38,7 @@ class UserSerializer(serializers.ModelSerializer):
             "email",
             "telegram_id",
             "native_language",
+            "target_language",
             "target_level",
             "daily_goal_minutes",
             "preferences",

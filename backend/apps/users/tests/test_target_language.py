@@ -1,5 +1,6 @@
 import pytest
 from django.contrib.auth import get_user_model
+from rest_framework.test import APIClient
 
 User = get_user_model()
 
@@ -28,3 +29,26 @@ def test_user_target_language_rejects_invalid_via_full_clean():
     user.set_password("x")
     with pytest.raises(ValidationError):
         user.full_clean()
+
+
+@pytest.mark.django_db
+def test_user_me_endpoint_includes_target_language():
+    user = User.objects.create_user(
+        username="me", email="me@x.com", password="x", target_language="en"
+    )
+    client = APIClient()
+    client.force_authenticate(user)
+    response = client.get("/api/users/me/")
+    assert response.status_code == 200
+    assert response.json()["target_language"] == "en"
+
+
+@pytest.mark.django_db
+def test_user_me_patch_target_language():
+    user = User.objects.create_user(username="me2", email="me2@x.com", password="x")
+    client = APIClient()
+    client.force_authenticate(user)
+    response = client.patch("/api/users/me/", {"target_language": "en"}, format="json")
+    assert response.status_code == 200
+    user.refresh_from_db()
+    assert user.target_language == "en"

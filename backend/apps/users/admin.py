@@ -25,11 +25,12 @@ class UserAdmin(BaseUserAdmin):
         "email",
         "is_active",
         "is_staff",
+        "target_language",
         "target_level",
         "telegram_id",
         "date_joined",
     )
-    list_filter = ("is_active", "is_staff", "target_level")
+    list_filter = ("is_active", "is_staff", "target_language", "target_level")
     # Pending approvals (is_active=False) come first, easy to spot.
     ordering = ("is_active", "-date_joined")
     list_per_page = 50

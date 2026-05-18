@@ -7,6 +7,11 @@ from rest_framework.views import APIView
 
 from services.llm.factory import create_llm_router
 from services.llm.prompts import SYSTEM_PROMPTS
+from services.memory import (
+    assemble_user_context,
+    is_memory_enabled,
+    maybe_extract_note,
+)
 from services.rag.context import retrieve_context_for_query
 from services.stt.groq_whisper import GroqWhisperProvider
 from services.tts.service import get_or_create_audio
@@ -91,6 +96,19 @@ class ChatView(APIView):
 
             system_prompt = append_agentic_footer(system_prompt)
 
+        # Memory layer (Phase B): prepend the user's LEARNER CONTEXT block.
+        # Defensive: assemble_user_context never raises, returns '' on failure.
+        # Gated on LINGARU_MEMORY_ENABLED so deploying this code does not
+        # change behaviour for projects that have not opted in.
+        if is_memory_enabled():
+            try:
+                learner_context = assemble_user_context(request.user)
+            except Exception as exc:
+                logger.warning("assemble_user_context unexpectedly raised: %s", exc)
+                learner_context = ""
+            if learner_context:
+                system_prompt = f"{learner_context}\n\n{system_prompt}"
+
         # RAG: retrieve relevant context for conversation mode
         # (skipped when an agent is in charge, agents have their own focused brief).
         rag_used = False
@@ -139,6 +157,33 @@ class ChatView(APIView):
             tokens_used=llm_response.tokens_used,
         )
 
+        # Memory layer (Phase B): post-turn extraction. Synchronous,
+        # ~300-500ms. Never raises -- maybe_extract_note swallows
+        # exceptions and writes a MemoryExtractionLog row instead.
+        memory_saved = None
+        if is_memory_enabled():
+            assistant_message = (
+                Message.objects.filter(conversation=conversation, role="assistant")
+                .order_by("-created_at")
+                .first()
+            )
+            try:
+                note = maybe_extract_note(
+                    user=request.user,
+                    user_message=user_message,
+                    assistant_response=prose,
+                    message=assistant_message,
+                )
+            except Exception as exc:
+                logger.warning("maybe_extract_note unexpectedly raised: %s", exc)
+                note = None
+            if note is not None:
+                memory_saved = {
+                    "id": note.id,
+                    "content": note.content,
+                    "category": note.category,
+                }
+
         # --- Gamification: award XP for 5+ exchange conversations ---
         user_message_count = Message.objects.filter(
             conversation=conversation,
@@ -156,16 +201,17 @@ class ChatView(APIView):
             )
             check_streak(request.user)
 
-        return Response(
-            {
-                "reply": prose,
-                "blocks": blocks,
-                "conversation_id": conversation.id,
-                "provider": llm_response.provider,
-                "tokens_used": llm_response.tokens_used,
-                "rag_used": rag_used,
-            }
-        )
+        response_body = {
+            "reply": prose,
+            "blocks": blocks,
+            "conversation_id": conversation.id,
+            "provider": llm_response.provider,
+            "tokens_used": llm_response.tokens_used,
+            "rag_used": rag_used,
+        }
+        if memory_saved is not None:
+            response_body["memory_saved"] = memory_saved
+        return Response(response_body)
 
 
 class ImageQueryView(APIView):

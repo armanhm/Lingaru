@@ -25,16 +25,22 @@ A comprehensive French language learning application targeting B1 to B2 progress
 | 15 - Grammar Booster | Dedicated grammar app: 6 categories, 11 topics, 90 drill items, SM-2 mastery scoring |
 | 16 - News | Standalone `/news` page — articles by topic with vocab, expressions, and grammar tabs |
 | 17 - UI Overhaul | Premium token system (Inter + Instrument Serif + JetBrains Mono), Hybride dashboard (compass + recommended session), redesigned Assistant (single-column chat with drawers), gradient top-band cards across all pages |
+| 18 - i18n | App-chrome translations (EN/FR) — `i18next` + `react-i18next`, persisted per-user via `user.ui_language`. French stays the learning target; UI chrome is localizable. |
+| 19 - Agents | Admin-editable specialised assistants (slug, system prompt, mode, suggested questions). `/agents` gallery + dedicated run pages, plus `@-mention` routing from the main chat composer. |
+| 20 - Agentic Mode | Inline practice widgets in chat: the assistant emits `action` / `feature_widget` blocks (quiz, conjugate, dictionary lookup, grammar drill, mini-game, news, SRS) that mutate-in-place inside the chat bubble. |
+| 21 - Observability | Sentry (backend + frontend), health probe (`/api/health/`), CI (Ruff + pytest + ESLint + Playwright + Lighthouse + Trivy + coverage), auto-deploy to Hetzner with migration rollback. |
 
 ## Tech Stack
 
 **Backend:** Django 5.1, Django REST Framework, Simple JWT, Celery + Redis, PostgreSQL, Gunicorn
 
-**Frontend:** React 18, Vite 5, React Router 6, Axios, Tailwind CSS 3
+**Frontend:** React 18, Vite 5, React Router 6, Axios, Tailwind CSS 3, i18next (EN/FR app chrome)
 
 **AI/ML:** Google Gemini (primary), Groq (fallback), gTTS, PyPDF2
 
 **Infrastructure:** Docker Compose, Nginx, Redis, PostgreSQL 16
+
+**Observability:** Sentry (Django + React), `/api/health/` liveness probe, GitHub Actions CI + auto-deploy
 
 **Telegram:** python-telegram-bot 21
 
@@ -119,6 +125,7 @@ Lingaru/
 │   │   ├── dictionary/     # French dictionary lookups + verb conjugator
 │   │   ├── exam_prep/      # TCF/TEF prep — exercises, sessions, history
 │   │   ├── grammar/        # Grammar Booster — categories, topics, drills, mastery (SM-2)
+│   │   ├── agents/         # Specialised assistants (admin-editable), agent runs
 │   │   └── bot/            # Telegram bot handlers
 │   ├── config/             # Django settings, URLs, WSGI, Celery
 │   │   └── settings/       # base.py, dev.py, prod.py, test.py
@@ -270,6 +277,23 @@ A dedicated practice surface — French news articles with vocabulary, expressio
 | DELETE | `/api/documents/{id}/` | Delete a document |
 | GET | `/api/documents/{id}/chunks/` | View document chunks |
 
+### Agents (`/api/agents/`)
+
+Specialised assistants, each with their own system prompt, suggested questions, and capabilities. Agents are admin-editable (via Django admin) so the gallery can be tuned without redeploying. The chat composer `@-mention` popover and the `/agents` gallery share the same source of truth.
+
+| Method | Endpoint | Description |
+|--------|----------|-------------|
+| GET | `/api/agents/` | Gallery payload (lean — no system prompt) |
+| GET | `/api/agents/{slug}/` | Full agent detail for the run page |
+| POST | `/api/agents/{slug}/start/` | Create a fresh conversation pinned to this agent |
+| GET | `/api/agents/{slug}/runs/` | User's recent conversations with this agent (last 20) |
+
+### Health (`/api/health/`)
+
+| Method | Endpoint | Description |
+|--------|----------|-------------|
+| GET | `/api/health/` | Liveness + readiness probe (returns 200 if Django can reach the DB, 503 otherwise). Used by the deploy smoke test. |
+
 ## Telegram Bot Setup
 
 1. Create a bot via [@BotFather](https://t.me/BotFather) on Telegram.
@@ -310,6 +334,10 @@ The bot shares the same Django codebase and database -- it calls Django models d
 | `TELEGRAM_BOT_TOKEN` | Telegram bot API token | No (bot won't start without it) |
 | `GEMINI_API_KEY` | Google Gemini API key (primary LLM) | No (AI features disabled) |
 | `GROQ_API_KEY` | Groq API key (fallback LLM) | No (fallback disabled) |
+| `SENTRY_DSN` | Sentry DSN for backend + frontend error tracking | No (Sentry off if empty) |
+| `SENTRY_ENVIRONMENT` | Sentry environment tag (e.g. `production`, `staging`) | No (default: `production`) |
+| `SENTRY_TRACES_SAMPLE_RATE` | Performance trace sample rate (0.0 – 1.0) | No (default: `0.1`) |
+| `SENTRY_RELEASE` | Release identifier (typically the git SHA, set in CI) | No |
 
 ## Testing
 
@@ -330,6 +358,33 @@ pytest apps/progress/tests/test_srs_service.py -v
 ```
 
 Test settings use SQLite and are configured in `backend/config/settings/test.py`. The pytest configuration is in `backend/pytest.ini`.
+
+## CI / Quality Gates
+
+GitHub Actions workflows in `.github/workflows/`:
+
+| Workflow | Triggers | What it does |
+|----------|----------|--------------|
+| `ci.yml` | Push & PR (`main`, `dev`) | Ruff lint + format check, Django pytest with coverage, ESLint, frontend build, Trivy filesystem scan, Playwright e2e |
+| `lighthouse.yml` | PR with frontend changes | Lighthouse CI against a built preview (perf / a11y / SEO / best-practices budgets in `frontend/lighthouserc.json`) |
+| `visual-regression.yml` | PR with frontend changes | Playwright screenshot diff |
+| `deploy.yml` | After successful CI on `main`, or manual dispatch | SSH to Hetzner, capture previous SHA, pull, build, migrate, smoke-test `/api/health/`, auto-rollback on failure |
+
+Dependabot (`.github/dependabot.yml`) groups weekly PRs across pip, npm, GitHub Actions, and Docker.
+
+## Internationalization
+
+The app supports **EN / FR** for the UI chrome (nav, settings, buttons, toasts). French remains the *learning target* — chrome-language and learning-language are independent.
+
+- **Frontend:** `i18next` + `react-i18next` + browser language detector. Strings live in `frontend/src/locales/{en,fr}.json`.
+- **Persistence:** the user's preference is stored in `localStorage` (`lingaru-ui-language`) and mirrored to `user.ui_language` on the server, so it follows them across devices.
+- **Adding a language:** drop a new `{lang}.json` into `frontend/src/locales/`, add it to `SUPPORTED_LANGUAGES` in `frontend/src/i18n.js`.
+
+## Observability
+
+- **Backend:** `sentry-sdk[django,celery]` initialised in `config/settings/prod.py` when `SENTRY_DSN` is set. Performance traces sampled per `SENTRY_TRACES_SAMPLE_RATE`.
+- **Frontend:** `@sentry/react` initialised in `frontend/src/sentry.js`. The deploy workflow stamps `SENTRY_RELEASE` with the git SHA so issues group across releases.
+- **Health probe:** `GET /api/health/` returns 200 if Django can hit Postgres, 503 otherwise. The deploy job hits this after migrations and rolls back if it fails.
 
 ## Deployment
 
@@ -366,3 +421,17 @@ docker compose exec django python manage.py migrate
 | `celery-beat` | Scheduled tasks (daily content, streak checks) |
 | `postgres` | PostgreSQL 16 database |
 | `redis` | Cache + Celery broker |
+
+## Documentation
+
+Deeper docs live in [`docs/`](docs/):
+
+- [`docs/ARCHITECTURE.md`](docs/ARCHITECTURE.md) — system overview, request lifecycle, key conventions
+- [`docs/superpowers/specs/2026-04-04-lingaru-system-design.md`](docs/superpowers/specs/2026-04-04-lingaru-system-design.md) — full original system design
+- [`docs/superpowers/plans/`](docs/superpowers/plans/) — per-phase implementation plans (1 through 17)
+- [`CONTRIBUTING.md`](CONTRIBUTING.md) — dev workflow, commit conventions, how to run tests/lint locally
+- [`SECURITY.md`](SECURITY.md) — vulnerability disclosure policy
+
+## License
+
+[MIT](LICENSE) — see the `LICENSE` file.

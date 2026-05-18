@@ -43,3 +43,42 @@ class MemoryNote(models.Model):
 
     def __str__(self):
         return f"{self.user_id}: {self.content[:60]}"
+
+
+class MemoryExtractionLog(models.Model):
+    """Audit trail for auto-detected notes. Enables:
+    (a) showing the user *why* a note was saved (link back to the message),
+    (b) debugging false positives,
+    (c) capping auto-extraction at N per rolling 24h.
+    """
+
+    user = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        on_delete=models.CASCADE,
+        related_name="memory_extraction_logs",
+    )
+    message = models.ForeignKey(
+        "assistant.Message",
+        on_delete=models.SET_NULL,
+        null=True,
+        blank=True,
+        related_name="memory_extraction_logs",
+    )
+    note = models.ForeignKey(
+        MemoryNote,
+        on_delete=models.SET_NULL,
+        null=True,
+        blank=True,
+        related_name="extraction_logs",
+    )
+    extracted = models.BooleanField()
+    raw_output = models.TextField(blank=True, default="")
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        db_table = "memory_extraction_log"
+        ordering = ["-created_at"]
+        indexes = [models.Index(fields=["user", "-created_at"])]
+
+    def __str__(self):
+        return f"log#{self.pk} user={self.user_id} extracted={self.extracted}"

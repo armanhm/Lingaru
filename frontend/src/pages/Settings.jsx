@@ -1,10 +1,16 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo } from "react";
 import { Link } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { useAuth } from "../contexts/AuthContext";
 import { useTheme } from "../contexts/ThemeContext";
 import { useToast } from "../contexts/ToastContext";
 import client from "../api/client";
+import {
+  listMemoryNotes,
+  createMemoryNote,
+  updateMemoryNote,
+  deleteMemoryNote,
+} from "../api/memory";
 import { PageHeader } from "../components/ui";
 
 const UI_LANGUAGE_OPTIONS = [
@@ -61,6 +67,7 @@ const TABS = [
   { id: "learning",   labelKey: "settings.tabs.learning",   icon: "📚", tint: "from-info-500 to-primary-600" },
   { id: "games",      labelKey: "settings.tabs.games",      icon: "🎮", tint: "from-success-500 to-info-500" },
   { id: "security",   labelKey: "settings.tabs.security",   icon: "🔒", tint: "from-danger-500 to-accent-600" },
+  { id: "memory",     labelKey: "settings.tabs.memory",     icon: "🧠", tint: "from-info-500 to-emerald-500" },
   { id: "mode",       labelKey: "settings.tabs.mode",       icon: "🧭", tint: "from-rose-500 to-purple-600" },
 ];
 
@@ -173,6 +180,265 @@ function GroupHeader({ icon, title }) {
       <span className="text-base">{icon}</span>
       <p className="text-eyebrow uppercase font-bold text-surface-500 dark:text-surface-400 tracking-wider">{title}</p>
       <div className="flex-1 h-px bg-surface-200 dark:bg-surface-700" />
+    </div>
+  );
+}
+
+function MemoryPanel() {
+  const { t } = useTranslation();
+  const [notes, setNotes] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [includeInactive, setIncludeInactive] = useState(false);
+  const [editingId, setEditingId] = useState(null);
+  const [draft, setDraft] = useState({ content: "", category: "other" });
+  const [adding, setAdding] = useState(false);
+  const [recentlyDeleted, setRecentlyDeleted] = useState(null);
+
+  const refresh = async (opts = {}) => {
+    setLoading(true);
+    try {
+      const res = await listMemoryNotes({ includeInactive: opts.includeInactive ?? includeInactive });
+      setNotes(res.data || []);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    refresh({ includeInactive });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [includeInactive]);
+
+  const grouped = useMemo(() => {
+    const acc = { goal: [], preference: [], background: [], weakness: [], other: [] };
+    for (const n of notes) {
+      if (acc[n.category]) acc[n.category].push(n);
+      else acc.other.push(n);
+    }
+    return acc;
+  }, [notes]);
+
+  const handleAdd = async () => {
+    if (!draft.content.trim()) return;
+    await createMemoryNote({ content: draft.content.trim(), category: draft.category });
+    setDraft({ content: "", category: "other" });
+    setAdding(false);
+    refresh();
+  };
+
+  const handleSaveEdit = async (id) => {
+    if (!draft.content.trim()) return;
+    await updateMemoryNote(id, { content: draft.content.trim(), category: draft.category });
+    setEditingId(null);
+    setDraft({ content: "", category: "other" });
+    refresh();
+  };
+
+  const handleDelete = async (note) => {
+    await deleteMemoryNote(note.id);
+    if (recentlyDeleted?.timeoutId) clearTimeout(recentlyDeleted.timeoutId);
+    const timeoutId = setTimeout(() => setRecentlyDeleted(null), 5000);
+    setRecentlyDeleted({ note, timeoutId });
+    refresh();
+  };
+
+  const handleUndo = async () => {
+    if (!recentlyDeleted) return;
+    await updateMemoryNote(recentlyDeleted.note.id, { is_active: true });
+    if (recentlyDeleted.timeoutId) clearTimeout(recentlyDeleted.timeoutId);
+    setRecentlyDeleted(null);
+    refresh();
+  };
+
+  const startEdit = (note) => {
+    setEditingId(note.id);
+    setDraft({ content: note.content, category: note.category });
+    setAdding(false);
+  };
+
+  const formatRelative = (iso) => {
+    const seconds = Math.floor((Date.now() - new Date(iso).getTime()) / 1000);
+    if (seconds < 60) return t("settings.memory.relativeTime.justNow");
+    if (seconds < 3600) return t("settings.memory.relativeTime.minutesAgo", { count: Math.floor(seconds / 60) });
+    if (seconds < 86400) return t("settings.memory.relativeTime.hoursAgo", { count: Math.floor(seconds / 3600) });
+    return t("settings.memory.relativeTime.daysAgo", { count: Math.floor(seconds / 86400) });
+  };
+
+  const CATEGORIES = ["goal", "preference", "background", "weakness", "other"];
+
+  return (
+    <div className="space-y-6">
+      <div>
+        <h2 className="text-lg font-semibold text-surface-900 dark:text-surface-50">
+          {t("settings.memory.title")}
+        </h2>
+        <p className="mt-1 text-sm text-surface-600 dark:text-surface-300">
+          {t("settings.memory.subtitle")}
+        </p>
+      </div>
+
+      {!adding ? (
+        <button
+          onClick={() => { setAdding(true); setEditingId(null); setDraft({ content: "", category: "other" }); }}
+          className="rounded-lg border border-dashed border-surface-300 dark:border-surface-700 px-4 py-3 text-sm font-medium text-surface-700 dark:text-surface-200 hover:bg-surface-50 dark:hover:bg-surface-900/50"
+        >
+          + {t("settings.memory.addNote")}
+        </button>
+      ) : (
+        <div className="rounded-lg border border-surface-200 dark:border-surface-800 bg-white dark:bg-surface-900/50 p-4 space-y-3">
+          <div className="flex items-center gap-2">
+            <label className="text-xs font-medium text-surface-600 dark:text-surface-300">
+              {t("settings.memory.categoryLabel")}
+            </label>
+            <select
+              value={draft.category}
+              onChange={(e) => setDraft({ ...draft, category: e.target.value })}
+              className="rounded-md border border-surface-200 dark:border-surface-700 bg-white dark:bg-surface-950 px-2 py-1 text-sm"
+            >
+              {CATEGORIES.map((c) => (
+                <option key={c} value={c}>{t(`settings.memory.categories.${c}`)}</option>
+              ))}
+            </select>
+          </div>
+          <textarea
+            value={draft.content}
+            onChange={(e) => setDraft({ ...draft, content: e.target.value })}
+            maxLength={500}
+            rows={3}
+            placeholder={t("settings.memory.placeholderExample")}
+            className="w-full rounded-md border border-surface-200 dark:border-surface-700 bg-white dark:bg-surface-950 px-3 py-2 text-sm"
+          />
+          <div className="flex justify-end gap-2">
+            <button
+              onClick={() => { setAdding(false); setDraft({ content: "", category: "other" }); }}
+              className="rounded-md px-3 py-1.5 text-sm text-surface-700 dark:text-surface-200 hover:bg-surface-100 dark:hover:bg-surface-800"
+            >
+              {t("settings.memory.cancel")}
+            </button>
+            <button
+              onClick={handleAdd}
+              disabled={!draft.content.trim()}
+              className="rounded-md bg-primary-600 px-3 py-1.5 text-sm font-medium text-white hover:bg-primary-700 disabled:opacity-50"
+            >
+              {t("settings.memory.save")}
+            </button>
+          </div>
+        </div>
+      )}
+
+      {loading ? (
+        <div className="text-sm text-surface-500">…</div>
+      ) : notes.length === 0 ? (
+        <p className="text-sm text-surface-500">{t("settings.memory.empty")}</p>
+      ) : (
+        CATEGORIES.map((cat) => {
+          const items = grouped[cat];
+          if (!items || items.length === 0) return null;
+          return (
+            <div key={cat}>
+              <h3 className="mb-2 text-xs font-semibold uppercase tracking-wider text-surface-500">
+                {t(`settings.memory.categories.${cat}`)}
+              </h3>
+              <div className="space-y-2">
+                {items.map((note) => (
+                  <div
+                    key={note.id}
+                    className={`rounded-lg border border-surface-200 dark:border-surface-800 bg-white dark:bg-surface-900/40 p-3 ${note.is_active ? "" : "opacity-50"}`}
+                  >
+                    {editingId === note.id ? (
+                      <div className="space-y-2">
+                        <select
+                          value={draft.category}
+                          onChange={(e) => setDraft({ ...draft, category: e.target.value })}
+                          className="rounded-md border border-surface-200 dark:border-surface-700 bg-white dark:bg-surface-950 px-2 py-1 text-sm"
+                        >
+                          {CATEGORIES.map((c) => (
+                            <option key={c} value={c}>{t(`settings.memory.categories.${c}`)}</option>
+                          ))}
+                        </select>
+                        <textarea
+                          value={draft.content}
+                          onChange={(e) => setDraft({ ...draft, content: e.target.value })}
+                          maxLength={500}
+                          rows={2}
+                          className="w-full rounded-md border border-surface-200 dark:border-surface-700 bg-white dark:bg-surface-950 px-2 py-1.5 text-sm"
+                        />
+                        <div className="flex justify-end gap-2">
+                          <button
+                            onClick={() => { setEditingId(null); setDraft({ content: "", category: "other" }); }}
+                            className="rounded-md px-3 py-1 text-xs text-surface-700 dark:text-surface-200 hover:bg-surface-100 dark:hover:bg-surface-800"
+                          >
+                            {t("settings.memory.cancel")}
+                          </button>
+                          <button
+                            onClick={() => handleSaveEdit(note.id)}
+                            disabled={!draft.content.trim()}
+                            className="rounded-md bg-primary-600 px-3 py-1 text-xs font-medium text-white hover:bg-primary-700 disabled:opacity-50"
+                          >
+                            {t("settings.memory.save")}
+                          </button>
+                        </div>
+                      </div>
+                    ) : (
+                      <div className="flex items-start justify-between gap-3">
+                        <div className="flex-1 min-w-0">
+                          <p className="text-sm text-surface-900 dark:text-surface-50">{note.content}</p>
+                          <p className="mt-1 text-xs text-surface-500">
+                            {note.source === "user"
+                              ? t("settings.memory.sourceUser")
+                              : t("settings.memory.sourceAssistant")} · {formatRelative(note.updated_at)}
+                          </p>
+                        </div>
+                        <div className="flex shrink-0 gap-1">
+                          <button
+                            onClick={() => startEdit(note)}
+                            className="rounded-md px-2 py-1 text-xs text-surface-600 dark:text-surface-300 hover:bg-surface-100 dark:hover:bg-surface-800"
+                          >
+                            {t("settings.memory.edit")}
+                          </button>
+                          {note.is_active && (
+                            <button
+                              onClick={() => handleDelete(note)}
+                              className="rounded-md px-2 py-1 text-xs text-danger-600 hover:bg-danger-50 dark:hover:bg-danger-900/20"
+                            >
+                              {t("settings.memory.delete")}
+                            </button>
+                          )}
+                        </div>
+                      </div>
+                    )}
+                  </div>
+                ))}
+              </div>
+            </div>
+          );
+        })
+      )}
+
+      <div className="flex items-center gap-2 border-t border-surface-200 dark:border-surface-800 pt-4">
+        <input
+          type="checkbox"
+          id="memory-show-inactive"
+          checked={includeInactive}
+          onChange={(e) => setIncludeInactive(e.target.checked)}
+          className="rounded"
+        />
+        <label htmlFor="memory-show-inactive" className="text-sm text-surface-700 dark:text-surface-200">
+          {t("settings.memory.showInactive")}
+        </label>
+      </div>
+
+      {recentlyDeleted && (
+        <div className="fixed bottom-6 right-6 z-50 flex items-center gap-3 rounded-lg bg-surface-900 dark:bg-surface-100 px-4 py-2 text-sm text-white dark:text-surface-900 shadow-lg">
+          <span>{t("settings.memory.removed")}</span>
+          <button
+            onClick={handleUndo}
+            className="font-medium underline underline-offset-2"
+          >
+            {t("settings.memory.undo")}
+          </button>
+        </div>
+      )}
     </div>
   );
 }
@@ -775,6 +1041,8 @@ export default function Settings() {
           </div>
         </>
       )}
+
+      {activeTab === "memory" && <MemoryPanel />}
 
       {modeCelebration && <ModeCelebration card={modeCelebration.card} />}
     </div>

@@ -39,6 +39,7 @@ urlpatterns = [
     path("api/exam-prep/", include("apps.exam_prep.urls")),
     path("api/grammar/", include("apps.grammar.urls")),
     path("api/agents/", include("apps.agents.urls")),
+    path("api/memory/", include("apps.memory.urls")),
 ]
 
 if settings.DEBUG:

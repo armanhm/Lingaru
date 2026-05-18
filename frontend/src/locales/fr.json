@@ -54,7 +54,8 @@
       "learning": "Apprentissage",
       "games": "Mini-jeux",
       "security": "Sécurité",
-      "mode": "Mode"
+      "mode": "Mode",
+      "memory": "Mémoire"
     },
     "profile": {
       "title": "Profil",
@@ -111,6 +112,37 @@
       "dangerZoneDescription": "Actions irréversibles sur le compte",
       "deleteAccountWarning": "Une fois le compte supprimé, toutes les données sont effacées définitivement.",
       "deleteAccountButton": "Supprimer le compte (bientôt)"
+    },
+    "memory": {
+      "title": "Ce que l'assistant retient sur vous",
+      "subtitle": "Ces notes sont incluses dans chaque conversation avec l'assistant. L'assistant ne peut ni les modifier ni les supprimer, vous seul le pouvez.",
+      "addNote": "Ajouter une note",
+      "categoryLabel": "Catégorie",
+      "contentLabel": "Contenu",
+      "save": "Enregistrer",
+      "cancel": "Annuler",
+      "edit": "Modifier",
+      "delete": "Supprimer",
+      "undo": "Annuler",
+      "removed": "Note supprimée",
+      "showInactive": "Afficher les notes inactives",
+      "sourceUser": "Ajoutée manuellement",
+      "sourceAssistant": "Détectée depuis le chat",
+      "empty": "Aucune note pour l'instant. Ajoutez-en une ci-dessus, ou demandez à l'assistant de retenir quelque chose.",
+      "relativeTime": {
+        "justNow": "à l'instant",
+        "minutesAgo": "il y a {{count}} min",
+        "hoursAgo": "il y a {{count}} h",
+        "daysAgo": "il y a {{count}} j"
+      },
+      "placeholderExample": "ex : Je confonds toujours depuis et pendant",
+      "categories": {
+        "goal": "Objectifs",
+        "preference": "Préférences",
+        "background": "Parcours",
+        "weakness": "Difficultés",
+        "other": "Autres"
+      }
     }
   },
 

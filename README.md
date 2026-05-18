@@ -288,6 +288,19 @@ Specialised assistants, each with their own system prompt, suggested questions, 
 | POST | `/api/agents/{slug}/start/` | Create a fresh conversation pinned to this agent |
 | GET | `/api/agents/{slug}/runs/` | User's recent conversations with this agent (last 20) |
 
+### Memory (`/api/memory/`)
+
+User-curated notes the assistant remembers across conversations. Notes are scoped to the authenticated user; the assistant cannot edit or delete them, only the user can. Phase A: CRUD only. Phase B will wire these into the chat system prompt and add auto-detection.
+
+| Method | Endpoint | Description |
+|--------|----------|-------------|
+| GET | `/api/memory/notes/` | List active notes. Add `?include_inactive=true` to also include soft-deleted ones. |
+| POST | `/api/memory/notes/` | Create a note (`{content, category?}`). `category` defaults to `"other"`. |
+| PATCH | `/api/memory/notes/{id}/` | Edit content, category, or `is_active`. |
+| DELETE | `/api/memory/notes/{id}/` | Soft-delete (sets `is_active=False`). Idempotent. |
+
+Categories: `goal`, `preference`, `background`, `weakness`, `other`.
+
 ### Health (`/api/health/`)
 
 | Method | Endpoint | Description |

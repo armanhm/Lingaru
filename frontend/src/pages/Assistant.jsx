@@ -1,5 +1,6 @@
 import { useState, useRef, useEffect, useCallback, useMemo } from "react";
 import { Link, useSearchParams } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 import {
@@ -9,6 +10,7 @@ import {
   sendImageQuery,
   sendVoiceChat,
 } from "../api/assistant";
+import { deleteMemoryNote, getMemoryCount, listMemoryNotes } from "../api/memory";
 import useVoiceRecorder from "../hooks/useVoiceRecorder";
 import AudioPlayButton from "../components/AudioPlayButton";
 import QuizBlock, { splitChatMessage } from "../components/QuizBlock";
@@ -649,7 +651,7 @@ function CorrectedText({ text, issues, tone = "default" }) {
 /* ──────────────────────────────────────────────────────────────
  * ChatBubble
  * ────────────────────────────────────────────────────────────── */
-function ChatBubble({ msg }) {
+function ChatBubble({ msg, onUndoMemorySave, t }) {
   const isUser = msg.role === "user";
   return (
     <div className={`flex ${isUser ? "justify-end" : "justify-start"} animate-fade-in-up`}>
@@ -726,6 +728,28 @@ function ChatBubble({ msg }) {
           <p className="mt-1 text-[10.5px] text-danger-600 dark:text-danger-400 font-mono">
             {msg.issues.length} {msg.issues.length === 1 ? "correction" : "corrections"} · survolez les mots soulignés
           </p>
+        )}
+
+        {/* Memory-save chip */}
+        {!isUser && msg.memory_saved && !msg.memory_undone && (
+          <div className="mt-2 flex items-center gap-2 text-xs text-surface-500 dark:text-surface-400">
+            <span aria-hidden>💾</span>
+            <span>
+              {t("assistant.memory.saved")}: <em>{msg.memory_saved.content}</em>
+            </span>
+            <span aria-hidden>·</span>
+            <button
+              onClick={() => onUndoMemorySave?.(msg)}
+              className="underline underline-offset-2 hover:text-surface-700 dark:hover:text-surface-200"
+            >
+              {t("assistant.memory.undo")}
+            </button>
+          </div>
+        )}
+        {!isUser && msg.memory_undone && (
+          <div className="mt-2 text-xs text-surface-400 italic">
+            {t("assistant.memory.removed")}
+          </div>
         )}
       </div>
     </div>
@@ -882,6 +906,7 @@ function MentionedText({ text, tone = "default" }) {
  * ────────────────────────────────────────────────────────────── */
 export default function Assistant() {
   const [searchParams] = useSearchParams();
+  const { t } = useTranslation();
 
   const [mode, setMode] = useState(() => {
     const m = searchParams.get("mode");
@@ -903,6 +928,11 @@ export default function Assistant() {
   const [historyOpen, setHistoryOpen] = useState(false);
   const [tuteurOpen, setTuteurOpen] = useState(false);
   const [erreursOpen, setErreursOpen] = useState(false);
+
+  // Memory indicator + popover
+  const [memoryCount, setMemoryCount] = useState(0);
+  const [memoryPopoverOpen, setMemoryPopoverOpen] = useState(false);
+  const [memoryPopoverNotes, setMemoryPopoverNotes] = useState([]);
 
   const messagesEndRef = useRef(null);
   const fileInputRef = useRef(null);
@@ -933,6 +963,45 @@ export default function Assistant() {
 
   const scrollToBottom = () => messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
   useEffect(() => { scrollToBottom(); }, [messages, loading]);
+
+  // Memory helpers
+  const refreshMemoryCount = async () => {
+    try {
+      const n = await getMemoryCount();
+      setMemoryCount(n);
+    } catch {
+      setMemoryCount(0);
+    }
+  };
+
+  useEffect(() => { refreshMemoryCount(); }, []); // eslint-disable-line react-hooks/exhaustive-deps
+
+  const openMemoryPopover = async () => {
+    setMemoryPopoverOpen(true);
+    try {
+      const res = await listMemoryNotes();
+      setMemoryPopoverNotes(res.data || []);
+    } catch {
+      setMemoryPopoverNotes([]);
+    }
+  };
+
+  const handleUndoMemorySave = async (msg) => {
+    if (!msg.memory_saved) return;
+    try {
+      await deleteMemoryNote(msg.memory_saved.id);
+      setMessages((prev) =>
+        prev.map((m) =>
+          m.memory_saved?.id === msg.memory_saved.id ? { ...m, memory_undone: true } : m
+        )
+      );
+      refreshMemoryCount();
+    } catch (exc) {
+      // Silent: a failed undo is cosmetic, the chip stays put
+      // eslint-disable-next-line no-console
+      console.error("Failed to undo memory save:", exc);
+    }
+  };
 
   useEffect(() => {
     getConversations()
@@ -1048,9 +1117,13 @@ export default function Assistant() {
         blocks: Array.isArray(res.data.blocks) ? res.data.blocks : [],
         provider: res.data.provider,
         ragUsed: res.data.rag_used || false,
+        memory_saved: res.data.memory_saved || null,
       };
       setMessages((prev) => [...prev, assistantMessage]);
       setConversationId(res.data.conversation_id);
+      if (res.data.memory_saved) {
+        refreshMemoryCount();
+      }
     } catch (err) {
       setError(err.response?.data?.detail || "Échec de l'envoi du message.");
     } finally {
@@ -1232,6 +1305,61 @@ export default function Assistant() {
             <Ic.chevDown className="w-3 h-3 text-surface-400 hidden sm:inline" />
           </button>
 
+          {/* Memory indicator + popover */}
+          {memoryCount >= 1 && (
+            <div className="relative">
+              <button
+                type="button"
+                onClick={openMemoryPopover}
+                className="inline-flex items-center gap-1 text-xs text-surface-500 hover:text-surface-700 dark:hover:text-surface-200"
+              >
+                <span aria-hidden>🧠</span>
+                <span className="hidden sm:inline">{t("assistant.memory.notesActive", { count: memoryCount })}</span>
+              </button>
+              {memoryPopoverOpen && (
+                <>
+                  <div
+                    className="fixed inset-0 z-40"
+                    onClick={() => setMemoryPopoverOpen(false)}
+                  />
+                  <div
+                    role="dialog"
+                    aria-label={t("assistant.memory.popoverLabel")}
+                    className="absolute right-0 z-50 mt-2 w-80 rounded-lg border border-surface-200 dark:border-surface-800 bg-white dark:bg-surface-900 p-3 shadow-lg"
+                    onClick={(e) => e.stopPropagation()}
+                  >
+                    <div className="space-y-2 max-h-64 overflow-y-auto">
+                      {memoryPopoverNotes.length === 0 ? (
+                        <p className="text-xs text-surface-500">{t("assistant.memory.noNotes")}</p>
+                      ) : (
+                        memoryPopoverNotes.map((n) => (
+                          <div key={n.id} className="text-xs">
+                            <p className="text-surface-900 dark:text-surface-50">{n.content}</p>
+                            <p className="text-surface-500">{n.category}</p>
+                          </div>
+                        ))
+                      )}
+                    </div>
+                    <div className="mt-3 border-t border-surface-200 dark:border-surface-800 pt-2 flex justify-end gap-2">
+                      <button
+                        onClick={() => setMemoryPopoverOpen(false)}
+                        className="text-xs text-surface-500 hover:text-surface-700 dark:hover:text-surface-200"
+                      >
+                        {t("common.close")}
+                      </button>
+                      <a
+                        href="/settings"
+                        className="text-xs text-primary-600 hover:underline"
+                      >
+                        {t("assistant.memory.manage")}
+                      </a>
+                    </div>
+                  </div>
+                </>
+              )}
+            </div>
+          )}
+
           {/* Erreurs button */}
           <button
             onClick={() => setErreursOpen(true)}
@@ -1289,7 +1417,7 @@ export default function Assistant() {
         ) : (
           <div className="max-w-3xl mx-auto space-y-5">
             {messages.map((m, i) => (
-              <ChatBubble key={i} msg={m} />
+              <ChatBubble key={i} msg={m} onUndoMemorySave={handleUndoMemorySave} t={t} />
             ))}
             {loading && <TypingIndicator />}
 

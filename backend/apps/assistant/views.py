@@ -7,6 +7,11 @@ from rest_framework.views import APIView
 
 from services.llm.factory import create_llm_router
 from services.llm.prompts import SYSTEM_PROMPTS
+from services.memory import (
+    assemble_user_context,
+    is_memory_enabled,
+    maybe_extract_note,
+)
 from services.rag.context import retrieve_context_for_query
 from services.stt.groq_whisper import GroqWhisperProvider
 from services.tts.service import get_or_create_audio
@@ -108,6 +113,23 @@ class ChatView(APIView):
             except Exception as exc:
                 logger.warning("RAG retrieval failed, using standard prompt: %s", exc)
 
+        # Memory layer (Phase B): prepend the user's LEARNER CONTEXT block.
+        # Placed AFTER the RAG block so that when RAG fires (which fully
+        # replaces system_prompt with the rag_conversation template) the
+        # memory context is preserved on top, not overwritten.
+        # The call-site try/except is a deliberate belt-and-suspenders
+        # guard: assemble_user_context already swallows internally, but
+        # "memory cannot break a chat turn" is a hard invariant pinned by
+        # test_assembler_failure_does_not_break_chat. Gated on the flag.
+        if is_memory_enabled():
+            try:
+                learner_context = assemble_user_context(request.user)
+            except Exception as exc:
+                logger.warning("assemble_user_context unexpectedly raised: %s", exc)
+                learner_context = ""
+            if learner_context:
+                system_prompt = f"{learner_context}\n\n{system_prompt}"
+
         # Call LLM
         try:
             router = create_llm_router()
@@ -130,7 +152,7 @@ class ChatView(APIView):
         prose, blocks = extract_blocks(llm_response.content)
 
         # Save assistant response (with blocks attached for the frontend)
-        Message.objects.create(
+        assistant_message = Message.objects.create(
             conversation=conversation,
             role="assistant",
             content=prose,
@@ -138,6 +160,28 @@ class ChatView(APIView):
             provider=llm_response.provider,
             tokens_used=llm_response.tokens_used,
         )
+
+        # Memory layer (Phase B): post-turn extraction. Synchronous,
+        # ~300-500ms. Never raises -- maybe_extract_note swallows
+        # exceptions and writes a MemoryExtractionLog row instead.
+        memory_saved = None
+        if is_memory_enabled():
+            try:
+                note = maybe_extract_note(
+                    user=request.user,
+                    user_message=user_message,
+                    assistant_response=prose,
+                    message=assistant_message,
+                )
+            except Exception as exc:
+                logger.warning("maybe_extract_note unexpectedly raised: %s", exc)
+                note = None
+            if note is not None:
+                memory_saved = {
+                    "id": note.id,
+                    "content": note.content,
+                    "category": note.category,
+                }
 
         # --- Gamification: award XP for 5+ exchange conversations ---
         user_message_count = Message.objects.filter(
@@ -156,16 +200,17 @@ class ChatView(APIView):
             )
             check_streak(request.user)
 
-        return Response(
-            {
-                "reply": prose,
-                "blocks": blocks,
-                "conversation_id": conversation.id,
-                "provider": llm_response.provider,
-                "tokens_used": llm_response.tokens_used,
-                "rag_used": rag_used,
-            }
-        )
+        response_body = {
+            "reply": prose,
+            "blocks": blocks,
+            "conversation_id": conversation.id,
+            "provider": llm_response.provider,
+            "tokens_used": llm_response.tokens_used,
+            "rag_used": rag_used,
+        }
+        if memory_saved is not None:
+            response_body["memory_saved"] = memory_saved
+        return Response(response_body)
 
 
 class ImageQueryView(APIView):

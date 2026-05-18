@@ -225,7 +225,17 @@
     "send": "Envoyer",
     "thinking": "Réflexion…",
     "recentSessions": "Récents",
-    "noSessions": "Aucune conversation pour l'instant"
+    "noSessions": "Aucune conversation pour l'instant",
+    "memory": {
+      "saved": "Enregistré en mémoire",
+      "undo": "Annuler",
+      "removed": "Supprimé de la mémoire",
+      "notesActive": "{{count}} note active",
+      "notesActive_plural": "{{count}} notes actives",
+      "manage": "Gérer dans les Réglages",
+      "popoverLabel": "Notes de mémoire actives",
+      "noNotes": "Aucune note"
+    }
   },
 
   "agents": {

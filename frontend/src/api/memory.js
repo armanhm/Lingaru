@@ -17,3 +17,13 @@ export const updateMemoryNote = (id, payload) =>
 
 export const deleteMemoryNote = (id) =>
   client.delete(`/memory/notes/${id}/`);
+
+/**
+ * Count active notes. The endpoint returns the full list, but the
+ * caller (the indicator in Assistant.jsx) only needs the length.
+ * Cheap enough to call on Assistant mount; do not call on every keystroke.
+ */
+export const getMemoryCount = async () => {
+  const res = await listMemoryNotes();
+  return Array.isArray(res.data) ? res.data.length : 0;
+};

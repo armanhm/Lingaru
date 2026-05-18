@@ -46,13 +46,17 @@ function SectionHeader({ icon, title, count }) {
   );
 }
 
-function VocabSection({ items }) {
+function VocabSection({ items, targetLanguage = "fr" }) {
   if (!items || items.length === 0) return null;
+  const isEn = targetLanguage === "en";
   return (
     <div className="mb-8">
       <SectionHeader icon="📝" title="Vocabulary" count={items.length} />
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-        {items.map((word, i) => (
+        {items.map((word, i) => {
+          const headword = isEn ? word.english : word.french;
+          const translation = isEn ? word.french : word.english;
+          return (
           <div
             key={word.id}
             className="card p-4 card-hover animate-fade-in-up"
@@ -60,13 +64,13 @@ function VocabSection({ items }) {
           >
             <div className="flex items-center justify-between mb-1">
               <div className="flex items-center gap-1.5">
-                <span className="text-base font-bold text-surface-900 dark:text-surface-100">{word.french}</span>
-                {word.gender && (
+                <span className="text-base font-bold text-surface-900 dark:text-surface-100">{headword}</span>
+                {word.gender && !isEn && (
                   <span className="badge-info text-[10px] px-1.5 py-0">{word.gender}</span>
                 )}
-                <AudioPlayButton text={word.french} />
+                <AudioPlayButton text={headword} />
               </div>
-              <span className="text-sm font-medium text-primary-600 dark:text-primary-400">{word.english}</span>
+              <span className="text-sm font-medium text-primary-600 dark:text-primary-400">{translation}</span>
             </div>
             {word.pronunciation && (
               <p className="text-xs text-surface-400 dark:text-surface-500 font-mono mb-1.5">/{word.pronunciation}/</p>
@@ -80,7 +84,8 @@ function VocabSection({ items }) {
               </div>
             )}
           </div>
-        ))}
+          );
+        })}
       </div>
     </div>
   );
@@ -292,7 +297,7 @@ export default function LessonDetail() {
         lessonQuestionCount={videoQuestions.length}
       />
 
-      <VocabSection items={lesson.vocabulary || lesson.vocab} />
+      <VocabSection items={lesson.vocabulary || lesson.vocab} targetLanguage={user?.target_language || lesson.language || "fr"} />
       <GrammarSection rules={lesson.grammar_rules} />
       <ReadingSection texts={lesson.reading_texts} />
       <QuestionsSection questions={lesson.questions} lessonId={id} />

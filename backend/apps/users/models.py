@@ -1,6 +1,8 @@
 from django.contrib.auth.models import AbstractUser
 from django.db import models
 
+from apps.users.constants import LANGUAGE_CHOICES
+
 
 class User(AbstractUser):
     LEVEL_CHOICES = [
@@ -41,6 +43,15 @@ class User(AbstractUser):
     native_language = models.CharField(max_length=10, default="en")
     target_level = models.CharField(max_length=2, choices=LEVEL_CHOICES, default="B2")
     daily_goal_minutes = models.PositiveIntegerField(default=15)
+    target_language = models.CharField(
+        max_length=8,
+        choices=LANGUAGE_CHOICES,
+        default="fr",
+        help_text=(
+            "The language the user is learning. Distinct from native_language "
+            "(what they speak natively) and ui_language (the app chrome)."
+        ),
+    )
     preferences = models.JSONField(default=dict, blank=True)
     mode = models.CharField(
         max_length=12,

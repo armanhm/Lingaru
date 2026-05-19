@@ -59,7 +59,9 @@ function DetailContent({ card }) {
               <span className="text-xs bg-white/70 dark:bg-surface-700/70 text-surface-500 dark:text-surface-400 px-2 py-0.5 rounded-full font-medium">{content.part_of_speech}</span>
             )}
           </div>
-          <p className="text-body-lg text-surface-600 dark:text-surface-300">{translation}</p>
+          {!isEn && (
+            <p className="text-body-lg text-surface-600 dark:text-surface-300">{translation}</p>
+          )}
           {content.pronunciation && !isEn && (
             <p className="text-sm text-surface-400 dark:text-surface-500 font-mono">/{content.pronunciation}/</p>
           )}
@@ -209,7 +211,14 @@ export function CompactCard({ card, onOpen }) {
   const translation = isEn ? content.french : content.english;
 
   let preview = "";
-  if (card.type === "word") preview = translation || "";
+  if (card.type === "word") {
+    if (isEn) {
+      const ex = content.example || "";
+      preview = ex.length > 80 ? ex.slice(0, 80) + "…" : ex;
+    } else {
+      preview = translation || "";
+    }
+  }
   else if (card.type === "grammar") {
     const expl = content.explanation || card.summary || "";
     preview = expl.length > 80 ? expl.slice(0, 80) + "…" : expl;

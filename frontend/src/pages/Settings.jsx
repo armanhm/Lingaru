@@ -687,7 +687,14 @@ export default function Settings() {
   const confirmLanguageSwitch = async () => {
     if (!pendingLanguage) return;
     try {
-      await client.patch("/users/me/", { target_language: pendingLanguage });
+      // Collapse ui_language onto target_language: when the learner is
+      // practicing English, the entire app chrome is in English too.
+      // No bilingual UI. The decoupled "interface language" toggle is
+      // retired in favor of one source of truth.
+      await client.patch("/users/me/", {
+        target_language: pendingLanguage,
+        ui_language: pendingLanguage,
+      });
       // Soft reload so all content lists refetch with the new language.
       window.location.reload();
     } catch {

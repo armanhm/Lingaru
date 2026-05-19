@@ -70,9 +70,11 @@ function VocabSection({ items, targetLanguage = "fr" }) {
                 )}
                 <AudioPlayButton text={headword} />
               </div>
-              <span className="text-sm font-medium text-primary-600 dark:text-primary-400">{translation}</span>
+              {!isEn && (
+                <span className="text-sm font-medium text-primary-600 dark:text-primary-400">{translation}</span>
+              )}
             </div>
-            {word.pronunciation && (
+            {word.pronunciation && !isEn && (
               <p className="text-xs text-surface-400 dark:text-surface-500 font-mono mb-1.5">/{word.pronunciation}/</p>
             )}
             {word.example_sentence && (

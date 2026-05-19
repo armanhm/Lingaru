@@ -98,13 +98,17 @@ export default function FlashcardsInline() {
           ) : (
             <>
               <div className="text-center space-y-1.5 rounded-xl border border-surface-200 dark:border-surface-700 bg-surface-50/60 dark:bg-surface-900/40 py-3 px-3">
-                <p className="text-[16px] font-bold text-surface-900 dark:text-surface-50">
-                  {isEn ? card.french : card.english}
-                </p>
-                {card.example_sentence && (
+                {!isEn && (
+                  <p className="text-[16px] font-bold text-surface-900 dark:text-surface-50">
+                    {card.english}
+                  </p>
+                )}
+                {card.example_sentence ? (
                   <p className="text-[12px] italic text-surface-600 dark:text-surface-400">
                     "{card.example_sentence}"
                   </p>
+                ) : isEn && (
+                  <p className="text-[12px] text-surface-500 dark:text-surface-400">Got it?</p>
                 )}
               </div>
 

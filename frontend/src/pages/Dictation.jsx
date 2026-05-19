@@ -1,7 +1,10 @@
 import { useState, useRef, useCallback } from "react";
+import { Link } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 import { startDictation, checkDictation } from "../api/media";
 import { useCountUp } from "../hooks/useAnimations";
-import { PageHeader } from "../components/ui";
+import { PageHeader, EmptyState } from "../components/ui";
+import { useAuth } from "../contexts/AuthContext";
 
 const API_BASE_URL = import.meta.env.VITE_API_URL || "/api";
 
@@ -13,6 +16,8 @@ function resolveAudioUrl(rawUrl) {
 }
 
 export default function Dictation() {
+  const { user } = useAuth();
+  const { t } = useTranslation();
   const [phase, setPhase] = useState("idle");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
@@ -85,6 +90,33 @@ export default function Dictation() {
     setUserText("");
     handleStart();
   }, [handleStart]);
+
+  if (user?.target_language === "en") {
+    return (
+      <div className="max-w-2xl mx-auto">
+        <PageHeader
+          eyebrow="Listen carefully"
+          title="Dictation"
+          icon="🎧"
+          backTo="/"
+          backLabel="Back to dashboard"
+          gradient
+        />
+        <div className="card p-6">
+          <EmptyState
+            icon="🇬🇧"
+            title={t("common.comingSoonForEnglish")}
+            subtitle={t("common.askAssistantInstead")}
+            action={
+              <Link to="/assistant" className="btn-primary btn-lg">
+                Open assistant
+              </Link>
+            }
+          />
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="max-w-2xl mx-auto">

@@ -375,13 +375,19 @@ export default function SRSReview() {
           ) : (
             <div className="transition-all duration-300 opacity-100">
               <div className="px-8 py-6 text-center border-b border-surface-100 dark:border-surface-700">
-                <p className="section-label mb-2">{backLabel}</p>
-                <p className="text-h2 font-extrabold text-surface-800 dark:text-surface-100">{backWord}</p>
-                {card.example_sentence && (
-                  <div className="mt-4 rounded-xl bg-primary-50/60 dark:bg-primary-900/20 border-l-4 border-primary-400 dark:border-primary-600 pl-4 pr-3 py-2.5 text-left">
+                {!isEn && (
+                  <>
+                    <p className="section-label mb-2">{backLabel}</p>
+                    <p className="text-h2 font-extrabold text-surface-800 dark:text-surface-100">{backWord}</p>
+                  </>
+                )}
+                {card.example_sentence ? (
+                  <div className={`${isEn ? "" : "mt-4"} rounded-xl bg-primary-50/60 dark:bg-primary-900/20 border-l-4 border-primary-400 dark:border-primary-600 pl-4 pr-3 py-2.5 text-left`}>
                     <p className="section-label mb-0.5">Example</p>
                     <p className="text-sm text-surface-700 dark:text-surface-300 italic">"{card.example_sentence}"</p>
                   </div>
+                ) : isEn && (
+                  <p className="text-sm text-surface-500 dark:text-surface-400">Tap again to rate</p>
                 )}
               </div>
 

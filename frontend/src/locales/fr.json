@@ -275,7 +275,145 @@
   "dashboard": {
     "welcomeBack": "Bon retour, {{name}}",
     "todayLabel": "Aujourd'hui",
-    "noActivity": "Aucune activité récente"
+    "noActivity": "Aucune activité récente",
+    "youFallback": "vous",
+    "streakLabel": "jours d'affilée",
+    "xpLabel": "XP",
+    "modeChip": {
+      "general": "🎒 Apprentissage",
+      "exam": "🎯 Prépa examen",
+      "agentic": "🤖 Mode agent"
+    },
+    "hero": {
+      "recommendedEyebrow": "Recommandé · axe sélectionné · {{axis}}",
+      "title": "Le subjonctif présent",
+      "subtitle": ": il faut que je comprenne",
+      "description": "12 minutes · 9 questions ciblées sur les verbes irréguliers (<1>aller, faire, savoir</1>). Vous avez fait <2>3 erreurs</2> sur ce point cette semaine.",
+      "startCta": "Commencer · 12 min",
+      "pickAnother": "Choisir autre chose",
+      "objectiveLabel": "{{value}}/100 · objectif {{target}}"
+    },
+    "compass": {
+      "eyebrow": "La boussole",
+      "title": "Compétences · B1 vers B2",
+      "clickHint": "cliquez un axe",
+      "towards": "vers B2"
+    },
+    "skills": {
+      "vocab": "Vocabulaire",
+      "grammar": "Grammaire",
+      "listen": "Compréhension",
+      "speak": "Expression",
+      "read": "Lecture",
+      "write": "Rédaction",
+      "hints": {
+        "vocab": "+82 mots cette semaine",
+        "grammar": "Subjonctif à revoir",
+        "listen": "Dictée · 4 sessions",
+        "speak": "3 roleplays cette semaine",
+        "read": "Discover · article B1",
+        "write": "1 dictée corrigée"
+      }
+    },
+    "plan": {
+      "warm": "Échauffement",
+      "focus": "Séance ciblée",
+      "talk": "Parler",
+      "minutes": "min"
+    },
+    "quote": {
+      "eyebrow": "Citation du jour",
+      "next": "Citation suivante",
+      "showTranslation": "Voir la traduction →",
+      "hideTranslation": "Masquer la traduction",
+      "types": {
+        "proverb": "Proverbe",
+        "inspiration": "Inspiration",
+        "poem": "Poésie",
+        "literature": "Littérature",
+        "philosophy": "Philosophie"
+      },
+      "authors": {
+        "frenchProverb": "Proverbe français",
+        "popularWisdom": "Sagesse populaire"
+      }
+    },
+    "exam": {
+      "eyebrow": "Compte à rebours TCF",
+      "scoreTarget": "Score cible · 500",
+      "daysRemainingLine1": "jours",
+      "daysRemainingLine2": "restants",
+      "registration": "inscription",
+      "today": "aujourd'hui · J−{{days}}",
+      "exam": "examen",
+      "listening": "Compr. orale",
+      "reading": "Compr. écrite",
+      "lexGrammar": "Lex. & gram.",
+      "defaultDate": "12 juin 2026"
+    },
+    "word": {
+      "eyebrow": "Mot du jour",
+      "newWord": "Nouveau mot",
+      "fullDefinition": "Définition complète",
+      "fallbackEn": {
+        "french": "flâner",
+        "english": "se promener sans but",
+        "pronunciation": "flɑ.ne",
+        "example": "J'aime flâner le long de la Seine au coucher du soleil."
+      }
+    },
+    "rail": {
+      "flashcards": "Flashcards",
+      "roleplay": "Roleplay",
+      "dictation": "Dictée",
+      "miniGames": "Mini-jeux",
+      "due": "{{count}} dues",
+      "upToDate": "à jour",
+      "ai": "AI",
+      "source": "RFI",
+      "games": "6 jeux"
+    },
+    "activity": {
+      "eyebrow": "Journal récent",
+      "viewAll": "tout voir →",
+      "types": {
+        "quiz": "Quiz",
+        "flashcard_review": "Flashcards",
+        "conjugation_drill": "Conjugaison",
+        "pronunciation": "Prononciation",
+        "dictation": "Dictée",
+        "mini_game": "Mini-jeu",
+        "roleplay": "Roleplay",
+        "grammar": "Grammaire",
+        "lesson_complete": "Leçon"
+      },
+      "perWeek": "{{count}} cette semaine",
+      "errorText": "Erreur, « {{text}} »",
+      "recentError": "Erreur récente",
+      "toReview": "à revoir",
+      "streakDays": "Série de {{count}} jours",
+      "today": "aujourd'hui",
+      "noneYet": "Aucune activité récente"
+    },
+    "resume": {
+      "eyebrow": "Reprendre où vous étiez",
+      "continue": "Continuer",
+      "dismiss": "Ignorer"
+    },
+    "timeAgo": {
+      "now": "à l'instant",
+      "minutes": "il y a {{count}} min",
+      "hours": "il y a {{count}} h",
+      "yesterday": "hier",
+      "days": "il y a {{count}} jours",
+      "recently": "récemment"
+    },
+    "greeting": {
+      "morning": "Bonjour",
+      "afternoon": "Bon après-midi",
+      "evening": "Bonsoir",
+      "night": "Bonne nuit"
+    }
   },
 
   "news": {

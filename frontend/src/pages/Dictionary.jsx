@@ -1,9 +1,10 @@
 import { useState, useEffect } from "react";
-import { useSearchParams } from "react-router-dom";
+import { useSearchParams, Link } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 import { lookupWord, conjugateVerb } from "../api/dictionary";
 import AudioPlayButton from "../components/AudioPlayButton";
 import { staggerDelay } from "../hooks/useAnimations";
-import { PageHeader } from "../components/ui";
+import { PageHeader, EmptyState } from "../components/ui";
 import { useAuth } from "../contexts/AuthContext";
 import { ComingSoonBadge } from "../components/ui/ComingSoonBadge";
 import { isAvailable } from "../lib/featureAvailability";
@@ -289,6 +290,7 @@ function ConjugationResult({ result }) {
 
 export default function Dictionary() {
   const { user } = useAuth();
+  const { t } = useTranslation();
   const [searchParams] = useSearchParams();
   const [tab, setTab] = useState(searchParams.get("tab") === "conjugator" ? "conjugator" : "dictionary");
 
@@ -366,6 +368,33 @@ export default function Dictionary() {
         .finally(() => setConjLoading(false));
     }
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
+
+  if (user?.target_language === "en") {
+    return (
+      <div className="max-w-2xl mx-auto">
+        <PageHeader
+          eyebrow="Lookup"
+          title="Dictionary"
+          icon="📖"
+          backTo="/"
+          backLabel="Back to dashboard"
+          gradient
+        />
+        <div className="card p-6">
+          <EmptyState
+            icon="🇬🇧"
+            title={t("common.comingSoonForEnglish")}
+            subtitle={t("common.askAssistantInstead")}
+            action={
+              <Link to="/assistant" className="btn-primary btn-lg">
+                Open assistant
+              </Link>
+            }
+          />
+        </div>
+      </div>
+    );
+  }
 
   const quickLookup = (word) => {
     setDictInput(word);

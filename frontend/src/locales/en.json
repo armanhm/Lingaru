@@ -91,7 +91,7 @@
     },
     "language": {
       "title": "Interface language",
-      "description": "Switch the language of the app chrome (nav, settings, buttons). The language being learned is always French.",
+      "description": "Switch the language of the app chrome (nav, settings, buttons).",
       "savedToast": "Language saved",
       "errorToast": "Failed to save language"
     },
@@ -127,7 +127,7 @@
       "telegramLinked": "Linked",
       "telegramNotLinked": "Not linked. Start the Lingaru bot on Telegram and send /start to connect your account.",
       "documentsTitle": "Documents",
-      "documentsDescription": "Upload French textbooks and notes, the AI assistant uses them to give grounded answers.",
+      "documentsDescription": "Upload textbooks and notes, the AI assistant uses them to give grounded answers.",
       "manageDocuments": "Manage documents",
       "dangerZone": "Danger zone",
       "dangerZoneDescription": "Irreversible account actions",
@@ -226,7 +226,7 @@
 
   "auth": {
     "loginTitle": "Welcome back",
-    "loginSubtitle": "Sign in to keep building your French",
+    "loginSubtitle": "Sign in to keep building your skills",
     "registerTitle": "Create your account",
     "registerSubtitle": "A few details and you're in",
     "username": "Username",
@@ -246,9 +246,9 @@
 
   "assistant": {
     "title": "Conversation",
-    "subtitle": "Speak freely in French, Claire will correct you as you chat.",
+    "subtitle": "Chat freely with your AI tutor — corrections as you go.",
     "newChat": "New chat",
-    "placeholder": "Ask anything in French…",
+    "placeholder": "Ask anything…",
     "send": "Send",
     "thinking": "Thinking…",
     "recentSessions": "Recent",
@@ -275,7 +275,145 @@
   "dashboard": {
     "welcomeBack": "Welcome back, {{name}}",
     "todayLabel": "Today",
-    "noActivity": "No recent activity"
+    "noActivity": "No recent activity",
+    "youFallback": "you",
+    "streakLabel": "day streak",
+    "xpLabel": "XP",
+    "modeChip": {
+      "general": "🎒 Learning",
+      "exam": "🎯 Exam prep",
+      "agentic": "🤖 Agent mode"
+    },
+    "hero": {
+      "recommendedEyebrow": "Recommended · selected axis · {{axis}}",
+      "title": "Present perfect tense",
+      "subtitle": ": forms you actually use",
+      "description": "12 minutes · 9 targeted questions on irregular verbs (<1>be, have, do</1>). You made <2>3 mistakes</2> on this point this week.",
+      "startCta": "Start · 12 min",
+      "pickAnother": "Pick something else",
+      "objectiveLabel": "{{value}}/100 · target {{target}}"
+    },
+    "compass": {
+      "eyebrow": "The compass",
+      "title": "Skills · B1 to B2",
+      "clickHint": "click an axis",
+      "towards": "to B2"
+    },
+    "skills": {
+      "vocab": "Vocabulary",
+      "grammar": "Grammar",
+      "listen": "Comprehension",
+      "speak": "Speaking",
+      "read": "Reading",
+      "write": "Writing",
+      "hints": {
+        "vocab": "+82 words this week",
+        "grammar": "Review subjunctive",
+        "listen": "Dictation · 4 sessions",
+        "speak": "3 roleplays this week",
+        "read": "Discover · B1 article",
+        "write": "1 dictation reviewed"
+      }
+    },
+    "plan": {
+      "warm": "Warm-up",
+      "focus": "Focused session",
+      "talk": "Speak",
+      "minutes": "min"
+    },
+    "quote": {
+      "eyebrow": "Quote of the day",
+      "next": "Next quote",
+      "showTranslation": "Show translation →",
+      "hideTranslation": "Hide translation",
+      "types": {
+        "proverb": "Proverb",
+        "inspiration": "Inspiration",
+        "poem": "Poetry",
+        "literature": "Literature",
+        "philosophy": "Philosophy"
+      },
+      "authors": {
+        "frenchProverb": "Proverb",
+        "popularWisdom": "Folk wisdom"
+      }
+    },
+    "exam": {
+      "eyebrow": "Exam countdown",
+      "scoreTarget": "Target score · 500",
+      "daysRemainingLine1": "days",
+      "daysRemainingLine2": "remaining",
+      "registration": "registration",
+      "today": "today · D−{{days}}",
+      "exam": "exam",
+      "listening": "Listening",
+      "reading": "Reading",
+      "lexGrammar": "Lex. & gram.",
+      "defaultDate": "June 12, 2026"
+    },
+    "word": {
+      "eyebrow": "Word of the day",
+      "newWord": "New word",
+      "fullDefinition": "Full definition",
+      "fallbackEn": {
+        "french": "to stroll",
+        "english": "to walk leisurely without purpose",
+        "pronunciation": "stroʊl",
+        "example": "We strolled along the river at sunset."
+      }
+    },
+    "rail": {
+      "flashcards": "Flashcards",
+      "roleplay": "Roleplay",
+      "dictation": "Dictation",
+      "miniGames": "Mini-games",
+      "due": "{{count}} due",
+      "upToDate": "up to date",
+      "ai": "AI",
+      "source": "Audio",
+      "games": "6 games"
+    },
+    "activity": {
+      "eyebrow": "Recent journal",
+      "viewAll": "view all →",
+      "types": {
+        "quiz": "Quiz",
+        "flashcard_review": "Flashcards",
+        "conjugation_drill": "Conjugation",
+        "pronunciation": "Pronunciation",
+        "dictation": "Dictation",
+        "mini_game": "Mini-game",
+        "roleplay": "Roleplay",
+        "grammar": "Grammar",
+        "lesson_complete": "Lesson"
+      },
+      "perWeek": "{{count}} this week",
+      "errorText": "Mistake: \"{{text}}\"",
+      "recentError": "Recent mistake",
+      "toReview": "to review",
+      "streakDays": "{{count}}-day streak",
+      "today": "today",
+      "noneYet": "No recent activity"
+    },
+    "resume": {
+      "eyebrow": "Pick up where you left off",
+      "continue": "Continue",
+      "dismiss": "Dismiss"
+    },
+    "timeAgo": {
+      "now": "just now",
+      "minutes": "{{count}} min ago",
+      "hours": "{{count}}h ago",
+      "yesterday": "yesterday",
+      "days": "{{count}} days ago",
+      "recently": "recently"
+    },
+    "greeting": {
+      "morning": "Good morning",
+      "afternoon": "Good afternoon",
+      "evening": "Good evening",
+      "night": "Good night"
+    }
   },
 
   "news": {
@@ -288,7 +426,7 @@
 
   "discover": {
     "pageTitle": "Discover",
-    "pageSubtitle": "Bite-sized French content, refreshed daily.",
+    "pageSubtitle": "Bite-sized content, refreshed daily.",
     "generateMore": "Generate more",
     "generating": "Generating…"
   },

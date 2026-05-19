@@ -222,6 +222,12 @@ export default function Layout() {
     [user?.mode],
   );
 
+  useEffect(() => {
+    const mode = user?.mode || "general";
+    const link = document.getElementById("app-favicon");
+    if (link) link.href = `/favicon-${mode}.png`;
+  }, [user?.mode]);
+
   const toggleSection = (label) => {
     setCollapsedSections((prev) => {
       const next = { ...prev, [label]: !prev[label] };

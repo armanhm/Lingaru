@@ -396,7 +396,9 @@ class Command(BaseCommand):
                 )
             else:
                 total_skipped += len(skipped_fields)
-                self.stdout.write(f"  ~ {agent.slug}: all {len(skipped_fields)} EN fields already set")
+                self.stdout.write(
+                    f"  ~ {agent.slug}: all {len(skipped_fields)} EN fields already set"
+                )
 
         self.stdout.write(
             self.style.SUCCESS(

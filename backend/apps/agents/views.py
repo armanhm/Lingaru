@@ -20,9 +20,7 @@ class AgentListView(APIView):
 
     def get(self, request):
         qs = Agent.objects.filter(is_active=True).order_by("order", "name")
-        return Response(
-            AgentListSerializer(qs, many=True, context={"request": request}).data
-        )
+        return Response(AgentListSerializer(qs, many=True, context={"request": request}).data)
 
 
 class AgentDetailView(APIView):

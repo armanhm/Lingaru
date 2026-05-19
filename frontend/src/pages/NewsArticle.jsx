@@ -1,21 +1,36 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 import { getNewsArticle, interactWithNews } from "../api/news";
+import { useAuth } from "../contexts/AuthContext";
 import { PageHeader } from "../components/ui";
 import AudioPlayButton from "../components/AudioPlayButton";
 import { staggerDelay } from "../hooks/useAnimations";
 
-const TOPICS = {
-  politics: { label: "Politique",     emoji: "🏛️", tint: "from-info-500 to-primary-600" },
-  sports:   { label: "Sport",         emoji: "⚽", tint: "from-success-500 to-info-500" },
-  culture:  { label: "Culture",       emoji: "🎭", tint: "from-accent-500 to-purple-500" },
-  economy:  { label: "Économie",      emoji: "💶", tint: "from-warn-500 to-accent-500" },
-  science:  { label: "Science",       emoji: "🔬", tint: "from-info-500 to-success-500" },
-  tech:     { label: "Tech",          emoji: "💻", tint: "from-primary-500 to-info-500" },
-  society:  { label: "Société",       emoji: "👥", tint: "from-purple-500 to-pink-500" },
-  environ:  { label: "Environnement", emoji: "🌿", tint: "from-success-500 to-warn-500" },
-  world:    { label: "Monde",         emoji: "🌍", tint: "from-info-500 to-purple-600" },
-  misc:     { label: "Divers",        emoji: "🗞️", tint: "from-primary-500 to-purple-600" },
+const TOPIC_TINTS = {
+  politics: "from-info-500 to-primary-600",
+  sports:   "from-success-500 to-info-500",
+  culture:  "from-accent-500 to-purple-500",
+  economy:  "from-warn-500 to-accent-500",
+  science:  "from-info-500 to-success-500",
+  tech:     "from-primary-500 to-info-500",
+  society:  "from-purple-500 to-pink-500",
+  environ:  "from-success-500 to-warn-500",
+  world:    "from-info-500 to-purple-600",
+  misc:     "from-primary-500 to-purple-600",
+};
+
+const TOPIC_EMOJIS = {
+  politics: "🏛️",
+  sports:   "⚽",
+  culture:  "🎭",
+  economy:  "💶",
+  science:  "🔬",
+  tech:     "💻",
+  society:  "👥",
+  environ:  "🌿",
+  world:    "🌍",
+  misc:     "🗞️",
 };
 
 const LEVEL_TONE = {
@@ -27,28 +42,31 @@ const LEVEL_TONE = {
   C2: "bg-danger-50 text-danger-700 border-danger-200 dark:bg-danger-900/30 dark:text-danger-300 dark:border-danger-800",
 };
 
-const TABS = [
-  { key: "vocabulary",     label: "Vocabulaire", emoji: "📚", tint: "from-primary-500 to-info-500" },
-  { key: "expressions",    label: "Expressions", emoji: "💬", tint: "from-accent-500 to-purple-500" },
-  { key: "grammar_points", label: "Grammaire",   emoji: "🧠", tint: "from-purple-500 to-primary-600" },
+const TAB_META = [
+  { key: "vocabulary",     emoji: "📚", tint: "from-primary-500 to-info-500" },
+  { key: "expressions",    emoji: "💬", tint: "from-accent-500 to-purple-500" },
+  { key: "grammar_points", emoji: "🧠", tint: "from-purple-500 to-primary-600" },
 ];
 
-function VocabRow({ item, i }) {
+function VocabRow({ item, i, isEn }) {
+  const headword = isEn ? item.english : item.french;
   return (
     <div
       className="rounded-xl border border-surface-100 dark:border-surface-800 bg-white dark:bg-surface-900/40 p-3.5 animate-fade-in-up"
       style={staggerDelay(i, 50)}
     >
       <div className="flex items-baseline gap-2 flex-wrap">
-        <span className="font-sans font-bold text-[18px] leading-tight text-surface-900 dark:text-surface-50">{item.french}</span>
-        <AudioPlayButton text={item.french} />
+        <span className="font-sans font-bold text-[18px] leading-tight text-surface-900 dark:text-surface-50">{headword}</span>
+        <AudioPlayButton text={headword} />
         {item.pos && (
           <span className="text-[10px] uppercase tracking-[0.12em] font-bold text-surface-500 dark:text-surface-400 bg-surface-100 dark:bg-surface-800 px-1.5 py-0.5 rounded">
             {item.pos}
           </span>
         )}
       </div>
-      <p className="text-[13px] text-surface-700 dark:text-surface-300 mt-1.5 font-medium">{item.english}</p>
+      {!isEn && (
+        <p className="text-[13px] text-surface-700 dark:text-surface-300 mt-1.5 font-medium">{item.english}</p>
+      )}
       {item.example_fr && (
         <p className="text-[12px] italic text-surface-500 dark:text-surface-400 mt-1.5 leading-snug">
           « {item.example_fr} »
@@ -58,17 +76,20 @@ function VocabRow({ item, i }) {
   );
 }
 
-function ExpressionRow({ item, i }) {
+function ExpressionRow({ item, i, isEn }) {
+  const headword = isEn ? item.en : item.fr;
   return (
     <div
       className="rounded-xl border border-accent-100 dark:border-accent-900/40 bg-gradient-to-br from-accent-50/60 to-white dark:from-accent-950/30 dark:to-surface-900/40 p-3.5 animate-fade-in-up"
       style={staggerDelay(i, 50)}
     >
       <div className="flex items-baseline gap-2 flex-wrap">
-        <span className="font-sans font-bold text-[16px] leading-tight text-surface-900 dark:text-surface-50">{item.fr}</span>
-        <AudioPlayButton text={item.fr} />
+        <span className="font-sans font-bold text-[16px] leading-tight text-surface-900 dark:text-surface-50">{headword}</span>
+        <AudioPlayButton text={headword} />
       </div>
-      <p className="text-[13px] text-surface-700 dark:text-surface-300 mt-1.5 font-medium">{item.en}</p>
+      {!isEn && (
+        <p className="text-[13px] text-surface-700 dark:text-surface-300 mt-1.5 font-medium">{item.en}</p>
+      )}
       {item.note && (
         <p className="text-[12px] text-accent-700 dark:text-accent-300 mt-1.5 leading-snug border-l-2 border-accent-300 dark:border-accent-700 pl-2.5">
           {item.note}
@@ -106,6 +127,10 @@ function GrammarRow({ item, i }) {
 
 export default function NewsArticle() {
   const { id } = useParams();
+  const { t } = useTranslation();
+  const { user } = useAuth();
+  const targetLanguage = user?.target_language || "fr";
+  const isEn = targetLanguage === "en";
   const [article, setArticle] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -117,9 +142,9 @@ export default function NewsArticle() {
     setError(null);
     getNewsArticle(id)
       .then((res) => setArticle(res.data))
-      .catch(() => setError("Article introuvable."))
+      .catch(() => setError(t("news.notFound")))
       .finally(() => setLoading(false));
-  }, [id]);
+  }, [id, t]);
 
   // Award XP on first read (fire and forget)
   useEffect(() => {
@@ -145,15 +170,18 @@ export default function NewsArticle() {
   if (error || !article) {
     return (
       <div className="max-w-2xl mx-auto">
-        <PageHeader title="Article introuvable" backTo="/news" backLabel="Retour aux actualités" />
+        <PageHeader title={t("news.notFound")} backTo="/news" backLabel={t("news.backToNews")} />
         <div className="bg-danger-50 dark:bg-danger-900/20 border border-danger-200 dark:border-danger-800 rounded-xl px-4 py-3 text-sm text-danger-700 dark:text-danger-300">
-          {error || "Cet article n'existe pas."}
+          {error || t("news.articleDoesNotExist")}
         </div>
       </div>
     );
   }
 
-  const topic = TOPICS[article.topic] || TOPICS.misc;
+  const topicKey = TOPIC_TINTS[article.topic] ? article.topic : "misc";
+  const topicTint = TOPIC_TINTS[topicKey];
+  const topicEmoji = TOPIC_EMOJIS[topicKey];
+  const topicLabel = t(`news.topics.${topicKey}`);
   const levelClass = LEVEL_TONE[article.level] || LEVEL_TONE.B1;
 
   const counts = {
@@ -161,24 +189,25 @@ export default function NewsArticle() {
     expressions:    article.expressions?.length || 0,
     grammar_points: article.grammar_points?.length || 0,
   };
+  const totalCount = counts.vocabulary + counts.expressions + counts.grammar_points;
 
   return (
     <div className="max-w-4xl mx-auto">
       <PageHeader
-        eyebrow={`${topic.emoji} ${topic.label}`}
+        eyebrow={`${topicEmoji} ${topicLabel}`}
         title={article.title}
         backTo="/news"
-        backLabel="Retour aux actualités"
+        backLabel={t("news.backToNews")}
       />
 
       {/* ─── Article body (full width) ────────────────────────────── */}
       <article className="card relative overflow-hidden p-6 sm:p-8 animate-fade-in-up">
-        <div className={`absolute inset-x-0 top-0 h-1 bg-gradient-to-r ${topic.tint}`} />
+        <div className={`absolute inset-x-0 top-0 h-1 bg-gradient-to-r ${topicTint}`} />
 
         <div className="flex items-center justify-between gap-3 flex-wrap mb-4">
-          <span className={`inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[11px] font-bold bg-gradient-to-br ${topic.tint} text-white shadow-sm`}>
-            <span>{topic.emoji}</span>
-            {topic.label}
+          <span className={`inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[11px] font-bold bg-gradient-to-br ${topicTint} text-white shadow-sm`}>
+            <span>{topicEmoji}</span>
+            {topicLabel}
           </span>
           <div className="flex items-center gap-2">
             {article.level && (
@@ -207,7 +236,7 @@ export default function NewsArticle() {
         {(article.source_name || article.source_url) && (
           <div className="mb-5 pb-5 border-b border-surface-100 dark:border-surface-800 flex items-center gap-2 flex-wrap">
             <span className="text-[10px] uppercase tracking-[0.14em] font-semibold text-surface-500 dark:text-surface-400">
-              Source
+              {t("news.sourceLabel")}
             </span>
             {article.source_name && (
               <span className="text-[12px] font-semibold text-surface-700 dark:text-surface-200">
@@ -221,7 +250,7 @@ export default function NewsArticle() {
                 rel="noopener noreferrer"
                 className="inline-flex items-center gap-1 text-[12px] font-semibold text-primary-600 dark:text-primary-400 hover:text-primary-700 dark:hover:text-primary-300 hover:underline focus-ring rounded px-1 -mx-1"
               >
-                Lire l'article original
+                {t("news.readOriginal")}
                 <svg className="w-3 h-3" fill="none" stroke="currentColor" strokeWidth={2.5} viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
                 </svg>
@@ -232,20 +261,20 @@ export default function NewsArticle() {
 
         <div className="flex items-center gap-2 mb-3">
           <AudioPlayButton text={article.article_fr} />
-          <span className="text-[11px] uppercase tracking-[0.14em] font-semibold text-surface-500 dark:text-surface-400">Écouter l'article</span>
+          <span className="text-[11px] uppercase tracking-[0.14em] font-semibold text-surface-500 dark:text-surface-400">{t("news.listenArticle")}</span>
         </div>
 
         <p className="text-[15px] sm:text-[16px] leading-[1.75] text-surface-800 dark:text-surface-100 whitespace-pre-line max-w-[72ch]">
           {article.article_fr}
         </p>
 
-        {article.article_en && (
+        {article.article_en && !isEn && (
           <>
             <button
               onClick={() => setShowTranslation((v) => !v)}
               className="mt-5 inline-flex items-center gap-1.5 text-[12px] font-semibold text-primary-600 dark:text-primary-400 hover:gap-2 transition-all focus-ring rounded px-1 -mx-1"
             >
-              {showTranslation ? "Masquer la traduction" : "Voir la traduction →"}
+              {showTranslation ? t("news.hideTranslation") : t("news.showTranslation")}
             </button>
             {showTranslation && (
               <div className="mt-3 rounded-xl bg-primary-50/40 dark:bg-primary-900/20 border-l-4 border-primary-300 dark:border-primary-700 p-4 max-w-[72ch] animate-fade-in-up">
@@ -258,42 +287,43 @@ export default function NewsArticle() {
         )}
       </article>
 
-      {/* ─── Pratique guidée (full width, big tabs) ───────────────── */}
+      {/* ─── Guided practice (full width, big tabs) ─────────────── */}
       <section className="mt-6 card relative overflow-hidden p-5 sm:p-6 animate-fade-in-up">
         <div className="absolute inset-x-0 top-0 h-1 bg-gradient-to-r from-primary-500 via-purple-500 to-accent-500" />
 
         <div className="flex items-baseline justify-between gap-3 flex-wrap mb-4">
           <div>
             <p className="text-[10px] uppercase tracking-[0.14em] font-semibold text-primary-600 dark:text-primary-400">
-              Pratique guidée
+              {t("news.guidedPractice")}
             </p>
-            <h2 className="text-h4 text-surface-900 dark:text-surface-50">Apprenez à partir de cet article</h2>
+            <h2 className="text-h4 text-surface-900 dark:text-surface-50">{t("news.learnFromArticle")}</h2>
           </div>
           <span className="text-[11px] font-mono uppercase tracking-[0.12em] text-surface-400 dark:text-surface-500">
-            {counts.vocabulary + counts.expressions + counts.grammar_points} éléments
+            {t("news.itemCount", { count: totalCount })}
           </span>
         </div>
 
         {/* Big segmented tabs, generous tap targets */}
-        <div role="tablist" aria-label="Pratique guidée" className="grid grid-cols-3 gap-2 sm:gap-3 mb-5">
-          {TABS.map((t) => {
-            const active = tab === t.key;
-            const count = counts[t.key];
+        <div role="tablist" aria-label={t("news.guidedPractice")} className="grid grid-cols-3 gap-2 sm:gap-3 mb-5">
+          {TAB_META.map((meta) => {
+            const active = tab === meta.key;
+            const count = counts[meta.key];
+            const labelKey = meta.key === "grammar_points" ? "news.tabs.grammar" : `news.tabs.${meta.key}`;
             return (
               <button
-                key={t.key}
+                key={meta.key}
                 role="tab"
                 aria-selected={active}
-                onClick={() => setTab(t.key)}
+                onClick={() => setTab(meta.key)}
                 className={`relative flex flex-col sm:flex-row items-center justify-center gap-1.5 sm:gap-2.5 px-3 py-3 sm:py-4 rounded-2xl text-[13px] sm:text-[14px] font-semibold transition-all overflow-hidden focus-ring active:scale-[0.98] ${
                   active
                     ? "text-white shadow-card-hover"
                     : "bg-white dark:bg-surface-900/60 border border-surface-200 dark:border-surface-700 text-surface-700 dark:text-surface-200 hover:border-primary-300 dark:hover:border-primary-700 hover:shadow-sm"
                 }`}
               >
-                {active && <span className={`absolute inset-0 bg-gradient-to-br ${t.tint}`} />}
-                <span className="relative z-10 text-xl sm:text-base">{t.emoji}</span>
-                <span className="relative z-10 truncate">{t.label}</span>
+                {active && <span className={`absolute inset-0 bg-gradient-to-br ${meta.tint}`} />}
+                <span className="relative z-10 text-xl sm:text-base">{meta.emoji}</span>
+                <span className="relative z-10 truncate">{t(labelKey)}</span>
                 {count > 0 && (
                   <span className={`relative z-10 inline-flex items-center justify-center min-w-[22px] h-[22px] text-[11px] font-bold rounded-full ${active ? "bg-white/25" : "bg-surface-100 dark:bg-surface-800 text-surface-600 dark:text-surface-300"}`}>
                     {count}
@@ -308,19 +338,19 @@ export default function NewsArticle() {
         {tab === "vocabulary" && (
           article.vocabulary?.length ? (
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
-              {article.vocabulary.map((v, i) => <VocabRow key={i} item={v} i={i} />)}
+              {article.vocabulary.map((v, i) => <VocabRow key={i} item={v} i={i} isEn={isEn} />)}
             </div>
           ) : (
-            <EmptyTabContent label="Aucun vocabulaire fourni pour cet article." />
+            <EmptyTabContent label={t("news.empty.vocabulary")} />
           )
         )}
         {tab === "expressions" && (
           article.expressions?.length ? (
             <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-              {article.expressions.map((e, i) => <ExpressionRow key={i} item={e} i={i} />)}
+              {article.expressions.map((e, i) => <ExpressionRow key={i} item={e} i={i} isEn={isEn} />)}
             </div>
           ) : (
-            <EmptyTabContent label="Aucune expression mise en avant pour cet article." />
+            <EmptyTabContent label={t("news.empty.expressions")} />
           )
         )}
         {tab === "grammar_points" && (
@@ -329,7 +359,7 @@ export default function NewsArticle() {
               {article.grammar_points.map((g, i) => <GrammarRow key={i} item={g} i={i} />)}
             </div>
           ) : (
-            <EmptyTabContent label="Aucun point de grammaire pour cet article." />
+            <EmptyTabContent label={t("news.empty.grammar")} />
           )
         )}
       </section>

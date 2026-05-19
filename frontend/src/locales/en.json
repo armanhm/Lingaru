@@ -262,6 +262,101 @@
       "manage": "Manage in Settings",
       "popoverLabel": "Active memory notes",
       "noNotes": "No notes"
+    },
+    "modes": {
+      "conversation": {
+        "label": "Conversation",
+        "description": "Free practice with a tutor",
+        "tagline": "Chat freely — your AI tutor will correct you as you go."
+      },
+      "grammar_correction": {
+        "label": "Correction",
+        "description": "Get a text reviewed",
+        "tagline": "Paste any text, the assistant will correct it and explain each mistake."
+      },
+      "grammar_explanation": {
+        "label": "Grammar explainer",
+        "description": "Understand a grammar point",
+        "tagline": "Ask any grammar question, get a clear explanation with concrete examples."
+      },
+      "roleplay": {
+        "label": "Roleplay",
+        "description": "Guided situational practice",
+        "tagline": "Pick a scene and act it out with an AI character."
+      }
+    },
+    "drawer": {
+      "close": "Close",
+      "conversationsTitle": "Conversations",
+      "newConversation": "New conversation",
+      "newShort": "New",
+      "search": "Search…",
+      "modeLabel": "Mode",
+      "scenariosLabel": "Scenarios",
+      "historyLabel": "History",
+      "noConversations": "No conversations yet.",
+      "untitled": "Untitled",
+      "messagesCount": "{{count}} messages",
+      "tuteurTitle": "Tutor · session",
+      "activeScenario": "Active scenario",
+      "erreursTitle": "Corrections · this session",
+      "erreursCount": "Mistakes",
+      "noMistakes": "No mistakes detected yet. Keep writing — your corrections will appear here."
+    },
+    "bubble": {
+      "you": "You",
+      "withDocs": "Using your documents",
+      "correctionOne": "{{count}} correction · hover the underlined words",
+      "correctionOther": "{{count}} corrections · hover the underlined words"
+    },
+    "composer": {
+      "removeImage": "Remove image",
+      "agentsAvailable": "Available agents",
+      "agentsHeader": "Agents · @{{query}}",
+      "navigate": "navigate",
+      "complete": "complete",
+      "close": "close",
+      "preview": "Preview",
+      "image": "Image",
+      "voice": "Voice",
+      "stopRecording": "Stop recording",
+      "translate": "Translate",
+      "send": "Send",
+      "recordingHint": "Recording… click the mic to stop.",
+      "footerHelpPrefix": "Enter to send · Shift+Enter for a new line · type ",
+      "footerHelpSuffix": " to summon an agent ·",
+      "agentsGallery": "agent gallery →"
+    },
+    "placeholders": {
+      "imageQuestion": "Ask a question about the image (optional)…",
+      "grammarCorrection": "Paste a text to correct…",
+      "grammarExplanation": "Ask a grammar question…",
+      "roleplayDefault": "Say something to start the scene…",
+      "conversation": "Write a message… your AI tutor will gently correct you."
+    },
+    "empty": {
+      "scenarioEyebrow": "Scene setup",
+      "startScene": "To start the scene, try:",
+      "tryThese": "Try one of these"
+    },
+    "header": {
+      "conversations": "Conversations",
+      "newConversation": "New conversation",
+      "newShort": "New",
+      "tutor": "Tutor",
+      "corrections": "Corrections",
+      "with": "with"
+    },
+    "errors": {
+      "loadConversation": "Could not load this conversation.",
+      "imageAnalysis": "Image analysis failed.",
+      "sendFailed": "Failed to send the message.",
+      "voiceFailed": "Voice send failed.",
+      "micDenied": "Microphone denied. Allow access to talk."
+    },
+    "placeholderBubble": {
+      "image": "[Image sent for analysis]",
+      "voice": "[Voice recording…]"
     }
   },
 
@@ -421,7 +516,40 @@
     "pageSubtitle": "Daily articles tuned to your level.",
     "loadMore": "Load more",
     "generating": "Generating…",
-    "empty": "No news yet"
+    "notFound": "Article not found",
+    "articleDoesNotExist": "This article doesn't exist.",
+    "backToNews": "Back to news",
+    "sourceLabel": "Source",
+    "readOriginal": "Read the original article",
+    "listenArticle": "Listen to the article",
+    "showTranslation": "Show translation →",
+    "hideTranslation": "Hide translation",
+    "guidedPractice": "Guided practice",
+    "learnFromArticle": "Learn from this article",
+    "itemCount": "{{count}} items",
+    "tabs": {
+      "vocabulary": "Vocabulary",
+      "expressions": "Expressions",
+      "grammar": "Grammar"
+    },
+    "topics": {
+      "politics": "Politics",
+      "sports": "Sports",
+      "culture": "Culture",
+      "economy": "Economy",
+      "science": "Science",
+      "tech": "Tech",
+      "society": "Society",
+      "environ": "Environment",
+      "world": "World",
+      "misc": "Misc"
+    },
+    "empty": {
+      "list": "No news yet",
+      "vocabulary": "No vocabulary provided for this article.",
+      "expressions": "No expressions highlighted for this article.",
+      "grammar": "No grammar points for this article."
+    }
   },
 
   "discover": {
@@ -433,8 +561,33 @@
 
   "dictionary": {
     "pageTitle": "Dictionary",
-    "pageSubtitle": "Look up French words, get definitions, examples, and pronunciations.",
-    "searchPlaceholder": "Look up a French word…"
+    "pageSubtitle": "Look up English words, get definitions, examples, and pronunciations.",
+    "pageSubtitleFr": "Look up French words and conjugate any verb in seconds.",
+    "searchPlaceholder": "Look up an English word…",
+    "searchPlaceholderFr": "Enter a French word… e.g. maison, beau, courir",
+    "searchPlaceholderEn": "Enter an English word… e.g. freedom, hope, beauty",
+    "eyebrow": "Lookup",
+    "tabDictionary": "📖 Dictionary",
+    "tabConjugator": "✏️ Verb conjugator",
+    "searchButton": "Search",
+    "tryAWord": "Try a word",
+    "commonVerbs": "Common verbs",
+    "lookingUp": "Looking up word…",
+    "conjugating": "Conjugating verb…",
+    "lookupFailed": "Lookup failed. Please try again.",
+    "conjugationFailed": "Conjugation failed. Please try again.",
+    "conjugatorPlaceholder": "Enter a French verb… e.g. avoir, manger, partir",
+    "conjugateLink": "Conjugate \"{{word}}\"",
+    "definitions": "Definitions",
+    "examples": "Examples",
+    "synonyms": "Synonyms",
+    "antonyms": "Antonyms",
+    "etymology": "Etymology",
+    "auxiliary": "auxiliary",
+    "pastParticiple": "past participle",
+    "presentParticiple": "present participle",
+    "showAllTenses": "Show all tenses at once",
+    "openAssistant": "Open assistant"
   },
 
   "progress": {

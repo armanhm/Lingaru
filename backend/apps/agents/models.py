@@ -23,6 +23,7 @@ class Agent(models.Model):
 
     slug = models.SlugField(max_length=64, unique=True)
     name = models.CharField(max_length=80)
+    name_en = models.CharField(max_length=80, blank=True, default="")
     emoji = models.CharField(max_length=8, default="✨")
     tint = models.CharField(
         max_length=120,
@@ -30,10 +31,15 @@ class Agent(models.Model):
         help_text="Tailwind gradient pair for the avatar / top band.",
     )
     tagline = models.CharField(max_length=160, blank=True, default="")
+    tagline_en = models.CharField(max_length=160, blank=True, default="")
     description = models.TextField(blank=True, default="")
+    description_en = models.TextField(blank=True, default="")
     best_for = models.JSONField(default=list, blank=True)
+    best_for_en = models.JSONField(default=list, blank=True)
     capabilities = models.JSONField(default=list, blank=True)
+    capabilities_en = models.JSONField(default=list, blank=True)
     suggested_questions = models.JSONField(default=list, blank=True)
+    suggested_questions_en = models.JSONField(default=list, blank=True)
 
     system_prompt = models.TextField(
         help_text="System prompt sent to the LLM for every turn of this agent.",

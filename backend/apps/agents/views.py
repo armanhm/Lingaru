@@ -20,7 +20,9 @@ class AgentListView(APIView):
 
     def get(self, request):
         qs = Agent.objects.filter(is_active=True).order_by("order", "name")
-        return Response(AgentListSerializer(qs, many=True).data)
+        return Response(
+            AgentListSerializer(qs, many=True, context={"request": request}).data
+        )
 
 
 class AgentDetailView(APIView):
@@ -30,7 +32,7 @@ class AgentDetailView(APIView):
 
     def get(self, request, slug):
         agent = get_object_or_404(Agent, slug=slug, is_active=True)
-        return Response(AgentDetailSerializer(agent).data)
+        return Response(AgentDetailSerializer(agent, context={"request": request}).data)
 
 
 class AgentStartRunView(APIView):
@@ -52,7 +54,7 @@ class AgentStartRunView(APIView):
         )
         return Response(
             {
-                "agent": AgentDetailSerializer(agent).data,
+                "agent": AgentDetailSerializer(agent, context={"request": request}).data,
                 "conversation_id": conversation.id,
                 "run_id": run.id,
             },

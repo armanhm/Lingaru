@@ -44,20 +44,25 @@ const TYPE_STYLES = {
 /* ── Expanded detail content ─────────────────────────── */
 function DetailContent({ card }) {
   const content = card.content_json || {};
+  const isEn = card.language === "en";
+  const headword = isEn ? content.english : content.french;
+  const translation = isEn ? content.french : content.english;
 
   if (card.type === "word") {
     return (
       <div className="space-y-4">
         <div className="bg-gradient-to-br from-info-50 to-primary-50 dark:from-info-900/20 dark:to-primary-900/20 rounded-xl p-5 border border-info-100 dark:border-info-800/40 space-y-2">
           <div className="flex items-center gap-3 flex-wrap">
-            <span className="text-h1 font-extrabold text-surface-900 dark:text-surface-100 tracking-tight">{content.french}</span>
-            <AudioPlayButton text={content.french} />
+            <span className="text-h1 font-extrabold text-surface-900 dark:text-surface-100 tracking-tight">{headword}</span>
+            <AudioPlayButton text={headword} />
             {content.part_of_speech && (
               <span className="text-xs bg-white/70 dark:bg-surface-700/70 text-surface-500 dark:text-surface-400 px-2 py-0.5 rounded-full font-medium">{content.part_of_speech}</span>
             )}
           </div>
-          <p className="text-body-lg text-surface-600 dark:text-surface-300">{content.english}</p>
-          {content.pronunciation && (
+          {!isEn && (
+            <p className="text-body-lg text-surface-600 dark:text-surface-300">{translation}</p>
+          )}
+          {content.pronunciation && !isEn && (
             <p className="text-sm text-surface-400 dark:text-surface-500 font-mono">/{content.pronunciation}/</p>
           )}
         </div>
@@ -201,9 +206,19 @@ function DetailContent({ card }) {
 export function CompactCard({ card, onOpen }) {
   const style = TYPE_STYLES[card.type] || TYPE_STYLES.trivia;
   const content = card.content_json || {};
+  const isEn = card.language === "en";
+  const headword = isEn ? content.english : content.french;
+  const translation = isEn ? content.french : content.english;
 
   let preview = "";
-  if (card.type === "word") preview = content.english || "";
+  if (card.type === "word") {
+    if (isEn) {
+      const ex = content.example || "";
+      preview = ex.length > 80 ? ex.slice(0, 80) + "…" : ex;
+    } else {
+      preview = translation || "";
+    }
+  }
   else if (card.type === "grammar") {
     const expl = content.explanation || card.summary || "";
     preview = expl.length > 80 ? expl.slice(0, 80) + "…" : expl;
@@ -231,9 +246,9 @@ export function CompactCard({ card, onOpen }) {
         )}
       </div>
       <h3 className="text-sm font-bold text-surface-900 dark:text-surface-100 line-clamp-2 leading-snug">{card.title}</h3>
-      {card.type === "word" && content.french && (
+      {card.type === "word" && headword && (
         <div className="flex items-center gap-2">
-          <span className={`text-h4 font-extrabold ${style.accent}`}>{content.french}</span>
+          <span className={`text-h4 font-extrabold ${style.accent}`}>{headword}</span>
           {content.part_of_speech && (
             <span className="text-xs bg-surface-100 dark:bg-surface-700 text-surface-500 dark:text-surface-400 px-1.5 py-0.5 rounded font-medium">{content.part_of_speech}</span>
           )}

@@ -93,6 +93,60 @@ class TestSRSDueCards:
         response = api_client.get("/api/progress/srs/due/")
         assert response.status_code == 401
 
+    def test_filters_by_target_language(self, authenticated_client, user, vocab_item, due_card):
+        """Cards backed by vocabulary in a different language are excluded.
+        Switching target_language should hide the old language's cards
+        without deleting them, so progress is preserved across switches.
+        """
+        topic_en = Topic.objects.create(
+            name_fr="Salutations EN",
+            name_en="Greetings",
+            description="EN greetings",
+            icon="hand",
+            order=2,
+            difficulty_level=1,
+            language="en",
+        )
+        lesson_en = Lesson.objects.create(
+            topic=topic_en,
+            type="vocab",
+            title="Hello",
+            content={},
+            order=1,
+            difficulty=1,
+            language="en",
+        )
+        vocab_en = Vocabulary.objects.create(
+            lesson=lesson_en,
+            english="hello",
+            french="bonjour",
+            example_sentence="Hello there.",
+            part_of_speech="interjection",
+            language="en",
+        )
+        SRSCard.objects.create(
+            user=user,
+            vocabulary=vocab_en,
+            ease_factor=2.5,
+            interval_days=0,
+            repetitions=0,
+            next_review_at=timezone.now() - timedelta(hours=1),
+        )
+
+        # Default user.target_language=fr → only the FR card surfaces.
+        response = authenticated_client.get("/api/progress/srs/due/")
+        assert response.status_code == 200
+        assert response.data["count"] == 1
+        assert response.data["cards"][0]["french"] == "pomme"
+
+        # Switch the learner to EN → only the EN card surfaces.
+        user.target_language = "en"
+        user.save(update_fields=["target_language"])
+        response = authenticated_client.get("/api/progress/srs/due/")
+        assert response.status_code == 200
+        assert response.data["count"] == 1
+        assert response.data["cards"][0]["english"] == "hello"
+
 
 @pytest.mark.django_db
 class TestSRSReview:

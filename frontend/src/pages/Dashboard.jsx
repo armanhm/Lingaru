@@ -1,5 +1,6 @@
 import { useEffect, useMemo, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import { Trans, useTranslation } from "react-i18next";
 import { useAuth } from "../contexts/AuthContext";
 import { getStats, getTrendReport } from "../api/gamification";
 import { getSRSDueCards } from "../api/progress";
@@ -9,74 +10,82 @@ import { useLastActivity } from "../hooks/useResumeSession";
 import { Confetti } from "../components/ui";
 import AudioPlayButton from "../components/AudioPlayButton";
 
-/* ─────────────────────────────────────────────────────────
- * Locale helpers, French dashboard
- * ───────────────────────────────────────────────────────── */
-const FRENCH_DAYS   = ["dimanche","lundi","mardi","mercredi","jeudi","vendredi","samedi"];
-const FRENCH_MONTHS = ["janvier","février","mars","avril","mai","juin","juillet","août","septembre","octobre","novembre","décembre"];
-
-function frenchDate(d = new Date()) {
-  return `${FRENCH_DAYS[d.getDay()]} ${d.getDate()} ${FRENCH_MONTHS[d.getMonth()]}`;
+function localeForLanguage(targetLanguage) {
+  return targetLanguage === "en" ? "en-US" : "fr-FR";
 }
+
+function localizedDate(d = new Date(), targetLanguage = "fr") {
+  try {
+    return new Intl.DateTimeFormat(localeForLanguage(targetLanguage), {
+      weekday: "long",
+      day: "numeric",
+      month: "long",
+    }).format(d);
+  } catch {
+    return d.toDateString();
+  }
+}
+
 function clockHM(d = new Date()) {
   const h = String(d.getHours()).padStart(2, "0");
   const m = String(d.getMinutes()).padStart(2, "0");
   return `${h}:${m}`;
 }
-function frenchGreeting(d = new Date()) {
+
+function localizedGreeting(targetLanguage = "fr", d = new Date()) {
   const h = d.getHours();
+  if (targetLanguage === "en") {
+    if (h < 5)  return "Good night";
+    if (h < 12) return "Good morning";
+    if (h < 18) return "Good afternoon";
+    return "Good evening";
+  }
   if (h < 5)  return "Bonne nuit";
   if (h < 12) return "Bonjour";
   if (h < 18) return "Bon après-midi";
   return "Bonsoir";
 }
 
-/* ─────────────────────────────────────────────────────────
- * Curated daily quotes (French + English), rotated daily
- * ───────────────────────────────────────────────────────── */
-const DAILY_QUOTES = [
-  { french: "La vie est belle.", english: "Life is beautiful.", author: "Proverbe français", type: "proverb" },
-  { french: "Chaque jour est une nouvelle chance de changer ta vie.", english: "Every day is a new chance to change your life.", author: "Sagesse populaire", type: "inspiration" },
-  { french: "Il n'y a pas de chemin vers le bonheur, le bonheur est le chemin.", english: "There is no path to happiness; happiness is the path.", author: "Proverbe français", type: "proverb" },
-  { french: "Sous le pont Mirabeau coule la Seine\nEt nos amours\nFaut-il qu'il m'en souvienne\nLa joie venait toujours après la peine.", english: "Under the Mirabeau Bridge flows the Seine\nAnd our loves\nMust I be reminded\nJoy always came after sorrow.", author: "Guillaume Apollinaire", type: "poem" },
-  { french: "L'imagination est plus importante que la connaissance.", english: "Imagination is more important than knowledge.", author: "Albert Einstein", type: "inspiration" },
-  { french: "Il faut toujours viser la lune, car même en cas d'échec, on atterrit dans les étoiles.", english: "Always aim for the moon, even if you miss, you'll land among the stars.", author: "Oscar Wilde", type: "inspiration" },
-  { french: "Mon âme a son secret, ma vie a son mystère.", english: "My soul has its secret, my life has its mystery.", author: "Félix Arvers", type: "poem" },
-  { french: "Le bonheur est la seule chose qui se double si on le partage.", english: "Happiness is the only thing that doubles when shared.", author: "Albert Schweitzer", type: "inspiration" },
-  { french: "On ne voit bien qu'avec le cœur. L'essentiel est invisible pour les yeux.", english: "One sees clearly only with the heart. What is essential is invisible to the eye.", author: "Antoine de Saint-Exupéry", type: "literature" },
-  { french: "La liberté commence où l'ignorance finit.", english: "Freedom begins where ignorance ends.", author: "Victor Hugo", type: "inspiration" },
-  { french: "Je pense, donc je suis.", english: "I think, therefore I am.", author: "René Descartes", type: "philosophy" },
-  { french: "Un sourire coûte moins cher que l'électricité, mais donne autant de lumière.", english: "A smile costs less than electricity, but gives just as much light.", author: "Abbé Pierre", type: "inspiration" },
-  { french: "Être ou ne pas être, telle est la question.", english: "To be or not to be, that is the question.", author: "Shakespeare (traduit)", type: "literature" },
+const DAILY_QUOTES_FR = [
+  { text: "La vie est belle.", translation: "Life is beautiful.", authorKey: "frenchProverb", type: "proverb" },
+  { text: "Chaque jour est une nouvelle chance de changer ta vie.", translation: "Every day is a new chance to change your life.", authorKey: "popularWisdom", type: "inspiration" },
+  { text: "Il n'y a pas de chemin vers le bonheur, le bonheur est le chemin.", translation: "There is no path to happiness; happiness is the path.", authorKey: "frenchProverb", type: "proverb" },
+  { text: "Sous le pont Mirabeau coule la Seine\nEt nos amours\nFaut-il qu'il m'en souvienne\nLa joie venait toujours après la peine.", translation: "Under the Mirabeau Bridge flows the Seine\nAnd our loves\nMust I be reminded\nJoy always came after sorrow.", author: "Guillaume Apollinaire", type: "poem" },
+  { text: "L'imagination est plus importante que la connaissance.", translation: "Imagination is more important than knowledge.", author: "Albert Einstein", type: "inspiration" },
+  { text: "Il faut toujours viser la lune, car même en cas d'échec, on atterrit dans les étoiles.", translation: "Always aim for the moon, even if you miss, you'll land among the stars.", author: "Oscar Wilde", type: "inspiration" },
+  { text: "Mon âme a son secret, ma vie a son mystère.", translation: "My soul has its secret, my life has its mystery.", author: "Félix Arvers", type: "poem" },
+  { text: "Le bonheur est la seule chose qui se double si on le partage.", translation: "Happiness is the only thing that doubles when shared.", author: "Albert Schweitzer", type: "inspiration" },
+  { text: "On ne voit bien qu'avec le cœur. L'essentiel est invisible pour les yeux.", translation: "One sees clearly only with the heart. What is essential is invisible to the eye.", author: "Antoine de Saint-Exupéry", type: "literature" },
+  { text: "La liberté commence où l'ignorance finit.", translation: "Freedom begins where ignorance ends.", author: "Victor Hugo", type: "inspiration" },
+  { text: "Je pense, donc je suis.", translation: "I think, therefore I am.", author: "René Descartes", type: "philosophy" },
+  { text: "Un sourire coûte moins cher que l'électricité, mais donne autant de lumière.", translation: "A smile costs less than electricity, but gives just as much light.", author: "Abbé Pierre", type: "inspiration" },
+  { text: "Être ou ne pas être, telle est la question.", translation: "To be or not to be, that is the question.", author: "Shakespeare", type: "literature" },
 ];
 
-const QUOTE_TYPE_LABEL = {
-  proverb:     "Proverbe",
-  inspiration: "Inspiration",
-  poem:        "Poésie",
-  literature:  "Littérature",
-  philosophy:  "Philosophie",
-};
+const DAILY_QUOTES_EN = [
+  { text: "To be, or not to be, that is the question.", translation: null, author: "William Shakespeare", type: "literature" },
+  { text: "The two most important days in your life are the day you are born and the day you find out why.", translation: null, author: "Mark Twain", type: "inspiration" },
+  { text: "You will face many defeats in life, but never let yourself be defeated.", translation: null, author: "Maya Angelou", type: "inspiration" },
+  { text: "I think, therefore I am.", translation: null, author: "René Descartes", type: "philosophy" },
+  { text: "The only way to do great work is to love what you do.", translation: null, author: "Steve Jobs", type: "inspiration" },
+  { text: "Not all those who wander are lost.", translation: null, author: "J.R.R. Tolkien", type: "literature" },
+];
 
-/* Mock skill axes for the compass, TODO: wire to /skills/snapshot when shipped */
 const SKILLS = [
-  { key: "vocab",   label: "Vocabulaire",   value: 78, target: 90, delta: 4, hint: "+82 mots cette semaine",   to: "/dictionary" },
-  { key: "grammar", label: "Grammaire",     value: 64, target: 85, delta: 2, hint: "Subjonctif à revoir",       to: "/grammar" },
-  { key: "listen",  label: "Compréhension", value: 71, target: 85, delta: 5, hint: "Dictée · 4 sessions",       to: "/practice/dictation" },
-  { key: "speak",   label: "Expression",    value: 52, target: 80, delta: 8, hint: "3 roleplays cette semaine", to: "/assistant" },
-  { key: "read",    label: "Lecture",       value: 81, target: 90, delta: 1, hint: "Discover · article B1",     to: "/discover" },
-  { key: "write",   label: "Rédaction",     value: 58, target: 75, delta: 3, hint: "1 dictée corrigée",         to: "/practice/dictation" },
+  { key: "vocab",   value: 78, target: 90, delta: 4, to: "/dictionary" },
+  { key: "grammar", value: 64, target: 85, delta: 2, to: "/grammar" },
+  { key: "listen",  value: 71, target: 85, delta: 5, to: "/practice/dictation" },
+  { key: "speak",   value: 52, target: 80, delta: 8, to: "/assistant" },
+  { key: "read",    value: 81, target: 90, delta: 1, to: "/discover" },
+  { key: "write",   value: 58, target: 75, delta: 3, to: "/practice/dictation" },
 ];
 
 const TODAY_PLAN = [
-  { id: "warm",  label: "Échauffement", minutes: 6,  icon: "cards", status: "ready",       to: "/practice/srs" },
-  { id: "focus", label: "Séance ciblée", minutes: 12, icon: "brain", status: "in-progress", to: "/grammar/topics/subjunctive-present" },
-  { id: "talk",  label: "Parler",       minutes: 8,  icon: "mic",   status: "ready",       to: "/assistant" },
+  { id: "warm",  labelKey: "warm",  minutes: 6,  icon: "cards", status: "ready",       to: "/practice/srs" },
+  { id: "focus", labelKey: "focus", minutes: 12, icon: "brain", status: "in-progress", to: "/grammar/topics/subjunctive-present" },
+  { id: "talk",  labelKey: "talk",  minutes: 8,  icon: "mic",   status: "ready",       to: "/assistant" },
 ];
 
-/* ─────────────────────────────────────────────────────────
- * Inline icon set
- * ───────────────────────────────────────────────────────── */
 const Ic = {
   bolt:    (p) => (<svg {...p} fill="none" stroke="currentColor" strokeWidth="1.8" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M13 3L4 14h6l-1 7 9-11h-6l1-7z" /></svg>),
   play:    (p) => (<svg {...p} fill="currentColor" viewBox="0 0 24 24"><path d="M7 4.5v15a1 1 0 001.55.83l11-7.5a1 1 0 000-1.66l-11-7.5A1 1 0 007 4.5z" /></svg>),
@@ -91,10 +100,8 @@ const Ic = {
   arrow:   (p) => (<svg {...p} fill="none" stroke="currentColor" strokeWidth="1.8" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M5 12h14M13 5l7 7-7 7" /></svg>),
 };
 
-/* ─────────────────────────────────────────────────────────
- * CompassDial, radar SVG
- * ───────────────────────────────────────────────────────── */
 function CompassDial({ skills, hovered, onHover, onSelect, level = "B1" }) {
+  const { t } = useTranslation();
   const size = 360, cx = size / 2, cy = size / 2;
   const N = skills.length;
   const rings = [25, 50, 75, 100];
@@ -168,7 +175,7 @@ function CompassDial({ skills, hovered, onHover, onSelect, level = "B1" }) {
         <text x={cx} y={cy + 12} textAnchor="middle"
           className="fill-surface-400 dark:fill-surface-500"
           style={{ fontSize: 8, letterSpacing: "0.14em", textTransform: "uppercase", fontWeight: 600 }}>
-          vers B2
+          {t("dashboard.compass.towards")}
         </text>
 
         {skills.map((s, i) => {
@@ -183,7 +190,7 @@ function CompassDial({ skills, hovered, onHover, onSelect, level = "B1" }) {
               <text x={x} y={y} textAnchor="middle" dominantBaseline="middle"
                 className={isHover ? "fill-primary-700 dark:fill-primary-300" : "fill-surface-700 dark:fill-surface-200"}
                 style={{ fontSize: 11, fontWeight: isHover ? 800 : 600, letterSpacing: "-0.01em" }}>
-                {s.label}
+                {t(`dashboard.skills.${s.key}`)}
               </text>
               <text x={x} y={y + 12} textAnchor="middle" dominantBaseline="middle"
                 className="fill-surface-400 dark:fill-surface-500 num"
@@ -204,20 +211,19 @@ function CompassDial({ skills, hovered, onHover, onSelect, level = "B1" }) {
   );
 }
 
-/* ─────────────────────────────────────────────────────────
- * Header
- * ───────────────────────────────────────────────────────── */
 function HybridHeader({ user, stats, animatedXP }) {
+  const { t } = useTranslation();
+  const targetLanguage = user?.target_language || "fr";
+  const numberLocale = localeForLanguage(targetLanguage);
+
   return (
     <div className="flex items-end justify-between gap-6 flex-wrap animate-fade-in">
       <div>
         <p className="text-[11px] uppercase tracking-[0.14em] font-semibold text-surface-400 dark:text-surface-500 num mb-1.5">
-          {frenchDate()} · {clockHM()}
+          {localizedDate(new Date(), targetLanguage)} · {clockHM()}
         </p>
         <h1 className="text-[32px] sm:text-[40px] font-bold tracking-tight text-surface-900 dark:text-surface-50 leading-[1.05]">
-          {frenchGreeting()},{" "}
-          {/* Username gradient reads CSS vars set per-mode so the greeting
-              re-tints when the user switches mode in Settings. */}
+          {localizedGreeting(targetLanguage)},{" "}
           <span
             className="bg-clip-text text-transparent"
             style={{
@@ -225,7 +231,7 @@ function HybridHeader({ user, stats, animatedXP }) {
                 "linear-gradient(90deg, var(--mode-grad-from), var(--mode-grad-to))",
             }}
           >
-            {user?.username || "vous"}
+            {user?.username || t("dashboard.youFallback")}
           </span>
           .
         </h1>
@@ -233,37 +239,35 @@ function HybridHeader({ user, stats, animatedXP }) {
       <div className="flex items-center gap-2 flex-wrap">
         {user?.mode && (
           <span className="mode-chip">
-            {user.mode === "general" ? "🎒 Apprentissage"
-              : user.mode === "exam" ? "🎯 Prépa examen"
-              : user.mode === "agentic" ? "🤖 Mode agent"
+            {user.mode === "general" ? t("dashboard.modeChip.general")
+              : user.mode === "exam" ? t("dashboard.modeChip.exam")
+              : user.mode === "agentic" ? t("dashboard.modeChip.agentic")
               : ""}
           </span>
         )}
       <div className="flex items-center gap-2 px-3 py-2 rounded-full bg-white dark:bg-surface-900/60 border border-surface-200 dark:border-surface-800 shadow-sm">
         <span className="animate-flame inline-block origin-bottom">🔥</span>
         <span className="text-[13px] font-bold text-surface-900 dark:text-surface-50 num">{stats?.current_streak ?? 0}</span>
-        <span className="text-[12px] text-surface-500 dark:text-surface-400">jours d'affilée</span>
+        <span className="text-[12px] text-surface-500 dark:text-surface-400">{t("dashboard.streakLabel")}</span>
         <span className="w-px h-4 bg-surface-200 dark:bg-surface-700 mx-1" />
         <Ic.bolt className="w-3.5 h-3.5 text-primary-500" />
-        <span className="text-[13px] font-bold text-surface-900 dark:text-surface-50 num">{Number(animatedXP).toLocaleString("fr-FR")}</span>
-        <span className="text-[12px] text-surface-500 dark:text-surface-400">XP</span>
+        <span className="text-[13px] font-bold text-surface-900 dark:text-surface-50 num">{Number(animatedXP).toLocaleString(numberLocale)}</span>
+        <span className="text-[12px] text-surface-500 dark:text-surface-400">{t("dashboard.xpLabel")}</span>
       </div>
       </div>
     </div>
   );
 }
 
-/* ─────────────────────────────────────────────────────────
- * HybridHero, compass + dark CTA panel
- * ───────────────────────────────────────────────────────── */
 function HybridHero({ srsDue }) {
+  const { t } = useTranslation();
   const navigate = useNavigate();
   const [hovered, setHovered] = useState("grammar");
   const focus = SKILLS.find((s) => s.key === hovered) || SKILLS[1];
+  const focusLabel = t(`dashboard.skills.${focus.key}`);
 
   return (
     <div className="grid grid-cols-1 lg:grid-cols-12 gap-5">
-      {/* LEFT, recommended next session */}
       <div className="lg:col-span-7 relative overflow-hidden rounded-3xl bg-gradient-to-br from-ink-900 via-ink-800 to-primary-900 dark:from-ink-900 dark:via-primary-950 dark:to-ink-900 text-white p-4 sm:p-5 flex flex-col animate-fade-in-up">
         <div className="absolute -top-12 -right-12 w-56 h-56 bg-primary-500/30 rounded-full blur-3xl pointer-events-none" />
         <div className="absolute -bottom-14 -left-8 w-56 h-56 bg-accent-500/20 rounded-full blur-3xl pointer-events-none" />
@@ -271,15 +275,20 @@ function HybridHero({ srsDue }) {
         <div className="relative flex flex-col h-full">
           <div className="flex items-center gap-2 text-[11px] uppercase tracking-[0.18em] font-semibold text-primary-200">
             <span className="w-1.5 h-1.5 rounded-full bg-accent-400 animate-pulse" />
-            Recommandé · axe sélectionné · {focus.label}
+            {t("dashboard.hero.recommendedEyebrow", { axis: focusLabel })}
           </div>
           <h2 className="mt-2 font-editorial text-[28px] sm:text-[34px] leading-[1.05]">
-            Le subjonctif présent
-            <span className="block italic text-primary-200 text-[20px] sm:text-[24px] mt-1">: il faut que je comprenne</span>
+            {t("dashboard.hero.title")}
+            <span className="block italic text-primary-200 text-[20px] sm:text-[24px] mt-1">{t("dashboard.hero.subtitle")}</span>
           </h2>
           <p className="mt-2.5 text-[14px] text-primary-100/85 max-w-[52ch] leading-snug">
-            12 minutes · 9 questions ciblées sur les verbes irréguliers (<em>aller, faire, savoir</em>).
-            Vous avez fait <span className="text-accent-300 font-semibold">3 erreurs</span> sur ce point cette semaine.
+            <Trans
+              i18nKey="dashboard.hero.description"
+              components={{
+                1: <em />,
+                2: <span className="text-accent-300 font-semibold" />,
+              }}
+            />
           </p>
 
           <div className="mt-auto pt-4 flex items-center gap-2 flex-wrap">
@@ -287,16 +296,16 @@ function HybridHero({ srsDue }) {
               to="/grammar/topics/subjunctive-present"
               className="flex items-center gap-1.5 bg-white text-ink-900 px-4 py-2 rounded-lg font-semibold text-[14px] hover:bg-accent-100 transition-colors shadow-lg focus-ring"
             >
-              <Ic.play className="w-3.5 h-3.5" /> Commencer · 12 min
+              <Ic.play className="w-3.5 h-3.5" /> {t("dashboard.hero.startCta")}
             </Link>
             <Link
               to="/grammar/library"
               className="flex items-center gap-2 px-3 py-2 rounded-lg text-[13px] font-semibold text-white/90 hover:bg-white/10 transition-colors border border-white/20 focus-ring"
             >
-              Choisir autre chose
+              {t("dashboard.hero.pickAnother")}
             </Link>
             <span className="ml-auto text-[11px] font-mono uppercase tracking-[0.14em] text-primary-200/70 hidden sm:block">
-              {focus.value}/100 · objectif {focus.target}
+              {t("dashboard.hero.objectiveLabel", { value: focus.value, target: focus.target })}
             </span>
           </div>
 
@@ -318,8 +327,8 @@ function HybridHero({ srsDue }) {
                     {done ? <Ic.check className="w-3.5 h-3.5 text-white" /> : <I className="w-3.5 h-3.5 text-white" />}
                   </span>
                   <div className="min-w-0">
-                    <p className="text-[10px] uppercase tracking-[0.14em] text-white/60 font-semibold">{p.label}</p>
-                    <p className="text-[12.5px] font-semibold truncate">{minutes} min</p>
+                    <p className="text-[10px] uppercase tracking-[0.14em] text-white/60 font-semibold">{t(`dashboard.plan.${p.labelKey}`)}</p>
+                    <p className="text-[12.5px] font-semibold truncate">{minutes} {t("dashboard.plan.minutes")}</p>
                   </div>
                 </Link>
               );
@@ -328,15 +337,14 @@ function HybridHero({ srsDue }) {
         </div>
       </div>
 
-      {/* RIGHT, compass */}
       <div className="lg:col-span-5 bg-white dark:bg-surface-900/60 border border-surface-100 dark:border-surface-800 rounded-3xl p-4 sm:p-5 animate-fade-in-up">
         <div className="flex items-baseline justify-between mb-1">
           <div>
-            <p className="text-[9px] uppercase tracking-[0.14em] font-semibold text-surface-400 dark:text-surface-500">La boussole</p>
-            <h3 className="text-[13px] font-bold text-surface-900 dark:text-surface-50">Compétences · B1 vers B2</h3>
+            <p className="text-[9px] uppercase tracking-[0.14em] font-semibold text-surface-400 dark:text-surface-500">{t("dashboard.compass.eyebrow")}</p>
+            <h3 className="text-[13px] font-bold text-surface-900 dark:text-surface-50">{t("dashboard.compass.title")}</h3>
           </div>
           <span className="hidden sm:block text-[9px] font-mono uppercase tracking-[0.14em] text-surface-400 dark:text-surface-500">
-            cliquez un axe
+            {t("dashboard.compass.clickHint")}
           </span>
         </div>
         <div className="max-w-[330px] mx-auto">
@@ -352,14 +360,14 @@ function HybridHero({ srsDue }) {
   );
 }
 
-/* ─────────────────────────────────────────────────────────
- * QuoteCard, daily inspiration phrase (rotates daily)
- * ───────────────────────────────────────────────────────── */
-function QuoteCard({ quoteIndex, onShuffle }) {
+function QuoteCard({ quotes, quoteIndex, onShuffle, targetLanguage }) {
+  const { t } = useTranslation();
   const [showTranslation, setShowTranslation] = useState(false);
-  const quote = DAILY_QUOTES[quoteIndex];
-  const frenchLines = quote.french.split("\n");
-  const englishLines = quote.english.split("\n");
+  const quote = quotes[quoteIndex];
+  const lines = quote.text.split("\n");
+  const translationLines = (quote.translation || "").split("\n");
+  const speechLang = targetLanguage === "en" ? "en-US" : "fr-FR";
+  const author = quote.author || (quote.authorKey ? t(`dashboard.quote.authors.${quote.authorKey}`) : "");
 
   const handleShuffle = () => {
     setShowTranslation(false);
@@ -371,10 +379,10 @@ function QuoteCard({ quoteIndex, onShuffle }) {
       <div className="absolute inset-x-0 top-0 h-1 bg-gradient-to-r from-primary-500 via-primary-400 to-accent-500" />
 
       <div className="relative flex items-center justify-between mb-2">
-        <p className="text-[10px] uppercase tracking-[0.14em] font-semibold text-primary-600 dark:text-primary-400">Citation du jour</p>
+        <p className="text-[10px] uppercase tracking-[0.14em] font-semibold text-primary-600 dark:text-primary-400">{t("dashboard.quote.eyebrow")}</p>
         <button
           onClick={handleShuffle}
-          aria-label="Citation suivante"
+          aria-label={t("dashboard.quote.next")}
           className="p-1.5 rounded-lg text-surface-300 dark:text-surface-600 hover:text-primary-500 hover:bg-primary-50/60 dark:hover:bg-primary-900/20 transition-all hover:rotate-180 duration-500 focus-ring"
         >
           <Ic.refresh className="w-3.5 h-3.5" />
@@ -384,42 +392,44 @@ function QuoteCard({ quoteIndex, onShuffle }) {
       <div className="relative flex-1 flex flex-col">
         <div className="flex gap-2 items-start mb-3">
           <p className="flex-1 font-editorial text-[20px] sm:text-[22px] leading-[1.35] text-surface-900 dark:text-surface-50 italic">
-            {frenchLines.map((line, i) => (
-              <span key={i}>{line}{i < frenchLines.length - 1 && <br />}</span>
+            {lines.map((line, i) => (
+              <span key={i}>{line}{i < lines.length - 1 && <br />}</span>
             ))}
           </p>
-          <AudioPlayButton text={quote.french.replace(/\n/g, " ")} />
+          <AudioPlayButton text={quote.text.replace(/\n/g, " ")} lang={speechLang} />
         </div>
 
         <div className="flex items-center gap-2 flex-wrap mb-2">
           <span className="text-[10px] font-mono uppercase tracking-[0.14em] font-semibold text-primary-700 dark:text-primary-300 bg-primary-50 dark:bg-primary-900/30 px-2 py-0.5 rounded-full">
-            {QUOTE_TYPE_LABEL[quote.type] || quote.type}
+            {t(`dashboard.quote.types.${quote.type}`, { defaultValue: quote.type })}
           </span>
-          <span className="text-[12px] text-surface-500 dark:text-surface-400 truncate">{quote.author}</span>
+          <span className="text-[12px] text-surface-500 dark:text-surface-400 truncate">{author}</span>
         </div>
 
-        <button
-          onClick={() => setShowTranslation((v) => !v)}
-          className="self-start text-[12px] font-semibold text-primary-600 dark:text-primary-400 hover:text-primary-700 dark:hover:text-primary-300 focus-ring rounded px-1 -mx-1 transition-colors mt-auto pt-1"
-        >
-          {showTranslation ? "Masquer la traduction" : "Voir la traduction →"}
-        </button>
-        {showTranslation && (
-          <p className="text-[12px] text-surface-600 dark:text-surface-400 italic border-l-2 border-primary-300 dark:border-primary-700 pl-3 mt-2 leading-relaxed animate-fade-in-up">
-            {englishLines.map((line, i) => (
-              <span key={i}>{line}{i < englishLines.length - 1 && <br />}</span>
-            ))}
-          </p>
+        {quote.translation && (
+          <>
+            <button
+              onClick={() => setShowTranslation((v) => !v)}
+              className="self-start text-[12px] font-semibold text-primary-600 dark:text-primary-400 hover:text-primary-700 dark:hover:text-primary-300 focus-ring rounded px-1 -mx-1 transition-colors mt-auto pt-1"
+            >
+              {showTranslation ? t("dashboard.quote.hideTranslation") : t("dashboard.quote.showTranslation")}
+            </button>
+            {showTranslation && (
+              <p className="text-[12px] text-surface-600 dark:text-surface-400 italic border-l-2 border-primary-300 dark:border-primary-700 pl-3 mt-2 leading-relaxed animate-fade-in-up">
+                {translationLines.map((line, i) => (
+                  <span key={i}>{line}{i < translationLines.length - 1 && <br />}</span>
+                ))}
+              </p>
+            )}
+          </>
         )}
       </div>
     </div>
   );
 }
 
-/* ─────────────────────────────────────────────────────────
- * ExamCountdown
- * ───────────────────────────────────────────────────────── */
 function ExamCountdown({ examDate, daysLeft }) {
+  const { t } = useTranslation();
   const totalDays = 90;
   const days = daysLeft ?? 47;
   const pct = Math.max(0, Math.min(1, 1 - days / totalDays));
@@ -428,50 +438,52 @@ function ExamCountdown({ examDate, daysLeft }) {
     <div className="rounded-3xl bg-white dark:bg-surface-900/60 border border-surface-100 dark:border-surface-800 p-5 animate-fade-in-up">
       <div className="flex items-center justify-between mb-3">
         <div>
-          <p className="text-[10px] uppercase tracking-[0.14em] font-semibold text-accent-600 dark:text-accent-400">Compte à rebours TCF</p>
+          <p className="text-[10px] uppercase tracking-[0.14em] font-semibold text-accent-600 dark:text-accent-400">{t("dashboard.exam.eyebrow")}</p>
           <h3 className="text-[15px] font-bold text-surface-900 dark:text-surface-50">{examDate}</h3>
         </div>
-        <span className="text-[10px] font-mono uppercase tracking-[0.14em] text-surface-400">Score cible · 500</span>
+        <span className="text-[10px] font-mono uppercase tracking-[0.14em] text-surface-400">{t("dashboard.exam.scoreTarget")}</span>
       </div>
       <div className="flex items-end gap-3">
         <p className="font-editorial text-[56px] leading-none font-bold text-surface-900 dark:text-surface-50 num">{days}</p>
-        <p className="text-[12px] text-surface-500 dark:text-surface-400 mb-2">jours<br />restants</p>
+        <p className="text-[12px] text-surface-500 dark:text-surface-400 mb-2">
+          {t("dashboard.exam.daysRemainingLine1")}<br />{t("dashboard.exam.daysRemainingLine2")}
+        </p>
         <div className="flex-1 mb-1">
           <div className="h-1.5 bg-surface-100 dark:bg-surface-800 rounded-full overflow-hidden">
             <div className="h-full bg-gradient-to-r from-primary-500 to-accent-500" style={{ width: `${pct * 100}%` }} />
           </div>
           <div className="flex justify-between text-[10px] font-mono num text-surface-400 dark:text-surface-500 mt-1">
-            <span>inscription</span>
-            <span>aujourd'hui · J−{days}</span>
-            <span>examen</span>
+            <span>{t("dashboard.exam.registration")}</span>
+            <span>{t("dashboard.exam.today", { days })}</span>
+            <span>{t("dashboard.exam.exam")}</span>
           </div>
         </div>
       </div>
       <div className="mt-4 grid grid-cols-3 divide-x divide-surface-100 dark:divide-surface-800 -mx-1 text-center">
-        <div className="px-2"><p className="text-[9px] uppercase tracking-[0.14em] text-surface-400">Compr. orale</p><p className="text-[14px] font-bold text-surface-900 dark:text-surface-50 num">412</p></div>
-        <div className="px-2"><p className="text-[9px] uppercase tracking-[0.14em] text-surface-400">Compr. écrite</p><p className="text-[14px] font-bold text-surface-900 dark:text-surface-50 num">438</p></div>
-        <div className="px-2"><p className="text-[9px] uppercase tracking-[0.14em] text-surface-400">Lex. & gram.</p><p className="text-[14px] font-bold text-surface-900 dark:text-surface-50 num">386</p></div>
+        <div className="px-2"><p className="text-[9px] uppercase tracking-[0.14em] text-surface-400">{t("dashboard.exam.listening")}</p><p className="text-[14px] font-bold text-surface-900 dark:text-surface-50 num">412</p></div>
+        <div className="px-2"><p className="text-[9px] uppercase tracking-[0.14em] text-surface-400">{t("dashboard.exam.reading")}</p><p className="text-[14px] font-bold text-surface-900 dark:text-surface-50 num">438</p></div>
+        <div className="px-2"><p className="text-[9px] uppercase tracking-[0.14em] text-surface-400">{t("dashboard.exam.lexGrammar")}</p><p className="text-[14px] font-bold text-surface-900 dark:text-surface-50 num">386</p></div>
       </div>
     </div>
   );
 }
 
-/* ─────────────────────────────────────────────────────────
- * WordCard, Mot du jour (real vocab API)
- * ───────────────────────────────────────────────────────── */
-function WordCard({ word, loading, onShuffle }) {
-  // Extract IPA-like pronunciation hint if backend provides it; else fallback.
+function WordCard({ word, loading, onShuffle, targetLanguage }) {
+  const { t } = useTranslation();
   const pronunciation = word?.pronunciation || word?.ipa || "";
   const example = word?.example_sentence || word?.example || "";
+  // The API still returns { french, english } shape; treat `french` as the target-language headword.
+  const headword = word?.french || word?.term || "";
+  const speechLang = targetLanguage === "en" ? "en-US" : "fr-FR";
 
   return (
     <div className="rounded-3xl bg-white dark:bg-surface-900/60 border border-surface-100 dark:border-surface-800 p-5 h-full animate-fade-in-up">
       <div className="flex items-center justify-between">
-        <p className="text-[10px] uppercase tracking-[0.14em] font-semibold text-primary-600 dark:text-primary-400">Mot du jour</p>
+        <p className="text-[10px] uppercase tracking-[0.14em] font-semibold text-primary-600 dark:text-primary-400">{t("dashboard.word.eyebrow")}</p>
         <button
           onClick={onShuffle}
           className="text-surface-300 dark:text-surface-600 hover:text-primary-500 transition-all focus-ring rounded p-1 disabled:opacity-50 hover:rotate-180 duration-500"
-          aria-label="Nouveau mot"
+          aria-label={t("dashboard.word.newWord")}
           disabled={loading}
         >
           <Ic.refresh className={`w-3.5 h-3.5 ${loading ? "animate-spin" : ""}`} />
@@ -488,8 +500,8 @@ function WordCard({ word, loading, onShuffle }) {
       ) : (
         <>
           <div className="flex items-baseline gap-2 mt-1">
-            <h3 className="font-editorial italic text-[32px] leading-none text-surface-900 dark:text-surface-50">{word.french}</h3>
-            <AudioPlayButton text={word.french} />
+            <h3 className="font-editorial italic text-[32px] leading-none text-surface-900 dark:text-surface-50">{headword}</h3>
+            <AudioPlayButton text={headword} lang={speechLang} />
           </div>
           {pronunciation && (
             <p className="text-[11px] font-mono text-surface-500 dark:text-surface-400 mt-1">
@@ -503,10 +515,10 @@ function WordCard({ word, loading, onShuffle }) {
             <p className="text-[12px] italic text-surface-600 dark:text-surface-300 mt-2 leading-snug">"{example}"</p>
           )}
           <Link
-            to={`/dictionary?word=${encodeURIComponent(word.french)}`}
+            to={`/dictionary?word=${encodeURIComponent(headword)}`}
             className="inline-flex items-center gap-1 mt-3 text-[11px] font-semibold text-primary-600 dark:text-primary-400 hover:gap-2 transition-all focus-ring rounded"
           >
-            Définition complète
+            {t("dashboard.word.fullDefinition")}
             <svg className="w-3 h-3" fill="none" stroke="currentColor" strokeWidth={2.5} viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" />
             </svg>
@@ -517,15 +529,13 @@ function WordCard({ word, loading, onShuffle }) {
   );
 }
 
-/* ─────────────────────────────────────────────────────────
- * QuickRail
- * ───────────────────────────────────────────────────────── */
 function QuickRail({ srsDue }) {
+  const { t } = useTranslation();
   const items = [
-    { label: "Flashcards", icon: "cards",     to: "/practice/srs",       count: srsDue ? `${srsDue} dues` : "à jour" },
-    { label: "Roleplay",   icon: "chat",      to: "/assistant",          count: "AI" },
-    { label: "Dictée",     icon: "dictation", to: "/practice/dictation", count: "RFI" },
-    { label: "Mini-jeux",  icon: "game",      to: "/mini-games",         count: "6 jeux" },
+    { label: t("dashboard.rail.flashcards"), icon: "cards",     to: "/practice/srs",       count: srsDue ? t("dashboard.rail.due", { count: srsDue }) : t("dashboard.rail.upToDate") },
+    { label: t("dashboard.rail.roleplay"),   icon: "chat",      to: "/assistant",          count: t("dashboard.rail.ai") },
+    { label: t("dashboard.rail.dictation"),  icon: "dictation", to: "/practice/dictation", count: t("dashboard.rail.source") },
+    { label: t("dashboard.rail.miniGames"),  icon: "game",      to: "/mini-games",         count: t("dashboard.rail.games") },
   ];
   return (
     <div className="grid grid-cols-2 gap-2.5 h-full">
@@ -551,42 +561,31 @@ function QuickRail({ srsDue }) {
   );
 }
 
-/* ─────────────────────────────────────────────────────────
- * RecentActivity, pulled from trend report when available
- * ───────────────────────────────────────────────────────── */
-function timeAgoFr(iso) {
-  if (!iso) return "récemment";
-  const d = new Date(iso);
-  const diff = (Date.now() - d.getTime()) / 1000; // seconds
-  if (diff < 60)       return "à l'instant";
-  if (diff < 3600)     return `il y a ${Math.floor(diff / 60)} min`;
-  if (diff < 86400)    return `il y a ${Math.floor(diff / 3600)} h`;
-  if (diff < 86400*2)  return "hier";
-  if (diff < 86400*7)  return `il y a ${Math.floor(diff / 86400)} jours`;
-  return d.toLocaleDateString("fr-FR", { day: "numeric", month: "short" });
+function useTimeAgo() {
+  const { t, i18n } = useTranslation();
+  return (iso) => {
+    if (!iso) return t("dashboard.timeAgo.recently");
+    const d = new Date(iso);
+    const diff = (Date.now() - d.getTime()) / 1000;
+    if (diff < 60)      return t("dashboard.timeAgo.now");
+    if (diff < 3600)    return t("dashboard.timeAgo.minutes", { count: Math.floor(diff / 60) });
+    if (diff < 86400)   return t("dashboard.timeAgo.hours", { count: Math.floor(diff / 3600) });
+    if (diff < 86400*2) return t("dashboard.timeAgo.yesterday");
+    if (diff < 86400*7) return t("dashboard.timeAgo.days", { count: Math.floor(diff / 86400) });
+    return d.toLocaleDateString(i18n.language || "en-US", { day: "numeric", month: "short" });
+  };
 }
 
-const ACTIVITY_TYPE_LABEL = {
-  quiz: "Quiz",
-  flashcard_review: "Flashcards",
-  conjugation_drill: "Conjugaison",
-  pronunciation: "Prononciation",
-  dictation: "Dictée",
-  mini_game: "Mini-jeu",
-  roleplay: "Roleplay",
-  grammar: "Grammaire",
-  lesson_complete: "Leçon",
-};
-
 function RecentActivity({ trend }) {
-  // Build event list from real backend data
+  const { t } = useTranslation();
+  const timeAgo = useTimeAgo();
   const events = [];
 
   if (trend?.top_activities?.length) {
     trend.top_activities.slice(0, 2).forEach((a) => {
       events.push({
-        t: `${a.count || 0} cette semaine`,
-        txt: ACTIVITY_TYPE_LABEL[a.activity_type] || a.activity_type,
+        t: t("dashboard.activity.perWeek", { count: a.count || 0 }),
+        txt: t(`dashboard.activity.types.${a.activity_type}`, { defaultValue: a.activity_type }),
         score: `+${a.total_xp ?? a.xp ?? 0} XP`,
         tone: "primary",
       });
@@ -596,35 +595,35 @@ function RecentActivity({ trend }) {
   if (trend?.sample_mistakes?.length) {
     trend.sample_mistakes.slice(0, 2).forEach((m) => {
       events.push({
-        t: timeAgoFr(m.created_at || m.timestamp),
-        txt: m.user_text ? `Erreur, « ${m.user_text} »` : (m.context || "Erreur récente"),
-        score: m.correct_text ? `→ ${m.correct_text}` : "à revoir",
+        t: timeAgo(m.created_at || m.timestamp),
+        txt: m.user_text
+          ? t("dashboard.activity.errorText", { text: m.user_text })
+          : (m.context || t("dashboard.activity.recentError")),
+        score: m.correct_text ? `→ ${m.correct_text}` : t("dashboard.activity.toReview"),
         tone: "danger",
       });
     });
   }
 
-  // Streak success line
   if (trend?.streak >= 3) {
     events.push({
-      t: "aujourd'hui",
-      txt: `Série de ${trend.streak} jours`,
+      t: t("dashboard.activity.today"),
+      txt: t("dashboard.activity.streakDays", { count: trend.streak }),
       score: "🔥",
       tone: "success",
     });
   }
 
-  // Fallback if backend returned nothing yet
   const display = events.length > 0 ? events : [
-    { t: "·", txt: "Aucune activité récente", score: "", tone: "primary" },
+    { t: "·", txt: t("dashboard.activity.noneYet"), score: "", tone: "primary" },
   ];
 
   return (
     <div className="rounded-3xl bg-white dark:bg-surface-900/60 border border-surface-100 dark:border-surface-800 p-5 animate-fade-in-up">
       <div className="flex items-baseline justify-between mb-3">
-        <p className="text-[10px] uppercase tracking-[0.14em] font-semibold text-surface-400 dark:text-surface-500">Journal récent</p>
+        <p className="text-[10px] uppercase tracking-[0.14em] font-semibold text-surface-400 dark:text-surface-500">{t("dashboard.activity.eyebrow")}</p>
         <Link to="/progress" className="text-[11px] text-surface-400 hover:text-primary-500 transition-colors focus-ring rounded px-1">
-          tout voir →
+          {t("dashboard.activity.viewAll")}
         </Link>
       </div>
       <ul className="space-y-2.5">
@@ -651,10 +650,8 @@ function RecentActivity({ trend }) {
   );
 }
 
-/* ─────────────────────────────────────────────────────────
- * ResumeBanner
- * ───────────────────────────────────────────────────────── */
 function ResumeBanner({ activity, onDismiss }) {
+  const { t } = useTranslation();
   if (!activity) return null;
   return (
     <div className="flex items-center gap-3 rounded-2xl bg-info-50 dark:bg-info-900/20 border border-info-200 dark:border-info-800/50 px-4 py-3 animate-slide-in-down">
@@ -664,14 +661,14 @@ function ResumeBanner({ activity, onDismiss }) {
         </svg>
       </span>
       <div className="flex-1 min-w-0">
-        <p className="text-[10px] uppercase tracking-[0.14em] font-semibold text-info-700 dark:text-info-300">Reprendre où vous étiez</p>
+        <p className="text-[10px] uppercase tracking-[0.14em] font-semibold text-info-700 dark:text-info-300">{t("dashboard.resume.eyebrow")}</p>
         <p className="text-sm font-medium text-surface-800 dark:text-surface-200 truncate">{activity.label}</p>
       </div>
-      <Link to={activity.url} className="btn-primary btn-sm shrink-0">Continuer</Link>
+      <Link to={activity.url} className="btn-primary btn-sm shrink-0">{t("dashboard.resume.continue")}</Link>
       <button
         onClick={onDismiss}
         className="shrink-0 w-7 h-7 rounded-lg text-surface-400 hover:text-surface-700 dark:hover:text-surface-200 hover:bg-white/60 dark:hover:bg-surface-800/60 transition-colors flex items-center justify-center"
-        aria-label="Ignorer"
+        aria-label={t("dashboard.resume.dismiss")}
       >
         <svg className="w-4 h-4" fill="none" stroke="currentColor" strokeWidth={2.5} viewBox="0 0 24 24">
           <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
@@ -681,11 +678,10 @@ function ResumeBanner({ activity, onDismiss }) {
   );
 }
 
-/* ─────────────────────────────────────────────────────────
- * MAIN, Dashboard
- * ───────────────────────────────────────────────────────── */
 export default function Dashboard() {
+  const { t } = useTranslation();
   const { user } = useAuth();
+  const targetLanguage = user?.target_language || "fr";
   const [stats, setStats]     = useState(null);
   const [trend, setTrend]     = useState(null);
   const [srsDue, setSrsDue]   = useState(0);
@@ -696,22 +692,25 @@ export default function Dashboard() {
   const [lastActivity, dismissActivity] = useLastActivity();
   const animatedXP = useCountUp(stats?.total_xp ?? 0);
 
-  // Daily quote, rotates each calendar day, shuffleable in-session
+  const quotes = targetLanguage === "en" ? DAILY_QUOTES_EN : DAILY_QUOTES_FR;
+
   const initialQuoteIndex = useMemo(
-    () => Math.floor(Date.now() / 86_400_000) % DAILY_QUOTES.length,
-    []
+    () => Math.floor(Date.now() / 86_400_000) % quotes.length,
+    [quotes.length]
   );
   const [quoteIndex, setQuoteIndex] = useState(initialQuoteIndex);
-  const shuffleQuote = () => setQuoteIndex((q) => (q + 1) % DAILY_QUOTES.length);
+  useEffect(() => {
+    setQuoteIndex((q) => q % quotes.length);
+  }, [quotes.length]);
+  const shuffleQuote = () => setQuoteIndex((q) => (q + 1) % quotes.length);
 
   const examDaysLeft = user?.preferences?.exam_days_left
     ?? user?.preferences?.examDaysLeft
     ?? 47;
   const examDate = user?.preferences?.exam_date
     ?? user?.preferences?.examDate
-    ?? "12 juin 2026";
+    ?? t("dashboard.exam.defaultDate");
 
-  // Load core dashboard data
   useEffect(() => {
     Promise.allSettled([getStats(), getSRSDueCards(1), getTrendReport()])
       .then(([statsRes, srsRes, trendRes]) => {
@@ -725,7 +724,6 @@ export default function Dashboard() {
       });
   }, []);
 
-  // Word of the day, fetch a real random vocab word
   const loadWord = () => {
     setWordLoading(true);
     getRandomVocabulary(1)
@@ -735,19 +733,26 @@ export default function Dashboard() {
         if (item) setWord(item);
       })
       .catch(() => {
-        // Fallback word if API unavailable
-        setWord({
-          french: "flâner",
-          english: "to stroll, to wander leisurely",
-          pronunciation: "flɑ.ne",
-          example: "J'aime flâner le long de la Seine au coucher du soleil.",
-        });
+        if (targetLanguage === "en") {
+          setWord({
+            french: "stroll",
+            english: "to walk leisurely without purpose",
+            pronunciation: "stroʊl",
+            example: "We strolled along the river at sunset.",
+          });
+        } else {
+          setWord({
+            french: "flâner",
+            english: "to stroll, to wander leisurely",
+            pronunciation: "flɑ.ne",
+            example: "J'aime flâner le long de la Seine au coucher du soleil.",
+          });
+        }
       })
       .finally(() => setWordLoading(false));
   };
-  useEffect(() => { loadWord(); }, []);
+  useEffect(() => { loadWord(); }, [targetLanguage]); // eslint-disable-line react-hooks/exhaustive-deps
 
-  // Confetti on a 7-day streak milestone
   useEffect(() => {
     if (stats?.current_streak > 0 && stats.current_streak % 7 === 0) {
       const key = `celebrated-streak-${stats.current_streak}`;
@@ -800,22 +805,25 @@ export default function Dashboard() {
 
         <HybridHero srsDue={srsDue} />
 
-        {/* Bottom row: countdown + word + quick rail */}
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-5">
           <div className="lg:col-span-5">
             <ExamCountdown examDate={examDate} daysLeft={examDaysLeft} />
           </div>
           <div className="lg:col-span-4">
-            <WordCard word={word} loading={wordLoading} onShuffle={loadWord} />
+            <WordCard word={word} loading={wordLoading} onShuffle={loadWord} targetLanguage={targetLanguage} />
           </div>
           <div className="lg:col-span-3">
             <QuickRail srsDue={srsDue} />
           </div>
         </div>
 
-        {/* Quote + Recent activity */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-5">
-          <QuoteCard quoteIndex={quoteIndex} onShuffle={shuffleQuote} />
+          <QuoteCard
+            quotes={quotes}
+            quoteIndex={quoteIndex}
+            onShuffle={shuffleQuote}
+            targetLanguage={targetLanguage}
+          />
           <RecentActivity trend={trend} />
         </div>
       </div>

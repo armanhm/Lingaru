@@ -1,5 +1,6 @@
 import { useState, useEffect, useCallback } from "react";
 import { getSRSDueCards, submitSRSReview } from "../../../api/progress";
+import { useAuth } from "../../../contexts/AuthContext";
 import InlineRoundWidget from "../InlineRoundWidget";
 
 /**
@@ -19,6 +20,8 @@ const RATINGS = [
 ];
 
 export default function FlashcardsInline() {
+  const { user } = useAuth();
+  const isEn = user?.target_language === "en";
   const [card, setCard] = useState(null);
   const [revealed, setRevealed] = useState(false);
   const [loading, setLoading] = useState(true);
@@ -73,9 +76,9 @@ export default function FlashcardsInline() {
         <div className="space-y-3">
           <div className="text-center space-y-1">
             <p className="text-[24px] font-extrabold text-surface-900 dark:text-surface-50">
-              {card.french}
+              {isEn ? card.english : card.french}
             </p>
-            {card.pronunciation && (
+            {card.pronunciation && !isEn && (
               <p className="text-[12px] font-mono text-surface-500 dark:text-surface-400">
                 /{card.pronunciation}/
               </p>
@@ -95,13 +98,17 @@ export default function FlashcardsInline() {
           ) : (
             <>
               <div className="text-center space-y-1.5 rounded-xl border border-surface-200 dark:border-surface-700 bg-surface-50/60 dark:bg-surface-900/40 py-3 px-3">
-                <p className="text-[16px] font-bold text-surface-900 dark:text-surface-50">
-                  {card.english}
-                </p>
-                {card.example_sentence && (
+                {!isEn && (
+                  <p className="text-[16px] font-bold text-surface-900 dark:text-surface-50">
+                    {card.english}
+                  </p>
+                )}
+                {card.example_sentence ? (
                   <p className="text-[12px] italic text-surface-600 dark:text-surface-400">
                     "{card.example_sentence}"
                   </p>
+                ) : isEn && (
+                  <p className="text-[12px] text-surface-500 dark:text-surface-400">Got it?</p>
                 )}
               </div>
 

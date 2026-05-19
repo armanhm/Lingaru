@@ -272,6 +272,11 @@ export default function SRSReview() {
 
   const card = cards[currentIndex];
   const progress = (reviewedCount / cards.length) * 100;
+  const isEn = user?.target_language === "en";
+  const frontLabel = isEn ? "English" : "French";
+  const backLabel = isEn ? "French" : "English";
+  const frontWord = isEn ? card.english : card.french;
+  const backWord = isEn ? card.french : card.english;
 
   // Card transform
   const tx = exiting ? exiting.x : dx;
@@ -346,12 +351,12 @@ export default function SRSReview() {
 
           {/* Front, always visible */}
           <div className="px-8 pt-10 pb-8 text-center border-b border-surface-100 dark:border-surface-700">
-            <p className="section-label mb-3">French</p>
+            <p className="section-label mb-3">{frontLabel}</p>
             <div className="flex items-center justify-center gap-3 flex-wrap">
-              <span className="text-display font-extrabold text-surface-900 dark:text-surface-100 tracking-tight">{card.french}</span>
-              <AudioPlayButton text={card.french} />
+              <span className="text-display font-extrabold text-surface-900 dark:text-surface-100 tracking-tight">{frontWord}</span>
+              <AudioPlayButton text={frontWord} />
             </div>
-            {card.pronunciation && (
+            {card.pronunciation && !isEn && (
               <p className="text-sm text-surface-400 dark:text-surface-500 font-mono mt-2">/{card.pronunciation}/</p>
             )}
           </div>
@@ -370,13 +375,19 @@ export default function SRSReview() {
           ) : (
             <div className="transition-all duration-300 opacity-100">
               <div className="px-8 py-6 text-center border-b border-surface-100 dark:border-surface-700">
-                <p className="section-label mb-2">English</p>
-                <p className="text-h2 font-extrabold text-surface-800 dark:text-surface-100">{card.english}</p>
-                {card.example_sentence && (
-                  <div className="mt-4 rounded-xl bg-primary-50/60 dark:bg-primary-900/20 border-l-4 border-primary-400 dark:border-primary-600 pl-4 pr-3 py-2.5 text-left">
+                {!isEn && (
+                  <>
+                    <p className="section-label mb-2">{backLabel}</p>
+                    <p className="text-h2 font-extrabold text-surface-800 dark:text-surface-100">{backWord}</p>
+                  </>
+                )}
+                {card.example_sentence ? (
+                  <div className={`${isEn ? "" : "mt-4"} rounded-xl bg-primary-50/60 dark:bg-primary-900/20 border-l-4 border-primary-400 dark:border-primary-600 pl-4 pr-3 py-2.5 text-left`}>
                     <p className="section-label mb-0.5">Example</p>
                     <p className="text-sm text-surface-700 dark:text-surface-300 italic">"{card.example_sentence}"</p>
                   </div>
+                ) : isEn && (
+                  <p className="text-sm text-surface-500 dark:text-surface-400">Tap again to rate</p>
                 )}
               </div>
 

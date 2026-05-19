@@ -1,10 +1,14 @@
 import { useEffect, useState, useCallback } from "react";
-import { useSearchParams } from "react-router-dom";
+import { useSearchParams, Link } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 import { getConjugationVerbs, checkConjugation } from "../api/progress";
 import { staggerDelay } from "../hooks/useAnimations";
-import { PageHeader } from "../components/ui";
+import { PageHeader, EmptyState } from "../components/ui";
+import { useAuth } from "../contexts/AuthContext";
 
 export default function ConjugationDrill() {
+  const { user } = useAuth();
+  const { t } = useTranslation();
   const [searchParams] = useSearchParams();
   const [verbs, setVerbs] = useState([]);
   const [tenses, setTenses] = useState([]);
@@ -77,6 +81,33 @@ export default function ConjugationDrill() {
     },
     [answer, currentSubjectIndex, selectedVerb, selectedTense]
   );
+
+  if (user?.target_language === "en") {
+    return (
+      <div className="max-w-2xl mx-auto">
+        <PageHeader
+          eyebrow="Verb practice"
+          title="Conjugation drill"
+          icon="✏️"
+          backTo="/"
+          backLabel="Back to dashboard"
+          gradient
+        />
+        <div className="card p-6">
+          <EmptyState
+            icon="🇬🇧"
+            title={t("common.comingSoonForEnglish")}
+            subtitle={t("common.askAssistantInstead")}
+            action={
+              <Link to="/assistant" className="btn-primary btn-lg">
+                Open assistant
+              </Link>
+            }
+          />
+        </div>
+      </div>
+    );
+  }
 
   const handleNext = () => {
     setFeedback(null);

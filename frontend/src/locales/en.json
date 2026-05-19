@@ -91,7 +91,7 @@
     },
     "language": {
       "title": "Interface language",
-      "description": "Switch the language of the app chrome (nav, settings, buttons). The language being learned is always French.",
+      "description": "Switch the language of the app chrome (nav, settings, buttons).",
       "savedToast": "Language saved",
       "errorToast": "Failed to save language"
     },
@@ -127,7 +127,7 @@
       "telegramLinked": "Linked",
       "telegramNotLinked": "Not linked. Start the Lingaru bot on Telegram and send /start to connect your account.",
       "documentsTitle": "Documents",
-      "documentsDescription": "Upload French textbooks and notes, the AI assistant uses them to give grounded answers.",
+      "documentsDescription": "Upload textbooks and notes, the AI assistant uses them to give grounded answers.",
       "manageDocuments": "Manage documents",
       "dangerZone": "Danger zone",
       "dangerZoneDescription": "Irreversible account actions",
@@ -226,7 +226,7 @@
 
   "auth": {
     "loginTitle": "Welcome back",
-    "loginSubtitle": "Sign in to keep building your French",
+    "loginSubtitle": "Sign in to keep building your skills",
     "registerTitle": "Create your account",
     "registerSubtitle": "A few details and you're in",
     "username": "Username",
@@ -246,9 +246,9 @@
 
   "assistant": {
     "title": "Conversation",
-    "subtitle": "Speak freely in French, Claire will correct you as you chat.",
+    "subtitle": "Chat freely with your AI tutor — corrections as you go.",
     "newChat": "New chat",
-    "placeholder": "Ask anything in French…",
+    "placeholder": "Ask anything…",
     "send": "Send",
     "thinking": "Thinking…",
     "recentSessions": "Recent",
@@ -262,6 +262,101 @@
       "manage": "Manage in Settings",
       "popoverLabel": "Active memory notes",
       "noNotes": "No notes"
+    },
+    "modes": {
+      "conversation": {
+        "label": "Conversation",
+        "description": "Free practice with a tutor",
+        "tagline": "Chat freely — your AI tutor will correct you as you go."
+      },
+      "grammar_correction": {
+        "label": "Correction",
+        "description": "Get a text reviewed",
+        "tagline": "Paste any text, the assistant will correct it and explain each mistake."
+      },
+      "grammar_explanation": {
+        "label": "Grammar explainer",
+        "description": "Understand a grammar point",
+        "tagline": "Ask any grammar question, get a clear explanation with concrete examples."
+      },
+      "roleplay": {
+        "label": "Roleplay",
+        "description": "Guided situational practice",
+        "tagline": "Pick a scene and act it out with an AI character."
+      }
+    },
+    "drawer": {
+      "close": "Close",
+      "conversationsTitle": "Conversations",
+      "newConversation": "New conversation",
+      "newShort": "New",
+      "search": "Search…",
+      "modeLabel": "Mode",
+      "scenariosLabel": "Scenarios",
+      "historyLabel": "History",
+      "noConversations": "No conversations yet.",
+      "untitled": "Untitled",
+      "messagesCount": "{{count}} messages",
+      "tuteurTitle": "Tutor · session",
+      "activeScenario": "Active scenario",
+      "erreursTitle": "Corrections · this session",
+      "erreursCount": "Mistakes",
+      "noMistakes": "No mistakes detected yet. Keep writing — your corrections will appear here."
+    },
+    "bubble": {
+      "you": "You",
+      "withDocs": "Using your documents",
+      "correctionOne": "{{count}} correction · hover the underlined words",
+      "correctionOther": "{{count}} corrections · hover the underlined words"
+    },
+    "composer": {
+      "removeImage": "Remove image",
+      "agentsAvailable": "Available agents",
+      "agentsHeader": "Agents · @{{query}}",
+      "navigate": "navigate",
+      "complete": "complete",
+      "close": "close",
+      "preview": "Preview",
+      "image": "Image",
+      "voice": "Voice",
+      "stopRecording": "Stop recording",
+      "translate": "Translate",
+      "send": "Send",
+      "recordingHint": "Recording… click the mic to stop.",
+      "footerHelpPrefix": "Enter to send · Shift+Enter for a new line · type ",
+      "footerHelpSuffix": " to summon an agent ·",
+      "agentsGallery": "agent gallery →"
+    },
+    "placeholders": {
+      "imageQuestion": "Ask a question about the image (optional)…",
+      "grammarCorrection": "Paste a text to correct…",
+      "grammarExplanation": "Ask a grammar question…",
+      "roleplayDefault": "Say something to start the scene…",
+      "conversation": "Write a message… your AI tutor will gently correct you."
+    },
+    "empty": {
+      "scenarioEyebrow": "Scene setup",
+      "startScene": "To start the scene, try:",
+      "tryThese": "Try one of these"
+    },
+    "header": {
+      "conversations": "Conversations",
+      "newConversation": "New conversation",
+      "newShort": "New",
+      "tutor": "Tutor",
+      "corrections": "Corrections",
+      "with": "with"
+    },
+    "errors": {
+      "loadConversation": "Could not load this conversation.",
+      "imageAnalysis": "Image analysis failed.",
+      "sendFailed": "Failed to send the message.",
+      "voiceFailed": "Voice send failed.",
+      "micDenied": "Microphone denied. Allow access to talk."
+    },
+    "placeholderBubble": {
+      "image": "[Image sent for analysis]",
+      "voice": "[Voice recording…]"
     }
   },
 
@@ -275,7 +370,145 @@
   "dashboard": {
     "welcomeBack": "Welcome back, {{name}}",
     "todayLabel": "Today",
-    "noActivity": "No recent activity"
+    "noActivity": "No recent activity",
+    "youFallback": "you",
+    "streakLabel": "day streak",
+    "xpLabel": "XP",
+    "modeChip": {
+      "general": "🎒 Learning",
+      "exam": "🎯 Exam prep",
+      "agentic": "🤖 Agent mode"
+    },
+    "hero": {
+      "recommendedEyebrow": "Recommended · selected axis · {{axis}}",
+      "title": "Present perfect tense",
+      "subtitle": ": forms you actually use",
+      "description": "12 minutes · 9 targeted questions on irregular verbs (<1>be, have, do</1>). You made <2>3 mistakes</2> on this point this week.",
+      "startCta": "Start · 12 min",
+      "pickAnother": "Pick something else",
+      "objectiveLabel": "{{value}}/100 · target {{target}}"
+    },
+    "compass": {
+      "eyebrow": "The compass",
+      "title": "Skills · B1 to B2",
+      "clickHint": "click an axis",
+      "towards": "to B2"
+    },
+    "skills": {
+      "vocab": "Vocabulary",
+      "grammar": "Grammar",
+      "listen": "Comprehension",
+      "speak": "Speaking",
+      "read": "Reading",
+      "write": "Writing",
+      "hints": {
+        "vocab": "+82 words this week",
+        "grammar": "Review subjunctive",
+        "listen": "Dictation · 4 sessions",
+        "speak": "3 roleplays this week",
+        "read": "Discover · B1 article",
+        "write": "1 dictation reviewed"
+      }
+    },
+    "plan": {
+      "warm": "Warm-up",
+      "focus": "Focused session",
+      "talk": "Speak",
+      "minutes": "min"
+    },
+    "quote": {
+      "eyebrow": "Quote of the day",
+      "next": "Next quote",
+      "showTranslation": "Show translation →",
+      "hideTranslation": "Hide translation",
+      "types": {
+        "proverb": "Proverb",
+        "inspiration": "Inspiration",
+        "poem": "Poetry",
+        "literature": "Literature",
+        "philosophy": "Philosophy"
+      },
+      "authors": {
+        "frenchProverb": "Proverb",
+        "popularWisdom": "Folk wisdom"
+      }
+    },
+    "exam": {
+      "eyebrow": "Exam countdown",
+      "scoreTarget": "Target score · 500",
+      "daysRemainingLine1": "days",
+      "daysRemainingLine2": "remaining",
+      "registration": "registration",
+      "today": "today · D−{{days}}",
+      "exam": "exam",
+      "listening": "Listening",
+      "reading": "Reading",
+      "lexGrammar": "Lex. & gram.",
+      "defaultDate": "June 12, 2026"
+    },
+    "word": {
+      "eyebrow": "Word of the day",
+      "newWord": "New word",
+      "fullDefinition": "Full definition",
+      "fallbackEn": {
+        "french": "to stroll",
+        "english": "to walk leisurely without purpose",
+        "pronunciation": "stroʊl",
+        "example": "We strolled along the river at sunset."
+      }
+    },
+    "rail": {
+      "flashcards": "Flashcards",
+      "roleplay": "Roleplay",
+      "dictation": "Dictation",
+      "miniGames": "Mini-games",
+      "due": "{{count}} due",
+      "upToDate": "up to date",
+      "ai": "AI",
+      "source": "Audio",
+      "games": "6 games"
+    },
+    "activity": {
+      "eyebrow": "Recent journal",
+      "viewAll": "view all →",
+      "types": {
+        "quiz": "Quiz",
+        "flashcard_review": "Flashcards",
+        "conjugation_drill": "Conjugation",
+        "pronunciation": "Pronunciation",
+        "dictation": "Dictation",
+        "mini_game": "Mini-game",
+        "roleplay": "Roleplay",
+        "grammar": "Grammar",
+        "lesson_complete": "Lesson"
+      },
+      "perWeek": "{{count}} this week",
+      "errorText": "Mistake: \"{{text}}\"",
+      "recentError": "Recent mistake",
+      "toReview": "to review",
+      "streakDays": "{{count}}-day streak",
+      "today": "today",
+      "noneYet": "No recent activity"
+    },
+    "resume": {
+      "eyebrow": "Pick up where you left off",
+      "continue": "Continue",
+      "dismiss": "Dismiss"
+    },
+    "timeAgo": {
+      "now": "just now",
+      "minutes": "{{count}} min ago",
+      "hours": "{{count}}h ago",
+      "yesterday": "yesterday",
+      "days": "{{count}} days ago",
+      "recently": "recently"
+    },
+    "greeting": {
+      "morning": "Good morning",
+      "afternoon": "Good afternoon",
+      "evening": "Good evening",
+      "night": "Good night"
+    }
   },
 
   "news": {
@@ -283,20 +516,78 @@
     "pageSubtitle": "Daily articles tuned to your level.",
     "loadMore": "Load more",
     "generating": "Generating…",
-    "empty": "No news yet"
+    "notFound": "Article not found",
+    "articleDoesNotExist": "This article doesn't exist.",
+    "backToNews": "Back to news",
+    "sourceLabel": "Source",
+    "readOriginal": "Read the original article",
+    "listenArticle": "Listen to the article",
+    "showTranslation": "Show translation →",
+    "hideTranslation": "Hide translation",
+    "guidedPractice": "Guided practice",
+    "learnFromArticle": "Learn from this article",
+    "itemCount": "{{count}} items",
+    "tabs": {
+      "vocabulary": "Vocabulary",
+      "expressions": "Expressions",
+      "grammar": "Grammar"
+    },
+    "topics": {
+      "politics": "Politics",
+      "sports": "Sports",
+      "culture": "Culture",
+      "economy": "Economy",
+      "science": "Science",
+      "tech": "Tech",
+      "society": "Society",
+      "environ": "Environment",
+      "world": "World",
+      "misc": "Misc"
+    },
+    "empty": {
+      "list": "No news yet",
+      "vocabulary": "No vocabulary provided for this article.",
+      "expressions": "No expressions highlighted for this article.",
+      "grammar": "No grammar points for this article."
+    }
   },
 
   "discover": {
     "pageTitle": "Discover",
-    "pageSubtitle": "Bite-sized French content, refreshed daily.",
+    "pageSubtitle": "Bite-sized content, refreshed daily.",
     "generateMore": "Generate more",
     "generating": "Generating…"
   },
 
   "dictionary": {
     "pageTitle": "Dictionary",
-    "pageSubtitle": "Look up French words, get definitions, examples, and pronunciations.",
-    "searchPlaceholder": "Look up a French word…"
+    "pageSubtitle": "Look up English words, get definitions, examples, and pronunciations.",
+    "pageSubtitleFr": "Look up French words and conjugate any verb in seconds.",
+    "searchPlaceholder": "Look up an English word…",
+    "searchPlaceholderFr": "Enter a French word… e.g. maison, beau, courir",
+    "searchPlaceholderEn": "Enter an English word… e.g. freedom, hope, beauty",
+    "eyebrow": "Lookup",
+    "tabDictionary": "📖 Dictionary",
+    "tabConjugator": "✏️ Verb conjugator",
+    "searchButton": "Search",
+    "tryAWord": "Try a word",
+    "commonVerbs": "Common verbs",
+    "lookingUp": "Looking up word…",
+    "conjugating": "Conjugating verb…",
+    "lookupFailed": "Lookup failed. Please try again.",
+    "conjugationFailed": "Conjugation failed. Please try again.",
+    "conjugatorPlaceholder": "Enter a French verb… e.g. avoir, manger, partir",
+    "conjugateLink": "Conjugate \"{{word}}\"",
+    "definitions": "Definitions",
+    "examples": "Examples",
+    "synonyms": "Synonyms",
+    "antonyms": "Antonyms",
+    "etymology": "Etymology",
+    "auxiliary": "auxiliary",
+    "pastParticiple": "past participle",
+    "presentParticiple": "present participle",
+    "showAllTenses": "Show all tenses at once",
+    "openAssistant": "Open assistant"
   },
 
   "progress": {

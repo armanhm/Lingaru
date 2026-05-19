@@ -18,17 +18,29 @@ CARD_EXPIRY_HOURS = 24
 
 
 def generate_word_card(language: str = "fr") -> Optional[DiscoverCard]:
-    """Generate a Word of the Day card from a random Vocabulary entry."""
-    vocab = Vocabulary.objects.order_by("?").first()
+    """Generate a Word of the Day card from a random Vocabulary entry
+    in the target language. For EN learners the card's title is the
+    English word with the French translation as a hint; for FR
+    learners (default) the title is the French word with the English
+    translation as a hint."""
+    vocab = Vocabulary.objects.filter(language=language).order_by("?").first()
     if vocab is None:
-        logger.warning("No vocabulary items available for word card generation.")
+        logger.warning(
+            "No vocabulary items available for word card generation (language=%s).",
+            language,
+        )
         return None
+
+    # The "headword" is whatever's being TAUGHT (the target language's
+    # value); the other field is the hint/translation.
+    headword = vocab.english if language == "en" else vocab.french
+    translation = vocab.french if language == "en" else vocab.english
 
     now = timezone.now()
     card = DiscoverCard.objects.create(
         type="word",
-        title=vocab.french,
-        summary=f"{vocab.french}, {vocab.english}",
+        title=headword,
+        summary=f"{headword}, {translation}",
         content_json={
             "french": vocab.french,
             "english": vocab.english,
@@ -45,10 +57,14 @@ def generate_word_card(language: str = "fr") -> Optional[DiscoverCard]:
 
 
 def generate_grammar_card(language: str = "fr") -> Optional[DiscoverCard]:
-    """Generate a Grammar Tip card from a random GrammarRule entry."""
-    rule = GrammarRule.objects.order_by("?").first()
+    """Generate a Grammar Tip card from a random GrammarRule entry
+    in the target language."""
+    rule = GrammarRule.objects.filter(language=language).order_by("?").first()
     if rule is None:
-        logger.warning("No grammar rules available for grammar card generation.")
+        logger.warning(
+            "No grammar rules available for grammar card generation (language=%s).",
+            language,
+        )
         return None
 
     now = timezone.now()
@@ -70,16 +86,22 @@ def generate_grammar_card(language: str = "fr") -> Optional[DiscoverCard]:
 
 
 def generate_trivia_card(language: str = "fr") -> Optional[DiscoverCard]:
-    """Generate a trivia card using the LLM."""
+    """Generate a trivia card using the LLM, in the target language."""
+    user_msg = (
+        "Generate an English trivia fact about an English-speaking country "
+        "(UK, US, Canada, Australia, Ireland, New Zealand)."
+        if language == "en"
+        else "Generate a French trivia fact."
+    )
     try:
         router = create_llm_router()
         response = router.generate(
-            messages=[{"role": "user", "content": "Generate a French trivia fact."}],
+            messages=[{"role": "user", "content": user_msg}],
             system_prompt=get_system_prompt(language, "trivia_generator"),
         )
         data = json.loads(response.content)
     except (RuntimeError, json.JSONDecodeError, KeyError) as exc:
-        logger.warning("Failed to generate trivia card: %s", exc)
+        logger.warning("Failed to generate trivia card (language=%s): %s", language, exc)
         return None
 
     now = timezone.now()

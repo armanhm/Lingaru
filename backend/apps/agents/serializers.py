@@ -2,7 +2,6 @@ from rest_framework import serializers
 
 from .models import Agent, AgentRun
 
-
 _EN_OVERRIDABLE_FIELDS = (
     "name",
     "tagline",

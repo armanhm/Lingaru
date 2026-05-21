@@ -42,6 +42,11 @@ export default function OurNotesReview() {
   const [exiting, setExiting] = useState(null);
   const startRef = useRef(null);
   const transitioningRef = useRef(false);
+  const swipeTimeoutRef = useRef(null);
+
+  useEffect(() => () => {
+    if (swipeTimeoutRef.current) clearTimeout(swipeTimeoutRef.current);
+  }, []);
 
   const [quizLoading, setQuizLoading] = useState(false);
   const [quizError, setQuizError] = useState(null);
@@ -129,12 +134,14 @@ export default function OurNotesReview() {
     if (nextIndex < 0 || nextIndex >= notes.length) return;
     transitioningRef.current = true;
     setExiting({ x: direction === "next" ? -FLY_DISTANCE : FLY_DISTANCE });
-    setTimeout(() => {
+    if (swipeTimeoutRef.current) clearTimeout(swipeTimeoutRef.current);
+    swipeTimeoutRef.current = setTimeout(() => {
       goTo(nextIndex);
       setExiting(null);
       setDx(0);
       setDragging(false);
       transitioningRef.current = false;
+      swipeTimeoutRef.current = null;
     }, FLY_DURATION);
   }, [activeIndex, notes.length, goTo]);
 
@@ -335,7 +342,7 @@ export default function OurNotesReview() {
               {words.map((w, idx) => (
                 <div key={w.id}>
                   <p className="text-[15px] leading-relaxed">
-                    <span aria-hidden>{WORD_EMOJIS[((noteNumber || 0) * 7 + idx) % WORD_EMOJIS.length]} </span>
+                    <span aria-hidden>{WORD_EMOJIS[((Number(noteNumber) || 0) * 7 + idx) % WORD_EMOJIS.length]} </span>
                     <span className="font-bold underline decoration-primary-400/60 underline-offset-2">{w.word}</span>
                     {w.definition && (
                       <>
@@ -388,7 +395,7 @@ export default function OurNotesReview() {
                     type="button"
                     onClick={() => goTo(i)}
                     ref={(el) => {
-                      if (active && el) el.scrollIntoView({ block: "nearest", behavior: "smooth" });
+                      if (active && el && !dragging && !exiting) el.scrollIntoView({ block: "nearest", behavior: "smooth" });
                     }}
                     className={`origin-right w-24 text-center whitespace-nowrap px-3 py-1 rounded-md text-sm font-medium transition-all duration-200 ease-out focus-ring backdrop-blur shadow-sm hover:scale-150 hover:font-bold hover:shadow-md hover:z-10 relative ${
                       active

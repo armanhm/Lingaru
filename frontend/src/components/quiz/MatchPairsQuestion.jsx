@@ -92,14 +92,14 @@ export default function MatchPairsQuestion({ pairs, onAnswer, disabled }) {
                         : "border-surface-200 dark:border-surface-600 bg-white dark:bg-surface-800 text-surface-800 dark:text-surface-200 hover:border-primary-300"
                 }`}
               >
-                {pair.french}
+                {isEn ? pair.english : pair.french}
                 {isMatched && <span className="float-right">✓</span>}
               </button>
             );
           })}
         </div>
 
-        {/* Right column, English (shuffled) */}
+        {/* Right column: native/translation (shuffled) */}
         <div className="space-y-2">
           <p className="section-label mb-1">{rightLabel}</p>
           {rightOrder.map((pairIdx, rightIdx) => {
@@ -121,7 +121,7 @@ export default function MatchPairsQuestion({ pairs, onAnswer, disabled }) {
                         : "border-surface-200 dark:border-surface-600 bg-white dark:bg-surface-800 text-surface-500 dark:text-surface-400"
                 }`}
               >
-                {pairs[pairIdx].english}
+                {isEn ? pairs[pairIdx].french : pairs[pairIdx].english}
                 {isMatched && <span className="float-right">✓</span>}
               </button>
             );

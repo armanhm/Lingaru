@@ -60,7 +60,7 @@ def test_list_returns_only_user_target_language(authed_client, en_note, fr_note)
     client, _ = authed_client("en")
     response = client.get("/api/notes/")
     assert response.status_code == 200
-    ids = [item["id"] for item in response.json()["results"]]
+    ids = [item["id"] for item in response.json()]
     assert en_note.id in ids
     assert fr_note.id not in ids
 

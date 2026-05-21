@@ -4,6 +4,7 @@ import { startQuiz, submitAnswer, completeQuiz } from "../api/practice";
 import { completeLesson } from "../api/progress";
 import { generateTTS } from "../api/media";
 import { useToast } from "../contexts/ToastContext";
+import { useAuth } from "../contexts/AuthContext";
 import { useCountUp, staggerDelay } from "../hooks/useAnimations";
 import { markActivity, clearActivity } from "../hooks/useResumeSession";
 import { TriumphHero } from "../components/ui";
@@ -262,6 +263,7 @@ export default function Quiz() {
   const { lessonId } = useParams();
   const navigate = useNavigate();
   const { showToast } = useToast();
+  const { user } = useAuth();
 
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -278,7 +280,13 @@ export default function Quiz() {
     startQuiz(lessonId)
       .then((res) => {
         setSessionId(res.data.session_id);
-        setQuestions(enhanceQuestions(res.data.questions));
+        // The enhancer's heuristics scan prompts for FR words in quotes
+        // and assume `correct_answer` is the English translation. For EN
+        // target learners those assumptions are wrong, so the enhanced
+        // match-pairs / odd-one-out questions render gibberish. Skip
+        // enhancement entirely for EN; ship clean MCQs only.
+        const isEn = user?.target_language === "en";
+        setQuestions(isEn ? res.data.questions : enhanceQuestions(res.data.questions));
       })
       .catch((err) => {
         setError(
@@ -288,7 +296,7 @@ export default function Quiz() {
         );
       })
       .finally(() => setLoading(false));
-  }, [lessonId]);
+  }, [lessonId, user?.target_language]);
 
   const handleAnswer = useCallback(
     async (answer) => {

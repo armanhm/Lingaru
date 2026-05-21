@@ -171,32 +171,39 @@ export default function OurNotesDetail() {
   if (!note) return null;
 
   const dateLabel = formatDate(note.date, dateLocale);
-  const number = note.number ?? note.id;
+  const number = note.note_number ?? note.number ?? note.id;
   const vocab = note.vocabulary || note.vocab || note.words || [];
 
   return (
     <div className="max-w-4xl mx-auto animate-fade-in">
-      <Link
-        to="/our-notes"
-        className="inline-flex items-center gap-1.5 text-caption font-medium text-surface-500 dark:text-surface-400 hover:text-primary-600 dark:hover:text-primary-400 mb-3 transition-colors focus-ring rounded-md -mx-1 px-1 py-0.5"
-      >
-        <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" strokeWidth={2.5} viewBox="0 0 24 24">
-          <path strokeLinecap="round" strokeLinejoin="round" d="M15 19l-7-7 7-7" />
-        </svg>
-        {t("ourNotes.detail.backToList")}
-      </Link>
+      <div className="flex items-center justify-between gap-3 mb-3">
+        <Link
+          to="/our-notes"
+          className="inline-flex items-center gap-1.5 text-caption font-medium text-surface-500 dark:text-surface-400 hover:text-primary-600 dark:hover:text-primary-400 transition-colors focus-ring rounded-md -mx-1 px-1 py-0.5"
+        >
+          <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" strokeWidth={2.5} viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" d="M15 19l-7-7 7-7" />
+          </svg>
+          {t("ourNotes.detail.backToList")}
+        </Link>
+        <Link to={`/our-notes/review/${note.id}`} className="btn-primary btn-md">
+          🎭 {t("ourNotes.review.ctaSingleNote")}
+        </Link>
+      </div>
 
       <div className="mb-8 flex items-start gap-3">
         <div className="shrink-0 w-12 h-12 rounded-2xl bg-gradient-to-br from-primary-500 to-primary-700 text-white flex items-center justify-center text-2xl shadow-glow-primary">
           🗒️
         </div>
         <div className="min-w-0">
-          <p className="eyebrow-primary mb-1">
-            {t("ourNotes.detail.noteHeader", { number })}
-          </p>
           <h1 className="text-h1 text-surface-900 dark:text-surface-100">
-            {note.title || t("ourNotes.untitled")}
+            {t("ourNotes.detail.noteHeader", { number })}
           </h1>
+          {note.title && (
+            <p className="text-body-lg text-surface-600 dark:text-surface-300 mt-1">
+              {note.title}
+            </p>
+          )}
           {dateLabel && (
             <p className="text-body text-surface-500 dark:text-surface-400 mt-1">
               {dateLabel}
@@ -209,7 +216,9 @@ export default function OurNotesDetail() {
 
       <div className="mt-8 space-y-6">
         <NoteActions noteId={note.id} />
-        <NoteAssistant noteId={note.id} />
+        <div id="assistant" className="scroll-mt-4">
+          <NoteAssistant noteId={note.id} />
+        </div>
       </div>
     </div>
   );

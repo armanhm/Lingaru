@@ -574,6 +574,19 @@
       "notFound": "Note not found",
       "example": "Example"
     },
+    "review": {
+      "cta": "Review notes",
+      "ctaSingleNote": "Review this note",
+      "previous": "Previous",
+      "next": "Next",
+      "hint": "Swipe or use ← / → keys",
+      "counter": "{{current}} / {{total}}",
+      "loadError": "Couldn't load the note. Try again.",
+      "jumpTo": "Jump to",
+      "shuffle": "Shuffle",
+      "askAi": "Ask AI",
+      "fullNote": "Full note"
+    },
     "assistant": {
       "title": "Ask about this note",
       "subtitle": "The assistant knows the words above. Ask for examples, comparisons, or generate practice prompts.",

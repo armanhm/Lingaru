@@ -1,10 +1,18 @@
 import { useState, useCallback } from "react";
+import { useAuth } from "../../contexts/AuthContext";
 
 /**
- * Match Pairs question: connect French words to English translations.
+ * Match Pairs question: connect target-language words to native translations.
  * Props: pairs=[{french, english}], onAnswer(allCorrect: bool)
  */
 export default function MatchPairsQuestion({ pairs, onAnswer, disabled }) {
+  const { user } = useAuth();
+  const isEn = user?.target_language === "en";
+  const leftLabel = isEn ? "English" : "French";
+  const rightLabel = isEn ? "Translation" : "English";
+  const subtitle = isEn
+    ? "Tap an English word, then tap its translation"
+    : "Tap a French word, then tap its English translation";
   const [selectedLeft, setSelectedLeft] = useState(null);
   const [matched, setMatched] = useState({}); // { leftIdx: rightIdx }
   const [wrongFlash, setWrongFlash] = useState(null); // { left, right }
@@ -57,13 +65,13 @@ export default function MatchPairsQuestion({ pairs, onAnswer, disabled }) {
         Match the pairs
       </p>
       <p className="text-sm text-surface-500 dark:text-surface-400 mb-5">
-        Tap a French word, then tap its English translation
+        {subtitle}
       </p>
 
       <div className="grid grid-cols-2 gap-3">
         {/* Left column, French */}
         <div className="space-y-2">
-          <p className="section-label mb-1">French</p>
+          <p className="section-label mb-1">{leftLabel}</p>
           {pairs.map((pair, i) => {
             const isMatched = matched[i] != null;
             const isSelected = selectedLeft === i;
@@ -84,16 +92,16 @@ export default function MatchPairsQuestion({ pairs, onAnswer, disabled }) {
                         : "border-surface-200 dark:border-surface-600 bg-white dark:bg-surface-800 text-surface-800 dark:text-surface-200 hover:border-primary-300"
                 }`}
               >
-                {pair.french}
+                {isEn ? pair.english : pair.french}
                 {isMatched && <span className="float-right">✓</span>}
               </button>
             );
           })}
         </div>
 
-        {/* Right column, English (shuffled) */}
+        {/* Right column: native/translation (shuffled) */}
         <div className="space-y-2">
-          <p className="section-label mb-1">English</p>
+          <p className="section-label mb-1">{rightLabel}</p>
           {rightOrder.map((pairIdx, rightIdx) => {
             const isMatched = isRightMatched(rightIdx);
             const isWrong = wrongFlash?.right === rightIdx;
@@ -113,7 +121,7 @@ export default function MatchPairsQuestion({ pairs, onAnswer, disabled }) {
                         : "border-surface-200 dark:border-surface-600 bg-white dark:bg-surface-800 text-surface-500 dark:text-surface-400"
                 }`}
               >
-                {pairs[pairIdx].english}
+                {isEn ? pairs[pairIdx].french : pairs[pairIdx].english}
                 {isMatched && <span className="float-right">✓</span>}
               </button>
             );

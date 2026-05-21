@@ -35,7 +35,13 @@ export default function OurNotes() {
       return;
     }
     listNotes()
-      .then((res) => setNotes(res.data.results || res.data || []))
+      .then((res) => {
+        const list = res.data.results || res.data || [];
+        const sorted = [...list].sort(
+          (a, b) => (a.note_number ?? a.id) - (b.note_number ?? b.id),
+        );
+        setNotes(sorted);
+      })
       .catch((err) => setError(err.response?.data?.detail || "Failed to load notes."))
       .finally(() => setLoading(false));
   }, [isEn]);
@@ -100,6 +106,13 @@ export default function OurNotes() {
         subtitle={t("ourNotes.pageSubtitle")}
         icon="🗒️"
         gradient
+        actions={
+          notes.length > 0 ? (
+            <Link to="/our-notes/review" className="btn-primary btn-md">
+              🎭 {t("ourNotes.review.cta")}
+            </Link>
+          ) : null
+        }
       />
 
       {notes.length === 0 ? (
@@ -109,7 +122,7 @@ export default function OurNotes() {
           {notes.map((note, i) => {
             const wordCount = note.word_count ?? note.vocabulary?.length ?? 0;
             const dateLabel = formatDate(note.date, dateLocale);
-            const title = note.title || t("ourNotes.untitled");
+            const noteNumber = note.note_number ?? note.number ?? note.id;
             return (
               <Link
                 key={note.id}
@@ -120,12 +133,8 @@ export default function OurNotes() {
                 <div className="h-1 bg-gradient-to-r from-primary-400 via-accent-400 to-success-400 opacity-60 group-hover:opacity-100 transition-opacity" />
 
                 <div className="p-5">
-                  <p className="eyebrow-primary mb-2">
-                    {t("ourNotes.detail.noteHeader", { number: note.number ?? note.id })}
-                  </p>
-
-                  <h2 className="text-h4 text-surface-900 dark:text-surface-100 group-hover:text-primary-600 dark:group-hover:text-primary-400 transition-colors line-clamp-2">
-                    {title}
+                  <h2 className="text-h4 text-surface-900 dark:text-surface-100 group-hover:text-primary-600 dark:group-hover:text-primary-400 transition-colors">
+                    {t("ourNotes.detail.noteHeader", { number: noteNumber })}
                   </h2>
 
                   {dateLabel && (

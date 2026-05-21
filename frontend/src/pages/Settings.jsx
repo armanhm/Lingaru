@@ -27,17 +27,6 @@ const LEVEL_OPTIONS = [
   { value: "C2", label: "C2, Proficiency" },
 ];
 
-const LANGUAGE_OPTIONS = [
-  { value: "en", label: "English" },
-  { value: "fr", label: "French" },
-  { value: "es", label: "Spanish" },
-  { value: "de", label: "German" },
-  { value: "ar", label: "Arabic" },
-  { value: "fa", label: "Persian" },
-  { value: "zh", label: "Chinese" },
-  { value: "ja", label: "Japanese" },
-];
-
 const DEFAULT_PREFS = {
   flashcard_count: 20,
   quiz_questions: 10,
@@ -579,7 +568,6 @@ export default function Settings() {
   const [email, setEmail] = useState("");
   const [dailyGoal, setDailyGoal] = useState(15);
   const [targetLevel, setTargetLevel] = useState("B1");
-  const [nativeLang, setNativeLang] = useState("en");
   const [targetLanguage, setTargetLanguage] = useState("fr");
   const [pendingLanguage, setPendingLanguage] = useState(null);
   const [profileSaving, setProfileSaving] = useState(false);
@@ -611,7 +599,6 @@ export default function Settings() {
       setEmail(user.email || "");
       setDailyGoal(user.daily_goal_minutes || 15);
       setTargetLevel(user.target_level || "B1");
-      setNativeLang(user.native_language || "en");
       setTargetLanguage(user.target_language || "fr");
       setMode(user.mode || "general");
       setProficiency(user.proficiency_level || "B1");
@@ -631,7 +618,6 @@ export default function Settings() {
         email,
         daily_goal_minutes: dailyGoal,
         target_level: targetLevel,
-        native_language: nativeLang,
       });
       showToast("Profile saved!", "success");
     } catch (err) {
@@ -885,16 +871,9 @@ export default function Settings() {
                 <input type="email" value={email} onChange={(e) => setEmail(e.target.value)} className="input" required />
               </div>
             </div>
-            <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-              <div>
-                <label className="block text-caption font-semibold text-surface-700 dark:text-surface-300 mb-1.5 uppercase tracking-wide">Native language</label>
-                <select value={nativeLang} onChange={(e) => setNativeLang(e.target.value)} className="input">
-                  {LANGUAGE_OPTIONS.map((l) => <option key={l.value} value={l.value}>{l.label}</option>)}
-                </select>
-              </div>
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <div>
                 <label className="block text-caption font-semibold text-surface-700 dark:text-surface-300 mb-1.5 uppercase tracking-wide">{t("settings.profile.targetLanguage")}</label>
-                <p className="text-xs text-surface-500 dark:text-surface-500 mb-1.5">{t("settings.profile.targetLanguageDescription")}</p>
                 <select
                   value={targetLanguage}
                   onChange={(e) => handleTargetLanguageChange(e.target.value)}
@@ -911,7 +890,7 @@ export default function Settings() {
                 </select>
               </div>
             </div>
-            <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <div>
                 <label className="block text-caption font-semibold text-surface-700 dark:text-surface-300 mb-1.5 uppercase tracking-wide">Daily goal (min)</label>
                 <input type="number" min={5} max={180} value={dailyGoal} onChange={(e) => setDailyGoal(Number(e.target.value))} className="input" />

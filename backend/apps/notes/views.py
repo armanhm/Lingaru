@@ -51,6 +51,7 @@ def _get_or_create_our_notes_lesson() -> Lesson:
 class NoteListView(generics.ListAPIView):
     serializer_class = NoteListSerializer
     permission_classes = (permissions.IsAuthenticated,)
+    pagination_class = None
 
     def get_queryset(self):
         return Note.objects.filter(

@@ -1,8 +1,11 @@
 import { useState, useRef, useCallback, useEffect } from "react";
+import { Link } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 import client from "../api/client";
 import { checkPronunciation, generateTTS } from "../api/media";
 import { useCountUp } from "../hooks/useAnimations";
-import { PageHeader } from "../components/ui";
+import { PageHeader, EmptyState } from "../components/ui";
+import { useAuth } from "../contexts/AuthContext";
 
 const API_BASE_URL = import.meta.env.VITE_API_URL || "/api";
 
@@ -19,6 +22,8 @@ async function fetchRandomVocab() {
 }
 
 export default function Pronunciation() {
+  const { user } = useAuth();
+  const { t } = useTranslation();
   const [word, setWord] = useState(null);
   const wordRef = useRef(null);
   const [loading, setLoading] = useState(false);
@@ -123,6 +128,33 @@ export default function Pronunciation() {
     setResult(null);
     loadWord();
   }, [loadWord]);
+
+  if (user?.target_language === "en") {
+    return (
+      <div className="max-w-2xl mx-auto">
+        <PageHeader
+          eyebrow="Speak it out"
+          title="Pronunciation"
+          icon="🎤"
+          backTo="/"
+          backLabel="Back to dashboard"
+          gradient
+        />
+        <div className="card p-6">
+          <EmptyState
+            icon="🇬🇧"
+            title={t("common.comingSoonForEnglish")}
+            subtitle={t("common.askAssistantInstead")}
+            action={
+              <Link to="/assistant" className="btn-primary btn-lg">
+                Open assistant
+              </Link>
+            }
+          />
+        </div>
+      </div>
+    );
+  }
 
   const accuracyColor = (score) => {
     if (score >= 0.8) return "text-success-600 dark:text-success-400";

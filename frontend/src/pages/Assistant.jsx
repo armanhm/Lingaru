@@ -15,6 +15,7 @@ import useVoiceRecorder from "../hooks/useVoiceRecorder";
 import AudioPlayButton from "../components/AudioPlayButton";
 import QuizBlock, { splitChatMessage } from "../components/QuizBlock";
 import MessageBlocks from "../components/blocks/MessageBlocks";
+import { useAuth } from "../contexts/AuthContext";
 
 /** Strip markdown formatting so TTS reads clean text, not "asterisk asterisk". */
 function plainText(s) {
@@ -40,28 +41,32 @@ function plainText(s) {
  * ────────────────────────────────────────────────────────────── */
 const MODE_OPTIONS = [
   {
-    value: "conversation", label: "Conversation", emoji: "💬",
-    description: "Pratique libre avec un tuteur",
-    tagline: "Discutez librement en français, Claire vous corrigera au fil de la conversation.",
+    value: "conversation", emoji: "💬",
+    labelKey: "assistant.modes.conversation.label",
+    descriptionKey: "assistant.modes.conversation.description",
+    taglineKey: "assistant.modes.conversation.tagline",
   },
   {
-    value: "grammar_correction", label: "Correction", emoji: "✍️",
-    description: "Faites corriger un texte français",
-    tagline: "Collez un texte français, Claire le corrigera et vous expliquera chaque erreur.",
+    value: "grammar_correction", emoji: "✍️",
+    labelKey: "assistant.modes.grammar_correction.label",
+    descriptionKey: "assistant.modes.grammar_correction.description",
+    taglineKey: "assistant.modes.grammar_correction.tagline",
   },
   {
-    value: "grammar_explanation", label: "Explication grammaire", emoji: "📚",
-    description: "Comprendre un point de grammaire",
-    tagline: "Posez une question de grammaire, Claire vous l'explique avec des exemples concrets.",
+    value: "grammar_explanation", emoji: "📚",
+    labelKey: "assistant.modes.grammar_explanation.label",
+    descriptionKey: "assistant.modes.grammar_explanation.description",
+    taglineKey: "assistant.modes.grammar_explanation.tagline",
   },
   {
-    value: "roleplay", label: "Roleplay", emoji: "🎭",
-    description: "Mise en situation guidée",
-    tagline: "Choisissez une scène et jouez-la avec Claire dans la peau d'un personnage.",
+    value: "roleplay", emoji: "🎭",
+    labelKey: "assistant.modes.roleplay.label",
+    descriptionKey: "assistant.modes.roleplay.description",
+    taglineKey: "assistant.modes.roleplay.tagline",
   },
 ];
 
-const ROLEPLAY_SCENARIOS = [
+const ROLEPLAY_SCENARIOS_FR = [
   {
     value: "roleplay_market", emoji: "🥖", label: "Au marché",
     sub: "Vous êtes au marché des Enfants Rouges, à Paris. Vous voulez acheter un fromage et des fruits pour ce soir.",
@@ -194,9 +199,75 @@ const ROLEPLAY_SCENARIOS = [
   },
 ];
 
-const SCENARIOS_BY_VALUE = Object.fromEntries(ROLEPLAY_SCENARIOS.map((s) => [s.value, s]));
+const ROLEPLAY_SCENARIOS_EN = [
+  {
+    value: "roleplay_deli", emoji: "🥪", label: "At the deli",
+    sub: "You're at a busy NYC deli at lunchtime. You want a sandwich and an iced coffee.",
+    blurb: "Order a sandwich and coffee",
+    level: "B1", minutes: 6,
+    placeholder: "Hi, can I get a turkey sandwich…",
+    starters: [
+      "Hi, can I get a turkey sandwich on rye?",
+      "Could I add avocado and extra mustard?",
+      "And an iced coffee, with oat milk please.",
+      "How much is that all together?",
+    ],
+  },
+  {
+    value: "roleplay_doctor", emoji: "🩺", label: "At the doctor's",
+    sub: "You've had a headache for three days. You're visiting your primary care doctor.",
+    blurb: "Describe your symptoms",
+    level: "B1", minutes: 10,
+    placeholder: "Hi doctor, I've had a headache for…",
+    starters: [
+      "Hi doctor, I've had a headache for three days now.",
+      "I'm not sleeping well and I feel really tired.",
+      "Could you write me a prescription?",
+      "I'm allergic to penicillin, by the way.",
+    ],
+  },
+  {
+    value: "roleplay_hotel", emoji: "🏨", label: "Hotel check-in",
+    sub: "You arrive at your hotel in San Francisco for a two-night stay.",
+    blurb: "Check in and ask about amenities",
+    level: "A2", minutes: 6,
+    placeholder: "Hi, I have a reservation under…",
+    starters: [
+      "Hi, I have a reservation under the name Martinez.",
+      "What time is breakfast served?",
+      "Is the Wi-Fi included?",
+      "Could you call me a cab for 8 AM tomorrow?",
+    ],
+  },
+  {
+    value: "roleplay_restaurant", emoji: "🍽️", label: "At the restaurant",
+    sub: "You're at a casual restaurant in Austin. You want to order dinner and dessert.",
+    blurb: "Order dinner and dessert",
+    level: "A2", minutes: 6,
+    placeholder: "Hi, could I see the menu please…",
+    starters: [
+      "Hi, could I see the menu please?",
+      "What's the special tonight?",
+      "I'll have the burger, medium, with fries.",
+      "Could we get the check whenever you have a moment?",
+    ],
+  },
+  {
+    value: "roleplay_airport", emoji: "✈️", label: "At the airport",
+    sub: "You're at JFK checking in for a flight to Los Angeles.",
+    blurb: "Check in and drop off your bag",
+    level: "B1", minutes: 7,
+    placeholder: "Hi, I'm flying to Los Angeles…",
+    starters: [
+      "Hi, I'm flying to Los Angeles on flight 218.",
+      "Here's my passport and confirmation number.",
+      "I just have one carry-on, is that okay?",
+      "What time does boarding start?",
+    ],
+  },
+];
 
-const PROMPT_TEMPLATES = {
+const PROMPT_TEMPLATES_FR = {
   conversation: [
     "Comment dit-on « I would like to make a reservation » en français ?",
     "Corrige : « Je suis allé au magasin hier et j'ai acheter du pain. »",
@@ -218,6 +289,29 @@ const PROMPT_TEMPLATES = {
     "Quand utilise-t-on « y » et « en » ?",
   ],
   // Roleplay starters are scenario-specific, see ROLEPLAY_SCENARIOS[*].starters
+};
+
+const PROMPT_TEMPLATES_EN = {
+  conversation: [
+    "How do you say 'I would like to make a reservation' in English?",
+    "Correct this: 'I goed to the store yesterday and buyed some bread.'",
+    "Teach me 5 idioms native speakers use every day.",
+    "What are useful phrases for everyday life in the US?",
+    "Tell me something interesting about American culture.",
+  ],
+  grammar_correction: [
+    "Correct this: 'She don't likes coffee in the morning.'",
+    "Is this right: 'Yesterday I have gone to the cinema'?",
+    "Check the agreement: 'The cars is fast and shiny.'",
+    "Is this correct: 'If I would have known, I would have come'?",
+  ],
+  grammar_explanation: [
+    "What's the difference between simple past and present perfect?",
+    "When do you use 'will' vs 'going to'?",
+    "Explain a/an/the with concrete examples.",
+    "How do phrasal verbs work?",
+    "When do you use 'who' vs 'whom'?",
+  ],
 };
 
 const TUTOR = {
@@ -356,6 +450,7 @@ const Ic = {
  * Drawer / Popover scaffolding
  * ────────────────────────────────────────────────────────────── */
 function Drawer({ open, onClose, side = "left", title, children }) {
+  const { t } = useTranslation();
   if (!open) return null;
   const slideClass = side === "left" ? "left-0 animate-slide-in-left" : "right-0 animate-slide-in-right";
   const borderClass = side === "left" ? "border-r" : "border-l";
@@ -372,7 +467,7 @@ function Drawer({ open, onClose, side = "left", title, children }) {
           <button
             onClick={onClose}
             className="w-7 h-7 rounded-lg flex items-center justify-center text-surface-400 hover:bg-surface-100 dark:hover:bg-surface-800 focus-ring"
-            aria-label="Fermer"
+            aria-label={t("assistant.drawer.close")}
           >
             <Ic.close className="w-4 h-4" />
           </button>
@@ -391,6 +486,10 @@ function HistoryDrawer({
   conversations, activeId, onPickConversation, onNewChat,
 }) {
   const [search, setSearch] = useState("");
+  const { t } = useTranslation();
+  const { user } = useAuth();
+  const isEn = user?.target_language === "en";
+  const scenarios = isEn ? ROLEPLAY_SCENARIOS_EN : ROLEPLAY_SCENARIOS_FR;
 
   const filtered = useMemo(() => {
     if (!search.trim()) return conversations;
@@ -399,27 +498,27 @@ function HistoryDrawer({
   }, [conversations, search]);
 
   return (
-    <Drawer open={open} onClose={onClose} side="left" title="Conversations">
+    <Drawer open={open} onClose={onClose} side="left" title={t("assistant.drawer.conversationsTitle")}>
       <div className="p-3 border-b border-surface-100 dark:border-surface-800 space-y-3">
         <button
           onClick={() => { onNewChat(); onClose(); }}
           className="w-full flex items-center justify-center gap-2 bg-gradient-to-br from-primary-600 to-purple-700 text-white px-3 py-2.5 rounded-xl font-semibold text-[13px] shadow-glow-primary hover:scale-[1.02] active:scale-95 transition-all focus-ring"
         >
-          <Ic.sparkle className="w-3.5 h-3.5" /> Nouvelle conversation
+          <Ic.sparkle className="w-3.5 h-3.5" /> {t("assistant.drawer.newConversation")}
         </button>
         <div className="relative">
           <Ic.search className="w-3.5 h-3.5 absolute left-3 top-1/2 -translate-y-1/2 text-surface-400 pointer-events-none" />
           <input
             value={search}
             onChange={(e) => setSearch(e.target.value)}
-            placeholder="Rechercher…"
+            placeholder={t("assistant.drawer.search")}
             className="w-full pl-8 pr-3 py-2 text-[12.5px] rounded-lg bg-surface-50 dark:bg-surface-800/60 border border-surface-100 dark:border-surface-700 text-surface-900 dark:text-surface-100 placeholder:text-surface-400 focus:outline-none focus:ring-2 focus:ring-primary-200 dark:focus:ring-primary-900/40 focus:border-primary-400"
           />
         </div>
       </div>
 
       <div className="px-3 pt-4 pb-2">
-        <p className="text-[10px] uppercase tracking-[0.14em] font-semibold text-surface-400 dark:text-surface-500">Mode</p>
+        <p className="text-[10px] uppercase tracking-[0.14em] font-semibold text-surface-400 dark:text-surface-500">{t("assistant.drawer.modeLabel")}</p>
       </div>
       <div className="px-3 grid grid-cols-2 gap-1.5 mb-3">
         {MODE_OPTIONS.map((m) => {
@@ -433,10 +532,10 @@ function HistoryDrawer({
                   ? "border-primary-300 dark:border-primary-700 bg-primary-50 dark:bg-primary-900/20"
                   : "border-surface-100 dark:border-surface-800 hover:border-surface-300 dark:hover:border-surface-700"
               }`}
-              title={m.description}
+              title={t(m.descriptionKey)}
             >
               <span className="text-[14px] leading-none">{m.emoji}</span>
-              <p className="text-[11.5px] font-semibold text-surface-900 dark:text-surface-50 truncate mt-1">{m.label}</p>
+              <p className="text-[11.5px] font-semibold text-surface-900 dark:text-surface-50 truncate mt-1">{t(m.labelKey)}</p>
             </button>
           );
         })}
@@ -445,10 +544,10 @@ function HistoryDrawer({
       {mode === "roleplay" && (
         <>
           <div className="px-3 pt-3 pb-2">
-            <p className="text-[10px] uppercase tracking-[0.14em] font-semibold text-surface-400 dark:text-surface-500">Scénarios</p>
+            <p className="text-[10px] uppercase tracking-[0.14em] font-semibold text-surface-400 dark:text-surface-500">{t("assistant.drawer.scenariosLabel")}</p>
           </div>
           <div className="px-3 grid grid-cols-2 gap-1.5 mb-3">
-            {ROLEPLAY_SCENARIOS.map((s) => {
+            {scenarios.map((s) => {
               const active = s.value === scenario;
               return (
                 <button
@@ -471,12 +570,12 @@ function HistoryDrawer({
       )}
 
       <div className="px-3 pt-4 pb-2">
-        <p className="text-[10px] uppercase tracking-[0.14em] font-semibold text-surface-400 dark:text-surface-500">Historique</p>
+        <p className="text-[10px] uppercase tracking-[0.14em] font-semibold text-surface-400 dark:text-surface-500">{t("assistant.drawer.historyLabel")}</p>
       </div>
       <div className="px-2 pb-3 space-y-0.5">
         {filtered.length === 0 && (
           <p className="px-3 py-4 text-[12px] text-surface-500 dark:text-surface-400 text-center">
-            Aucune conversation pour l'instant.
+            {t("assistant.drawer.noConversations")}
           </p>
         )}
         {filtered.map((c) => {
@@ -493,9 +592,9 @@ function HistoryDrawer({
             >
               <span className="text-[13px] leading-none mt-0.5 shrink-0">💬</span>
               <span className="flex-1 min-w-0">
-                <span className="block text-[12.5px] font-semibold text-surface-900 dark:text-surface-50 truncate">{c.title || "Sans titre"}</span>
+                <span className="block text-[12.5px] font-semibold text-surface-900 dark:text-surface-50 truncate">{c.title || t("assistant.drawer.untitled")}</span>
                 <span className="block text-[10.5px] text-surface-400 dark:text-surface-500 truncate">
-                  {c.message_count ?? 0} messages
+                  {t("assistant.drawer.messagesCount", { count: c.message_count ?? 0 })}
                 </span>
               </span>
               {active && <span className="w-1.5 h-1.5 rounded-full bg-primary-500 mt-1.5 shrink-0 animate-pulse" />}
@@ -511,9 +610,17 @@ function HistoryDrawer({
  * Tuteur Drawer (right), persona + active mode/scenario
  * ────────────────────────────────────────────────────────────── */
 function TuteurDrawer({ open, onClose, mode, onModeChange, scenario, onScenarioChange }) {
-  const sc = SCENARIOS_BY_VALUE[scenario] || ROLEPLAY_SCENARIOS[0];
+  const { t } = useTranslation();
+  const { user } = useAuth();
+  const isEn = user?.target_language === "en";
+  const scenarios = isEn ? ROLEPLAY_SCENARIOS_EN : ROLEPLAY_SCENARIOS_FR;
+  const scenariosByValue = useMemo(
+    () => Object.fromEntries(scenarios.map((s) => [s.value, s])),
+    [scenarios]
+  );
+  const sc = scenariosByValue[scenario] || scenarios[0];
   return (
-    <Drawer open={open} onClose={onClose} side="right" title="Tuteur · session">
+    <Drawer open={open} onClose={onClose} side="right" title={t("assistant.drawer.tuteurTitle")}>
       <div className="p-5 space-y-5">
         <div className="flex items-center gap-3">
           <span className="w-14 h-14 rounded-full bg-gradient-to-br from-primary-400 to-primary-600 flex items-center justify-center text-[26px] shadow-glow-primary shrink-0">{TUTOR.emoji}</span>
@@ -525,7 +632,7 @@ function TuteurDrawer({ open, onClose, mode, onModeChange, scenario, onScenarioC
         <p className="text-[13px] text-surface-600 dark:text-surface-300 leading-snug italic">"{TUTOR.desc}"</p>
 
         <div>
-          <p className="text-[10px] uppercase tracking-[0.14em] font-semibold text-surface-400 dark:text-surface-500 mb-2">Mode</p>
+          <p className="text-[10px] uppercase tracking-[0.14em] font-semibold text-surface-400 dark:text-surface-500 mb-2">{t("assistant.drawer.modeLabel")}</p>
           <div className="grid grid-cols-2 gap-2">
             {MODE_OPTIONS.map((m) => {
               const active = m.value === mode;
@@ -541,8 +648,8 @@ function TuteurDrawer({ open, onClose, mode, onModeChange, scenario, onScenarioC
                 >
                   <span className="text-[20px]">{m.emoji}</span>
                   <div className="text-left min-w-0">
-                    <p className="text-[12.5px] font-bold text-surface-900 dark:text-surface-50 truncate">{m.label}</p>
-                    <p className="text-[10px] text-surface-500 truncate">{m.description}</p>
+                    <p className="text-[12.5px] font-bold text-surface-900 dark:text-surface-50 truncate">{t(m.labelKey)}</p>
+                    <p className="text-[10px] text-surface-500 truncate">{t(m.descriptionKey)}</p>
                   </div>
                 </button>
               );
@@ -552,7 +659,7 @@ function TuteurDrawer({ open, onClose, mode, onModeChange, scenario, onScenarioC
 
         {mode === "roleplay" && (
           <div className="border-t border-surface-100 dark:border-surface-800 pt-4">
-            <p className="text-[10px] uppercase tracking-[0.14em] font-semibold text-primary-600 mb-2">Scénario actif</p>
+            <p className="text-[10px] uppercase tracking-[0.14em] font-semibold text-primary-600 mb-2">{t("assistant.drawer.activeScenario")}</p>
             <div className="flex items-center gap-3 mb-3">
               <span className="text-[28px]">{sc.emoji}</span>
               <div>
@@ -561,7 +668,7 @@ function TuteurDrawer({ open, onClose, mode, onModeChange, scenario, onScenarioC
               </div>
             </div>
             <div className="grid grid-cols-2 gap-1.5">
-              {ROLEPLAY_SCENARIOS.map((s) => {
+              {scenarios.map((s) => {
                 const active = s.value === scenario;
                 return (
                   <button
@@ -590,17 +697,18 @@ function TuteurDrawer({ open, onClose, mode, onModeChange, scenario, onScenarioC
  * Erreurs Drawer (right), inline mistakes from the session
  * ────────────────────────────────────────────────────────────── */
 function ErreursDrawer({ open, onClose, mistakes }) {
+  const { t } = useTranslation();
   return (
-    <Drawer open={open} onClose={onClose} side="right" title="Corrections · cette session">
+    <Drawer open={open} onClose={onClose} side="right" title={t("assistant.drawer.erreursTitle")}>
       <div className="p-5">
         <div className="flex items-baseline justify-between mb-3">
-          <p className="text-[10px] uppercase tracking-[0.14em] font-semibold text-danger-600">Erreurs</p>
+          <p className="text-[10px] uppercase tracking-[0.14em] font-semibold text-danger-600">{t("assistant.drawer.erreursCount")}</p>
           <span className="text-[20px] font-bold num text-danger-600">{mistakes.length}</span>
         </div>
         {mistakes.length === 0 ? (
           <div className="rounded-xl border border-dashed border-surface-200 dark:border-surface-700 px-4 py-8 text-center">
             <p className="text-[12px] text-surface-500 dark:text-surface-400">
-              Pas d'erreur détectée pour l'instant. Continuez à écrire, vos corrections apparaîtront ici.
+              {t("assistant.drawer.noMistakes")}
             </p>
           </div>
         ) : (
@@ -657,7 +765,7 @@ function ChatBubble({ msg, onUndoMemorySave, t }) {
     <div className={`flex ${isUser ? "justify-end" : "justify-start"} animate-fade-in-up`}>
       <div className={`max-w-[78%] flex flex-col ${isUser ? "items-end" : "items-start"}`}>
         <div className="flex items-center gap-2 text-[10px] uppercase tracking-[0.14em] font-semibold text-surface-400 dark:text-surface-500 mb-1">
-          <span>{isUser ? "Vous" : TUTOR.name}</span>
+          <span>{isUser ? t("assistant.bubble.you") : TUTOR.name}</span>
         </div>
 
         {msg.imagePreview && (
@@ -721,12 +829,14 @@ function ChatBubble({ msg, onUndoMemorySave, t }) {
         {!isUser && msg.ragUsed && (
           <p className="text-[10.5px] text-info-600 dark:text-info-400 mt-1.5 flex items-center gap-1 font-semibold">
             <svg className="w-3 h-3" fill="none" stroke="currentColor" strokeWidth={2.2} viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
-            Avec vos documents
+            {t("assistant.bubble.withDocs")}
           </p>
         )}
         {isUser && msg.issues?.length > 0 && (
           <p className="mt-1 text-[10.5px] text-danger-600 dark:text-danger-400 font-mono">
-            {msg.issues.length} {msg.issues.length === 1 ? "correction" : "corrections"} · survolez les mots soulignés
+            {msg.issues.length === 1
+              ? t("assistant.bubble.correctionOne", { count: msg.issues.length })
+              : t("assistant.bubble.correctionOther", { count: msg.issues.length })}
           </p>
         )}
 
@@ -777,6 +887,7 @@ function TypingIndicator() {
  * ────────────────────────────────────────────────────────────── */
 function ImagePreviewBanner({ file, onRemove }) {
   const [preview, setPreview] = useState(null);
+  const { t } = useTranslation();
   useEffect(() => {
     if (!file) { setPreview(null); return; }
     const url = URL.createObjectURL(file);
@@ -793,7 +904,7 @@ function ImagePreviewBanner({ file, onRemove }) {
       <button
         onClick={onRemove}
         className="w-7 h-7 rounded-full flex items-center justify-center text-info-400 hover:text-danger-500 hover:bg-danger-50 dark:hover:bg-danger-900/30 transition-all active:scale-95 focus-ring"
-        title="Retirer l'image"
+        title={t("assistant.composer.removeImage")}
       >
         <Ic.close className="w-4 h-4" />
       </button>
@@ -805,21 +916,22 @@ function ImagePreviewBanner({ file, onRemove }) {
  * MentionPopover, palette of agents shown above the textarea
  * ────────────────────────────────────────────────────────────── */
 function MentionPopover({ open, query, onPick, onClose, activeIndex, setActiveIndex, matches }) {
+  const { t } = useTranslation();
   if (!open || matches.length === 0) return null;
   return (
     <div
       className="absolute bottom-full left-0 right-0 mb-2 rounded-2xl border border-surface-200 dark:border-surface-700 bg-white dark:bg-surface-900 shadow-card-elevated overflow-hidden animate-fade-in-up z-30"
       role="listbox"
-      aria-label="Agents disponibles"
+      aria-label={t("assistant.composer.agentsAvailable")}
     >
       <div className="px-3 py-2 border-b border-surface-100 dark:border-surface-800 flex items-center justify-between">
         <div className="text-[11px] uppercase tracking-[0.14em] font-semibold text-surface-500 dark:text-surface-400">
-          Agents · @{query || "…"}
+          {t("assistant.composer.agentsHeader", { query: query || "…" })}
         </div>
         <div className="flex items-center gap-2 text-[10px] text-surface-400 dark:text-surface-500">
-          <span><kbd className="kbd">↑↓</kbd> naviguer</span>
-          <span><kbd className="kbd">Tab</kbd> compléter</span>
-          <span><kbd className="kbd">Esc</kbd> fermer</span>
+          <span><kbd className="kbd">↑↓</kbd> {t("assistant.composer.navigate")}</span>
+          <span><kbd className="kbd">Tab</kbd> {t("assistant.composer.complete")}</span>
+          <span><kbd className="kbd">Esc</kbd> {t("assistant.composer.close")}</span>
         </div>
       </div>
       <ul className="max-h-72 overflow-y-auto py-1">
@@ -907,6 +1019,14 @@ function MentionedText({ text, tone = "default" }) {
 export default function Assistant() {
   const [searchParams] = useSearchParams();
   const { t } = useTranslation();
+  const { user } = useAuth();
+  const isEn = user?.target_language === "en";
+  const ROLEPLAY_SCENARIOS = isEn ? ROLEPLAY_SCENARIOS_EN : ROLEPLAY_SCENARIOS_FR;
+  const PROMPT_TEMPLATES = isEn ? PROMPT_TEMPLATES_EN : PROMPT_TEMPLATES_FR;
+  const SCENARIOS_BY_VALUE = useMemo(
+    () => Object.fromEntries(ROLEPLAY_SCENARIOS.map((s) => [s.value, s])),
+    [ROLEPLAY_SCENARIOS]
+  );
 
   const [mode, setMode] = useState(() => {
     const m = searchParams.get("mode");
@@ -914,7 +1034,8 @@ export default function Assistant() {
   });
   const [scenario, setScenario] = useState(() => {
     const s = searchParams.get("scenario");
-    return s && s.startsWith("roleplay_") ? s : "roleplay_market";
+    const defaultScenario = isEn ? "roleplay_deli" : "roleplay_market";
+    return s && s.startsWith("roleplay_") ? s : defaultScenario;
   });
 
   const [messages, setMessages] = useState([]);
@@ -1030,9 +1151,9 @@ export default function Assistant() {
       setConversationId(id);
       setError(null);
     } catch {
-      setError("Impossible de charger cette conversation.");
+      setError(t("assistant.errors.loadConversation"));
     }
-  }, []);
+  }, [t]);
 
   const startNewChat = useCallback(() => {
     setMessages([]);
@@ -1066,7 +1187,7 @@ export default function Assistant() {
       const imagePreview = URL.createObjectURL(imageFile);
       const userMessage = {
         role: "user",
-        content: trimmed || "[Image envoyée pour analyse]",
+        content: trimmed || t("assistant.placeholderBubble.image"),
         imagePreview,
       };
       setMessages((prev) => [...prev, userMessage]);
@@ -1081,7 +1202,7 @@ export default function Assistant() {
         setMessages((prev) => [...prev, assistantMessage]);
         setConversationId(res.data.conversation_id);
       } catch (err) {
-        setError(err.response?.data?.detail || "Échec de l'analyse de l'image.");
+        setError(err.response?.data?.detail || t("assistant.errors.imageAnalysis"));
       } finally {
         setLoading(false);
         setImageFile(null);
@@ -1125,11 +1246,11 @@ export default function Assistant() {
         refreshMemoryCount();
       }
     } catch (err) {
-      setError(err.response?.data?.detail || "Échec de l'envoi du message.");
+      setError(err.response?.data?.detail || t("assistant.errors.sendFailed"));
     } finally {
       setLoading(false);
     }
-  }, [input, loading, mode, scenario, conversationId, imageFile]);
+  }, [input, loading, mode, scenario, conversationId, imageFile, t]);
 
   // Voice
   const handleVoiceToggle = useCallback(async () => {
@@ -1138,7 +1259,7 @@ export default function Assistant() {
       if (!blob) return;
       setLoading(true);
       setError(null);
-      const userMessage = { role: "user", content: "[Enregistrement vocal…]" };
+      const userMessage = { role: "user", content: t("assistant.placeholderBubble.voice") };
       setMessages((prev) => [...prev, userMessage]);
       try {
         const res = await sendVoiceChat(blob, conversationId);
@@ -1157,15 +1278,15 @@ export default function Assistant() {
         setMessages((prev) => [...prev, assistantMessage]);
         setConversationId(res.data.conversation_id);
       } catch (err) {
-        setError(err.response?.data?.detail || "Échec de l'envoi vocal.");
+        setError(err.response?.data?.detail || t("assistant.errors.voiceFailed"));
       } finally {
         setLoading(false);
       }
     } else {
       try { await startRecording(); }
-      catch { setError("Microphone refusé. Autorisez l'accès pour parler."); }
+      catch { setError(t("assistant.errors.micDenied")); }
     }
-  }, [isRecording, startRecording, stopRecording, conversationId]);
+  }, [isRecording, startRecording, stopRecording, conversationId, t]);
 
   const handleTemplate = useCallback((text) => setInput(text), []);
 
@@ -1239,11 +1360,11 @@ export default function Assistant() {
   const sc = SCENARIOS_BY_VALUE[scenario] || ROLEPLAY_SCENARIOS[0];
   const activeMode = MODE_OPTIONS.find((m) => m.value === mode) || MODE_OPTIONS[0];
   const placeholder =
-    imageFile ? "Posez une question sur l'image (optionnel)…"
-    : mode === "grammar_correction" ? "Collez un texte français à corriger…"
-    : mode === "grammar_explanation" ? "Posez une question de grammaire…"
-    : mode === "roleplay" ? (sc.placeholder || "Dites quelque chose en français pour démarrer la scène…")
-    : "Écrivez en français… Claire vous corrigera gentiment.";
+    imageFile ? t("assistant.placeholders.imageQuestion")
+    : mode === "grammar_correction" ? t("assistant.placeholders.grammarCorrection")
+    : mode === "grammar_explanation" ? t("assistant.placeholders.grammarExplanation")
+    : mode === "roleplay" ? (sc.placeholder || t("assistant.placeholders.roleplayDefault"))
+    : t("assistant.placeholders.conversation");
 
   // Suggested starters: scenario-specific in roleplay, mode-specific otherwise.
   const starters = mode === "roleplay"
@@ -1258,19 +1379,19 @@ export default function Assistant() {
           {/* History toggle */}
           <button
             onClick={() => setHistoryOpen(true)}
-            title="Conversations"
+            title={t("assistant.header.conversations")}
             className="w-9 h-9 rounded-lg flex items-center justify-center text-surface-500 dark:text-surface-300 hover:bg-surface-100 dark:hover:bg-surface-800 focus-ring"
           >
             <Ic.menu className="w-[18px] h-[18px]" />
           </button>
 
-          {/* Nouvelle conversation as primary action button */}
+          {/* New conversation as primary action button */}
           <button
             onClick={startNewChat}
-            title="Nouvelle conversation"
+            title={t("assistant.header.newConversation")}
             className="hidden sm:flex items-center gap-1.5 px-3 h-9 rounded-lg bg-primary-50 dark:bg-primary-900/30 text-primary-700 dark:text-primary-300 font-semibold text-[12.5px] hover:bg-primary-100 dark:hover:bg-primary-900/50 focus-ring"
           >
-            <Ic.sparkle className="w-3.5 h-3.5" /> Nouvelle
+            <Ic.sparkle className="w-3.5 h-3.5" /> {t("assistant.header.newShort")}
           </button>
 
           <div className="w-px h-6 bg-surface-200 dark:bg-surface-700 mx-1 hidden sm:block" />
@@ -1280,7 +1401,7 @@ export default function Assistant() {
           <div className="flex-1 min-w-0">
             <div className="flex items-center gap-2 flex-wrap">
               <h2 className="font-editorial text-[20px] leading-none text-surface-900 dark:text-surface-50">
-                {mode === "roleplay" ? sc.label : activeMode.label}
+                {mode === "roleplay" ? sc.label : t(activeMode.labelKey)}
               </h2>
               {mode === "roleplay" && (
                 <span className="px-2 py-0.5 rounded-md text-[10px] font-mono uppercase tracking-[0.14em] bg-primary-50 dark:bg-primary-900/30 text-primary-700 dark:text-primary-300">
@@ -1289,15 +1410,15 @@ export default function Assistant() {
               )}
             </div>
             <p className="text-[11.5px] text-surface-500 dark:text-surface-400 mt-0.5 truncate">
-              avec <span className="font-semibold text-surface-700 dark:text-surface-200">{TUTOR.name}</span>
-              {mode === "roleplay" ? ` · ${sc.blurb || sc.sub}` : ` · ${activeMode.description}`}
+              {t("assistant.header.with")} <span className="font-semibold text-surface-700 dark:text-surface-200">{TUTOR.name}</span>
+              {mode === "roleplay" ? ` · ${sc.blurb || sc.sub}` : ` · ${t(activeMode.descriptionKey)}`}
             </p>
           </div>
 
           {/* Tuteur button */}
           <button
             onClick={() => setTuteurOpen(true)}
-            title="Tuteur"
+            title={t("assistant.header.tutor")}
             className="flex items-center gap-2 h-9 pl-1.5 pr-2 sm:pr-3 rounded-lg border border-surface-200 dark:border-surface-700 hover:border-primary-300 dark:hover:border-primary-700 bg-white dark:bg-surface-900 transition-colors focus-ring"
           >
             <span className="w-6 h-6 rounded-full bg-gradient-to-br from-primary-500 to-purple-600 flex items-center justify-center text-[14px] shadow-sm">{TUTOR.emoji}</span>
@@ -1363,7 +1484,7 @@ export default function Assistant() {
           {/* Erreurs button */}
           <button
             onClick={() => setErreursOpen(true)}
-            title="Corrections"
+            title={t("assistant.header.corrections")}
             className="flex items-center gap-1.5 h-9 px-2 sm:px-3 rounded-lg border border-surface-200 dark:border-surface-700 hover:border-danger-300 dark:hover:border-danger-700 bg-white dark:bg-surface-900 focus-ring"
           >
             <Ic.flag className="w-3.5 h-3.5 text-danger-500" />
@@ -1379,35 +1500,35 @@ export default function Assistant() {
       <div className="flex-1 overflow-y-auto px-4 sm:px-6 lg:px-10 py-6">
         {messages.length === 0 && !loading ? (
           <div className="max-w-3xl mx-auto space-y-6 animate-fade-in-up">
-            {/* Mise en situation card */}
+            {/* Scene setup card */}
             <div className="rounded-2xl border border-dashed border-surface-300 dark:border-surface-700 bg-white/60 dark:bg-surface-900/40 p-5 text-center">
               <div className="w-14 h-14 mx-auto mb-3 rounded-2xl bg-gradient-to-br from-primary-500 to-purple-600 text-white flex items-center justify-center text-2xl shadow-glow-primary">
                 {mode === "roleplay" ? sc.emoji : activeMode.emoji}
               </div>
               <p className="text-[10px] uppercase tracking-[0.14em] font-semibold text-surface-400 dark:text-surface-500 mb-1">
-                {mode === "roleplay" ? "Mise en situation" : activeMode.label}
+                {mode === "roleplay" ? t("assistant.empty.scenarioEyebrow") : t(activeMode.labelKey)}
               </p>
               <p className="font-sans text-[15px] sm:text-[16px] text-surface-700 dark:text-surface-200 leading-relaxed max-w-[60ch] mx-auto">
-                {mode === "roleplay" ? sc.sub : activeMode.tagline}
+                {mode === "roleplay" ? sc.sub : t(activeMode.taglineKey)}
               </p>
             </div>
 
             {/* Suggested prompts */}
             <div>
               <p className="text-[10px] uppercase tracking-[0.14em] font-semibold text-surface-400 dark:text-surface-500 mb-3 text-center">
-                {mode === "roleplay" ? "Pour commencer la scène, essayez :" : "Essayez l'une de ces phrases"}
+                {mode === "roleplay" ? t("assistant.empty.startScene") : t("assistant.empty.tryThese")}
               </p>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
-                {starters.map((t, i) => (
+                {starters.map((starter, i) => (
                   <button
                     key={i}
-                    onClick={() => handleTemplate(t)}
+                    onClick={() => handleTemplate(starter)}
                     className="text-left px-4 py-3 rounded-xl border border-surface-200 dark:border-surface-700 bg-white dark:bg-surface-900 hover:border-primary-300 dark:hover:border-primary-700 hover:bg-primary-50/40 dark:hover:bg-primary-900/20 hover:-translate-y-0.5 hover:shadow-sm transition-all animate-fade-in-up focus-ring"
                     style={{ animationDelay: `${i * 50}ms` }}
                   >
                     <p className="text-[13px] text-surface-800 dark:text-surface-100 leading-snug">
                       <span className="text-primary-500 mr-1.5">↗</span>
-                      {t}
+                      {starter}
                     </p>
                   </button>
                 ))}
@@ -1450,7 +1571,7 @@ export default function Assistant() {
           {/* Echo strip, shows the typed message with @mentions colored, only when at least one mention is present */}
           {parseMentions(input).length > 0 && (
             <div className="mb-1.5 px-3 py-1.5 rounded-lg bg-primary-50/40 dark:bg-primary-900/15 border border-primary-100 dark:border-primary-900/40 text-[12.5px] leading-snug text-surface-700 dark:text-surface-200 break-words">
-              <span className="text-[10px] font-mono uppercase tracking-[0.14em] text-primary-600 dark:text-primary-400 font-semibold mr-2">Aperçu</span>
+              <span className="text-[10px] font-mono uppercase tracking-[0.14em] text-primary-600 dark:text-primary-400 font-semibold mr-2">{t("assistant.composer.preview")}</span>
               <MentionedText text={input} />
             </div>
           )}
@@ -1480,7 +1601,7 @@ export default function Assistant() {
               <button
                 onClick={() => fileInputRef.current?.click()}
                 disabled={loading}
-                title="Image"
+                title={t("assistant.composer.image")}
                 className="w-8 h-8 rounded-lg flex items-center justify-center text-surface-500 hover:text-primary-600 hover:bg-primary-50 dark:hover:bg-primary-900/20 active:scale-95 transition-all disabled:opacity-50 focus-ring"
               >
                 <Ic.image className="w-4 h-4" />
@@ -1490,7 +1611,7 @@ export default function Assistant() {
               <button
                 onClick={handleVoiceToggle}
                 disabled={loading && !isRecording}
-                title={isRecording ? "Arrêter l'enregistrement" : "Voix"}
+                title={isRecording ? t("assistant.composer.stopRecording") : t("assistant.composer.voice")}
                 className={`w-8 h-8 rounded-lg flex items-center justify-center transition-all active:scale-95 focus-ring ${
                   isRecording
                     ? "bg-danger-100 dark:bg-danger-900/40 text-danger-600 dark:text-danger-400 animate-recording-pulse"
@@ -1500,7 +1621,7 @@ export default function Assistant() {
                 <Ic.mic className="w-4 h-4" />
               </button>
 
-              <button title="Traduire" className="w-8 h-8 rounded-lg flex items-center justify-center text-surface-500 hover:text-primary-600 hover:bg-primary-50 dark:hover:bg-primary-900/20 transition-all focus-ring">
+              <button title={t("assistant.composer.translate")} className="w-8 h-8 rounded-lg flex items-center justify-center text-surface-500 hover:text-primary-600 hover:bg-primary-50 dark:hover:bg-primary-900/20 transition-all focus-ring">
                 <Ic.globe className="w-4 h-4" />
               </button>
 
@@ -1510,7 +1631,7 @@ export default function Assistant() {
                 disabled={loading || (!input.trim() && !imageFile)}
                 className="ml-auto bg-gradient-to-br from-primary-600 to-purple-700 disabled:from-surface-300 disabled:to-surface-400 dark:disabled:from-surface-700 dark:disabled:to-surface-600 text-white px-4 py-2 rounded-lg text-[13px] font-bold flex items-center gap-1.5 disabled:opacity-60 disabled:cursor-not-allowed shadow-sm hover:shadow-glow-primary active:scale-95 transition-all focus-ring"
               >
-                Envoyer <Ic.arrowUp className="w-3.5 h-3.5" />
+                {t("assistant.composer.send")} <Ic.arrowUp className="w-3.5 h-3.5" />
               </button>
             </div>
           </div>
@@ -1518,13 +1639,15 @@ export default function Assistant() {
           {isRecording && (
             <p className="text-xs text-danger-600 dark:text-danger-400 mt-2 text-center font-semibold flex items-center justify-center gap-1.5">
               <span className="w-2 h-2 bg-danger-500 rounded-full animate-pulse" />
-              Enregistrement… cliquez le micro pour arrêter.
+              {t("assistant.composer.recordingHint")}
             </p>
           )}
 
           <p className="text-[10px] font-mono text-surface-400 dark:text-surface-500 text-center mt-2">
-            Entrée pour envoyer · Shift+Entrée pour une nouvelle ligne · tapez <kbd className="kbd">@</kbd> pour invoquer un agent ·{" "}
-            <Link to="/agents" className="text-primary-500 dark:text-primary-400 hover:underline">galerie d'agents →</Link>
+            {t("assistant.composer.footerHelpPrefix")}
+            <kbd className="kbd">@</kbd>
+            {t("assistant.composer.footerHelpSuffix")}{" "}
+            <Link to="/agents" className="text-primary-500 dark:text-primary-400 hover:underline">{t("assistant.composer.agentsGallery")}</Link>
           </p>
         </div>
       </div>

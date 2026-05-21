@@ -28,6 +28,8 @@ import MistakeJournal from "./pages/MistakeJournal";
 import ConjugationDrill from "./pages/ConjugationDrill";
 import Documents from "./pages/Documents";
 import Dictionary from "./pages/Dictionary";
+import OurNotes from "./pages/OurNotes";
+import OurNotesDetail from "./pages/OurNotesDetail";
 import Settings from "./pages/Settings";
 import MiniGames from "./pages/MiniGames";
 import WordScramble from "./pages/WordScramble";
@@ -85,6 +87,8 @@ export default function App() {
           <Route path="practice/conjugation" element={<ConjugationDrill />} />
           <Route path="progress/mistakes" element={<MistakeJournal />} />
           <Route path="dictionary" element={<Dictionary />} />
+          <Route path="our-notes" element={<OurNotes />} />
+          <Route path="our-notes/:id" element={<OurNotesDetail />} />
           <Route path="mini-games" element={<MiniGames />} />
           <Route path="mini-games/word-scramble" element={<WordScramble />} />
           <Route path="mini-games/match-pairs" element={<MatchPairs />} />

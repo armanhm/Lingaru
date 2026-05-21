@@ -1,9 +1,10 @@
 import { useState, useEffect } from "react";
-import { useSearchParams } from "react-router-dom";
+import { useSearchParams, Link } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 import { lookupWord, conjugateVerb } from "../api/dictionary";
 import AudioPlayButton from "../components/AudioPlayButton";
 import { staggerDelay } from "../hooks/useAnimations";
-import { PageHeader } from "../components/ui";
+import { PageHeader, EmptyState } from "../components/ui";
 import { useAuth } from "../contexts/AuthContext";
 import { ComingSoonBadge } from "../components/ui/ComingSoonBadge";
 import { isAvailable } from "../lib/featureAvailability";
@@ -42,6 +43,7 @@ const POS_COLORS = {
 };
 
 function SearchBar({ value, onChange, onSubmit, loading, placeholder }) {
+  const { t } = useTranslation();
   return (
     <form onSubmit={onSubmit} className="flex gap-2">
       <div className="relative flex-1">
@@ -66,7 +68,7 @@ function SearchBar({ value, onChange, onSubmit, loading, placeholder }) {
             <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
             <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8z" />
           </svg>
-        ) : "Search"}
+        ) : t("dictionary.searchButton")}
       </button>
     </form>
   );
@@ -81,6 +83,7 @@ function Badge({ children, className = "" }) {
 }
 
 function DictionaryResult({ result }) {
+  const { t } = useTranslation();
   const { word, part_of_speech, gender, register, definitions, examples, synonyms, antonyms, etymology } = result;
 
   return (
@@ -113,7 +116,7 @@ function DictionaryResult({ result }) {
       {/* Definitions */}
       {definitions?.length > 0 && (
         <div>
-          <h3 className="section-label mb-2.5">Definitions</h3>
+          <h3 className="section-label mb-2.5">{t("dictionary.definitions")}</h3>
           <ol className="space-y-2.5">
             {definitions.map((def, i) => (
               <li key={i} className="flex gap-3 animate-fade-in-up" style={staggerDelay(i, 60)}>
@@ -133,7 +136,7 @@ function DictionaryResult({ result }) {
       {/* Examples */}
       {examples?.length > 0 && (
         <div>
-          <h3 className="section-label mb-2.5">Examples</h3>
+          <h3 className="section-label mb-2.5">{t("dictionary.examples")}</h3>
           <div className="space-y-2.5">
             {examples.map((ex, i) => (
               <div key={i} className="rounded-xl bg-primary-50/60 dark:bg-primary-900/20 border-l-4 border-primary-400 dark:border-primary-600 pl-4 pr-3 py-2.5 animate-fade-in-up" style={staggerDelay(i, 60)}>
@@ -152,7 +155,7 @@ function DictionaryResult({ result }) {
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
         {synonyms?.length > 0 && (
           <div>
-            <h3 className="section-label mb-2.5">Synonyms</h3>
+            <h3 className="section-label mb-2.5">{t("dictionary.synonyms")}</h3>
             <div className="flex flex-wrap gap-1.5">
               {synonyms.map((s, i) => (
                 <span key={i} className="px-2.5 py-1 text-xs font-medium rounded-lg bg-success-50 dark:bg-success-900/20 text-success-700 dark:text-success-300 border border-success-200 dark:border-success-800">
@@ -164,7 +167,7 @@ function DictionaryResult({ result }) {
         )}
         {antonyms?.length > 0 && (
           <div>
-            <h3 className="section-label mb-2.5">Antonyms</h3>
+            <h3 className="section-label mb-2.5">{t("dictionary.antonyms")}</h3>
             <div className="flex flex-wrap gap-1.5">
               {antonyms.map((a, i) => (
                 <span key={i} className="px-2.5 py-1 text-xs font-medium rounded-lg bg-danger-50 dark:bg-danger-900/20 text-danger-700 dark:text-danger-300 border border-danger-200 dark:border-danger-800">
@@ -179,7 +182,7 @@ function DictionaryResult({ result }) {
       {/* Etymology */}
       {etymology && etymology !== "null" && (
         <div className="rounded-xl bg-gradient-to-br from-surface-50 to-primary-50/30 dark:from-surface-700/40 dark:to-primary-900/10 border border-surface-200 dark:border-surface-700 px-4 py-3">
-          <h3 className="section-label mb-1.5 flex items-center gap-1.5"><span>📜</span> Etymology</h3>
+          <h3 className="section-label mb-1.5 flex items-center gap-1.5"><span>📜</span> {t("dictionary.etymology")}</h3>
           <p className="text-sm text-surface-700 dark:text-surface-300 leading-relaxed">{etymology}</p>
         </div>
       )}
@@ -188,6 +191,7 @@ function DictionaryResult({ result }) {
 }
 
 function ConjugationResult({ result }) {
+  const { t } = useTranslation();
   const { verb, auxiliary, past_participle, present_participle, tenses } = result;
   const [activeTab, setActiveTab] = useState(TENSE_ORDER[0]);
 
@@ -204,19 +208,19 @@ function ConjugationResult({ result }) {
         <div className="flex flex-wrap gap-2">
           {auxiliary && (
             <span className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-primary-50 dark:bg-primary-900/30 border border-primary-200 dark:border-primary-800 text-xs">
-              <span className="font-medium text-surface-600 dark:text-surface-300">auxiliary</span>
+              <span className="font-medium text-surface-600 dark:text-surface-300">{t("dictionary.auxiliary")}</span>
               <span className="font-bold text-primary-700 dark:text-primary-300">{auxiliary}</span>
             </span>
           )}
           {past_participle && (
             <span className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-purple-50 dark:bg-purple-900/30 border border-purple-200 dark:border-purple-800 text-xs">
-              <span className="font-medium text-surface-600 dark:text-surface-300">past participle</span>
+              <span className="font-medium text-surface-600 dark:text-surface-300">{t("dictionary.pastParticiple")}</span>
               <span className="font-bold text-purple-700 dark:text-purple-300">{past_participle}</span>
             </span>
           )}
           {present_participle && (
             <span className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-success-50 dark:bg-success-900/30 border border-success-200 dark:border-success-800 text-xs">
-              <span className="font-medium text-surface-600 dark:text-surface-300">present participle</span>
+              <span className="font-medium text-surface-600 dark:text-surface-300">{t("dictionary.presentParticiple")}</span>
               <span className="font-bold text-success-700 dark:text-success-300">{present_participle}</span>
             </span>
           )}
@@ -265,7 +269,7 @@ function ConjugationResult({ result }) {
           <svg className="w-3 h-3 transition-transform group-open:rotate-90" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
           </svg>
-          Show all tenses at once
+          {t("dictionary.showAllTenses")}
         </summary>
         <div className="mt-3 grid grid-cols-1 md:grid-cols-2 gap-3">
           {availableTenses.map((tense) => (
@@ -289,6 +293,7 @@ function ConjugationResult({ result }) {
 
 export default function Dictionary() {
   const { user } = useAuth();
+  const { t } = useTranslation();
   const [searchParams] = useSearchParams();
   const [tab, setTab] = useState(searchParams.get("tab") === "conjugator" ? "conjugator" : "dictionary");
 
@@ -309,7 +314,10 @@ export default function Dictionary() {
   const [conjResult, setConjResult] = useState(null);
   const [conjError, setConjError] = useState(null);
 
-  const QUICK_WORDS = ["bonjour", "amour", "liberté", "belle", "espoir", "joie"];
+  const isEn = user?.target_language === "en";
+  const QUICK_WORDS = isEn
+    ? ["hello", "freedom", "hope", "beauty", "love", "joy"]
+    : ["bonjour", "amour", "liberté", "belle", "espoir", "joie"];
   const QUICK_VERBS = ["être", "avoir", "aller", "faire", "vouloir", "pouvoir", "prendre", "venir"];
 
   const handleDictSubmit = async (e) => {
@@ -323,7 +331,7 @@ export default function Dictionary() {
       const res = await lookupWord(word);
       setDictResult(res.data.result);
     } catch (err) {
-      setDictError(err.response?.data?.detail || "Lookup failed. Please try again.");
+      setDictError(err.response?.data?.detail || t("dictionary.lookupFailed"));
     } finally {
       setDictLoading(false);
     }
@@ -340,7 +348,7 @@ export default function Dictionary() {
       const res = await conjugateVerb(verb);
       setConjResult(res.data.result);
     } catch (err) {
-      setConjError(err.response?.data?.detail || "Conjugation failed. Please try again.");
+      setConjError(err.response?.data?.detail || t("dictionary.conjugationFailed"));
     } finally {
       setConjLoading(false);
     }
@@ -355,14 +363,14 @@ export default function Dictionary() {
       setDictLoading(true);
       lookupWord(w)
         .then((res) => setDictResult(res.data.result))
-        .catch((err) => setDictError(err.response?.data?.detail || "Lookup failed."))
+        .catch((err) => setDictError(err.response?.data?.detail || t("dictionary.lookupFailed")))
         .finally(() => setDictLoading(false));
     } else if (v) {
       setTab("conjugator");
       setConjLoading(true);
       conjugateVerb(v)
         .then((res) => setConjResult(res.data.result))
-        .catch((err) => setConjError(err.response?.data?.detail || "Conjugation failed."))
+        .catch((err) => setConjError(err.response?.data?.detail || t("dictionary.conjugationFailed")))
         .finally(() => setConjLoading(false));
     }
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
@@ -376,7 +384,7 @@ export default function Dictionary() {
       setDictResult(null);
       lookupWord(word)
         .then((res) => setDictResult(res.data.result))
-        .catch((err) => setDictError(err.response?.data?.detail || "Lookup failed."))
+        .catch((err) => setDictError(err.response?.data?.detail || t("dictionary.lookupFailed")))
         .finally(() => setDictLoading(false));
     }, 0);
   };
@@ -390,7 +398,7 @@ export default function Dictionary() {
       setConjResult(null);
       conjugateVerb(verb)
         .then((res) => setConjResult(res.data.result))
-        .catch((err) => setConjError(err.response?.data?.detail || "Conjugation failed."))
+        .catch((err) => setConjError(err.response?.data?.detail || t("dictionary.conjugationFailed")))
         .finally(() => setConjLoading(false));
     }, 0);
   };
@@ -398,9 +406,9 @@ export default function Dictionary() {
   return (
     <div className="max-w-4xl mx-auto">
       <PageHeader
-        eyebrow="Lookup"
-        title="Dictionary"
-        subtitle="Look up French words and conjugate any verb in seconds."
+        eyebrow={t("dictionary.eyebrow")}
+        title={t("dictionary.pageTitle")}
+        subtitle={isEn ? t("dictionary.pageSubtitle") : t("dictionary.pageSubtitleFr")}
         icon="📖"
         gradient
       />
@@ -416,7 +424,7 @@ export default function Dictionary() {
           }`}
         >
           {tab === "dictionary" && <span className="absolute inset-0 rounded-lg bg-gradient-to-br from-primary-500 to-purple-600" />}
-          <span className="relative z-10">📖 Dictionary</span>
+          <span className="relative z-10">{t("dictionary.tabDictionary")}</span>
         </button>
         <button
           onClick={() => setTab("conjugator")}
@@ -427,7 +435,7 @@ export default function Dictionary() {
           }`}
         >
           {tab === "conjugator" && <span className="absolute inset-0 rounded-lg bg-gradient-to-br from-info-500 to-primary-600" />}
-          <span className="relative z-10">✏️ Verb conjugator</span>
+          <span className="relative z-10">{t("dictionary.tabConjugator")}</span>
         </button>
       </div>
 
@@ -439,13 +447,13 @@ export default function Dictionary() {
             onChange={setDictInput}
             onSubmit={handleDictSubmit}
             loading={dictLoading}
-            placeholder="Enter a French word… e.g. maison, beau, courir"
+            placeholder={isEn ? t("dictionary.searchPlaceholderEn") : t("dictionary.searchPlaceholderFr")}
           />
 
           {/* Quick words */}
           {!dictResult && !dictLoading && (
             <div>
-              <p className="section-label mb-2">Try a word</p>
+              <p className="section-label mb-2">{t("dictionary.tryAWord")}</p>
               <div className="flex flex-wrap gap-2">
                 {QUICK_WORDS.map((w, i) => (
                   <button
@@ -467,7 +475,7 @@ export default function Dictionary() {
                 <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
                 <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8z" />
               </svg>
-              <p className="text-sm font-medium">Looking up word…</p>
+              <p className="text-sm font-medium">{t("dictionary.lookingUp")}</p>
             </div>
           )}
 
@@ -482,13 +490,13 @@ export default function Dictionary() {
             <div className="card relative overflow-hidden p-6 animate-scale-in">
               <div className="absolute inset-x-0 top-0 h-1 bg-gradient-to-r from-primary-500 via-purple-500 to-info-500" />
               <DictionaryResult result={dictResult} />
-              {dictResult.part_of_speech === "verb" && (
+              {dictResult.part_of_speech === "verb" && !isEn && (
                 <div className="mt-5 pt-4 border-t border-surface-100 dark:border-surface-700">
                   <button
                     onClick={() => quickConjugate(dictResult.word)}
                     className="inline-flex items-center gap-1 text-sm font-semibold text-primary-600 dark:text-primary-400 hover:gap-2 transition-all"
                   >
-                    Conjugate &ldquo;{dictResult.word}&rdquo;
+                    {t("dictionary.conjugateLink", { word: dictResult.word })}
                     <svg className="w-4 h-4" fill="none" stroke="currentColor" strokeWidth={2.5} viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" /></svg>
                   </button>
                 </div>
@@ -499,7 +507,21 @@ export default function Dictionary() {
       )}
 
       {/* Conjugator tab */}
-      {tab === "conjugator" && (
+      {tab === "conjugator" && isEn && (
+        <div className="card p-6">
+          <EmptyState
+            icon="🇬🇧"
+            title={t("common.comingSoonForEnglish")}
+            subtitle={t("common.askAssistantInstead")}
+            action={
+              <Link to="/assistant" className="btn-primary btn-lg">
+                {t("dictionary.openAssistant")}
+              </Link>
+            }
+          />
+        </div>
+      )}
+      {tab === "conjugator" && !isEn && (
         <ComingSoonBadge available={isAvailable("conjugation", user?.target_language)}>
         <div className="space-y-5">
           <SearchBar
@@ -507,13 +529,13 @@ export default function Dictionary() {
             onChange={setConjInput}
             onSubmit={handleConjSubmit}
             loading={conjLoading}
-            placeholder="Enter a French verb… e.g. avoir, manger, partir"
+            placeholder={t("dictionary.conjugatorPlaceholder")}
           />
 
           {/* Quick verbs */}
           {!conjResult && !conjLoading && (
             <div>
-              <p className="section-label mb-2">Common verbs</p>
+              <p className="section-label mb-2">{t("dictionary.commonVerbs")}</p>
               <div className="flex flex-wrap gap-2">
                 {QUICK_VERBS.map((v, i) => (
                   <button
@@ -535,7 +557,7 @@ export default function Dictionary() {
                 <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
                 <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8z" />
               </svg>
-              <p className="text-sm font-medium">Conjugating verb…</p>
+              <p className="text-sm font-medium">{t("dictionary.conjugating")}</p>
             </div>
           )}
 

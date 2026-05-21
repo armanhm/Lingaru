@@ -21,6 +21,7 @@ class DiscoverCardSerializer(serializers.ModelSerializer):
             "expires_at",
             "topic",
             "level",
+            "language",
             "seen",
             "interacted",
         )

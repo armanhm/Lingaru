@@ -44,6 +44,7 @@
     "agents": "Agents",
     "home": "Accueil",
     "dictionary": "Dictionnaire",
+    "ourNotes": "Nos notes",
     "progress": "Progression",
     "practice": "Entraînement",
     "dictation": "Dictée",
@@ -262,6 +263,101 @@
       "manage": "Gérer dans les Réglages",
       "popoverLabel": "Notes de mémoire actives",
       "noNotes": "Aucune note"
+    },
+    "modes": {
+      "conversation": {
+        "label": "Conversation",
+        "description": "Pratique libre avec un tuteur",
+        "tagline": "Discutez librement en français, Claire vous corrigera au fil de la conversation."
+      },
+      "grammar_correction": {
+        "label": "Correction",
+        "description": "Faites corriger un texte français",
+        "tagline": "Collez un texte français, Claire le corrigera et vous expliquera chaque erreur."
+      },
+      "grammar_explanation": {
+        "label": "Explication grammaire",
+        "description": "Comprendre un point de grammaire",
+        "tagline": "Posez une question de grammaire, Claire vous l'explique avec des exemples concrets."
+      },
+      "roleplay": {
+        "label": "Roleplay",
+        "description": "Mise en situation guidée",
+        "tagline": "Choisissez une scène et jouez-la avec Claire dans la peau d'un personnage."
+      }
+    },
+    "drawer": {
+      "close": "Fermer",
+      "conversationsTitle": "Conversations",
+      "newConversation": "Nouvelle conversation",
+      "newShort": "Nouvelle",
+      "search": "Rechercher…",
+      "modeLabel": "Mode",
+      "scenariosLabel": "Scénarios",
+      "historyLabel": "Historique",
+      "noConversations": "Aucune conversation pour l'instant.",
+      "untitled": "Sans titre",
+      "messagesCount": "{{count}} messages",
+      "tuteurTitle": "Tuteur · session",
+      "activeScenario": "Scénario actif",
+      "erreursTitle": "Corrections · cette session",
+      "erreursCount": "Erreurs",
+      "noMistakes": "Pas d'erreur détectée pour l'instant. Continuez à écrire, vos corrections apparaîtront ici."
+    },
+    "bubble": {
+      "you": "Vous",
+      "withDocs": "Avec vos documents",
+      "correctionOne": "{{count}} correction · survolez les mots soulignés",
+      "correctionOther": "{{count}} corrections · survolez les mots soulignés"
+    },
+    "composer": {
+      "removeImage": "Retirer l'image",
+      "agentsAvailable": "Agents disponibles",
+      "agentsHeader": "Agents · @{{query}}",
+      "navigate": "naviguer",
+      "complete": "compléter",
+      "close": "fermer",
+      "preview": "Aperçu",
+      "image": "Image",
+      "voice": "Voix",
+      "stopRecording": "Arrêter l'enregistrement",
+      "translate": "Traduire",
+      "send": "Envoyer",
+      "recordingHint": "Enregistrement… cliquez le micro pour arrêter.",
+      "footerHelpPrefix": "Entrée pour envoyer · Shift+Entrée pour une nouvelle ligne · tapez ",
+      "footerHelpSuffix": " pour invoquer un agent ·",
+      "agentsGallery": "galerie d'agents →"
+    },
+    "placeholders": {
+      "imageQuestion": "Posez une question sur l'image (optionnel)…",
+      "grammarCorrection": "Collez un texte français à corriger…",
+      "grammarExplanation": "Posez une question de grammaire…",
+      "roleplayDefault": "Dites quelque chose en français pour démarrer la scène…",
+      "conversation": "Écrivez en français… Claire vous corrigera gentiment."
+    },
+    "empty": {
+      "scenarioEyebrow": "Mise en situation",
+      "startScene": "Pour commencer la scène, essayez :",
+      "tryThese": "Essayez l'une de ces phrases"
+    },
+    "header": {
+      "conversations": "Conversations",
+      "newConversation": "Nouvelle conversation",
+      "newShort": "Nouvelle",
+      "tutor": "Tuteur",
+      "corrections": "Corrections",
+      "with": "avec"
+    },
+    "errors": {
+      "loadConversation": "Impossible de charger cette conversation.",
+      "imageAnalysis": "Échec de l'analyse de l'image.",
+      "sendFailed": "Échec de l'envoi du message.",
+      "voiceFailed": "Échec de l'envoi vocal.",
+      "micDenied": "Microphone refusé. Autorisez l'accès pour parler."
+    },
+    "placeholderBubble": {
+      "image": "[Image envoyée pour analyse]",
+      "voice": "[Enregistrement vocal…]"
     }
   },
 
@@ -275,7 +371,145 @@
   "dashboard": {
     "welcomeBack": "Bon retour, {{name}}",
     "todayLabel": "Aujourd'hui",
-    "noActivity": "Aucune activité récente"
+    "noActivity": "Aucune activité récente",
+    "youFallback": "vous",
+    "streakLabel": "jours d'affilée",
+    "xpLabel": "XP",
+    "modeChip": {
+      "general": "🎒 Apprentissage",
+      "exam": "🎯 Prépa examen",
+      "agentic": "🤖 Mode agent"
+    },
+    "hero": {
+      "recommendedEyebrow": "Recommandé · axe sélectionné · {{axis}}",
+      "title": "Le subjonctif présent",
+      "subtitle": ": il faut que je comprenne",
+      "description": "12 minutes · 9 questions ciblées sur les verbes irréguliers (<1>aller, faire, savoir</1>). Vous avez fait <2>3 erreurs</2> sur ce point cette semaine.",
+      "startCta": "Commencer · 12 min",
+      "pickAnother": "Choisir autre chose",
+      "objectiveLabel": "{{value}}/100 · objectif {{target}}"
+    },
+    "compass": {
+      "eyebrow": "La boussole",
+      "title": "Compétences · B1 vers B2",
+      "clickHint": "cliquez un axe",
+      "towards": "vers B2"
+    },
+    "skills": {
+      "vocab": "Vocabulaire",
+      "grammar": "Grammaire",
+      "listen": "Compréhension",
+      "speak": "Expression",
+      "read": "Lecture",
+      "write": "Rédaction",
+      "hints": {
+        "vocab": "+82 mots cette semaine",
+        "grammar": "Subjonctif à revoir",
+        "listen": "Dictée · 4 sessions",
+        "speak": "3 roleplays cette semaine",
+        "read": "Discover · article B1",
+        "write": "1 dictée corrigée"
+      }
+    },
+    "plan": {
+      "warm": "Échauffement",
+      "focus": "Séance ciblée",
+      "talk": "Parler",
+      "minutes": "min"
+    },
+    "quote": {
+      "eyebrow": "Citation du jour",
+      "next": "Citation suivante",
+      "showTranslation": "Voir la traduction →",
+      "hideTranslation": "Masquer la traduction",
+      "types": {
+        "proverb": "Proverbe",
+        "inspiration": "Inspiration",
+        "poem": "Poésie",
+        "literature": "Littérature",
+        "philosophy": "Philosophie"
+      },
+      "authors": {
+        "frenchProverb": "Proverbe français",
+        "popularWisdom": "Sagesse populaire"
+      }
+    },
+    "exam": {
+      "eyebrow": "Compte à rebours TCF",
+      "scoreTarget": "Score cible · 500",
+      "daysRemainingLine1": "jours",
+      "daysRemainingLine2": "restants",
+      "registration": "inscription",
+      "today": "aujourd'hui · J−{{days}}",
+      "exam": "examen",
+      "listening": "Compr. orale",
+      "reading": "Compr. écrite",
+      "lexGrammar": "Lex. & gram.",
+      "defaultDate": "12 juin 2026"
+    },
+    "word": {
+      "eyebrow": "Mot du jour",
+      "newWord": "Nouveau mot",
+      "fullDefinition": "Définition complète",
+      "fallbackEn": {
+        "french": "flâner",
+        "english": "se promener sans but",
+        "pronunciation": "flɑ.ne",
+        "example": "J'aime flâner le long de la Seine au coucher du soleil."
+      }
+    },
+    "rail": {
+      "flashcards": "Flashcards",
+      "roleplay": "Roleplay",
+      "dictation": "Dictée",
+      "miniGames": "Mini-jeux",
+      "due": "{{count}} dues",
+      "upToDate": "à jour",
+      "ai": "AI",
+      "source": "RFI",
+      "games": "6 jeux"
+    },
+    "activity": {
+      "eyebrow": "Journal récent",
+      "viewAll": "tout voir →",
+      "types": {
+        "quiz": "Quiz",
+        "flashcard_review": "Flashcards",
+        "conjugation_drill": "Conjugaison",
+        "pronunciation": "Prononciation",
+        "dictation": "Dictée",
+        "mini_game": "Mini-jeu",
+        "roleplay": "Roleplay",
+        "grammar": "Grammaire",
+        "lesson_complete": "Leçon"
+      },
+      "perWeek": "{{count}} cette semaine",
+      "errorText": "Erreur, « {{text}} »",
+      "recentError": "Erreur récente",
+      "toReview": "à revoir",
+      "streakDays": "Série de {{count}} jours",
+      "today": "aujourd'hui",
+      "noneYet": "Aucune activité récente"
+    },
+    "resume": {
+      "eyebrow": "Reprendre où vous étiez",
+      "continue": "Continuer",
+      "dismiss": "Ignorer"
+    },
+    "timeAgo": {
+      "now": "à l'instant",
+      "minutes": "il y a {{count}} min",
+      "hours": "il y a {{count}} h",
+      "yesterday": "hier",
+      "days": "il y a {{count}} jours",
+      "recently": "récemment"
+    },
+    "greeting": {
+      "morning": "Bonjour",
+      "afternoon": "Bon après-midi",
+      "evening": "Bonsoir",
+      "night": "Bonne nuit"
+    }
   },
 
   "news": {
@@ -283,7 +517,40 @@
     "pageSubtitle": "Articles quotidiens calibrés à ton niveau.",
     "loadMore": "Charger plus",
     "generating": "Génération…",
-    "empty": "Aucune actualité pour l'instant"
+    "notFound": "Article introuvable",
+    "articleDoesNotExist": "Cet article n'existe pas.",
+    "backToNews": "Retour aux actualités",
+    "sourceLabel": "Source",
+    "readOriginal": "Lire l'article original",
+    "listenArticle": "Écouter l'article",
+    "showTranslation": "Voir la traduction →",
+    "hideTranslation": "Masquer la traduction",
+    "guidedPractice": "Pratique guidée",
+    "learnFromArticle": "Apprenez à partir de cet article",
+    "itemCount": "{{count}} éléments",
+    "tabs": {
+      "vocabulary": "Vocabulaire",
+      "expressions": "Expressions",
+      "grammar": "Grammaire"
+    },
+    "topics": {
+      "politics": "Politique",
+      "sports": "Sport",
+      "culture": "Culture",
+      "economy": "Économie",
+      "science": "Science",
+      "tech": "Tech",
+      "society": "Société",
+      "environ": "Environnement",
+      "world": "Monde",
+      "misc": "Divers"
+    },
+    "empty": {
+      "list": "Aucune actualité pour l'instant",
+      "vocabulary": "Aucun vocabulaire fourni pour cet article.",
+      "expressions": "Aucune expression mise en avant pour cet article.",
+      "grammar": "Aucun point de grammaire pour cet article."
+    }
   },
 
   "discover": {
@@ -293,10 +560,70 @@
     "generating": "Génération…"
   },
 
+  "ourNotes": {
+    "pageTitle": "Nos notes",
+    "pageSubtitle": "Une bibliothèque de 80 notes d'étude (~1 275 mots). Chaque note contient une liste de vocabulaire avec définitions et exemples.",
+    "untitled": "Sans titre",
+    "wordCount": "{{count}} mots",
+    "empty": "Pas encore de notes",
+    "comingSoonForFrench": "Bientôt disponible pour le français",
+    "detail": {
+      "backToList": "Retour aux notes",
+      "noteHeader": "Note {{number}}",
+      "vocabulary": "Vocabulaire",
+      "notFound": "Note introuvable",
+      "example": "Exemple"
+    },
+    "assistant": {
+      "title": "Posez une question sur cette note",
+      "subtitle": "L'assistant connaît les mots ci-dessus. Demandez des exemples, des comparaisons ou des phrases d'entraînement.",
+      "placeholder": "Utilise 3 de ces mots dans une phrase sur ma matinée",
+      "askButton": "Demander",
+      "thinking": "Réflexion…",
+      "errorToast": "Impossible de joindre l'assistant. Réessayez.",
+      "kbdHint": "Appuyez sur ⌘ Entrée pour envoyer"
+    },
+    "actions": {
+      "addToSrs": "Ajouter aux flashcards",
+      "addingToSrs": "Ajout en cours…",
+      "addedToSrs": "{{count}} flashcards ajoutées",
+      "allAlreadyInSrs": "Tous les mots sont déjà dans vos flashcards",
+      "generateQuiz": "Générer un quiz",
+      "generatingQuiz": "Génération du quiz…",
+      "quizError": "Impossible de générer le quiz. Réessayez.",
+      "srsError": "Impossible d'ajouter aux flashcards. Réessayez."
+    }
+  },
+
   "dictionary": {
     "pageTitle": "Dictionnaire",
     "pageSubtitle": "Cherche des mots français : définitions, exemples, prononciations.",
-    "searchPlaceholder": "Cherche un mot français…"
+    "pageSubtitleFr": "Cherche des mots français et conjugue n'importe quel verbe en quelques secondes.",
+    "searchPlaceholder": "Cherche un mot français…",
+    "searchPlaceholderFr": "Entre un mot français… ex. maison, beau, courir",
+    "searchPlaceholderEn": "Entre un mot anglais… ex. freedom, hope, beauty",
+    "eyebrow": "Recherche",
+    "tabDictionary": "📖 Dictionnaire",
+    "tabConjugator": "✏️ Conjugueur",
+    "searchButton": "Chercher",
+    "tryAWord": "Essaie un mot",
+    "commonVerbs": "Verbes courants",
+    "lookingUp": "Recherche du mot…",
+    "conjugating": "Conjugaison du verbe…",
+    "lookupFailed": "Recherche échouée. Réessaie.",
+    "conjugationFailed": "Conjugaison échouée. Réessaie.",
+    "conjugatorPlaceholder": "Entre un verbe français… ex. avoir, manger, partir",
+    "conjugateLink": "Conjuguer « {{word}} »",
+    "definitions": "Définitions",
+    "examples": "Exemples",
+    "synonyms": "Synonymes",
+    "antonyms": "Antonymes",
+    "etymology": "Étymologie",
+    "auxiliary": "auxiliaire",
+    "pastParticiple": "participe passé",
+    "presentParticiple": "participe présent",
+    "showAllTenses": "Afficher tous les temps",
+    "openAssistant": "Ouvrir l'assistant"
   },
 
   "progress": {

@@ -60,11 +60,15 @@ def sm2_update(
 
 
 def get_due_cards(user, limit: int = 20):
-    """Return SRSCards due for review, oldest first."""
+    """Return SRSCards due for review, oldest first, scoped to the user's
+    current target language. Cards backed by vocabulary in another
+    language remain in the DB so progress is preserved across switches."""
     now = timezone.now()
-    return SRSCard.objects.filter(user=user, next_review_at__lte=now).select_related("vocabulary")[
-        :limit
-    ]
+    return SRSCard.objects.filter(
+        user=user,
+        next_review_at__lte=now,
+        vocabulary__language=user.target_language,
+    ).select_related("vocabulary")[:limit]
 
 
 def review_card(card: SRSCard, quality: int) -> SRSCard:

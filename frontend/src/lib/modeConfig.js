@@ -40,6 +40,7 @@ export const MODE_CONFIG = {
       "/assistant", "/agents",
       "/dictionary",
       "/progress",
+      "/our-notes",
     ],
     chipLabel: "Apprentissage général",
     accent: "primary",
@@ -57,6 +58,7 @@ export const MODE_CONFIG = {
       "/assistant", "/agents",
       "/dictionary",
       "/progress",
+      "/our-notes",
     ],
     chipLabel: "Prépa examen",
     accent: "info",
@@ -75,21 +77,28 @@ export const MODE_CONFIG = {
       "/assistant", "/agents",
       "/dictionary",
       "/progress",
+      "/our-notes",
     ],
     chipLabel: "Mode agent",
     accent: "accent",
   },
 };
 
-/** Filter NAV_SECTIONS down to the items allowed by the active mode. */
-export function filterNavForMode(sections, mode) {
+/** Filter NAV_SECTIONS down to the items allowed by the active mode.
+ *  Items may also declare a `languages` allow-list (e.g. `["en"]`); when
+ *  present, they're only shown if `targetLanguage` is in that list. */
+export function filterNavForMode(sections, mode, targetLanguage) {
   const cfg = MODE_CONFIG[mode] || MODE_CONFIG.general;
   const allow = new Set(cfg.visible);
 
   let filtered = sections
     .map((section) => ({
       ...section,
-      items: (section.items || []).filter((it) => allow.has(it.to)),
+      items: (section.items || []).filter((it) => {
+        if (!allow.has(it.to)) return false;
+        if (it.languages && !it.languages.includes(targetLanguage)) return false;
+        return true;
+      }),
     }))
     .filter((section) => section.items.length > 0);
 

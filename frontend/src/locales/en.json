@@ -44,6 +44,7 @@
     "agents": "Agents",
     "home": "Home",
     "dictionary": "Dictionary",
+    "ourNotes": "Our Notes",
     "progress": "Progress",
     "practice": "Practice",
     "dictation": "Dictation",
@@ -557,6 +558,41 @@
     "pageSubtitle": "Bite-sized content, refreshed daily.",
     "generateMore": "Generate more",
     "generating": "Generating…"
+  },
+
+  "ourNotes": {
+    "pageTitle": "Our Notes",
+    "pageSubtitle": "A curated library of 80 study notes (~1,275 words). Each note has a vocabulary list with definitions and examples.",
+    "untitled": "Untitled",
+    "wordCount": "{{count}} words",
+    "empty": "No notes yet",
+    "comingSoonForFrench": "Coming soon for French",
+    "detail": {
+      "backToList": "Back to notes",
+      "noteHeader": "Note {{number}}",
+      "vocabulary": "Vocabulary",
+      "notFound": "Note not found",
+      "example": "Example"
+    },
+    "assistant": {
+      "title": "Ask about this note",
+      "subtitle": "The assistant knows the words above. Ask for examples, comparisons, or generate practice prompts.",
+      "placeholder": "Use 3 of these words in one sentence about my morning",
+      "askButton": "Ask",
+      "thinking": "Thinking…",
+      "errorToast": "Couldn't reach the assistant. Try again.",
+      "kbdHint": "Press ⌘ Enter to send"
+    },
+    "actions": {
+      "addToSrs": "Add to flashcards",
+      "addingToSrs": "Adding…",
+      "addedToSrs": "Added {{count}} new flashcards",
+      "allAlreadyInSrs": "All words are already in your flashcards",
+      "generateQuiz": "Generate practice quiz",
+      "generatingQuiz": "Generating quiz…",
+      "quizError": "Couldn't generate quiz. Try again.",
+      "srsError": "Couldn't add to flashcards. Try again."
+    }
   },
 
   "dictionary": {

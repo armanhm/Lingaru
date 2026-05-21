@@ -37,6 +37,7 @@ INSTALLED_APPS = [
     "apps.grammar",
     "apps.agents",
     "apps.memory",
+    "apps.notes",
 ]
 
 MIDDLEWARE = [

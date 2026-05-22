@@ -147,21 +147,48 @@ export default function OurNotesReview() {
 
   const onPointerDown = (e) => {
     if (exiting || transitioningRef.current) return;
-    startRef.current = { x: e.clientX };
-    setDragging(true);
+    // Track origin + intent. We don't lock the pointer or set
+    // `dragging` until the user has moved far enough HORIZONTALLY for
+    // us to be confident this is a swipe (not a tap, not a scroll).
+    startRef.current = {
+      x: e.clientX,
+      y: e.clientY,
+      pointerId: e.pointerId,
+      committed: false,
+    };
     setDx(0);
-    e.currentTarget.setPointerCapture(e.pointerId);
   };
 
   const onPointerMove = (e) => {
-    if (!dragging || !startRef.current) return;
-    setDx(e.clientX - startRef.current.x);
+    const start = startRef.current;
+    if (!start) return;
+    const deltaX = e.clientX - start.x;
+    const deltaY = e.clientY - start.y;
+    if (!start.committed) {
+      // Wait until the user has moved at least 10px in some direction.
+      // If the dominant axis is vertical, let the browser scroll the
+      // page naturally — bail out of swipe tracking entirely.
+      if (Math.abs(deltaX) < 10 && Math.abs(deltaY) < 10) return;
+      if (Math.abs(deltaY) > Math.abs(deltaX)) {
+        startRef.current = null;
+        return;
+      }
+      start.committed = true;
+      setDragging(true);
+      try { e.currentTarget.setPointerCapture(start.pointerId); } catch (_e) { /* ignore */ }
+    }
+    setDx(deltaX);
   };
 
   const onPointerUp = () => {
-    if (!dragging) return;
-    setDragging(false);
+    const start = startRef.current;
     startRef.current = null;
+    if (!start || !start.committed) {
+      setDragging(false);
+      setDx(0);
+      return;
+    }
+    setDragging(false);
     if (dx < -SWIPE_THRESHOLD && activeIndex < notes.length - 1) {
       swipeTo("next");
     } else if (dx > SWIPE_THRESHOLD && activeIndex > 0) {
@@ -300,7 +327,7 @@ export default function OurNotesReview() {
           onPointerMove={onPointerMove}
           onPointerUp={onPointerUp}
           onPointerCancel={onPointerUp}
-          className="relative rounded-2xl bg-surface-900 text-surface-100 shadow-card p-6 sm:p-8 touch-none dark:bg-surface-800 dark:ring-1 dark:ring-surface-700 animate-soft-zoom"
+          className="relative rounded-2xl bg-surface-900 text-surface-100 shadow-card p-6 sm:p-8 touch-pan-y dark:bg-surface-800 dark:ring-1 dark:ring-surface-700 animate-soft-zoom"
           style={{
             transform: `translateX(${tx}px) rotate(${rotate}deg) scale(${scale})`,
             transition,

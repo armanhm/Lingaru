@@ -309,8 +309,12 @@ export default function MyNotesEdit() {
   // Resizable split between editor and preview (desktop only).
   // Persists to localStorage so it sticks across reloads.
   const [splitPct, setSplitPct] = useState(() => {
-    const saved = parseFloat(localStorage.getItem("myNotes:splitPct") || "");
-    return Number.isFinite(saved) && saved >= 25 && saved <= 75 ? saved : 50;
+    try {
+      const saved = parseFloat(localStorage.getItem("myNotes:splitPct") || "");
+      return Number.isFinite(saved) && saved >= 25 && saved <= 75 ? saved : 50;
+    } catch {
+      return 50;
+    }
   });
   const splitContainerRef = useRef(null);
   const draggingSplitRef = useRef(false);
@@ -338,7 +342,11 @@ export default function MyNotesEdit() {
   }, []);
 
   useEffect(() => {
-    localStorage.setItem("myNotes:splitPct", String(splitPct));
+    try {
+      localStorage.setItem("myNotes:splitPct", String(splitPct));
+    } catch {
+      // Storage may be unavailable (Safari private mode, quota, blocked).
+    }
   }, [splitPct]);
 
   const onSplitGrabberDown = (e) => {
@@ -356,6 +364,7 @@ export default function MyNotesEdit() {
   const latestStateRef = useRef(null);
   const noteIdRef = useRef(noteId);
   const bodyRef = useRef(null);
+  const isMountedRef = useRef(true);
   useEffect(() => { noteIdRef.current = noteId; }, [noteId]);
 
   useEffect(() => {
@@ -423,20 +432,24 @@ export default function MyNotesEdit() {
           window.history.replaceState(null, "", `/my-notes/${res.data.id}`);
         }
       }
-      if (res.data?.updated_at) setUpdatedAt(res.data.updated_at);
-      setSaveState("saved");
+      if (res.data?.updated_at && isMountedRef.current) setUpdatedAt(res.data.updated_at);
+      if (isMountedRef.current) setSaveState("saved");
       dirtyRef.current = false;
     } catch (err) {
-      setSaveState("error");
-      // Surface validation errors so the user knows why nothing saved.
+      if (isMountedRef.current) setSaveState("error");
+      // DRF returns either a single `detail` string or per-field error
+      // arrays (e.g. {title: ["This field is required."]}). Indexing a
+      // string with [0] returns its first character — guard with
+      // Array.isArray so we surface the full error message.
+      const firstOf = (e) => (Array.isArray(e) ? e[0] : e);
       const detail =
         err.response?.data?.detail ||
-        err.response?.data?.title?.[0] ||
-        err.response?.data?.tags?.[0] ||
-        err.response?.data?.body_markdown?.[0] ||
+        firstOf(err.response?.data?.title) ||
+        firstOf(err.response?.data?.tags) ||
+        firstOf(err.response?.data?.body_markdown) ||
         err.message ||
         "Save failed.";
-      showToast(detail, "error");
+      if (isMountedRef.current) showToast(detail, "error");
     } finally {
       inFlightRef.current = false;
       if (latestStateRef.current) {
@@ -459,14 +472,18 @@ export default function MyNotesEdit() {
   // silently vanish. Refs avoid stale closures.
   const performSaveRef = useRef(performSave);
   useEffect(() => { performSaveRef.current = performSave; }, [performSave]);
-  useEffect(() => () => {
-    if (saveTimerRef.current) {
-      clearTimeout(saveTimerRef.current);
-      saveTimerRef.current = null;
-    }
-    if (dirtyRef.current && !inFlightRef.current) {
-      performSaveRef.current();
-    }
+  useEffect(() => {
+    isMountedRef.current = true;
+    return () => {
+      isMountedRef.current = false;
+      if (saveTimerRef.current) {
+        clearTimeout(saveTimerRef.current);
+        saveTimerRef.current = null;
+      }
+      if (dirtyRef.current && !inFlightRef.current) {
+        performSaveRef.current();
+      }
+    };
   }, []);
 
   useEffect(() => {

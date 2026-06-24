@@ -81,7 +81,8 @@ class MyNoteAIActionView(APIView):
                 {"detail": f"Unknown action: {action}"},
                 status=status.HTTP_400_BAD_REQUEST,
             )
-        if not note.body_markdown.strip() and action != "suggest_tags":
+        body_markdown = note.body_markdown or ""
+        if not body_markdown.strip() and action != "suggest_tags":
             return Response(
                 {"detail": "Note body is empty."},
                 status=status.HTTP_400_BAD_REQUEST,
@@ -123,7 +124,7 @@ def _build_ai_prompt(note, action):
         f"Title: {note.title}.\n"
         f"Tags: {tags_str}.\n"
     )
-    body = note.body_markdown
+    body = note.body_markdown or ""
 
     if action == "summarize":
         system = (

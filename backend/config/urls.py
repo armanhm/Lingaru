@@ -40,6 +40,7 @@ urlpatterns = [
     path("api/grammar/", include("apps.grammar.urls")),
     path("api/agents/", include("apps.agents.urls")),
     path("api/memory/", include("apps.memory.urls")),
+    path("api/my-notes/", include("apps.my_notes.urls")),
     path("api/notes/", include("apps.notes.urls")),
 ]
 

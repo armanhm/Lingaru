@@ -645,7 +645,40 @@
     "sharedBadge": "Shared",
     "bodyPlaceholder": "Write your session here. Markdown supported — try # headings, **bold**, tables, code blocks...",
     "preview": "Preview",
-    "editor": "Editor"
+    "editor": "Editor",
+    "ai": {
+      "aiButton": "AI",
+      "aiActionRequiresSave": "Save the session first to use AI",
+      "categoryTransform": "Transform",
+      "categoryGenerate": "Generate",
+      "suggestedTagsLabel": "Suggested tags",
+      "dismissAll": "Dismiss all",
+      "original": "Original",
+      "aiResult": "AI result",
+      "replace": "Replace",
+      "insertBelow": "Insert below",
+      "discard": "Discard",
+      "working": "Working…",
+      "actions": {
+        "summarize": "Summarize",
+        "enhance_format": "Enhance format",
+        "fix_grammar": "Fix grammar",
+        "more_examples": "More examples",
+        "ice_breakers": "Ice-breakers",
+        "practice_questions": "Practice questions",
+        "suggest_tags": "Suggest tags"
+      },
+      "summarizeDescription": "3-bullet summary of the body",
+      "enhanceFormatDescription": "Tidy markdown, headings, lists",
+      "fixGrammarDescription": "Correct language errors",
+      "moreExamplesDescription": "5 more example sentences",
+      "iceBreakersDescription": "5 conversation starters",
+      "practiceQuestionsDescription": "3 self-test questions with answers",
+      "suggestTagsDescription": "Suggest 3-5 tags from the content",
+      "errors": {
+        "aiFailed": "AI request failed. Try again."
+      }
+    }
   },
 
   "dictionary": {

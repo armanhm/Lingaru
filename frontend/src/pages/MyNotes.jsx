@@ -1,10 +1,23 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
+import ReactMarkdown from "react-markdown";
+import remarkGfm from "remark-gfm";
 import { listMyNotes } from "../api/myNotes";
 import { useAuth } from "../contexts/AuthContext";
 import { staggerDelay } from "../hooks/useAnimations";
 import { PageHeader, SkeletonCard, EmptyState } from "../components/ui";
+
+const CARD_PROSE = "prose prose-sm dark:prose-invert max-w-none " +
+  "prose-p:my-0 prose-p:leading-snug prose-p:text-surface-500 prose-p:dark:text-surface-400 " +
+  "prose-headings:my-0 prose-headings:text-sm prose-headings:font-semibold prose-headings:text-surface-600 prose-headings:dark:text-surface-300 " +
+  "prose-ul:my-0 prose-ol:my-0 prose-li:my-0 prose-li:text-surface-500 prose-li:dark:text-surface-400 " +
+  "prose-strong:font-semibold prose-strong:text-surface-700 prose-strong:dark:text-surface-200 " +
+  "prose-em:italic " +
+  "prose-code:bg-surface-100 prose-code:dark:bg-surface-700 prose-code:px-1 prose-code:rounded prose-code:text-xs " +
+  "prose-a:text-primary-600 prose-a:dark:text-primary-400 prose-a:no-underline " +
+  "prose-blockquote:my-0 prose-blockquote:pl-2 prose-blockquote:border-l-2 prose-blockquote:border-surface-300 prose-blockquote:dark:border-surface-600 prose-blockquote:italic " +
+  "prose-hr:my-2";
 
 const KINDS = [
   { value: "grammar",    emoji: "📐", tint: "bg-info-100 dark:bg-info-700/30 text-info-700 dark:text-info-300" },
@@ -256,9 +269,11 @@ export default function MyNotes() {
                 </h2>
 
                 {note.body_preview ? (
-                  <p className="mt-2 text-sm text-surface-500 dark:text-surface-400 line-clamp-3">
-                    {note.body_preview}
-                  </p>
+                  <div className={`mt-2 line-clamp-3 ${CARD_PROSE}`}>
+                    <ReactMarkdown remarkPlugins={[remarkGfm]}>
+                      {note.body_preview}
+                    </ReactMarkdown>
+                  </div>
                 ) : (
                   <p className="mt-2 text-sm italic text-surface-400 dark:text-surface-500 line-clamp-3">
                     {t("myNotes.emptySubtitle")}

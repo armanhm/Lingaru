@@ -6,3 +6,5 @@ export const createMyNote = (data) => client.post("/my-notes/", data);
 export const updateMyNote = (id, data) => client.patch(`/my-notes/${id}/`, data);
 export const deleteMyNote = (id) => client.delete(`/my-notes/${id}/`);
 export const getPublicMyNote = (id) => client.get(`/my-notes/public/${id}/`);
+export const runMyNoteAIAction = (id, action) =>
+  client.post(`/my-notes/${id}/ai-action/`, { action });

@@ -45,6 +45,7 @@
     "home": "Home",
     "dictionary": "Dictionary",
     "ourNotes": "Our Notes",
+    "myNotes": "My Notes",
     "progress": "Progress",
     "practice": "Practice",
     "dictation": "Dictation",
@@ -606,6 +607,45 @@
       "quizError": "Couldn't generate quiz. Try again.",
       "srsError": "Couldn't add to flashcards. Try again."
     }
+  },
+
+  "myNotes": {
+    "pageTitle": "My Notes",
+    "pageSubtitle": "Your private practice space — capture grammar, dialogs, vocab, anything you're studying.",
+    "newSession": "+ New session",
+    "searchPlaceholder": "Search your notes...",
+    "favoritesOnly": "Favorites",
+    "languageAll": "All",
+    "kindAll": "All kinds",
+    "kinds": {
+      "grammar": "Grammar",
+      "dialog": "Dialog",
+      "vocabulary": "Vocabulary",
+      "listening": "Listening",
+      "writing": "Writing",
+      "reading": "Reading",
+      "freeform": "Freeform"
+    },
+    "emptyTitle": "Start your first practice session",
+    "emptySubtitle": "Capture what you're studying — grammar, dialogs, vocabulary, anything.",
+    "untitled": "Untitled session",
+    "addTag": "Add tag...",
+    "delete": "Delete",
+    "deleteConfirm": "Delete this session?",
+    "cancel": "Cancel",
+    "save": "Save",
+    "saved": "Saved",
+    "saving": "Saving…",
+    "savedRelative": "Saved · {{time}}",
+    "publicToggle": "Share with all learners",
+    "publicHint": "Anyone with the link can view your session (read-only).",
+    "copyShareLink": "Copy share link",
+    "copied": "Copied!",
+    "loadError": "Couldn't load this session.",
+    "sharedBadge": "Shared",
+    "bodyPlaceholder": "Write your session here. Markdown supported — try # headings, **bold**, tables, code blocks...",
+    "preview": "Preview",
+    "editor": "Editor"
   },
 
   "dictionary": {

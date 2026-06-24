@@ -31,6 +31,9 @@ import Dictionary from "./pages/Dictionary";
 import OurNotes from "./pages/OurNotes";
 import OurNotesDetail from "./pages/OurNotesDetail";
 import OurNotesReview from "./pages/OurNotesReview";
+import MyNotes from "./pages/MyNotes";
+import MyNotesEdit from "./pages/MyNotesEdit";
+import MyNotesPublic from "./pages/MyNotesPublic";
 import Settings from "./pages/Settings";
 import MiniGames from "./pages/MiniGames";
 import WordScramble from "./pages/WordScramble";
@@ -92,6 +95,10 @@ export default function App() {
           <Route path="our-notes/review" element={<OurNotesReview />} />
           <Route path="our-notes/review/:id" element={<OurNotesReview />} />
           <Route path="our-notes/:id" element={<OurNotesDetail />} />
+          <Route path="my-notes" element={<MyNotes />} />
+          <Route path="my-notes/new" element={<MyNotesEdit />} />
+          <Route path="my-notes/public/:id" element={<MyNotesPublic />} />
+          <Route path="my-notes/:id" element={<MyNotesEdit />} />
           <Route path="mini-games" element={<MiniGames />} />
           <Route path="mini-games/word-scramble" element={<WordScramble />} />
           <Route path="mini-games/match-pairs" element={<MatchPairs />} />

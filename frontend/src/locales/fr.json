@@ -45,6 +45,7 @@
     "home": "Accueil",
     "dictionary": "Dictionnaire",
     "ourNotes": "Nos notes",
+    "myNotes": "Mes notes",
     "progress": "Progression",
     "practice": "Entraînement",
     "dictation": "Dictée",
@@ -606,6 +607,45 @@
       "quizError": "Impossible de générer le quiz. Réessayez.",
       "srsError": "Impossible d'ajouter aux flashcards. Réessayez."
     }
+  },
+
+  "myNotes": {
+    "pageTitle": "Mes notes",
+    "pageSubtitle": "Votre espace de pratique privé — grammaire, dialogues, vocabulaire, tout ce que vous étudiez.",
+    "newSession": "+ Nouvelle session",
+    "searchPlaceholder": "Chercher dans vos notes…",
+    "favoritesOnly": "Favoris",
+    "languageAll": "Toutes",
+    "kindAll": "Tous",
+    "kinds": {
+      "grammar": "Grammaire",
+      "dialog": "Dialogue",
+      "vocabulary": "Vocabulaire",
+      "listening": "Écoute",
+      "writing": "Écriture",
+      "reading": "Lecture",
+      "freeform": "Libre"
+    },
+    "emptyTitle": "Lancez votre première session",
+    "emptySubtitle": "Notez ce que vous étudiez — grammaire, dialogues, vocabulaire, tout.",
+    "untitled": "Session sans titre",
+    "addTag": "Ajouter un tag…",
+    "delete": "Supprimer",
+    "deleteConfirm": "Supprimer cette session ?",
+    "cancel": "Annuler",
+    "save": "Enregistrer",
+    "saved": "Enregistré",
+    "saving": "Enregistrement…",
+    "savedRelative": "Enregistré · {{time}}",
+    "publicToggle": "Partager avec tous",
+    "publicHint": "Tout utilisateur ayant le lien peut consulter votre session (lecture seule).",
+    "copyShareLink": "Copier le lien",
+    "copied": "Copié !",
+    "loadError": "Impossible de charger cette session.",
+    "sharedBadge": "Partagé",
+    "bodyPlaceholder": "Écrivez votre session ici. Markdown pris en charge — essayez # titres, **gras**, tableaux, blocs de code…",
+    "preview": "Aperçu",
+    "editor": "Éditeur"
   },
 
   "dictionary": {

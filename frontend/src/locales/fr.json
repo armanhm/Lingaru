@@ -645,7 +645,40 @@
     "sharedBadge": "Partagé",
     "bodyPlaceholder": "Écrivez votre session ici. Markdown pris en charge — essayez # titres, **gras**, tableaux, blocs de code…",
     "preview": "Aperçu",
-    "editor": "Éditeur"
+    "editor": "Éditeur",
+    "ai": {
+      "aiButton": "IA",
+      "aiActionRequiresSave": "Enregistrez la session avant d'utiliser l'IA",
+      "categoryTransform": "Transformer",
+      "categoryGenerate": "Générer",
+      "suggestedTagsLabel": "Tags suggérés",
+      "dismissAll": "Tout ignorer",
+      "original": "Original",
+      "aiResult": "Résultat IA",
+      "replace": "Remplacer",
+      "insertBelow": "Insérer en dessous",
+      "discard": "Annuler",
+      "working": "En cours…",
+      "actions": {
+        "summarize": "Résumer",
+        "enhance_format": "Améliorer la mise en forme",
+        "fix_grammar": "Corriger la grammaire",
+        "more_examples": "Plus d'exemples",
+        "ice_breakers": "Brise-glaces",
+        "practice_questions": "Questions d'entraînement",
+        "suggest_tags": "Suggérer des tags"
+      },
+      "summarizeDescription": "Résumé en 3 puces",
+      "enhanceFormatDescription": "Markdown nettoyé, titres, listes",
+      "fixGrammarDescription": "Corrige les fautes de langue",
+      "moreExamplesDescription": "5 exemples supplémentaires",
+      "iceBreakersDescription": "5 questions pour démarrer",
+      "practiceQuestionsDescription": "3 questions avec réponses",
+      "suggestTagsDescription": "Suggère 3 à 5 tags du contenu",
+      "errors": {
+        "aiFailed": "Échec de la requête IA. Réessayez."
+      }
+    }
   },
 
   "dictionary": {

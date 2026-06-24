@@ -406,9 +406,32 @@ export default function OurNotesReview() {
         </button>
       </div>
 
-      <p className="text-xs text-center text-surface-500 dark:text-surface-400 mt-3">
+      <p className="text-xs text-center text-surface-500 dark:text-surface-400 mt-3 pb-24 lg:pb-0">
         {t("ourNotes.review.hint")}
       </p>
+
+      <div
+        className="lg:hidden fixed bottom-0 inset-x-0 z-30 bg-white/95 dark:bg-surface-900/95 backdrop-blur-md border-t border-surface-200 dark:border-surface-700"
+        style={{ paddingBottom: "env(safe-area-inset-bottom)" }}
+      >
+        <div className="grid grid-cols-3 max-w-md mx-auto">
+          {actionButtons.map((btn) => (
+            <button
+              key={btn.key}
+              type="button"
+              onClick={btn.onClick}
+              disabled={btn.disabled}
+              className="flex flex-col items-center justify-center gap-1 py-2.5 text-surface-700 dark:text-surface-200 hover:bg-primary-50 dark:hover:bg-primary-900/30 active:bg-primary-100 dark:active:bg-primary-900/50 transition-colors focus-ring disabled:opacity-40 disabled:cursor-not-allowed"
+              aria-label={btn.label}
+            >
+              <span className="text-2xl leading-none" aria-hidden>{btn.icon}</span>
+              <span className="text-[10px] font-semibold uppercase tracking-wide leading-none">
+                {btn.label}
+              </span>
+            </button>
+          ))}
+        </div>
+      </div>
 
       <aside className="hidden lg:flex fixed right-0 top-1/2 -translate-y-1/2 z-30 flex-col items-end">
         <div className="relative max-h-[80vh] py-2 pr-2 pl-32 -ml-32 overflow-y-auto overflow-x-visible scrollbar-thin">

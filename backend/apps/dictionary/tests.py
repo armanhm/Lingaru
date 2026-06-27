@@ -38,6 +38,12 @@ def test_cefr_from_rank_boundaries(rank, expected):
     assert cefr_from_rank(rank) == expected
 
 
+@pytest.mark.parametrize("bad_rank", [0, -1, -100])
+def test_cefr_from_rank_rejects_non_positive(bad_rank):
+    with pytest.raises(ValueError, match="positive 1-indexed"):
+        cefr_from_rank(bad_rank)
+
+
 # ---- cached_or_call -----------------------------------------------------------
 
 

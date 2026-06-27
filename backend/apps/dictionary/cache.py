@@ -31,8 +31,13 @@ def cached_or_call(
     Args:
         kind: DictionaryCache.LOOKUP or .CONJUGATION
         key: normalized lemma (lookup) or infinitive (conjugation)
-        llm_fn: zero-arg callable returning {"result": dict, "provider": str}.
-            MUST raise on failure — None results are rejected, never cached.
+        llm_fn: zero-arg callable returning {"result": dict | None, "provider": str}.
+            Two equivalent failure modes are supported:
+              1. Raise any exception (network error, timeout, etc.).
+              2. Return {"result": None, "provider": "..."} to signal a clean
+                 parse failure without a traceback.
+            Either way, no row is persisted on failure — the wrapper raises
+            CacheMissResult that the view translates to a 502.
         default_cefr: CEFR level to tag the new row with on miss (e.g. the
             requesting user's target_level). Ignored when the row already
             exists; seeded rows keep their seeded level.

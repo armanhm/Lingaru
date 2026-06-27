@@ -1,6 +1,4 @@
-import json
 import logging
-import re
 
 from rest_framework import permissions, status
 from rest_framework.response import Response
@@ -8,6 +6,7 @@ from rest_framework.views import APIView
 
 from apps.dictionary.cache import CacheMissResult, cached_or_call
 from apps.dictionary.models import DictionaryCache
+from apps.dictionary.parsing import parse_json_response
 from services.llm.factory import create_llm_router
 
 logger = logging.getLogger(__name__)
@@ -53,21 +52,9 @@ CONJUGATE_SYSTEM_PROMPT = (
 )
 
 
-def _parse_json_response(text: str) -> dict | None:
-    """Extract and parse JSON from LLM response, stripping markdown if present."""
-    text = text.strip()
-    text = re.sub(r"^```(?:json)?\s*", "", text)
-    text = re.sub(r"\s*```$", "", text)
-    try:
-        return json.loads(text)
-    except json.JSONDecodeError:
-        match = re.search(r"\{.*\}", text, re.DOTALL)
-        if match:
-            try:
-                return json.loads(match.group())
-            except json.JSONDecodeError:
-                pass
-    return None
+# Re-exported for callers that imported the parser from this module.
+# Source of truth is apps.dictionary.parsing.parse_json_response.
+_parse_json_response = parse_json_response
 
 
 class DictionaryLookupView(APIView):

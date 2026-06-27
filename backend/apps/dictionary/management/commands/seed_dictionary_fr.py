@@ -8,9 +8,7 @@ Idempotent: rows already present are skipped (no LLM call).
 """
 
 import csv
-import json
 import logging
-import re
 import time
 from pathlib import Path
 
@@ -19,6 +17,7 @@ from django.core.management.base import BaseCommand, CommandError
 
 from apps.dictionary.cefr import cefr_from_rank
 from apps.dictionary.models import DictionaryCache
+from apps.dictionary.parsing import parse_json_response
 from apps.dictionary.views import LOOKUP_SYSTEM_PROMPT_FR
 from services.llm.factory import create_llm_router
 
@@ -26,24 +25,6 @@ logger = logging.getLogger(__name__)
 
 DEFAULT_CSV_PATH = Path(settings.BASE_DIR).parent / "data" / "dictionary_seed_fr.csv"
 FAILURE_LOG_PATH = Path(settings.BASE_DIR).parent / "data" / "dictionary_seed_failures.log"
-
-
-def _parse_json_response(text: str) -> dict | None:
-    """Same shape as views._parse_json_response; duplicated to avoid a circular
-    import once we move the wrapper into services/llm/."""
-    text = text.strip()
-    text = re.sub(r"^```(?:json)?\s*", "", text)
-    text = re.sub(r"\s*```$", "", text)
-    try:
-        return json.loads(text)
-    except json.JSONDecodeError:
-        match = re.search(r"\{.*\}", text, re.DOTALL)
-        if match:
-            try:
-                return json.loads(match.group())
-            except json.JSONDecodeError:
-                pass
-    return None
 
 
 class Command(BaseCommand):
@@ -113,13 +94,24 @@ class Command(BaseCommand):
         router = create_llm_router()
         failures: list[str] = []
 
+        # Pre-fetch all existing LOOKUP keys in one query so the per-lemma
+        # "is this already cached?" check is an O(1) set lookup instead of
+        # N round-trips to the DB. At 3000 lemmas this turns 3000 SELECTs
+        # into one. We update the set as we create rows so re-seeds
+        # within the same run stay consistent.
+        existing_keys: set[str] = set(
+            DictionaryCache.objects.filter(kind=DictionaryCache.LOOKUP).values_list(
+                "key", flat=True
+            )
+        )
+
         for i, r in enumerate(rows, start=1):
             lemma = r["lemma"]
             rank = r["rank"]
             cefr = cefr_from_rank(rank)
             prefix = f"[{i}/{len(rows)}]"
 
-            if DictionaryCache.objects.filter(kind=DictionaryCache.LOOKUP, key=lemma).exists():
+            if lemma in existing_keys:
                 self.stdout.write(f"{prefix} {lemma} (skipped — cached)")
                 skipped += 1
                 continue
@@ -129,7 +121,7 @@ class Command(BaseCommand):
                     messages=[{"role": "user", "content": lemma}],
                     system_prompt=LOOKUP_SYSTEM_PROMPT_FR,
                 )
-                parsed = _parse_json_response(llm_result.content)
+                parsed = parse_json_response(llm_result.content)
                 if parsed is None:
                     raise ValueError("malformed JSON from LLM")
 
@@ -140,6 +132,7 @@ class Command(BaseCommand):
                     cefr_level=cefr,
                     source=DictionaryCache.SEED,
                 )
+                existing_keys.add(lemma)
                 self.stdout.write(
                     f"{prefix} {lemma} (created, CEFR={cefr}, provider={llm_result.provider})"
                 )
@@ -179,7 +172,9 @@ class Command(BaseCommand):
                             "part_of_speech": (raw.get("part_of_speech") or "").strip(),
                         }
                     )
-                except (KeyError, ValueError) as exc:
+                except (KeyError, ValueError, AttributeError) as exc:
+                    # AttributeError: csv.DictReader emits None for missing
+                    # columns, so raw["lemma"].strip() would fail.
                     raise CommandError(f"Bad CSV row {raw}: {exc}") from exc
         # Sort by rank to make CEFR derivation correct even if the CSV is unsorted.
         rows.sort(key=lambda r: r["rank"])

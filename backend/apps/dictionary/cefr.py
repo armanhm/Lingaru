@@ -21,7 +21,12 @@ def cefr_from_rank(rank: int) -> str:
     'A2'
     >>> cefr_from_rank(3000)
     'C2'
+
+    Raises ValueError on non-positive ranks — silently returning "A1" for
+    rank=0 would mask off-by-one bugs in upstream CSV parsing.
     """
+    if rank < 1:
+        raise ValueError(f"rank must be a positive 1-indexed integer, got {rank!r}")
     if rank <= 500:
         return "A1"
     if rank <= 1000:

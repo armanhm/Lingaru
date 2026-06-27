@@ -90,28 +90,33 @@ def grade_response(self, response_id: int) -> dict:
         f"Student response:\n{response.user_answer}"
     )
 
-    router = create_llm_router()
-    llm_result = router.generate(
-        messages=[{"role": "user", "content": user_msg}],
-        system_prompt=system_prompt,
-    )
-    grading = _parse_grading_json(llm_result.content)
-
-    if grading is None:
-        # We exhausted retries on a malformed response — mark as failed
-        # and surface a clean error to the polling client. We deliberately
-        # don't re-raise here on the final retry; raising would leave the
-        # row stuck in "pending" forever.
+    # Wrap the LLM call AND the parse together so that any failure mode
+    # (network error, timeout, rate limit, malformed JSON) reaches the same
+    # final-retry handler below. Without this, an exception inside
+    # `router.generate` on the last retry would propagate out of the task
+    # and leave the row stuck in GRADING_PENDING forever.
+    llm_result = None
+    try:
+        router = create_llm_router()
+        llm_result = router.generate(
+            messages=[{"role": "user", "content": user_msg}],
+            system_prompt=system_prompt,
+        )
+        grading = _parse_grading_json(llm_result.content)
+        if grading is None:
+            raise ValueError("LLM returned unparseable JSON")
+    except Exception as exc:
         if self.request.retries >= self.max_retries:
             response.grading_status = ExamResponse.GRADING_FAILED
             response.grading_completed_at = timezone.now()
+            raw_content = llm_result.content[:500] if llm_result is not None else ""
             response.ai_feedback = json.dumps(
-                {"error": "parse_failed", "raw": llm_result.content[:500]}
+                {"error": "grading_failed", "detail": str(exc), "raw": raw_content}
             )
             response.save(update_fields=["grading_status", "grading_completed_at", "ai_feedback"])
-            return {"error": "parse_failed"}
-        # Otherwise: let Celery retry per @shared_task autoretry policy.
-        raise ValueError("LLM returned unparseable JSON")
+            return {"error": "grading_failed", "detail": str(exc)}
+        # Not the final retry: let Celery's autoretry kick in.
+        raise
 
     ai_score = grading.get("score", 0)
     ai_max = grading.get("max_score", 20)

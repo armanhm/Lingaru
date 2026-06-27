@@ -199,8 +199,19 @@ class SessionRespondView(APIView):
         # The frontend polls `/grading/` on the response id until status
         # leaves "pending".
         if session.section in ("EE", "EO"):
+            import uuid
+
+            from django.db import transaction
+            from django.urls import reverse
+
             from apps.exam_prep.tasks import grade_response as grade_task
 
+            # Pre-generate the task id so we can persist it on the same row
+            # we just created, BEFORE handing it to Celery. Pair the queue
+            # with transaction.on_commit so the worker can never see a row
+            # that hasn't actually committed yet (would 404 the .get() on
+            # the task's first attempt and consume a retry needlessly).
+            task_id = str(uuid.uuid4())
             response = ExamResponse.objects.create(
                 session=session,
                 exercise=exercise,
@@ -210,16 +221,20 @@ class SessionRespondView(APIView):
                 score=0,
                 max_score=20,
                 grading_status=ExamResponse.GRADING_PENDING,
+                grading_task_id=task_id,
             )
-            async_result = grade_task.delay(response.id)
-            response.grading_task_id = async_result.id
-            response.save(update_fields=["grading_task_id"])
+
+            transaction.on_commit(
+                lambda response_id=response.id, task_id=task_id: grade_task.apply_async(
+                    args=[response_id], task_id=task_id
+                )
+            )
 
             return Response(
                 {
                     "response_id": response.id,
                     "grading_status": ExamResponse.GRADING_PENDING,
-                    "poll_url": f"/api/exam-prep/responses/{response.id}/grading/",
+                    "poll_url": reverse("exam_prep:response-grading", args=[response.id]),
                 },
                 status=status.HTTP_202_ACCEPTED,
             )

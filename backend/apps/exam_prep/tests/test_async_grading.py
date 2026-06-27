@@ -46,23 +46,20 @@ def _fake_llm_result(content: str) -> MagicMock:
 # ---- view: respond returns 202, no LLM call in request thread ---------------
 
 
-@pytest.mark.django_db
+@pytest.mark.django_db(transaction=True)
 def test_ee_respond_returns_202_and_queues_task(ee_setup, api_client):
+    """The view persists the response then uses transaction.on_commit to
+    queue the Celery task. Without transaction=True the test's wrapping
+    transaction never commits, so the on_commit callback wouldn't fire and
+    apply_async wouldn't be called — which is what the test is asserting.
+    """
     user, exercise, session = ee_setup
     api_client.force_authenticate(user=user)
 
-    # Patch the router AT the task module (the only place that imports it
-    # for grading). If the view ever reintroduces a synchronous router
-    # call, this patch wouldn't intercept it — and mock_delay being called
-    # is what proves the work was offloaded.
     with (
-        patch("apps.exam_prep.tasks.grade_response.delay") as mock_delay,
+        patch("apps.exam_prep.tasks.grade_response.apply_async") as mock_apply,
         patch("apps.exam_prep.tasks.create_llm_router") as mock_router,
     ):
-        mock_async_result = MagicMock()
-        mock_async_result.id = "task-abc-123"
-        mock_delay.return_value = mock_async_result
-
         resp = api_client.post(
             f"/api/exam-prep/sessions/{session.id}/respond/",
             {
@@ -76,14 +73,18 @@ def test_ee_respond_returns_202_and_queues_task(ee_setup, api_client):
     assert resp.status_code == 202, resp.data
     assert resp.data["grading_status"] == ExamResponse.GRADING_PENDING
     assert resp.data["poll_url"].endswith("/grading/")
-    # We mocked .delay so the real task never ran; mock_router should not
-    # have been called either. Together these prove no LLM round-trip.
+    # The router must never be invoked synchronously.
     assert not mock_router.called, "task-level LLM router must not be invoked synchronously"
-    mock_delay.assert_called_once()
+    # apply_async fires only after the per-request transaction commits,
+    # which proves the on_commit guard works as intended.
+    mock_apply.assert_called_once()
 
     response_row = ExamResponse.objects.get(id=resp.data["response_id"])
     assert response_row.grading_status == ExamResponse.GRADING_PENDING
-    assert response_row.grading_task_id == "task-abc-123"
+    # Task id was pre-generated and persisted BEFORE the task was queued.
+    assert response_row.grading_task_id, "grading_task_id must be set before the task is enqueued"
+    # The worker is enqueued with the same task id (no drift row vs worker).
+    assert mock_apply.call_args.kwargs["task_id"] == response_row.grading_task_id
 
 
 # ---- task: grades a pending row and writes back -----------------------------
@@ -234,7 +235,35 @@ def test_grade_response_marks_failed_after_unparseable_output(ee_setup):
         mock_router.return_value.generate.return_value = _fake_llm_result("this is not json at all")
         result = grade_response(response.id)
 
-    assert result == {"error": "parse_failed"}
+    assert result["error"] == "grading_failed"
+    response.refresh_from_db()
+    assert response.grading_status == ExamResponse.GRADING_FAILED
+    assert response.grading_completed_at is not None
+
+
+@pytest.mark.django_db
+def test_grade_response_marks_failed_when_router_raises(ee_setup):
+    """The previous version of the task let exceptions from router.generate
+    (network error, timeout, rate limit) propagate out, leaving the row
+    stuck in GRADING_PENDING. This test pins the behaviour: on the final
+    retry the unified try/except writes GRADING_FAILED instead."""
+    user, exercise, session = ee_setup
+    response = ExamResponse.objects.create(
+        session=session,
+        exercise=exercise,
+        user_answer="…",
+        grading_status=ExamResponse.GRADING_PENDING,
+    )
+
+    with (
+        patch("apps.exam_prep.tasks.create_llm_router") as mock_router,
+        patch.object(grade_response, "max_retries", 0),
+    ):
+        mock_router.return_value.generate.side_effect = TimeoutError("LLM took too long")
+        result = grade_response(response.id)
+
+    assert result["error"] == "grading_failed"
+    assert "LLM took too long" in result["detail"]
     response.refresh_from_db()
     assert response.grading_status == ExamResponse.GRADING_FAILED
     assert response.grading_completed_at is not None

@@ -4,7 +4,22 @@ import {
   submitExamResponse,
   completeExamSession,
   pollExamGrading,
+  ExamGradingPollError,
 } from "../api/examPrep";
+
+const POLL_ERROR_MESSAGES = {
+  timeout: "Grading is taking longer than expected. Please try again.",
+  not_found: "Your answer wasn't found on the server. Please re-submit.",
+  server: "Our grading service is temporarily unavailable. Please try again in a moment.",
+  network: "Network error while waiting for grading. Check your connection.",
+};
+
+function pollErrorMessage(err, fallback) {
+  if (err instanceof ExamGradingPollError) {
+    return POLL_ERROR_MESSAGES[err.code] || fallback;
+  }
+  return fallback;
+}
 import { generateTTS } from "../api/media";
 import AudioPlayButton from "../components/AudioPlayButton";
 import useVoiceRecorder from "../hooks/useVoiceRecorder";
@@ -352,11 +367,14 @@ export default function ExamExercise() {
                         if (result.status === "done") {
                           setWritingGrading(result.grading || {});
                           setScore((s) => s + (result.grading?.score || 0));
+                          // Only count the question as answered on success;
+                          // otherwise the progress bar advances while the user
+                          // is stuck on the input screen.
+                          setTotalAnswered((c) => c + 1);
                         } else {
                           setError("Grading failed. Please try again.");
                         }
-                        setTotalAnswered((c) => c + 1);
-                      } catch { setError("Grading timed out. Please try again."); }
+                      } catch (err) { setError(pollErrorMessage(err, "Grading failed. Please try again.")); }
                       finally { setSubmittingWriting(false); }
                     }}
                     disabled={submittingWriting || !writingText.trim()}
@@ -466,11 +484,14 @@ export default function ExamExercise() {
                         if (result.status === "done") {
                           setSpeakingGrading(result.grading || {});
                           setScore((s) => s + (result.grading?.score || 0));
+                          // Only count the question as answered on success;
+                          // otherwise the progress bar advances while the user
+                          // is stuck on the recording screen.
+                          setTotalAnswered((c) => c + 1);
                         } else {
                           setError("Grading failed. Please try again.");
                         }
-                        setTotalAnswered((c) => c + 1);
-                      } catch { setError("Recording or grading failed."); }
+                      } catch (err) { setError(pollErrorMessage(err, "Recording or grading failed.")); }
                       finally { setSubmittingSpeaking(false); }
                     } else {
                       try { await startRecording(); } catch { setError("Microphone access required."); }

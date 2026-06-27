@@ -1,6 +1,10 @@
 import { useState, useEffect, useCallback, useRef } from "react";
 import { useParams, Link, useNavigate } from "react-router-dom";
-import { submitExamResponse, completeExamSession } from "../api/examPrep";
+import {
+  submitExamResponse,
+  completeExamSession,
+  pollExamGrading,
+} from "../api/examPrep";
 import { generateTTS } from "../api/media";
 import AudioPlayButton from "../components/AudioPlayButton";
 import useVoiceRecorder from "../hooks/useVoiceRecorder";
@@ -341,11 +345,18 @@ export default function ExamExercise() {
                       if (!writingText.trim()) return;
                       setSubmittingWriting(true);
                       try {
-                        const res = await submitExamResponse(sessionId, currentExercise.id, 0, writingText.trim());
-                        setWritingGrading(res.data.grading || {});
+                        // Backend returns 202 with a response_id, the grading
+                        // runs in Celery. Poll until done (or timeout).
+                        const submit = await submitExamResponse(sessionId, currentExercise.id, 0, writingText.trim());
+                        const result = await pollExamGrading(submit.data.response_id);
+                        if (result.status === "done") {
+                          setWritingGrading(result.grading || {});
+                          setScore((s) => s + (result.grading?.score || 0));
+                        } else {
+                          setError("Grading failed. Please try again.");
+                        }
                         setTotalAnswered((c) => c + 1);
-                        setScore((s) => s + (res.data.grading?.score || 0));
-                      } catch { setError("Grading failed."); }
+                      } catch { setError("Grading timed out. Please try again."); }
                       finally { setSubmittingWriting(false); }
                     }}
                     disabled={submittingWriting || !writingText.trim()}
@@ -449,11 +460,16 @@ export default function ExamExercise() {
                         const sttData = await sttRes.json();
                         const text = sttData.transcription || "";
                         setTranscription(text);
-                        // Submit for AI grading
-                        const res = await submitExamResponse(sessionId, currentExercise.id, 0, text);
-                        setSpeakingGrading(res.data.grading || {});
+                        // Submit for AI grading (async: 202 + poll)
+                        const submit = await submitExamResponse(sessionId, currentExercise.id, 0, text);
+                        const result = await pollExamGrading(submit.data.response_id);
+                        if (result.status === "done") {
+                          setSpeakingGrading(result.grading || {});
+                          setScore((s) => s + (result.grading?.score || 0));
+                        } else {
+                          setError("Grading failed. Please try again.");
+                        }
                         setTotalAnswered((c) => c + 1);
-                        setScore((s) => s + (res.data.grading?.score || 0));
                       } catch { setError("Recording or grading failed."); }
                       finally { setSubmittingSpeaking(false); }
                     } else {

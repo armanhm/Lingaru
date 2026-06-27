@@ -194,48 +194,12 @@ class SessionRespondView(APIView):
             result["explanation"] = question.get("explanation", "")
             return Response(result)
 
-        # AI-graded sections (EE, EO)
+        # AI-graded sections (EE, EO): persist the response in a "pending"
+        # state, queue the LLM grading as a Celery task, and return 202.
+        # The frontend polls `/grading/` on the response id until status
+        # leaves "pending".
         if session.section in ("EE", "EO"):
-            import json
-            import re
-
-            from services.llm.factory import create_llm_router
-            from services.llm.prompts import SYSTEM_PROMPTS
-
-            prompt_key = "exam_ee_grading" if session.section == "EE" else "exam_eo_grading"
-            system_prompt = SYSTEM_PROMPTS.get(prompt_key, "")
-
-            # Build the grading prompt
-            task_prompt = exercise.content.get("prompt_fr", exercise.content.get("prompt_en", ""))
-            rubric = exercise.content.get("rubric", "")
-            user_msg = (
-                f"Task: {task_prompt}\n"
-                f"{'Rubric: ' + rubric if rubric else ''}\n\n"
-                f"Student response:\n{user_answer}"
-            )
-
-            try:
-                router = create_llm_router()
-                llm_result = router.generate(
-                    messages=[{"role": "user", "content": user_msg}],
-                    system_prompt=system_prompt,
-                )
-                # Parse JSON from LLM
-                text = llm_result.content.strip()
-                text = re.sub(r"^```(?:json)?\s*", "", text)
-                text = re.sub(r"\s*```$", "", text)
-                grading = json.loads(text)
-            except Exception:
-                grading = {
-                    "score": 0,
-                    "max_score": 20,
-                    "feedback_en": "Grading failed. Please try again.",
-                    "feedback_fr": "",
-                }
-
-            ai_score = grading.get("score", 0)
-            ai_max = grading.get("max_score", 20)
-            ai_feedback = json.dumps(grading, ensure_ascii=False)
+            from apps.exam_prep.tasks import grade_response as grade_task
 
             response = ExamResponse.objects.create(
                 session=session,
@@ -243,16 +207,69 @@ class SessionRespondView(APIView):
                 question_index=question_index,
                 user_answer=user_answer,
                 is_correct=None,
-                score=ai_score,
-                max_score=ai_max,
-                ai_feedback=ai_feedback,
+                score=0,
+                max_score=20,
+                grading_status=ExamResponse.GRADING_PENDING,
+            )
+            async_result = grade_task.delay(response.id)
+            response.grading_task_id = async_result.id
+            response.save(update_fields=["grading_task_id"])
+
+            return Response(
+                {
+                    "response_id": response.id,
+                    "grading_status": ExamResponse.GRADING_PENDING,
+                    "poll_url": f"/api/exam-prep/responses/{response.id}/grading/",
+                },
+                status=status.HTTP_202_ACCEPTED,
             )
 
-            result = ResponseResultSerializer(response).data
-            result["grading"] = grading
-            return Response(result)
-
         return Response({"detail": "Unsupported section."}, status=status.HTTP_400_BAD_REQUEST)
+
+
+class ResponseGradingView(APIView):
+    """Polling endpoint for async EE/EO grading.
+
+    GET /api/exam-prep/responses/<id>/grading/
+
+    Response shape:
+      - status="pending"  → grading not done yet, poll again in ~500ms
+      - status="done"     → includes `grading` (the parsed LLM payload)
+      - status="failed"   → grading finished but the LLM output was unusable
+      - status="not_required" → CO/CE response, grading is already in `score`
+    """
+
+    permission_classes = (permissions.IsAuthenticated,)
+
+    def get(self, request, response_id):
+        try:
+            response = ExamResponse.objects.select_related("session").get(
+                id=response_id, session__user=request.user
+            )
+        except ExamResponse.DoesNotExist:
+            return Response(
+                {"detail": "Response not found."},
+                status=status.HTTP_404_NOT_FOUND,
+            )
+
+        payload = {
+            "response_id": response.id,
+            "status": response.grading_status,
+            "score": response.score,
+            "max_score": response.max_score,
+        }
+        if response.grading_status == ExamResponse.GRADING_DONE:
+            import json as _json
+
+            try:
+                payload["grading"] = (
+                    _json.loads(response.ai_feedback) if response.ai_feedback else {}
+                )
+            except _json.JSONDecodeError:
+                payload["grading"] = {}
+        elif response.grading_status == ExamResponse.GRADING_FAILED:
+            payload["detail"] = "Grading failed. Please retry the answer."
+        return Response(payload)
 
 
 class SessionCompleteView(APIView):

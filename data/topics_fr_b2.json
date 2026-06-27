@@ -1,0 +1,3262 @@
+{
+  "_meta": {
+    "language": "fr",
+    "cefr_level": "B2",
+    "title": "Lingaru Topics — Niveau B2 (Avancé)",
+    "description": "Argumenter, nuancer, débattre. Aborder des sujets abstraits et de société."
+  },
+  "topics": [
+    {
+      "name_fr": "L'éducation et le système scolaire",
+      "name_en": "Education and the school system",
+      "icon": "🎓",
+      "order": 700,
+      "difficulty_level": 4,
+      "description": "Débattre du système éducatif français, de l'égalité des chances, des réformes.",
+      "vocabulary": [
+        {
+          "french": "le système éducatif / scolaire",
+          "english": "educational / school system",
+          "gender": "m",
+          "part_of_speech": "noun",
+          "example_sentence": "Le système éducatif français est très centralisé."
+        },
+        {
+          "french": "l'enseignement (primaire, secondaire, supérieur)",
+          "english": "teaching (primary, secondary, higher)",
+          "gender": "m",
+          "part_of_speech": "noun",
+          "example_sentence": "L'enseignement supérieur est en pleine mutation."
+        },
+        {
+          "french": "l'école maternelle / primaire / élémentaire",
+          "english": "preschool / primary / elementary school",
+          "gender": "f",
+          "part_of_speech": "noun",
+          "example_sentence": "Les enfants entrent à l'école maternelle à 3 ans."
+        },
+        {
+          "french": "le collège / le lycée",
+          "english": "middle school / high school",
+          "gender": "m",
+          "part_of_speech": "noun",
+          "example_sentence": "Le collège accueille les élèves de 11 à 15 ans."
+        },
+        {
+          "french": "l'université / la fac (familier) / la faculté",
+          "english": "university / college",
+          "gender": "f",
+          "part_of_speech": "noun",
+          "example_sentence": "Elle a étudié à la faculté de droit."
+        },
+        {
+          "french": "la grande école / la classe préparatoire (prépa)",
+          "english": "elite school / prep class",
+          "gender": "f",
+          "part_of_speech": "noun",
+          "example_sentence": "Les grandes écoles forment l'élite française."
+        },
+        {
+          "french": "le baccalauréat / le bac",
+          "english": "high school diploma",
+          "gender": "m",
+          "part_of_speech": "noun",
+          "example_sentence": "Le bac est obtenu à la fin du lycée."
+        },
+        {
+          "french": "la licence / le master / le doctorat",
+          "english": "bachelor's / master's / doctorate",
+          "gender": "a",
+          "part_of_speech": "noun",
+          "example_sentence": "J'ai un master en sciences politiques."
+        },
+        {
+          "french": "le diplôme / diplômé(e) / obtenir un diplôme",
+          "english": "diploma / graduated / to graduate",
+          "gender": "m",
+          "part_of_speech": "noun",
+          "example_sentence": "Sans diplôme, l'insertion est difficile."
+        },
+        {
+          "french": "le professeur / l'enseignant(e) / l'instituteur",
+          "english": "teacher / instructor / primary teacher",
+          "gender": "a",
+          "part_of_speech": "noun",
+          "example_sentence": "Les enseignants sont en sous-effectif."
+        },
+        {
+          "french": "l'élève / l'étudiant(e)",
+          "english": "pupil / student",
+          "gender": "a",
+          "part_of_speech": "noun",
+          "example_sentence": "Les étudiants protestent contre la réforme."
+        },
+        {
+          "french": "le programme scolaire / la matière",
+          "english": "curriculum / subject",
+          "gender": "a",
+          "part_of_speech": "noun",
+          "example_sentence": "Le programme est trop chargé."
+        },
+        {
+          "french": "la note / la moyenne / l'évaluation",
+          "english": "grade / average / assessment",
+          "gender": "a",
+          "part_of_speech": "noun",
+          "example_sentence": "Sa moyenne dépasse 15/20."
+        },
+        {
+          "french": "redoubler / le redoublement",
+          "english": "to repeat a year / grade repetition",
+          "gender": "m",
+          "part_of_speech": "verb",
+          "example_sentence": "Le redoublement n'est plus systématique."
+        },
+        {
+          "french": "l'orientation scolaire / l'orientation professionnelle",
+          "english": "academic / career guidance",
+          "gender": "f",
+          "part_of_speech": "noun",
+          "example_sentence": "L'orientation se décide en fin de troisième."
+        },
+        {
+          "french": "l'égalité des chances / la méritocratie",
+          "english": "equal opportunity / meritocracy",
+          "gender": "f",
+          "part_of_speech": "noun",
+          "example_sentence": "L'égalité des chances reste un idéal."
+        },
+        {
+          "french": "la mixité sociale / la ségrégation scolaire",
+          "english": "social mixing / school segregation",
+          "gender": "f",
+          "part_of_speech": "noun",
+          "example_sentence": "La mixité sociale recule dans certains quartiers."
+        },
+        {
+          "french": "l'échec scolaire / le décrochage scolaire",
+          "english": "academic failure / dropping out",
+          "gender": "m",
+          "part_of_speech": "noun",
+          "example_sentence": "Le décrochage scolaire touche 8 % des jeunes."
+        },
+        {
+          "french": "la réforme / réformer",
+          "english": "reform / to reform",
+          "gender": "f",
+          "part_of_speech": "noun",
+          "example_sentence": "Cette réforme est très contestée."
+        },
+        {
+          "french": "l'apprentissage / l'alternance",
+          "english": "apprenticeship / work-study",
+          "gender": "m",
+          "part_of_speech": "noun",
+          "example_sentence": "L'apprentissage favorise l'insertion."
+        },
+        {
+          "french": "le savoir / les connaissances / les compétences",
+          "english": "knowledge / skills",
+          "gender": "a",
+          "part_of_speech": "noun",
+          "example_sentence": "Le savoir est notre meilleure ressource."
+        },
+        {
+          "french": "l'autonomie / la pensée critique",
+          "english": "autonomy / critical thinking",
+          "gender": "f",
+          "part_of_speech": "noun",
+          "example_sentence": "L'école doit former à la pensée critique."
+        },
+        {
+          "french": "la laïcité / l'école laïque",
+          "english": "secularism / secular school",
+          "gender": "f",
+          "part_of_speech": "noun",
+          "example_sentence": "La laïcité est un pilier de l'école française."
+        },
+        {
+          "french": "le harcèlement scolaire / le bizutage",
+          "english": "school bullying / hazing",
+          "gender": "m",
+          "part_of_speech": "noun",
+          "example_sentence": "Le harcèlement scolaire est devenu une priorité."
+        },
+        {
+          "french": "l'illettrisme / l'analphabétisme",
+          "english": "functional illiteracy / illiteracy",
+          "gender": "m",
+          "part_of_speech": "noun",
+          "example_sentence": "L'illettrisme touche encore 7 % des adultes."
+        }
+      ],
+      "phrases": [
+        {
+          "fr": "L'école devrait/doit former des citoyens.",
+          "en": "School should/must train citizens.",
+          "note": "Common debate framing — modal mood matters."
+        },
+        {
+          "fr": "Il faut repenser le système.",
+          "en": "We need to rethink the system.",
+          "note": "Useful debate opener."
+        },
+        {
+          "fr": "À mon sens, le système privilégie les classes aisées.",
+          "en": "In my view, the system favors the wealthy.",
+          "note": "Nuanced opinion."
+        },
+        {
+          "fr": "On ne peut pas réduire l'éducation à un classement.",
+          "en": "We can't reduce education to a ranking.",
+          "note": "Strong critique."
+        },
+        {
+          "fr": "L'enseignant n'a plus l'autorité qu'il avait avant.",
+          "en": "Teachers no longer have the authority they once had.",
+          "note": "Recurring complaint in France."
+        },
+        {
+          "fr": "L'orientation se fait trop tôt.",
+          "en": "Career guidance happens too early.",
+          "note": "Common critique of French system."
+        },
+        {
+          "fr": "Cela favorise la reproduction sociale.",
+          "en": "This perpetuates social reproduction.",
+          "note": "Bourdieu reference — useful at B2."
+        },
+        {
+          "fr": "Si je pouvais changer une chose, ce serait...",
+          "en": "If I could change one thing, it would be...",
+          "note": "Conditional — useful for argumentation."
+        },
+        {
+          "fr": "Les écoles privées creusent les inégalités.",
+          "en": "Private schools widen inequalities.",
+          "note": "Often-heard argument."
+        },
+        {
+          "fr": "On manque cruellement d'enseignants.",
+          "en": "We're cruelly short of teachers.",
+          "note": "Strong adverb emphasis."
+        },
+        {
+          "fr": "Les programmes sont déconnectés de la réalité.",
+          "en": "The curricula are disconnected from reality.",
+          "note": "Common reform-debate phrase."
+        },
+        {
+          "fr": "Il est urgent de revaloriser le métier d'enseignant.",
+          "en": "We urgently need to revalue teaching as a profession.",
+          "note": "Formal register, useful in essays."
+        }
+      ],
+      "reading": {
+        "title": "Le bac à l'épreuve du temps",
+        "content_fr": "Créé sous Napoléon Ier en 1808, le **baccalauréat** est l'un des plus vieux examens du monde. Pendant deux siècles, il a structuré la jeunesse française : le « bac », c'est le seuil entre l'adolescence et l'âge adulte, entre le lycée et l'université, entre l'élève et le citoyen.\n\nMais en 2026, ce monument vacille. Sa **réforme**, lancée en 2019, l'a transformé en profondeur. Fini le grand oral général, fini les épreuves « couperet » de juin pour toutes les matières : place au **contrôle continu**, qui compte désormais pour 40 % de la note finale. Le bac n'est plus un examen unique, mais une longue série d'évaluations étalées sur deux ans.\n\nLes partisans de la réforme y voient un progrès : moins de stress, plus de réalisme, des compétences mieux évaluées. « Un examen final, c'est une loterie », explique une enseignante de Marseille. « Le contrôle continu valorise le travail régulier. »\n\nLes critiques, eux, **dénoncent** une **dérégulation**. Les notes du contrôle continu varient d'un lycée à l'autre, parfois de 2 ou 3 points sur 20. « Mon bac n'a plus la même valeur que le bac de ma sœur », s'inquiète Lucas, 17 ans. Le **diplôme national** devient en pratique un **diplôme local**, dépendant de l'établissement, de ses pratiques de notation, voire de la réputation que les parents veulent lui donner.\n\nUne autre critique, plus profonde encore, vise la philosophie du nouveau bac : en supprimant le **grand oral** d'autrefois et certaines épreuves écrites longues, on aurait, dit-on, sacrifié l'**esprit de synthèse**, la capacité à argumenter sur la durée. Les universités s'inquiètent : les bacheliers d'aujourd'hui auraient plus de mal à rédiger une dissertation de quatre heures.\n\nFaut-il **revenir en arrière** ? Sans doute pas. Mais il faut sans doute **réformer la réforme** : harmoniser les notations entre lycées, restaurer une part importante d'épreuves nationales anonymes, et redonner sa place à l'**oral long** — épreuve civique par excellence, où l'élève apprend à défendre une idée devant un jury.\n\nLe bac doit rester ce qu'il a toujours été : non un simple diplôme, mais un **rite de passage** vers la pensée libre.",
+        "content_en": "Created under Napoleon I in 1808, the baccalauréat is one of the world's oldest exams. For two centuries, it has structured French youth: the 'bac' is the threshold between adolescence and adulthood, between high school and university, between pupil and citizen.\n\nBut in 2026, this monument is wavering. Its reform, launched in 2019, transformed it deeply. Gone is the great general oral, gone are the June 'guillotine' exams for every subject: now comes continuous assessment, which counts for 40 % of the final grade. The bac is no longer a single exam but a long series of evaluations spread over two years.\n\nReform supporters see it as progress: less stress, more realism, better-evaluated skills. 'A final exam is a lottery,' explains a teacher from Marseille. 'Continuous assessment values regular work.'\n\nCritics, however, denounce a deregulation. Continuous grades vary between high schools, sometimes by 2 or 3 points out of 20. 'My bac no longer has the same value as my sister's,' worries Lucas, 17. The national diploma is becoming in practice a local diploma, depending on the school, its grading practices, even the reputation parents want to give it.\n\nA deeper criticism targets the philosophy of the new bac: by removing the old grand oral and certain long written exams, one would have, it's said, sacrificed the spirit of synthesis, the ability to argue over time. Universities worry: today's graduates would have more trouble writing a four-hour dissertation.\n\nShould we go back? Probably not. But we should probably reform the reform: harmonize grading between schools, restore an important share of anonymous national exams, and give the long oral exam its place again — a civic exam par excellence, where the student learns to defend an idea before a jury.\n\nThe bac must remain what it has always been: not a simple diploma, but a rite of passage to free thought.",
+        "comprehension_questions": [
+          {
+            "q": "Quand le baccalauréat a-t-il été créé et par qui ?",
+            "a": "En 1808, sous Napoléon Ier."
+          },
+          {
+            "q": "Quel pourcentage de la note vient désormais du contrôle continu ?",
+            "a": "40 %."
+          },
+          {
+            "q": "Quelle est la principale critique du contrôle continu ?",
+            "a": "Les notes varient d'un lycée à l'autre, ce qui rend le diplôme « local » plutôt que national."
+          },
+          {
+            "q": "Quelles solutions l'auteur propose-t-il ?",
+            "a": "Harmoniser les notations entre lycées, restaurer des épreuves nationales anonymes, redonner sa place à l'oral long."
+          }
+        ]
+      },
+      "cultural_note": "Le **baccalauréat** est à la fois un diplôme et un **rite de passage** quasi-national. Chaque année en juin, les épreuves font la une des journaux ; les sujets de philosophie, en particulier, sont commentés au-delà du monde scolaire. Le **taux de réussite** dépasse aujourd'hui 90 %, contre 60 % en 1980 — d'où le débat sur la « dévalorisation » du diplôme. À distinguer : au Québec, l'équivalent est le **DES** (diplôme d'études secondaires), suivi du **CÉGEP** (Collège d'enseignement général et professionnel) — deux ans entre lycée et université, propres au Québec. La France compte aussi un système parallèle d'**élite** : les **classes préparatoires** (deux ans après le bac) qui mènent aux **grandes écoles** (Polytechnique, ENS, Sciences Po, HEC) — chemin que ne connaît aucun autre pays sous cette forme."
+    },
+    {
+      "name_fr": "La politique et la démocratie",
+      "name_en": "Politics and democracy",
+      "icon": "🏛️",
+      "order": 710,
+      "difficulty_level": 4,
+      "description": "Parler des institutions, des élections, des partis, et des grands débats politiques.",
+      "vocabulary": [
+        {
+          "french": "la politique / un homme / une femme politique",
+          "english": "politics / male / female politician",
+          "gender": "f",
+          "part_of_speech": "noun",
+          "example_sentence": "Cette femme politique est très respectée."
+        },
+        {
+          "french": "la démocratie / démocratique",
+          "english": "democracy / democratic",
+          "gender": "f",
+          "part_of_speech": "noun",
+          "example_sentence": "La démocratie demande un effort constant."
+        },
+        {
+          "french": "la République / républicain(e)",
+          "english": "Republic / republican",
+          "gender": "f",
+          "part_of_speech": "noun",
+          "example_sentence": "La France est une république depuis 1870."
+        },
+        {
+          "french": "l'État / le gouvernement / l'administration",
+          "english": "State / government / administration",
+          "gender": "m",
+          "part_of_speech": "noun",
+          "example_sentence": "L'État joue un rôle central en France."
+        },
+        {
+          "french": "le président / la présidente / la présidence",
+          "english": "president / presidency",
+          "gender": "a",
+          "part_of_speech": "noun",
+          "example_sentence": "Le président est élu pour cinq ans."
+        },
+        {
+          "french": "le premier ministre / la première ministre",
+          "english": "prime minister",
+          "gender": "a",
+          "part_of_speech": "noun",
+          "example_sentence": "Le premier ministre dirige le gouvernement."
+        },
+        {
+          "french": "le député / la députée / l'Assemblée nationale",
+          "english": "MP / National Assembly",
+          "gender": "a",
+          "part_of_speech": "noun",
+          "example_sentence": "Les députés siègent à l'Assemblée nationale."
+        },
+        {
+          "french": "le sénateur / la sénatrice / le Sénat",
+          "english": "senator / Senate",
+          "gender": "a",
+          "part_of_speech": "noun",
+          "example_sentence": "Le Sénat représente les territoires."
+        },
+        {
+          "french": "le ministre / le ministère",
+          "english": "minister / ministry",
+          "gender": "a",
+          "part_of_speech": "noun",
+          "example_sentence": "Le ministre de l'Économie a démissionné."
+        },
+        {
+          "french": "l'élection / les élections / élire / voter",
+          "english": "election / to elect / to vote",
+          "gender": "f",
+          "part_of_speech": "noun",
+          "example_sentence": "Les élections législatives ont lieu en juin."
+        },
+        {
+          "french": "le suffrage universel / le scrutin",
+          "english": "universal suffrage / ballot",
+          "gender": "m",
+          "part_of_speech": "noun",
+          "example_sentence": "Le suffrage universel direct date de 1962."
+        },
+        {
+          "french": "le parti politique / le mouvement / la coalition",
+          "english": "political party / movement / coalition",
+          "gender": "a",
+          "part_of_speech": "noun",
+          "example_sentence": "Aucun parti n'a la majorité absolue."
+        },
+        {
+          "french": "la gauche / la droite / le centre / l'extrême",
+          "english": "left / right / center / extreme",
+          "gender": "a",
+          "part_of_speech": "noun",
+          "example_sentence": "L'extrême droite progresse en Europe."
+        },
+        {
+          "french": "le candidat / la candidate / la candidature",
+          "english": "candidate / candidacy",
+          "gender": "a",
+          "part_of_speech": "noun",
+          "example_sentence": "Sa candidature a surpris."
+        },
+        {
+          "french": "la campagne électorale / le débat",
+          "english": "election campaign / debate",
+          "gender": "a",
+          "part_of_speech": "noun",
+          "example_sentence": "La campagne a été virulente."
+        },
+        {
+          "french": "le sondage / les intentions de vote",
+          "english": "poll / voting intentions",
+          "gender": "m",
+          "part_of_speech": "noun",
+          "example_sentence": "Le dernier sondage est cinglant."
+        },
+        {
+          "french": "l'opposition / la majorité",
+          "english": "opposition / majority",
+          "gender": "f",
+          "part_of_speech": "noun",
+          "example_sentence": "Le gouvernement n'a pas la majorité."
+        },
+        {
+          "french": "la loi / la législation / le projet de loi",
+          "english": "law / legislation / bill",
+          "gender": "f",
+          "part_of_speech": "noun",
+          "example_sentence": "Cette loi vient d'être adoptée."
+        },
+        {
+          "french": "la Constitution / constitutionnel(le)",
+          "english": "Constitution / constitutional",
+          "gender": "f",
+          "part_of_speech": "noun",
+          "example_sentence": "La Cinquième République date de 1958."
+        },
+        {
+          "french": "le pouvoir (exécutif / législatif / judiciaire)",
+          "english": "power (executive / legislative / judicial)",
+          "gender": "m",
+          "part_of_speech": "noun",
+          "example_sentence": "La séparation des pouvoirs est essentielle."
+        },
+        {
+          "french": "la manifestation / manifester / le mouvement social",
+          "english": "demonstration / to demonstrate / social movement",
+          "gender": "f",
+          "part_of_speech": "noun",
+          "example_sentence": "Les Français manifestent souvent."
+        },
+        {
+          "french": "la grève / faire grève / le gréviste",
+          "english": "strike / to strike / striker",
+          "gender": "f",
+          "part_of_speech": "noun",
+          "example_sentence": "Les cheminots sont en grève."
+        },
+        {
+          "french": "le débat public / l'opinion publique",
+          "english": "public debate / public opinion",
+          "gender": "m",
+          "part_of_speech": "noun",
+          "example_sentence": "L'opinion publique est divisée."
+        },
+        {
+          "french": "la liberté d'expression / les libertés fondamentales",
+          "english": "freedom of expression / fundamental freedoms",
+          "gender": "f",
+          "part_of_speech": "noun",
+          "example_sentence": "La liberté d'expression a des limites."
+        },
+        {
+          "french": "la corruption / le scandale / la transparence",
+          "english": "corruption / scandal / transparency",
+          "gender": "f",
+          "part_of_speech": "noun",
+          "example_sentence": "Le scandale a éclaboussé le ministère."
+        }
+      ],
+      "phrases": [
+        {
+          "fr": "Je ne fais plus confiance aux politiques.",
+          "en": "I no longer trust politicians.",
+          "note": "Common sentiment — note 'les politiques' = politicians."
+        },
+        {
+          "fr": "Tous pourris / tous les mêmes.",
+          "en": "They're all crooked / all the same.",
+          "note": "Cynical phrase, very common in informal debates."
+        },
+        {
+          "fr": "Il faut voter, même blanc.",
+          "en": "You have to vote, even blank.",
+          "note": "Civic-duty phrase."
+        },
+        {
+          "fr": "Le clivage gauche-droite n'a plus de sens.",
+          "en": "The left-right divide no longer makes sense.",
+          "note": "Recurring B2 debate."
+        },
+        {
+          "fr": "La démocratie est en crise.",
+          "en": "Democracy is in crisis.",
+          "note": "Standard analytical framing."
+        },
+        {
+          "fr": "On ne peut pas réduire un programme à un slogan.",
+          "en": "You can't reduce a program to a slogan.",
+          "note": "Critical thinking phrase."
+        },
+        {
+          "fr": "Je suis pour / contre cette réforme.",
+          "en": "I'm for / against this reform.",
+          "note": "Direct opinion."
+        },
+        {
+          "fr": "Cela soulève une vraie question.",
+          "en": "This raises a real question.",
+          "note": "Useful for nuancing."
+        },
+        {
+          "fr": "Cela me paraît démagogique.",
+          "en": "It seems demagogic to me.",
+          "note": "Strong political critique."
+        },
+        {
+          "fr": "Quel est ton bord politique ?",
+          "en": "What's your political leaning?",
+          "note": "Common question among friends."
+        },
+        {
+          "fr": "Je ne me reconnais dans aucun parti.",
+          "en": "I don't identify with any party.",
+          "note": "Frequent today."
+        },
+        {
+          "fr": "Il faut redonner du pouvoir aux citoyens.",
+          "en": "We need to give power back to citizens.",
+          "note": "Reform discourse."
+        }
+      ],
+      "reading": {
+        "title": "Les abstentionnistes : ces silencieux qui parlent fort",
+        "content_fr": "Au second tour des dernières élections législatives françaises, **plus d'un électeur sur trois** s'est abstenu. Le chiffre est devenu si banal que les journalistes oublient parfois de le commenter. Pourtant, il est l'un des indicateurs les plus alarmants de notre démocratie.\n\nQui sont ces abstentionnistes ? **Une mosaïque** plutôt qu'un bloc. Il y a d'abord les **jeunes**, souvent surreprésentés : moins de 50 % des 18-25 ans votent régulièrement. Ils ne se reconnaissent dans aucun parti, trouvent les programmes déconnectés, perçoivent les politiques comme des **professionnels lointains**. Il y a ensuite les **classes populaires**, dans les zones rurales et les banlieues, qui ont **rompu le contrat** avec une République qu'ils estiment ne plus rien leur offrir. Il y a enfin les **désillusionnés**, anciens militants devenus cyniques après plusieurs alternances sans changement perçu.\n\nFace à eux, les **abstentionnistes \"actifs\"** — ceux qui s'abstiennent par stratégie ou par protestation. « Mon vote blanc n'est pas compté ; mon abstention, elle, fait du bruit », explique Sarah, 32 ans, professeure d'histoire. Pour eux, **ne pas voter, c'est voter** — voter contre le système.\n\nCe phénomène **fragilise la légitimité** des élus. Un président élu avec 27 % des inscrits — ce qui devient courant — a-t-il vraiment le « mandat » qu'il prétend ? À l'inverse, les forces extrêmes profitent paradoxalement de l'abstention : leur électorat, lui, vote massivement, ce qui leur donne un poids relatif amplifié.\n\nPlusieurs solutions sont régulièrement proposées : **vote obligatoire** (comme en Belgique), **reconnaissance du vote blanc**, **proportionnelle** plus large, **tirage au sort de citoyens** pour certaines décisions. Aucune n'est sans inconvénient.\n\nMais une chose est claire : **on ne sauvera pas la démocratie sans redonner aux citoyens la sensation que leur voix compte.** L'abstentionniste n'est pas un mauvais citoyen — c'est, le plus souvent, un citoyen blessé, déçu, désorienté. C'est à la démocratie de **regagner sa confiance**, non l'inverse.",
+        "content_en": "In the second round of the latest French legislative elections, more than one in three voters abstained. The figure has become so banal that journalists sometimes forget to comment on it. Yet it is one of the most alarming indicators of our democracy.\n\nWho are these abstentionists? A mosaic rather than a bloc. First, the young, often overrepresented: fewer than 50 % of 18-25-year-olds vote regularly. They identify with no party, find programs disconnected, perceive politicians as distant professionals. Then come the working classes, in rural areas and the banlieues, who have broken the contract with a Republic they feel no longer offers them anything. Finally, the disillusioned — former activists who became cynical after several alternations without perceived change.\n\nFacing them are 'active' abstentionists — those who abstain strategically or in protest. 'My blank vote isn't counted; my abstention, on the other hand, makes noise,' explains Sarah, 32, a history teacher. For them, not voting is voting — voting against the system.\n\nThis phenomenon weakens elected officials' legitimacy. A president elected by 27 % of registered voters — increasingly common — does he really have the 'mandate' he claims? Conversely, extreme forces paradoxically benefit from abstention: their voters vote massively, amplifying their relative weight.\n\nSeveral solutions are regularly proposed: mandatory voting (as in Belgium), recognition of blank votes, broader proportional representation, citizens drawn by lot for certain decisions. None is without drawback.\n\nBut one thing is clear: we won't save democracy without giving citizens the sense that their voice counts. The abstentionist isn't a bad citizen — they are, most often, a wounded, disappointed, disoriented citizen. It's up to democracy to regain their trust, not the other way around.",
+        "comprehension_questions": [
+          {
+            "q": "Quelle est la part d'abstention au second tour des dernières législatives ?",
+            "a": "Plus d'un électeur sur trois (plus de 33 %)."
+          },
+          {
+            "q": "Quels sont les trois groupes principaux d'abstentionnistes décrits ?",
+            "a": "Les jeunes, les classes populaires (rurales et banlieues), et les désillusionnés."
+          },
+          {
+            "q": "Pourquoi l'abstention bénéficie-t-elle paradoxalement aux extrêmes ?",
+            "a": "Parce que leur électorat vote massivement, ce qui amplifie leur poids relatif."
+          },
+          {
+            "q": "Quelles solutions sont mentionnées par l'auteur ?",
+            "a": "Vote obligatoire, reconnaissance du vote blanc, proportionnelle, tirage au sort de citoyens."
+          }
+        ]
+      },
+      "cultural_note": "La **Cinquième République** (1958, voulue par De Gaulle) donne au **président** un pouvoir exceptionnel — souvent qualifié de « monarchie républicaine ». Élu au **suffrage universel direct** depuis 1962, il nomme le Premier ministre, peut dissoudre l'Assemblée, et préside la Défense. Les élections clés : **présidentielle** (tous les 5 ans), **législatives** (députés), **européennes**, **municipales**, **régionales**. Les **partis traditionnels** (PS et LR) se sont effondrés depuis 2017 ; le paysage est désormais structuré autour de trois pôles : la **gauche** (NFP, Insoumis, Verts, PS), le **centre** (Renaissance/Macronie), et l'**extrême droite** (RN). Au Québec/Canada : régime parlementaire à l'anglaise, premier ministre élu indirectement, monarchie constitutionnelle — différence radicale avec le système français présidentiel."
+    },
+    {
+      "name_fr": "L'économie et le monde du travail",
+      "name_en": "Economy and the world of work",
+      "icon": "📊",
+      "order": 720,
+      "difficulty_level": 4,
+      "description": "Comprendre l'économie, la croissance, le chômage, et les transformations du travail.",
+      "vocabulary": [
+        {
+          "french": "l'économie / économique",
+          "english": "economy / economic",
+          "gender": "f",
+          "part_of_speech": "noun",
+          "example_sentence": "L'économie française est diversifiée."
+        },
+        {
+          "french": "la croissance / la récession / la crise",
+          "english": "growth / recession / crisis",
+          "gender": "f",
+          "part_of_speech": "noun",
+          "example_sentence": "La croissance ralentit en zone euro."
+        },
+        {
+          "french": "le PIB (produit intérieur brut) / la richesse",
+          "english": "GDP / wealth",
+          "gender": "m",
+          "part_of_speech": "noun",
+          "example_sentence": "Le PIB a augmenté de 1 %."
+        },
+        {
+          "french": "l'inflation / la déflation / le pouvoir d'achat",
+          "english": "inflation / deflation / purchasing power",
+          "gender": "f",
+          "part_of_speech": "noun",
+          "example_sentence": "L'inflation érode le pouvoir d'achat."
+        },
+        {
+          "french": "le chômage / le chômeur / la chômeuse",
+          "english": "unemployment / unemployed person",
+          "gender": "m",
+          "part_of_speech": "noun",
+          "example_sentence": "Le taux de chômage est à 7 %."
+        },
+        {
+          "french": "le marché du travail / l'emploi",
+          "english": "labor market / employment",
+          "gender": "m",
+          "part_of_speech": "noun",
+          "example_sentence": "Le marché du travail se tend."
+        },
+        {
+          "french": "l'entreprise (privée, publique, multinationale)",
+          "english": "company (private, public, multinational)",
+          "gender": "f",
+          "part_of_speech": "noun",
+          "example_sentence": "Cette multinationale a 50 000 employés."
+        },
+        {
+          "french": "la PME / la TPE / la start-up",
+          "english": "SME / micro-business / startup",
+          "gender": "a",
+          "part_of_speech": "noun",
+          "example_sentence": "Les PME représentent 99 % des entreprises."
+        },
+        {
+          "french": "l'industrie / le secteur tertiaire / les services",
+          "english": "industry / tertiary sector / services",
+          "gender": "f",
+          "part_of_speech": "noun",
+          "example_sentence": "L'industrie française a beaucoup décliné."
+        },
+        {
+          "french": "la mondialisation / la globalisation",
+          "english": "globalization",
+          "gender": "f",
+          "part_of_speech": "noun",
+          "example_sentence": "La mondialisation rebat les cartes."
+        },
+        {
+          "french": "la délocalisation / la relocalisation",
+          "english": "offshoring / reshoring",
+          "gender": "f",
+          "part_of_speech": "noun",
+          "example_sentence": "La relocalisation revient à la mode."
+        },
+        {
+          "french": "l'investissement / investir / le capital",
+          "english": "investment / to invest / capital",
+          "gender": "m",
+          "part_of_speech": "noun",
+          "example_sentence": "L'investissement public stagne."
+        },
+        {
+          "french": "la dette publique / le déficit / l'excédent",
+          "english": "public debt / deficit / surplus",
+          "gender": "f",
+          "part_of_speech": "noun",
+          "example_sentence": "La dette dépasse 110 % du PIB."
+        },
+        {
+          "french": "l'impôt / la fiscalité / le fiscal",
+          "english": "tax / taxation / fiscal",
+          "gender": "m",
+          "part_of_speech": "noun",
+          "example_sentence": "La fiscalité française est complexe."
+        },
+        {
+          "french": "le salaire / le SMIC / la rémunération",
+          "english": "salary / minimum wage / compensation",
+          "gender": "m",
+          "part_of_speech": "noun",
+          "example_sentence": "Le SMIC a été revalorisé en janvier."
+        },
+        {
+          "french": "le CDI / le CDD / l'intérim / le freelance",
+          "english": "permanent / fixed-term / temp / freelance contract",
+          "gender": "m",
+          "part_of_speech": "noun",
+          "example_sentence": "Il a enfin décroché un CDI."
+        },
+        {
+          "french": "le télétravail / le travail hybride",
+          "english": "remote work / hybrid work",
+          "gender": "m",
+          "part_of_speech": "noun",
+          "example_sentence": "Le télétravail s'est généralisé."
+        },
+        {
+          "french": "le burn-out / l'épuisement professionnel",
+          "english": "burnout / professional exhaustion",
+          "gender": "m",
+          "part_of_speech": "noun",
+          "example_sentence": "Le burn-out touche tous les secteurs."
+        },
+        {
+          "french": "la précarité / l'ubérisation / la flexibilité",
+          "english": "precarity / uberization / flexibility",
+          "gender": "f",
+          "part_of_speech": "noun",
+          "example_sentence": "L'ubérisation crée de la précarité."
+        },
+        {
+          "french": "le syndicat / le syndicaliste / la négociation",
+          "english": "union / unionist / negotiation",
+          "gender": "m",
+          "part_of_speech": "noun",
+          "example_sentence": "Les syndicats appellent à la grève."
+        },
+        {
+          "french": "le patronat / le MEDEF / le grand patron",
+          "english": "employers / French employers' federation / boss",
+          "gender": "m",
+          "part_of_speech": "noun",
+          "example_sentence": "Le patronat refuse cette proposition."
+        },
+        {
+          "french": "la productivité / la compétitivité",
+          "english": "productivity / competitiveness",
+          "gender": "f",
+          "part_of_speech": "noun",
+          "example_sentence": "La productivité française reste élevée."
+        },
+        {
+          "french": "l'innovation / la disruption / la transformation numérique",
+          "english": "innovation / disruption / digital transformation",
+          "gender": "f",
+          "part_of_speech": "noun",
+          "example_sentence": "L'innovation est notre seul avenir."
+        },
+        {
+          "french": "la transition (écologique / énergétique / numérique)",
+          "english": "(ecological/energy/digital) transition",
+          "gender": "f",
+          "part_of_speech": "noun",
+          "example_sentence": "La transition écologique coûte cher."
+        },
+        {
+          "french": "le pouvoir d'achat / la consommation des ménages",
+          "english": "purchasing power / household consumption",
+          "gender": "m",
+          "part_of_speech": "noun",
+          "example_sentence": "Le pouvoir d'achat est au cœur du débat."
+        }
+      ],
+      "phrases": [
+        {
+          "fr": "Le travail ne paie plus comme avant.",
+          "en": "Work doesn't pay like it used to.",
+          "note": "Common complaint."
+        },
+        {
+          "fr": "On ne peut pas tout attendre de l'État.",
+          "en": "You can't expect everything from the State.",
+          "note": "Liberal-leaning argument."
+        },
+        {
+          "fr": "L'État doit protéger les plus faibles.",
+          "en": "The State must protect the weakest.",
+          "note": "Social-leaning argument."
+        },
+        {
+          "fr": "C'est le marché qui décide.",
+          "en": "It's the market that decides.",
+          "note": "Liberal framing."
+        },
+        {
+          "fr": "Les inégalités se creusent.",
+          "en": "Inequalities are widening.",
+          "note": "Recurring B2 phrase."
+        },
+        {
+          "fr": "Cette politique économique va dans le mur.",
+          "en": "This economic policy is heading for a wall.",
+          "note": "Strong critique."
+        },
+        {
+          "fr": "Il faut investir dans l'avenir.",
+          "en": "We must invest in the future.",
+          "note": "Common political talking point."
+        },
+        {
+          "fr": "Le travail n'est plus une valeur centrale.",
+          "en": "Work is no longer a central value.",
+          "note": "Sociological observation."
+        },
+        {
+          "fr": "On valorise le bien-être au travail.",
+          "en": "We value workplace well-being.",
+          "note": "Modern HR phrase."
+        },
+        {
+          "fr": "Les jeunes générations ont d'autres priorités.",
+          "en": "Young generations have other priorities.",
+          "note": "Sociological."
+        },
+        {
+          "fr": "C'est un sacrifice qu'on impose aux salariés.",
+          "en": "It's a sacrifice imposed on employees.",
+          "note": "Union framing."
+        },
+        {
+          "fr": "L'économie ne peut pas tout.",
+          "en": "The economy can't do everything.",
+          "note": "Useful for humanistic arguments."
+        }
+      ],
+      "reading": {
+        "title": "La semaine de 4 jours : utopie ou avenir du travail ?",
+        "content_fr": "Imaginez : vous travaillez **lundi, mardi, mercredi, jeudi**. Vendredi, vous êtes chez vous. Pas en télétravail — **en repos**. Et votre salaire reste identique.\n\nC'est l'expérimentation menée par 61 entreprises britanniques en 2022, et reproduite depuis dans plusieurs pays européens, dont la France. Les résultats sont **étonnants**. Quasi-unanimes : **92 % des entreprises** participantes ont décidé de conserver la semaine de 4 jours après la phase d'essai. Les salariés y trouvent leur compte (santé mentale en hausse, équilibre vie pro/vie perso restauré). Mais surtout — c'est l'argument décisif pour les chefs d'entreprise — **la productivité n'a pas baissé**. Dans certains cas, elle a même légèrement augmenté.\n\nComment expliquer ce paradoxe ? Plusieurs facteurs. D'abord, le **resserrement du temps** : on supprime les réunions inutiles, on découpe les journées différemment, on évite les pauses dilatoires. Ensuite, les **employés reposés** sont plus créatifs, font moins d'erreurs, prennent moins de congés maladie. Enfin, **l'attractivité de l'employeur** explose : 88 % des candidats préfèrent une entreprise en semaine de 4 jours, à salaire égal.\n\nMais le modèle a aussi **ses limites**. Tous les métiers ne s'y prêtent pas. Une caissière, un médecin urgentiste, un chauffeur de bus ne peuvent pas \"comprimer leur productivité\" pour faire le même travail en 32 heures. La semaine de 4 jours convient aux métiers **flexibles** — bureaux, services, ingénierie — bien moins aux métiers d'**exécution** ou de **service public** où la présence est valorisée pour elle-même.\n\nAutre objection : dans certaines entreprises, les 4 jours sont devenus des **jours plus longs** (10h au lieu de 8h). Le gain réel devient discutable. Et certains employés rapportent une **intensification du stress** sur les jours travaillés.\n\nFaut-il alors généraliser ? Sans doute pas par décret. Mais l'expérimentation montre quelque chose de profond : le **modèle des 35 heures sur 5 jours**, hérité du XXe siècle, n'est pas l'unique manière d'organiser le travail moderne. Et si l'avenir, ce n'était pas de travailler moins **par jour**, mais de travailler **moins de jours** ?",
+        "content_en": "Imagine: you work Monday, Tuesday, Wednesday, Thursday. Friday, you're at home. Not remote-working — at rest. And your salary stays the same.\n\nThis was the experiment run by 61 British companies in 2022, since reproduced in several European countries, including France. The results are astonishing. Nearly unanimous: 92 % of participating companies decided to keep the 4-day week after the trial. Employees find it works (better mental health, restored work/life balance). But above all — the decisive argument for company heads — productivity didn't drop. In some cases, it even slightly rose.\n\nHow to explain this paradox? Several factors. First, time compression: useless meetings are dropped, days are structured differently, dilatory breaks are avoided. Then rested employees are more creative, make fewer mistakes, take fewer sick days. Finally, employer attractiveness explodes: 88 % of candidates prefer a 4-day-week company at equal salary.\n\nBut the model also has its limits. Not all jobs lend themselves to it. A cashier, an ER doctor, a bus driver can't 'compress their productivity' to do the same work in 32 hours. The 4-day week suits flexible jobs — offices, services, engineering — far less the execution or public-service jobs where presence is valued for itself.\n\nAnother objection: in some companies, the 4 days have become longer days (10h instead of 8h). The real gain becomes questionable. And some employees report intensified stress on workdays.\n\nShould we generalize? Probably not by decree. But the experiment shows something deep: the 35-hour-5-day model, inherited from the 20th century, isn't the only way to organize modern work. What if the future wasn't to work less per day, but fewer days?",
+        "comprehension_questions": [
+          {
+            "q": "Quel pourcentage d'entreprises britanniques a conservé la semaine de 4 jours après l'essai ?",
+            "a": "92 %."
+          },
+          {
+            "q": "Pourquoi la productivité n'a-t-elle pas chuté ?",
+            "a": "Resserrement du temps, employés reposés plus créatifs, moins de congés maladie."
+          },
+          {
+            "q": "Pour quels types de métiers le modèle est-il moins adapté ?",
+            "a": "Les métiers d'exécution ou de service public (caissière, médecin urgentiste, chauffeur)."
+          },
+          {
+            "q": "Quelle est l'objection principale au modèle des « 4 jours plus longs » ?",
+            "a": "Le gain réel devient discutable et le stress peut s'intensifier sur les jours travaillés."
+          }
+        ]
+      },
+      "cultural_note": "La France a adopté les **35 heures hebdomadaires** en 2000 (loi Aubry) — une exception mondiale qui suscite encore des débats. Le **SMIC** (Salaire minimum interprofessionnel de croissance) est revalorisé chaque année, et compte parmi les plus élevés au monde. Le **modèle social français** repose sur une **forte protection** des salariés (CDI difficile à rompre, indemnités de licenciement importantes, allocations chômage généreuses), mais cela rend le marché du travail **rigide** — d'où un chômage structurel autour de 7-8 %. L'**ubérisation** (Uber, Deliveroo) a créé une nouvelle classe de travailleurs indépendants précaires, mal couverts. Au Québec, le système est plus proche du modèle anglo-saxon : **moins de protection statutaire**, mais marché plus fluide."
+    },
+    {
+      "name_fr": "L'immigration et l'intégration",
+      "name_en": "Immigration and integration",
+      "icon": "🌍",
+      "order": 730,
+      "difficulty_level": 4,
+      "description": "Aborder un sujet sensible avec nuance — débats, données, dimension humaine.",
+      "vocabulary": [
+        {
+          "french": "l'immigration / immigrer",
+          "english": "immigration / to immigrate",
+          "gender": "f",
+          "part_of_speech": "noun",
+          "example_sentence": "L'immigration est un sujet sensible."
+        },
+        {
+          "french": "l'émigration / émigrer",
+          "english": "emigration / to emigrate",
+          "gender": "f",
+          "part_of_speech": "noun",
+          "example_sentence": "L'émigration des cerveaux préoccupe."
+        },
+        {
+          "french": "l'immigré / le migrant / l'étranger",
+          "english": "immigrant / migrant / foreigner",
+          "gender": "a",
+          "part_of_speech": "noun",
+          "example_sentence": "Les immigrés ont enrichi la France."
+        },
+        {
+          "french": "l'origine / d'origine étrangère",
+          "english": "origin / of foreign origin",
+          "gender": "f",
+          "part_of_speech": "noun",
+          "example_sentence": "Je suis d'origine algérienne."
+        },
+        {
+          "french": "la nationalité / acquérir la nationalité",
+          "english": "nationality / to acquire citizenship",
+          "gender": "f",
+          "part_of_speech": "noun",
+          "example_sentence": "Il a acquis la nationalité française."
+        },
+        {
+          "french": "la naturalisation / le double-national",
+          "english": "naturalization / dual-national",
+          "gender": "f",
+          "part_of_speech": "noun",
+          "example_sentence": "Sa naturalisation a été acceptée."
+        },
+        {
+          "french": "le droit du sol / le droit du sang",
+          "english": "right of soil / right of blood",
+          "gender": "m",
+          "part_of_speech": "noun",
+          "example_sentence": "La France a un droit du sol modéré."
+        },
+        {
+          "french": "l'asile / le demandeur d'asile / le réfugié",
+          "english": "asylum / asylum seeker / refugee",
+          "gender": "m",
+          "part_of_speech": "noun",
+          "example_sentence": "Le demandeur d'asile attend une réponse."
+        },
+        {
+          "french": "la régularisation / le sans-papiers",
+          "english": "regularization / undocumented person",
+          "gender": "f",
+          "part_of_speech": "noun",
+          "example_sentence": "Les sans-papiers manifestent à Paris."
+        },
+        {
+          "french": "l'expulsion / la reconduite à la frontière",
+          "english": "deportation / removal to the border",
+          "gender": "f",
+          "part_of_speech": "noun",
+          "example_sentence": "L'expulsion a été suspendue."
+        },
+        {
+          "french": "le visa / la carte de séjour / le titre de séjour",
+          "english": "visa / residence permit",
+          "gender": "a",
+          "part_of_speech": "noun",
+          "example_sentence": "Sa carte de séjour expire en 2027."
+        },
+        {
+          "french": "l'intégration / s'intégrer / l'assimilation",
+          "english": "integration / to integrate / assimilation",
+          "gender": "f",
+          "part_of_speech": "noun",
+          "example_sentence": "L'intégration prend du temps."
+        },
+        {
+          "french": "la diversité / multiculturel(le)",
+          "english": "diversity / multicultural",
+          "gender": "f",
+          "part_of_speech": "noun",
+          "example_sentence": "Paris est une ville multiculturelle."
+        },
+        {
+          "french": "le communautarisme / le repli identitaire",
+          "english": "communitarianism / identity retreat",
+          "gender": "m",
+          "part_of_speech": "noun",
+          "example_sentence": "Le communautarisme est très débattu."
+        },
+        {
+          "french": "la laïcité / le voile / le foulard",
+          "english": "secularism / veil / headscarf",
+          "gender": "f",
+          "part_of_speech": "noun",
+          "example_sentence": "Le débat sur le voile revient régulièrement."
+        },
+        {
+          "french": "le racisme / la discrimination / la xénophobie",
+          "english": "racism / discrimination / xenophobia",
+          "gender": "a",
+          "part_of_speech": "noun",
+          "example_sentence": "Le racisme persiste sous diverses formes."
+        },
+        {
+          "french": "le ghetto / la banlieue / le quartier sensible",
+          "english": "ghetto / suburb / sensitive area",
+          "gender": "a",
+          "part_of_speech": "noun",
+          "example_sentence": "Les banlieues françaises sont diverses."
+        },
+        {
+          "french": "la deuxième génération / la troisième génération",
+          "english": "second / third generation",
+          "gender": "f",
+          "part_of_speech": "noun",
+          "example_sentence": "Les troisièmes générations se sentent françaises."
+        },
+        {
+          "french": "le brassage / le métissage",
+          "english": "mixing / interbreeding",
+          "gender": "m",
+          "part_of_speech": "noun",
+          "example_sentence": "Le métissage culturel est une richesse."
+        },
+        {
+          "french": "la francisation / parler couramment",
+          "english": "Frenchification / to speak fluently",
+          "gender": "f",
+          "part_of_speech": "noun",
+          "example_sentence": "La francisation passe par l'école."
+        },
+        {
+          "french": "le repère / le modèle d'intégration",
+          "english": "reference / integration model",
+          "gender": "m",
+          "part_of_speech": "noun",
+          "example_sentence": "Le modèle républicain a ses limites."
+        },
+        {
+          "french": "le marché du travail / l'accès à l'emploi",
+          "english": "labor market / access to employment",
+          "gender": "m",
+          "part_of_speech": "noun",
+          "example_sentence": "L'accès à l'emploi reste plus difficile pour les immigrés."
+        },
+        {
+          "french": "la peur / la méfiance / le préjugé",
+          "english": "fear / mistrust / prejudice",
+          "gender": "a",
+          "part_of_speech": "noun",
+          "example_sentence": "Les préjugés s'effritent face aux faits."
+        },
+        {
+          "french": "l'apport / la contribution",
+          "english": "contribution / input",
+          "gender": "m",
+          "part_of_speech": "noun",
+          "example_sentence": "L'apport culturel est considérable."
+        },
+        {
+          "french": "le mythe / la réalité / les chiffres",
+          "english": "myth / reality / numbers",
+          "gender": "a",
+          "part_of_speech": "noun",
+          "example_sentence": "Les chiffres déconstruisent souvent les mythes."
+        }
+      ],
+      "phrases": [
+        {
+          "fr": "Il faut nuancer le débat.",
+          "en": "We must nuance the debate.",
+          "note": "Useful opener on sensitive topics."
+        },
+        {
+          "fr": "L'immigration n'est pas un problème en soi.",
+          "en": "Immigration isn't a problem in itself.",
+          "note": "Balanced framing."
+        },
+        {
+          "fr": "Tout dépend des conditions d'accueil.",
+          "en": "Everything depends on reception conditions.",
+          "note": "Nuanced argument."
+        },
+        {
+          "fr": "Les chiffres ne mentent pas — mais on peut leur faire dire ce qu'on veut.",
+          "en": "Numbers don't lie — but you can make them say what you want.",
+          "note": "Critical thinking phrase."
+        },
+        {
+          "fr": "Mon arrière-grand-père était immigré.",
+          "en": "My great-grandfather was an immigrant.",
+          "note": "Personal-history framing — common in France."
+        },
+        {
+          "fr": "On ne peut pas tout mettre dans le même panier.",
+          "en": "You can't put everything in the same basket.",
+          "note": "Against generalization."
+        },
+        {
+          "fr": "Le racisme ordinaire fait des dégâts au quotidien.",
+          "en": "Everyday racism does daily damage.",
+          "note": "Modern term."
+        },
+        {
+          "fr": "L'intégration est une responsabilité partagée.",
+          "en": "Integration is a shared responsibility.",
+          "note": "Balanced view."
+        },
+        {
+          "fr": "Sans immigration, nos hôpitaux fermeraient.",
+          "en": "Without immigration, our hospitals would close.",
+          "note": "Economic argument."
+        },
+        {
+          "fr": "La culture française s'est toujours nourrie d'apports extérieurs.",
+          "en": "French culture has always been nourished by external contributions.",
+          "note": "Historical framing."
+        },
+        {
+          "fr": "Je ne suis pas d'accord, mais je comprends ton inquiétude.",
+          "en": "I don't agree, but I understand your concern.",
+          "note": "Useful for difficult conversations."
+        },
+        {
+          "fr": "Ce sujet mérite mieux qu'une polémique.",
+          "en": "This subject deserves better than a polemic.",
+          "note": "Calls for serious debate."
+        }
+      ],
+      "reading": {
+        "title": "Trois générations : portrait d'une famille franco-algérienne",
+        "content_fr": "Karim a 32 ans. Il est ingénieur informatique à Lyon. Quand on lui demande d'où il vient, il répond simplement : « Je suis français. » Pourtant, son histoire familiale parle de **trois pays, trois générations, et un siècle de transformations**.\n\n**Son grand-père Saïd** est arrivé en France en 1957, à 22 ans. Recruté en Algérie, alors département français, par une entreprise de Renault, il est venu seul, sans parler un mot de français. Pendant 35 ans, il a vissé des boulots à la chaîne, dans une usine près de Lyon. Il vivait dans un **foyer de travailleurs immigrés**, envoyait l'essentiel de son salaire au pays. À 50 ans, il a fait venir sa femme et ses enfants. Il a obtenu la nationalité française en 1991, mais il ne s'est jamais senti **vraiment** d'ici. « La France m'a donné du travail », disait-il. « L'Algérie m'a donné une âme. »\n\n**Le père de Karim, Brahim**, est né en Algérie mais arrivé à 8 ans. L'école française l'a transformé. Élève brillant, il est devenu **professeur de mathématiques**. Il a épousé Sylvie, une Lyonnaise « de souche », comme on dit. Brahim parle un français impeccable, plus pur que celui de beaucoup de ses élèves. Mais il a parfois ressenti le **racisme ordinaire** : un appartement qui lui était refusé, un policier qui le contrôlait deux fois plus souvent, des regards dans certains restaurants. Il dit aujourd'hui : « Ma génération a payé le prix de l'intégration. Mes enfants, eux, n'auront pas à le payer. »\n\n**Karim**, lui, n'a jamais douté qu'il était français. Il a grandi à Lyon, sa langue maternelle est le français (même s'il comprend l'arabe parlé par ses grands-parents). Il a étudié dans une grande école d'ingénieurs. Il a une carrière, des amis de toutes origines, une vie qu'il ne distingue en rien de celle de ses collègues « de souche ». Pourtant, parfois, on lui demande encore : « D'où venez-vous **vraiment** ? » Il sourit. Il répond : « De Villeurbanne. »\n\nDans la famille, on garde des liens forts avec l'Algérie : un voyage tous les deux ans, des plats traditionnels au repas du dimanche, des chants kabyles que la grand-mère apprend à ses petits-enfants. Karim n'y voit aucune contradiction. **« Avoir deux cultures, c'est avoir deux fois plus de richesse, pas la moitié d'une seule. »**\n\nC'est, peut-être, ce que **réussir une intégration** veut dire — pas effacer ses origines, mais **les transmettre tout en avançant**.",
+        "content_en": "Karim is 32. He's a software engineer in Lyon. When asked where he's from, he simply answers: 'I'm French.' Yet his family history speaks of three countries, three generations, and a century of transformations.\n\nHis grandfather Saïd arrived in France in 1957, at 22. Recruited in Algeria, then a French department, by a Renault company, he came alone, not speaking a word of French. For 35 years, he tightened bolts on an assembly line in a factory near Lyon. He lived in an immigrant workers' hostel and sent most of his salary home. At 50, he brought his wife and children. He obtained French citizenship in 1991 but never felt truly from here. 'France gave me work,' he used to say. 'Algeria gave me a soul.'\n\nKarim's father, Brahim, was born in Algeria but arrived at 8. French school transformed him. A brilliant pupil, he became a math teacher. He married Sylvie, a Lyon-born 'native.' Brahim speaks impeccable French, purer than many of his students'. But he sometimes felt everyday racism: an apartment refused, a police officer who checked him twice as often, looks in certain restaurants. Today he says: 'My generation paid the price of integration. My children won't have to pay it.'\n\nKarim never doubted he was French. He grew up in Lyon, his mother tongue is French (though he understands the Arabic his grandparents speak). He studied at an elite engineering school. He has a career, friends of all origins, a life he doesn't distinguish from that of his 'native' colleagues. Yet sometimes, he's still asked: 'Where do you really come from?' He smiles. He answers: 'From Villeurbanne.'\n\nIn the family, they keep strong ties with Algeria: a trip every two years, traditional dishes at Sunday meals, Kabyle songs the grandmother teaches her grandchildren. Karim sees no contradiction. 'Having two cultures is having twice the richness, not half of one.'\n\nThat is, perhaps, what succeeding at integration means — not erasing one's origins, but transmitting them while moving forward.",
+        "comprehension_questions": [
+          {
+            "q": "En quelle année Saïd est-il arrivé en France ?",
+            "a": "En 1957."
+          },
+          {
+            "q": "Quel métier exerce le père de Karim ?",
+            "a": "Professeur de mathématiques."
+          },
+          {
+            "q": "Quelle forme de racisme Brahim a-t-il vécue ?",
+            "a": "Le racisme ordinaire : appartements refusés, contrôles policiers répétés, regards dans certains restaurants."
+          },
+          {
+            "q": "Quelle est la conviction de Karim sur la double culture ?",
+            "a": "« Avoir deux cultures, c'est avoir deux fois plus de richesse, pas la moitié d'une seule. »"
+          }
+        ]
+      },
+      "cultural_note": "La France est, historiquement, un **pays d'immigration ancien** — la première vague (italienne, polonaise, espagnole) date du XIXe siècle, suivie de l'immigration **maghrébine** (1950-1970) liée au besoin de main-d'œuvre. Aujourd'hui, environ **10 % de la population** est née étrangère, et près de **30 % a au moins un grand-parent immigré**. Le **modèle républicain** d'intégration repose sur l'**assimilation individuelle** (langue, école, valeurs républicaines) — par opposition au **modèle multiculturel** anglo-saxon ou québécois. Ce modèle est en tension : il a produit de belles trajectoires (Aimé Césaire, Patrick Modiano, Zinédine Zidane, Omar Sy), mais a aussi laissé des **angles morts** — discrimination à l'embauche, ghettoïsation de certaines banlieues. Au Québec, le modèle de l'**interculturalisme** (différent du multiculturalisme canadien) cherche une voie médiane : reconnaître les cultures d'origine tout en affirmant un **socle commun francophone**."
+    },
+    {
+      "name_fr": "La santé et le système de soins",
+      "name_en": "Health and the healthcare system",
+      "icon": "🏥",
+      "order": 740,
+      "difficulty_level": 4,
+      "description": "Parler du système de santé, des grands défis sanitaires, du bien-être.",
+      "vocabulary": [
+        {
+          "french": "la santé / sanitaire",
+          "english": "health / sanitary",
+          "gender": "f",
+          "part_of_speech": "noun",
+          "example_sentence": "La santé publique est une priorité."
+        },
+        {
+          "french": "le système de santé / la sécurité sociale (la sécu)",
+          "english": "healthcare system / social security",
+          "gender": "m",
+          "part_of_speech": "noun",
+          "example_sentence": "Le système français est universel."
+        },
+        {
+          "french": "l'assurance maladie / la mutuelle / la complémentaire",
+          "english": "health insurance / mutual insurance / supplemental",
+          "gender": "f",
+          "part_of_speech": "noun",
+          "example_sentence": "Sans mutuelle, certains soins coûtent cher."
+        },
+        {
+          "french": "le remboursement / la prise en charge",
+          "english": "reimbursement / coverage",
+          "gender": "m",
+          "part_of_speech": "noun",
+          "example_sentence": "Cette consultation est remboursée à 70 %."
+        },
+        {
+          "french": "le médecin (généraliste / spécialiste)",
+          "english": "doctor (GP / specialist)",
+          "gender": "m",
+          "part_of_speech": "noun",
+          "example_sentence": "Mon médecin traitant me suit depuis 10 ans."
+        },
+        {
+          "french": "le médecin traitant / la médecine de ville",
+          "english": "primary care physician / outpatient care",
+          "gender": "m",
+          "part_of_speech": "noun",
+          "example_sentence": "Sans médecin traitant, les remboursements baissent."
+        },
+        {
+          "french": "le désert médical / la pénurie de médecins",
+          "english": "medical desert / doctor shortage",
+          "gender": "m",
+          "part_of_speech": "noun",
+          "example_sentence": "Les déserts médicaux s'étendent en zone rurale."
+        },
+        {
+          "french": "l'hôpital / la clinique / le CHU",
+          "english": "hospital / private clinic / university hospital",
+          "gender": "m",
+          "part_of_speech": "noun",
+          "example_sentence": "Le CHU est en sous-effectif chronique."
+        },
+        {
+          "french": "les urgences / le service d'urgence",
+          "english": "ER / emergency service",
+          "gender": "f",
+          "part_of_speech": "noun",
+          "example_sentence": "Aux urgences, l'attente est interminable."
+        },
+        {
+          "french": "le personnel soignant / le soignant / l'infirmier(ère)",
+          "english": "care staff / caregiver / nurse",
+          "gender": "m",
+          "part_of_speech": "noun",
+          "example_sentence": "Le personnel soignant est épuisé."
+        },
+        {
+          "french": "le patient / la patiente / l'usager du système",
+          "english": "patient / system user",
+          "gender": "a",
+          "part_of_speech": "noun",
+          "example_sentence": "Les patients attendent des heures."
+        },
+        {
+          "french": "la consultation / le rendez-vous / la téléconsultation",
+          "english": "consultation / appointment / telehealth",
+          "gender": "f",
+          "part_of_speech": "noun",
+          "example_sentence": "La téléconsultation s'est généralisée."
+        },
+        {
+          "french": "l'ordonnance / la prescription / le médicament",
+          "english": "prescription / medicine",
+          "gender": "f",
+          "part_of_speech": "noun",
+          "example_sentence": "Cette ordonnance est valable un mois."
+        },
+        {
+          "french": "le générique / le princeps / la pharmacie",
+          "english": "generic drug / brand-name / pharmacy",
+          "gender": "a",
+          "part_of_speech": "noun",
+          "example_sentence": "Les génériques sont remboursés mieux."
+        },
+        {
+          "french": "la maladie / la pathologie / le diagnostic",
+          "english": "disease / pathology / diagnosis",
+          "gender": "a",
+          "part_of_speech": "noun",
+          "example_sentence": "Le diagnostic a été posé tardivement."
+        },
+        {
+          "french": "le diabète / le cancer / l'AVC / l'infarctus",
+          "english": "diabetes / cancer / stroke / heart attack",
+          "gender": "a",
+          "part_of_speech": "noun",
+          "example_sentence": "Le diabète touche 5 % des Français."
+        },
+        {
+          "french": "la prévention / le dépistage / la vaccination",
+          "english": "prevention / screening / vaccination",
+          "gender": "f",
+          "part_of_speech": "noun",
+          "example_sentence": "Le dépistage du cancer du sein sauve des vies."
+        },
+        {
+          "french": "la santé mentale / la dépression / l'anxiété",
+          "english": "mental health / depression / anxiety",
+          "gender": "f",
+          "part_of_speech": "noun",
+          "example_sentence": "La santé mentale est enfin reconnue."
+        },
+        {
+          "french": "le bien-être / la qualité de vie",
+          "english": "well-being / quality of life",
+          "gender": "m",
+          "part_of_speech": "noun",
+          "example_sentence": "Le bien-être au travail compte."
+        },
+        {
+          "french": "l'espérance de vie / le vieillissement",
+          "english": "life expectancy / aging",
+          "gender": "f",
+          "part_of_speech": "noun",
+          "example_sentence": "L'espérance de vie en France est de 82 ans."
+        },
+        {
+          "french": "l'EHPAD / la maison de retraite",
+          "english": "nursing home",
+          "gender": "m",
+          "part_of_speech": "noun",
+          "example_sentence": "Les EHPAD sont en crise."
+        },
+        {
+          "french": "le tabagisme / l'alcoolisme / les addictions",
+          "english": "smoking / alcoholism / addictions",
+          "gender": "m",
+          "part_of_speech": "noun",
+          "example_sentence": "Le tabagisme reste la première cause de mortalité évitable."
+        },
+        {
+          "french": "l'obésité / la malbouffe / l'alimentation équilibrée",
+          "english": "obesity / junk food / balanced diet",
+          "gender": "f",
+          "part_of_speech": "noun",
+          "example_sentence": "La malbouffe favorise l'obésité."
+        },
+        {
+          "french": "la crise sanitaire / la pandémie / l'épidémie",
+          "english": "health crisis / pandemic / epidemic",
+          "gender": "f",
+          "part_of_speech": "noun",
+          "example_sentence": "La crise du Covid a tout changé."
+        },
+        {
+          "french": "le burn-out / le stress chronique / l'épuisement",
+          "english": "burnout / chronic stress / exhaustion",
+          "gender": "m",
+          "part_of_speech": "noun",
+          "example_sentence": "Le burn-out frappe aussi les médecins."
+        }
+      ],
+      "phrases": [
+        {
+          "fr": "Je vais voir mon médecin demain.",
+          "en": "I'm seeing my doctor tomorrow.",
+          "note": "Standard."
+        },
+        {
+          "fr": "Je n'arrive pas à avoir un rendez-vous.",
+          "en": "I can't manage to get an appointment.",
+          "note": "Common today."
+        },
+        {
+          "fr": "Notre système de santé craque.",
+          "en": "Our healthcare system is cracking.",
+          "note": "Recurring."
+        },
+        {
+          "fr": "Heureusement qu'on a la sécu.",
+          "en": "Lucky we have social security.",
+          "note": "Common French sentiment."
+        },
+        {
+          "fr": "Sans mutuelle, ça aurait coûté 800 euros.",
+          "en": "Without supplemental insurance, it would have cost 800 euros.",
+          "note": "Concrete example."
+        },
+        {
+          "fr": "Les soignants n'en peuvent plus.",
+          "en": "Caregivers can't take it anymore.",
+          "note": "Strong empathic framing."
+        },
+        {
+          "fr": "Il faut prévenir plutôt que guérir.",
+          "en": "Better to prevent than cure.",
+          "note": "Classic proverb."
+        },
+        {
+          "fr": "Ma grand-mère est en EHPAD.",
+          "en": "My grandmother is in a nursing home.",
+          "note": "Common family topic."
+        },
+        {
+          "fr": "Je fais attention à ce que je mange.",
+          "en": "I pay attention to what I eat.",
+          "note": "Health consciousness."
+        },
+        {
+          "fr": "La santé mentale, c'est aussi sérieux que le reste.",
+          "en": "Mental health is as serious as anything else.",
+          "note": "Modern affirmation."
+        },
+        {
+          "fr": "On ne peut pas tout médicaliser.",
+          "en": "We can't medicalize everything.",
+          "note": "Reasoned critique."
+        },
+        {
+          "fr": "L'accès aux soins devient inégal.",
+          "en": "Access to care is becoming unequal.",
+          "note": "Sociological observation."
+        }
+      ],
+      "reading": {
+        "title": "Sept ans dans le désert médical",
+        "content_fr": "À 67 ans, Marie habite dans un village de 850 habitants, dans la Creuse. Quand on lui demande ce qui a le plus changé dans sa vie depuis 20 ans, elle ne parle ni d'Internet ni du climat. Elle parle **du médecin**.\n\n« Quand je suis arrivée ici en 1998, on avait deux médecins, une infirmière, un dentiste, et une pharmacie ouverte six jours sur sept », raconte-t-elle. « Aujourd'hui, j'ai un médecin une fois par mois, sur rendez-vous, à 45 minutes en voiture. La pharmacie ferme à 18 h. Et le dentiste le plus proche est à Limoges — 1 h 30. »\n\nMarie n'est pas un cas isolé. Selon le Conseil de l'ordre, **8 millions de Français** vivent aujourd'hui dans ce qu'on appelle un **désert médical** : une zone où l'accès aux soins est devenu structurellement difficile. Le phénomène frappe d'abord les **zones rurales** — Creuse, Cantal, Aveyron — mais s'étend aussi à des **banlieues** entières (Seine-Saint-Denis, certaines parties de Marseille).\n\nLes causes sont **multiples**. D'abord, **le numerus clausus** — ce quota limitant le nombre d'étudiants en médecine — supprimé seulement en 2020, a privé la France de plusieurs milliers de médecins par génération. Ensuite, la **désaffection pour la médecine générale** : les jeunes diplômés préfèrent les spécialités urbaines, mieux rémunérées et moins isolées. Enfin, la **démographie médicale** : un tiers des médecins en exercice ont plus de 60 ans, et leurs départs en retraite ne sont pas remplacés.\n\nQue faire ? Le gouvernement a tenté plusieurs solutions. **Les bourses** aux étudiants qui s'installent en zone sous-dotée. **La téléconsultation** — utile, mais qui ne remplace pas une vraie auscultation. Les **maisons de santé pluri-professionnelles**, qui regroupent plusieurs soignants et créent un environnement de travail attractif. Et plus récemment, l'idée d'une **régulation à l'installation** — obliger les nouveaux médecins à exercer un certain temps en zone défavorisée, comme cela se pratique pour les pharmaciens.\n\nMarie, elle, a fini par **changer de stratégie** : « J'ai pris une assurance avec un service de téléconsultation 24h/24. Et je me déplace systématiquement à Limoges pour mes vrais examens. Mais imaginez la même chose pour une mère seule, sans voiture, avec trois enfants malades. C'est impossible. »\n\nLe **système universel** dont la France se targue tient une promesse : « **tous égaux face à la maladie** ». À l'heure des déserts médicaux, cette promesse, sur le terrain, sonne creux.",
+        "content_en": "At 67, Marie lives in a village of 850 inhabitants, in the Creuse. When asked what has changed most in her life over 20 years, she speaks neither of the Internet nor the climate. She speaks of the doctor.\n\n'When I arrived here in 1998, we had two doctors, a nurse, a dentist, and a pharmacy open six days a week,' she says. 'Today I have a doctor once a month, by appointment, a 45-minute drive away. The pharmacy closes at 6 PM. And the nearest dentist is in Limoges — 1h30.'\n\nMarie isn't an isolated case. According to the medical board, 8 million French people now live in what's called a medical desert: an area where access to care has become structurally difficult. The phenomenon strikes rural areas first — Creuse, Cantal, Aveyron — but also extends to entire suburbs (Seine-Saint-Denis, parts of Marseille).\n\nThe causes are multiple. First, the numerus clausus — that quota limiting the number of medical students — abolished only in 2020, deprived France of several thousand doctors per generation. Then the disaffection for general medicine: young graduates prefer urban specialties, better paid and less isolated. Finally, medical demographics: a third of practicing doctors are over 60, and their retirements are not being replaced.\n\nWhat to do? The government tried several solutions. Grants to students who set up in under-served zones. Telehealth — useful, but no substitute for a real auscultation. Multi-professional health centers, grouping several caregivers and creating an attractive work environment. More recently, the idea of regulated installation — requiring new doctors to practice for a certain time in disadvantaged areas, as is done for pharmacists.\n\nMarie has ended up changing strategy: 'I took insurance with a 24/7 telehealth service. And I systematically travel to Limoges for real exams. But imagine the same for a single mother, without a car, with three sick children. It's impossible.'\n\nThe universal system France boasts of holds a promise: 'all equal before illness.' In the era of medical deserts, that promise, on the ground, rings hollow.",
+        "comprehension_questions": [
+          {
+            "q": "Combien de Français vivent dans un désert médical ?",
+            "a": "Environ 8 millions."
+          },
+          {
+            "q": "Qu'est-ce que le numerus clausus et pourquoi est-il évoqué ?",
+            "a": "Un quota qui limitait le nombre d'étudiants en médecine, supprimé en 2020, qui a privé la France de plusieurs milliers de médecins par génération."
+          },
+          {
+            "q": "Citez deux solutions tentées par le gouvernement.",
+            "a": "Les bourses aux étudiants en zone sous-dotée, la téléconsultation, les maisons de santé pluri-professionnelles, la régulation à l'installation."
+          },
+          {
+            "q": "Quelle est la promesse du système universel français mentionnée à la fin ?",
+            "a": "« Tous égaux face à la maladie »."
+          }
+        ]
+      },
+      "cultural_note": "La France a longtemps eu un système de santé considéré comme **l'un des meilleurs au monde** (OMS, 2000). Le pilier en est la **Sécurité sociale** (1945), financée par les cotisations sur le travail, et qui rembourse environ **70 %** du coût des soins de ville — le reste étant pris en charge par les **mutuelles** (privées mais souvent semi-obligatoires via l'employeur). Le **médecin traitant** est obligatoire pour bénéficier d'un remboursement optimal. La **carte Vitale** (verte) traite automatiquement les remboursements. Au Québec, le système est **public et gratuit** (RAMQ — Régie de l'assurance maladie du Québec), mais souvent critiqué pour ses **longues listes d'attente**. Différence majeure : pas de **dépassement d'honoraires** au Québec, contrairement à la France où certains spécialistes facturent plus que le tarif sécu."
+    },
+    {
+      "name_fr": "La science, la recherche et l'innovation",
+      "name_en": "Science, research and innovation",
+      "icon": "🔬",
+      "order": 750,
+      "difficulty_level": 4,
+      "description": "Parler des grandes avancées scientifiques, du financement de la recherche, du débat science vs société.",
+      "vocabulary": [
+        {
+          "french": "la science / scientifique / la méthode scientifique",
+          "english": "science / scientific / scientific method",
+          "gender": "f",
+          "part_of_speech": "noun",
+          "example_sentence": "La science avance par essais et erreurs."
+        },
+        {
+          "french": "la recherche (fondamentale / appliquée)",
+          "english": "research (basic / applied)",
+          "gender": "f",
+          "part_of_speech": "noun",
+          "example_sentence": "La recherche fondamentale demande du temps."
+        },
+        {
+          "french": "le chercheur / la chercheuse / le laboratoire",
+          "english": "researcher / lab",
+          "gender": "a",
+          "part_of_speech": "noun",
+          "example_sentence": "Les chercheurs réclament des moyens."
+        },
+        {
+          "french": "l'expérience / l'expérimentation / le protocole",
+          "english": "experiment / experimentation / protocol",
+          "gender": "f",
+          "part_of_speech": "noun",
+          "example_sentence": "Le protocole doit être reproductible."
+        },
+        {
+          "french": "l'hypothèse / la théorie / la preuve",
+          "english": "hypothesis / theory / proof",
+          "gender": "f",
+          "part_of_speech": "noun",
+          "example_sentence": "L'hypothèse est confirmée."
+        },
+        {
+          "french": "la découverte / l'invention / l'innovation",
+          "english": "discovery / invention / innovation",
+          "gender": "f",
+          "part_of_speech": "noun",
+          "example_sentence": "Cette découverte changera la médecine."
+        },
+        {
+          "french": "le brevet / la propriété intellectuelle",
+          "english": "patent / intellectual property",
+          "gender": "m",
+          "part_of_speech": "noun",
+          "example_sentence": "Le brevet est déposé."
+        },
+        {
+          "french": "la publication / la revue scientifique / l'article",
+          "english": "publication / scientific journal / article",
+          "gender": "f",
+          "part_of_speech": "noun",
+          "example_sentence": "Publier dans Nature est un objectif."
+        },
+        {
+          "french": "le CNRS / l'INRIA / l'INRAE",
+          "english": "French research institutes (national, IT, agriculture)",
+          "gender": "m",
+          "part_of_speech": "noun",
+          "example_sentence": "Le CNRS emploie 30 000 personnes."
+        },
+        {
+          "french": "l'université / le doctorant / le post-doc",
+          "english": "university / PhD student / postdoc",
+          "gender": "f",
+          "part_of_speech": "noun",
+          "example_sentence": "Les doctorants sont mal payés."
+        },
+        {
+          "french": "le prix Nobel / la médaille Fields",
+          "english": "Nobel Prize / Fields Medal",
+          "gender": "m",
+          "part_of_speech": "noun",
+          "example_sentence": "La France a 16 prix Nobel de littérature."
+        },
+        {
+          "french": "l'intelligence artificielle (IA) / le machine learning",
+          "english": "AI / machine learning",
+          "gender": "f",
+          "part_of_speech": "noun",
+          "example_sentence": "L'IA transforme tous les secteurs."
+        },
+        {
+          "french": "la biologie / la génétique / l'ADN",
+          "english": "biology / genetics / DNA",
+          "gender": "f",
+          "part_of_speech": "noun",
+          "example_sentence": "La génétique progresse à vitesse exponentielle."
+        },
+        {
+          "french": "la physique / la chimie / l'astronomie",
+          "english": "physics / chemistry / astronomy",
+          "gender": "f",
+          "part_of_speech": "noun",
+          "example_sentence": "La physique quantique défie l'intuition."
+        },
+        {
+          "french": "l'éthique / la bioéthique / le comité d'éthique",
+          "english": "ethics / bioethics / ethics committee",
+          "gender": "f",
+          "part_of_speech": "noun",
+          "example_sentence": "La bioéthique encadre la recherche."
+        },
+        {
+          "french": "le clonage / la PMA / la GPA",
+          "english": "cloning / ART / surrogacy",
+          "gender": "m",
+          "part_of_speech": "noun",
+          "example_sentence": "La GPA est interdite en France."
+        },
+        {
+          "french": "les OGM / le bio / l'agronomie",
+          "english": "GMOs / organic / agronomy",
+          "gender": "m",
+          "part_of_speech": "noun",
+          "example_sentence": "Les OGM divisent les scientifiques."
+        },
+        {
+          "french": "la vulgarisation scientifique",
+          "english": "popularization of science",
+          "gender": "f",
+          "part_of_speech": "noun",
+          "example_sentence": "La vulgarisation rend la science accessible."
+        },
+        {
+          "french": "le débat science / société",
+          "english": "science / society debate",
+          "gender": "m",
+          "part_of_speech": "noun",
+          "example_sentence": "Ce débat est essentiel en démocratie."
+        },
+        {
+          "french": "le complotisme / le climato-scepticisme",
+          "english": "conspiracy theories / climate skepticism",
+          "gender": "m",
+          "part_of_speech": "noun",
+          "example_sentence": "Le complotisme se nourrit de la défiance."
+        },
+        {
+          "french": "le financement / le crédit de recherche / la subvention",
+          "english": "funding / research credit / grant",
+          "gender": "m",
+          "part_of_speech": "noun",
+          "example_sentence": "Le financement de la recherche stagne."
+        },
+        {
+          "french": "la fuite des cerveaux / l'exode des chercheurs",
+          "english": "brain drain",
+          "gender": "f",
+          "part_of_speech": "noun",
+          "example_sentence": "La fuite des cerveaux est un vrai sujet."
+        },
+        {
+          "french": "la rupture technologique / la disruption",
+          "english": "technological breakthrough / disruption",
+          "gender": "f",
+          "part_of_speech": "noun",
+          "example_sentence": "L'IA est une rupture comparable à l'électricité."
+        },
+        {
+          "french": "la responsabilité / l'usage / les dérives",
+          "english": "responsibility / use / abuses",
+          "gender": "f",
+          "part_of_speech": "noun",
+          "example_sentence": "Toute technologie a ses dérives potentielles."
+        },
+        {
+          "french": "le progrès / les bienfaits / les risques",
+          "english": "progress / benefits / risks",
+          "gender": "m",
+          "part_of_speech": "noun",
+          "example_sentence": "Le progrès n'est pas linéaire."
+        }
+      ],
+      "phrases": [
+        {
+          "fr": "C'est prouvé scientifiquement.",
+          "en": "It's scientifically proven.",
+          "note": "Often misused as appeal to authority."
+        },
+        {
+          "fr": "Les études se contredisent souvent.",
+          "en": "Studies often contradict each other.",
+          "note": "Critical-thinking phrase."
+        },
+        {
+          "fr": "Il faut financer davantage la recherche.",
+          "en": "We need to fund research more.",
+          "note": "Recurring demand."
+        },
+        {
+          "fr": "La science n'a pas réponse à tout.",
+          "en": "Science doesn't have all the answers.",
+          "note": "Useful nuance."
+        },
+        {
+          "fr": "On ne peut pas tout faire sous prétexte qu'on peut le faire.",
+          "en": "We can't do everything just because we can.",
+          "note": "Ethical framing."
+        },
+        {
+          "fr": "Cette technologie peut servir au pire comme au meilleur.",
+          "en": "This tech can serve the worst as the best.",
+          "note": "Double-edged-sword phrase."
+        },
+        {
+          "fr": "Je me méfie des annonces sensationnelles.",
+          "en": "I'm wary of sensational announcements.",
+          "note": "Healthy skepticism."
+        },
+        {
+          "fr": "L'IA, c'est l'avenir mais aussi un risque.",
+          "en": "AI is the future but also a risk.",
+          "note": "Modern nuance."
+        },
+        {
+          "fr": "La science est un consensus, pas une vérité figée.",
+          "en": "Science is a consensus, not a fixed truth.",
+          "note": "Epistemological nuance."
+        },
+        {
+          "fr": "Les chercheurs sont sous-payés.",
+          "en": "Researchers are underpaid.",
+          "note": "Real complaint in France."
+        },
+        {
+          "fr": "Sans recherche fondamentale, pas de progrès appliqué.",
+          "en": "Without basic research, no applied progress.",
+          "note": "Important argument."
+        },
+        {
+          "fr": "Il faut une éthique à la hauteur de nos outils.",
+          "en": "We need ethics worthy of our tools.",
+          "note": "Philosophical."
+        }
+      ],
+      "reading": {
+        "title": "Quand l'IA réinvente la médecine",
+        "content_fr": "Au CHU de Lille, en 2026, un système d'**intelligence artificielle** identifie des cancers du sein à partir de mammographies — avec une **précision supérieure de 11 %** à celle des radiologues les plus expérimentés. Au CHU de Bordeaux, un autre algorithme prédit les **arrêts cardiaques** 48 heures avant qu'ils ne surviennent, en analysant les variations subtiles des électrocardiogrammes. Au CHU de Toulouse, un troisième propose des **diagnostics rares** que des médecins humains, par manque d'exposition, n'auraient probablement pas identifiés.\n\nLa révolution est silencieuse, mais profonde. **L'IA médicale** est en train de devenir, dans certaines spécialités, un **collaborateur indispensable**. Les performances de ces systèmes, sur des tâches précises, dépassent désormais celles des experts humains. Et le rythme du progrès est **exponentiel** : un algorithme de 2026 fait en quelques secondes ce qui demandait des heures à un humain expérimenté.\n\nPourtant, le déploiement à grande échelle se heurte à **plusieurs obstacles**. D'abord, **les biais**. Les algorithmes sont entraînés sur des données — et ces données portent les inégalités du système qui les produit. Un système entraîné sur une population majoritairement masculine échouera sur des cas féminins ; un autre, entraîné sur des peaux claires, sera moins fiable sur des peaux noires. La **diversité** des données d'entraînement n'est pas un détail technique : c'est un enjeu éthique majeur.\n\nEnsuite, la **transparence**. La plupart des systèmes d'IA fonctionnent en **\"boîte noire\"** : ils donnent une réponse, sans expliquer leur raisonnement. Un médecin peut-il prescrire un traitement lourd au seul motif que « l'IA l'a recommandé », sans pouvoir auditer la chaîne de décision ? La législation européenne (AI Act, 2024) impose désormais une **explicabilité** pour les usages à haut risque — mais la mise en œuvre reste complexe.\n\nEnfin, **la responsabilité**. Si une IA fait une **erreur de diagnostic** et que le patient en meurt, **qui est responsable** ? Le médecin qui a suivi la recommandation ? Le fabricant du logiciel ? L'hôpital qui l'a déployé ? Le droit cherche encore ses repères.\n\nDans cette équation, **le médecin humain n'est pas remplacé** — il est **augmenté**. L'IA ne supprime pas le jugement clinique ; elle l'éclaire d'une lumière nouvelle. C'est, sans doute, la promesse la plus excitante de la décennie : non pas une médecine **sans humains**, mais une médecine où l'humain est libéré de tâches ingrates pour se concentrer sur ce qu'il fait de mieux — **comprendre, accompagner, décider**.",
+        "content_en": "At Lille University Hospital in 2026, an AI system identifies breast cancers from mammograms with 11 % higher accuracy than the most experienced radiologists. At Bordeaux University Hospital, another algorithm predicts cardiac arrests 48 hours before they occur, by analyzing subtle ECG variations. At Toulouse University Hospital, a third proposes rare diagnoses that human doctors, lacking exposure, would likely not have identified.\n\nThe revolution is silent but profound. Medical AI is becoming, in certain specialties, an indispensable collaborator. The performance of these systems, on specific tasks, now exceeds that of human experts. And the pace of progress is exponential: a 2026 algorithm does in seconds what took hours for an experienced human.\n\nYet large-scale deployment hits several obstacles. First, biases. Algorithms are trained on data — and that data carries the inequalities of the system that produced it. A system trained on a mostly-male population will fail on female cases; another, trained on light skin, will be less reliable on darker skin. Diversity in training data isn't a technical detail: it's a major ethical issue.\n\nThen transparency. Most AI systems operate as a 'black box': they give an answer without explaining their reasoning. Can a doctor prescribe a heavy treatment solely because 'the AI recommended it,' without being able to audit the decision chain? European legislation (AI Act, 2024) now requires explainability for high-risk uses — but implementation remains complex.\n\nFinally, responsibility. If an AI makes a diagnostic error and the patient dies, who is responsible? The doctor who followed the recommendation? The software maker? The hospital that deployed it? The law is still finding its bearings.\n\nIn this equation, the human doctor isn't replaced — they're augmented. AI doesn't suppress clinical judgment; it illuminates it in a new light. That is, perhaps, the decade's most exciting promise: not a medicine without humans, but one where the human is freed from ungrateful tasks to focus on what they do best — understanding, accompanying, deciding.",
+        "comprehension_questions": [
+          {
+            "q": "Quelle est la précision de l'IA de Lille comparée aux radiologues ?",
+            "a": "11 % supérieure à celle des radiologues les plus expérimentés."
+          },
+          {
+            "q": "Quels sont les trois obstacles principaux au déploiement à grande échelle ?",
+            "a": "Les biais, la transparence (boîte noire), et la responsabilité juridique."
+          },
+          {
+            "q": "Qu'impose l'AI Act européen pour les usages à haut risque ?",
+            "a": "Une explicabilité des décisions de l'IA."
+          },
+          {
+            "q": "Quelle est la conclusion de l'auteur sur le rôle de l'humain ?",
+            "a": "L'humain n'est pas remplacé mais augmenté — libéré pour comprendre, accompagner, décider."
+          }
+        ]
+      },
+      "cultural_note": "La France a une **longue tradition scientifique** — de Pascal à Curie, en passant par Lavoisier, Pasteur, Poincaré. Elle compte **70 prix Nobel** (toutes catégories), dont une dizaine récente. Pourtant, son **budget public de R&D** (2,2 % du PIB) reste inférieur à celui de l'Allemagne (3 %) ou de la Corée (4,8 %). Le **CNRS** est le plus grand organisme de recherche public d'Europe (33 000 employés). Les chercheurs français se plaignent souvent de la **bureaucratie** et des **salaires bas** par rapport au privé international — d'où une **fuite des cerveaux** vers les États-Unis, le Royaume-Uni, voire la Suisse. Au Québec, les universités (McGill, Polytechnique Montréal, Laval) jouent un rôle plus central, et la recherche est davantage financée par les **fonds privés**."
+    },
+    {
+      "name_fr": "L'histoire et le patrimoine",
+      "name_en": "History and heritage",
+      "icon": "🏰",
+      "order": 760,
+      "difficulty_level": 4,
+      "description": "Parler de l'histoire de France, des grands événements, du patrimoine matériel et immatériel.",
+      "vocabulary": [
+        {
+          "french": "l'histoire / historique / l'historien(ne)",
+          "english": "history / historic / historian",
+          "gender": "f",
+          "part_of_speech": "noun",
+          "example_sentence": "L'histoire éclaire le présent."
+        },
+        {
+          "french": "le siècle / l'époque / la période",
+          "english": "century / era / period",
+          "gender": "a",
+          "part_of_speech": "noun",
+          "example_sentence": "Le 18e siècle est celui des Lumières."
+        },
+        {
+          "french": "l'Antiquité / le Moyen Âge / la Renaissance",
+          "english": "Antiquity / Middle Ages / Renaissance",
+          "gender": "f",
+          "part_of_speech": "noun",
+          "example_sentence": "Le Moyen Âge a duré mille ans."
+        },
+        {
+          "french": "les Lumières / la Révolution française",
+          "english": "Enlightenment / French Revolution",
+          "gender": "f",
+          "part_of_speech": "noun",
+          "example_sentence": "1789 a tout changé."
+        },
+        {
+          "french": "la monarchie / le roi / la reine / la dynastie",
+          "english": "monarchy / king / queen / dynasty",
+          "gender": "f",
+          "part_of_speech": "noun",
+          "example_sentence": "Louis XIV est le Roi-Soleil."
+        },
+        {
+          "french": "la république / l'empire / la république",
+          "english": "republic / empire / republic",
+          "gender": "f",
+          "part_of_speech": "noun",
+          "example_sentence": "Napoléon a fondé le Premier Empire."
+        },
+        {
+          "french": "la guerre / la paix / le conflit / la bataille",
+          "english": "war / peace / conflict / battle",
+          "gender": "a",
+          "part_of_speech": "noun",
+          "example_sentence": "La bataille de Verdun fut terrible."
+        },
+        {
+          "french": "la Première / Deuxième Guerre mondiale",
+          "english": "First / Second World War",
+          "gender": "f",
+          "part_of_speech": "noun",
+          "example_sentence": "La Seconde Guerre mondiale a marqué l'Europe."
+        },
+        {
+          "french": "l'Occupation / la Résistance / la Libération",
+          "english": "Occupation / Resistance / Liberation",
+          "gender": "f",
+          "part_of_speech": "noun",
+          "example_sentence": "La Résistance reste un mythe fondateur."
+        },
+        {
+          "french": "la colonisation / la décolonisation / l'empire colonial",
+          "english": "colonization / decolonization / colonial empire",
+          "gender": "f",
+          "part_of_speech": "noun",
+          "example_sentence": "La décolonisation a duré 30 ans."
+        },
+        {
+          "french": "la mémoire (collective, historique)",
+          "english": "(collective, historical) memory",
+          "gender": "f",
+          "part_of_speech": "noun",
+          "example_sentence": "La mémoire collective oublie ce qu'elle veut."
+        },
+        {
+          "french": "le devoir de mémoire / la commémoration",
+          "english": "duty of memory / commemoration",
+          "gender": "m",
+          "part_of_speech": "noun",
+          "example_sentence": "Le devoir de mémoire est sacré."
+        },
+        {
+          "french": "le patrimoine (matériel, immatériel, mondial)",
+          "english": "heritage (tangible, intangible, world)",
+          "gender": "m",
+          "part_of_speech": "noun",
+          "example_sentence": "Le patrimoine immatériel est protégé par l'UNESCO."
+        },
+        {
+          "french": "le monument historique / le site classé",
+          "english": "historic monument / listed site",
+          "gender": "m",
+          "part_of_speech": "noun",
+          "example_sentence": "Ce château est un monument historique."
+        },
+        {
+          "french": "le château / la cathédrale / l'abbaye",
+          "english": "castle / cathedral / abbey",
+          "gender": "a",
+          "part_of_speech": "noun",
+          "example_sentence": "La cathédrale a brûlé en 2019."
+        },
+        {
+          "french": "la fouille archéologique / l'archéologue / le vestige",
+          "english": "archaeological dig / archaeologist / remnant",
+          "gender": "f",
+          "part_of_speech": "noun",
+          "example_sentence": "Les fouilles ont révélé une villa romaine."
+        },
+        {
+          "french": "la restauration / restaurer / le restaurateur",
+          "english": "restoration / to restore / restorer",
+          "gender": "f",
+          "part_of_speech": "noun",
+          "example_sentence": "La restauration de Notre-Dame est exemplaire."
+        },
+        {
+          "french": "l'UNESCO / le patrimoine mondial",
+          "english": "UNESCO / World Heritage",
+          "gender": "m",
+          "part_of_speech": "noun",
+          "example_sentence": "Carcassonne est inscrite à l'UNESCO."
+        },
+        {
+          "french": "l'archive / le document historique",
+          "english": "archive / historical document",
+          "gender": "f",
+          "part_of_speech": "noun",
+          "example_sentence": "Les archives nationales sont précieuses."
+        },
+        {
+          "french": "la tradition / la coutume / le folklore",
+          "english": "tradition / custom / folklore",
+          "gender": "f",
+          "part_of_speech": "noun",
+          "example_sentence": "Les traditions provençales sont vivaces."
+        },
+        {
+          "french": "l'identité nationale / le récit national",
+          "english": "national identity / national narrative",
+          "gender": "f",
+          "part_of_speech": "noun",
+          "example_sentence": "Le récit national est en débat."
+        },
+        {
+          "french": "le mythe / la légende / le héros",
+          "english": "myth / legend / hero",
+          "gender": "a",
+          "part_of_speech": "noun",
+          "example_sentence": "Jeanne d'Arc est un mythe national."
+        },
+        {
+          "french": "la France d'outre-mer / les anciennes colonies",
+          "english": "Overseas France / former colonies",
+          "gender": "f",
+          "part_of_speech": "noun",
+          "example_sentence": "La Guadeloupe est un département d'outre-mer."
+        },
+        {
+          "french": "le récit officiel / la version officielle",
+          "english": "official narrative / official version",
+          "gender": "m",
+          "part_of_speech": "noun",
+          "example_sentence": "Le récit officiel évolue avec les générations."
+        },
+        {
+          "french": "la révision historique / la repentance",
+          "english": "historical revision / repentance",
+          "gender": "f",
+          "part_of_speech": "noun",
+          "example_sentence": "La repentance divise les historiens."
+        }
+      ],
+      "phrases": [
+        {
+          "fr": "On ne peut pas comprendre le présent sans le passé.",
+          "en": "You can't understand the present without the past.",
+          "note": "Classic phrase."
+        },
+        {
+          "fr": "L'histoire est écrite par les vainqueurs.",
+          "en": "History is written by the winners.",
+          "note": "Famous saying."
+        },
+        {
+          "fr": "C'est notre devoir de mémoire.",
+          "en": "It's our duty of memory.",
+          "note": "Civic phrase."
+        },
+        {
+          "fr": "On ne peut pas juger le passé avec les yeux du présent.",
+          "en": "You can't judge the past with present-day eyes.",
+          "note": "Useful nuance."
+        },
+        {
+          "fr": "Et pourtant, certains crimes restent imprescriptibles.",
+          "en": "Yet some crimes remain imprescriptible.",
+          "note": "Counterpoint to previous phrase."
+        },
+        {
+          "fr": "C'est un pan oublié de notre histoire.",
+          "en": "It's a forgotten part of our history.",
+          "note": "Common phrasing."
+        },
+        {
+          "fr": "L'histoire n'est jamais neutre.",
+          "en": "History is never neutral.",
+          "note": "Critical thinking."
+        },
+        {
+          "fr": "Cette époque me fascine.",
+          "en": "That era fascinates me.",
+          "note": "Personal interest."
+        },
+        {
+          "fr": "Le patrimoine, c'est notre identité.",
+          "en": "Heritage is our identity.",
+          "note": "Patriotic framing."
+        },
+        {
+          "fr": "On a tendance à idéaliser le passé.",
+          "en": "We tend to idealize the past.",
+          "note": "Critical observation."
+        },
+        {
+          "fr": "Cette commémoration soulève une vraie polémique.",
+          "en": "This commemoration raises a real polemic.",
+          "note": "Useful for debate."
+        },
+        {
+          "fr": "L'histoire de France ne se limite pas à l'Hexagone.",
+          "en": "France's history isn't limited to mainland France.",
+          "note": "Important nuance — includes colonies."
+        }
+      ],
+      "reading": {
+        "title": "Notre-Dame de Paris : la résurrection",
+        "content_fr": "Le **15 avril 2019**, à 18h50, l'impossible s'est produit. **Notre-Dame de Paris**, cathédrale millénaire, joyau gothique du cœur de la capitale française, **prenait feu**.\n\nLes premières flammes ont jailli de la charpente médiévale — surnommée « la forêt » à cause de ses 1 300 chênes — bois sec accumulé depuis le **XIIIe siècle**. En moins de deux heures, la **flèche** de Viollet-le-Duc, haute de 96 mètres, s'effondrait dans un fracas filmé en direct par des millions de smartphones. La toiture entière s'écroulait. Les pompiers, à un cheveu de tout perdre, sauvaient in extremis la **structure principale**, les **deux tours**, et la quasi-totalité des **trésors** — dont la **Couronne d'Épines**.\n\nLe choc fut planétaire. En 24 heures, **plus d'un milliard d'euros** étaient promis par des donateurs du monde entier — particuliers, milliardaires, États. Le président français Emmanuel Macron prit alors un engagement audacieux : **rouvrir Notre-Dame dans cinq ans**, à temps pour les Jeux Olympiques de Paris 2024.\n\nBeaucoup ont alors crié à l'**utopie**. Cinq ans pour reconstruire ce que des siècles avaient bâti ? Restaurer une charpente médiévale demanderait de retrouver 1 300 chênes d'âge équivalent — dans une France où ces forêts ont largement disparu. Reproduire la flèche, refondre la toiture, restaurer les **vitraux** noircis par la chaleur, nettoyer chacune des **pierres** : un défi titanesque.\n\nEt pourtant, **cinq ans plus tard**, presque jour pour jour, **Notre-Dame a rouvert**. Le **7 décembre 2024**. Le projet a été conduit par le général Jean-Louis Georgelin, puis par Philippe Jost, avec **plus de 2 000 artisans** : charpentiers, couvreurs, vitraillistes, tailleurs de pierre, sculpteurs, ferronniers — venus de toute la France. Une **épopée artisanale** sans précédent depuis les bâtisseurs de cathédrales.\n\nUn débat avait fait rage : fallait-il **restaurer à l'identique**, ou se permettre une **réinterprétation contemporaine** (toit en verre, flèche moderne) ? Le choix final fut **conservateur** : Notre-Dame retrouverait son visage du XIXe siècle, celui que Viollet-le-Duc lui avait sculpté. Une décision saluée par les **traditionalistes**, regrettée par certains **modernistes**.\n\nMais ce que cette reconstruction nous a appris dépasse l'architecture. Elle nous a montré que **les savoir-faire artisanaux** — qu'on croyait perdus — étaient encore vivants. Que la **mobilisation collective**, dans un monde si fragmenté, restait possible. Et qu'un patrimoine, c'est une promesse faite aux générations futures.",
+        "content_en": "On April 15, 2019, at 6:50 PM, the impossible happened. Notre-Dame de Paris, the thousand-year-old cathedral, gothic jewel of the French capital's heart, was on fire.\n\nThe first flames burst from the medieval framework — nicknamed 'the forest' because of its 1,300 oaks — dry wood accumulated since the 13th century. In less than two hours, Viollet-le-Duc's 96-meter spire collapsed in a roar filmed live by millions of smartphones. The entire roof caved in. Firefighters, on the verge of losing everything, saved at the last moment the main structure, the two towers, and almost all the treasures — including the Crown of Thorns.\n\nThe shock was planetary. Within 24 hours, more than one billion euros were promised by donors worldwide — individuals, billionaires, states. President Macron then made a bold commitment: reopen Notre-Dame in five years, in time for the 2024 Paris Olympics.\n\nMany cried utopia. Five years to rebuild what centuries had built? Restoring a medieval framework would require finding 1,300 oaks of equivalent age — in a France where such forests have largely disappeared. Reproducing the spire, recasting the roof, restoring stained glass blackened by heat, cleaning each stone: a titanic challenge.\n\nAnd yet, five years later, almost to the day, Notre-Dame reopened. December 7, 2024. The project was led by General Jean-Louis Georgelin, then Philippe Jost, with over 2,000 artisans: carpenters, roofers, glassmakers, stonemasons, sculptors, ironworkers — from all over France. An artisan epic unprecedented since the cathedral builders.\n\nA debate had raged: should it be restored identically, or allow a contemporary reinterpretation (glass roof, modern spire)? The final choice was conservative: Notre-Dame would regain its 19th-century face, sculpted by Viollet-le-Duc. A decision welcomed by traditionalists, regretted by some modernists.\n\nBut what this reconstruction taught us goes beyond architecture. It showed us that artisanal know-how — believed lost — was still alive. That collective mobilization, in such a fragmented world, was still possible. And that heritage is a promise made to future generations.",
+        "comprehension_questions": [
+          {
+            "q": "Quand l'incendie a-t-il eu lieu ?",
+            "a": "Le 15 avril 2019, à 18h50."
+          },
+          {
+            "q": "Quel élément emblématique s'est effondré pendant l'incendie ?",
+            "a": "La flèche de Viollet-le-Duc, haute de 96 mètres."
+          },
+          {
+            "q": "Combien d'argent a été promis dans les 24 heures et combien d'artisans ont participé ?",
+            "a": "Plus d'un milliard d'euros, plus de 2 000 artisans."
+          },
+          {
+            "q": "Quel choix de restauration a été fait : identique ou contemporain ?",
+            "a": "Restauration identique au XIXe siècle (visage sculpté par Viollet-le-Duc)."
+          }
+        ]
+      },
+      "cultural_note": "Le **patrimoine français** est l'un des plus riches du monde — la France compte **49 sites inscrits au patrimoine mondial de l'UNESCO**. Parmi eux : Versailles, le Mont-Saint-Michel, Carcassonne, les rives de la Seine, la cathédrale de Chartres, les rives de la Garonne à Bordeaux. La **Journée du patrimoine** (3e weekend de septembre) ouvre gratuitement des centaines de lieux normalement fermés au public. Le **Loto du patrimoine**, lancé par Stéphane Bern en 2018, finance la restauration de monuments menacés. La **mémoire historique** est un sujet vif et contesté : les **lois mémorielles** (sur l'esclavage, le génocide arménien, la Shoah) reconnaissent officiellement certains crimes du passé. Au Québec, le patrimoine francophone — quartier historique de Québec (UNESCO), traditions, architecture du Vieux-Montréal — est protégé avec une fierté particulière, fierté de la **survivance francophone** en Amérique du Nord."
+    },
+    {
+      "name_fr": "L'égalité hommes-femmes et le féminisme",
+      "name_en": "Gender equality and feminism",
+      "icon": "♀️",
+      "order": 770,
+      "difficulty_level": 4,
+      "description": "Comprendre les enjeux d'égalité, du féminisme, et débattre avec nuance.",
+      "vocabulary": [
+        {
+          "french": "l'égalité (hommes-femmes / des sexes / des genres)",
+          "english": "equality (gender)",
+          "gender": "f",
+          "part_of_speech": "noun",
+          "example_sentence": "L'égalité reste un combat quotidien."
+        },
+        {
+          "french": "le féminisme / la féministe",
+          "english": "feminism / feminist",
+          "gender": "m",
+          "part_of_speech": "noun",
+          "example_sentence": "Le féminisme se décline en plusieurs courants."
+        },
+        {
+          "french": "le sexisme / le machisme / le patriarcat",
+          "english": "sexism / machismo / patriarchy",
+          "gender": "m",
+          "part_of_speech": "noun",
+          "example_sentence": "Le patriarcat est un système, pas une intention."
+        },
+        {
+          "french": "la discrimination / l'inégalité salariale",
+          "english": "discrimination / pay gap",
+          "gender": "f",
+          "part_of_speech": "noun",
+          "example_sentence": "L'inégalité salariale est de 15 % en France."
+        },
+        {
+          "french": "le plafond de verre / le congé parental",
+          "english": "glass ceiling / parental leave",
+          "gender": "m",
+          "part_of_speech": "noun",
+          "example_sentence": "Le plafond de verre persiste au sommet."
+        },
+        {
+          "french": "le harcèlement (sexuel, moral, de rue)",
+          "english": "harassment (sexual, moral, street)",
+          "gender": "m",
+          "part_of_speech": "noun",
+          "example_sentence": "Le harcèlement de rue touche la quasi-totalité des femmes."
+        },
+        {
+          "french": "le viol / l'agression sexuelle / l'outrage sexiste",
+          "english": "rape / sexual assault / sexist offense",
+          "gender": "m",
+          "part_of_speech": "noun",
+          "example_sentence": "Le viol est un crime grave."
+        },
+        {
+          "french": "la victime / le bourreau / l'agresseur",
+          "english": "victim / abuser / aggressor",
+          "gender": "a",
+          "part_of_speech": "noun",
+          "example_sentence": "Les victimes osent enfin parler."
+        },
+        {
+          "french": "le consentement / le non-consentement",
+          "english": "consent / non-consent",
+          "gender": "m",
+          "part_of_speech": "noun",
+          "example_sentence": "Le consentement doit être explicite."
+        },
+        {
+          "french": "MeToo / la libération de la parole",
+          "english": "MeToo / speech liberation",
+          "gender": "f",
+          "part_of_speech": "noun",
+          "example_sentence": "MeToo a tout changé en 2017."
+        },
+        {
+          "french": "le féminicide / les violences conjugales",
+          "english": "femicide / domestic violence",
+          "gender": "m",
+          "part_of_speech": "noun",
+          "example_sentence": "Plus de 100 féminicides par an en France."
+        },
+        {
+          "french": "la parité / la mixité",
+          "english": "parity / mixing",
+          "gender": "f",
+          "part_of_speech": "noun",
+          "example_sentence": "La parité progresse en politique."
+        },
+        {
+          "french": "le quota / la représentation",
+          "english": "quota / representation",
+          "gender": "m",
+          "part_of_speech": "noun",
+          "example_sentence": "Les quotas divisent les féministes."
+        },
+        {
+          "french": "l'IVG / l'avortement / le droit de disposer de son corps",
+          "english": "abortion / right to one's body",
+          "gender": "f",
+          "part_of_speech": "noun",
+          "example_sentence": "L'IVG est constitutionnalisée en 2024."
+        },
+        {
+          "french": "la contraception / la pilule / le préservatif",
+          "english": "contraception / pill / condom",
+          "gender": "f",
+          "part_of_speech": "noun",
+          "example_sentence": "La contraception est remboursée jusqu'à 26 ans."
+        },
+        {
+          "french": "la PMA / la GPA / la fertilité",
+          "english": "ART / surrogacy / fertility",
+          "gender": "f",
+          "part_of_speech": "noun",
+          "example_sentence": "La PMA est ouverte à toutes les femmes."
+        },
+        {
+          "french": "la charge mentale / le travail invisible",
+          "english": "mental load / invisible labor",
+          "gender": "f",
+          "part_of_speech": "noun",
+          "example_sentence": "La charge mentale pèse sur les mères."
+        },
+        {
+          "french": "le stéréotype / le préjugé de genre",
+          "english": "stereotype / gender prejudice",
+          "gender": "m",
+          "part_of_speech": "noun",
+          "example_sentence": "Les stéréotypes commencent dès l'enfance."
+        },
+        {
+          "french": "le masculin / le féminin / le langage inclusif",
+          "english": "masculine / feminine / inclusive language",
+          "gender": "m",
+          "part_of_speech": "noun",
+          "example_sentence": "Le langage inclusif divise les linguistes."
+        },
+        {
+          "french": "la maternité / la paternité / le rôle parental",
+          "english": "motherhood / fatherhood / parental role",
+          "gender": "f",
+          "part_of_speech": "noun",
+          "example_sentence": "La paternité aussi est en évolution."
+        },
+        {
+          "french": "le congé maternité / le congé paternité",
+          "english": "maternity / paternity leave",
+          "gender": "m",
+          "part_of_speech": "noun",
+          "example_sentence": "Le congé paternité a doublé en 2021."
+        },
+        {
+          "french": "le LGBT / LGBTQI+ / les minorités sexuelles",
+          "english": "LGBT / LGBTQI+ / sexual minorities",
+          "gender": "m",
+          "part_of_speech": "noun",
+          "example_sentence": "Les droits LGBT progressent inégalement."
+        },
+        {
+          "french": "la transidentité / non-binaire",
+          "english": "transidentity / non-binary",
+          "gender": "f",
+          "part_of_speech": "noun",
+          "example_sentence": "La transidentité est un sujet sociétal."
+        },
+        {
+          "french": "la sororité / l'allié(e)",
+          "english": "sisterhood / ally",
+          "gender": "f",
+          "part_of_speech": "noun",
+          "example_sentence": "La sororité fait la force du mouvement."
+        },
+        {
+          "french": "le backlash / la résistance / les anti-féministes",
+          "english": "backlash / resistance / anti-feminists",
+          "gender": "m",
+          "part_of_speech": "noun",
+          "example_sentence": "Chaque progrès suscite un backlash."
+        }
+      ],
+      "phrases": [
+        {
+          "fr": "Je me considère féministe.",
+          "en": "I consider myself a feminist.",
+          "note": "Identity statement."
+        },
+        {
+          "fr": "Le féminisme, c'est l'humanisme appliqué.",
+          "en": "Feminism is humanism applied.",
+          "note": "Common framing."
+        },
+        {
+          "fr": "À travail égal, salaire égal.",
+          "en": "Equal pay for equal work.",
+          "note": "Slogan since the 60s."
+        },
+        {
+          "fr": "C'est inacceptable en 2026.",
+          "en": "It's unacceptable in 2026.",
+          "note": "Indignant phrase."
+        },
+        {
+          "fr": "On ne peut pas tout mettre sur le dos du patriarcat.",
+          "en": "You can't blame everything on patriarchy.",
+          "note": "Useful nuance."
+        },
+        {
+          "fr": "Mais le système, lui, est bien réel.",
+          "en": "But the system itself is very real.",
+          "note": "Counter-nuance."
+        },
+        {
+          "fr": "Pourquoi est-ce toujours moi qui pense à tout ?",
+          "en": "Why am I always the one thinking of everything?",
+          "note": "Mental-load complaint."
+        },
+        {
+          "fr": "Les mentalités évoluent, mais lentement.",
+          "en": "Mindsets evolve, but slowly.",
+          "note": "Realistic observation."
+        },
+        {
+          "fr": "On a fait des progrès, c'est indéniable.",
+          "en": "We've made progress, it's undeniable.",
+          "note": "Balanced opener."
+        },
+        {
+          "fr": "Le combat n'est pas terminé.",
+          "en": "The fight isn't over.",
+          "note": "Activist phrase."
+        },
+        {
+          "fr": "Je ne suis pas féministe, mais je crois à l'égalité.",
+          "en": "I'm not a feminist, but I believe in equality.",
+          "note": "Common — and often critiqued — position."
+        },
+        {
+          "fr": "Mon fils joue aussi à la poupée.",
+          "en": "My son also plays with dolls.",
+          "note": "Anti-stereotype example."
+        }
+      ],
+      "reading": {
+        "title": "Mars 2024 : l'IVG entre dans la Constitution",
+        "content_fr": "**4 mars 2024**, château de Versailles. **Une émotion rare** dans l'hémicycle du Congrès — la réunion des deux chambres du Parlement français. À 17 h 32, **par 780 voix contre 72**, les députés et sénateurs réunis votent la **constitutionnalisation du droit à l'avortement**. La France devient le **premier pays au monde** à inscrire ce droit dans sa Constitution.\n\nLa phrase ajoutée à l'article 34 est simple : « *La loi détermine les conditions dans lesquelles s'exerce **la liberté garantie à la femme** d'avoir recours à une interruption volontaire de grossesse.* » Quatre mots changent tout : « **liberté garantie à la femme** ». Pour les juristes, ce libellé ferme la porte à toute remise en cause future par une majorité politique — sauf à modifier la Constitution elle-même, ce qui exige une majorité des 3/5.\n\nPourquoi cette inscription, alors que la **loi Veil** (1975), qui a légalisé l'IVG en France, n'avait jamais été sérieusement contestée ? **Une raison principale** : l'**onde de choc** venue des États-Unis. En juin 2022, la Cour suprême américaine, par l'arrêt **Dobbs**, a renversé un demi-siècle de jurisprudence (Roe v. Wade, 1973). Dans la foulée, **13 États américains** ont interdit ou drastiquement restreint l'avortement. Du jour au lendemain, des millions de femmes ont perdu un droit fondamental.\n\nEn France, le message a été reçu : **aucun droit n'est acquis pour toujours**. Les mouvements féministes — épaulés cette fois par une **majorité politique** transpartisane, allant de la gauche à une partie de la droite et au centre macroniste — ont obtenu en 18 mois ce qui semblait impensable.\n\nMais cette victoire ne dissimule pas les **fragilités du terrain**. En France même, **8 femmes sur 10** rapportent avoir vécu un parcours d'IVG **difficile** — délais d'attente, manque de praticiens, jugements moraux du personnel soignant. Le délai légal a été porté à **14 semaines** en 2022, mais reste plus court que dans plusieurs voisins européens (24 semaines aux Pays-Bas).\n\nAu-delà de l'IVG, la **constitutionnalisation** envoie un message plus vaste : les **droits des femmes** ne sont pas un *bonus social* qu'on accorde quand l'époque est généreuse. Ils sont, ou doivent devenir, un **pilier non-négociable** de la République.\n\n« **Ma fille naîtra dans un pays où sa liberté est gravée dans le marbre**, » disait, en pleurs, une élue ce jour-là. « **C'est tout ce que je voulais lui transmettre.** »",
+        "content_en": "March 4, 2024, Château de Versailles. A rare emotion in the Congress chamber — the joint session of France's two parliamentary houses. At 5:32 PM, by 780 votes against 72, MPs and senators voted to constitutionalize the right to abortion. France became the first country in the world to inscribe this right in its Constitution.\n\nThe phrase added to Article 34 is simple: 'The law determines the conditions under which is exercised the freedom guaranteed to women to have recourse to a voluntary termination of pregnancy.' Four words change everything: 'freedom guaranteed to women.' For legal scholars, this wording closes the door to any future challenge by a political majority — except by amending the Constitution itself, requiring a 3/5 majority.\n\nWhy this inscription, when the Veil Law (1975), which legalized abortion in France, had never been seriously contested? One main reason: the shockwave from the United States. In June 2022, the Supreme Court, via the Dobbs ruling, overturned half a century of jurisprudence (Roe v. Wade, 1973). In its wake, 13 American states banned or drastically restricted abortion. Overnight, millions of women lost a fundamental right.\n\nIn France, the message was received: no right is acquired forever. Feminist movements — supported this time by a cross-party political majority, from the left to part of the right and the Macronist center — obtained in 18 months what seemed unthinkable.\n\nBut this victory doesn't hide the fragilities on the ground. In France itself, 8 women in 10 report having experienced a difficult abortion journey — waiting times, lack of practitioners, moral judgments from caregivers. The legal limit was extended to 14 weeks in 2022, but remains shorter than in several European neighbors (24 weeks in the Netherlands).\n\nBeyond abortion, the constitutionalization sends a broader message: women's rights are not a social bonus granted when times are generous. They are, or must become, a non-negotiable pillar of the Republic.\n\n'My daughter will be born in a country where her freedom is carved in stone,' said an elected official in tears that day. 'That's all I wanted to pass on to her.'",
+        "comprehension_questions": [
+          {
+            "q": "Quelle est la date et le résultat exact du vote ?",
+            "a": "Le 4 mars 2024 : 780 voix pour, 72 contre."
+          },
+          {
+            "q": "Quels sont les quatre mots décisifs ajoutés à la Constitution ?",
+            "a": "« Liberté garantie à la femme »."
+          },
+          {
+            "q": "Quel événement aux États-Unis a accéléré cette décision en France ?",
+            "a": "L'arrêt Dobbs de la Cour suprême américaine (juin 2022) qui a renversé Roe v. Wade."
+          },
+          {
+            "q": "Quelle est la limite légale d'IVG en France aujourd'hui ?",
+            "a": "14 semaines (étendue en 2022)."
+          }
+        ]
+      },
+      "cultural_note": "Le **féminisme français** est historiquement riche : Olympe de Gouges (1791, Déclaration des droits de la femme), Simone de Beauvoir (*Le Deuxième Sexe*, 1949 — pierre fondatrice de la deuxième vague), Simone Veil (loi de 1975 sur l'IVG), Gisèle Halimi (avocate féministe), et plus récemment Adèle Haenel ou Caroline De Haas. La **loi Veil** (1975) a légalisé l'IVG ; la **loi Roudy** (1983) l'égalité salariale ; les **lois sur la parité** (2000, 2014) en politique. Le mouvement **MeToo** a frappé la France à partir de 2017 (« #BalanceTonPorc »), avec une intensité particulière dans le **cinéma**, la **politique** et la **médecine**. Au Québec, le féminisme a une longue tradition syndicale et féministe (Madeleine Parent, Léa Roback), et la **lutte contre les violences faites aux femmes autochtones** est un combat majeur des dernières décennies."
+    },
+    {
+      "name_fr": "La justice et le droit",
+      "name_en": "Justice and law",
+      "icon": "⚖️",
+      "order": 780,
+      "difficulty_level": 4,
+      "description": "Comprendre le système judiciaire, les grands débats juridiques et la notion de justice.",
+      "vocabulary": [
+        {
+          "french": "la justice / le système judiciaire",
+          "english": "justice / judicial system",
+          "gender": "f",
+          "part_of_speech": "noun",
+          "example_sentence": "La justice française est indépendante."
+        },
+        {
+          "french": "le droit / les droits / juridique",
+          "english": "law / rights / legal",
+          "gender": "m",
+          "part_of_speech": "noun",
+          "example_sentence": "Le droit évolue avec la société."
+        },
+        {
+          "french": "le tribunal / le palais de justice / la cour",
+          "english": "court / courthouse",
+          "gender": "a",
+          "part_of_speech": "noun",
+          "example_sentence": "Le procès se tient au tribunal de grande instance."
+        },
+        {
+          "french": "le juge / la juge / le magistrat",
+          "english": "judge / magistrate",
+          "gender": "a",
+          "part_of_speech": "noun",
+          "example_sentence": "Le juge a délibéré pendant trois heures."
+        },
+        {
+          "french": "l'avocat / l'avocate / le bâtonnier",
+          "english": "lawyer / bar president",
+          "gender": "a",
+          "part_of_speech": "noun",
+          "example_sentence": "Mon avocate est excellente."
+        },
+        {
+          "french": "le procureur / le ministère public",
+          "english": "prosecutor / public prosecution",
+          "gender": "a",
+          "part_of_speech": "noun",
+          "example_sentence": "Le procureur a requis 10 ans."
+        },
+        {
+          "french": "le procès / l'audience / le jugement",
+          "english": "trial / hearing / judgment",
+          "gender": "m",
+          "part_of_speech": "noun",
+          "example_sentence": "Le procès durera trois semaines."
+        },
+        {
+          "french": "l'accusé / le prévenu / la mise en examen",
+          "english": "the accused / defendant / indictment",
+          "gender": "a",
+          "part_of_speech": "noun",
+          "example_sentence": "L'accusé clame son innocence."
+        },
+        {
+          "french": "la plainte / porter plainte / déposer une plainte",
+          "english": "complaint / to file a complaint",
+          "gender": "f",
+          "part_of_speech": "noun",
+          "example_sentence": "Elle a porté plainte au commissariat."
+        },
+        {
+          "french": "le crime / le délit / la contravention",
+          "english": "crime / offense / fine",
+          "gender": "a",
+          "part_of_speech": "noun",
+          "example_sentence": "C'est un délit, pas un crime."
+        },
+        {
+          "french": "la peine / la sanction / la sentence",
+          "english": "sentence / sanction",
+          "gender": "f",
+          "part_of_speech": "noun",
+          "example_sentence": "La peine a été lourde."
+        },
+        {
+          "french": "la prison / l'incarcération / le détenu",
+          "english": "prison / incarceration / inmate",
+          "gender": "f",
+          "part_of_speech": "noun",
+          "example_sentence": "Les prisons françaises sont surpeuplées."
+        },
+        {
+          "french": "la condamnation / l'acquittement / la relaxe",
+          "english": "conviction / acquittal / dismissal",
+          "gender": "f",
+          "part_of_speech": "noun",
+          "example_sentence": "L'acquittement a soulevé un débat."
+        },
+        {
+          "french": "l'amende / le sursis / le bracelet électronique",
+          "english": "fine / suspended sentence / ankle monitor",
+          "gender": "f",
+          "part_of_speech": "noun",
+          "example_sentence": "Il a écopé de six mois avec sursis."
+        },
+        {
+          "french": "la présomption d'innocence",
+          "english": "presumption of innocence",
+          "gender": "f",
+          "part_of_speech": "noun",
+          "example_sentence": "La présomption d'innocence est un principe fondamental."
+        },
+        {
+          "french": "les droits de l'homme / les droits fondamentaux",
+          "english": "human rights / fundamental rights",
+          "gender": "m",
+          "part_of_speech": "noun",
+          "example_sentence": "La Déclaration de 1789 reste un texte fondateur."
+        },
+        {
+          "french": "la Cour européenne des droits de l'homme (CEDH)",
+          "english": "European Court of Human Rights",
+          "gender": "f",
+          "part_of_speech": "noun",
+          "example_sentence": "La CEDH a condamné la France."
+        },
+        {
+          "french": "la jurisprudence / le précédent",
+          "english": "case law / precedent",
+          "gender": "f",
+          "part_of_speech": "noun",
+          "example_sentence": "La jurisprudence évolue."
+        },
+        {
+          "french": "le code (civil, pénal, du travail)",
+          "english": "code (civil, penal, labor)",
+          "gender": "m",
+          "part_of_speech": "noun",
+          "example_sentence": "Le Code civil date de 1804 (Napoléon)."
+        },
+        {
+          "french": "la garde à vue / la détention provisoire",
+          "english": "police custody / pre-trial detention",
+          "gender": "f",
+          "part_of_speech": "noun",
+          "example_sentence": "Il a été placé en garde à vue."
+        },
+        {
+          "french": "le jury populaire / la cour d'assises",
+          "english": "popular jury / criminal court",
+          "gender": "m",
+          "part_of_speech": "noun",
+          "example_sentence": "La cour d'assises juge les crimes."
+        },
+        {
+          "french": "l'appel / la cassation / le pourvoi",
+          "english": "appeal / cassation / petition",
+          "gender": "m",
+          "part_of_speech": "noun",
+          "example_sentence": "Il a fait appel du jugement."
+        },
+        {
+          "french": "la médiation / la conciliation / l'amiable",
+          "english": "mediation / conciliation / out-of-court",
+          "gender": "f",
+          "part_of_speech": "noun",
+          "example_sentence": "La médiation évite le procès."
+        },
+        {
+          "french": "l'État de droit / l'indépendance de la justice",
+          "english": "rule of law / judicial independence",
+          "gender": "m",
+          "part_of_speech": "noun",
+          "example_sentence": "L'État de droit est notre boussole."
+        },
+        {
+          "french": "la récidive / la réinsertion",
+          "english": "reoffending / rehabilitation",
+          "gender": "f",
+          "part_of_speech": "noun",
+          "example_sentence": "La réinsertion réduit la récidive."
+        }
+      ],
+      "phrases": [
+        {
+          "fr": "La justice est lente.",
+          "en": "Justice is slow.",
+          "note": "Universal complaint."
+        },
+        {
+          "fr": "Tout le monde est égal devant la loi — en principe.",
+          "en": "Everyone is equal before the law — in principle.",
+          "note": "Useful nuance."
+        },
+        {
+          "fr": "Cette peine me paraît disproportionnée.",
+          "en": "This sentence seems disproportionate to me.",
+          "note": "Common reaction."
+        },
+        {
+          "fr": "Il faut respecter la présomption d'innocence.",
+          "en": "We must respect the presumption of innocence.",
+          "note": "Civic phrase."
+        },
+        {
+          "fr": "Justice doit être rendue.",
+          "en": "Justice must be done.",
+          "note": "Solemn."
+        },
+        {
+          "fr": "La prison ne résout pas tout.",
+          "en": "Prison doesn't solve everything.",
+          "note": "Reform argument."
+        },
+        {
+          "fr": "Notre système privilégie la sanction sur la réinsertion.",
+          "en": "Our system favors punishment over rehabilitation.",
+          "note": "Common critique."
+        },
+        {
+          "fr": "Sans avocat, on ne s'en sort pas.",
+          "en": "Without a lawyer, you don't get by.",
+          "note": "Sociological observation."
+        },
+        {
+          "fr": "L'aide juridictionnelle est essentielle.",
+          "en": "Legal aid is essential.",
+          "note": "Social pillar."
+        },
+        {
+          "fr": "Je ne fais plus confiance à la justice.",
+          "en": "I no longer trust the justice system.",
+          "note": "Worrying sentiment, increasingly common."
+        },
+        {
+          "fr": "Au pénal, on présume innocent ; au civil, on présume responsable.",
+          "en": "In criminal court, presumed innocent; in civil, presumed liable.",
+          "note": "Useful legal distinction."
+        },
+        {
+          "fr": "Cette affaire fera jurisprudence.",
+          "en": "This case will set a precedent.",
+          "note": "Legal commentary."
+        }
+      ],
+      "reading": {
+        "title": "Cinq ans pour un procès : la lente justice française",
+        "content_fr": "Quand Sabine, 41 ans, dépose plainte pour **harcèlement sexuel** à son ancien lieu de travail, en juin 2020, elle pense voir aboutir son dossier dans **un an, peut-être deux**. La procédure paraît simple : témoignages, mails accablants, un employeur identifié. « Je veux que la justice passe », dit-elle alors. « Et après, je tourne la page. »\n\n**Cinq ans plus tard**, Sabine attend toujours son procès.\n\nSon histoire n'est pas isolée. La **justice française** est l'une des **plus lentes d'Europe**. Selon le dernier rapport de la Commission européenne pour l'efficacité de la justice (CEPEJ, 2024), **un procès civil moyen** prend en France **13 mois** ; un procès pénal, **26 mois** ; et les affaires complexes (harcèlement, abus financiers, conflits d'entreprise) **dépassent souvent les cinq ans**.\n\nLes **causes** sont multiples. D'abord, **la pénurie de magistrats**. La France compte **environ 12 juges pour 100 000 habitants** — contre **24 en Allemagne** ou **17 en Italie**. Un magistrat français gère donc en moyenne **deux fois plus de dossiers** qu'un magistrat allemand. Ensuite, la **complexité procédurale** : chaque recours, chaque expertise, chaque audience successive **ajoute des mois**. Enfin, le **manque de personnels de greffe** — ces auxiliaires sans qui rien n'avance.\n\nPour Sabine, la **lenteur** a un **prix humain**. Pendant cinq ans, elle a dû **reconstruire sa vie** en arrière-plan, sans pouvoir clore le chapitre. Son ancien employeur, lui, a continué son activité comme si de rien n'était. La **mémoire des témoins** s'est érodée — certains ont déménagé, d'autres ne se souviennent plus précisément. Les **preuves matérielles** (mails, captures d'écran) restent, mais leur **force émotionnelle** diminue avec le temps.\n\nQue faire ? Les solutions proposées sont **diverses**. **Embaucher plus de magistrats** — ce que les gouvernements promettent à chaque législature, mais avec une lenteur qui n'a d'égale que celle des procès eux-mêmes. **Simplifier la procédure** — projet récurrent, mais qui se heurte aux **droits de la défense**, dont la lenteur est parfois la garantie. **Encourager la médiation** pour les conflits civils — solution prometteuse, qui se développe.\n\nMais quelques années suffisent rarement à reconstruire ce qui a été cassé. Sabine, elle, conclut : « Aujourd'hui, je ne sais plus si je veux le procès. Je veux surtout pouvoir tourner la page. »\n\nQuand la justice perd son **temps**, elle perd aussi un peu de son **sens**.",
+        "content_en": "When Sabine, 41, files a complaint for sexual harassment at her former workplace in June 2020, she expects her case to be resolved in a year, maybe two. The procedure seems simple: testimonies, damning emails, an identified employer. 'I want justice to be done,' she says then. 'And then I turn the page.'\n\nFive years later, Sabine is still waiting for her trial.\n\nHer story isn't isolated. French justice is one of the slowest in Europe. According to the European Commission for the Efficiency of Justice (CEPEJ, 2024), an average civil trial takes 13 months in France; a criminal trial, 26 months; and complex cases (harassment, financial abuse, corporate conflicts) often exceed five years.\n\nThe causes are multiple. First, the shortage of magistrates. France has about 12 judges per 100,000 inhabitants — compared with 24 in Germany or 17 in Italy. A French magistrate thus manages, on average, twice as many cases as a German colleague. Then procedural complexity: each appeal, each expert opinion, each successive hearing adds months. Finally, the lack of clerk staff — those auxiliaries without whom nothing moves forward.\n\nFor Sabine, the slowness has a human cost. For five years, she had to rebuild her life in the background, unable to close the chapter. Her former employer, meanwhile, continued his activity as if nothing happened. Witness memory has eroded — some moved, others no longer remember precisely. Material evidence (emails, screenshots) remains, but its emotional force diminishes over time.\n\nWhat to do? The solutions proposed are diverse. Hire more magistrates — what governments promise each legislature, but with a slowness matched only by that of trials themselves. Simplify procedure — recurring project, but it clashes with defense rights, whose slowness is sometimes their guarantee. Encourage mediation for civil conflicts — a promising solution, growing.\n\nBut a few years rarely suffice to rebuild what was broken. Sabine concludes: 'Today, I no longer know if I want the trial. I mostly want to be able to turn the page.'\n\nWhen justice loses its time, it also loses some of its meaning.",
+        "comprehension_questions": [
+          {
+            "q": "Combien d'années Sabine attend-elle son procès ?",
+            "a": "Cinq ans."
+          },
+          {
+            "q": "Combien de juges la France a-t-elle pour 100 000 habitants comparé à l'Allemagne ?",
+            "a": "Environ 12 juges en France contre 24 en Allemagne (deux fois moins)."
+          },
+          {
+            "q": "Quelles sont les trois causes principales de la lenteur ?",
+            "a": "La pénurie de magistrats, la complexité procédurale, et le manque de personnels de greffe."
+          },
+          {
+            "q": "Quelle est la conclusion de Sabine sur le procès ?",
+            "a": "Elle ne sait plus si elle veut le procès — elle veut surtout pouvoir tourner la page."
+          }
+        ]
+      },
+      "cultural_note": "Le **droit français** est de tradition **civiliste** (par opposition à la *common law* anglo-saxonne) : il repose sur des **codes écrits** plutôt que sur les précédents judiciaires. Le **Code civil** (1804, dit « Code Napoléon ») est l'un des textes juridiques les plus influents du monde — il a inspiré les codes de dizaines de pays. La **séparation des pouvoirs** est un pilier : la justice est indépendante de l'exécutif et du législatif (article 64 de la Constitution). Le **Conseil constitutionnel** contrôle la conformité des lois à la Constitution. La **peine de mort** a été abolie en **1981** (Robert Badinter). Au Québec, le système est **mixte** : droit civil (Code civil du Québec, 1994) pour le privé, mais common law pour le droit public — héritage des colonisations française puis britannique. Le procureur s'y appelle **« procureur de la Couronne »**, signe de la monarchie constitutionnelle."
+    },
+    {
+      "name_fr": "La géopolitique et les relations internationales",
+      "name_en": "Geopolitics and international relations",
+      "icon": "🌐",
+      "order": 790,
+      "difficulty_level": 4,
+      "description": "Comprendre les grands enjeux mondiaux, l'UE, l'ONU, les conflits actuels.",
+      "vocabulary": [
+        {
+          "french": "la géopolitique / géopolitique",
+          "english": "geopolitics / geopolitical",
+          "gender": "f",
+          "part_of_speech": "noun",
+          "example_sentence": "La géopolitique du Moyen-Orient est complexe."
+        },
+        {
+          "french": "les relations internationales / la diplomatie",
+          "english": "international relations / diplomacy",
+          "gender": "f",
+          "part_of_speech": "noun",
+          "example_sentence": "La diplomatie demande de la patience."
+        },
+        {
+          "french": "l'État / la nation / le pays",
+          "english": "State / nation / country",
+          "gender": "m",
+          "part_of_speech": "noun",
+          "example_sentence": "Les États ont des intérêts."
+        },
+        {
+          "french": "l'Union européenne (UE) / la Commission européenne",
+          "english": "European Union / European Commission",
+          "gender": "f",
+          "part_of_speech": "noun",
+          "example_sentence": "L'UE compte 27 États membres."
+        },
+        {
+          "french": "l'ONU / le Conseil de sécurité",
+          "english": "UN / Security Council",
+          "gender": "f",
+          "part_of_speech": "noun",
+          "example_sentence": "La France a un siège permanent au Conseil de sécurité."
+        },
+        {
+          "french": "l'OTAN / l'alliance / l'allié",
+          "english": "NATO / alliance / ally",
+          "gender": "f",
+          "part_of_speech": "noun",
+          "example_sentence": "L'OTAN s'est élargie depuis la guerre en Ukraine."
+        },
+        {
+          "french": "le sommet / la conférence / le G7 / le G20",
+          "english": "summit / conference",
+          "gender": "m",
+          "part_of_speech": "noun",
+          "example_sentence": "Le G20 se réunit annuellement."
+        },
+        {
+          "french": "la diplomatie / le diplomate / l'ambassade / l'ambassadeur",
+          "english": "diplomacy / diplomat / embassy / ambassador",
+          "gender": "a",
+          "part_of_speech": "noun",
+          "example_sentence": "L'ambassade a fermé."
+        },
+        {
+          "french": "le traité / l'accord / la convention",
+          "english": "treaty / agreement / convention",
+          "gender": "a",
+          "part_of_speech": "noun",
+          "example_sentence": "Le traité de paix tarde à venir."
+        },
+        {
+          "french": "la guerre / le conflit / l'invasion / l'agression",
+          "english": "war / conflict / invasion / aggression",
+          "gender": "f",
+          "part_of_speech": "noun",
+          "example_sentence": "La guerre en Ukraine continue."
+        },
+        {
+          "french": "la paix / la trêve / le cessez-le-feu",
+          "english": "peace / truce / ceasefire",
+          "gender": "f",
+          "part_of_speech": "noun",
+          "example_sentence": "Le cessez-le-feu n'a pas tenu."
+        },
+        {
+          "french": "la sanction (économique) / l'embargo",
+          "english": "sanction / embargo",
+          "gender": "f",
+          "part_of_speech": "noun",
+          "example_sentence": "Les sanctions visent l'élite russe."
+        },
+        {
+          "french": "la souveraineté / l'indépendance / la dépendance",
+          "english": "sovereignty / independence / dependence",
+          "gender": "f",
+          "part_of_speech": "noun",
+          "example_sentence": "La souveraineté énergétique est cruciale."
+        },
+        {
+          "french": "la superpuissance / la puissance émergente",
+          "english": "superpower / emerging power",
+          "gender": "f",
+          "part_of_speech": "noun",
+          "example_sentence": "La Chine est une puissance émergente devenue dominante."
+        },
+        {
+          "french": "les Brics / le Sud global / le Nord global",
+          "english": "BRICS / Global South / Global North",
+          "gender": "m",
+          "part_of_speech": "noun",
+          "example_sentence": "Les BRICS s'opposent à l'hégémonie occidentale."
+        },
+        {
+          "french": "la mondialisation / la déglobalisation",
+          "english": "globalization / deglobalization",
+          "gender": "f",
+          "part_of_speech": "noun",
+          "example_sentence": "La déglobalisation se confirme."
+        },
+        {
+          "french": "le multilatéralisme / l'unilatéralisme",
+          "english": "multilateralism / unilateralism",
+          "gender": "m",
+          "part_of_speech": "noun",
+          "example_sentence": "Le multilatéralisme est en crise."
+        },
+        {
+          "french": "le terrorisme / la radicalisation",
+          "english": "terrorism / radicalization",
+          "gender": "m",
+          "part_of_speech": "noun",
+          "example_sentence": "Le terrorisme a marqué les années 2010."
+        },
+        {
+          "french": "le réfugié / le migrant climatique / l'exilé",
+          "english": "refugee / climate migrant / exile",
+          "gender": "a",
+          "part_of_speech": "noun",
+          "example_sentence": "Les migrants climatiques se multiplieront."
+        },
+        {
+          "french": "le commerce international / les exportations / les importations",
+          "english": "international trade / exports / imports",
+          "gender": "m",
+          "part_of_speech": "noun",
+          "example_sentence": "Les exportations françaises faiblissent."
+        },
+        {
+          "french": "l'OMC / les barrières douanières / les droits de douane",
+          "english": "WTO / trade barriers / tariffs",
+          "gender": "f",
+          "part_of_speech": "noun",
+          "example_sentence": "Les droits de douane reviennent à la mode."
+        },
+        {
+          "french": "l'influence / le soft power / le hard power",
+          "english": "influence / soft power / hard power",
+          "gender": "f",
+          "part_of_speech": "noun",
+          "example_sentence": "Le soft power français passe par la francophonie."
+        },
+        {
+          "french": "la francophonie / l'Organisation internationale de la Francophonie",
+          "english": "Francophonie / OIF",
+          "gender": "f",
+          "part_of_speech": "noun",
+          "example_sentence": "La francophonie compte 88 États membres."
+        },
+        {
+          "french": "la cyberguerre / les cyberattaques",
+          "english": "cyberwar / cyberattacks",
+          "gender": "f",
+          "part_of_speech": "noun",
+          "example_sentence": "La cyberguerre est devenue stratégique."
+        },
+        {
+          "french": "l'ingérence / l'influence étrangère",
+          "english": "interference / foreign influence",
+          "gender": "f",
+          "part_of_speech": "noun",
+          "example_sentence": "L'ingérence russe inquiète les démocraties."
+        }
+      ],
+      "phrases": [
+        {
+          "fr": "Le monde a changé.",
+          "en": "The world has changed.",
+          "note": "Common opening."
+        },
+        {
+          "fr": "Nous sommes entrés dans une nouvelle ère.",
+          "en": "We've entered a new era.",
+          "note": "Standard framing."
+        },
+        {
+          "fr": "L'Europe doit parler d'une seule voix.",
+          "en": "Europe must speak with one voice.",
+          "note": "Common political call."
+        },
+        {
+          "fr": "Sans Europe, la France ne pèserait rien.",
+          "en": "Without Europe, France would carry no weight.",
+          "note": "Pro-European argument."
+        },
+        {
+          "fr": "L'UE est trop bureaucratique.",
+          "en": "The EU is too bureaucratic.",
+          "note": "Common Euroskeptic critique."
+        },
+        {
+          "fr": "Les États-Unis ne sont plus un allié fiable.",
+          "en": "The US is no longer a reliable ally.",
+          "note": "Recent geopolitical observation."
+        },
+        {
+          "fr": "La Chine est le grand rival du XXIe siècle.",
+          "en": "China is the great rival of the 21st century.",
+          "note": "Strategic framing."
+        },
+        {
+          "fr": "Cette guerre nous concerne tous.",
+          "en": "This war concerns us all.",
+          "note": "Solidarity-based phrase."
+        },
+        {
+          "fr": "Il faut sortir de la dépendance énergétique.",
+          "en": "We must exit energy dependence.",
+          "note": "Post-2022 priority."
+        },
+        {
+          "fr": "On ne peut pas tout résoudre par la force.",
+          "en": "You can't solve everything by force.",
+          "note": "Diplomatic argument."
+        },
+        {
+          "fr": "La diplomatie demande du temps.",
+          "en": "Diplomacy takes time.",
+          "note": "Useful in debates."
+        },
+        {
+          "fr": "Le monde n'est plus américain.",
+          "en": "The world is no longer American.",
+          "note": "Multipolar-world phrase."
+        }
+      ],
+      "reading": {
+        "title": "L'Europe à l'épreuve de la guerre",
+        "content_fr": "**24 février 2022**, 5 h 30 du matin. La Russie envahit l'Ukraine. En quelques heures, l'**Europe** — qui croyait à la guerre comme à une vieille relique, enfouie dans les pages des manuels d'histoire — se réveille brutalement dans une **réalité oubliée**. Pour la première fois depuis 1945, **un État européen** est attaqué dans toute sa souveraineté, en plein continent, par un voisin disposant de **l'arme nucléaire**.\n\nLes premiers jours, l'**incrédulité domine**. Volodymyr Zelensky restera-t-il en vie ? Kiev tombera-t-elle en 72 heures, comme le pronostiquent les analystes ? Quand le président ukrainien refuse l'exfiltration américaine en lançant son fameux « **J'ai besoin de munitions, pas d'un taxi** », il déclenche une vague d'**adhésion mondiale**. L'Ukraine devient, le temps de quelques semaines, **la cause de l'Europe entière**.\n\nLes réactions ont été **rapides et inédites**. L'Union européenne, souvent critiquée pour sa lenteur décisionnelle, a pris en **moins de deux semaines** des décisions qu'on attendait depuis des décennies : **sanctions économiques massives** contre la Russie (gel d'avoirs, exclusion partielle de SWIFT, embargo progressif sur le pétrole et le gaz), **aide militaire** à l'Ukraine (un précédent — l'UE n'avait jamais financé d'armement pour un État en guerre), **accueil de réfugiés** simplifié (plus de 4 millions accueillis en quelques mois). La **Suède** et la **Finlande**, neutres depuis des décennies, ont demandé leur adhésion à l'**OTAN**.\n\nMais quatre ans plus tard, l'**unité européenne** s'effrite. Les **opinions publiques**, lassées par l'inflation, le coût énergétique, et la perspective d'une guerre sans fin, se fragmentent. Certains pays (Hongrie, Slovaquie) bloquent régulièrement les aides supplémentaires. **L'élection de Donald Trump** aux États-Unis, en 2024, a ouvert une nouvelle ère : Washington exige une **paix négociée** rapide, quitte à laisser une partie du territoire ukrainien sous contrôle russe. L'Europe, brusquement, doit **assumer seule** ce qu'elle a longtemps délégué.\n\nCe choc révèle une **vérité ancienne** : la **paix européenne**, depuis 1945, a été **construite sous parapluie américain**. Sans ce parapluie, l'Europe est-elle encore **capable de se défendre** ? L'enjeu est gigantesque : pour la première fois depuis la fondation de l'Europe communautaire, le continent doit redevenir **acteur stratégique** — ou se contenter de **commenter** son déclin.\n\nLa **construction européenne** est née d'une promesse : « **plus jamais la guerre sur notre sol** ». Le 24 février 2022 a montré que cette promesse était **fragile**. La défendre exigera autre chose que des discours.",
+        "content_en": "February 24, 2022, 5:30 AM. Russia invades Ukraine. In a few hours, Europe — which believed in war as an old relic, buried in the pages of history books — wakes brutally to a forgotten reality. For the first time since 1945, a European State is attacked in all its sovereignty, in the middle of the continent, by a neighbor with nuclear weapons.\n\nThe first days, disbelief dominates. Will Volodymyr Zelensky stay alive? Will Kiev fall in 72 hours, as analysts predict? When the Ukrainian president refuses the American exfiltration by launching his famous 'I need ammunition, not a taxi,' he triggers a wave of global support. Ukraine becomes, for a few weeks, the cause of all of Europe.\n\nReactions were rapid and unprecedented. The European Union, often criticized for its decision-making slowness, took in less than two weeks decisions expected for decades: massive economic sanctions against Russia (asset freezes, partial exclusion from SWIFT, progressive oil and gas embargo), military aid to Ukraine (a precedent — the EU had never financed weapons for a state at war), simplified refugee reception (over 4 million welcomed in a few months). Sweden and Finland, neutral for decades, applied to join NATO.\n\nBut four years later, European unity is crumbling. Public opinions, weary of inflation, energy cost, and the prospect of an endless war, fragment. Some countries (Hungary, Slovakia) regularly block additional aid. Donald Trump's election in the US in 2024 opened a new era: Washington demands a rapid negotiated peace, even if it means leaving part of Ukrainian territory under Russian control. Europe must suddenly take on alone what it long delegated.\n\nThis shock reveals an old truth: European peace, since 1945, has been built under the American umbrella. Without that umbrella, is Europe still able to defend itself? The stakes are gigantic: for the first time since the founding of communitarian Europe, the continent must become a strategic actor again — or content itself with commenting on its decline.\n\nEuropean construction was born of a promise: 'never again war on our soil.' February 24, 2022 showed that this promise was fragile. Defending it will require more than speeches.",
+        "comprehension_questions": [
+          {
+            "q": "Quand l'invasion russe a-t-elle commencé ?",
+            "a": "Le 24 février 2022 à 5h30 du matin."
+          },
+          {
+            "q": "Citez trois décisions inédites prises par l'UE dans les semaines suivantes.",
+            "a": "Sanctions économiques massives, aide militaire à l'Ukraine (un précédent), accueil simplifié de réfugiés."
+          },
+          {
+            "q": "Quel pays neutre depuis des décennies a demandé son adhésion à l'OTAN ?",
+            "a": "La Suède et la Finlande."
+          },
+          {
+            "q": "Quelle « vérité ancienne » sur l'Europe ce conflit a-t-il révélée ?",
+            "a": "Que la paix européenne depuis 1945 a été construite sous parapluie américain."
+          }
+        ]
+      },
+      "cultural_note": "La **France** joue un rôle central dans la diplomatie mondiale : **membre permanent du Conseil de sécurité de l'ONU**, **puissance nucléaire**, fondatrice de l'**Union européenne** (Traité de Rome, 1957) avec l'Allemagne, le moteur historique du couple **franco-allemand**. Elle dispose du **3e réseau diplomatique** au monde (160 ambassades). La **Francophonie** rassemble 88 États (321 millions de locuteurs) — un outil de **soft power** sous-estimé. Le **Quai d'Orsay** (siège du ministère des Affaires étrangères) est un nom souvent utilisé par métonymie pour la diplomatie française. Au Québec, la **politique étrangère** est officiellement de compétence fédérale (Ottawa), mais la province entretient des **relations directes** avec la France et la francophonie internationale — une singularité du fédéralisme canadien."
+    },
+    {
+      "name_fr": "Le sport et la société",
+      "name_en": "Sport and society",
+      "icon": "⚽",
+      "order": 800,
+      "difficulty_level": 4,
+      "description": "Parler du sport comme phénomène social, des grandes compétitions, et des débats associés.",
+      "vocabulary": [
+        {
+          "french": "le sport / sportif / la pratique sportive",
+          "english": "sport / sporty / sports activity",
+          "gender": "m",
+          "part_of_speech": "noun",
+          "example_sentence": "Le sport est un droit pour tous."
+        },
+        {
+          "french": "l'athlète / le sportif de haut niveau",
+          "english": "athlete / elite athlete",
+          "gender": "a",
+          "part_of_speech": "noun",
+          "example_sentence": "Cet athlète a battu trois records."
+        },
+        {
+          "french": "la compétition / le championnat / le tournoi",
+          "english": "competition / championship / tournament",
+          "gender": "f",
+          "part_of_speech": "noun",
+          "example_sentence": "Le tournoi des Six Nations a débuté."
+        },
+        {
+          "french": "l'équipe / le club / la fédération",
+          "english": "team / club / federation",
+          "gender": "f",
+          "part_of_speech": "noun",
+          "example_sentence": "L'équipe de France est mondialement reconnue."
+        },
+        {
+          "french": "l'entraîneur / le coach / le sélectionneur",
+          "english": "trainer / coach / national-team selector",
+          "gender": "a",
+          "part_of_speech": "noun",
+          "example_sentence": "L'entraîneur a démissionné."
+        },
+        {
+          "french": "le footballeur / le rugbyman / le cycliste",
+          "english": "footballer / rugby player / cyclist",
+          "gender": "a",
+          "part_of_speech": "noun",
+          "example_sentence": "Les footballeurs sont des stars."
+        },
+        {
+          "french": "les Jeux Olympiques / les JO / les Paralympiques",
+          "english": "Olympics / Paralympics",
+          "gender": "m",
+          "part_of_speech": "noun",
+          "example_sentence": "Paris a accueilli les JO en 2024."
+        },
+        {
+          "french": "la Coupe du monde / la Coupe d'Europe / la Ligue 1",
+          "english": "World Cup / Euro / Ligue 1",
+          "gender": "f",
+          "part_of_speech": "noun",
+          "example_sentence": "La Coupe du monde 2026 sera nord-américaine."
+        },
+        {
+          "french": "le Tour de France / le maillot jaune",
+          "english": "Tour de France / yellow jersey",
+          "gender": "m",
+          "part_of_speech": "noun",
+          "example_sentence": "Le Tour fête ses 120 ans."
+        },
+        {
+          "french": "le stade / la salle / la pelouse / le terrain",
+          "english": "stadium / arena / pitch / field",
+          "gender": "m",
+          "part_of_speech": "noun",
+          "example_sentence": "Le Stade de France peut accueillir 80 000 spectateurs."
+        },
+        {
+          "french": "le supporter / la supportrice / les ultras",
+          "english": "fan / female fan / ultras",
+          "gender": "a",
+          "part_of_speech": "noun",
+          "example_sentence": "Les ultras animent le stade."
+        },
+        {
+          "french": "la victoire / la défaite / le match nul",
+          "english": "victory / defeat / draw",
+          "gender": "f",
+          "part_of_speech": "noun",
+          "example_sentence": "La victoire fut éclatante."
+        },
+        {
+          "french": "le record / battre un record",
+          "english": "record / to break a record",
+          "gender": "m",
+          "part_of_speech": "noun",
+          "example_sentence": "Le record du monde a été battu."
+        },
+        {
+          "french": "la performance / la performance physique",
+          "english": "performance / physical performance",
+          "gender": "f",
+          "part_of_speech": "noun",
+          "example_sentence": "Sa performance fut remarquable."
+        },
+        {
+          "french": "le dopage / la lutte antidopage / l'AMA",
+          "english": "doping / anti-doping / WADA",
+          "gender": "m",
+          "part_of_speech": "noun",
+          "example_sentence": "Le dopage gâche le sport."
+        },
+        {
+          "french": "le fair-play / l'esprit sportif",
+          "english": "fair play / sportsmanship",
+          "gender": "m",
+          "part_of_speech": "noun",
+          "example_sentence": "Le fair-play est une valeur."
+        },
+        {
+          "french": "le sponsoring / les droits télé / la marchandisation",
+          "english": "sponsorship / TV rights / commercialization",
+          "gender": "m",
+          "part_of_speech": "noun",
+          "example_sentence": "Les droits télé sont devenus astronomiques."
+        },
+        {
+          "french": "le sport-spectacle / l'argent dans le sport",
+          "english": "spectator sport / money in sports",
+          "gender": "m",
+          "part_of_speech": "noun",
+          "example_sentence": "Le sport-spectacle a tué l'amateurisme."
+        },
+        {
+          "french": "l'amateurisme / le professionnel",
+          "english": "amateurism / professional",
+          "gender": "m",
+          "part_of_speech": "noun",
+          "example_sentence": "L'amateurisme a disparu."
+        },
+        {
+          "french": "la pratique amateur / le sport pour tous",
+          "english": "amateur practice / sport for all",
+          "gender": "f",
+          "part_of_speech": "noun",
+          "example_sentence": "Le sport pour tous reste un idéal."
+        },
+        {
+          "french": "la santé par le sport / l'activité physique",
+          "english": "health through sport / physical activity",
+          "gender": "f",
+          "part_of_speech": "noun",
+          "example_sentence": "L'activité physique est prescrite par les médecins."
+        },
+        {
+          "french": "la diversité dans le sport / les femmes dans le sport",
+          "english": "diversity in sport / women in sport",
+          "gender": "f",
+          "part_of_speech": "noun",
+          "example_sentence": "Les femmes dans le sport gagnent en visibilité."
+        },
+        {
+          "french": "le sport féminin / l'écart de salaires",
+          "english": "women's sport / pay gap",
+          "gender": "m",
+          "part_of_speech": "noun",
+          "example_sentence": "L'écart de salaires reste considérable."
+        },
+        {
+          "french": "les e-sports / les jeux vidéo compétitifs",
+          "english": "e-sports / competitive video games",
+          "gender": "m",
+          "part_of_speech": "noun",
+          "example_sentence": "Les e-sports remplissent des stades."
+        },
+        {
+          "french": "le sport et l'environnement / la sobriété sportive",
+          "english": "sport and environment / sports sustainability",
+          "gender": "m",
+          "part_of_speech": "noun",
+          "example_sentence": "L'impact carbone des grandes compétitions est massif."
+        }
+      ],
+      "phrases": [
+        {
+          "fr": "Le sport, c'est la santé.",
+          "en": "Sport is health.",
+          "note": "Classic saying."
+        },
+        {
+          "fr": "On a gagné !",
+          "en": "We won!",
+          "note": "Note 'on' = collective enthusiasm — 'we' the fans, not 'we' the team."
+        },
+        {
+          "fr": "C'est inadmissible, cet arbitrage !",
+          "en": "This refereeing is unacceptable!",
+          "note": "Fan complaint."
+        },
+        {
+          "fr": "Allez les Bleus !",
+          "en": "Go Blues!",
+          "note": "Cheer for the French team."
+        },
+        {
+          "fr": "Cette équipe joue collectif.",
+          "en": "This team plays as a unit.",
+          "note": "Tactical compliment."
+        },
+        {
+          "fr": "Le foot, c'est devenu un business.",
+          "en": "Football has become a business.",
+          "note": "Common critique."
+        },
+        {
+          "fr": "Les salaires sont indécents.",
+          "en": "Salaries are obscene.",
+          "note": "Strong feeling among many."
+        },
+        {
+          "fr": "Au moins, dans le sport, c'est le mérite qui compte.",
+          "en": "At least in sport, merit matters.",
+          "note": "Defending sport's ideal."
+        },
+        {
+          "fr": "Le dopage gâche tout.",
+          "en": "Doping ruins everything.",
+          "note": "Recurring sentiment."
+        },
+        {
+          "fr": "Je préfère pratiquer que regarder.",
+          "en": "I prefer practicing to watching.",
+          "note": "Personal preference."
+        },
+        {
+          "fr": "Les femmes méritent les mêmes moyens.",
+          "en": "Women deserve the same resources.",
+          "note": "Equality argument."
+        },
+        {
+          "fr": "Le sport unit ce que la politique divise.",
+          "en": "Sport unites what politics divides.",
+          "note": "Useful phrase for arguments."
+        }
+      ],
+      "reading": {
+        "title": "Paris 2024 : le pari réussi",
+        "content_fr": "**26 juillet 2024**, 20 h 30. Sur la Seine, **80 bateaux** défilent devant 600 000 spectateurs massés sur les quais. Lady Gaga chante depuis un ponton ; Aya Nakamura, elle, depuis le Pont des Arts. La tour Eiffel s'illumine. La flamme olympique, allumée à Olympie deux mois plus tôt, traverse la capitale. C'est la **cérémonie d'ouverture** des **Jeux Olympiques de Paris 2024** — la **première de l'histoire** à se tenir **en pleine ville**, hors d'un stade, sur un fleuve.\n\nLe pari était risqué. Beaucoup, dans les mois précédents, **doutaient**. La Seine serait-elle assez **propre** pour accueillir les épreuves de natation ? La **sécurité** d'un défilé étalé sur 6 kilomètres était-elle tenable ? Le **prix** — plus de 9 milliards d'euros — était-il justifié ?\n\nQuatre semaines plus tard, le verdict était sans appel : **Paris 2024 a été un succès**. Pas seulement sportif (les Français ont remporté **64 médailles**, dont 16 d'or, leur meilleur résultat depuis 1900) — mais **culturel, organisationnel, et politique**. Pour deux semaines, Paris est devenu **la capitale du monde**, dans une ferveur populaire qu'on n'avait pas vue depuis la Coupe du monde 1998.\n\n**Plusieurs symboles** ont marqué ces Jeux. **Léon Marchand**, 22 ans, **quadruple médaillé d'or** en natation, est devenu une icône — comparable, dans les esprits, à Bernard Hinault ou à Zidane. **Teddy Riner** (judo) a remporté sa **cinquième médaille olympique**. La **breakdance** est devenue discipline olympique, ouvrant la porte à des sports nouveaux. Mais surtout, ces Jeux ont mis en lumière une **génération diverse**, multi-origines, à l'image de la France contemporaine — Marchand est petit-fils d'immigrés ; le rugby à 7 français était capitaine par Antoine Dupont, fils du Lot-et-Garonne ; la sabreuse Manon Apithy-Brunet a apporté la première médaille d'or à la France, métissée et fière de l'être.\n\nLa **dimension paralympique** a été un autre **moment fort**. Les **Jeux Paralympiques de Paris**, qui ont suivi en septembre, ont rassemblé des **stades pleins** — ce qui était loin d'être garanti. La couverture télévisée a été plus large qu'à aucun précédent paralympique. Pour beaucoup de personnes handicapées en France, ces Jeux ont représenté une **forme de reconnaissance** rarement vécue.\n\nReste à juger sur le long terme. Les **infrastructures** construites (village olympique transformé en quartier d'habitation, équipements à Saint-Denis) doivent maintenant **profiter à la population locale**. La **pratique sportive** des Français progresse-t-elle réellement, comme l'avaient promis les organisateurs ? Le **bilan environnemental** — malgré des efforts inédits (60 % d'événements dans des sites existants, énergies renouvelables) — reste contesté.\n\nMais une chose est certaine : Paris 2024 a montré qu'un grand événement mondial peut être **populaire, ouvert, et fier**. Dans une France souvent fracturée, ces deux semaines ont été un **moment d'unité** dont on parlera longtemps.",
+        "content_en": "July 26, 2024, 8:30 PM. On the Seine, 80 boats parade before 600,000 spectators packed on the banks. Lady Gaga sings from a platform; Aya Nakamura, from the Pont des Arts. The Eiffel Tower lights up. The Olympic flame, lit in Olympia two months earlier, crosses the capital. It's the opening ceremony of the Paris 2024 Olympics — the first in history held in the city itself, outside a stadium, on a river.\n\nThe bet was risky. Many in the preceding months doubted. Would the Seine be clean enough for swimming events? Was the security of a 6-kilometer-spread parade sustainable? Was the cost — over 9 billion euros — justified?\n\nFour weeks later, the verdict was unequivocal: Paris 2024 was a success. Not just sportingly (the French won 64 medals, 16 gold, their best result since 1900) — but culturally, organizationally, and politically. For two weeks, Paris became the capital of the world, in a popular fervor not seen since the 1998 World Cup.\n\nSeveral symbols marked these Games. Léon Marchand, 22, four-time gold medalist in swimming, became an icon — comparable, in people's minds, to Bernard Hinault or Zidane. Teddy Riner (judo) won his fifth Olympic medal. Breakdance became an Olympic discipline, opening the door to new sports. But above all, these Games highlighted a diverse, multi-origin generation, reflecting contemporary France — Marchand is the grandson of immigrants; French sevens rugby was captained by Antoine Dupont, son of Lot-et-Garonne; sabre fencer Manon Apithy-Brunet brought France's first gold, mixed-race and proud of it.\n\nThe Paralympic dimension was another high point. The Paralympic Games of Paris, which followed in September, filled stadiums — far from guaranteed. TV coverage was broader than any previous Paralympic. For many people with disabilities in France, these Games represented a rare form of recognition.\n\nIt remains to judge over the long term. The infrastructure built (Olympic village transformed into housing, equipment in Saint-Denis) must now benefit the local population. Are French sports practices really progressing, as organizers promised? The environmental balance — despite unprecedented efforts (60 % of events at existing sites, renewable energy) — remains contested.\n\nBut one thing is certain: Paris 2024 showed that a global event can be popular, open, and proud. In a France often fractured, these two weeks were a moment of unity that will be talked about for a long time.",
+        "comprehension_questions": [
+          {
+            "q": "Quelle était la particularité de la cérémonie d'ouverture ?",
+            "a": "Première de l'histoire à se tenir en pleine ville, hors d'un stade, sur un fleuve (la Seine)."
+          },
+          {
+            "q": "Combien de médailles la France a-t-elle remportées, et c'est le meilleur résultat depuis quand ?",
+            "a": "64 médailles, dont 16 d'or — meilleur résultat depuis 1900."
+          },
+          {
+            "q": "Qui est Léon Marchand et que représente-t-il ?",
+            "a": "Un nageur de 22 ans, quadruple médaillé d'or, devenu icône d'une France diverse (petit-fils d'immigrés)."
+          },
+          {
+            "q": "Quels sont les défis à long terme évoqués ?",
+            "a": "Que les infrastructures profitent à la population locale, que la pratique sportive progresse, et le bilan environnemental contesté."
+          }
+        ]
+      },
+      "cultural_note": "La France est un **grand pays sportif** : 18 millions de licenciés (sur 67 millions d'habitants), des fédérations historiques, un palmarès olympique parmi les meilleurs au monde. Les **sports nationaux** : football, rugby (surtout dans le Sud-Ouest), cyclisme (le Tour de France date de 1903), tennis (Roland-Garros), équitation, voile. Le **football français** brille particulièrement depuis 1998 : deux titres mondiaux (1998, 2018), une équipe nationale mondialement respectée. La **devise sportive française** repose sur l'idée que **le sport doit rester au service de la société** — d'où la place importante du sport amateur, des associations, et du **bénévolat**. Au Québec, le **hockey sur glace** est le sport-roi (Canadiens de Montréal), et le sport identifie fortement la communauté francophone."
+    },
+    {
+      "name_fr": "La philosophie et les idées",
+      "name_en": "Philosophy and ideas",
+      "icon": "🧠",
+      "order": 810,
+      "difficulty_level": 4,
+      "description": "Aborder les grands courants philosophiques, les questions de sens, et les débats d'idées.",
+      "vocabulary": [
+        {
+          "french": "la philosophie / philosophique / le philosophe",
+          "english": "philosophy / philosophical / philosopher",
+          "gender": "f",
+          "part_of_speech": "noun",
+          "example_sentence": "La philosophie m'aide à penser."
+        },
+        {
+          "french": "la pensée / la réflexion / réfléchir",
+          "english": "thought / reflection / to reflect",
+          "gender": "f",
+          "part_of_speech": "noun",
+          "example_sentence": "La pensée critique se cultive."
+        },
+        {
+          "french": "l'idée / le concept / la notion",
+          "english": "idea / concept / notion",
+          "gender": "f",
+          "part_of_speech": "noun",
+          "example_sentence": "Cette idée est fascinante."
+        },
+        {
+          "french": "le sens / le sens de la vie / la signification",
+          "english": "meaning / meaning of life / significance",
+          "gender": "m",
+          "part_of_speech": "noun",
+          "example_sentence": "Quel est le sens de tout cela ?"
+        },
+        {
+          "french": "la vérité / le vrai / le faux / le mensonge",
+          "english": "truth / true / false / lie",
+          "gender": "f",
+          "part_of_speech": "noun",
+          "example_sentence": "La vérité n'est jamais simple."
+        },
+        {
+          "french": "la liberté / la responsabilité / le libre arbitre",
+          "english": "freedom / responsibility / free will",
+          "gender": "f",
+          "part_of_speech": "noun",
+          "example_sentence": "Sans liberté, pas de responsabilité."
+        },
+        {
+          "french": "le bien / le mal / la morale / l'éthique",
+          "english": "good / evil / morality / ethics",
+          "gender": "a",
+          "part_of_speech": "noun",
+          "example_sentence": "Le bien et le mal ne sont pas relatifs."
+        },
+        {
+          "french": "le bonheur / le malheur / la joie",
+          "english": "happiness / unhappiness / joy",
+          "gender": "m",
+          "part_of_speech": "noun",
+          "example_sentence": "Le bonheur ne s'achète pas."
+        },
+        {
+          "french": "la sagesse / le sage / la prudence",
+          "english": "wisdom / wise person / prudence",
+          "gender": "f",
+          "part_of_speech": "noun",
+          "example_sentence": "La sagesse vient avec l'expérience."
+        },
+        {
+          "french": "l'humanisme / l'humaniste / les Lumières",
+          "english": "humanism / humanist / the Enlightenment",
+          "gender": "m",
+          "part_of_speech": "noun",
+          "example_sentence": "L'humanisme place l'homme au centre."
+        },
+        {
+          "french": "le rationalisme / la raison / l'irrationnel",
+          "english": "rationalism / reason / the irrational",
+          "gender": "m",
+          "part_of_speech": "noun",
+          "example_sentence": "Descartes incarne le rationalisme."
+        },
+        {
+          "french": "l'empirisme / l'expérience / l'observation",
+          "english": "empiricism / experience / observation",
+          "gender": "m",
+          "part_of_speech": "noun",
+          "example_sentence": "Les Anglais ont développé l'empirisme."
+        },
+        {
+          "french": "l'existentialisme / l'existence / l'essence",
+          "english": "existentialism / existence / essence",
+          "gender": "m",
+          "part_of_speech": "noun",
+          "example_sentence": "Sartre est le philosophe de l'existentialisme."
+        },
+        {
+          "french": "le stoïcisme / l'épicurisme / le cynisme",
+          "english": "Stoicism / Epicureanism / Cynicism",
+          "gender": "m",
+          "part_of_speech": "noun",
+          "example_sentence": "Le stoïcisme revient à la mode."
+        },
+        {
+          "french": "la conscience / l'inconscient / la psyché",
+          "english": "consciousness / unconscious / psyche",
+          "gender": "f",
+          "part_of_speech": "noun",
+          "example_sentence": "Freud a découvert l'inconscient."
+        },
+        {
+          "french": "la métaphysique / l'épistémologie / la logique",
+          "english": "metaphysics / epistemology / logic",
+          "gender": "f",
+          "part_of_speech": "noun",
+          "example_sentence": "La logique est l'outil du philosophe."
+        },
+        {
+          "french": "l'esthétique / le beau / l'art",
+          "english": "aesthetics / the beautiful / art",
+          "gender": "f",
+          "part_of_speech": "noun",
+          "example_sentence": "L'esthétique étudie le beau."
+        },
+        {
+          "french": "la politique / le pouvoir / la justice",
+          "english": "politics / power / justice",
+          "gender": "f",
+          "part_of_speech": "noun",
+          "example_sentence": "La politique est-elle un art ou une science ?"
+        },
+        {
+          "french": "l'argument / la thèse / l'antithèse / la synthèse",
+          "english": "argument / thesis / antithesis / synthesis",
+          "gender": "m",
+          "part_of_speech": "noun",
+          "example_sentence": "La dialectique hégélienne procède en trois temps."
+        },
+        {
+          "french": "la dialectique / le débat / la controverse",
+          "english": "dialectic / debate / controversy",
+          "gender": "f",
+          "part_of_speech": "noun",
+          "example_sentence": "La dialectique fait avancer la pensée."
+        },
+        {
+          "french": "le doute / la certitude / le scepticisme",
+          "english": "doubt / certainty / skepticism",
+          "gender": "m",
+          "part_of_speech": "noun",
+          "example_sentence": "Le doute est le commencement de la sagesse."
+        },
+        {
+          "french": "la mort / la finitude / l'éternité",
+          "english": "death / finitude / eternity",
+          "gender": "f",
+          "part_of_speech": "noun",
+          "example_sentence": "Penser la mort, c'est penser la vie."
+        },
+        {
+          "french": "le temps / l'instant / le passé / le futur",
+          "english": "time / instant / past / future",
+          "gender": "m",
+          "part_of_speech": "noun",
+          "example_sentence": "Le temps est une énigme philosophique."
+        },
+        {
+          "french": "la nature / la culture / l'inné / l'acquis",
+          "english": "nature / culture / innate / acquired",
+          "gender": "f",
+          "part_of_speech": "noun",
+          "example_sentence": "Le débat nature-culture est éternel."
+        },
+        {
+          "french": "l'absurde / le néant / le nihilisme",
+          "english": "the absurd / nothingness / nihilism",
+          "gender": "m",
+          "part_of_speech": "noun",
+          "example_sentence": "Camus a écrit sur l'absurde."
+        }
+      ],
+      "phrases": [
+        {
+          "fr": "C'est une vraie question.",
+          "en": "That's a real question.",
+          "note": "Common philosophical opener."
+        },
+        {
+          "fr": "Tout dépend de ce qu'on entend par...",
+          "en": "It all depends what we mean by...",
+          "note": "Useful for nuanced debate."
+        },
+        {
+          "fr": "Cela mérite réflexion.",
+          "en": "That deserves reflection.",
+          "note": "Polite pause."
+        },
+        {
+          "fr": "Je pense, donc je suis.",
+          "en": "I think, therefore I am.",
+          "note": "Descartes' famous quote."
+        },
+        {
+          "fr": "L'homme est condamné à être libre.",
+          "en": "Man is condemned to be free.",
+          "note": "Sartre — frequent reference."
+        },
+        {
+          "fr": "Le bonheur, c'est subjectif.",
+          "en": "Happiness is subjective.",
+          "note": "Common stance."
+        },
+        {
+          "fr": "Il faut imaginer Sisyphe heureux.",
+          "en": "We must imagine Sisyphus happy.",
+          "note": "Camus, frequently cited."
+        },
+        {
+          "fr": "Cela me fait penser à...",
+          "en": "That makes me think of...",
+          "note": "Building bridges in debate."
+        },
+        {
+          "fr": "Je nuancerais ton propos.",
+          "en": "I'd nuance your statement.",
+          "note": "Polite disagreement."
+        },
+        {
+          "fr": "C'est plus complexe qu'il n'y paraît.",
+          "en": "It's more complex than it appears.",
+          "note": "Useful framing."
+        },
+        {
+          "fr": "La philosophie nous apprend à penser, pas à conclure.",
+          "en": "Philosophy teaches us to think, not conclude.",
+          "note": "Methodological point."
+        },
+        {
+          "fr": "Que serait notre monde sans...?",
+          "en": "What would our world be without...?",
+          "note": "Counterfactual reasoning."
+        }
+      ],
+      "reading": {
+        "title": "Pourquoi le bac de philo nous obsède",
+        "content_fr": "Chaque année, à la mi-juin, un événement étrange se produit en France. Les **journaux télévisés** ouvrent leurs éditions sur **les sujets du bac de philosophie**. Les radios débattent. Les anciens bacheliers — y compris ceux qui ont quitté le lycée il y a 30 ou 40 ans — se prêtent au jeu : « Que répondrais-je à : *Notre liberté est-elle compromise par notre besoin d'appartenance ?* »\n\nAucun autre pays au monde ne traite ainsi un **examen scolaire**. Aux États-Unis ou en Asie, on évalue par QCM standardisés. Au Royaume-Uni, par essais sur des œuvres précises. Mais en France ? **Quatre heures de dissertation** sur un sujet philosophique abstrait, à 18 ans. **Pourquoi ?**\n\nLa réponse tient à l'**héritage des Lumières**. La France, depuis le XVIIIe siècle, considère que **former des citoyens libres** passe par la **pensée critique**. Et que la pensée critique se forge — non par accumulation de savoirs — mais par **l'effort de problématiser**, **d'argumenter**, **de nuancer**. La philosophie est donc devenue, dans le système français, **la matière reine du lycée** : la dernière année, en terminale, lui est presque entièrement consacrée.\n\nLes sujets sont **toujours des questions ouvertes**, formulées en quelques mots, mais qui réclament des heures de pensée. *« La vérité dépend-elle de nous ? »*. *« Le travail divise-t-il les hommes ? »*. *« Faut-il toujours tenir ses promesses ? »*. Aucune réponse n'est attendue : ce qu'on évalue, c'est la **démarche** — capacité à problématiser, à mobiliser des références, à construire un raisonnement.\n\nCe modèle a ses **critiques**. Beaucoup d'élèves le **détestent** : ils trouvent les sujets obscurs, les attentes floues, les notes injustes. **Bourdieu** a montré que le bac de philo reproduit fortement les **inégalités sociales** : les élèves issus de milieux culturellement favorisés, habitués au débat à table, réussissent mieux que les autres. Beaucoup d'enseignants se demandent si la **dissertation traditionnelle** est encore le bon outil au XXIe siècle.\n\nMais il a aussi des **défenseurs passionnés**. Pour eux, le bac de philo est **un acte de foi républicain**. Croire que chaque jeune Français, à 18 ans, peut **réfléchir au sens du monde** — c'est, fondamentalement, **croire en la démocratie**. Supprimer cette épreuve, ce serait **abandonner** une certaine idée de la France : celle d'un pays qui pense, qui débat, qui doute.\n\nL'épreuve de philosophie, ce n'est pas seulement un examen. C'est une **promesse** : celle que **chaque jeune adulte mérite de poser, au moins une fois dans sa vie, les grandes questions de l'existence**. Et qu'il les pose **à plat**, **à blanc**, **avec sa propre tête** — non pour réussir, non pour prouver, mais pour **devenir lui-même**.\n\nDans un monde saturé de réponses rapides, peut-être que **la philosophie n'a jamais été aussi nécessaire**.",
+        "content_en": "Every year, in mid-June, a strange event occurs in France. TV news opens its broadcasts on the philosophy bac topics. Radios debate. Former bac graduates — including those who left high school 30 or 40 years ago — play the game: 'How would I answer: Is our freedom compromised by our need to belong?'\n\nNo other country in the world treats a school exam this way. In the US or Asia, you're evaluated by standardized multiple choice. In the UK, by essays on specific works. But in France? Four hours of dissertation on an abstract philosophical topic, at 18. Why?\n\nThe answer lies in the heritage of the Enlightenment. France, since the 18th century, considers that forming free citizens passes through critical thinking. And critical thinking is forged — not by accumulating knowledge — but by the effort of problematizing, arguing, nuancing. Philosophy has therefore become, in the French system, the high school's queen subject: the last year is almost entirely devoted to it.\n\nTopics are always open questions, formulated in a few words but demanding hours of thought. 'Does truth depend on us?' 'Does work divide men?' 'Must we always keep our promises?' No answer is expected: what's evaluated is the approach — the ability to problematize, mobilize references, construct reasoning.\n\nThis model has its critics. Many students hate it: they find topics obscure, expectations vague, grades unfair. Bourdieu showed that the philosophy bac strongly reproduces social inequalities: students from culturally privileged backgrounds, used to debate at the table, do better than others. Many teachers wonder if traditional dissertation is still the right tool in the 21st century.\n\nBut it also has passionate defenders. For them, the philosophy bac is a republican act of faith. To believe that every young French person at 18 can reflect on the meaning of the world — that is, fundamentally, to believe in democracy. To suppress this exam would be to abandon a certain idea of France: that of a country that thinks, debates, doubts.\n\nThe philosophy exam isn't just a test. It's a promise: that every young adult deserves to ask, at least once in their life, the big questions of existence. And to ask them plain, blank, with their own mind — not to succeed, not to prove, but to become themselves.\n\nIn a world saturated with quick answers, perhaps philosophy has never been more necessary.",
+        "comprehension_questions": [
+          {
+            "q": "Combien de temps dure l'épreuve de philosophie au bac ?",
+            "a": "Quatre heures."
+          },
+          {
+            "q": "Quel héritage explique cette singularité française ?",
+            "a": "L'héritage des Lumières et l'idée que former des citoyens libres passe par la pensée critique."
+          },
+          {
+            "q": "Quelle est la critique majeure formulée par Bourdieu ?",
+            "a": "Que le bac de philo reproduit fortement les inégalités sociales — favorisant les enfants de milieux culturellement aisés."
+          },
+          {
+            "q": "Pour les défenseurs, qu'est-ce que représente cette épreuve ?",
+            "a": "Un acte de foi républicain — croire que chaque jeune Français peut réfléchir au sens du monde, donc croire en la démocratie."
+          }
+        ]
+      },
+      "cultural_note": "La **philosophie française** est l'une des plus influentes au monde : Descartes (« je pense donc je suis »), Pascal, Rousseau, Voltaire, Bergson, Sartre, Camus, Foucault, Derrida, Deleuze, Bourdieu. Le **bac de philo** est obligatoire pour tous les bacheliers généraux (4 à 8 heures, selon la filière) — une **exception mondiale**. Les **philosophes contemporains** restent des **personnages publics** très médiatisés : ils ont droit à des éditoriaux, des prime-times télé, des best-sellers. La **figure du philosophe-citoyen** (Sartre marchant avec les ouvriers en 1968, Foucault défendant les prisonniers) imprègne l'imaginaire. Au Québec, la philosophie est enseignée au **CÉGEP** — un cours obligatoire pour tous les étudiants, une autre singularité francophone. La pensée québécoise contemporaine (Charles Taylor, par exemple) est respectée internationalement, notamment sur les questions d'**identité** et de **multiculturalisme**."
+    }
+  ]
+}

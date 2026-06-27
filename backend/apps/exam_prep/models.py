@@ -83,6 +83,17 @@ class ExamSession(models.Model):
 class ExamResponse(models.Model):
     """A single answer within an exam session."""
 
+    GRADING_NOT_REQUIRED = "not_required"
+    GRADING_PENDING = "pending"
+    GRADING_DONE = "done"
+    GRADING_FAILED = "failed"
+    GRADING_STATUS_CHOICES = [
+        (GRADING_NOT_REQUIRED, "Not required (auto-graded)"),
+        (GRADING_PENDING, "Pending"),
+        (GRADING_DONE, "Done"),
+        (GRADING_FAILED, "Failed"),
+    ]
+
     session = models.ForeignKey(ExamSession, on_delete=models.CASCADE, related_name="responses")
     exercise = models.ForeignKey(ExamExercise, on_delete=models.CASCADE, related_name="responses")
     question_index = models.PositiveIntegerField(default=0)
@@ -92,6 +103,16 @@ class ExamResponse(models.Model):
     score = models.FloatField(default=0)
     max_score = models.FloatField(default=1)
     answered_at = models.DateTimeField(auto_now_add=True)
+    # Async grading bookkeeping (EE / EO sections only). Auto-graded sections
+    # (CO / CE) leave grading_status at "not_required".
+    grading_status = models.CharField(
+        max_length=16,
+        choices=GRADING_STATUS_CHOICES,
+        default=GRADING_NOT_REQUIRED,
+        db_index=True,
+    )
+    grading_task_id = models.CharField(max_length=64, blank=True, default="")
+    grading_completed_at = models.DateTimeField(null=True, blank=True)
 
     class Meta:
         db_table = "exam_prep_responses"

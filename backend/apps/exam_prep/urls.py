@@ -19,4 +19,9 @@ urlpatterns = [
         name="session-complete",
     ),
     path("sessions/history/", views.SessionHistoryView.as_view(), name="session-history"),
+    path(
+        "responses/<int:response_id>/grading/",
+        views.ResponseGradingView.as_view(),
+        name="response-grading",
+    ),
 ]

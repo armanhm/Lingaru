@@ -1,0 +1,909 @@
+{
+  "_meta": {
+    "language": "fr",
+    "title": "Lingaru — Discover trivia bank (FR)",
+    "description": "Hand-authored French trivia cards. Loaded into TriviaTemplate by seed_discover_trivia_fr; daily picks come from this bank instead of an LLM call."
+  },
+  "entries": [
+    {
+      "slug": "geo-hexagon",
+      "category": "geography",
+      "level": "A1",
+      "title": "Pourquoi « l'Hexagone » ?",
+      "summary": "Le surnom géographique de la France.",
+      "fact_fr": "On surnomme la France « l'Hexagone » parce que sa forme, vue sur une carte, se rapproche d'un hexagone régulier — six côtés naturels formés par les frontières terrestres et maritimes du pays.",
+      "fact_en": "France is nicknamed 'the Hexagon' because its shape on a map roughly resembles a regular hexagon — six natural sides formed by its land and sea borders."
+    },
+    {
+      "slug": "geo-mont-blanc",
+      "category": "geography",
+      "level": "A2",
+      "title": "Le toit de l'Europe occidentale",
+      "summary": "Le sommet le plus haut d'Europe occidentale.",
+      "fact_fr": "Le Mont Blanc, situé dans les Alpes à la frontière entre la France et l'Italie, culmine à environ 4 808 mètres. C'est le point le plus élevé d'Europe occidentale.",
+      "fact_en": "Mont Blanc, in the Alps on the border between France and Italy, rises to roughly 4,808 metres. It is the highest point in Western Europe."
+    },
+    {
+      "slug": "geo-overseas-five",
+      "category": "geography",
+      "level": "B1",
+      "title": "Cinq départements d'outre-mer",
+      "summary": "La France a une géographie mondiale.",
+      "fact_fr": "La France compte cinq départements et régions d'outre-mer : la Guadeloupe, la Martinique, la Guyane, La Réunion et Mayotte. Leurs habitants sont citoyens français de plein droit.",
+      "fact_en": "France has five overseas departments and regions: Guadeloupe, Martinique, Guyane, La Réunion, and Mayotte. Their residents are full French citizens."
+    },
+    {
+      "slug": "geo-loire-longest",
+      "category": "geography",
+      "level": "A2",
+      "title": "Le plus long fleuve",
+      "summary": "Le plus long fleuve français.",
+      "fact_fr": "Avec ses 1 006 kilomètres, la Loire est le plus long fleuve qui coule entièrement en France. Elle prend sa source dans le Massif central et se jette dans l'océan Atlantique près de Saint-Nazaire.",
+      "fact_en": "At 1,006 kilometres, the Loire is the longest river running entirely within France. It rises in the Massif Central and reaches the Atlantic near Saint-Nazaire."
+    },
+    {
+      "slug": "geo-three-seas",
+      "category": "geography",
+      "level": "A2",
+      "title": "Trois façades maritimes",
+      "summary": "La France métropolitaine borde trois mers.",
+      "fact_fr": "La France métropolitaine possède des côtes sur trois étendues d'eau différentes : l'océan Atlantique à l'ouest, la Manche au nord-ouest, et la mer Méditerranée au sud.",
+      "fact_en": "Metropolitan France has coastline on three different bodies of water: the Atlantic Ocean to the west, the English Channel to the north-west, and the Mediterranean Sea to the south."
+    },
+    {
+      "slug": "lang-academy-1635",
+      "category": "language",
+      "level": "B1",
+      "title": "L'Académie française a 390 ans",
+      "summary": "L'institution qui veille sur la langue.",
+      "fact_fr": "L'Académie française a été fondée en 1635 par le cardinal de Richelieu pour veiller sur la langue française. Ses quarante membres sont surnommés « les Immortels ».",
+      "fact_en": "The Académie française was founded in 1635 by Cardinal Richelieu to safeguard the French language. Its forty members are nicknamed 'the Immortals'."
+    },
+    {
+      "slug": "lang-courriel",
+      "category": "language",
+      "level": "B1",
+      "title": "« Courriel » au lieu d'« e-mail »",
+      "summary": "Un mot venu du Québec.",
+      "fact_fr": "Le mot « courriel », contraction de « courrier électronique », a été proposé par l'Office québécois de la langue française. Il est aujourd'hui largement accepté dans le français officiel.",
+      "fact_en": "The word 'courriel', a blend of 'courrier électronique', was coined by the Office québécois de la langue française. It is now widely accepted in formal French."
+    },
+    {
+      "slug": "lang-french-speakers",
+      "category": "language",
+      "level": "B2",
+      "title": "Plus de 300 millions de francophones",
+      "summary": "La portée mondiale du français.",
+      "fact_fr": "Le français est parlé par plus de 320 millions de personnes dans le monde, ce qui en fait l'une des cinq langues les plus parlées sur la planète. Une grande partie de cette francophonie se trouve aujourd'hui en Afrique.",
+      "fact_en": "French is spoken by more than 320 million people worldwide, making it one of the planet's five most widely spoken languages. A large share of this Francophonie is now in Africa."
+    },
+    {
+      "slug": "lang-no-w-words",
+      "category": "language",
+      "level": "A2",
+      "title": "La lettre W est rare en français",
+      "summary": "Une lettre d'emprunt.",
+      "fact_fr": "La lettre « W » est très rare en français : presque tous les mots qui la contiennent (wagon, week-end, wifi) sont des emprunts à d'autres langues, principalement l'anglais et l'allemand.",
+      "fact_en": "The letter 'W' is rare in French: nearly every word that contains it (wagon, week-end, wifi) is borrowed from another language, mostly English or German."
+    },
+    {
+      "slug": "lang-ouis-vs-si",
+      "category": "language",
+      "level": "A2",
+      "title": "« Si » au lieu de « oui »",
+      "summary": "Une exception polie à la règle.",
+      "fact_fr": "Pour répondre « oui » à une question posée à la forme négative, le français utilise « si » à la place de « oui ». Exemple : « Tu n'as pas faim ? — Si, j'ai faim. »",
+      "fact_en": "To answer 'yes' to a negative question, French uses 'si' instead of 'oui'. For example: 'Aren't you hungry? — Yes, I am.'"
+    },
+    {
+      "slug": "lang-feminine-noun-rule",
+      "category": "language",
+      "level": "A2",
+      "title": "Tout mot a un genre",
+      "summary": "Pas de neutre en français moderne.",
+      "fact_fr": "En français moderne, tout nom commun est soit masculin, soit féminin. Le genre neutre, qui existait en latin, a disparu au cours de l'évolution de la langue.",
+      "fact_en": "In modern French, every common noun is either masculine or feminine. The neuter gender, which existed in Latin, was lost as the language evolved."
+    },
+    {
+      "slug": "lang-passive-voice-rarity",
+      "category": "language",
+      "level": "B2",
+      "title": "Une langue qui préfère l'actif",
+      "summary": "Une habitude stylistique.",
+      "fact_fr": "Le français préfère la voix active à la voix passive bien plus systématiquement que l'anglais. Au lieu de « le livre a été écrit par elle », un francophone dira souvent « elle a écrit le livre » ou utilisera la tournure pronominale.",
+      "fact_en": "French favours the active voice over the passive much more systematically than English. Rather than 'the book was written by her', a French speaker often says 'she wrote the book' or uses a reflexive construction."
+    },
+    {
+      "slug": "hist-bastille-1789",
+      "category": "history",
+      "level": "B1",
+      "title": "Le 14 juillet 1789",
+      "summary": "La date qui a tout changé.",
+      "fact_fr": "La prise de la Bastille, le 14 juillet 1789, marque le début symbolique de la Révolution française. Cette date est devenue la fête nationale française en 1880, près d'un siècle plus tard.",
+      "fact_en": "The storming of the Bastille on 14 July 1789 marks the symbolic start of the French Revolution. The date was adopted as France's national holiday in 1880, nearly a century later."
+    },
+    {
+      "slug": "hist-marianne-symbol",
+      "category": "history",
+      "level": "B1",
+      "title": "Marianne, figure de la République",
+      "summary": "Le visage de la République.",
+      "fact_fr": "Marianne est la figure allégorique qui personnifie la République française. On la trouve sur les pièces de monnaie, les timbres et les bâtiments officiels. Elle porte traditionnellement un bonnet phrygien, symbole de liberté.",
+      "fact_en": "Marianne is the allegorical figure who personifies the French Republic. She appears on coins, stamps, and official buildings, traditionally wearing a Phrygian cap, a symbol of liberty."
+    },
+    {
+      "slug": "hist-eiffel-1889",
+      "category": "history",
+      "level": "A2",
+      "title": "La tour Eiffel a 136 ans",
+      "summary": "Le monument né d'une exposition.",
+      "fact_fr": "La tour Eiffel a été inaugurée en 1889 pour l'Exposition universelle de Paris, qui célébrait le centenaire de la Révolution française. Elle ne devait rester en place que vingt ans.",
+      "fact_en": "The Eiffel Tower was inaugurated in 1889 for the Paris Universal Exposition, which marked the centenary of the French Revolution. It was originally meant to stand for only twenty years."
+    },
+    {
+      "slug": "hist-versailles-louvre",
+      "category": "history",
+      "level": "B1",
+      "title": "Du Louvre à Versailles",
+      "summary": "Le palais devenu musée.",
+      "fact_fr": "Le Louvre fut d'abord une forteresse médiévale, puis un palais royal. Louis XIV déplaça la cour à Versailles en 1682, et c'est seulement après la Révolution, en 1793, que le Louvre devint un musée public.",
+      "fact_en": "The Louvre was first a medieval fortress, then a royal palace. Louis XIV moved the court to Versailles in 1682, and only after the Revolution, in 1793, did the Louvre become a public museum."
+    },
+    {
+      "slug": "hist-five-republics",
+      "category": "history",
+      "level": "B2",
+      "title": "Cinq républiques",
+      "summary": "La France a refondé sa Constitution cinq fois.",
+      "fact_fr": "La République française actuelle est la Cinquième République. Elle a été fondée en 1958 sous l'impulsion du général de Gaulle, après quatre régimes républicains successifs depuis 1792.",
+      "fact_en": "The current French Republic is the Fifth Republic. It was established in 1958 under Charles de Gaulle's leadership, following four successive republican regimes since 1792."
+    },
+    {
+      "slug": "hist-vichy-occupation",
+      "category": "history",
+      "level": "B2",
+      "title": "Quatre années d'Occupation",
+      "summary": "1940-1944.",
+      "fact_fr": "La France a été occupée par l'Allemagne nazie de juin 1940 à août 1944. La Résistance intérieure et les Forces françaises libres, dirigées depuis Londres par Charles de Gaulle, ont joué un rôle clé dans la Libération.",
+      "fact_en": "France was occupied by Nazi Germany from June 1940 to August 1944. The Resistance inside France and the Free French Forces, led from London by Charles de Gaulle, played a key role in the Liberation."
+    },
+    {
+      "slug": "hist-may-68",
+      "category": "history",
+      "level": "B2",
+      "title": "Mai 68",
+      "summary": "Un mois qui a changé la société.",
+      "fact_fr": "En mai 1968, étudiants et ouvriers ont déclenché une vague de manifestations et de grèves d'une ampleur exceptionnelle. Le mouvement a profondément transformé la société française, même si De Gaulle est resté au pouvoir quelques mois de plus.",
+      "fact_en": "In May 1968, students and workers triggered a wave of protests and strikes on an exceptional scale. The movement deeply reshaped French society, even though de Gaulle remained in power for several more months."
+    },
+    {
+      "slug": "cult-cinema-lumiere",
+      "category": "culture",
+      "level": "B1",
+      "title": "Le cinéma est né à Lyon",
+      "summary": "1895, les frères Lumière.",
+      "fact_fr": "Le cinématographe a été breveté en 1895 par les frères Auguste et Louis Lumière, à Lyon. La première projection publique payante a eu lieu à Paris la même année.",
+      "fact_en": "The cinematograph was patented in 1895 by brothers Auguste and Louis Lumière in Lyon. The first paid public screening took place in Paris that same year."
+    },
+    {
+      "slug": "cult-cannes-festival",
+      "category": "culture",
+      "level": "A2",
+      "title": "Cannes, capitale du cinéma",
+      "summary": "Le festival le plus prestigieux du monde.",
+      "fact_fr": "Le Festival de Cannes, créé en 1946, est aujourd'hui considéré comme le festival de cinéma le plus prestigieux du monde. Son prix principal s'appelle la Palme d'or.",
+      "fact_en": "The Cannes Film Festival, established in 1946, is regarded today as the world's most prestigious film festival. Its top prize is called the Palme d'Or."
+    },
+    {
+      "slug": "cult-nobel-literature",
+      "category": "culture",
+      "level": "B2",
+      "title": "Premiers en littérature",
+      "summary": "Plus de prix Nobel de littérature que tout autre pays.",
+      "fact_fr": "La France compte plus de prix Nobel de littérature qu'aucun autre pays au monde. Parmi eux figurent Sully Prudhomme (le tout premier en 1901), Romain Rolland, Albert Camus, et plus récemment Patrick Modiano et Annie Ernaux.",
+      "fact_en": "France holds more Nobel Prizes in Literature than any other country. The list includes Sully Prudhomme (the very first one in 1901), Romain Rolland, Albert Camus, and more recently Patrick Modiano and Annie Ernaux."
+    },
+    {
+      "slug": "cult-impressionism-name",
+      "category": "culture",
+      "level": "B2",
+      "title": "Le mot « impressionnisme »",
+      "summary": "Une critique devenue compliment.",
+      "fact_fr": "Le mot « impressionnisme » vient d'une critique négative du tableau de Monet « Impression, soleil levant » exposé en 1874. Le terme moqueur a été repris par les peintres eux-mêmes et est devenu le nom officiel du mouvement.",
+      "fact_en": "The word 'impressionism' comes from a negative review of Monet's painting 'Impression, soleil levant' shown in 1874. The mocking term was adopted by the painters themselves and became the movement's official name."
+    },
+    {
+      "slug": "cult-paris-museums",
+      "category": "culture",
+      "level": "A2",
+      "title": "Paris compte plus de 130 musées",
+      "summary": "La ville musée.",
+      "fact_fr": "Paris abrite plus de 130 musées différents, ce qui en fait l'une des villes les plus riches culturellement au monde. Le Louvre est de loin le plus visité, avec des millions d'entrées par an.",
+      "fact_en": "Paris is home to more than 130 different museums, making it one of the world's culturally richest cities. The Louvre is by far the most visited, with millions of entries each year."
+    },
+    {
+      "slug": "cult-pantheon-great",
+      "category": "culture",
+      "level": "B1",
+      "title": "Le Panthéon honore les grandes figures",
+      "summary": "« Aux grands hommes, la Patrie reconnaissante. »",
+      "fact_fr": "Le Panthéon, à Paris, sert de mausolée aux grandes figures de l'histoire française. Y reposent notamment Voltaire, Rousseau, Victor Hugo, Marie Curie et Simone Veil.",
+      "fact_en": "The Panthéon in Paris serves as the mausoleum for great figures in French history. Those laid to rest there include Voltaire, Rousseau, Victor Hugo, Marie Curie, and Simone Veil."
+    },
+    {
+      "slug": "food-cheese-400",
+      "category": "food",
+      "level": "A2",
+      "title": "Plus de 1 200 fromages",
+      "summary": "Une variété fromagère exceptionnelle.",
+      "fact_fr": "La France produit plus de 1 200 fromages différents, soit l'une des plus grandes diversités fromagères au monde. Plus de 45 d'entre eux bénéficient d'une AOP, qui protège leur origine géographique.",
+      "fact_en": "France produces more than 1,200 different cheeses, one of the world's broadest cheese ranges. More than 45 of them carry a Protected Designation of Origin that protects their geographic origin."
+    },
+    {
+      "slug": "food-baguette-unesco",
+      "category": "food",
+      "level": "B1",
+      "title": "La baguette à l'UNESCO",
+      "summary": "Un savoir-faire reconnu.",
+      "fact_fr": "Le savoir-faire artisanal et la culture de la baguette de pain ont été inscrits au patrimoine culturel immatériel de l'UNESCO en 2022. La baguette pèse traditionnellement entre 250 et 300 grammes.",
+      "fact_en": "The craftsmanship and culture surrounding the baguette of bread were inscribed on the UNESCO list of intangible cultural heritage in 2022. A traditional baguette weighs between 250 and 300 grams."
+    },
+    {
+      "slug": "food-meal-unesco",
+      "category": "food",
+      "level": "B2",
+      "title": "Le repas gastronomique à l'UNESCO",
+      "summary": "Un patrimoine immatériel.",
+      "fact_fr": "En 2010, l'UNESCO a inscrit le repas gastronomique des Français au patrimoine culturel immatériel de l'humanité, reconnaissant l'importance culturelle et sociale du repas convivial à la française.",
+      "fact_en": "In 2010, UNESCO added the gastronomic meal of the French to its list of intangible cultural heritage, recognising the cultural and social importance of the convivial French-style meal."
+    },
+    {
+      "slug": "food-croissant-austrian",
+      "category": "food",
+      "level": "B1",
+      "title": "Le croissant n'est pas si français",
+      "summary": "Une origine viennoise.",
+      "fact_fr": "Le croissant tel que nous le connaissons aujourd'hui s'inspire d'une viennoiserie autrichienne, le « Kipferl ». Il s'est implanté en France au XIXe siècle et est devenu un symbole du petit-déjeuner français.",
+      "fact_en": "The croissant as we know it today is inspired by an Austrian pastry, the 'Kipferl'. It became established in France during the 19th century and turned into a symbol of the French breakfast."
+    },
+    {
+      "slug": "food-wine-aoc",
+      "category": "food",
+      "level": "B2",
+      "title": "L'origine du vin garantie",
+      "summary": "AOC, AOP et IGP.",
+      "fact_fr": "Le système français d'appellations d'origine contrôlée (AOC), créé en 1935, a inspiré la plupart des systèmes de protection viticole du monde. Un vin AOC doit respecter des règles précises de cépage, de terroir et de méthode.",
+      "fact_en": "France's appellation d'origine contrôlée (AOC) system, established in 1935, inspired most of the world's wine-protection schemes. An AOC wine must follow specific rules on grape variety, terroir, and production method."
+    },
+    {
+      "slug": "food-michelin-stars",
+      "category": "food",
+      "level": "B1",
+      "title": "Le guide Michelin a plus de 120 ans",
+      "summary": "À l'origine, un cadeau pour les automobilistes.",
+      "fact_fr": "Le célèbre guide Michelin, qui décerne aujourd'hui les étoiles aux meilleurs restaurants du monde, a été créé en 1900 par les frères Michelin pour encourager les automobilistes à voyager — et donc à user leurs pneus.",
+      "fact_en": "The famous Michelin guide, which today awards stars to the world's finest restaurants, was created in 1900 by the Michelin brothers to encourage drivers to travel — and so wear out their tyres."
+    },
+    {
+      "slug": "food-meal-three-courses",
+      "category": "food",
+      "level": "A2",
+      "title": "Entrée, plat, dessert",
+      "summary": "La structure traditionnelle.",
+      "fact_fr": "Un repas français traditionnel suit une structure en trois parties : l'entrée, le plat principal et le dessert. À ces trois éléments s'ajoute souvent une assiette de fromage, servie avant le dessert.",
+      "fact_en": "A traditional French meal follows a three-part structure: a starter, a main course, and a dessert. A cheese plate is often added before the dessert."
+    },
+    {
+      "slug": "geo-six-borders",
+      "category": "geography",
+      "level": "A2",
+      "title": "Six pays voisins terrestres",
+      "summary": "Les frontières françaises.",
+      "fact_fr": "La France métropolitaine partage des frontières terrestres avec six pays : la Belgique, le Luxembourg, l'Allemagne, la Suisse, l'Italie et l'Espagne. Elle est également proche du Royaume-Uni par la Manche.",
+      "fact_en": "Metropolitan France shares land borders with six countries: Belgium, Luxembourg, Germany, Switzerland, Italy, and Spain. It is also close to the United Kingdom across the Channel."
+    },
+    {
+      "slug": "geo-mediterranean-coast",
+      "category": "geography",
+      "level": "A2",
+      "title": "La Côte d'Azur",
+      "summary": "Une côte célèbre dans le monde entier.",
+      "fact_fr": "La Côte d'Azur, qui longe la mer Méditerranée dans le sud-est de la France, doit son nom à la couleur bleu intense de la mer. Elle attire des millions de visiteurs chaque année.",
+      "fact_en": "The Côte d'Azur, running along the Mediterranean in the south-east of France, owes its name to the deep blue colour of the sea. It draws millions of visitors every year."
+    },
+    {
+      "slug": "lang-numbers-soixante-dix",
+      "category": "language",
+      "level": "B1",
+      "title": "70, 80, 90 : des nombres composés",
+      "summary": "Une exception européenne du français.",
+      "fact_fr": "En français standard de France, on dit « soixante-dix », « quatre-vingts » et « quatre-vingt-dix ». En Belgique et en Suisse, on préfère les formes plus simples « septante » et « nonante ».",
+      "fact_en": "In standard French of France, you say 'soixante-dix' (sixty-ten), 'quatre-vingts' (four-twenties) and 'quatre-vingt-dix' (four-twenties-ten). In Belgium and Switzerland, the simpler forms 'septante' and 'nonante' are preferred."
+    },
+    {
+      "slug": "lang-circumflex-history",
+      "category": "language",
+      "level": "B2",
+      "title": "L'accent circonflexe garde la mémoire",
+      "summary": "Le « petit chapeau » a un sens.",
+      "fact_fr": "L'accent circonflexe, le « petit chapeau » qu'on trouve sur certaines voyelles, marque souvent la disparition d'une lettre, en général un « s ». Ainsi, « hôpital » garde le souvenir de « hospital », et « forêt » celui de « forest ».",
+      "fact_en": "The circumflex accent, the 'little hat' found on some vowels, often marks the disappearance of a letter, usually an 's'. So 'hôpital' preserves the memory of 'hospital', and 'forêt' that of 'forest'."
+    },
+    {
+      "slug": "lang-tu-vous-rules",
+      "category": "language",
+      "level": "A2",
+      "title": "Tutoyer ou vouvoyer ?",
+      "summary": "Une question de respect.",
+      "fact_fr": "Le français distingue deux formes pour s'adresser à quelqu'un : « tu » (familier) et « vous » (poli ou pluriel). Choisir l'un ou l'autre est une question de respect, d'âge et de contexte social.",
+      "fact_en": "French distinguishes two ways of addressing someone: 'tu' (informal) and 'vous' (polite or plural). Choosing between them is a matter of respect, age, and social context."
+    },
+    {
+      "slug": "lang-quebec-french",
+      "category": "language",
+      "level": "B1",
+      "title": "Le français du Québec",
+      "summary": "Une variante riche d'Amérique du Nord.",
+      "fact_fr": "Le français parlé au Québec, en Amérique du Nord, a conservé des tournures plus anciennes du français et a développé son propre vocabulaire. Par exemple, on y dit « magasiner » au lieu de « faire du shopping ».",
+      "fact_en": "The French spoken in Quebec, in North America, has kept older French turns of phrase and developed its own vocabulary. For example, 'magasiner' is used there instead of 'faire du shopping'."
+    },
+    {
+      "slug": "lang-creoles",
+      "category": "language",
+      "level": "B2",
+      "title": "Les créoles à base française",
+      "summary": "Des langues nées de l'histoire coloniale.",
+      "fact_fr": "Plusieurs langues créoles à base française sont parlées aujourd'hui en Haïti, aux Antilles françaises, à La Réunion et à l'île Maurice. Ces langues, issues de l'histoire coloniale, ont leurs propres règles et leur propre littérature.",
+      "fact_en": "Several French-based creole languages are spoken today in Haiti, the French Antilles, La Réunion, and Mauritius. These languages, born of colonial history, have their own rules and their own literature."
+    },
+    {
+      "slug": "lang-feminine-professions",
+      "category": "language",
+      "level": "B2",
+      "title": "Féminiser les métiers",
+      "summary": "Une évolution récente.",
+      "fact_fr": "La féminisation des noms de métiers (auteure, ingénieure, professeure) est désormais largement acceptée en français contemporain. L'Académie française elle-même a reconnu cet usage en 2019.",
+      "fact_en": "Feminising profession names ('auteure', 'ingénieure', 'professeure') is now widely accepted in contemporary French. The Académie française itself recognised this usage in 2019."
+    },
+    {
+      "slug": "lang-most-common-letters",
+      "category": "language",
+      "level": "B2",
+      "title": "Le « e » règne en français",
+      "summary": "La lettre la plus utilisée.",
+      "fact_fr": "La lettre la plus fréquente du français est le « e ». Elle apparaît dans environ 15 % de toutes les lettres écrites en français — bien plus que dans l'anglais, où le « e » règne aussi mais avec moins d'avance.",
+      "fact_en": "The most common letter in French is 'e'. It accounts for roughly 15% of all letters written in French — far ahead of its share in English, where 'e' also leads but with a smaller margin."
+    },
+    {
+      "slug": "hist-louis-xiv-72-years",
+      "category": "history",
+      "level": "B1",
+      "title": "72 ans sur le trône",
+      "summary": "Le règne le plus long d'Europe.",
+      "fact_fr": "Louis XIV, le Roi-Soleil, a régné pendant 72 ans (1643-1715), ce qui constitue l'un des règnes les plus longs de l'histoire européenne. Il fit construire le château de Versailles dans toute sa splendeur.",
+      "fact_en": "Louis XIV, the Sun King, reigned for 72 years (1643-1715), one of the longest reigns in European history. He had the Palace of Versailles built in all its splendor."
+    },
+    {
+      "slug": "hist-napoleon-code",
+      "category": "history",
+      "level": "B2",
+      "title": "Le Code civil de Napoléon",
+      "summary": "Un texte au rayonnement mondial.",
+      "fact_fr": "Le Code civil, promulgué par Napoléon en 1804, a profondément influencé les législations du monde entier. Il reste, deux siècles plus tard, le fondement du droit civil français — moyennant de nombreuses révisions.",
+      "fact_en": "The Civil Code, enacted by Napoleon in 1804, has profoundly influenced legal systems around the world. Two centuries later it remains the foundation of French civil law — after many revisions."
+    },
+    {
+      "slug": "hist-marie-curie-twice",
+      "category": "history",
+      "level": "B1",
+      "title": "Deux Nobel pour Marie Curie",
+      "summary": "Une scientifique d'exception.",
+      "fact_fr": "Marie Curie, scientifique née en Pologne et naturalisée française, a reçu deux prix Nobel dans deux disciplines différentes : physique en 1903 et chimie en 1911. Elle est la seule femme à avoir cet honneur.",
+      "fact_en": "Marie Curie, a scientist born in Poland and naturalised French, received two Nobel Prizes in two different disciplines: physics in 1903 and chemistry in 1911. She is the only woman to hold that distinction."
+    },
+    {
+      "slug": "hist-women-vote-1944",
+      "category": "history",
+      "level": "B1",
+      "title": "1944 : le droit de vote des femmes",
+      "summary": "Une conquête tardive.",
+      "fact_fr": "Les femmes françaises ont obtenu le droit de vote en avril 1944, par ordonnance du Gouvernement provisoire de la République française. La France a ainsi accordé ce droit assez tardivement par rapport à d'autres démocraties occidentales.",
+      "fact_en": "French women won the right to vote in April 1944, by ordinance of the Provisional Government of the French Republic. France granted this right relatively late compared with other Western democracies."
+    },
+    {
+      "slug": "cult-french-tour",
+      "category": "culture",
+      "level": "A2",
+      "title": "Le Tour de France",
+      "summary": "La plus grande course cycliste du monde.",
+      "fact_fr": "Le Tour de France, créé en 1903, est la plus prestigieuse des courses cyclistes par étapes au monde. Le maillot jaune, porté par le leader du classement général, est l'un des objets sportifs les plus reconnaissables au monde.",
+      "fact_en": "The Tour de France, created in 1903, is the most prestigious stage cycling race in the world. The yellow jersey, worn by the overall leader, is one of sport's most instantly recognisable items."
+    },
+    {
+      "slug": "cult-marseillaise-1792",
+      "category": "culture",
+      "level": "B1",
+      "title": "La Marseillaise",
+      "summary": "Un hymne né d'une guerre.",
+      "fact_fr": "L'hymne national français, La Marseillaise, a été composé en 1792 à Strasbourg par Rouget de Lisle, en pleine guerre contre l'Autriche. Il est devenu hymne officiel sous la IIIe République, à la fin du XIXe siècle.",
+      "fact_en": "The French national anthem, La Marseillaise, was composed in 1792 in Strasbourg by Rouget de Lisle, during the war against Austria. It became the official anthem under the Third Republic at the end of the 19th century."
+    },
+    {
+      "slug": "cult-french-flag-three",
+      "category": "culture",
+      "level": "A1",
+      "title": "Bleu, blanc, rouge",
+      "summary": "Les trois couleurs du drapeau.",
+      "fact_fr": "Le drapeau français est composé de trois bandes verticales : bleu, blanc et rouge. Le bleu et le rouge sont les couleurs traditionnelles de Paris ; le blanc, celle de la monarchie. L'union des trois symbolise la réconciliation républicaine.",
+      "fact_en": "The French flag is made up of three vertical stripes: blue, white, and red. Blue and red are the traditional colours of Paris; white was the colour of the monarchy. The three together symbolise republican reconciliation."
+    },
+    {
+      "slug": "food-restaurant-word",
+      "category": "food",
+      "level": "B1",
+      "title": "Le mot « restaurant »",
+      "summary": "Une invention française.",
+      "fact_fr": "Le mot « restaurant », au sens d'établissement où l'on sert des repas, est apparu à Paris au XVIIIe siècle. Il vient du verbe « restaurer », car on y servait à l'origine des bouillons réputés « restaurateurs » de la santé.",
+      "fact_en": "The word 'restaurant', in the sense of a place where meals are served, appeared in Paris in the 18th century. It comes from the verb 'restaurer' because such places originally served broths thought to 'restore' health."
+    },
+    {
+      "slug": "food-galette-rois",
+      "category": "food",
+      "level": "B1",
+      "title": "La galette des Rois",
+      "summary": "Une tradition de janvier.",
+      "fact_fr": "Chaque mois de janvier, les Français partagent la galette des Rois pour célébrer l'Épiphanie. Une petite figurine, la « fève », est cachée dans la galette ; celui ou celle qui la trouve est couronné roi ou reine de la journée.",
+      "fact_en": "Every January, French families share the galette des Rois to celebrate Epiphany. A small figurine called the 'fève' is hidden in the cake; whoever finds it is crowned king or queen for the day."
+    },
+    {
+      "slug": "geo-territoires-pacifique",
+      "category": "geography",
+      "level": "B2",
+      "title": "Plus de territoires que de pays voisins",
+      "summary": "La France au-delà de l'Hexagone.",
+      "fact_fr": "Outre les cinq départements d'outre-mer, la France possède plusieurs territoires d'outre-mer dans le Pacifique et l'Atlantique, notamment la Polynésie française, la Nouvelle-Calédonie et Saint-Pierre-et-Miquelon. Le pays est ainsi présent sur trois océans.",
+      "fact_en": "Beyond its five overseas departments, France holds several overseas territories in the Pacific and the Atlantic, including French Polynesia, New Caledonia and Saint-Pierre-et-Miquelon. The country is therefore present on three oceans."
+    },
+    {
+      "slug": "geo-corse-mountain",
+      "category": "geography",
+      "level": "B1",
+      "title": "Une île montagneuse",
+      "summary": "La géographie de la Corse.",
+      "fact_fr": "La Corse est l'île la plus montagneuse de la Méditerranée. Son point culminant, le Monte Cinto, atteint près de 2 700 mètres, ce qui en fait un terrain inattendu pour les amateurs de randonnée en haute altitude.",
+      "fact_en": "Corsica is the most mountainous island in the Mediterranean. Its highest peak, Monte Cinto, reaches nearly 2,700 metres, making it an unexpected destination for high-altitude hikers."
+    },
+    {
+      "slug": "geo-paris-arrondissements",
+      "category": "geography",
+      "level": "A2",
+      "title": "20 arrondissements à Paris",
+      "summary": "L'organisation parisienne en escargot.",
+      "fact_fr": "Paris est découpée en vingt arrondissements numérotés selon une spirale qui part du centre et tourne dans le sens des aiguilles d'une montre. Le 1er arrondissement entoure le Louvre ; le 20e se trouve au nord-est de la ville.",
+      "fact_en": "Paris is divided into twenty arrondissements numbered along a spiral that starts in the centre and turns clockwise. The 1st surrounds the Louvre; the 20th lies in the north-east of the city."
+    },
+    {
+      "slug": "geo-vol-aux-iles",
+      "category": "geography",
+      "level": "B2",
+      "title": "Volcans en activité",
+      "summary": "Des volcans actifs en France.",
+      "fact_fr": "Bien que la France métropolitaine ne possède plus de volcans actifs, deux volcans très actifs se trouvent dans ses départements d'outre-mer : la Soufrière en Guadeloupe et le Piton de la Fournaise à La Réunion, ce dernier étant l'un des plus actifs au monde.",
+      "fact_en": "Although mainland France no longer has active volcanoes, two highly active volcanoes lie within its overseas departments: La Soufrière in Guadeloupe and Piton de la Fournaise in La Réunion, the latter being one of the most active in the world."
+    },
+    {
+      "slug": "geo-population-67m",
+      "category": "geography",
+      "level": "A2",
+      "title": "Environ 68 millions d'habitants",
+      "summary": "Démographie française.",
+      "fact_fr": "La France compte environ 68 millions d'habitants, ce qui en fait l'un des pays les plus peuplés d'Europe. Près de 11 millions d'entre eux vivent en région parisienne, dans ce qu'on appelle l'Île-de-France.",
+      "fact_en": "France has roughly 68 million inhabitants, making it one of the most populous countries in Europe. Close to 11 million live in the Paris region, known as Île-de-France."
+    },
+    {
+      "slug": "lang-ne-explicit",
+      "category": "language",
+      "level": "B2",
+      "title": "Le « ne » qui disparaît",
+      "summary": "Une évolution à l'oral.",
+      "fact_fr": "À l'oral, les francophones laissent souvent tomber le « ne » de la négation. « Je ne sais pas » devient « Je sais pas ». À l'écrit, en revanche, l'omission reste considérée comme familière.",
+      "fact_en": "In speech, French speakers often drop the 'ne' part of the negation. 'Je ne sais pas' becomes 'Je sais pas'. In writing, however, leaving it out is still seen as informal."
+    },
+    {
+      "slug": "lang-faux-amis",
+      "category": "language",
+      "level": "B1",
+      "title": "Les faux amis",
+      "summary": "Des mots trompeurs.",
+      "fact_fr": "Les « faux amis » sont des mots qui se ressemblent entre deux langues mais ont des sens différents. Par exemple, « actuellement » en français signifie « currently » et non « actually », et « librairie » désigne une bookshop, pas une bibliothèque.",
+      "fact_en": "'False friends' are words that look alike across two languages but mean different things. For example, 'actuellement' in French means 'currently' rather than 'actually', and 'librairie' refers to a bookshop, not a library."
+    },
+    {
+      "slug": "lang-h-aspirate",
+      "category": "language",
+      "level": "B2",
+      "title": "Le H aspiré",
+      "summary": "Une lettre muette… mais pas toujours.",
+      "fact_fr": "Le « h » est toujours muet en français, mais il existe deux variétés : le « h » muet, qui permet la liaison (l'homme), et le « h » aspiré, qui l'empêche (le héros, pas « l'héros »).",
+      "fact_en": "The letter 'h' is always silent in French, but two varieties exist: the mute 'h', which allows liaison ('l'homme'), and the aspirated 'h', which blocks it ('le héros', not 'l'héros')."
+    },
+    {
+      "slug": "lang-iso-fr",
+      "category": "language",
+      "level": "B1",
+      "title": "« FR » : une norme mondiale",
+      "summary": "Le code à deux lettres.",
+      "fact_fr": "Le code international à deux lettres de la France est « FR », d'après la norme ISO 3166. Ce code apparaît sur les plaques d'immatriculation européennes, dans les adresses internet et dans la plupart des systèmes informatiques.",
+      "fact_en": "France's two-letter international code is 'FR', under ISO 3166. This code appears on European licence plates, in internet addresses, and in most computer systems."
+    },
+    {
+      "slug": "lang-anglais-mots",
+      "category": "language",
+      "level": "B1",
+      "title": "Le français a enrichi l'anglais",
+      "summary": "Près d'un mot anglais sur trois.",
+      "fact_fr": "Près de 30 % du vocabulaire anglais vient du français, surtout par le biais de la conquête normande de 1066. Des mots comme « government », « beef » ou « cuisine » sont d'origine française.",
+      "fact_en": "Close to 30% of English vocabulary comes from French, mostly through the Norman conquest of 1066. Words like 'government', 'beef' and 'cuisine' are of French origin."
+    },
+    {
+      "slug": "hist-three-musketeers",
+      "category": "history",
+      "level": "B2",
+      "title": "Les Trois Mousquetaires étaient quatre",
+      "summary": "Une curiosité littéraire.",
+      "fact_fr": "Dans le célèbre roman d'Alexandre Dumas, « Les Trois Mousquetaires », il y a en réalité quatre personnages principaux : Athos, Porthos, Aramis et d'Artagnan, qui se joint au trio dès le début de l'histoire.",
+      "fact_en": "In Alexandre Dumas's celebrated novel 'The Three Musketeers', four main characters actually appear: Athos, Porthos, Aramis and d'Artagnan, who joins the trio at the start of the story."
+    },
+    {
+      "slug": "hist-edict-nantes-1598",
+      "category": "history",
+      "level": "B2",
+      "title": "L'édit de Nantes",
+      "summary": "Un compromis religieux historique.",
+      "fact_fr": "En 1598, le roi Henri IV signa l'édit de Nantes, qui accordait aux protestants français la liberté de culte et plusieurs droits civils. Cet édit fut révoqué en 1685 par Louis XIV, ce qui poussa de nombreux protestants à l'exil.",
+      "fact_en": "In 1598, King Henri IV signed the Edict of Nantes, which granted French Protestants freedom of worship and several civil rights. The edict was revoked in 1685 by Louis XIV, driving many Protestants into exile."
+    },
+    {
+      "slug": "hist-statue-liberty-gift",
+      "category": "history",
+      "level": "A2",
+      "title": "La statue de la Liberté, un cadeau français",
+      "summary": "Liens entre Paris et New York.",
+      "fact_fr": "La statue de la Liberté à New York a été offerte aux États-Unis par la France en 1886, en signe d'amitié entre les deux républiques. Son squelette métallique a été conçu par Gustave Eiffel, le même ingénieur que la fameuse tour.",
+      "fact_en": "The Statue of Liberty in New York was a gift from France to the United States in 1886, as a sign of friendship between the two republics. Its metal framework was designed by Gustave Eiffel, the engineer behind the famous tower."
+    },
+    {
+      "slug": "hist-metro-1900",
+      "category": "history",
+      "level": "B1",
+      "title": "Le métro de Paris a 125 ans",
+      "summary": "Inauguré pour l'Exposition universelle.",
+      "fact_fr": "Le métro parisien a été inauguré en juillet 1900, en pleine Exposition universelle. Sa première ligne reliait la Porte de Vincennes à la Porte Maillot, traversant Paris d'est en ouest.",
+      "fact_en": "The Paris Métro opened in July 1900, during the Universal Exposition. Its first line ran from Porte de Vincennes to Porte Maillot, crossing Paris from east to west."
+    },
+    {
+      "slug": "hist-revolution-calendar",
+      "category": "history",
+      "level": "B2",
+      "title": "Le calendrier révolutionnaire",
+      "summary": "Une réforme audacieuse mais éphémère.",
+      "fact_fr": "Pendant la Révolution, la France a adopté un calendrier républicain à partir de 1793, avec des mois comme Brumaire, Vendémiaire et Thermidor. Ce calendrier, qui devait remplacer la culture chrétienne du temps, n'a duré que treize ans.",
+      "fact_en": "During the Revolution, France adopted a republican calendar starting in 1793, with months such as Brumaire, Vendémiaire and Thermidor. The calendar, intended to replace the Christian framing of time, lasted only thirteen years."
+    },
+    {
+      "slug": "cult-bd-ninth-art",
+      "category": "culture",
+      "level": "B1",
+      "title": "Le neuvième art",
+      "summary": "La bande dessinée prise au sérieux.",
+      "fact_fr": "En France, la bande dessinée est officiellement reconnue comme le « neuvième art ». Le festival international de la BD d'Angoulême, créé en 1974, est l'un des plus prestigieux au monde dans ce domaine.",
+      "fact_en": "In France, comics are officially recognised as the 'ninth art'. The Angoulême International Comics Festival, founded in 1974, is one of the most prestigious of its kind in the world."
+    },
+    {
+      "slug": "cult-asterix-pop",
+      "category": "culture",
+      "level": "A2",
+      "title": "Astérix et Obélix",
+      "summary": "Une bande dessinée mondialement connue.",
+      "fact_fr": "La bande dessinée « Astérix », créée en 1959 par René Goscinny et Albert Uderzo, raconte les aventures d'un petit village gaulois qui résiste aux Romains. Elle a été traduite dans plus de cent langues.",
+      "fact_en": "The comic 'Asterix', created in 1959 by René Goscinny and Albert Uderzo, follows the adventures of a small Gaulish village that resists the Romans. It has been translated into more than a hundred languages."
+    },
+    {
+      "slug": "cult-tintin-belgian",
+      "category": "culture",
+      "level": "B1",
+      "title": "Tintin est francophone, pas français",
+      "summary": "Une icône belge.",
+      "fact_fr": "Tintin, le célèbre reporter à houppette, est en réalité un personnage belge créé par l'auteur Hergé en 1929. Mais comme la BD est écrite en français, on l'associe souvent à la culture francophone dans son ensemble.",
+      "fact_en": "Tintin, the famous reporter with a tuft of hair, is actually a Belgian character created by the author Hergé in 1929. Because the comic is written in French, however, he is often associated with the broader Francophone culture."
+    },
+    {
+      "slug": "cult-cite-radieuse",
+      "category": "culture",
+      "level": "B2",
+      "title": "Le Corbusier et la Cité radieuse",
+      "summary": "Une architecture révolutionnaire.",
+      "fact_fr": "L'architecte franco-suisse Le Corbusier a profondément transformé l'architecture du XXe siècle. Son bâtiment le plus emblématique, la Cité radieuse de Marseille (1952), est aujourd'hui inscrit au patrimoine mondial de l'UNESCO.",
+      "fact_en": "The Franco-Swiss architect Le Corbusier reshaped 20th-century architecture in lasting ways. His most iconic building, the Cité radieuse in Marseille (1952), is now listed on UNESCO's World Heritage list."
+    },
+    {
+      "slug": "cult-yves-saint-laurent",
+      "category": "culture",
+      "level": "B1",
+      "title": "Yves Saint Laurent et le smoking féminin",
+      "summary": "Une révolution dans la mode.",
+      "fact_fr": "Le couturier Yves Saint Laurent a révolutionné la mode féminine dans les années 1960 en proposant le smoking pour les femmes. Cette pièce, longtemps réservée aux hommes, est devenue un symbole d'émancipation féminine.",
+      "fact_en": "The designer Yves Saint Laurent transformed women's fashion in the 1960s by introducing the tuxedo for women. The garment, long reserved for men, became a symbol of women's emancipation."
+    },
+    {
+      "slug": "food-aperitif-tradition",
+      "category": "food",
+      "level": "B1",
+      "title": "L'apéritif, rituel social",
+      "summary": "Plus qu'un simple verre.",
+      "fact_fr": "L'apéritif est un rituel social français : un verre pris avant le repas, souvent accompagné d'amuse-bouches, qui sert de transition entre la journée de travail et le dîner. Inviter « à l'apéro » est une marque d'amitié plutôt qu'une simple invitation.",
+      "fact_en": "The apéritif is a French social ritual: a drink taken before the meal, often with small snacks, that bridges the workday and dinner. Inviting someone 'à l'apéro' is more a gesture of friendship than a simple invitation."
+    },
+    {
+      "slug": "food-baguette-three-meals",
+      "category": "food",
+      "level": "A2",
+      "title": "Trois repas avec du pain",
+      "summary": "Le pain à toutes les heures.",
+      "fact_fr": "En France, le pain accompagne traditionnellement les trois repas de la journée : il est tartiné le matin, posé à côté de l'assiette à midi et au dîner pour saucer ou accompagner le fromage.",
+      "fact_en": "In France, bread traditionally accompanies all three meals of the day: it is spread in the morning and placed beside the plate at lunch and dinner to mop up sauces or pair with cheese."
+    },
+    {
+      "slug": "food-soupe-letter",
+      "category": "food",
+      "level": "B2",
+      "title": "Manger sa soupe, c'est grandir",
+      "summary": "Un dicton transmis aux enfants.",
+      "fact_fr": "Les parents français répètent souvent à leurs enfants qu'il faut manger sa soupe pour grandir. Cette croyance, transmise depuis des générations, n'a pas de fondement scientifique précis mais reste un classique de l'éducation à la française.",
+      "fact_en": "French parents often tell their children to finish their soup so they will grow taller. The belief, passed down for generations, has no real scientific basis but remains a classic of French upbringing."
+    },
+    {
+      "slug": "food-galette-bretagne",
+      "category": "food",
+      "level": "B1",
+      "title": "La galette bretonne",
+      "summary": "Une crêpe salée au sarrasin.",
+      "fact_fr": "En Bretagne, la galette se distingue de la crêpe : elle est faite avec de la farine de sarrasin et garnie d'ingrédients salés comme du jambon, du fromage ou un œuf. La crêpe, faite avec de la farine de blé, est servie sucrée.",
+      "fact_en": "In Brittany, a 'galette' is different from a 'crêpe': it is made with buckwheat flour and topped with savoury fillings like ham, cheese or an egg. The crêpe, made from wheat flour, is served sweet."
+    },
+    {
+      "slug": "food-truffes-perigord",
+      "category": "food",
+      "level": "B2",
+      "title": "Les truffes noires du Périgord",
+      "summary": "Un trésor souterrain.",
+      "fact_fr": "Les truffes noires du Périgord, dans le sud-ouest de la France, sont parmi les plus chères au monde — le prix peut dépasser mille euros le kilo. Elles sont récoltées en hiver avec l'aide de chiens spécialement dressés.",
+      "fact_en": "The black truffles of the Périgord, in south-west France, are among the most expensive in the world — their price can top one thousand euros per kilo. They are gathered in winter with the help of specially trained dogs."
+    },
+    {
+      "slug": "lang-bonjour-everywhere",
+      "category": "language",
+      "level": "A1",
+      "title": "Bonjour est obligatoire",
+      "summary": "La politesse à la française.",
+      "fact_fr": "En France, dire « bonjour » en entrant dans un magasin, un café ou même un ascenseur est presque obligatoire. Omettre cette salutation est souvent perçu comme un manque de respect.",
+      "fact_en": "In France, saying 'bonjour' on entering a shop, café or even a lift is almost compulsory. Skipping this greeting is often seen as a sign of disrespect."
+    },
+    {
+      "slug": "lang-rs-french",
+      "category": "language",
+      "level": "B2",
+      "title": "Le « R » français : un défi",
+      "summary": "Une consonne particulière.",
+      "fact_fr": "Le « R » français est prononcé au fond de la gorge (consonne uvulaire), ce qui le rend très différent du « R » roulé italien ou espagnol. C'est l'un des sons les plus difficiles à maîtriser pour les apprenants étrangers.",
+      "fact_en": "The French 'R' is pronounced at the back of the throat (a uvular consonant), which sets it apart from the rolled 'R' of Italian or Spanish. It is one of the hardest sounds for foreign learners to master."
+    },
+    {
+      "slug": "lang-spelling-1990",
+      "category": "language",
+      "level": "B2",
+      "title": "La réforme de 1990",
+      "summary": "Une orthographe simplifiée.",
+      "fact_fr": "L'Académie française a proposé en 1990 une réforme de l'orthographe qui simplifiait environ 2 000 mots, par exemple en supprimant certains accents circonflexes. Cette réforme reste optionnelle et beaucoup de Français continuent d'utiliser l'orthographe traditionnelle.",
+      "fact_en": "The Académie française proposed a spelling reform in 1990 that simplified around 2,000 words, for example by dropping certain circumflex accents. The reform remains optional and many French people stick with traditional spelling."
+    },
+    {
+      "slug": "lang-acronyms",
+      "category": "language",
+      "level": "B1",
+      "title": "TGV, SNCF, RATP",
+      "summary": "La France aime les sigles.",
+      "fact_fr": "Le français adore les sigles : TGV (train à grande vitesse), SNCF (compagnie nationale des chemins de fer), RATP (transports parisiens), CDI (contrat à durée indéterminée). Ces acronymes font partie du vocabulaire quotidien.",
+      "fact_en": "French loves acronyms: TGV (high-speed train), SNCF (the national rail company), RATP (Paris transport), CDI (permanent employment contract). These initialisms are part of everyday vocabulary."
+    },
+    {
+      "slug": "lang-mardi-gras-name",
+      "category": "language",
+      "level": "B2",
+      "title": "Mardi gras au sens propre",
+      "summary": "Le « gras » avant le carême.",
+      "fact_fr": "L'expression « Mardi gras » désigne le dernier jour avant le début du carême chrétien. Le mot « gras » fait référence aux aliments riches qu'on mangeait abondamment ce jour-là, avant les semaines de jeûne.",
+      "fact_en": "The term 'Mardi gras' refers to the last day before the start of Christian Lent. The word 'gras' (fat) refers to the rich foods eaten in abundance on that day, before the weeks of fasting."
+    },
+    {
+      "slug": "hist-fleur-de-lys",
+      "category": "history",
+      "level": "B2",
+      "title": "La fleur de lys, symbole royal",
+      "summary": "Un emblème mille fois utilisé.",
+      "fact_fr": "La fleur de lys, emblème stylisé des rois de France pendant près de mille ans, est encore visible sur le drapeau du Québec et de plusieurs régions francophones. Elle a été abandonnée comme symbole d'État après la Révolution.",
+      "fact_en": "The fleur-de-lis, stylised emblem of the kings of France for nearly a thousand years, can still be seen on the flag of Quebec and several Francophone regions. It was dropped as a national symbol after the Revolution."
+    },
+    {
+      "slug": "hist-jeanne-darc-1431",
+      "category": "history",
+      "level": "B2",
+      "title": "Jeanne d'Arc",
+      "summary": "Une héroïne nationale.",
+      "fact_fr": "Jeanne d'Arc, jeune paysanne lorraine, a contribué à libérer Orléans des Anglais pendant la guerre de Cent Ans. Capturée puis brûlée vive en 1431 à 19 ans, elle a été canonisée en 1920 et reste une figure majeure de l'histoire française.",
+      "fact_en": "Joan of Arc, a young peasant from Lorraine, helped free Orléans from the English during the Hundred Years' War. Captured and burned at the stake in 1431 at age 19, she was canonised in 1920 and remains a major figure in French history."
+    },
+    {
+      "slug": "hist-baccalaureat-1808",
+      "category": "history",
+      "level": "B1",
+      "title": "Le baccalauréat a plus de 200 ans",
+      "summary": "Une institution napoléonienne.",
+      "fact_fr": "Le baccalauréat, diplôme de fin de lycée, a été créé en 1808 par Napoléon. Aujourd'hui obtenu par plus de 90 % des candidats, il reste un rite de passage majeur dans la vie d'un jeune Français.",
+      "fact_en": "The baccalauréat, France's secondary-school leaving diploma, was created in 1808 by Napoleon. Now obtained by more than 90% of candidates, it remains a major rite of passage in young French people's lives."
+    },
+    {
+      "slug": "hist-marseille-2600",
+      "category": "history",
+      "level": "B1",
+      "title": "Marseille, plus vieille que Paris",
+      "summary": "2 600 ans d'histoire.",
+      "fact_fr": "Marseille a été fondée vers 600 avant Jésus-Christ par des marins grecs venus de Phocée. C'est donc l'une des plus anciennes villes d'Europe, bien plus ancienne que Paris ou Lyon.",
+      "fact_en": "Marseille was founded around 600 BCE by Greek sailors from Phocaea. That makes it one of the oldest cities in Europe — far older than Paris or Lyon."
+    },
+    {
+      "slug": "cult-mona-lisa-paris",
+      "category": "culture",
+      "level": "A2",
+      "title": "La Joconde vit à Paris",
+      "summary": "Le portrait le plus célèbre au monde.",
+      "fact_fr": "La Joconde, peinte par Léonard de Vinci, se trouve au musée du Louvre depuis le début du XIXe siècle. Léonard l'a apportée lui-même en France à l'invitation du roi François Ier, et elle n'a presque jamais quitté le pays depuis.",
+      "fact_en": "The Mona Lisa, painted by Leonardo da Vinci, has hung in the Louvre since the early 19th century. Leonardo brought it to France himself at the invitation of King François I, and it has barely left the country since."
+    },
+    {
+      "slug": "cult-cesar-awards",
+      "category": "culture",
+      "level": "B1",
+      "title": "Les César, équivalent des Oscars",
+      "summary": "Le grand prix du cinéma français.",
+      "fact_fr": "Les César du cinéma sont les récompenses les plus prestigieuses du cinéma français. Créés en 1976, ils sont remis chaque année lors d'une cérémonie nationale et sont considérés comme l'équivalent français des Oscars américains.",
+      "fact_en": "The César Awards are the most prestigious prizes of French cinema. Established in 1976, they are presented every year at a national ceremony and are seen as the French equivalent of the American Oscars."
+    },
+    {
+      "slug": "cult-tdf-three-weeks",
+      "category": "culture",
+      "level": "B1",
+      "title": "Le Tour dure trois semaines",
+      "summary": "Une course épuisante.",
+      "fact_fr": "Le Tour de France couvre environ 3 500 kilomètres en trois semaines, avec une vingtaine d'étapes traversant tout le pays. Les coureurs montent souvent les cols mythiques des Alpes et des Pyrénées avant l'arrivée finale sur les Champs-Élysées.",
+      "fact_en": "The Tour de France covers around 3,500 kilometres over three weeks, with about twenty stages crossing the country. Riders frequently tackle the legendary climbs of the Alps and Pyrenees before the final finish on the Champs-Élysées."
+    },
+    {
+      "slug": "cult-claude-debussy",
+      "category": "culture",
+      "level": "B2",
+      "title": "Debussy, père du modernisme musical",
+      "summary": "Une révolution sonore.",
+      "fact_fr": "Le compositeur français Claude Debussy a profondément renouvelé la musique classique au tournant du XXe siècle. Son œuvre la plus célèbre, « Clair de lune », est devenue un classique mondialement connu.",
+      "fact_en": "The French composer Claude Debussy profoundly renewed classical music at the turn of the 20th century. His best-known piece, 'Clair de lune', has become a world-famous classic."
+    },
+    {
+      "slug": "cult-mont-saint-michel-tides",
+      "category": "culture",
+      "level": "B2",
+      "title": "Le Mont-Saint-Michel et ses marées",
+      "summary": "Une île… parfois.",
+      "fact_fr": "Le Mont-Saint-Michel, en Normandie, devient une véritable île seulement lors des marées les plus fortes, autour des équinoxes. Le site est inscrit au patrimoine mondial de l'UNESCO depuis 1979.",
+      "fact_en": "Mont-Saint-Michel in Normandy only becomes a true island during the strongest tides, around the equinoxes. The site has been on the UNESCO World Heritage list since 1979."
+    },
+    {
+      "slug": "food-michelin-three-stars",
+      "category": "food",
+      "level": "B2",
+      "title": "Le sens des étoiles Michelin",
+      "summary": "Une, deux, trois étoiles.",
+      "fact_fr": "Dans le guide Michelin, une étoile signale « une très bonne cuisine », deux « une cuisine d'exception qui vaut le détour » et trois « une cuisine remarquable qui mérite le voyage ». Très peu de restaurants au monde obtiennent les trois.",
+      "fact_en": "In the Michelin guide, one star marks 'very good cooking', two means 'excellent cooking worth a detour', and three signals 'exceptional cooking worth a special journey'. Very few restaurants in the world reach three."
+    },
+    {
+      "slug": "food-ratatouille-region",
+      "category": "food",
+      "level": "A2",
+      "title": "La ratatouille",
+      "summary": "Un plat du Sud.",
+      "fact_fr": "La ratatouille est un plat traditionnel du sud-est de la France, originaire de la région niçoise. C'est un mélange mijoté d'aubergines, de courgettes, de tomates, de poivrons et d'oignons, parfumé aux herbes de Provence.",
+      "fact_en": "Ratatouille is a traditional dish from the south-east of France, originally from the Nice area. It is a slow-cooked mix of aubergines, courgettes, tomatoes, peppers and onions, scented with herbs of Provence."
+    },
+    {
+      "slug": "food-bouillabaisse-marseille",
+      "category": "food",
+      "level": "B1",
+      "title": "La bouillabaisse marseillaise",
+      "summary": "Un plat de pêcheurs devenu noble.",
+      "fact_fr": "La bouillabaisse était à l'origine une soupe de pêcheurs marseillais, préparée avec les poissons invendus de la journée. Aujourd'hui, c'est un plat raffiné et codifié, dont la « charte » liste précisément les poissons autorisés.",
+      "fact_en": "Bouillabaisse was originally a stew made by Marseille fishermen using the day's unsold fish. Today it is a refined, codified dish whose 'charter' precisely lists the permitted fish."
+    },
+    {
+      "slug": "food-foie-gras-debate",
+      "category": "food",
+      "level": "B2",
+      "title": "Le foie gras, plat noble et controversé",
+      "summary": "Une tradition millénaire en débat.",
+      "fact_fr": "Le foie gras, fabriqué en France depuis l'Antiquité, est un mets traditionnel servi notamment lors des fêtes de fin d'année. Sa méthode de production, le gavage des canards et des oies, fait aujourd'hui l'objet d'un débat éthique vif.",
+      "fact_en": "Foie gras, made in France since antiquity, is a traditional dish especially served during the end-of-year holidays. Its production method, the force-feeding of ducks and geese, is the subject of an intense ethical debate today."
+    },
+    {
+      "slug": "food-champagne-region",
+      "category": "food",
+      "level": "B1",
+      "title": "Le vrai Champagne vient de Champagne",
+      "summary": "Une appellation strictement protégée.",
+      "fact_fr": "Seuls les vins effervescents produits dans la région de Champagne, dans le nord-est de la France, ont le droit de s'appeler « Champagne ». Les autres vins effervescents portent des noms différents : crémant, mousseux, prosecco, cava.",
+      "fact_en": "Only sparkling wines produced in the Champagne region of north-east France have the right to be called 'Champagne'. Other sparkling wines go by different names: crémant, mousseux, prosecco, cava."
+    },
+    {
+      "slug": "lang-tu-vous-history",
+      "category": "language",
+      "level": "B2",
+      "title": "Le « vous » est plus ancien",
+      "summary": "Une politesse héritée du latin.",
+      "fact_fr": "L'usage du « vous » au lieu du « tu » comme marque de respect remonte à l'Empire romain tardif, quand on s'adressait à l'empereur au pluriel par déférence. Cette tradition s'est ensuite transmise au français médiéval, puis moderne.",
+      "fact_en": "Using 'vous' instead of 'tu' as a mark of respect goes back to the late Roman Empire, when one addressed the emperor in the plural out of deference. The tradition was later passed down to medieval and then modern French."
+    },
+    {
+      "slug": "lang-ipa-french",
+      "category": "language",
+      "level": "B2",
+      "title": "L'API : une invention française",
+      "summary": "Une référence mondiale pour la phonétique.",
+      "fact_fr": "L'Alphabet phonétique international (API) a été conçu en France à la fin du XIXe siècle par l'Association phonétique internationale, fondée à Paris. Il permet de représenter par écrit les sons de toutes les langues du monde.",
+      "fact_en": "The International Phonetic Alphabet (IPA) was developed in France in the late 19th century by the International Phonetic Association, founded in Paris. It allows the sounds of all the world's languages to be written down."
+    },
+    {
+      "slug": "hist-suffrage-universel-1848",
+      "category": "history",
+      "level": "B2",
+      "title": "Le suffrage universel masculin de 1848",
+      "summary": "Une étape démocratique majeure.",
+      "fact_fr": "La France a instauré le suffrage universel masculin en 1848, lors de la Deuxième République. C'était l'un des premiers pays au monde à accorder le droit de vote à tous les hommes, indépendamment de leur fortune.",
+      "fact_en": "France introduced universal male suffrage in 1848, under the Second Republic. It was one of the first countries in the world to grant voting rights to all men regardless of their wealth."
+    },
+    {
+      "slug": "cult-louvre-pyramid",
+      "category": "culture",
+      "level": "B1",
+      "title": "La pyramide du Louvre",
+      "summary": "Une entrée moderne pour un palais ancien.",
+      "fact_fr": "La pyramide de verre du Louvre, conçue par l'architecte sino-américain I. M. Pei et inaugurée en 1989, sert d'entrée principale au musée. Très contestée à sa construction, elle est aujourd'hui devenue un symbole reconnu du Louvre.",
+      "fact_en": "The Louvre's glass pyramid, designed by the Chinese-American architect I. M. Pei and inaugurated in 1989, serves as the museum's main entrance. Highly controversial when built, it has since become a recognised symbol of the Louvre."
+    },
+    {
+      "slug": "cult-edith-piaf",
+      "category": "culture",
+      "level": "B1",
+      "title": "Édith Piaf, le moineau de Paris",
+      "summary": "L'une des plus grandes chanteuses françaises.",
+      "fact_fr": "Édith Piaf, surnommée « la môme Piaf », est l'une des plus célèbres chanteuses françaises du XXe siècle. Ses chansons, notamment « La Vie en rose » et « Non, je ne regrette rien », ont fait le tour du monde.",
+      "fact_en": "Édith Piaf, nicknamed 'la môme Piaf', is one of the most famous French singers of the 20th century. Her songs, including 'La Vie en rose' and 'Non, je ne regrette rien', have travelled the world."
+    },
+    {
+      "slug": "cult-tdf-yellow-jersey",
+      "category": "culture",
+      "level": "B1",
+      "title": "Pourquoi le maillot est jaune ?",
+      "summary": "Un choix marketing astucieux.",
+      "fact_fr": "Le maillot du leader du Tour de France est jaune depuis 1919, en hommage à la couleur des pages du journal L'Auto, organisateur historique de la course. C'est l'un des symboles sportifs les plus reconnaissables au monde.",
+      "fact_en": "The leader's jersey on the Tour de France has been yellow since 1919, echoing the colour of the pages of L'Auto, the newspaper that originally organised the race. It is one of the most instantly recognisable symbols in sport."
+    }
+  ]
+}

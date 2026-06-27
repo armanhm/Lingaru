@@ -110,39 +110,49 @@ class TestGenerateGrammarCard:
 
 @pytest.mark.django_db
 class TestGenerateTriviaCard:
-    @patch("apps.discover.services.create_llm_router")
-    def test_creates_trivia_card_from_llm(self, mock_create_router):
-        mock_router = MagicMock()
-        mock_router.generate.return_value = MagicMock(
-            content=json.dumps(
-                {
-                    "title": "French in Africa",
-                    "summary": "More people speak French in Africa than in Europe.",
-                    "fact_fr": "Plus de gens parlent fran\u00e7ais en Afrique qu'en Europe.",
-                    "fact_en": "More people speak French in Africa than in Europe.",
-                }
-            )
+    """Phase 3: trivia comes from the TriviaTemplate bank, not the LLM.
+
+    The bank picker is exercised in detail by test_trivia_bank.py; these
+    tests just pin the public-API contract of generate_trivia_card (the
+    function called by the daily Celery task).
+    """
+
+    def test_creates_trivia_card_from_bank(self, db):
+        from apps.discover.models import TriviaTemplate
+
+        TriviaTemplate.objects.create(
+            slug="t-fr",
+            language="fr",
+            title="Generated title",
+            summary="A short summary.",
+            fact_fr="Un fait original sur la France.",
+            fact_en="An original fact about France.",
+            is_active=True,
         )
-        mock_create_router.return_value = mock_router
 
         card = generate_trivia_card()
+
         assert card is not None
         assert card.type == "trivia"
-        assert card.title == "French in Africa"
-        assert card.content_json["fact_fr"] is not None
+        assert card.title == "Generated title"
+        assert card.content_json["fact_fr"] == "Un fait original sur la France."
+        assert card.content_json["fact_en"] == "An original fact about France."
 
-    @patch("apps.discover.services.create_llm_router")
-    def test_returns_none_on_llm_error(self, mock_create_router):
-        mock_create_router.side_effect = RuntimeError("No API key")
-        card = generate_trivia_card()
-        assert card is None
+    def test_does_not_call_the_llm_router(self, db):
+        """Pin the cost-saving invariant: no LLM round-trip for trivia."""
+        from apps.discover.models import TriviaTemplate
 
-    @patch("apps.discover.services.create_llm_router")
-    def test_returns_none_on_invalid_json(self, mock_create_router):
-        mock_router = MagicMock()
-        mock_router.generate.return_value = MagicMock(content="not json")
-        mock_create_router.return_value = mock_router
+        TriviaTemplate.objects.create(
+            slug="t-noop",
+            language="fr",
+            title="Bank fact",
+            fact_fr="Texte.",
+        )
+        with patch("apps.discover.services.create_llm_router") as mock_router:
+            generate_trivia_card()
+        assert not mock_router.called
 
+    def test_returns_none_when_bank_empty(self, db):
         card = generate_trivia_card()
         assert card is None
 

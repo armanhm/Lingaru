@@ -1,0 +1,3468 @@
+{
+  "_meta": {
+    "language": "fr",
+    "cefr_level": "A1",
+    "title": "Lingaru — French Dictionary A1 (Beginner)",
+    "description": "Hand-authored French dictionary entries for the 500 most-frequent A1 lemmas (ranks 1–500). Format mirrors what /api/dictionary/lookup/ returns to the frontend."
+  },
+  "entries": [
+    {
+      "rank": 1,
+      "cefr_level": "A1",
+      "lemma": "de",
+      "part_of_speech": "prep",
+      "definitions": [
+        {
+          "fr": "Marque l'origine, la provenance, le point de départ.",
+          "en": "Marks origin, source, point of departure."
+        },
+        {
+          "fr": "Indique la possession ou l'appartenance.",
+          "en": "Indicates possession or belonging."
+        },
+        {
+          "fr": "Introduit un complément de matière, de manière ou de quantité.",
+          "en": "Introduces a complement of material, manner, or quantity."
+        }
+      ],
+      "examples": [
+        {
+          "fr": "Je viens de Paris.",
+          "en": "I come from Paris."
+        },
+        {
+          "fr": "C'est le livre de Marie.",
+          "en": "It's Marie's book."
+        },
+        {
+          "fr": "Une tasse de café, s'il te plaît.",
+          "en": "A cup of coffee, please."
+        }
+      ],
+      "synonyms": [],
+      "antonyms": [],
+      "etymology": "Du latin classique *de* (« en provenance de »).",
+      "register": "neutral",
+      "gender": null
+    },
+    {
+      "rank": 2,
+      "cefr_level": "A1",
+      "lemma": "le",
+      "part_of_speech": "det",
+      "definitions": [
+        {
+          "fr": "Article défini masculin singulier ; désigne un être ou un objet précis.",
+          "en": "Masculine singular definite article; identifies a specific being or object."
+        },
+        {
+          "fr": "Pronom personnel complément masculin singulier de la troisième personne.",
+          "en": "Third-person masculine singular object pronoun."
+        }
+      ],
+      "examples": [
+        {
+          "fr": "Le chat dort sur le canapé.",
+          "en": "The cat is sleeping on the sofa."
+        },
+        {
+          "fr": "Je le vois tous les jours.",
+          "en": "I see him every day."
+        }
+      ],
+      "synonyms": [],
+      "antonyms": [
+        "la",
+        "les"
+      ],
+      "etymology": "Du latin tardif *ille* (« celui-là »).",
+      "register": "neutral",
+      "gender": "masculine"
+    },
+    {
+      "rank": 3,
+      "cefr_level": "A1",
+      "lemma": "et",
+      "part_of_speech": "conj",
+      "definitions": [
+        {
+          "fr": "Conjonction de coordination ; relie deux éléments de même nature.",
+          "en": "Coordinating conjunction; joins two elements of the same kind."
+        }
+      ],
+      "examples": [
+        {
+          "fr": "Du pain et du fromage.",
+          "en": "Bread and cheese."
+        },
+        {
+          "fr": "Il est jeune et fort.",
+          "en": "He is young and strong."
+        }
+      ],
+      "synonyms": [
+        "ainsi que"
+      ],
+      "antonyms": [
+        "ou",
+        "ni"
+      ],
+      "etymology": "Du latin classique *et*.",
+      "register": "neutral",
+      "gender": null
+    },
+    {
+      "rank": 4,
+      "cefr_level": "A1",
+      "lemma": "à",
+      "part_of_speech": "prep",
+      "definitions": [
+        {
+          "fr": "Indique la destination, le lieu où l'on va.",
+          "en": "Indicates destination, where one is going."
+        },
+        {
+          "fr": "Indique le moment précis d'une action.",
+          "en": "Indicates the precise moment of an action."
+        },
+        {
+          "fr": "Marque l'appartenance ou l'attribution.",
+          "en": "Marks belonging or attribution."
+        }
+      ],
+      "examples": [
+        {
+          "fr": "Je vais à l'école.",
+          "en": "I am going to school."
+        },
+        {
+          "fr": "Le train part à huit heures.",
+          "en": "The train leaves at eight o'clock."
+        },
+        {
+          "fr": "Ce livre est à toi.",
+          "en": "This book is yours."
+        }
+      ],
+      "synonyms": [],
+      "antonyms": [],
+      "etymology": "Du latin classique *ad* (« vers, près de »).",
+      "register": "neutral",
+      "gender": null
+    },
+    {
+      "rank": 5,
+      "cefr_level": "A1",
+      "lemma": "être",
+      "part_of_speech": "v",
+      "definitions": [
+        {
+          "fr": "Exister, avoir une réalité.",
+          "en": "To exist, to have being."
+        },
+        {
+          "fr": "Servir de copule entre le sujet et son attribut.",
+          "en": "To be (linking verb between subject and attribute)."
+        },
+        {
+          "fr": "Se trouver dans un lieu ou un état particulier.",
+          "en": "To be located in a place or particular state."
+        }
+      ],
+      "examples": [
+        {
+          "fr": "Je suis étudiant.",
+          "en": "I am a student."
+        },
+        {
+          "fr": "Elle est très gentille.",
+          "en": "She is very kind."
+        },
+        {
+          "fr": "Nous sommes à Paris.",
+          "en": "We are in Paris."
+        }
+      ],
+      "synonyms": [
+        "exister",
+        "demeurer"
+      ],
+      "antonyms": [],
+      "etymology": "Du latin populaire *essere*, dérivé de *esse*.",
+      "register": "neutral",
+      "gender": null
+    },
+    {
+      "rank": 6,
+      "cefr_level": "A1",
+      "lemma": "en",
+      "part_of_speech": "prep",
+      "definitions": [
+        {
+          "fr": "Indique le lieu où l'on se trouve ou vers lequel on se dirige.",
+          "en": "Indicates location or direction."
+        },
+        {
+          "fr": "Marque la durée, le temps ou la manière.",
+          "en": "Marks duration, time, or manner."
+        },
+        {
+          "fr": "Pronom adverbial reprenant un complément introduit par « de ».",
+          "en": "Adverbial pronoun replacing a complement introduced by 'de'."
+        }
+      ],
+      "examples": [
+        {
+          "fr": "Nous habitons en France.",
+          "en": "We live in France."
+        },
+        {
+          "fr": "Il a tout fait en une heure.",
+          "en": "He did everything in an hour."
+        },
+        {
+          "fr": "J'en ai assez.",
+          "en": "I've had enough of it."
+        }
+      ],
+      "synonyms": [
+        "dans"
+      ],
+      "antonyms": [],
+      "etymology": "Du latin *in*.",
+      "register": "neutral",
+      "gender": null
+    },
+    {
+      "rank": 7,
+      "cefr_level": "A1",
+      "lemma": "un",
+      "part_of_speech": "det",
+      "definitions": [
+        {
+          "fr": "Article indéfini masculin singulier ; désigne un être ou un objet sans le préciser.",
+          "en": "Masculine singular indefinite article; refers to a non-specific being or object."
+        },
+        {
+          "fr": "Adjectif numéral cardinal ; désigne l'unité.",
+          "en": "Cardinal numeral; the unit one."
+        }
+      ],
+      "examples": [
+        {
+          "fr": "Un homme attend dehors.",
+          "en": "A man is waiting outside."
+        },
+        {
+          "fr": "Il n'y a qu'un seul chemin.",
+          "en": "There is only one path."
+        }
+      ],
+      "synonyms": [],
+      "antonyms": [
+        "plusieurs",
+        "aucun"
+      ],
+      "etymology": "Du latin *unus*.",
+      "register": "neutral",
+      "gender": "masculine"
+    },
+    {
+      "rank": 8,
+      "cefr_level": "A1",
+      "lemma": "avoir",
+      "part_of_speech": "v",
+      "definitions": [
+        {
+          "fr": "Posséder, détenir quelque chose.",
+          "en": "To have, to possess something."
+        },
+        {
+          "fr": "Auxiliaire pour former les temps composés de la plupart des verbes.",
+          "en": "Auxiliary used to form compound tenses of most verbs."
+        },
+        {
+          "fr": "Éprouver une sensation, un sentiment ou un besoin.",
+          "en": "To experience a sensation, feeling, or need."
+        }
+      ],
+      "examples": [
+        {
+          "fr": "J'ai deux frères.",
+          "en": "I have two brothers."
+        },
+        {
+          "fr": "Il a fini son travail.",
+          "en": "He has finished his work."
+        },
+        {
+          "fr": "Elle a faim.",
+          "en": "She is hungry."
+        }
+      ],
+      "synonyms": [
+        "posséder",
+        "détenir"
+      ],
+      "antonyms": [
+        "manquer"
+      ],
+      "etymology": "Du latin populaire *habere*.",
+      "register": "neutral",
+      "gender": null
+    },
+    {
+      "rank": 9,
+      "cefr_level": "A1",
+      "lemma": "pas",
+      "part_of_speech": "adv",
+      "definitions": [
+        {
+          "fr": "Adverbe de négation, employé avec « ne ».",
+          "en": "Negation adverb, used with 'ne'."
+        },
+        {
+          "fr": "Mouvement d'un pied que l'on pose devant l'autre pour marcher (n.m.).",
+          "en": "Step; movement of one foot in front of the other when walking (m. noun)."
+        }
+      ],
+      "examples": [
+        {
+          "fr": "Je ne sais pas.",
+          "en": "I don't know."
+        },
+        {
+          "fr": "Faites un pas en avant.",
+          "en": "Take a step forward."
+        }
+      ],
+      "synonyms": [
+        "point",
+        "nullement"
+      ],
+      "antonyms": [
+        "oui",
+        "si"
+      ],
+      "etymology": "Du latin *passus* (« pas, enjambée »).",
+      "register": "neutral",
+      "gender": "masculine"
+    },
+    {
+      "rank": 10,
+      "cefr_level": "A1",
+      "lemma": "il",
+      "part_of_speech": "pron",
+      "definitions": [
+        {
+          "fr": "Pronom personnel masculin singulier de la troisième personne.",
+          "en": "Third-person masculine singular pronoun."
+        },
+        {
+          "fr": "Pronom impersonnel utilisé pour certaines tournures (il pleut, il y a).",
+          "en": "Impersonal pronoun used in fixed expressions (it rains, there is)."
+        }
+      ],
+      "examples": [
+        {
+          "fr": "Il habite à Lyon.",
+          "en": "He lives in Lyon."
+        },
+        {
+          "fr": "Il fait froid aujourd'hui.",
+          "en": "It's cold today."
+        }
+      ],
+      "synonyms": [],
+      "antonyms": [
+        "elle"
+      ],
+      "etymology": "Du latin *ille* (« celui-là »).",
+      "register": "neutral",
+      "gender": "masculine"
+    },
+    {
+      "rank": 11,
+      "cefr_level": "A1",
+      "lemma": "que",
+      "part_of_speech": "conj",
+      "definitions": [
+        {
+          "fr": "Conjonction introduisant une proposition subordonnée.",
+          "en": "Conjunction introducing a subordinate clause."
+        },
+        {
+          "fr": "Pronom relatif désignant la personne ou la chose dont on parle.",
+          "en": "Relative pronoun referring to a person or thing."
+        },
+        {
+          "fr": "Pronom interrogatif employé dans une question.",
+          "en": "Interrogative pronoun used in a question."
+        }
+      ],
+      "examples": [
+        {
+          "fr": "Je pense que tu as raison.",
+          "en": "I think you are right."
+        },
+        {
+          "fr": "Le livre que je lis est passionnant.",
+          "en": "The book I'm reading is fascinating."
+        },
+        {
+          "fr": "Que veux-tu manger ?",
+          "en": "What do you want to eat?"
+        }
+      ],
+      "synonyms": [],
+      "antonyms": [],
+      "etymology": "Du latin *quem*, *quod*, *quia* (selon le sens).",
+      "register": "neutral",
+      "gender": null
+    },
+    {
+      "rank": 12,
+      "cefr_level": "A1",
+      "lemma": "je",
+      "part_of_speech": "pron",
+      "definitions": [
+        {
+          "fr": "Pronom personnel sujet de la première personne du singulier.",
+          "en": "First-person singular subject pronoun."
+        }
+      ],
+      "examples": [
+        {
+          "fr": "Je m'appelle Marie.",
+          "en": "My name is Marie."
+        },
+        {
+          "fr": "Je travaille à Paris.",
+          "en": "I work in Paris."
+        }
+      ],
+      "synonyms": [],
+      "antonyms": [],
+      "etymology": "Du latin *ego*, par évolution phonétique.",
+      "register": "neutral",
+      "gender": null
+    },
+    {
+      "rank": 13,
+      "cefr_level": "A1",
+      "lemma": "qui",
+      "part_of_speech": "pron",
+      "definitions": [
+        {
+          "fr": "Pronom relatif ayant pour fonction sujet, désignant une personne ou une chose.",
+          "en": "Relative pronoun in subject function, referring to a person or thing."
+        },
+        {
+          "fr": "Pronom interrogatif désignant une personne.",
+          "en": "Interrogative pronoun referring to a person."
+        }
+      ],
+      "examples": [
+        {
+          "fr": "L'homme qui parle est mon père.",
+          "en": "The man who is speaking is my father."
+        },
+        {
+          "fr": "Qui est à la porte ?",
+          "en": "Who is at the door?"
+        }
+      ],
+      "synonyms": [],
+      "antonyms": [],
+      "etymology": "Du latin *qui*, pronom relatif et interrogatif.",
+      "register": "neutral",
+      "gender": null
+    },
+    {
+      "rank": 14,
+      "cefr_level": "A1",
+      "lemma": "au",
+      "part_of_speech": "prep",
+      "definitions": [
+        {
+          "fr": "Contraction de « à le » devant un nom masculin singulier.",
+          "en": "Contraction of 'à le' before a masculine singular noun."
+        }
+      ],
+      "examples": [
+        {
+          "fr": "Je vais au marché.",
+          "en": "I am going to the market."
+        },
+        {
+          "fr": "Il téléphone au médecin.",
+          "en": "He is calling the doctor."
+        }
+      ],
+      "synonyms": [],
+      "antonyms": [],
+      "etymology": "Contraction de « à » + « le ».",
+      "register": "neutral",
+      "gender": null
+    },
+    {
+      "rank": 15,
+      "cefr_level": "A1",
+      "lemma": "ce",
+      "part_of_speech": "det",
+      "definitions": [
+        {
+          "fr": "Adjectif démonstratif masculin singulier ; désigne ce qui est proche.",
+          "en": "Masculine singular demonstrative adjective; points out something close by."
+        },
+        {
+          "fr": "Pronom démonstratif neutre, souvent suivi du verbe « être ».",
+          "en": "Neutral demonstrative pronoun, often followed by 'être'."
+        }
+      ],
+      "examples": [
+        {
+          "fr": "Ce livre est intéressant.",
+          "en": "This book is interesting."
+        },
+        {
+          "fr": "C'est très bon.",
+          "en": "It is very good."
+        }
+      ],
+      "synonyms": [
+        "cet",
+        "cette"
+      ],
+      "antonyms": [],
+      "etymology": "Du latin *ecce hoc* (« voici cela »).",
+      "register": "neutral",
+      "gender": "masculine"
+    },
+    {
+      "rank": 16,
+      "cefr_level": "A1",
+      "lemma": "sur",
+      "part_of_speech": "prep",
+      "definitions": [
+        {
+          "fr": "Indique une position au-dessus de quelque chose, en contact avec sa surface.",
+          "en": "Indicates position above or on the surface of something."
+        },
+        {
+          "fr": "Indique le sujet d'un discours ou d'un écrit.",
+          "en": "Indicates the subject of a discussion or text."
+        }
+      ],
+      "examples": [
+        {
+          "fr": "Le livre est sur la table.",
+          "en": "The book is on the table."
+        },
+        {
+          "fr": "Une conférence sur l'environnement.",
+          "en": "A lecture on the environment."
+        }
+      ],
+      "synonyms": [
+        "au-dessus de"
+      ],
+      "antonyms": [
+        "sous"
+      ],
+      "etymology": "Du latin *super* (« au-dessus »).",
+      "register": "neutral",
+      "gender": null
+    },
+    {
+      "rank": 17,
+      "cefr_level": "A1",
+      "lemma": "par",
+      "part_of_speech": "prep",
+      "definitions": [
+        {
+          "fr": "Indique le moyen, l'agent ou la cause d'une action.",
+          "en": "Indicates means, agent, or cause of an action."
+        },
+        {
+          "fr": "Indique un parcours, un trajet ou une distribution.",
+          "en": "Indicates a path, route, or distribution."
+        }
+      ],
+      "examples": [
+        {
+          "fr": "Le tableau a été peint par Monet.",
+          "en": "The painting was made by Monet."
+        },
+        {
+          "fr": "Nous passons par Lyon.",
+          "en": "We go through Lyon."
+        }
+      ],
+      "synonyms": [],
+      "antonyms": [],
+      "etymology": "Du latin *per* (« à travers »).",
+      "register": "neutral",
+      "gender": null
+    },
+    {
+      "rank": 18,
+      "cefr_level": "A1",
+      "lemma": "on",
+      "part_of_speech": "pron",
+      "definitions": [
+        {
+          "fr": "Pronom indéfini désignant une ou plusieurs personnes non identifiées.",
+          "en": "Indefinite pronoun referring to one or more unidentified people."
+        },
+        {
+          "fr": "Employé à l'oral pour « nous ».",
+          "en": "Used in speech to mean 'we'."
+        }
+      ],
+      "examples": [
+        {
+          "fr": "On parle français au Québec.",
+          "en": "French is spoken in Quebec."
+        },
+        {
+          "fr": "On va au cinéma ce soir.",
+          "en": "We are going to the cinema tonight."
+        }
+      ],
+      "synonyms": [
+        "nous",
+        "les gens"
+      ],
+      "antonyms": [],
+      "etymology": "Du latin *homo* (« homme »).",
+      "register": "neutral",
+      "gender": null
+    },
+    {
+      "rank": 19,
+      "cefr_level": "A1",
+      "lemma": "ne",
+      "part_of_speech": "adv",
+      "definitions": [
+        {
+          "fr": "Première partie de la négation, suivie de « pas », « jamais », « plus », etc.",
+          "en": "First element of negation, followed by 'pas', 'jamais', 'plus', etc."
+        }
+      ],
+      "examples": [
+        {
+          "fr": "Je ne sais pas.",
+          "en": "I don't know."
+        },
+        {
+          "fr": "Elle ne mange jamais de viande.",
+          "en": "She never eats meat."
+        }
+      ],
+      "synonyms": [],
+      "antonyms": [],
+      "etymology": "Du latin *non*.",
+      "register": "neutral",
+      "gender": null
+    },
+    {
+      "rank": 20,
+      "cefr_level": "A1",
+      "lemma": "se",
+      "part_of_speech": "pron",
+      "definitions": [
+        {
+          "fr": "Pronom personnel réfléchi de la troisième personne.",
+          "en": "Third-person reflexive pronoun."
+        }
+      ],
+      "examples": [
+        {
+          "fr": "Elle se lave les mains.",
+          "en": "She is washing her hands."
+        },
+        {
+          "fr": "Ils se parlent souvent.",
+          "en": "They often talk to each other."
+        }
+      ],
+      "synonyms": [],
+      "antonyms": [],
+      "etymology": "Du latin *se*.",
+      "register": "neutral",
+      "gender": null
+    },
+    {
+      "rank": 21,
+      "cefr_level": "A1",
+      "lemma": "vous",
+      "part_of_speech": "pron",
+      "definitions": [
+        {
+          "fr": "Pronom personnel de la deuxième personne du pluriel.",
+          "en": "Second-person plural pronoun."
+        },
+        {
+          "fr": "Pronom de politesse employé pour s'adresser à une seule personne.",
+          "en": "Polite pronoun used to address a single person."
+        }
+      ],
+      "examples": [
+        {
+          "fr": "Vous êtes mes amis.",
+          "en": "You are my friends."
+        },
+        {
+          "fr": "Bonjour, vous allez bien ?",
+          "en": "Hello, how are you?"
+        }
+      ],
+      "synonyms": [],
+      "antonyms": [
+        "tu"
+      ],
+      "etymology": "Du latin *vos*.",
+      "register": "neutral",
+      "gender": null
+    },
+    {
+      "rank": 22,
+      "cefr_level": "A1",
+      "lemma": "tu",
+      "part_of_speech": "pron",
+      "definitions": [
+        {
+          "fr": "Pronom personnel sujet de la deuxième personne du singulier ; forme familière.",
+          "en": "Second-person singular subject pronoun; informal form."
+        }
+      ],
+      "examples": [
+        {
+          "fr": "Tu viens ce soir ?",
+          "en": "Are you coming tonight?"
+        },
+        {
+          "fr": "Tu as raison.",
+          "en": "You are right."
+        }
+      ],
+      "synonyms": [],
+      "antonyms": [
+        "vous"
+      ],
+      "etymology": "Du latin *tu*.",
+      "register": "informal",
+      "gender": null
+    },
+    {
+      "rank": 23,
+      "cefr_level": "A1",
+      "lemma": "lui",
+      "part_of_speech": "pron",
+      "definitions": [
+        {
+          "fr": "Pronom personnel complément de la troisième personne du singulier (masculin ou féminin).",
+          "en": "Third-person singular object pronoun (masculine or feminine)."
+        },
+        {
+          "fr": "Pronom tonique masculin singulier.",
+          "en": "Stressed masculine singular pronoun."
+        }
+      ],
+      "examples": [
+        {
+          "fr": "Je lui ai parlé hier.",
+          "en": "I spoke to him/her yesterday."
+        },
+        {
+          "fr": "C'est lui qui a gagné.",
+          "en": "He is the one who won."
+        }
+      ],
+      "synonyms": [],
+      "antonyms": [],
+      "etymology": "Du latin *illī*, datif d'*ille*.",
+      "register": "neutral",
+      "gender": "masculine"
+    },
+    {
+      "rank": 24,
+      "cefr_level": "A1",
+      "lemma": "nous",
+      "part_of_speech": "pron",
+      "definitions": [
+        {
+          "fr": "Pronom personnel de la première personne du pluriel.",
+          "en": "First-person plural pronoun."
+        }
+      ],
+      "examples": [
+        {
+          "fr": "Nous allons au restaurant.",
+          "en": "We are going to the restaurant."
+        },
+        {
+          "fr": "Cela nous concerne tous.",
+          "en": "This concerns all of us."
+        }
+      ],
+      "synonyms": [
+        "on"
+      ],
+      "antonyms": [],
+      "etymology": "Du latin *nos*.",
+      "register": "neutral",
+      "gender": null
+    },
+    {
+      "rank": 25,
+      "cefr_level": "A1",
+      "lemma": "comme",
+      "part_of_speech": "conj",
+      "definitions": [
+        {
+          "fr": "Conjonction de comparaison ; introduit un terme de référence.",
+          "en": "Conjunction of comparison; introduces a reference term."
+        },
+        {
+          "fr": "Indique la cause d'un fait.",
+          "en": "Indicates the cause of a fact."
+        },
+        {
+          "fr": "Indique la manière ou la qualité.",
+          "en": "Indicates manner or quality."
+        }
+      ],
+      "examples": [
+        {
+          "fr": "Elle chante comme un oiseau.",
+          "en": "She sings like a bird."
+        },
+        {
+          "fr": "Comme il pleuvait, nous sommes restés.",
+          "en": "As it was raining, we stayed."
+        },
+        {
+          "fr": "Fais comme tu veux.",
+          "en": "Do as you wish."
+        }
+      ],
+      "synonyms": [
+        "ainsi que",
+        "puisque"
+      ],
+      "antonyms": [],
+      "etymology": "Du latin populaire *quomodo* (« de quelle manière »).",
+      "register": "neutral",
+      "gender": null
+    },
+    {
+      "rank": 26,
+      "cefr_level": "A1",
+      "lemma": "y",
+      "part_of_speech": "pron",
+      "definitions": [
+        {
+          "fr": "Pronom adverbial remplaçant un complément de lieu introduit par « à », « dans », « en ».",
+          "en": "Adverbial pronoun replacing a place complement introduced by 'à', 'dans', 'en'."
+        },
+        {
+          "fr": "Pronom adverbial remplaçant un complément introduit par « à » (chose ou idée).",
+          "en": "Adverbial pronoun replacing a complement introduced by 'à' (thing or idea)."
+        }
+      ],
+      "examples": [
+        {
+          "fr": "Tu vas à Paris ? — Oui, j'y vais.",
+          "en": "Are you going to Paris? — Yes, I'm going there."
+        },
+        {
+          "fr": "Je n'y pense plus.",
+          "en": "I don't think about it anymore."
+        }
+      ],
+      "synonyms": [],
+      "antonyms": [],
+      "etymology": "Du latin *ibi* (« là »).",
+      "register": "neutral",
+      "gender": null
+    },
+    {
+      "rank": 27,
+      "cefr_level": "A1",
+      "lemma": "pour",
+      "part_of_speech": "prep",
+      "definitions": [
+        {
+          "fr": "Marque le but, la destination ou la finalité d'une action.",
+          "en": "Marks the goal, destination, or purpose of an action."
+        },
+        {
+          "fr": "Indique la durée envisagée.",
+          "en": "Indicates anticipated duration."
+        },
+        {
+          "fr": "Indique la cause ou le motif.",
+          "en": "Indicates cause or motive."
+        }
+      ],
+      "examples": [
+        {
+          "fr": "Ce cadeau est pour toi.",
+          "en": "This gift is for you."
+        },
+        {
+          "fr": "Il part pour deux semaines.",
+          "en": "He is leaving for two weeks."
+        },
+        {
+          "fr": "Il a été puni pour son retard.",
+          "en": "He was punished for being late."
+        }
+      ],
+      "synonyms": [
+        "afin de"
+      ],
+      "antonyms": [
+        "contre"
+      ],
+      "etymology": "Du latin *pro* (« devant, en faveur de »).",
+      "register": "neutral",
+      "gender": null
+    },
+    {
+      "rank": 28,
+      "cefr_level": "A1",
+      "lemma": "dans",
+      "part_of_speech": "prep",
+      "definitions": [
+        {
+          "fr": "Indique le lieu intérieur ; à l'intérieur de.",
+          "en": "Indicates interior location; inside of."
+        },
+        {
+          "fr": "Indique un délai dans le futur.",
+          "en": "Indicates a delay in the future."
+        }
+      ],
+      "examples": [
+        {
+          "fr": "Le chat est dans la maison.",
+          "en": "The cat is in the house."
+        },
+        {
+          "fr": "Je reviens dans dix minutes.",
+          "en": "I'll be back in ten minutes."
+        }
+      ],
+      "synonyms": [
+        "en",
+        "à l'intérieur de"
+      ],
+      "antonyms": [
+        "hors de",
+        "dehors"
+      ],
+      "etymology": "Du latin *de intus* (« de l'intérieur »).",
+      "register": "neutral",
+      "gender": null
+    },
+    {
+      "rank": 29,
+      "cefr_level": "A1",
+      "lemma": "faire",
+      "part_of_speech": "v",
+      "definitions": [
+        {
+          "fr": "Réaliser, accomplir, exécuter une action.",
+          "en": "To do, to accomplish, to perform an action."
+        },
+        {
+          "fr": "Fabriquer, créer, produire quelque chose.",
+          "en": "To make, to create, to produce something."
+        },
+        {
+          "fr": "Verbe substitut employé pour éviter la répétition d'un autre verbe.",
+          "en": "Substitute verb used to avoid repeating another verb."
+        }
+      ],
+      "examples": [
+        {
+          "fr": "Que fais-tu ce soir ?",
+          "en": "What are you doing tonight?"
+        },
+        {
+          "fr": "Elle fait un gâteau.",
+          "en": "She is making a cake."
+        },
+        {
+          "fr": "Il joue mieux que moi ne le fais.",
+          "en": "He plays better than I do."
+        }
+      ],
+      "synonyms": [
+        "accomplir",
+        "réaliser",
+        "fabriquer"
+      ],
+      "antonyms": [
+        "défaire",
+        "détruire"
+      ],
+      "etymology": "Du latin *facere*.",
+      "register": "neutral",
+      "gender": null
+    },
+    {
+      "rank": 30,
+      "cefr_level": "A1",
+      "lemma": "une",
+      "part_of_speech": "det",
+      "definitions": [
+        {
+          "fr": "Article indéfini féminin singulier.",
+          "en": "Feminine singular indefinite article."
+        },
+        {
+          "fr": "Adjectif numéral cardinal féminin.",
+          "en": "Feminine cardinal numeral."
+        }
+      ],
+      "examples": [
+        {
+          "fr": "Une femme passe dans la rue.",
+          "en": "A woman is walking down the street."
+        },
+        {
+          "fr": "J'ai mangé une pomme.",
+          "en": "I ate one apple."
+        }
+      ],
+      "synonyms": [],
+      "antonyms": [
+        "plusieurs"
+      ],
+      "etymology": "Du latin *una*, féminin d'*unus*.",
+      "register": "neutral",
+      "gender": "feminine"
+    },
+    {
+      "rank": 31,
+      "cefr_level": "A1",
+      "lemma": "des",
+      "part_of_speech": "det",
+      "definitions": [
+        {
+          "fr": "Article indéfini pluriel ; désigne des êtres ou objets non précisés.",
+          "en": "Plural indefinite article; refers to unspecified beings or objects."
+        },
+        {
+          "fr": "Article partitif masculin pluriel.",
+          "en": "Masculine plural partitive article."
+        }
+      ],
+      "examples": [
+        {
+          "fr": "Des enfants jouent dans le parc.",
+          "en": "Children are playing in the park."
+        },
+        {
+          "fr": "J'ai acheté des fruits.",
+          "en": "I bought some fruit."
+        }
+      ],
+      "synonyms": [],
+      "antonyms": [
+        "les"
+      ],
+      "etymology": "Contraction de « de » + « les ».",
+      "register": "neutral",
+      "gender": null
+    },
+    {
+      "rank": 32,
+      "cefr_level": "A1",
+      "lemma": "son",
+      "part_of_speech": "det",
+      "definitions": [
+        {
+          "fr": "Adjectif possessif masculin singulier de la troisième personne.",
+          "en": "Third-person masculine singular possessive adjective."
+        },
+        {
+          "fr": "Sensation produite par les vibrations de l'air et perçue par l'oreille (n.m.).",
+          "en": "Sound; sensation produced by air vibrations perceived by the ear (m. noun)."
+        }
+      ],
+      "examples": [
+        {
+          "fr": "Il aime son chien.",
+          "en": "He loves his dog."
+        },
+        {
+          "fr": "Le son de la cloche est clair.",
+          "en": "The sound of the bell is clear."
+        }
+      ],
+      "synonyms": [
+        "bruit"
+      ],
+      "antonyms": [
+        "silence"
+      ],
+      "etymology": "Du latin *suum* (adjectif) ; du latin *sonus* (nom).",
+      "register": "neutral",
+      "gender": "masculine"
+    },
+    {
+      "rank": 33,
+      "cefr_level": "A1",
+      "lemma": "mais",
+      "part_of_speech": "conj",
+      "definitions": [
+        {
+          "fr": "Conjonction de coordination ; introduit une opposition ou une restriction.",
+          "en": "Coordinating conjunction; introduces an opposition or restriction."
+        }
+      ],
+      "examples": [
+        {
+          "fr": "Il est fatigué, mais content.",
+          "en": "He is tired but happy."
+        },
+        {
+          "fr": "Je voudrais venir, mais je ne peux pas.",
+          "en": "I would like to come, but I can't."
+        }
+      ],
+      "synonyms": [
+        "cependant",
+        "pourtant"
+      ],
+      "antonyms": [],
+      "etymology": "Du latin *magis* (« plus, davantage »).",
+      "register": "neutral",
+      "gender": null
+    },
+    {
+      "rank": 34,
+      "cefr_level": "A1",
+      "lemma": "ou",
+      "part_of_speech": "conj",
+      "definitions": [
+        {
+          "fr": "Conjonction de coordination indiquant une alternative ou un choix.",
+          "en": "Coordinating conjunction indicating an alternative or choice."
+        }
+      ],
+      "examples": [
+        {
+          "fr": "Du café ou du thé ?",
+          "en": "Coffee or tea?"
+        },
+        {
+          "fr": "Viens à midi ou plus tard.",
+          "en": "Come at noon or later."
+        }
+      ],
+      "synonyms": [],
+      "antonyms": [
+        "et"
+      ],
+      "etymology": "Du latin *aut*.",
+      "register": "neutral",
+      "gender": null
+    },
+    {
+      "rank": 35,
+      "cefr_level": "A1",
+      "lemma": "si",
+      "part_of_speech": "conj",
+      "definitions": [
+        {
+          "fr": "Conjonction introduisant une condition ou une hypothèse.",
+          "en": "Conjunction introducing a condition or hypothesis."
+        },
+        {
+          "fr": "Adverbe d'intensité signifiant « tellement ».",
+          "en": "Adverb of intensity meaning 'so much'."
+        },
+        {
+          "fr": "Adverbe d'affirmation employé après une question négative.",
+          "en": "Affirmative adverb used after a negative question."
+        }
+      ],
+      "examples": [
+        {
+          "fr": "Si tu veux, on peut sortir.",
+          "en": "If you want, we can go out."
+        },
+        {
+          "fr": "Il est si gentil !",
+          "en": "He is so kind!"
+        },
+        {
+          "fr": "Tu n'as pas faim ? — Si, j'ai faim.",
+          "en": "Aren't you hungry? — Yes, I am."
+        }
+      ],
+      "synonyms": [
+        "lorsque",
+        "tellement"
+      ],
+      "antonyms": [],
+      "etymology": "Du latin *si* (conditionnel) ou *sic* (« ainsi »).",
+      "register": "neutral",
+      "gender": null
+    },
+    {
+      "rank": 36,
+      "cefr_level": "A1",
+      "lemma": "ils",
+      "part_of_speech": "pron",
+      "definitions": [
+        {
+          "fr": "Pronom personnel sujet de la troisième personne du pluriel (masculin ou mixte).",
+          "en": "Third-person plural subject pronoun (masculine or mixed)."
+        }
+      ],
+      "examples": [
+        {
+          "fr": "Ils habitent en banlieue.",
+          "en": "They live in the suburbs."
+        },
+        {
+          "fr": "Ils sont arrivés hier.",
+          "en": "They arrived yesterday."
+        }
+      ],
+      "synonyms": [],
+      "antonyms": [
+        "elles"
+      ],
+      "etymology": "Du latin *illi*, pluriel d'*ille*.",
+      "register": "neutral",
+      "gender": "masculine"
+    },
+    {
+      "rank": 37,
+      "cefr_level": "A1",
+      "lemma": "elle",
+      "part_of_speech": "pron",
+      "definitions": [
+        {
+          "fr": "Pronom personnel sujet de la troisième personne du singulier féminin.",
+          "en": "Third-person feminine singular subject pronoun."
+        }
+      ],
+      "examples": [
+        {
+          "fr": "Elle parle français.",
+          "en": "She speaks French."
+        },
+        {
+          "fr": "Elle est très belle.",
+          "en": "She is very beautiful."
+        }
+      ],
+      "synonyms": [],
+      "antonyms": [
+        "il"
+      ],
+      "etymology": "Du latin *illa*, féminin d'*ille*.",
+      "register": "neutral",
+      "gender": "feminine"
+    },
+    {
+      "rank": 38,
+      "cefr_level": "A1",
+      "lemma": "plus",
+      "part_of_speech": "adv",
+      "definitions": [
+        {
+          "fr": "Adverbe de quantité ; marque la supériorité dans une comparaison.",
+          "en": "Adverb of quantity; marks superiority in a comparison."
+        },
+        {
+          "fr": "Indique la cessation, en combinaison avec « ne ».",
+          "en": "Indicates cessation, combined with 'ne'."
+        }
+      ],
+      "examples": [
+        {
+          "fr": "Il est plus grand que moi.",
+          "en": "He is taller than me."
+        },
+        {
+          "fr": "Je n'ai plus faim.",
+          "en": "I'm no longer hungry."
+        }
+      ],
+      "synonyms": [
+        "davantage"
+      ],
+      "antonyms": [
+        "moins"
+      ],
+      "etymology": "Du latin *plus*.",
+      "register": "neutral",
+      "gender": null
+    },
+    {
+      "rank": 39,
+      "cefr_level": "A1",
+      "lemma": "non",
+      "part_of_speech": "adv",
+      "definitions": [
+        {
+          "fr": "Adverbe de négation employé pour répondre par la négative.",
+          "en": "Negation adverb used to give a negative answer."
+        }
+      ],
+      "examples": [
+        {
+          "fr": "Non, je ne veux pas.",
+          "en": "No, I don't want to."
+        },
+        {
+          "fr": "Tu viens ? — Non, pas aujourd'hui.",
+          "en": "Are you coming? — No, not today."
+        }
+      ],
+      "synonyms": [
+        "nullement"
+      ],
+      "antonyms": [
+        "oui",
+        "si"
+      ],
+      "etymology": "Du latin *non*.",
+      "register": "neutral",
+      "gender": null
+    },
+    {
+      "rank": 40,
+      "cefr_level": "A1",
+      "lemma": "oui",
+      "part_of_speech": "adv",
+      "definitions": [
+        {
+          "fr": "Adverbe d'affirmation servant à répondre positivement.",
+          "en": "Affirmative adverb used to give a positive answer."
+        }
+      ],
+      "examples": [
+        {
+          "fr": "Oui, je veux bien.",
+          "en": "Yes, I'd like to."
+        },
+        {
+          "fr": "Tu as compris ? — Oui.",
+          "en": "Did you understand? — Yes."
+        }
+      ],
+      "synonyms": [
+        "d'accord",
+        "voire"
+      ],
+      "antonyms": [
+        "non"
+      ],
+      "etymology": "De l'ancien français *oïl* (« cela ») ; opposé à *oc* en pays d'oc.",
+      "register": "neutral",
+      "gender": null
+    },
+    {
+      "rank": 41,
+      "cefr_level": "A1",
+      "lemma": "moi",
+      "part_of_speech": "pron",
+      "definitions": [
+        {
+          "fr": "Pronom personnel tonique de la première personne du singulier.",
+          "en": "Stressed first-person singular pronoun."
+        }
+      ],
+      "examples": [
+        {
+          "fr": "Moi, je préfère le thé.",
+          "en": "Me, I prefer tea."
+        },
+        {
+          "fr": "C'est à moi.",
+          "en": "It belongs to me."
+        }
+      ],
+      "synonyms": [],
+      "antonyms": [
+        "toi"
+      ],
+      "etymology": "Du latin *me*.",
+      "register": "neutral",
+      "gender": null
+    },
+    {
+      "rank": 42,
+      "cefr_level": "A1",
+      "lemma": "aller",
+      "part_of_speech": "v",
+      "definitions": [
+        {
+          "fr": "Se déplacer d'un lieu vers un autre.",
+          "en": "To go, to move from one place to another."
+        },
+        {
+          "fr": "Verbe employé comme auxiliaire pour exprimer le futur proche.",
+          "en": "Auxiliary verb used to express the near future."
+        },
+        {
+          "fr": "Se sentir, se porter d'une certaine manière.",
+          "en": "To feel, to be in a certain state of health."
+        }
+      ],
+      "examples": [
+        {
+          "fr": "Je vais au cinéma.",
+          "en": "I'm going to the cinema."
+        },
+        {
+          "fr": "Il va pleuvoir.",
+          "en": "It's going to rain."
+        },
+        {
+          "fr": "Comment ça va ?",
+          "en": "How are you?"
+        }
+      ],
+      "synonyms": [
+        "se rendre",
+        "partir"
+      ],
+      "antonyms": [
+        "venir",
+        "rester"
+      ],
+      "etymology": "Du latin populaire *ambulare* (« marcher »).",
+      "register": "neutral",
+      "gender": null
+    },
+    {
+      "rank": 43,
+      "cefr_level": "A1",
+      "lemma": "où",
+      "part_of_speech": "pron",
+      "definitions": [
+        {
+          "fr": "Adverbe et pronom relatif désignant un lieu.",
+          "en": "Adverb and relative pronoun referring to a place."
+        },
+        {
+          "fr": "Adverbe interrogatif portant sur le lieu.",
+          "en": "Interrogative adverb asking about location."
+        }
+      ],
+      "examples": [
+        {
+          "fr": "La ville où je suis né.",
+          "en": "The city where I was born."
+        },
+        {
+          "fr": "Où habites-tu ?",
+          "en": "Where do you live?"
+        }
+      ],
+      "synonyms": [],
+      "antonyms": [],
+      "etymology": "Du latin *ubi* (« là où »).",
+      "register": "neutral",
+      "gender": null
+    },
+    {
+      "rank": 44,
+      "cefr_level": "A1",
+      "lemma": "voir",
+      "part_of_speech": "v",
+      "definitions": [
+        {
+          "fr": "Percevoir par la vue.",
+          "en": "To see, to perceive with the eyes."
+        },
+        {
+          "fr": "Rencontrer, faire la connaissance ou rendre visite à quelqu'un.",
+          "en": "To meet, to visit, to spend time with someone."
+        },
+        {
+          "fr": "Comprendre, se rendre compte.",
+          "en": "To understand, to realize."
+        }
+      ],
+      "examples": [
+        {
+          "fr": "Je vois la mer depuis ma fenêtre.",
+          "en": "I can see the sea from my window."
+        },
+        {
+          "fr": "Je vais voir mes parents demain.",
+          "en": "I'm going to see my parents tomorrow."
+        },
+        {
+          "fr": "Je vois ce que tu veux dire.",
+          "en": "I see what you mean."
+        }
+      ],
+      "synonyms": [
+        "apercevoir",
+        "observer",
+        "rencontrer"
+      ],
+      "antonyms": [],
+      "etymology": "Du latin *videre*.",
+      "register": "neutral",
+      "gender": null
+    },
+    {
+      "rank": 45,
+      "cefr_level": "A1",
+      "lemma": "vouloir",
+      "part_of_speech": "v",
+      "definitions": [
+        {
+          "fr": "Avoir l'intention, le désir ou la volonté de faire quelque chose.",
+          "en": "To want, to intend, to desire something."
+        },
+        {
+          "fr": "Demander, exiger ou souhaiter (en formule de politesse).",
+          "en": "To request or wish for (in polite formulations)."
+        }
+      ],
+      "examples": [
+        {
+          "fr": "Je veux apprendre le français.",
+          "en": "I want to learn French."
+        },
+        {
+          "fr": "Voulez-vous un café ?",
+          "en": "Would you like a coffee?"
+        }
+      ],
+      "synonyms": [
+        "désirer",
+        "souhaiter"
+      ],
+      "antonyms": [
+        "refuser"
+      ],
+      "etymology": "Du latin populaire *volere*, dérivé de *velle*.",
+      "register": "neutral",
+      "gender": null
+    },
+    {
+      "rank": 46,
+      "cefr_level": "A1",
+      "lemma": "tout",
+      "part_of_speech": "det",
+      "definitions": [
+        {
+          "fr": "Adjectif indéfini ; désigne la totalité d'un ensemble.",
+          "en": "Indefinite adjective; refers to the totality of a set."
+        },
+        {
+          "fr": "Adverbe d'intensité signifiant « entièrement, complètement ».",
+          "en": "Adverb of intensity meaning 'entirely, completely'."
+        },
+        {
+          "fr": "Pronom indéfini neutre ; l'ensemble des choses.",
+          "en": "Neutral indefinite pronoun; everything."
+        }
+      ],
+      "examples": [
+        {
+          "fr": "Tout le monde est arrivé.",
+          "en": "Everyone has arrived."
+        },
+        {
+          "fr": "Elle est tout heureuse.",
+          "en": "She is completely happy."
+        },
+        {
+          "fr": "Il sait tout.",
+          "en": "He knows everything."
+        }
+      ],
+      "synonyms": [
+        "entier",
+        "complet"
+      ],
+      "antonyms": [
+        "rien",
+        "aucun"
+      ],
+      "etymology": "Du latin populaire *tottus*, variante de *totus*.",
+      "register": "neutral",
+      "gender": "masculine"
+    },
+    {
+      "rank": 47,
+      "cefr_level": "A1",
+      "lemma": "savoir",
+      "part_of_speech": "v",
+      "definitions": [
+        {
+          "fr": "Connaître par l'esprit, avoir conscience de quelque chose.",
+          "en": "To know, to be aware of something."
+        },
+        {
+          "fr": "Être capable de faire quelque chose grâce à une compétence acquise.",
+          "en": "To know how, to be able to do something through learned skill."
+        }
+      ],
+      "examples": [
+        {
+          "fr": "Je sais qu'il viendra.",
+          "en": "I know he will come."
+        },
+        {
+          "fr": "Elle sait nager.",
+          "en": "She knows how to swim."
+        }
+      ],
+      "synonyms": [
+        "connaître",
+        "comprendre"
+      ],
+      "antonyms": [
+        "ignorer"
+      ],
+      "etymology": "Du latin populaire *sapere*.",
+      "register": "neutral",
+      "gender": null
+    },
+    {
+      "rank": 48,
+      "cefr_level": "A1",
+      "lemma": "deux",
+      "part_of_speech": "num",
+      "definitions": [
+        {
+          "fr": "Adjectif numéral cardinal ; nombre qui suit un.",
+          "en": "Cardinal number; the number following one."
+        },
+        {
+          "fr": "Nom masculin invariable désignant ce chiffre.",
+          "en": "Invariable masculine noun referring to this digit."
+        }
+      ],
+      "examples": [
+        {
+          "fr": "J'ai deux frères.",
+          "en": "I have two brothers."
+        },
+        {
+          "fr": "Le deux décembre.",
+          "en": "The second of December."
+        }
+      ],
+      "synonyms": [
+        "couple",
+        "paire"
+      ],
+      "antonyms": [],
+      "etymology": "Du latin *duos*, accusatif de *duo*.",
+      "register": "neutral",
+      "gender": "masculine"
+    },
+    {
+      "rank": 49,
+      "cefr_level": "A1",
+      "lemma": "même",
+      "part_of_speech": "adj",
+      "definitions": [
+        {
+          "fr": "Adjectif indéfini exprimant l'identité ou la ressemblance.",
+          "en": "Indefinite adjective expressing identity or resemblance."
+        },
+        {
+          "fr": "Adverbe servant à renforcer une affirmation.",
+          "en": "Adverb used to reinforce a statement."
+        }
+      ],
+      "examples": [
+        {
+          "fr": "Nous avons le même âge.",
+          "en": "We are the same age."
+        },
+        {
+          "fr": "Même les enfants l'ont compris.",
+          "en": "Even the children understood it."
+        }
+      ],
+      "synonyms": [
+        "identique",
+        "pareil"
+      ],
+      "antonyms": [
+        "différent",
+        "autre"
+      ],
+      "etymology": "Du latin populaire *metipsimus*.",
+      "register": "neutral",
+      "gender": null
+    },
+    {
+      "rank": 50,
+      "cefr_level": "A1",
+      "lemma": "venir",
+      "part_of_speech": "v",
+      "definitions": [
+        {
+          "fr": "Se déplacer vers le lieu où l'on parle.",
+          "en": "To come, to move toward the place where one is speaking."
+        },
+        {
+          "fr": "Avoir une origine ; provenir.",
+          "en": "To have an origin; to come from."
+        },
+        {
+          "fr": "Employé avec « de » pour exprimer le passé récent.",
+          "en": "Used with 'de' to express the recent past."
+        }
+      ],
+      "examples": [
+        {
+          "fr": "Viens ici, s'il te plaît.",
+          "en": "Come here, please."
+        },
+        {
+          "fr": "Il vient d'Italie.",
+          "en": "He comes from Italy."
+        },
+        {
+          "fr": "Je viens de finir mes devoirs.",
+          "en": "I have just finished my homework."
+        }
+      ],
+      "synonyms": [
+        "arriver",
+        "provenir"
+      ],
+      "antonyms": [
+        "partir",
+        "aller"
+      ],
+      "etymology": "Du latin *venire*.",
+      "register": "neutral",
+      "gender": null
+    },
+    {
+      "rank": 51,
+      "cefr_level": "A1",
+      "lemma": "bien",
+      "part_of_speech": "adv",
+      "definitions": [
+        {
+          "fr": "De façon satisfaisante, conforme à ce qu'on attend.",
+          "en": "Well, in a satisfactory manner."
+        },
+        {
+          "fr": "Marque l'intensité, équivaut à « beaucoup » ou « vraiment ».",
+          "en": "Marks intensity; equivalent to 'much' or 'really'."
+        },
+        {
+          "fr": "Ce qui est moralement bon ou utile (n.m.).",
+          "en": "What is morally good or useful (m. noun)."
+        }
+      ],
+      "examples": [
+        {
+          "fr": "Il chante bien.",
+          "en": "He sings well."
+        },
+        {
+          "fr": "Je l'aime bien.",
+          "en": "I like him quite a bit."
+        },
+        {
+          "fr": "Faire le bien autour de soi.",
+          "en": "To do good around oneself."
+        }
+      ],
+      "synonyms": [
+        "correctement",
+        "très"
+      ],
+      "antonyms": [
+        "mal"
+      ],
+      "etymology": "Du latin *bene*.",
+      "register": "neutral",
+      "gender": "masculine"
+    },
+    {
+      "rank": 52,
+      "cefr_level": "A1",
+      "lemma": "leur",
+      "part_of_speech": "pron",
+      "definitions": [
+        {
+          "fr": "Pronom personnel complément de la troisième personne du pluriel.",
+          "en": "Third-person plural object pronoun."
+        },
+        {
+          "fr": "Adjectif possessif de la troisième personne du pluriel.",
+          "en": "Third-person plural possessive adjective."
+        }
+      ],
+      "examples": [
+        {
+          "fr": "Je leur parle souvent.",
+          "en": "I often talk to them."
+        },
+        {
+          "fr": "Voici leurs enfants.",
+          "en": "Here are their children."
+        }
+      ],
+      "synonyms": [],
+      "antonyms": [],
+      "etymology": "Du latin *illorum*, génitif d'*ille*.",
+      "register": "neutral",
+      "gender": null
+    },
+    {
+      "rank": 53,
+      "cefr_level": "A1",
+      "lemma": "homme",
+      "part_of_speech": "n",
+      "definitions": [
+        {
+          "fr": "Être humain adulte de sexe masculin.",
+          "en": "Adult male human being."
+        },
+        {
+          "fr": "Espèce humaine prise dans son ensemble.",
+          "en": "The human species as a whole."
+        }
+      ],
+      "examples": [
+        {
+          "fr": "Cet homme est mon voisin.",
+          "en": "This man is my neighbour."
+        },
+        {
+          "fr": "L'homme préhistorique vivait dans des grottes.",
+          "en": "Prehistoric man lived in caves."
+        }
+      ],
+      "synonyms": [
+        "monsieur",
+        "individu"
+      ],
+      "antonyms": [
+        "femme"
+      ],
+      "etymology": "Du latin *homo*.",
+      "register": "neutral",
+      "gender": "masculine"
+    },
+    {
+      "rank": 54,
+      "cefr_level": "A1",
+      "lemma": "jour",
+      "part_of_speech": "n",
+      "definitions": [
+        {
+          "fr": "Période de vingt-quatre heures correspondant à une rotation de la Terre.",
+          "en": "Period of twenty-four hours corresponding to one rotation of the Earth."
+        },
+        {
+          "fr": "Période pendant laquelle il fait clair, par opposition à la nuit.",
+          "en": "Period when it is light, as opposed to night."
+        }
+      ],
+      "examples": [
+        {
+          "fr": "Il y a sept jours dans une semaine.",
+          "en": "There are seven days in a week."
+        },
+        {
+          "fr": "Travailler de jour.",
+          "en": "To work during the day."
+        }
+      ],
+      "synonyms": [
+        "journée"
+      ],
+      "antonyms": [
+        "nuit"
+      ],
+      "etymology": "Du latin *diurnum*, dérivé de *dies* (« jour »).",
+      "register": "neutral",
+      "gender": "masculine"
+    },
+    {
+      "rank": 55,
+      "cefr_level": "A1",
+      "lemma": "petit",
+      "part_of_speech": "adj",
+      "definitions": [
+        {
+          "fr": "De faible taille ou de faible quantité.",
+          "en": "Small in size or quantity."
+        },
+        {
+          "fr": "Jeune en âge (enfant).",
+          "en": "Young in age (child)."
+        },
+        {
+          "fr": "De peu d'importance.",
+          "en": "Of little importance."
+        }
+      ],
+      "examples": [
+        {
+          "fr": "Un petit chien noir.",
+          "en": "A small black dog."
+        },
+        {
+          "fr": "Quand j'étais petit.",
+          "en": "When I was little."
+        },
+        {
+          "fr": "C'est un petit problème.",
+          "en": "It's a minor problem."
+        }
+      ],
+      "synonyms": [
+        "minuscule",
+        "jeune"
+      ],
+      "antonyms": [
+        "grand"
+      ],
+      "etymology": "Du latin populaire *pittittus*, d'origine expressive.",
+      "register": "neutral",
+      "gender": "masculine"
+    },
+    {
+      "rank": 56,
+      "cefr_level": "A1",
+      "lemma": "prendre",
+      "part_of_speech": "v",
+      "definitions": [
+        {
+          "fr": "Saisir, attraper avec la main.",
+          "en": "To take, to grasp with the hand."
+        },
+        {
+          "fr": "Emprunter ou utiliser un moyen de transport.",
+          "en": "To take or use a means of transport."
+        },
+        {
+          "fr": "Consommer un aliment, une boisson ou un médicament.",
+          "en": "To consume food, drink, or medicine."
+        }
+      ],
+      "examples": [
+        {
+          "fr": "Prends ce stylo.",
+          "en": "Take this pen."
+        },
+        {
+          "fr": "Je prends le métro.",
+          "en": "I'm taking the metro."
+        },
+        {
+          "fr": "Voulez-vous prendre un café ?",
+          "en": "Would you like to have a coffee?"
+        }
+      ],
+      "synonyms": [
+        "saisir",
+        "attraper"
+      ],
+      "antonyms": [
+        "donner",
+        "lâcher"
+      ],
+      "etymology": "Du latin *prehendere*.",
+      "register": "neutral",
+      "gender": null
+    },
+    {
+      "rank": 57,
+      "cefr_level": "A1",
+      "lemma": "mon",
+      "part_of_speech": "det",
+      "definitions": [
+        {
+          "fr": "Adjectif possessif masculin singulier de la première personne.",
+          "en": "First-person masculine singular possessive adjective."
+        }
+      ],
+      "examples": [
+        {
+          "fr": "Mon père travaille à la banque.",
+          "en": "My father works at the bank."
+        },
+        {
+          "fr": "Voici mon ami.",
+          "en": "Here is my friend."
+        }
+      ],
+      "synonyms": [],
+      "antonyms": [
+        "ton",
+        "son"
+      ],
+      "etymology": "Du latin *meum*.",
+      "register": "neutral",
+      "gender": "masculine"
+    },
+    {
+      "rank": 58,
+      "cefr_level": "A1",
+      "lemma": "ma",
+      "part_of_speech": "det",
+      "definitions": [
+        {
+          "fr": "Adjectif possessif féminin singulier de la première personne.",
+          "en": "First-person feminine singular possessive adjective."
+        }
+      ],
+      "examples": [
+        {
+          "fr": "Ma sœur habite en Belgique.",
+          "en": "My sister lives in Belgium."
+        },
+        {
+          "fr": "Voici ma maison.",
+          "en": "Here is my house."
+        }
+      ],
+      "synonyms": [],
+      "antonyms": [
+        "ta",
+        "sa"
+      ],
+      "etymology": "Du latin *mea*.",
+      "register": "neutral",
+      "gender": "feminine"
+    },
+    {
+      "rank": 59,
+      "cefr_level": "A1",
+      "lemma": "an",
+      "part_of_speech": "n",
+      "definitions": [
+        {
+          "fr": "Période de douze mois ou de 365 jours.",
+          "en": "Period of twelve months or 365 days."
+        },
+        {
+          "fr": "Unité de mesure de l'âge.",
+          "en": "Unit for measuring age."
+        }
+      ],
+      "examples": [
+        {
+          "fr": "Il y a deux ans, j'habitais à Lyon.",
+          "en": "Two years ago, I lived in Lyon."
+        },
+        {
+          "fr": "Elle a trente ans.",
+          "en": "She is thirty years old."
+        }
+      ],
+      "synonyms": [
+        "année"
+      ],
+      "antonyms": [],
+      "etymology": "Du latin *annus*.",
+      "register": "neutral",
+      "gender": "masculine"
+    },
+    {
+      "rank": 60,
+      "cefr_level": "A1",
+      "lemma": "te",
+      "part_of_speech": "pron",
+      "definitions": [
+        {
+          "fr": "Pronom personnel complément de la deuxième personne du singulier.",
+          "en": "Second-person singular object pronoun."
+        }
+      ],
+      "examples": [
+        {
+          "fr": "Je te vois demain.",
+          "en": "I'll see you tomorrow."
+        },
+        {
+          "fr": "Il te parle.",
+          "en": "He is talking to you."
+        }
+      ],
+      "synonyms": [],
+      "antonyms": [],
+      "etymology": "Du latin *te*.",
+      "register": "informal",
+      "gender": null
+    },
+    {
+      "rank": 61,
+      "cefr_level": "A1",
+      "lemma": "année",
+      "part_of_speech": "n",
+      "definitions": [
+        {
+          "fr": "Période de douze mois consécutifs, considérée dans sa durée.",
+          "en": "Period of twelve consecutive months, considered as a duration."
+        }
+      ],
+      "examples": [
+        {
+          "fr": "Bonne année !",
+          "en": "Happy New Year!"
+        },
+        {
+          "fr": "Cette année a été difficile.",
+          "en": "This year was difficult."
+        }
+      ],
+      "synonyms": [
+        "an"
+      ],
+      "antonyms": [],
+      "etymology": "De *an*, avec le suffixe *-ée* indiquant la durée.",
+      "register": "neutral",
+      "gender": "feminine"
+    },
+    {
+      "rank": 62,
+      "cefr_level": "A1",
+      "lemma": "dire",
+      "part_of_speech": "v",
+      "definitions": [
+        {
+          "fr": "Exprimer une idée par la parole ou par écrit.",
+          "en": "To say, to express an idea by speech or writing."
+        },
+        {
+          "fr": "Affirmer, soutenir une opinion.",
+          "en": "To claim, to assert an opinion."
+        }
+      ],
+      "examples": [
+        {
+          "fr": "Que dis-tu ?",
+          "en": "What are you saying?"
+        },
+        {
+          "fr": "On dit que c'est vrai.",
+          "en": "They say it's true."
+        }
+      ],
+      "synonyms": [
+        "déclarer",
+        "affirmer"
+      ],
+      "antonyms": [
+        "taire"
+      ],
+      "etymology": "Du latin *dicere*.",
+      "register": "neutral",
+      "gender": null
+    },
+    {
+      "rank": 63,
+      "cefr_level": "A1",
+      "lemma": "encore",
+      "part_of_speech": "adv",
+      "definitions": [
+        {
+          "fr": "À nouveau, une fois de plus.",
+          "en": "Again, one more time."
+        },
+        {
+          "fr": "Jusqu'à présent ; toujours.",
+          "en": "Still; until now."
+        }
+      ],
+      "examples": [
+        {
+          "fr": "Dis-le encore une fois.",
+          "en": "Say it again."
+        },
+        {
+          "fr": "Tu es encore là ?",
+          "en": "Are you still here?"
+        }
+      ],
+      "synonyms": [
+        "de nouveau",
+        "toujours"
+      ],
+      "antonyms": [],
+      "etymology": "Du latin populaire *hinc ad horam* (« d'ici à cette heure »).",
+      "register": "neutral",
+      "gender": null
+    },
+    {
+      "rank": 65,
+      "cefr_level": "A1",
+      "lemma": "monsieur",
+      "part_of_speech": "n",
+      "definitions": [
+        {
+          "fr": "Titre de civilité donné à un homme.",
+          "en": "Polite title used for a man."
+        },
+        {
+          "fr": "Forme d'adresse polie envers un homme.",
+          "en": "Polite form of address to a man."
+        }
+      ],
+      "examples": [
+        {
+          "fr": "Bonjour monsieur.",
+          "en": "Good morning, sir."
+        },
+        {
+          "fr": "Monsieur Dupont est mon professeur.",
+          "en": "Mister Dupont is my teacher."
+        }
+      ],
+      "synonyms": [],
+      "antonyms": [
+        "madame"
+      ],
+      "etymology": "De « mon » + « sieur », forme ancienne de « seigneur ».",
+      "register": "formal",
+      "gender": "masculine"
+    },
+    {
+      "rank": 66,
+      "cefr_level": "A1",
+      "lemma": "votre",
+      "part_of_speech": "det",
+      "definitions": [
+        {
+          "fr": "Adjectif possessif de la deuxième personne du pluriel (singulier).",
+          "en": "Second-person plural possessive adjective (singular noun)."
+        },
+        {
+          "fr": "Adjectif possessif employé en politesse pour vouvoyer une personne.",
+          "en": "Polite possessive used to address one person formally."
+        }
+      ],
+      "examples": [
+        {
+          "fr": "Voici votre billet.",
+          "en": "Here is your ticket."
+        },
+        {
+          "fr": "Quel est votre nom ?",
+          "en": "What is your name?"
+        }
+      ],
+      "synonyms": [],
+      "antonyms": [
+        "mon",
+        "ton",
+        "son"
+      ],
+      "etymology": "Du latin populaire *vostrum*.",
+      "register": "formal",
+      "gender": null
+    },
+    {
+      "rank": 67,
+      "cefr_level": "A1",
+      "lemma": "bon",
+      "part_of_speech": "adj",
+      "definitions": [
+        {
+          "fr": "Qui possède les qualités souhaitées ; agréable, satisfaisant.",
+          "en": "Good; having the desired qualities; pleasant."
+        },
+        {
+          "fr": "Qui agit avec bonté ou bienveillance.",
+          "en": "Kind, well-meaning."
+        },
+        {
+          "fr": "Qui a un goût agréable.",
+          "en": "Tasty, having a pleasant flavour."
+        }
+      ],
+      "examples": [
+        {
+          "fr": "C'est un bon film.",
+          "en": "It's a good film."
+        },
+        {
+          "fr": "Elle est très bonne avec ses élèves.",
+          "en": "She is very kind to her students."
+        },
+        {
+          "fr": "Ce gâteau est bon.",
+          "en": "This cake tastes good."
+        }
+      ],
+      "synonyms": [
+        "agréable",
+        "gentil",
+        "savoureux"
+      ],
+      "antonyms": [
+        "mauvais",
+        "méchant"
+      ],
+      "etymology": "Du latin *bonus*.",
+      "register": "neutral",
+      "gender": "masculine"
+    },
+    {
+      "rank": 68,
+      "cefr_level": "A1",
+      "lemma": "trois",
+      "part_of_speech": "num",
+      "definitions": [
+        {
+          "fr": "Adjectif numéral cardinal qui suit deux.",
+          "en": "Cardinal number that follows two."
+        }
+      ],
+      "examples": [
+        {
+          "fr": "J'ai trois frères.",
+          "en": "I have three brothers."
+        },
+        {
+          "fr": "Le bus passe toutes les trois minutes.",
+          "en": "The bus comes every three minutes."
+        }
+      ],
+      "synonyms": [],
+      "antonyms": [],
+      "etymology": "Du latin *tres*.",
+      "register": "neutral",
+      "gender": "masculine"
+    },
+    {
+      "rank": 69,
+      "cefr_level": "A1",
+      "lemma": "quand",
+      "part_of_speech": "conj",
+      "definitions": [
+        {
+          "fr": "Conjonction marquant le temps ; au moment où.",
+          "en": "Conjunction of time; at the moment when."
+        },
+        {
+          "fr": "Adverbe interrogatif portant sur le moment.",
+          "en": "Interrogative adverb asking about a moment in time."
+        }
+      ],
+      "examples": [
+        {
+          "fr": "Quand je suis arrivé, il dormait.",
+          "en": "When I arrived, he was sleeping."
+        },
+        {
+          "fr": "Quand viens-tu ?",
+          "en": "When are you coming?"
+        }
+      ],
+      "synonyms": [
+        "lorsque"
+      ],
+      "antonyms": [],
+      "etymology": "Du latin *quando*.",
+      "register": "neutral",
+      "gender": null
+    },
+    {
+      "rank": 70,
+      "cefr_level": "A1",
+      "lemma": "très",
+      "part_of_speech": "adv",
+      "definitions": [
+        {
+          "fr": "Adverbe d'intensité ; à un haut degré.",
+          "en": "Adverb of intensity; to a high degree."
+        }
+      ],
+      "examples": [
+        {
+          "fr": "Il fait très chaud.",
+          "en": "It's very hot."
+        },
+        {
+          "fr": "Je suis très content.",
+          "en": "I am very happy."
+        }
+      ],
+      "synonyms": [
+        "fort",
+        "extrêmement"
+      ],
+      "antonyms": [
+        "peu"
+      ],
+      "etymology": "Du latin *trans*.",
+      "register": "neutral",
+      "gender": null
+    },
+    {
+      "rank": 71,
+      "cefr_level": "A1",
+      "lemma": "maintenant",
+      "part_of_speech": "adv",
+      "definitions": [
+        {
+          "fr": "Au moment présent, à l'instant où l'on parle.",
+          "en": "Now, at the present moment."
+        }
+      ],
+      "examples": [
+        {
+          "fr": "Que fais-tu maintenant ?",
+          "en": "What are you doing now?"
+        },
+        {
+          "fr": "Il pleut maintenant.",
+          "en": "It is raining now."
+        }
+      ],
+      "synonyms": [
+        "désormais",
+        "actuellement"
+      ],
+      "antonyms": [
+        "autrefois"
+      ],
+      "etymology": "De « main » + « tenant » (« tenir en main »).",
+      "register": "neutral",
+      "gender": null
+    },
+    {
+      "rank": 72,
+      "cefr_level": "A1",
+      "lemma": "trop",
+      "part_of_speech": "adv",
+      "definitions": [
+        {
+          "fr": "Plus qu'il ne faut ; à l'excès.",
+          "en": "Too much; excessively."
+        },
+        {
+          "fr": "Familièrement, « très » ou « beaucoup ».",
+          "en": "Informally, 'very' or 'a lot'."
+        }
+      ],
+      "examples": [
+        {
+          "fr": "Il fait trop chaud.",
+          "en": "It's too hot."
+        },
+        {
+          "fr": "C'est trop bien !",
+          "en": "It's so good!"
+        }
+      ],
+      "synonyms": [
+        "excessivement"
+      ],
+      "antonyms": [
+        "pas assez"
+      ],
+      "etymology": "Du francique *thorp*, par adjonction de sens.",
+      "register": "neutral",
+      "gender": null
+    },
+    {
+      "rank": 73,
+      "cefr_level": "A1",
+      "lemma": "rien",
+      "part_of_speech": "pron",
+      "definitions": [
+        {
+          "fr": "Pronom indéfini négatif ; aucune chose.",
+          "en": "Negative indefinite pronoun; nothing."
+        }
+      ],
+      "examples": [
+        {
+          "fr": "Je ne sais rien.",
+          "en": "I don't know anything."
+        },
+        {
+          "fr": "Rien n'est plus important.",
+          "en": "Nothing is more important."
+        }
+      ],
+      "synonyms": [],
+      "antonyms": [
+        "tout",
+        "quelque chose"
+      ],
+      "etymology": "Du latin *rem*, accusatif de *res* (« chose »).",
+      "register": "neutral",
+      "gender": null
+    },
+    {
+      "rank": 74,
+      "cefr_level": "A1",
+      "lemma": "fois",
+      "part_of_speech": "n",
+      "definitions": [
+        {
+          "fr": "Occurrence d'un fait ou d'une action répétée.",
+          "en": "Time, occurrence of a repeated event."
+        }
+      ],
+      "examples": [
+        {
+          "fr": "C'est la première fois que je viens.",
+          "en": "It's the first time I've come."
+        },
+        {
+          "fr": "Deux fois par semaine.",
+          "en": "Twice a week."
+        }
+      ],
+      "synonyms": [
+        "occasion"
+      ],
+      "antonyms": [],
+      "etymology": "Du latin *vices* (« tour, alternance »).",
+      "register": "neutral",
+      "gender": "feminine"
+    },
+    {
+      "rank": 75,
+      "cefr_level": "A1",
+      "lemma": "passer",
+      "part_of_speech": "v",
+      "definitions": [
+        {
+          "fr": "Se déplacer d'un point à un autre.",
+          "en": "To pass, to move from one point to another."
+        },
+        {
+          "fr": "S'écouler, en parlant du temps.",
+          "en": "To pass, in reference to time."
+        },
+        {
+          "fr": "Remettre, donner.",
+          "en": "To pass, to hand over."
+        }
+      ],
+      "examples": [
+        {
+          "fr": "Le train passe à huit heures.",
+          "en": "The train comes at eight."
+        },
+        {
+          "fr": "Le temps passe vite.",
+          "en": "Time goes quickly."
+        },
+        {
+          "fr": "Passe-moi le sel.",
+          "en": "Pass me the salt."
+        }
+      ],
+      "synonyms": [
+        "traverser",
+        "écouler",
+        "transmettre"
+      ],
+      "antonyms": [
+        "rester"
+      ],
+      "etymology": "Du latin populaire *passare*, dérivé de *passus* (« pas »).",
+      "register": "neutral",
+      "gender": null
+    },
+    {
+      "rank": 76,
+      "cefr_level": "A1",
+      "lemma": "déjà",
+      "part_of_speech": "adv",
+      "definitions": [
+        {
+          "fr": "Dès maintenant, avant le moment attendu.",
+          "en": "Already, before the expected time."
+        }
+      ],
+      "examples": [
+        {
+          "fr": "Tu as déjà fini ?",
+          "en": "Have you already finished?"
+        },
+        {
+          "fr": "Il est déjà huit heures.",
+          "en": "It's already eight o'clock."
+        }
+      ],
+      "synonyms": [],
+      "antonyms": [
+        "pas encore"
+      ],
+      "etymology": "Composé de « dès » et « ja » (ancien français pour « maintenant »).",
+      "register": "neutral",
+      "gender": null
+    },
+    {
+      "rank": 77,
+      "cefr_level": "A1",
+      "lemma": "alors",
+      "part_of_speech": "adv",
+      "definitions": [
+        {
+          "fr": "À ce moment-là, dans ces conditions.",
+          "en": "At that moment, in those conditions."
+        },
+        {
+          "fr": "Par conséquent ; donc.",
+          "en": "Consequently; so."
+        }
+      ],
+      "examples": [
+        {
+          "fr": "Alors, j'ai compris.",
+          "en": "Then I understood."
+        },
+        {
+          "fr": "Tu viens, alors ?",
+          "en": "Are you coming, then?"
+        }
+      ],
+      "synonyms": [
+        "donc",
+        "ainsi"
+      ],
+      "antonyms": [],
+      "etymology": "Du latin populaire *ad illa hora* (« à cette heure-là »).",
+      "register": "neutral",
+      "gender": null
+    },
+    {
+      "rank": 78,
+      "cefr_level": "A1",
+      "lemma": "ici",
+      "part_of_speech": "adv",
+      "definitions": [
+        {
+          "fr": "Dans ce lieu, à l'endroit où l'on est.",
+          "en": "Here, in this place."
+        }
+      ],
+      "examples": [
+        {
+          "fr": "Viens ici.",
+          "en": "Come here."
+        },
+        {
+          "fr": "Je suis né ici.",
+          "en": "I was born here."
+        }
+      ],
+      "synonyms": [],
+      "antonyms": [
+        "là",
+        "ailleurs"
+      ],
+      "etymology": "Du latin populaire *ecce hic*.",
+      "register": "neutral",
+      "gender": null
+    },
+    {
+      "rank": 79,
+      "cefr_level": "A1",
+      "lemma": "donc",
+      "part_of_speech": "conj",
+      "definitions": [
+        {
+          "fr": "Conjonction de conséquence ; par suite, en conclusion.",
+          "en": "Conjunction of consequence; therefore, thus."
+        }
+      ],
+      "examples": [
+        {
+          "fr": "Je pense, donc je suis.",
+          "en": "I think, therefore I am."
+        },
+        {
+          "fr": "Il pleut, donc on reste.",
+          "en": "It's raining, so we're staying."
+        }
+      ],
+      "synonyms": [
+        "par conséquent",
+        "ainsi"
+      ],
+      "antonyms": [],
+      "etymology": "Du latin *dumque*, renforcement de *dum* (« cependant »).",
+      "register": "neutral",
+      "gender": null
+    },
+    {
+      "rank": 80,
+      "cefr_level": "A1",
+      "lemma": "aussi",
+      "part_of_speech": "adv",
+      "definitions": [
+        {
+          "fr": "Pareillement, de la même façon ; également.",
+          "en": "Also, likewise, equally."
+        },
+        {
+          "fr": "À un degré comparable, dans une comparaison.",
+          "en": "As, to a comparable degree."
+        }
+      ],
+      "examples": [
+        {
+          "fr": "Moi aussi, j'y vais.",
+          "en": "Me too, I'm going there."
+        },
+        {
+          "fr": "Elle est aussi grande que toi.",
+          "en": "She is as tall as you."
+        }
+      ],
+      "synonyms": [
+        "également",
+        "pareillement"
+      ],
+      "antonyms": [],
+      "etymology": "Du latin *aliud sic* (« autrement ainsi »).",
+      "register": "neutral",
+      "gender": null
+    },
+    {
+      "rank": 81,
+      "cefr_level": "A1",
+      "lemma": "sans",
+      "part_of_speech": "prep",
+      "definitions": [
+        {
+          "fr": "Marque l'absence ou la privation de quelque chose.",
+          "en": "Marks the absence or deprivation of something."
+        }
+      ],
+      "examples": [
+        {
+          "fr": "Un café sans sucre, s'il vous plaît.",
+          "en": "A coffee without sugar, please."
+        },
+        {
+          "fr": "Il est parti sans rien dire.",
+          "en": "He left without saying anything."
+        }
+      ],
+      "synonyms": [],
+      "antonyms": [
+        "avec"
+      ],
+      "etymology": "Du latin populaire *sene*, variante de *sine*.",
+      "register": "neutral",
+      "gender": null
+    },
+    {
+      "rank": 83,
+      "cefr_level": "A1",
+      "lemma": "donner",
+      "part_of_speech": "v",
+      "definitions": [
+        {
+          "fr": "Remettre quelque chose à quelqu'un sans rien attendre en retour.",
+          "en": "To give something to someone without expecting anything in return."
+        },
+        {
+          "fr": "Offrir, fournir.",
+          "en": "To offer, to provide."
+        }
+      ],
+      "examples": [
+        {
+          "fr": "Je te donne ce livre.",
+          "en": "I'll give you this book."
+        },
+        {
+          "fr": "Pouvez-vous me donner l'heure ?",
+          "en": "Can you give me the time?"
+        }
+      ],
+      "synonyms": [
+        "offrir",
+        "remettre"
+      ],
+      "antonyms": [
+        "prendre",
+        "recevoir"
+      ],
+      "etymology": "Du latin *donare*.",
+      "register": "neutral",
+      "gender": null
+    },
+    {
+      "rank": 84,
+      "cefr_level": "A1",
+      "lemma": "moins",
+      "part_of_speech": "adv",
+      "definitions": [
+        {
+          "fr": "Adverbe de quantité indiquant l'infériorité.",
+          "en": "Adverb of quantity indicating inferiority."
+        },
+        {
+          "fr": "Préposition utilisée dans la soustraction.",
+          "en": "Preposition used in subtraction."
+        }
+      ],
+      "examples": [
+        {
+          "fr": "Il est moins grand que moi.",
+          "en": "He is shorter than me."
+        },
+        {
+          "fr": "Cinq moins deux égale trois.",
+          "en": "Five minus two equals three."
+        }
+      ],
+      "synonyms": [],
+      "antonyms": [
+        "plus"
+      ],
+      "etymology": "Du latin *minus*.",
+      "register": "neutral",
+      "gender": null
+    },
+    {
+      "rank": 85,
+      "cefr_level": "A1",
+      "lemma": "toujours",
+      "part_of_speech": "adv",
+      "definitions": [
+        {
+          "fr": "En tout temps, sans interruption.",
+          "en": "Always, at all times."
+        },
+        {
+          "fr": "Encore à ce moment ; jusqu'à maintenant.",
+          "en": "Still; up to now."
+        }
+      ],
+      "examples": [
+        {
+          "fr": "Il pleut toujours en novembre.",
+          "en": "It always rains in November."
+        },
+        {
+          "fr": "Elle habite toujours à Paris.",
+          "en": "She still lives in Paris."
+        }
+      ],
+      "synonyms": [
+        "constamment"
+      ],
+      "antonyms": [
+        "jamais"
+      ],
+      "etymology": "De « tout » + « jours ».",
+      "register": "neutral",
+      "gender": null
+    },
+    {
+      "rank": 86,
+      "cefr_level": "A1",
+      "lemma": "monde",
+      "part_of_speech": "n",
+      "definitions": [
+        {
+          "fr": "La Terre, l'ensemble des pays et de leurs habitants.",
+          "en": "The world; the Earth and all its inhabitants."
+        },
+        {
+          "fr": "Ensemble des personnes présentes ou concernées.",
+          "en": "All the people present or concerned."
+        }
+      ],
+      "examples": [
+        {
+          "fr": "Il a fait le tour du monde.",
+          "en": "He travelled around the world."
+        },
+        {
+          "fr": "Il y a beaucoup de monde aujourd'hui.",
+          "en": "There are a lot of people today."
+        }
+      ],
+      "synonyms": [
+        "univers",
+        "foule"
+      ],
+      "antonyms": [],
+      "etymology": "Du latin *mundus*.",
+      "register": "neutral",
+      "gender": "masculine"
+    },
+    {
+      "rank": 88,
+      "cefr_level": "A1",
+      "lemma": "côté",
+      "part_of_speech": "n",
+      "definitions": [
+        {
+          "fr": "Partie latérale d'un objet, d'un lieu ou d'un corps.",
+          "en": "Side; lateral part of an object, place, or body."
+        },
+        {
+          "fr": "Direction, point de vue d'où l'on considère quelque chose.",
+          "en": "Side, perspective from which something is considered."
+        }
+      ],
+      "examples": [
+        {
+          "fr": "Mon père est assis à côté de moi.",
+          "en": "My father is sitting beside me."
+        },
+        {
+          "fr": "D'un côté, c'est vrai.",
+          "en": "On one hand, it's true."
+        }
+      ],
+      "synonyms": [
+        "bord",
+        "flanc"
+      ],
+      "antonyms": [
+        "centre"
+      ],
+      "etymology": "Du latin *costa* (« côte, flanc »).",
+      "register": "neutral",
+      "gender": "masculine"
+    },
+    {
+      "rank": 90,
+      "cefr_level": "A1",
+      "lemma": "moment",
+      "part_of_speech": "n",
+      "definitions": [
+        {
+          "fr": "Court espace de temps ; instant.",
+          "en": "Moment; brief span of time."
+        },
+        {
+          "fr": "Occasion ou période particulière.",
+          "en": "Occasion or particular period."
+        }
+      ],
+      "examples": [
+        {
+          "fr": "Attends un moment.",
+          "en": "Wait a moment."
+        },
+        {
+          "fr": "Ce n'est pas le bon moment.",
+          "en": "It's not the right time."
+        }
+      ],
+      "synonyms": [
+        "instant",
+        "période"
+      ],
+      "antonyms": [],
+      "etymology": "Du latin *momentum*.",
+      "register": "neutral",
+      "gender": "masculine"
+    },
+    {
+      "rank": 91,
+      "cefr_level": "A1",
+      "lemma": "vie",
+      "part_of_speech": "n",
+      "definitions": [
+        {
+          "fr": "État des êtres organisés tant qu'ils respirent et fonctionnent.",
+          "en": "Life; state of organized beings while they breathe and function."
+        },
+        {
+          "fr": "Manière dont une personne vit ; existence quotidienne.",
+          "en": "The way someone lives; daily existence."
+        }
+      ],
+      "examples": [
+        {
+          "fr": "La vie est belle.",
+          "en": "Life is beautiful."
+        },
+        {
+          "fr": "Je mène une vie tranquille.",
+          "en": "I lead a peaceful life."
+        }
+      ],
+      "synonyms": [
+        "existence"
+      ],
+      "antonyms": [
+        "mort"
+      ],
+      "etymology": "Du latin *vita*.",
+      "register": "neutral",
+      "gender": "feminine"
+    },
+    {
+      "rank": 92,
+      "cefr_level": "A1",
+      "lemma": "ami",
+      "part_of_speech": "n",
+      "definitions": [
+        {
+          "fr": "Personne avec laquelle on a un lien d'affection mutuelle.",
+          "en": "Friend; someone with whom one shares mutual affection."
+        }
+      ],
+      "examples": [
+        {
+          "fr": "C'est mon meilleur ami.",
+          "en": "He is my best friend."
+        },
+        {
+          "fr": "Je vais voir des amis ce soir.",
+          "en": "I'm going to see friends tonight."
+        }
+      ],
+      "synonyms": [
+        "camarade",
+        "copain"
+      ],
+      "antonyms": [
+        "ennemi"
+      ],
+      "etymology": "Du latin *amicus*.",
+      "register": "neutral",
+      "gender": "masculine"
+    },
+    {
+      "rank": 94,
+      "cefr_level": "A1",
+      "lemma": "place",
+      "part_of_speech": "n",
+      "definitions": [
+        {
+          "fr": "Espace libre destiné à être occupé.",
+          "en": "Place; open space meant to be occupied."
+        },
+        {
+          "fr": "Espace public urbain, généralement de forme régulière.",
+          "en": "Public urban square, usually of regular shape."
+        }
+      ],
+      "examples": [
+        {
+          "fr": "Cette place est libre.",
+          "en": "This seat is free."
+        },
+        {
+          "fr": "La place de la Concorde est très grande.",
+          "en": "Place de la Concorde is very large."
+        }
+      ],
+      "synonyms": [
+        "espace",
+        "siège"
+      ],
+      "antonyms": [],
+      "etymology": "Du latin populaire *plattia*, du grec *plateia*.",
+      "register": "neutral",
+      "gender": "feminine"
+    },
+    {
+      "rank": 95,
+      "cefr_level": "A1",
+      "lemma": "trouver",
+      "part_of_speech": "v",
+      "definitions": [
+        {
+          "fr": "Découvrir ce que l'on cherchait.",
+          "en": "To find, to discover what one was looking for."
+        },
+        {
+          "fr": "Avoir une opinion ; juger.",
+          "en": "To find, to think (have an opinion)."
+        }
+      ],
+      "examples": [
+        {
+          "fr": "J'ai trouvé mes clés.",
+          "en": "I found my keys."
+        },
+        {
+          "fr": "Je trouve ça intéressant.",
+          "en": "I find it interesting."
+        }
+      ],
+      "synonyms": [
+        "découvrir"
+      ],
+      "antonyms": [
+        "perdre"
+      ],
+      "etymology": "Du latin populaire *tropare* (« composer »).",
+      "register": "neutral",
+      "gender": null
+    },
+    {
+      "rank": 96,
+      "cefr_level": "A1",
+      "lemma": "demander",
+      "part_of_speech": "v",
+      "definitions": [
+        {
+          "fr": "Poser une question pour obtenir une information.",
+          "en": "To ask, to pose a question to get information."
+        },
+        {
+          "fr": "Solliciter quelque chose de quelqu'un.",
+          "en": "To ask for, to request something from someone."
+        }
+      ],
+      "examples": [
+        {
+          "fr": "Il demande si tu viens.",
+          "en": "He's asking if you're coming."
+        },
+        {
+          "fr": "Demande de l'aide à ton frère.",
+          "en": "Ask your brother for help."
+        }
+      ],
+      "synonyms": [
+        "solliciter",
+        "interroger"
+      ],
+      "antonyms": [
+        "répondre"
+      ],
+      "etymology": "Du latin *demandare* (« confier »).",
+      "register": "neutral",
+      "gender": null
+    },
+    {
+      "rank": 97,
+      "cefr_level": "A1",
+      "lemma": "femme",
+      "part_of_speech": "n",
+      "definitions": [
+        {
+          "fr": "Être humain adulte de sexe féminin.",
+          "en": "Woman; adult female human being."
+        },
+        {
+          "fr": "Épouse.",
+          "en": "Wife."
+        }
+      ],
+      "examples": [
+        {
+          "fr": "Cette femme est mon professeur.",
+          "en": "This woman is my teacher."
+        },
+        {
+          "fr": "Il a présenté sa femme.",
+          "en": "He introduced his wife."
+        }
+      ],
+      "synonyms": [
+        "madame",
+        "épouse"
+      ],
+      "antonyms": [
+        "homme",
+        "mari"
+      ],
+      "etymology": "Du latin *femina*.",
+      "register": "neutral",
+      "gender": "feminine"
+    },
+    {
+      "rank": 98,
+      "cefr_level": "A1",
+      "lemma": "enfant",
+      "part_of_speech": "n",
+      "definitions": [
+        {
+          "fr": "Être humain qui n'a pas encore atteint l'âge adulte.",
+          "en": "Child; human being who has not yet reached adulthood."
+        },
+        {
+          "fr": "Fils ou fille, indépendamment de l'âge.",
+          "en": "Son or daughter, regardless of age."
+        }
+      ],
+      "examples": [
+        {
+          "fr": "Les enfants jouent dans le parc.",
+          "en": "The children are playing in the park."
+        },
+        {
+          "fr": "Elle a trois enfants.",
+          "en": "She has three children."
+        }
+      ],
+      "synonyms": [
+        "gamin",
+        "fils",
+        "fille"
+      ],
+      "antonyms": [
+        "adulte"
+      ],
+      "etymology": "Du latin *infans* (« qui ne parle pas »).",
+      "register": "neutral",
+      "gender": "masculine"
+    },
+    {
+      "rank": 99,
+      "cefr_level": "A1",
+      "lemma": "fille",
+      "part_of_speech": "n",
+      "definitions": [
+        {
+          "fr": "Enfant de sexe féminin par rapport à ses parents.",
+          "en": "Daughter; female child in relation to her parents."
+        },
+        {
+          "fr": "Jeune personne de sexe féminin.",
+          "en": "Girl; young female person."
+        }
+      ],
+      "examples": [
+        {
+          "fr": "Ma fille a dix ans.",
+          "en": "My daughter is ten."
+        },
+        {
+          "fr": "Une petite fille jouait dans le jardin.",
+          "en": "A little girl was playing in the garden."
+        }
+      ],
+      "synonyms": [
+        "enfant"
+      ],
+      "antonyms": [
+        "fils",
+        "garçon"
+      ],
+      "etymology": "Du latin *filia*.",
+      "register": "neutral",
+      "gender": "feminine"
+    },
+    {
+      "rank": 100,
+      "cefr_level": "A1",
+      "lemma": "famille",
+      "part_of_speech": "n",
+      "definitions": [
+        {
+          "fr": "Ensemble des personnes apparentées par le sang, le mariage ou l'adoption.",
+          "en": "Family; group of people related by blood, marriage, or adoption."
+        },
+        {
+          "fr": "Père, mère et leurs enfants.",
+          "en": "Father, mother, and their children."
+        }
+      ],
+      "examples": [
+        {
+          "fr": "Toute la famille est venue à Noël.",
+          "en": "The whole family came for Christmas."
+        },
+        {
+          "fr": "Une famille nombreuse.",
+          "en": "A large family."
+        }
+      ],
+      "synonyms": [
+        "foyer",
+        "parents"
+      ],
+      "antonyms": [],
+      "etymology": "Du latin *familia*.",
+      "register": "neutral",
+      "gender": "feminine"
+    },
+    {
+      "rank": 101,
+      "cefr_level": "A1",
+      "lemma": "premier",
+      "part_of_speech": "adj",
+      "definitions": [
+        {
+          "fr": "Qui vient avant les autres dans l'ordre.",
+          "en": "First; coming before all others in order."
+        },
+        {
+          "fr": "Qui occupe le rang le plus élevé.",
+          "en": "Foremost, top-ranked."
+        }
+      ],
+      "examples": [
+        {
+          "fr": "Le premier jour de l'année.",
+          "en": "The first day of the year."
+        },
+        {
+          "fr": "Il est arrivé premier à la course.",
+          "en": "He came first in the race."
+        }
+      ],
+      "synonyms": [
+        "initial"
+      ],
+      "antonyms": [
+        "dernier"
+      ],
+      "etymology": "Du latin *primarius*, dérivé de *primus*.",
+      "register": "neutral",
+      "gender": "masculine"
+    },
+    {
+      "rank": 102,
+      "cefr_level": "A1",
+      "lemma": "parler",
+      "part_of_speech": "v",
+      "definitions": [
+        {
+          "fr": "Émettre des sons articulés pour communiquer.",
+          "en": "To speak, to produce articulated sounds to communicate."
+        },
+        {
+          "fr": "Connaître et pouvoir s'exprimer dans une langue.",
+          "en": "To know and be able to express oneself in a language."
+        }
+      ],
+      "examples": [
+        {
+          "fr": "Il parle très fort.",
+          "en": "He speaks very loudly."
+        },
+        {
+          "fr": "Elle parle trois langues.",
+          "en": "She speaks three languages."
+        }
+      ],
+      "synonyms": [
+        "dire",
+        "discuter"
+      ],
+      "antonyms": [
+        "se taire"
+      ],
+      "etymology": "Du latin populaire *parabolare*, dérivé de *parabola* (« parole »).",
+      "register": "neutral",
+      "gender": null
+    },
+    {
+      "rank": 103,
+      "cefr_level": "A1",
+      "lemma": "maison",
+      "part_of_speech": "n",
+      "definitions": [
+        {
+          "fr": "Bâtiment d'habitation, généralement individuel.",
+          "en": "House; residential building, usually for one family."
+        },
+        {
+          "fr": "Lieu où l'on vit avec sa famille.",
+          "en": "Home; place where one lives with one's family."
+        }
+      ],
+      "examples": [
+        {
+          "fr": "Nous habitons dans une grande maison.",
+          "en": "We live in a big house."
+        },
+        {
+          "fr": "Je rentre à la maison.",
+          "en": "I'm going home."
+        }
+      ],
+      "synonyms": [
+        "habitation",
+        "foyer"
+      ],
+      "antonyms": [],
+      "etymology": "Du latin *mansio* (« demeure »).",
+      "register": "neutral",
+      "gender": "feminine"
+    },
+    {
+      "rank": 104,
+      "cefr_level": "A1",
+      "lemma": "manger",
+      "part_of_speech": "v",
+      "definitions": [
+        {
+          "fr": "Absorber des aliments pour se nourrir.",
+          "en": "To eat, to consume food for nourishment."
+        }
+      ],
+      "examples": [
+        {
+          "fr": "Je mange une pomme.",
+          "en": "I'm eating an apple."
+        },
+        {
+          "fr": "Nous mangeons à midi.",
+          "en": "We eat at noon."
+        }
+      ],
+      "synonyms": [
+        "consommer",
+        "se nourrir"
+      ],
+      "antonyms": [
+        "jeûner"
+      ],
+      "etymology": "Du latin *manducare*.",
+      "register": "neutral",
+      "gender": null
+    },
+    {
+      "rank": 105,
+      "cefr_level": "A1",
+      "lemma": "eau",
+      "part_of_speech": "n",
+      "definitions": [
+        {
+          "fr": "Liquide transparent essentiel à la vie.",
+          "en": "Water; transparent liquid essential to life."
+        },
+        {
+          "fr": "Boisson tirée de cette substance.",
+          "en": "Drinking water."
+        }
+      ],
+      "examples": [
+        {
+          "fr": "Je bois beaucoup d'eau.",
+          "en": "I drink a lot of water."
+        },
+        {
+          "fr": "L'eau de mer est salée.",
+          "en": "Seawater is salty."
+        }
+      ],
+      "synonyms": [],
+      "antonyms": [],
+      "etymology": "Du latin *aqua*.",
+      "register": "neutral",
+      "gender": "feminine"
+    }
+  ]
+}

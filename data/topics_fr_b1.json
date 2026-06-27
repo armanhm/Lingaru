@@ -1,0 +1,3533 @@
+{
+  "_meta": {
+    "language": "fr",
+    "cefr_level": "B1",
+    "title": "Lingaru Topics — Niveau B1 (Seuil)",
+    "description": "Exprimer ses opinions, raconter, gérer la vie quotidienne abstraite."
+  },
+  "topics": [
+    {
+      "name_fr": "Les émotions et les sentiments",
+      "name_en": "Emotions and feelings",
+      "icon": "💭",
+      "order": 500,
+      "difficulty_level": 3,
+      "description": "Exprimer ses émotions, nuancer ses sentiments, en parler avec les autres.",
+      "vocabulary": [
+        {
+          "french": "le sentiment / l'émotion",
+          "english": "feeling / emotion",
+          "gender": "a",
+          "part_of_speech": "noun",
+          "example_sentence": "Il a du mal à exprimer ses émotions."
+        },
+        {
+          "french": "la joie / heureux / heureuse",
+          "english": "joy / happy",
+          "gender": "a",
+          "part_of_speech": "noun",
+          "example_sentence": "Je suis vraiment heureuse aujourd'hui."
+        },
+        {
+          "french": "le bonheur / malheureux / malheureuse",
+          "english": "happiness / unhappy",
+          "gender": "m",
+          "part_of_speech": "noun",
+          "example_sentence": "Le bonheur, c'est dans les petites choses."
+        },
+        {
+          "french": "la tristesse / triste",
+          "english": "sadness / sad",
+          "gender": "f",
+          "part_of_speech": "noun",
+          "example_sentence": "Cette nouvelle me rend triste."
+        },
+        {
+          "french": "la colère / en colère / fâché(e)",
+          "english": "anger / angry",
+          "gender": "f",
+          "part_of_speech": "noun",
+          "example_sentence": "Il est en colère contre moi."
+        },
+        {
+          "french": "la peur / avoir peur",
+          "english": "fear / to be afraid",
+          "gender": "f",
+          "part_of_speech": "noun",
+          "example_sentence": "J'ai peur des araignées."
+        },
+        {
+          "french": "l'angoisse / l'anxiété / anxieux / anxieuse",
+          "english": "anxiety / anxious",
+          "gender": "a",
+          "part_of_speech": "noun",
+          "example_sentence": "Je ressens beaucoup d'anxiété en ce moment."
+        },
+        {
+          "french": "le stress / stressé(e)",
+          "english": "stress / stressed",
+          "gender": "m",
+          "part_of_speech": "noun",
+          "example_sentence": "Mon travail me stresse énormément."
+        },
+        {
+          "french": "la surprise / surpris(e) / étonné(e)",
+          "english": "surprise / surprised",
+          "gender": "f",
+          "part_of_speech": "noun",
+          "example_sentence": "Quelle bonne surprise !"
+        },
+        {
+          "french": "la déception / déçu(e)",
+          "english": "disappointment / disappointed",
+          "gender": "f",
+          "part_of_speech": "noun",
+          "example_sentence": "Je suis déçu par sa réaction."
+        },
+        {
+          "french": "la honte / honteux / honteuse",
+          "english": "shame / ashamed",
+          "gender": "f",
+          "part_of_speech": "noun",
+          "example_sentence": "J'ai honte de mon comportement."
+        },
+        {
+          "french": "la fierté / fier / fière",
+          "english": "pride / proud",
+          "gender": "f",
+          "part_of_speech": "noun",
+          "example_sentence": "Je suis fière de mes enfants."
+        },
+        {
+          "french": "la jalousie / jaloux / jalouse",
+          "english": "jealousy / jealous",
+          "gender": "f",
+          "part_of_speech": "noun",
+          "example_sentence": "La jalousie est un sentiment destructeur."
+        },
+        {
+          "french": "l'amour / amoureux / amoureuse",
+          "english": "love / in love",
+          "gender": "m",
+          "part_of_speech": "noun",
+          "example_sentence": "Elle est amoureuse de lui depuis des années."
+        },
+        {
+          "french": "la haine / haïr / détester",
+          "english": "hatred / to hate",
+          "gender": "f",
+          "part_of_speech": "noun",
+          "example_sentence": "Je déteste l'injustice."
+        },
+        {
+          "french": "la gratitude / reconnaissant(e)",
+          "english": "gratitude / grateful",
+          "gender": "f",
+          "part_of_speech": "noun",
+          "example_sentence": "Je suis très reconnaissant de ton aide."
+        },
+        {
+          "french": "le regret / regretter",
+          "english": "regret / to regret",
+          "gender": "m",
+          "part_of_speech": "noun",
+          "example_sentence": "Je regrette mes paroles."
+        },
+        {
+          "french": "la culpabilité / coupable",
+          "english": "guilt / guilty",
+          "gender": "f",
+          "part_of_speech": "noun",
+          "example_sentence": "Il se sent coupable d'avoir oublié."
+        },
+        {
+          "french": "ressentir / éprouver",
+          "english": "to feel / experience",
+          "gender": "a",
+          "part_of_speech": "verb",
+          "example_sentence": "Je ressens un grand soulagement."
+        },
+        {
+          "french": "le soulagement / soulagé(e)",
+          "english": "relief / relieved",
+          "gender": "m",
+          "part_of_speech": "noun",
+          "example_sentence": "Quel soulagement, c'est fini !"
+        },
+        {
+          "french": "ému(e) / l'émotion",
+          "english": "moved / emotion",
+          "gender": "a",
+          "part_of_speech": "adjective",
+          "example_sentence": "J'étais très ému à son mariage."
+        },
+        {
+          "french": "pleurer / rire",
+          "english": "to cry / to laugh",
+          "gender": "a",
+          "part_of_speech": "verb",
+          "example_sentence": "Elle a pleuré de joie."
+        },
+        {
+          "french": "se sentir bien / mal / à l'aise",
+          "english": "to feel good/bad/at ease",
+          "gender": "a",
+          "part_of_speech": "verb",
+          "example_sentence": "Je me sens à l'aise avec toi."
+        },
+        {
+          "french": "l'humeur (être de bonne/mauvaise humeur)",
+          "english": "mood",
+          "gender": "f",
+          "part_of_speech": "noun",
+          "example_sentence": "Il est de mauvaise humeur ce matin."
+        },
+        {
+          "french": "tomber amoureux / amoureuse de",
+          "english": "to fall in love with",
+          "gender": "a",
+          "part_of_speech": "phrase",
+          "example_sentence": "Elle est tombée amoureuse de lui dès le premier jour."
+        }
+      ],
+      "phrases": [
+        {
+          "fr": "Comment tu te sens ?",
+          "en": "How do you feel?",
+          "note": "Caring, sincere question. More personal than 'Ça va ?'."
+        },
+        {
+          "fr": "Je suis vraiment content(e) pour toi.",
+          "en": "I'm really happy for you.",
+          "note": "Express joy at someone else's news."
+        },
+        {
+          "fr": "Ça me fait mal au cœur.",
+          "en": "It breaks my heart.",
+          "note": "Strong empathy."
+        },
+        {
+          "fr": "Je n'en peux plus.",
+          "en": "I can't take it anymore.",
+          "note": "Emotional/physical exhaustion."
+        },
+        {
+          "fr": "Ça me touche beaucoup.",
+          "en": "It really touches me.",
+          "note": "Sincere gratitude or emotion."
+        },
+        {
+          "fr": "Je suis à bout de nerfs.",
+          "en": "I'm at the end of my rope.",
+          "note": "Strong frustration / exhaustion idiom."
+        },
+        {
+          "fr": "J'ai le moral à zéro.",
+          "en": "My morale is at zero.",
+          "note": "Strong sadness/depression."
+        },
+        {
+          "fr": "Je suis aux anges.",
+          "en": "I'm over the moon.",
+          "note": "Pure joy idiom — 'with the angels'."
+        },
+        {
+          "fr": "Ne le prends pas mal.",
+          "en": "Don't take it the wrong way.",
+          "note": "Softener before a delicate remark."
+        },
+        {
+          "fr": "Ça me fait plaisir de te voir.",
+          "en": "It's nice to see you.",
+          "note": "Standard warm greeting."
+        },
+        {
+          "fr": "Je suis désolé(e) pour toi.",
+          "en": "I'm sorry for you.",
+          "note": "Empathy after bad news."
+        },
+        {
+          "fr": "J'ai un mauvais pressentiment.",
+          "en": "I have a bad feeling.",
+          "note": "Anxiety or intuition."
+        }
+      ],
+      "reading": {
+        "title": "Une lettre à un ami",
+        "content_fr": "Cher Antoine,\n\nJ'espère que cette lettre te trouve en forme. Je t'écris parce que j'avais besoin de te parler — pas par téléphone, par écrit, c'est plus facile pour moi en ce moment.\n\nCes dernières semaines ont été difficiles. Depuis que j'ai perdu mon emploi, je me sens perdue. Le matin, je n'ai plus envie de me lever. La journée passe sans que je sache vraiment ce que j'ai fait. Le soir, je suis épuisée mais je ne dors pas bien. Mes amis sont gentils, mais je n'arrive pas à leur parler de ce que je ressens vraiment. Je crois que j'ai un peu honte, en fait.\n\nLe pire, c'est ce mélange de colère et de tristesse. Colère contre mon ancien patron qui m'a licenciée sans préavis. Tristesse parce que j'aimais vraiment mon travail. Et parfois, surtout la nuit, une grosse vague d'angoisse : « Et si je ne retrouvais jamais de travail ? Et si je devais déménager ? »\n\nMais il y a aussi des moments de paix. Hier, j'ai marché deux heures dans le parc, en regardant les arbres et les enfants jouer. J'ai ressenti une sorte de soulagement — comme si quelque chose en moi se calmait. La nature, ça aide.\n\nTu m'as toujours bien comprise, Antoine. C'est pour ça que je t'écris. Je n'attends pas de solution magique, juste savoir que quelqu'un est là, à l'autre bout, qui lit ces mots avec attention.\n\nDis-moi comment tu vas, toi. Et reviens vite à Paris, j'ai envie de te voir.\n\nAvec toute mon affection,\nMarie",
+        "content_en": "Dear Antoine,\n\nI hope this letter finds you well. I'm writing because I needed to talk to you — not by phone, in writing, it's easier for me right now.\n\nThese last few weeks have been hard. Since I lost my job, I feel lost. In the morning, I don't want to get up anymore. The day passes without me really knowing what I did. In the evening, I'm exhausted but I don't sleep well. My friends are kind, but I can't tell them what I really feel. I think I'm a bit ashamed, actually.\n\nThe worst is this mix of anger and sadness. Anger at my former boss who fired me without notice. Sadness because I really loved my job. And sometimes, especially at night, a big wave of anxiety: 'What if I never find a job again? What if I have to move?'\n\nBut there are also moments of peace. Yesterday, I walked for two hours in the park, looking at the trees and the children playing. I felt a kind of relief — as if something inside me was calming down. Nature helps.\n\nYou've always understood me, Antoine. That's why I'm writing. I don't expect a magic solution, just to know that someone is there, on the other end, reading these words attentively.\n\nTell me how you're doing. And come back to Paris soon, I want to see you.\n\nWith all my affection,\nMarie",
+        "comprehension_questions": [
+          {
+            "q": "Pourquoi Marie écrit-elle à Antoine ?",
+            "a": "Parce qu'elle avait besoin de lui parler par écrit, ce qui est plus facile pour elle en ce moment."
+          },
+          {
+            "q": "Quels deux sentiments mélangés ressent-elle ?",
+            "a": "De la colère contre son ancien patron et de la tristesse parce qu'elle aimait son travail."
+          },
+          {
+            "q": "Qu'est-ce qui lui apporte du soulagement ?",
+            "a": "La nature, marcher dans le parc."
+          },
+          {
+            "q": "Qu'attend-elle d'Antoine ?",
+            "a": "Pas de solution magique, juste savoir que quelqu'un est là, qui lit ses mots avec attention."
+          }
+        ]
+      },
+      "cultural_note": "Les Français se réputent **réservés** sur leurs émotions, surtout en contexte professionnel — mais en privé, ils sont expressifs. Il existe un vrai vocabulaire des nuances émotionnelles (*ému, troublé, gêné, vexé, agacé*), bien plus riche qu'en anglais. **La psychothérapie** se développe mais reste moins courante qu'aux États-Unis ; en cas de difficultés, on parle d'abord à un proche ou au médecin généraliste. Les **expressions corporelles** (*« j'ai le cœur lourd »*, *« j'ai la boule au ventre »*, *« j'ai le moral dans les chaussettes »*) sont nombreuses et imagées."
+    },
+    {
+      "name_fr": "Le caractère et la personnalité",
+      "name_en": "Character and personality",
+      "icon": "🧬",
+      "order": 510,
+      "difficulty_level": 3,
+      "description": "Décrire la personnalité de quelqu'un, ses qualités et défauts.",
+      "vocabulary": [
+        {
+          "french": "le caractère / la personnalité",
+          "english": "character / personality",
+          "gender": "a",
+          "part_of_speech": "noun",
+          "example_sentence": "Il a un caractère bien trempé."
+        },
+        {
+          "french": "la qualité / le défaut",
+          "english": "quality / flaw",
+          "gender": "a",
+          "part_of_speech": "noun",
+          "example_sentence": "Sa principale qualité est la patience."
+        },
+        {
+          "french": "sympathique / sympa (familier)",
+          "english": "nice, friendly",
+          "gender": "a",
+          "part_of_speech": "adjective",
+          "example_sentence": "Mes collègues sont très sympas."
+        },
+        {
+          "french": "antipathique",
+          "english": "unpleasant, off-putting",
+          "gender": "a",
+          "part_of_speech": "adjective",
+          "example_sentence": "Il m'a trouvé antipathique au début."
+        },
+        {
+          "french": "gentil / gentille",
+          "english": "kind",
+          "gender": "a",
+          "part_of_speech": "adjective",
+          "example_sentence": "Sa mère est très gentille avec moi."
+        },
+        {
+          "french": "généreux / généreuse",
+          "english": "generous",
+          "gender": "a",
+          "part_of_speech": "adjective",
+          "example_sentence": "Il est très généreux avec ses amis."
+        },
+        {
+          "french": "égoïste",
+          "english": "selfish",
+          "gender": "a",
+          "part_of_speech": "adjective",
+          "example_sentence": "Je trouve son comportement égoïste."
+        },
+        {
+          "french": "patient / patiente / la patience",
+          "english": "patient / patience",
+          "gender": "a",
+          "part_of_speech": "adjective",
+          "example_sentence": "Soyez patient, ça vient."
+        },
+        {
+          "french": "impatient(e) / l'impatience",
+          "english": "impatient",
+          "gender": "a",
+          "part_of_speech": "adjective",
+          "example_sentence": "Il est très impatient au volant."
+        },
+        {
+          "french": "honnête / malhonnête",
+          "english": "honest / dishonest",
+          "gender": "a",
+          "part_of_speech": "adjective",
+          "example_sentence": "Je préfère qu'on soit honnête avec moi."
+        },
+        {
+          "french": "sincère / hypocrite",
+          "english": "sincere / hypocritical",
+          "gender": "a",
+          "part_of_speech": "adjective",
+          "example_sentence": "Ses compliments paraissent sincères."
+        },
+        {
+          "french": "timide / sûr(e) de soi",
+          "english": "shy / self-confident",
+          "gender": "a",
+          "part_of_speech": "adjective",
+          "example_sentence": "Petite, j'étais très timide."
+        },
+        {
+          "french": "ouvert(e) / fermé(e)",
+          "english": "open / closed (personality)",
+          "gender": "a",
+          "part_of_speech": "adjective",
+          "example_sentence": "Elle est très ouverte aux autres cultures."
+        },
+        {
+          "french": "drôle / sérieux / sérieuse",
+          "english": "funny / serious",
+          "gender": "a",
+          "part_of_speech": "adjective",
+          "example_sentence": "Il est drôle mais reste sérieux au travail."
+        },
+        {
+          "french": "sensible / dur(e)",
+          "english": "sensitive / tough",
+          "gender": "a",
+          "part_of_speech": "adjective",
+          "example_sentence": "Mon fils est très sensible."
+        },
+        {
+          "french": "calme / nerveux / nerveuse",
+          "english": "calm / nervous",
+          "gender": "a",
+          "part_of_speech": "adjective",
+          "example_sentence": "Il reste calme dans les crises."
+        },
+        {
+          "french": "actif / active / paresseux / paresseuse",
+          "english": "active / lazy",
+          "gender": "a",
+          "part_of_speech": "adjective",
+          "example_sentence": "Il est paresseux le week-end mais très actif au travail."
+        },
+        {
+          "french": "courageux / courageuse / lâche",
+          "english": "brave / cowardly",
+          "gender": "a",
+          "part_of_speech": "adjective",
+          "example_sentence": "Quel courage de partir seule à l'étranger !"
+        },
+        {
+          "french": "modeste / arrogant(e) / prétentieux / prétentieuse",
+          "english": "modest / arrogant / pretentious",
+          "gender": "a",
+          "part_of_speech": "adjective",
+          "example_sentence": "Il est talentueux mais arrogant."
+        },
+        {
+          "french": "fiable / pas fiable",
+          "english": "reliable / unreliable",
+          "gender": "a",
+          "part_of_speech": "adjective",
+          "example_sentence": "Tu peux compter sur lui, il est fiable."
+        },
+        {
+          "french": "discret / discrète / bavard(e)",
+          "english": "discreet / talkative",
+          "gender": "a",
+          "part_of_speech": "adjective",
+          "example_sentence": "Elle est discrète sur sa vie privée."
+        },
+        {
+          "french": "optimiste / pessimiste",
+          "english": "optimist / pessimist",
+          "gender": "a",
+          "part_of_speech": "adjective",
+          "example_sentence": "Je suis optimiste pour l'avenir."
+        },
+        {
+          "french": "curieux / curieuse / la curiosité",
+          "english": "curious / curiosity",
+          "gender": "a",
+          "part_of_speech": "adjective",
+          "example_sentence": "Les enfants sont naturellement curieux."
+        },
+        {
+          "french": "ambitieux / ambitieuse / l'ambition",
+          "english": "ambitious",
+          "gender": "a",
+          "part_of_speech": "adjective",
+          "example_sentence": "Elle est très ambitieuse dans son métier."
+        },
+        {
+          "french": "compréhensif / compréhensive",
+          "english": "understanding",
+          "gender": "a",
+          "part_of_speech": "adjective",
+          "example_sentence": "Mon patron est compréhensif quand on a un problème."
+        }
+      ],
+      "phrases": [
+        {
+          "fr": "Comment est-il/elle ?",
+          "en": "What is he/she like?",
+          "note": "Standard personality question."
+        },
+        {
+          "fr": "C'est quelqu'un de très gentil.",
+          "en": "He/she is someone very kind.",
+          "note": "Structure: 'quelqu'un de' + adjective."
+        },
+        {
+          "fr": "Il a un cœur d'or.",
+          "en": "He has a heart of gold.",
+          "note": "Idiom for very kind."
+        },
+        {
+          "fr": "Elle est têtue comme une mule.",
+          "en": "She's as stubborn as a mule.",
+          "note": "Strong character idiom."
+        },
+        {
+          "fr": "Il a un sale caractère.",
+          "en": "He has a nasty temper.",
+          "note": "'Sale' = dirty/nasty, here for personality."
+        },
+        {
+          "fr": "C'est une bonne pâte.",
+          "en": "He/she is a good-natured person.",
+          "note": "Friendly compliment, 'good dough'."
+        },
+        {
+          "fr": "Je le trouve un peu fier.",
+          "en": "I find him a bit proud.",
+          "note": "'Fier' can mean arrogant depending on tone."
+        },
+        {
+          "fr": "Elle a tendance à...",
+          "en": "She tends to...",
+          "note": "Useful for nuanced description."
+        },
+        {
+          "fr": "Il est très ouvert d'esprit.",
+          "en": "He's very open-minded.",
+          "note": "Positive trait."
+        },
+        {
+          "fr": "C'est un grand timide.",
+          "en": "He's very shy.",
+          "note": "'Un grand' = amplifier with the adjective as noun."
+        },
+        {
+          "fr": "Je ne supporte pas les gens hypocrites.",
+          "en": "I can't stand hypocrites.",
+          "note": "Strong opinion."
+        },
+        {
+          "fr": "Tu lui ressembles beaucoup, en caractère.",
+          "en": "You're a lot like him, in personality.",
+          "note": "Family/friend comparison."
+        }
+      ],
+      "reading": {
+        "title": "Mon meilleur ami",
+        "content_fr": "Mon meilleur ami s'appelle Julien. On se connaît depuis le lycée — presque vingt ans maintenant. Quand je dois parler de quelqu'un que je connais vraiment bien, c'est lui qui me vient à l'esprit.\n\nJulien est quelqu'un de très calme. Il ne s'énerve presque jamais, même dans les pires situations. Cette qualité m'a souvent aidé dans ma vie : quand je panique pour un truc, il me regarde avec ce sourire un peu moqueur et me dit : « Ne t'inquiète pas, ça va s'arranger. » Et étrangement, j'y crois.\n\nIl est aussi très généreux. Il prête, il offre, il aide. Parfois même un peu trop : je trouve qu'il se laisse marcher sur les pieds. C'est son seul vrai défaut — il a du mal à dire non.\n\nAu travail, c'est un perfectionniste. Tout doit être parfait, jusqu'au moindre détail. Cela fait de lui un ingénieur excellent — mais aussi, parfois, un peu obsessionnel. Ses collègues l'adorent et l'agacent à la fois.\n\nDans le privé, c'est un grand romantique. Quand il est tombé amoureux de sa femme Léa, il lui a écrit une lettre par jour pendant six mois — par la poste, à l'ancienne. Léa a toutes ces lettres dans une boîte, sous leur lit. Je trouve ça beau.\n\nCe qui me touche le plus chez lui, c'est sa loyauté. Quand on est ami avec Julien, c'est pour la vie. Il se souvient de tout, il appelle aux bonnes dates, il vient quand on a besoin de lui, sans qu'on demande. C'est rare, et précieux.\n\nPersonne n'est parfait, et Julien non plus. Mais s'il fallait définir ma chance dans la vie, ce serait d'avoir trouvé cet ami-là.",
+        "content_en": "My best friend is named Julien. We've known each other since high school — almost twenty years now. When I have to talk about someone I really know well, he comes to mind.\n\nJulien is someone very calm. He almost never gets upset, even in the worst situations. This quality has often helped me in my life: when I panic about something, he looks at me with that slightly teasing smile and says: 'Don't worry, it'll work out.' And strangely, I believe him.\n\nHe's also very generous. He lends, he gives, he helps. Sometimes even a bit too much: I find he lets people walk all over him. It's his only real flaw — he has trouble saying no.\n\nAt work, he's a perfectionist. Everything must be perfect, down to the smallest detail. This makes him an excellent engineer — but also, sometimes, a bit obsessive. His colleagues adore him and find him annoying at the same time.\n\nIn his private life, he's a great romantic. When he fell in love with his wife Léa, he wrote her a letter every day for six months — by post, the old-fashioned way. Léa has all those letters in a box, under their bed. I find that beautiful.\n\nWhat touches me most about him is his loyalty. When you're friends with Julien, it's for life. He remembers everything, he calls on the right dates, he comes when you need him, without you having to ask. That's rare, and precious.\n\nNobody's perfect, and neither is Julien. But if I had to define my luck in life, it would be having found that friend.",
+        "comprehension_questions": [
+          {
+            "q": "Depuis combien de temps se connaissent-ils ?",
+            "a": "Presque vingt ans, depuis le lycée."
+          },
+          {
+            "q": "Quel est son seul vrai défaut ?",
+            "a": "Il a du mal à dire non, il se laisse marcher sur les pieds."
+          },
+          {
+            "q": "Comment a-t-il exprimé son amour à Léa ?",
+            "a": "Il lui a écrit une lettre par jour pendant six mois, par la poste."
+          },
+          {
+            "q": "Quelle est la qualité qui touche le plus le narrateur ?",
+            "a": "Sa loyauté — il se souvient de tout, il vient quand on a besoin de lui."
+          }
+        ]
+      },
+      "cultural_note": "En français, **décrire la personnalité** demande de la nuance — les Français évitent les jugements trop tranchés. On dira plutôt *« il a tendance à être... »* ou *« elle est plutôt... »* que *« il EST... »*. Les **adjectifs ont souvent des doublets masculin/féminin** (gentil/gentille, fier/fière, sérieux/sérieuse) qu'il faut mémoriser. La **timidité** est culturellement bien vue (signe de modestie), tandis que la **vantardise** est mal perçue — d'où l'expression *« faux modeste »* pour quelqu'un qui prétend ne pas l'être mais l'est trop."
+    },
+    {
+      "name_fr": "L'argent, la banque et le budget",
+      "name_en": "Money, banking, and budget",
+      "icon": "💶",
+      "order": 520,
+      "difficulty_level": 3,
+      "description": "Gérer son argent, ouvrir un compte bancaire, comprendre les finances personnelles.",
+      "vocabulary": [
+        {
+          "french": "l'argent / les sous (familier)",
+          "english": "money",
+          "gender": "m",
+          "part_of_speech": "noun",
+          "example_sentence": "Je n'ai pas beaucoup d'argent ce mois-ci."
+        },
+        {
+          "french": "l'euro / les espèces / la monnaie",
+          "english": "euro / cash / change",
+          "gender": "a",
+          "part_of_speech": "noun",
+          "example_sentence": "Vous avez de la monnaie ?"
+        },
+        {
+          "french": "la banque / l'agence bancaire",
+          "english": "bank / bank branch",
+          "gender": "f",
+          "part_of_speech": "noun",
+          "example_sentence": "Je vais à la banque demain."
+        },
+        {
+          "french": "le compte (bancaire / courant / d'épargne)",
+          "english": "(bank/checking/savings) account",
+          "gender": "m",
+          "part_of_speech": "noun",
+          "example_sentence": "J'ai ouvert un compte d'épargne."
+        },
+        {
+          "french": "le RIB / l'IBAN",
+          "english": "bank details / IBAN",
+          "gender": "m",
+          "part_of_speech": "noun",
+          "example_sentence": "Envoyez-moi votre RIB pour le virement."
+        },
+        {
+          "french": "la carte bancaire / la CB",
+          "english": "debit/credit card",
+          "gender": "f",
+          "part_of_speech": "noun",
+          "example_sentence": "Ma carte bancaire est bloquée."
+        },
+        {
+          "french": "le distributeur (de billets) / le DAB",
+          "english": "ATM",
+          "gender": "m",
+          "part_of_speech": "noun",
+          "example_sentence": "Le distributeur est en panne."
+        },
+        {
+          "french": "retirer de l'argent / déposer",
+          "english": "to withdraw / to deposit",
+          "gender": "a",
+          "part_of_speech": "verb",
+          "example_sentence": "Je dois retirer 200 euros."
+        },
+        {
+          "french": "le virement / faire un virement",
+          "english": "(bank) transfer",
+          "gender": "m",
+          "part_of_speech": "noun",
+          "example_sentence": "Je vous fais le virement aujourd'hui."
+        },
+        {
+          "french": "le prélèvement automatique",
+          "english": "direct debit",
+          "gender": "m",
+          "part_of_speech": "noun",
+          "example_sentence": "Le loyer est prélevé automatiquement."
+        },
+        {
+          "french": "le chèque",
+          "english": "check / cheque",
+          "gender": "m",
+          "part_of_speech": "noun",
+          "example_sentence": "Vous acceptez les chèques ?"
+        },
+        {
+          "french": "le solde / le découvert",
+          "english": "balance / overdraft",
+          "gender": "m",
+          "part_of_speech": "noun",
+          "example_sentence": "Je suis à découvert ce mois-ci."
+        },
+        {
+          "french": "le budget / dépenser / économiser",
+          "english": "budget / to spend / to save",
+          "gender": "m",
+          "part_of_speech": "noun",
+          "example_sentence": "J'essaie d'économiser 200 euros par mois."
+        },
+        {
+          "french": "le revenu / le salaire",
+          "english": "income / salary",
+          "gender": "m",
+          "part_of_speech": "noun",
+          "example_sentence": "Mon revenu net est de 2 200 euros."
+        },
+        {
+          "french": "les frais / les charges",
+          "english": "fees / fixed costs",
+          "gender": "m",
+          "part_of_speech": "noun",
+          "example_sentence": "Les frais bancaires sont trop élevés."
+        },
+        {
+          "french": "le loyer",
+          "english": "rent",
+          "gender": "m",
+          "part_of_speech": "noun",
+          "example_sentence": "Mon loyer augmente chaque année."
+        },
+        {
+          "french": "les impôts / la taxe",
+          "english": "taxes",
+          "gender": "a",
+          "part_of_speech": "noun",
+          "example_sentence": "Les impôts sont prélevés à la source."
+        },
+        {
+          "french": "le crédit / l'emprunt / emprunter",
+          "english": "credit / loan / to borrow",
+          "gender": "a",
+          "part_of_speech": "noun",
+          "example_sentence": "Nous avons fait un crédit pour la maison."
+        },
+        {
+          "french": "rembourser / la dette",
+          "english": "to repay / debt",
+          "gender": "a",
+          "part_of_speech": "verb",
+          "example_sentence": "Je rembourse mon prêt étudiant chaque mois."
+        },
+        {
+          "french": "l'épargne / placer / investir",
+          "english": "savings / to invest",
+          "gender": "f",
+          "part_of_speech": "noun",
+          "example_sentence": "J'ai une petite épargne pour les imprévus."
+        },
+        {
+          "french": "l'assurance / le contrat",
+          "english": "insurance / contract",
+          "gender": "f",
+          "part_of_speech": "noun",
+          "example_sentence": "Mon assurance habitation coûte 250 € par an."
+        },
+        {
+          "french": "les intérêts / le taux",
+          "english": "interest / rate",
+          "gender": "m",
+          "part_of_speech": "noun",
+          "example_sentence": "Le taux d'intérêt est très bas en ce moment."
+        },
+        {
+          "french": "la facture / payer",
+          "english": "bill / to pay",
+          "gender": "f",
+          "part_of_speech": "noun",
+          "example_sentence": "J'ai oublié de payer ma facture d'électricité."
+        },
+        {
+          "french": "cher / pas cher / bon marché",
+          "english": "expensive / cheap",
+          "gender": "a",
+          "part_of_speech": "adjective",
+          "example_sentence": "Cet hôtel est bon marché."
+        },
+        {
+          "french": "le pouvoir d'achat",
+          "english": "purchasing power",
+          "gender": "m",
+          "part_of_speech": "noun",
+          "example_sentence": "Le pouvoir d'achat baisse en France."
+        }
+      ],
+      "phrases": [
+        {
+          "fr": "Je voudrais ouvrir un compte.",
+          "en": "I'd like to open an account.",
+          "note": "Standard bank request."
+        },
+        {
+          "fr": "Quel est le solde de mon compte ?",
+          "en": "What's my account balance?",
+          "note": "Bank question."
+        },
+        {
+          "fr": "Je voudrais faire un virement de 500 euros.",
+          "en": "I'd like to make a transfer of 500 euros.",
+          "note": "Standard transfer request."
+        },
+        {
+          "fr": "Vous prenez la carte ?",
+          "en": "Do you take card?",
+          "note": "Always worth asking in small shops."
+        },
+        {
+          "fr": "C'est combien ? — Cela fait 47 euros.",
+          "en": "How much? — That's 47 euros.",
+          "note": "Standard exchange."
+        },
+        {
+          "fr": "Je n'ai pas de monnaie.",
+          "en": "I don't have change.",
+          "note": "Common situation."
+        },
+        {
+          "fr": "Je fais attention à mes dépenses.",
+          "en": "I watch my spending.",
+          "note": "Budgeting expression."
+        },
+        {
+          "fr": "Je suis fauché(e). / Je n'ai plus un sou.",
+          "en": "I'm broke.",
+          "note": "Colloquial: 'fauché' = mowed down/broke."
+        },
+        {
+          "fr": "Ça coûte les yeux de la tête.",
+          "en": "It costs an arm and a leg.",
+          "note": "Literal: 'the eyes of the head'."
+        },
+        {
+          "fr": "L'argent ne fait pas le bonheur.",
+          "en": "Money doesn't buy happiness.",
+          "note": "Classic French proverb."
+        },
+        {
+          "fr": "Je voudrais déposer un chèque.",
+          "en": "I'd like to deposit a check.",
+          "note": "Bank counter request."
+        },
+        {
+          "fr": "Vous pouvez me donner du liquide ?",
+          "en": "Can you give me cash?",
+          "note": "'Du liquide' = cash (lit. 'liquid')."
+        }
+      ],
+      "reading": {
+        "title": "Mon premier budget",
+        "content_fr": "Quand j'ai commencé à travailler à 24 ans, je n'avais aucune notion de gestion d'argent. Je gagnais 1 800 euros net par mois et j'avais l'impression d'être riche. Six mois plus tard, j'étais à découvert.\n\nMon problème ? Je dépensais sans réfléchir. Un café par-ci, un dîner par-là, un nouvel achat sur Internet... À la fin du mois, je ne savais pas où était passé mon argent.\n\nUn jour, ma mère m'a dit : « Tu devrais faire un budget. » J'ai d'abord trouvé ça démodé. Mais j'ai essayé. J'ai ouvert un tableur et j'ai noté toutes mes dépenses pendant un mois. Le résultat m'a choqué.\n\nMes dépenses fixes (loyer, factures, transport, assurances) : 950 euros. Mes dépenses variables nécessaires (courses, sorties raisonnables) : devraient être 400 euros. Mais elles montaient en réalité à... 900 euros !\n\nDont 300 euros de restaurants et bars. 200 euros d'achats en ligne, souvent inutiles. 100 euros de petits cafés et viennoiseries quotidiennes au bureau (faites le calcul : 5 € × 22 jours = 110 €).\n\nJ'ai alors fait des changements simples. J'ai pris l'habitude d'apporter mon café et mon déjeuner au bureau. J'ai désinstallé les applications de shopping. J'ai mis en place un virement automatique de 200 euros vers un compte d'épargne, le jour de la paie.\n\nUn an plus tard, j'avais 2 400 euros d'épargne. Et surtout, je ne stressais plus à la fin du mois. Le budget n'est pas une contrainte — c'est une libération.\n\nMa nouvelle règle : « Avant chaque achat, je me demande si j'en ai vraiment besoin. » Cette simple question m'a changé la vie.",
+        "content_en": "When I started working at 24, I had no notion of money management. I earned 1,800 euros net per month and felt rich. Six months later, I was overdrawn.\n\nMy problem? I spent without thinking. A coffee here, a dinner there, a new online purchase... At the end of the month, I didn't know where my money had gone.\n\nOne day, my mother told me: 'You should make a budget.' At first I found it old-fashioned. But I tried. I opened a spreadsheet and noted all my expenses for a month. The result shocked me.\n\nMy fixed expenses (rent, bills, transport, insurance): 950 euros. My variable necessary expenses (groceries, reasonable outings): should be 400 euros. But they actually came to... 900 euros!\n\nOf which 300 euros restaurants and bars. 200 euros online purchases, often useless. 100 euros daily coffees and pastries at the office (do the math: 5 € × 22 days = 110 €).\n\nI then made simple changes. I got into the habit of bringing my coffee and lunch to the office. I uninstalled shopping apps. I set up an automatic transfer of 200 euros to a savings account, on payday.\n\nA year later, I had 2,400 euros in savings. And most importantly, I no longer stressed at the end of the month. A budget isn't a constraint — it's a liberation.\n\nMy new rule: 'Before each purchase, I ask myself if I really need it.' This simple question changed my life.",
+        "comprehension_questions": [
+          {
+            "q": "Quel était le revenu net mensuel du narrateur ?",
+            "a": "1 800 euros net par mois."
+          },
+          {
+            "q": "Combien dépensait-il en restaurants et bars chaque mois ?",
+            "a": "300 euros."
+          },
+          {
+            "q": "Quels changements concrets a-t-il faits ?",
+            "a": "Apporter café et déjeuner au bureau, désinstaller les applis de shopping, mettre en place un virement automatique de 200 € vers l'épargne."
+          },
+          {
+            "q": "Quelle est sa nouvelle règle d'or ?",
+            "a": "Avant chaque achat, se demander s'il en a vraiment besoin."
+          }
+        ]
+      },
+      "cultural_note": "En France, **le système bancaire** est très réglementé : pour ouvrir un compte, il faut un justificatif de domicile et une pièce d'identité. Les **frais bancaires** sont une source constante de mécontentement (parfois 100-200 € / an dans les banques traditionnelles). Les **banques en ligne** (Boursorama, Fortuneo, BoursoBank) gagnent du terrain, souvent gratuites. **Le chèque** existe encore (la France est l'un des derniers pays à l'utiliser massivement). Le **prélèvement à la source** des impôts existe depuis 2019. Pour acheter un logement, on emprunte presque toujours auprès de sa banque, avec un taux fixe sur 15-25 ans."
+    },
+    {
+      "name_fr": "Le logement : louer, acheter, déménager",
+      "name_en": "Housing: renting, buying, moving",
+      "icon": "🏘️",
+      "order": 530,
+      "difficulty_level": 3,
+      "description": "Chercher un logement, signer un bail, organiser un déménagement.",
+      "vocabulary": [
+        {
+          "french": "le logement / l'habitat",
+          "english": "housing",
+          "gender": "m",
+          "part_of_speech": "noun",
+          "example_sentence": "Le logement à Paris est un vrai problème."
+        },
+        {
+          "french": "louer / la location / le locataire",
+          "english": "to rent / rental / tenant",
+          "gender": "a",
+          "part_of_speech": "verb",
+          "example_sentence": "Je loue un studio à Lyon."
+        },
+        {
+          "french": "acheter / l'achat / le propriétaire",
+          "english": "to buy / purchase / owner",
+          "gender": "a",
+          "part_of_speech": "verb",
+          "example_sentence": "Mes parents ont acheté leur maison en 1985."
+        },
+        {
+          "french": "déménager / le déménagement",
+          "english": "to move / moving (house)",
+          "gender": "a",
+          "part_of_speech": "verb",
+          "example_sentence": "Nous déménageons le mois prochain."
+        },
+        {
+          "french": "le bail",
+          "english": "lease",
+          "gender": "m",
+          "part_of_speech": "noun",
+          "example_sentence": "J'ai signé un bail de trois ans."
+        },
+        {
+          "french": "le loyer / les charges",
+          "english": "rent / utilities (in fees)",
+          "gender": "m",
+          "part_of_speech": "noun",
+          "example_sentence": "Le loyer charges comprises est de 850 €."
+        },
+        {
+          "french": "la caution / le dépôt de garantie",
+          "english": "security deposit",
+          "gender": "f",
+          "part_of_speech": "noun",
+          "example_sentence": "La caution est égale à un mois de loyer."
+        },
+        {
+          "french": "le garant",
+          "english": "guarantor",
+          "gender": "m",
+          "part_of_speech": "noun",
+          "example_sentence": "Mon père est mon garant."
+        },
+        {
+          "french": "l'état des lieux",
+          "english": "inventory of fixtures",
+          "gender": "m",
+          "part_of_speech": "noun",
+          "example_sentence": "On fait l'état des lieux samedi."
+        },
+        {
+          "french": "l'agence immobilière / l'agent immobilier",
+          "english": "real estate agency / agent",
+          "gender": "f",
+          "part_of_speech": "noun",
+          "example_sentence": "J'ai trouvé mon appart via une agence."
+        },
+        {
+          "french": "le propriétaire / le bailleur",
+          "english": "owner / landlord",
+          "gender": "m",
+          "part_of_speech": "noun",
+          "example_sentence": "Mon propriétaire est très sympa."
+        },
+        {
+          "french": "meublé / non meublé / vide",
+          "english": "furnished / unfurnished",
+          "gender": "a",
+          "part_of_speech": "adjective",
+          "example_sentence": "Je préfère un appart meublé."
+        },
+        {
+          "french": "la surface / le mètre carré (m²)",
+          "english": "area / square meter",
+          "gender": "f",
+          "part_of_speech": "noun",
+          "example_sentence": "L'appart fait 60 m²."
+        },
+        {
+          "french": "le studio / le T1, T2, T3",
+          "english": "studio / 1-bed, 2-bed, 3-bed",
+          "gender": "m",
+          "part_of_speech": "noun",
+          "example_sentence": "Un T2, c'est un salon plus une chambre."
+        },
+        {
+          "french": "la pièce / la pièce principale",
+          "english": "room / main room",
+          "gender": "f",
+          "part_of_speech": "noun",
+          "example_sentence": "Combien de pièces a l'appartement ?"
+        },
+        {
+          "french": "la chambre / le salon / la cuisine",
+          "english": "bedroom / living room / kitchen",
+          "gender": "a",
+          "part_of_speech": "noun",
+          "example_sentence": "Le salon donne sur la cour."
+        },
+        {
+          "french": "l'ascenseur / l'escalier / l'étage",
+          "english": "elevator / stairs / floor",
+          "gender": "m",
+          "part_of_speech": "noun",
+          "example_sentence": "J'habite au 5e étage, sans ascenseur."
+        },
+        {
+          "french": "le quartier / le voisinage",
+          "english": "neighborhood",
+          "gender": "m",
+          "part_of_speech": "noun",
+          "example_sentence": "Mon quartier est très calme."
+        },
+        {
+          "french": "le prix au m² / le marché immobilier",
+          "english": "price per square meter / market",
+          "gender": "m",
+          "part_of_speech": "noun",
+          "example_sentence": "Le prix au m² à Paris dépasse 10 000 €."
+        },
+        {
+          "french": "l'emprunt immobilier / le prêt",
+          "english": "mortgage / loan",
+          "gender": "m",
+          "part_of_speech": "noun",
+          "example_sentence": "On rembourse notre emprunt sur 20 ans."
+        },
+        {
+          "french": "l'apport / les frais de notaire",
+          "english": "down payment / notary fees",
+          "gender": "m",
+          "part_of_speech": "noun",
+          "example_sentence": "Il faut un apport de 10 % minimum."
+        },
+        {
+          "french": "le notaire / la promesse de vente",
+          "english": "notary / sale agreement",
+          "gender": "m",
+          "part_of_speech": "noun",
+          "example_sentence": "Le notaire valide l'acte de vente."
+        },
+        {
+          "french": "emménager / s'installer",
+          "english": "to move in / settle",
+          "gender": "a",
+          "part_of_speech": "verb",
+          "example_sentence": "On emménage le 15 juin."
+        },
+        {
+          "french": "le carton / la boîte de déménagement",
+          "english": "cardboard box / moving box",
+          "gender": "m",
+          "part_of_speech": "noun",
+          "example_sentence": "J'ai cent cartons à faire."
+        },
+        {
+          "french": "résilier / donner son préavis",
+          "english": "to cancel / give notice",
+          "gender": "a",
+          "part_of_speech": "verb",
+          "example_sentence": "J'ai donné mon préavis de trois mois."
+        }
+      ],
+      "phrases": [
+        {
+          "fr": "Je cherche un appartement à louer.",
+          "en": "I'm looking for an apartment to rent.",
+          "note": "Standard search statement."
+        },
+        {
+          "fr": "C'est dans quel quartier ?",
+          "en": "Which neighborhood is it in?",
+          "note": "Important question in big cities."
+        },
+        {
+          "fr": "Quel est le loyer charges comprises ?",
+          "en": "What's the rent including utilities?",
+          "note": "Important distinction: 'cc' on listings."
+        },
+        {
+          "fr": "Il faut combien de mois de caution ?",
+          "en": "How many months' deposit is required?",
+          "note": "Usually 1 month for unfurnished, 2 for furnished."
+        },
+        {
+          "fr": "Vous demandez un garant ?",
+          "en": "Do you require a guarantor?",
+          "note": "Very common in France."
+        },
+        {
+          "fr": "Je peux visiter quand ?",
+          "en": "When can I visit?",
+          "note": "Standard scheduling question."
+        },
+        {
+          "fr": "L'appart est libre quand ?",
+          "en": "When is the apartment available?",
+          "note": "Common question."
+        },
+        {
+          "fr": "On déménage le week-end prochain.",
+          "en": "We're moving next weekend.",
+          "note": "Standard plan announcement."
+        },
+        {
+          "fr": "Vous pouvez m'aider à porter ce carton ?",
+          "en": "Can you help me carry this box?",
+          "note": "Universal moving-day request."
+        },
+        {
+          "fr": "Je suis propriétaire / locataire.",
+          "en": "I own / I rent.",
+          "note": "Common life status."
+        },
+        {
+          "fr": "Le marché immobilier est tendu.",
+          "en": "The housing market is tight.",
+          "note": "Common observation in big cities."
+        },
+        {
+          "fr": "On a fait un prêt sur 25 ans.",
+          "en": "We took out a 25-year mortgage.",
+          "note": "Standard French mortgage length."
+        }
+      ],
+      "reading": {
+        "title": "Chercher un appartement à Paris",
+        "content_fr": "Chercher un appartement à Paris, c'est un sport extrême. Je viens de le vivre, et j'en ressors épuisé(e) — mais avec un appart. Voici mon parcours.\n\nTout commence par les **petites annonces** : SeLoger, Bien'ici, Le Bon Coin, PAP. Je passe deux heures par jour à scroller. Pour un budget de 1 100 € charges comprises, je trouve... des studios de 18 m² dans des quartiers parfois bizarres. Le rêve s'effrite.\n\nJe trouve enfin une annonce qui me plaît : un T2 de 38 m², dans le 11e, à 1 200 € cc. J'appelle. La propriétaire me dit : « J'ai déjà 50 personnes intéressées. Envoyez-moi votre dossier. »\n\nLe **dossier**, parlons-en. Il faut : la pièce d'identité, les trois derniers bulletins de salaire, le contrat de travail, le dernier avis d'imposition, le RIB, une attestation d'employeur, et — si on n'a pas un salaire au moins trois fois le loyer — un **garant** (souvent les parents). Le tout au format PDF, joliment présenté.\n\nJ'envoie. Trois jours plus tard, la propriétaire me rappelle : « Votre dossier est bon. Vous pouvez venir visiter demain à 18 h. »\n\nLa visite : 30 personnes dans 38 m². On défile en silence, on observe, on prend des photos. Je remarque les détails : la cuisine est correcte, le salon donne sur une cour calme, mais la salle de bains est minuscule.\n\nÀ la sortie, je dis à la propriétaire : « Je le prends. » Elle me regarde, sourit : « Je vous appelle demain. »\n\nÉlue. J'ai dû donner un mois de caution (1 200 €), un mois de loyer d'avance (1 200 €) et des honoraires d'agence (environ 500 €). Le déménagement coûte 600 € de plus. Total : 3 500 € sortis du compte en deux semaines.\n\nMais ce matin, je me suis réveillé(e) chez moi, dans mon T2 du 11e, avec du café et la lumière du soleil qui entre par la fenêtre. Et tout l'effort en valait la peine.",
+        "content_en": "Searching for an apartment in Paris is an extreme sport. I just lived it, and I come out exhausted — but with an apartment. Here's my journey.\n\nIt all starts with the listings: SeLoger, Bien'ici, Le Bon Coin, PAP. I spend two hours a day scrolling. For a budget of 1,100 € all inclusive, I find... 18 m² studios in sometimes weird neighborhoods. The dream crumbles.\n\nI finally find a listing I like: a 38 m² 1-bedroom, in the 11th arrondissement, for 1,200 € all in. I call. The owner tells me: 'I already have 50 people interested. Send me your file.'\n\nThe file, let's talk about it. You need: ID, the last three pay slips, the employment contract, the latest tax statement, bank details, an employer's certificate, and — if you don't earn at least three times the rent — a guarantor (often parents). All in PDF, nicely presented.\n\nI send it. Three days later, the owner calls back: 'Your file is good. You can come visit tomorrow at 6 PM.'\n\nThe visit: 30 people in 38 m². We file through in silence, observe, take photos. I notice the details: the kitchen is okay, the living room faces a quiet courtyard, but the bathroom is tiny.\n\nOn the way out, I tell the owner: 'I'll take it.' She looks at me, smiles: 'I'll call you tomorrow.'\n\nChosen. I had to give a month's deposit (1,200 €), a month's rent in advance (1,200 €) and agency fees (about 500 €). The move costs 600 € more. Total: 3,500 € out of the account in two weeks.\n\nBut this morning, I woke up at home, in my 11th-arrondissement 1-bed, with coffee and sunlight coming through the window. And all the effort was worth it.",
+        "comprehension_questions": [
+          {
+            "q": "Quel est le budget du narrateur ?",
+            "a": "1 100 euros charges comprises."
+          },
+          {
+            "q": "Que faut-il dans un dossier de location ?",
+            "a": "Pièce d'identité, trois derniers bulletins de salaire, contrat de travail, avis d'imposition, RIB, attestation d'employeur, et un garant si le salaire est inférieur à trois fois le loyer."
+          },
+          {
+            "q": "Combien de personnes ont visité l'appartement ?",
+            "a": "30 personnes dans 38 m²."
+          },
+          {
+            "q": "Quel est le coût total du déménagement et de l'installation ?",
+            "a": "3 500 euros (caution, avance, frais d'agence, déménagement)."
+          }
+        ]
+      },
+      "cultural_note": "Le **marché locatif à Paris** est l'un des plus tendus du monde. La règle : on demande un salaire **trois fois le loyer**, et un garant si on ne l'a pas. Le **dossier de location** est désormais standardisé via **DossierFacile**, un service gouvernemental qui certifie les dossiers. Les **frais d'agence** sont plafonnés par la loi (10-12 €/m² selon les villes). Pour **acheter** : il faut compter ~8 % de frais de notaire (taxes + honoraires) en plus du prix du bien dans l'ancien, 3 % dans le neuf. Les **emprunts immobiliers** se font typiquement sur 20-25 ans, avec un taux fixe (rare ailleurs en Europe)."
+    },
+    {
+      "name_fr": "Le monde du travail : entretiens et CV",
+      "name_en": "The job market: interviews and CVs",
+      "icon": "📋",
+      "order": 540,
+      "difficulty_level": 3,
+      "description": "Rédiger un CV, préparer un entretien d'embauche, négocier une offre.",
+      "vocabulary": [
+        {
+          "french": "le CV (curriculum vitae)",
+          "english": "résumé / CV",
+          "gender": "m",
+          "part_of_speech": "noun",
+          "example_sentence": "Mon CV tient sur une page."
+        },
+        {
+          "french": "la lettre de motivation",
+          "english": "cover letter",
+          "gender": "f",
+          "part_of_speech": "noun",
+          "example_sentence": "La lettre de motivation est obligatoire."
+        },
+        {
+          "french": "la candidature / postuler",
+          "english": "application / to apply",
+          "gender": "f",
+          "part_of_speech": "noun",
+          "example_sentence": "J'ai postulé à 30 offres ce mois-ci."
+        },
+        {
+          "french": "l'offre d'emploi",
+          "english": "job offer / job listing",
+          "gender": "f",
+          "part_of_speech": "noun",
+          "example_sentence": "Cette offre d'emploi est très intéressante."
+        },
+        {
+          "french": "l'entretien (d'embauche)",
+          "english": "(job) interview",
+          "gender": "m",
+          "part_of_speech": "noun",
+          "example_sentence": "J'ai un entretien jeudi matin."
+        },
+        {
+          "french": "le recruteur / le RH",
+          "english": "recruiter / HR",
+          "gender": "m",
+          "part_of_speech": "noun",
+          "example_sentence": "La recruteuse semblait très professionnelle."
+        },
+        {
+          "french": "le poste / le métier / le secteur",
+          "english": "position / job / sector",
+          "gender": "m",
+          "part_of_speech": "noun",
+          "example_sentence": "Je vise un poste de chef de projet."
+        },
+        {
+          "french": "le diplôme / la formation",
+          "english": "diploma / training",
+          "gender": "m",
+          "part_of_speech": "noun",
+          "example_sentence": "J'ai un master en marketing."
+        },
+        {
+          "french": "l'expérience (professionnelle)",
+          "english": "(professional) experience",
+          "gender": "f",
+          "part_of_speech": "noun",
+          "example_sentence": "J'ai cinq ans d'expérience."
+        },
+        {
+          "french": "les compétences / les soft skills",
+          "english": "skills / soft skills",
+          "gender": "f",
+          "part_of_speech": "noun",
+          "example_sentence": "Mes compétences principales sont l'analyse et la communication."
+        },
+        {
+          "french": "le stage / le stagiaire",
+          "english": "internship / intern",
+          "gender": "m",
+          "part_of_speech": "noun",
+          "example_sentence": "J'ai fait un stage chez L'Oréal."
+        },
+        {
+          "french": "le CDI / le CDD / l'intérim",
+          "english": "permanent / temp / temp-agency contract",
+          "gender": "m",
+          "part_of_speech": "noun",
+          "example_sentence": "Je cherche un CDI."
+        },
+        {
+          "french": "le salaire net / brut",
+          "english": "net / gross salary",
+          "gender": "m",
+          "part_of_speech": "noun",
+          "example_sentence": "Le salaire brut est plus élevé que le net."
+        },
+        {
+          "french": "la prime / les avantages",
+          "english": "bonus / benefits",
+          "gender": "a",
+          "part_of_speech": "noun",
+          "example_sentence": "Ils offrent une prime de fin d'année."
+        },
+        {
+          "french": "le télétravail",
+          "english": "remote work",
+          "gender": "m",
+          "part_of_speech": "noun",
+          "example_sentence": "Le télétravail deux jours par semaine est possible."
+        },
+        {
+          "french": "la période d'essai",
+          "english": "probation period",
+          "gender": "f",
+          "part_of_speech": "noun",
+          "example_sentence": "La période d'essai est de trois mois."
+        },
+        {
+          "french": "embaucher / engager / recruter",
+          "english": "to hire",
+          "gender": "a",
+          "part_of_speech": "verb",
+          "example_sentence": "Ils embauchent 50 personnes cette année."
+        },
+        {
+          "french": "négocier / la négociation",
+          "english": "to negotiate",
+          "gender": "a",
+          "part_of_speech": "verb",
+          "example_sentence": "J'ai négocié mon salaire."
+        },
+        {
+          "french": "se présenter / présenter son parcours",
+          "english": "to introduce oneself / one's background",
+          "gender": "a",
+          "part_of_speech": "verb",
+          "example_sentence": "Présentez-vous en deux minutes."
+        },
+        {
+          "french": "la motivation / motivé(e)",
+          "english": "motivation / motivated",
+          "gender": "f",
+          "part_of_speech": "noun",
+          "example_sentence": "Pourquoi êtes-vous motivé(e) pour ce poste ?"
+        },
+        {
+          "french": "le point fort / le point faible",
+          "english": "strength / weakness",
+          "gender": "m",
+          "part_of_speech": "noun",
+          "example_sentence": "Quels sont vos points forts ?"
+        },
+        {
+          "french": "le poste pourvu / vacant",
+          "english": "filled / vacant position",
+          "gender": "m",
+          "part_of_speech": "adjective",
+          "example_sentence": "Le poste est déjà pourvu, hélas."
+        },
+        {
+          "french": "la réponse / la relance",
+          "english": "response / follow-up",
+          "gender": "f",
+          "part_of_speech": "noun",
+          "example_sentence": "Je n'ai aucune réponse depuis deux semaines."
+        },
+        {
+          "french": "le réseau / le networking",
+          "english": "network / networking",
+          "gender": "m",
+          "part_of_speech": "noun",
+          "example_sentence": "Le réseau, c'est essentiel pour trouver un emploi."
+        },
+        {
+          "french": "Pôle Emploi / France Travail",
+          "english": "French unemployment agency",
+          "gender": "m",
+          "part_of_speech": "noun",
+          "example_sentence": "Je suis inscrit à Pôle Emploi."
+        }
+      ],
+      "phrases": [
+        {
+          "fr": "Parlez-moi de vous.",
+          "en": "Tell me about yourself.",
+          "note": "Classic interview opener."
+        },
+        {
+          "fr": "Pourquoi voulez-vous travailler chez nous ?",
+          "en": "Why do you want to work here?",
+          "note": "Always asked. Prepare a specific answer."
+        },
+        {
+          "fr": "Quels sont vos points forts ?",
+          "en": "What are your strengths?",
+          "note": "Have 3 ready, with examples."
+        },
+        {
+          "fr": "Et vos points faibles ?",
+          "en": "And your weaknesses?",
+          "note": "Don't say 'I'm a perfectionist' — too cliché."
+        },
+        {
+          "fr": "Où vous voyez-vous dans cinq ans ?",
+          "en": "Where do you see yourself in five years?",
+          "note": "Classic forward-looking question."
+        },
+        {
+          "fr": "Quelles sont vos prétentions salariales ?",
+          "en": "What are your salary expectations?",
+          "note": "Negotiation moment."
+        },
+        {
+          "fr": "Je suis disponible immédiatement.",
+          "en": "I'm available immediately.",
+          "note": "Useful if true."
+        },
+        {
+          "fr": "Je peux commencer dans un mois.",
+          "en": "I can start in a month.",
+          "note": "Standard notice period in France."
+        },
+        {
+          "fr": "Auriez-vous des questions ?",
+          "en": "Do you have any questions?",
+          "note": "Always have 2-3 ready."
+        },
+        {
+          "fr": "Je suis très intéressé(e) par ce poste.",
+          "en": "I'm very interested in this position.",
+          "note": "Closing statement."
+        },
+        {
+          "fr": "Merci pour votre temps.",
+          "en": "Thank you for your time.",
+          "note": "Professional closing."
+        },
+        {
+          "fr": "Je reste à votre disposition.",
+          "en": "I remain at your disposal.",
+          "note": "Formal closing in emails / letters."
+        }
+      ],
+      "reading": {
+        "title": "L'entretien décisif",
+        "content_fr": "J'ai passé trois entretiens chez cette entreprise — un grand groupe français de l'agroalimentaire. Le poste : chef de projet marketing. Le salaire annoncé : 42 000 € brut. Aujourd'hui, c'était le troisième et dernier entretien, avec la directrice marketing en personne.\n\nJe suis arrivé(e) en avance, en costume sombre. La directrice, Madame Rousseau, m'a reçu(e) dans son bureau au 12e étage. Vue sur Paris. Mon dossier était sur la table — toutes les annotations en couleur.\n\n— Bonjour. Asseyez-vous. Vous avez l'air détendu(e), c'est bien. Beaucoup viennent ici très stressés.\n\n— J'essaie de me dire que c'est juste une conversation. Si ça ne marche pas, ça ne marche pas.\n\nElle a souri. Premier point gagné.\n\nNous avons parlé pendant une heure. Mon parcours, mes deux derniers projets, mes erreurs (« Parlez-moi d'un échec dont vous êtes fier(e) »), mes envies. Elle posait des questions précises, jamais pièges. Elle voulait comprendre comment je pensais.\n\nÀ un moment, elle m'a demandé : « Si vous arriviez chez nous, quelle serait votre première initiative ? » J'avais préparé cette question. J'ai parlé de la stratégie digitale du groupe, qui me semblait en retard. J'ai proposé trois actions concrètes. Elle écoutait, prenait des notes.\n\nÀ la fin, elle a dit : « Vous nous correspondez. Le salaire — vous demandiez 45 000, je vais voir si je peux monter à 44 000 plus une prime de 5 %. Le poste est à pourvoir au 1er juin. »\n\n— Très bien. Quand pourrai-je vous donner ma réponse ?\n\n— Prenez quelques jours. Mais... ne nous faites pas attendre trop longtemps. Nous avons d'autres candidats forts.\n\nEn sortant, j'ai marché dix minutes dans le froid, le sourire aux lèvres. J'avais peut-être trouvé. Ce soir, je vais en discuter avec ma copine — et puis je vais accepter, je crois.",
+        "content_en": "I had three interviews at this company — a big French food-industry group. The position: marketing project manager. The advertised salary: 42,000 € gross. Today was the third and final interview, with the marketing director in person.\n\nI arrived early, in a dark suit. The director, Madame Rousseau, received me in her office on the 12th floor. View of Paris. My file was on the table — all annotated in color.\n\n— Hello. Please sit down. You look relaxed, that's good. Many come here very stressed.\n\n— I try to tell myself it's just a conversation. If it doesn't work out, it doesn't.\n\nShe smiled. First point won.\n\nWe talked for an hour. My background, my last two projects, my mistakes ('Tell me about a failure you're proud of'), my aspirations. She asked specific questions, never tricky ones. She wanted to understand how I thought.\n\nAt one point, she asked: 'If you joined us, what would be your first initiative?' I had prepared this question. I talked about the group's digital strategy, which seemed behind. I proposed three concrete actions. She listened, took notes.\n\nAt the end, she said: 'You're a fit. The salary — you asked for 45,000, I'll see if I can go up to 44,000 plus a 5% bonus. The position starts June 1.'\n\n— Very good. When can I give you my answer?\n\n— Take a few days. But... don't make us wait too long. We have other strong candidates.\n\nOn the way out, I walked for ten minutes in the cold, smiling. Maybe I had found something. Tonight, I'll talk about it with my girlfriend — and then I'll accept, I think.",
+        "comprehension_questions": [
+          {
+            "q": "Combien d'entretiens le narrateur a-t-il passés en tout ?",
+            "a": "Trois entretiens."
+          },
+          {
+            "q": "Quel poste vise-t-il ?",
+            "a": "Chef de projet marketing dans un grand groupe agroalimentaire."
+          },
+          {
+            "q": "Quelle question a-t-il anticipée ?",
+            "a": "« Quelle serait votre première initiative ? »"
+          },
+          {
+            "q": "Quel salaire final lui est proposé ?",
+            "a": "44 000 € brut plus une prime de 5 %."
+          }
+        ]
+      },
+      "cultural_note": "Le **marché du travail français** privilégie les **diplômes** et les **grandes écoles** — un parcours académique brillant ouvre beaucoup de portes. Le **CV français** tient sur **une page** (sauf cadres séniors), avec une **photo** (de plus en plus optionnelle) et des sections claires : Expérience, Formation, Compétences, Langues, Centres d'intérêt. La **lettre de motivation** reste très importante, même si elle disparaît dans certains secteurs (tech, start-up). Le **CDI** (contrat à durée indéterminée) est le Graal — symbole de stabilité pour louer un appartement, obtenir un crédit, etc. **France Travail** (ex-Pôle Emploi) gère le chômage avec des allocations généreuses (jusqu'à 70 % du salaire pendant 18 mois)."
+    },
+    {
+      "name_fr": "Les médias et l'information",
+      "name_en": "Media and news",
+      "icon": "📰",
+      "order": 550,
+      "difficulty_level": 3,
+      "description": "S'informer, comprendre la presse, donner son avis sur l'actualité.",
+      "vocabulary": [
+        {
+          "french": "les médias / le média",
+          "english": "media",
+          "gender": "m",
+          "part_of_speech": "noun",
+          "example_sentence": "Les médias français sont très politisés."
+        },
+        {
+          "french": "l'information / les infos",
+          "english": "news / news (colloquial)",
+          "gender": "f",
+          "part_of_speech": "noun",
+          "example_sentence": "Je regarde les infos tous les soirs."
+        },
+        {
+          "french": "l'actualité / l'actu (familier)",
+          "english": "current events",
+          "gender": "f",
+          "part_of_speech": "noun",
+          "example_sentence": "Je suis l'actu de près en ce moment."
+        },
+        {
+          "french": "la presse / le journal",
+          "english": "press / newspaper",
+          "gender": "a",
+          "part_of_speech": "noun",
+          "example_sentence": "Je lis le journal au petit déjeuner."
+        },
+        {
+          "french": "le quotidien / l'hebdomadaire / le mensuel",
+          "english": "daily / weekly / monthly publication",
+          "gender": "m",
+          "part_of_speech": "noun",
+          "example_sentence": "Le Monde est un quotidien français célèbre."
+        },
+        {
+          "french": "le magazine / la revue",
+          "english": "magazine",
+          "gender": "m",
+          "part_of_speech": "noun",
+          "example_sentence": "Je m'abonne à plusieurs magazines."
+        },
+        {
+          "french": "la chaîne / la chaîne de télévision",
+          "english": "channel / TV channel",
+          "gender": "f",
+          "part_of_speech": "noun",
+          "example_sentence": "Quelle chaîne regardes-tu ?"
+        },
+        {
+          "french": "la radio / la station de radio",
+          "english": "radio / radio station",
+          "gender": "f",
+          "part_of_speech": "noun",
+          "example_sentence": "France Inter est ma radio préférée."
+        },
+        {
+          "french": "le journal télévisé / le JT",
+          "english": "TV news broadcast",
+          "gender": "m",
+          "part_of_speech": "noun",
+          "example_sentence": "Le JT de 20 h est très regardé."
+        },
+        {
+          "french": "le journaliste / la journaliste",
+          "english": "journalist",
+          "gender": "a",
+          "part_of_speech": "noun",
+          "example_sentence": "C'est une journaliste reconnue."
+        },
+        {
+          "french": "le reportage / l'enquête / l'interview",
+          "english": "report / investigation / interview",
+          "gender": "a",
+          "part_of_speech": "noun",
+          "example_sentence": "Un excellent reportage sur le climat."
+        },
+        {
+          "french": "l'article / l'éditorial / la tribune",
+          "english": "article / editorial / op-ed",
+          "gender": "m",
+          "part_of_speech": "noun",
+          "example_sentence": "L'éditorial du Monde était brillant."
+        },
+        {
+          "french": "le titre / le gros titre / la une",
+          "english": "headline / front page",
+          "gender": "m",
+          "part_of_speech": "noun",
+          "example_sentence": "C'est à la une de tous les journaux."
+        },
+        {
+          "french": "l'événement / le fait divers",
+          "english": "event / news item",
+          "gender": "m",
+          "part_of_speech": "noun",
+          "example_sentence": "Un fait divers tragique."
+        },
+        {
+          "french": "le débat / la polémique",
+          "english": "debate / controversy",
+          "gender": "m",
+          "part_of_speech": "noun",
+          "example_sentence": "Le débat fait rage sur cette question."
+        },
+        {
+          "french": "l'opinion / le sondage / l'enquête",
+          "english": "opinion / survey / inquiry",
+          "gender": "f",
+          "part_of_speech": "noun",
+          "example_sentence": "Les sondages montrent une grande inquiétude."
+        },
+        {
+          "french": "le journalisme / la liberté de la presse",
+          "english": "journalism / press freedom",
+          "gender": "m",
+          "part_of_speech": "noun",
+          "example_sentence": "La liberté de la presse est un droit fondamental."
+        },
+        {
+          "french": "la rumeur / la fausse nouvelle / la fake news",
+          "english": "rumor / fake news",
+          "gender": "f",
+          "part_of_speech": "noun",
+          "example_sentence": "Ne croyez pas tout ce que vous lisez ; il y a beaucoup de fake news."
+        },
+        {
+          "french": "la source / vérifier les sources",
+          "english": "source / to fact-check",
+          "gender": "f",
+          "part_of_speech": "noun",
+          "example_sentence": "Vérifie tes sources avant de partager."
+        },
+        {
+          "french": "objectif / objective / subjectif / partial",
+          "english": "objective / subjective / biased",
+          "gender": "a",
+          "part_of_speech": "adjective",
+          "example_sentence": "Cet article est très partial."
+        },
+        {
+          "french": "informer / annoncer / révéler",
+          "english": "to inform / announce / reveal",
+          "gender": "a",
+          "part_of_speech": "verb",
+          "example_sentence": "La presse a révélé un grand scandale."
+        },
+        {
+          "french": "censurer / la censure / la liberté d'expression",
+          "english": "to censor / censorship / freedom of expression",
+          "gender": "a",
+          "part_of_speech": "verb",
+          "example_sentence": "Ce livre a été censuré dans plusieurs pays."
+        },
+        {
+          "french": "le présentateur / l'animateur",
+          "english": "anchor / host",
+          "gender": "m",
+          "part_of_speech": "noun",
+          "example_sentence": "La présentatrice est très professionnelle."
+        },
+        {
+          "french": "le téléspectateur / le lecteur / l'auditeur",
+          "english": "viewer / reader / listener",
+          "gender": "m",
+          "part_of_speech": "noun",
+          "example_sentence": "Les téléspectateurs sont plus exigeants qu'avant."
+        },
+        {
+          "french": "le scoop / l'exclusivité",
+          "english": "scoop / exclusive",
+          "gender": "m",
+          "part_of_speech": "noun",
+          "example_sentence": "Le journal a eu le scoop."
+        }
+      ],
+      "phrases": [
+        {
+          "fr": "Tu as vu les infos hier soir ?",
+          "en": "Did you see the news last night?",
+          "note": "Common conversation starter."
+        },
+        {
+          "fr": "Je m'informe surtout sur Internet.",
+          "en": "I get my news mainly online.",
+          "note": "Modern habit, increasingly common."
+        },
+        {
+          "fr": "Je ne fais plus confiance aux médias traditionnels.",
+          "en": "I no longer trust traditional media.",
+          "note": "Common opinion these days."
+        },
+        {
+          "fr": "C'est à la une de tous les journaux.",
+          "en": "It's on the front page of every newspaper.",
+          "note": "Major story."
+        },
+        {
+          "fr": "Les journalistes font un travail difficile.",
+          "en": "Journalists do a tough job.",
+          "note": "Balanced statement."
+        },
+        {
+          "fr": "Il faut prendre l'info avec des pincettes.",
+          "en": "You have to take the news with a grain of salt.",
+          "note": "'Avec des pincettes' = with tweezers (idiom)."
+        },
+        {
+          "fr": "Cette nouvelle me semble douteuse.",
+          "en": "This news seems doubtful to me.",
+          "note": "Critical thinking phrase."
+        },
+        {
+          "fr": "C'est une fake news, j'en suis sûr(e).",
+          "en": "It's fake news, I'm sure.",
+          "note": "Modern judgment."
+        },
+        {
+          "fr": "Tu te tiens au courant de l'actualité ?",
+          "en": "Do you keep up with current events?",
+          "note": "Polite enquiry."
+        },
+        {
+          "fr": "Je préfère lire le journal sur papier.",
+          "en": "I prefer reading newspapers on paper.",
+          "note": "Old-school preference."
+        },
+        {
+          "fr": "Cette chaîne est trop sensationnaliste.",
+          "en": "This channel is too sensationalist.",
+          "note": "Critical assessment."
+        },
+        {
+          "fr": "Je m'abstiens de regarder les infos avant de dormir.",
+          "en": "I avoid watching the news before bed.",
+          "note": "Self-care strategy."
+        }
+      ],
+      "reading": {
+        "title": "Comment je m'informe en 2026",
+        "content_fr": "Il y a dix ans, je m'informais simplement : un journal acheté le matin (Le Monde), le journal télévisé de 20 heures, parfois une heure de radio dans la voiture. Aujourd'hui, c'est devenu beaucoup plus compliqué.\n\nMes journées commencent toujours par un coup d'œil aux notifications de mon téléphone. France Info, Le Monde, BBC News — chaque application m'envoie ses titres. Je lis les premiers paragraphes, mais rarement les articles complets. Trop d'informations, pas assez de temps.\n\nLe soir, j'évite le JT — je le trouve trop anxiogène. À la place, je regarde **Arte** ou je lis un long article de fond sur Mediapart ou The Conversation. Je préfère **comprendre** que m'informer en surface.\n\nLe problème, c'est la **surcharge informationnelle**. Trop de sujets, trop d'opinions, trop d'urgence permanente. Et avec les réseaux sociaux, on est exposé à des **fake news** difficiles à distinguer de l'information vérifiée. J'ai pris l'habitude de toujours vérifier la source d'un article avant de le partager. C'est mon hygiène numérique.\n\nUn autre changement : je m'informe maintenant via des **podcasts**. « Les Pieds sur Terre » sur France Culture, « Affaires sensibles » sur France Inter — j'écoute le matin en allant au travail. C'est plus calme, plus approfondi, sans publicité agressive.\n\nFinalement, mon conseil aux jeunes : choisissez **trois ou quatre sources fiables** et abonnez-vous (oui, payez — la presse de qualité coûte). Et déconnectez-vous de Twitter / X : on n'y trouve plus que de la rage et du sensationnel.\n\nL'information, c'est précieux. Mais comme tout ce qui est précieux, il faut savoir le doser.",
+        "content_en": "Ten years ago, I got my news simply: a newspaper bought in the morning (Le Monde), the 8 PM TV news, sometimes an hour of radio in the car. Today, it's become much more complicated.\n\nMy days always start with a glance at my phone notifications. France Info, Le Monde, BBC News — each app sends me its headlines. I read the first paragraphs, but rarely full articles. Too much information, not enough time.\n\nIn the evening, I avoid the TV news — I find it too anxiety-inducing. Instead, I watch Arte or read a long, in-depth article on Mediapart or The Conversation. I prefer to understand rather than be informed on the surface.\n\nThe problem is information overload. Too many topics, too many opinions, too much constant urgency. And with social media, you're exposed to fake news that's hard to distinguish from verified information. I've gotten into the habit of always checking the source of an article before sharing it. That's my digital hygiene.\n\nAnother change: I now get my news via podcasts. 'Les Pieds sur Terre' on France Culture, 'Affaires sensibles' on France Inter — I listen in the morning on my way to work. It's calmer, more in-depth, without aggressive advertising.\n\nFinally, my advice to young people: choose three or four reliable sources and subscribe (yes, pay — quality press costs). And disconnect from Twitter / X: you only find rage and sensationalism there.\n\nInformation is precious. But like everything precious, you have to know how to ration it.",
+        "comprehension_questions": [
+          {
+            "q": "Pourquoi le narrateur évite-t-il le JT du soir ?",
+            "a": "Il le trouve trop anxiogène."
+          },
+          {
+            "q": "Quel est le problème principal selon lui ?",
+            "a": "La surcharge informationnelle et les fake news."
+          },
+          {
+            "q": "Comment vérifie-t-il les fake news ?",
+            "a": "Il vérifie toujours la source d'un article avant de le partager."
+          },
+          {
+            "q": "Quel est son conseil aux jeunes ?",
+            "a": "Choisir trois ou quatre sources fiables, s'abonner (payer), et se déconnecter de Twitter/X."
+          }
+        ]
+      },
+      "cultural_note": "La **presse française** a une longue tradition. Les **quotidiens** : Le Monde (centre-gauche, référence), Le Figaro (droite), Libération (gauche), L'Équipe (sport), Les Échos (économie). Les **hebdomadaires** : Le Nouvel Obs, L'Express, Le Point, Marianne, Charlie Hebdo (satirique). La **télévision publique** : France 2, France 3, France 5, Arte (franco-allemande, culturelle). La **radio publique** : France Inter (généraliste), France Culture (culture, idées), France Info (info continue). **Mediapart** est un journal d'investigation 100 % en ligne, payant, qui a sorti plusieurs grands scandales. La **fake news** est devenue un sujet politique majeur."
+    },
+    {
+      "name_fr": "Internet et les réseaux sociaux",
+      "name_en": "Internet and social media",
+      "icon": "🌐",
+      "order": 560,
+      "difficulty_level": 3,
+      "description": "Discuter de la vie numérique, des réseaux sociaux et de leurs impacts.",
+      "vocabulary": [
+        {
+          "french": "Internet / le web",
+          "english": "Internet / web",
+          "gender": "m",
+          "part_of_speech": "noun",
+          "example_sentence": "Internet a tout changé en 30 ans."
+        },
+        {
+          "french": "le réseau social / les réseaux sociaux",
+          "english": "social network / social media",
+          "gender": "m",
+          "part_of_speech": "noun",
+          "example_sentence": "Je passe trop de temps sur les réseaux sociaux."
+        },
+        {
+          "french": "le compte / l'utilisateur",
+          "english": "account / user",
+          "gender": "m",
+          "part_of_speech": "noun",
+          "example_sentence": "Crée un compte avec ton mail."
+        },
+        {
+          "french": "le profil / la photo de profil",
+          "english": "profile / profile picture",
+          "gender": "m",
+          "part_of_speech": "noun",
+          "example_sentence": "Sa photo de profil date d'il y a 10 ans !"
+        },
+        {
+          "french": "publier / poster / le post / la publication",
+          "english": "to post / posting",
+          "gender": "a",
+          "part_of_speech": "verb",
+          "example_sentence": "Elle poste tous les jours."
+        },
+        {
+          "french": "partager / le partage",
+          "english": "to share / sharing",
+          "gender": "a",
+          "part_of_speech": "verb",
+          "example_sentence": "J'ai partagé l'article."
+        },
+        {
+          "french": "commenter / le commentaire",
+          "english": "to comment / comment",
+          "gender": "a",
+          "part_of_speech": "verb",
+          "example_sentence": "Les commentaires sont parfois violents."
+        },
+        {
+          "french": "liker / le like / le j'aime",
+          "english": "to like / like (noun)",
+          "gender": "a",
+          "part_of_speech": "verb",
+          "example_sentence": "Sa photo a eu 500 likes."
+        },
+        {
+          "french": "suivre / le suiveur / l'abonné",
+          "english": "to follow / follower / subscriber",
+          "gender": "a",
+          "part_of_speech": "verb",
+          "example_sentence": "Combien d'abonnés as-tu sur Instagram ?"
+        },
+        {
+          "french": "bloquer / signaler / le harcèlement",
+          "english": "to block / report / harassment",
+          "gender": "a",
+          "part_of_speech": "verb",
+          "example_sentence": "J'ai bloqué cette personne, elle me harcelait."
+        },
+        {
+          "french": "le message privé / le DM",
+          "english": "private message / DM",
+          "gender": "m",
+          "part_of_speech": "noun",
+          "example_sentence": "Envoie-moi ça en DM."
+        },
+        {
+          "french": "la story / le reel / la vidéo courte",
+          "english": "story / reel / short video",
+          "gender": "f",
+          "part_of_speech": "noun",
+          "example_sentence": "J'ai vu ta story de ce matin."
+        },
+        {
+          "french": "l'influenceur / l'influenceuse",
+          "english": "influencer",
+          "gender": "a",
+          "part_of_speech": "noun",
+          "example_sentence": "Ce métier d'influenceur me semble bizarre."
+        },
+        {
+          "french": "viral(e) / devenir viral",
+          "english": "viral",
+          "gender": "a",
+          "part_of_speech": "adjective",
+          "example_sentence": "La vidéo est devenue virale en deux heures."
+        },
+        {
+          "french": "l'algorithme / le fil d'actualité",
+          "english": "algorithm / news feed",
+          "gender": "m",
+          "part_of_speech": "noun",
+          "example_sentence": "L'algorithme me montre toujours les mêmes vidéos."
+        },
+        {
+          "french": "la dépendance / l'addiction",
+          "english": "dependence / addiction",
+          "gender": "f",
+          "part_of_speech": "noun",
+          "example_sentence": "Les réseaux créent une vraie addiction."
+        },
+        {
+          "french": "la vie privée / les données personnelles",
+          "english": "privacy / personal data",
+          "gender": "f",
+          "part_of_speech": "noun",
+          "example_sentence": "Ils collectent toutes nos données personnelles."
+        },
+        {
+          "french": "la cybersécurité / le piratage / le hacker",
+          "english": "cybersecurity / hacking / hacker",
+          "gender": "a",
+          "part_of_speech": "noun",
+          "example_sentence": "Ils ont été victimes d'un piratage massif."
+        },
+        {
+          "french": "le mot de passe / s'identifier",
+          "english": "password / to log in",
+          "gender": "m",
+          "part_of_speech": "noun",
+          "example_sentence": "Choisis un mot de passe fort."
+        },
+        {
+          "french": "naviguer / scroller / défiler",
+          "english": "to browse / scroll",
+          "gender": "a",
+          "part_of_speech": "verb",
+          "example_sentence": "Je scrolle souvent sans réfléchir."
+        },
+        {
+          "french": "le contenu / le créateur de contenu",
+          "english": "content / content creator",
+          "gender": "m",
+          "part_of_speech": "noun",
+          "example_sentence": "Elle est créatrice de contenu sur TikTok."
+        },
+        {
+          "french": "le streaming / regarder en direct",
+          "english": "streaming / to watch live",
+          "gender": "m",
+          "part_of_speech": "noun",
+          "example_sentence": "Je regarde Netflix en streaming."
+        },
+        {
+          "french": "le bug / le plantage / la panne",
+          "english": "bug / crash / outage",
+          "gender": "m",
+          "part_of_speech": "noun",
+          "example_sentence": "Twitter a planté ce matin."
+        },
+        {
+          "french": "le débat / la polémique en ligne",
+          "english": "online debate / controversy",
+          "gender": "m",
+          "part_of_speech": "noun",
+          "example_sentence": "Cette polémique a duré trois jours."
+        },
+        {
+          "french": "se déconnecter / la digital detox",
+          "english": "to log off / digital detox",
+          "gender": "a",
+          "part_of_speech": "verb",
+          "example_sentence": "Je fais une digital detox ce week-end."
+        }
+      ],
+      "phrases": [
+        {
+          "fr": "Tu es sur Instagram ?",
+          "en": "Are you on Instagram?",
+          "note": "Standard ice-breaker among younger people."
+        },
+        {
+          "fr": "Je ne suis sur aucun réseau social.",
+          "en": "I'm not on any social network.",
+          "note": "Increasingly common statement."
+        },
+        {
+          "fr": "Tu as vu ce qu'elle a posté ?",
+          "en": "Did you see what she posted?",
+          "note": "Common gossip starter."
+        },
+        {
+          "fr": "Sa story est trop drôle.",
+          "en": "Her story is hilarious.",
+          "note": "Casual praise."
+        },
+        {
+          "fr": "J'en peux plus de ce harcèlement en ligne.",
+          "en": "I can't take this online harassment anymore.",
+          "note": "Strong reaction."
+        },
+        {
+          "fr": "Je me déconnecte le week-end.",
+          "en": "I log off on weekends.",
+          "note": "Healthy habit."
+        },
+        {
+          "fr": "L'algorithme me suggère toujours les mêmes choses.",
+          "en": "The algorithm always suggests the same things.",
+          "note": "Common complaint."
+        },
+        {
+          "fr": "Mon ado est accro à TikTok.",
+          "en": "My teen is addicted to TikTok.",
+          "note": "Parental concern."
+        },
+        {
+          "fr": "Je vérifie mes notifications 100 fois par jour.",
+          "en": "I check my notifications 100 times a day.",
+          "note": "Modern affliction."
+        },
+        {
+          "fr": "Ils ont fui Twitter pour Mastodon.",
+          "en": "They left Twitter for Mastodon.",
+          "note": "Recent migration trend."
+        },
+        {
+          "fr": "Cette vidéo a fait 10 millions de vues.",
+          "en": "This video got 10 million views.",
+          "note": "Reporting virality."
+        },
+        {
+          "fr": "C'est devenu un meme.",
+          "en": "It's become a meme.",
+          "note": "Internet culture phrase."
+        }
+      ],
+      "reading": {
+        "title": "Faut-il quitter les réseaux sociaux ?",
+        "content_fr": "Le mois dernier, j'ai pris une grande décision : j'ai supprimé Instagram, Twitter (ou X, comme on doit dire maintenant) et TikTok de mon téléphone. Seul Facebook est resté, mais juste pour les événements familiaux. Voici ce que j'ai appris en un mois sans réseaux sociaux.\n\nLes **premiers jours** ont été difficiles. Mon doigt cherchait automatiquement les applications. Je ne savais pas quoi faire dans le métro, dans la file d'attente, aux toilettes. Le silence intérieur me dérangeait. J'avais l'impression de **manquer quelque chose d'important**.\n\nPuis, vers le **septième jour**, une chose étrange : je me suis senti(e) plus calme. Mon humeur du matin était meilleure. J'ai recommencé à lire de vrais livres, le soir. J'ai téléphoné à des amis (vraiment téléphoné, pas envoyé des messages). J'ai même commencé un cours d'aquarelle.\n\nLes **avantages** que j'ai constatés :\n\n- Plus de **concentration** au travail. Mon attention est passée de 3 minutes à 20 minutes en moyenne.\n- Moins de **comparaisons** toxiques. Je ne voyais plus les vacances parfaites des autres, et donc je n'étais plus jaloux.\n- **Meilleur sommeil**. Sans scroll avant de dormir, je m'endors en 10 minutes au lieu d'une heure.\n- Plus de **présence**. Je remarque les gens autour de moi, les nuages dans le ciel, le goût du café.\n\nLes **inconvénients** :\n\n- J'ai raté quelques informations rapides (un événement local, une grève surprise).\n- Mes amis influenceurs me trouvent étrange.\n- Je me sens parfois un peu hors du temps.\n\nMa conclusion ? **Les réseaux sociaux ne sont pas un mal absolu, mais une drogue subtile.** Je vais peut-être réinstaller Instagram en limitant à 15 minutes par jour. Mais Twitter, jamais.\n\nÀ chacun de trouver son équilibre. Mais essayez, ne serait-ce qu'une semaine. Vous pourriez être surpris.",
+        "content_en": "Last month, I made a big decision: I deleted Instagram, Twitter (or X, as we have to say now) and TikTok from my phone. Only Facebook remained, but just for family events. Here's what I learned in a month without social media.\n\nThe first days were hard. My finger automatically searched for the apps. I didn't know what to do on the subway, in line, in the bathroom. The inner silence bothered me. I felt I was missing something important.\n\nThen, around the seventh day, a strange thing: I felt calmer. My morning mood was better. I started reading real books again, at night. I called friends (really called, not messaged). I even started a watercolor class.\n\nThe benefits I noticed:\n\n- More concentration at work. My attention went from 3 minutes to 20 minutes on average.\n- Fewer toxic comparisons. I no longer saw others' perfect vacations, so I wasn't jealous.\n- Better sleep. Without scrolling before bed, I fall asleep in 10 minutes instead of an hour.\n- More presence. I notice the people around me, the clouds in the sky, the taste of coffee.\n\nThe drawbacks:\n\n- I missed some quick info (a local event, a surprise strike).\n- My influencer friends find me strange.\n- I sometimes feel a bit out of time.\n\nMy conclusion? Social media isn't an absolute evil, but a subtle drug. Maybe I'll reinstall Instagram limited to 15 minutes a day. But Twitter, never.\n\nEveryone has to find their balance. But try it, even for a week. You might be surprised.",
+        "comprehension_questions": [
+          {
+            "q": "Quelles applications a-t-il supprimées ?",
+            "a": "Instagram, Twitter (X) et TikTok."
+          },
+          {
+            "q": "Quel changement remarquable au bout d'une semaine ?",
+            "a": "Il s'est senti plus calme, avec une meilleure humeur le matin."
+          },
+          {
+            "q": "Cite trois avantages mentionnés.",
+            "a": "Plus de concentration, moins de comparaisons toxiques, meilleur sommeil, plus de présence."
+          },
+          {
+            "q": "Quelle est sa conclusion ?",
+            "a": "Les réseaux sociaux ne sont pas un mal absolu, mais une drogue subtile. Il faut trouver son équilibre."
+          }
+        ]
+      },
+      "cultural_note": "Les Français utilisent **massivement les réseaux sociaux** : 50 millions d'utilisateurs sur Facebook (plus pour les 40+), 20 millions sur Instagram, 15 millions sur TikTok (surtout les jeunes), 10 millions sur Twitter/X (plus politique et journalistique). Une tendance forte : **la défiance grandit** envers les algorithmes et la surveillance des données. Le **RGPD** (Règlement général sur la protection des données, 2018) est la loi européenne pionnière qui oblige les plateformes à demander le consentement et permet aux utilisateurs de récupérer leurs données. La France a aussi voté en 2024 une loi pour **interdire les téléphones aux collégiens** pendant les cours."
+    },
+    {
+      "name_fr": "La nature et l'environnement",
+      "name_en": "Nature and the environment",
+      "icon": "🌳",
+      "order": 570,
+      "difficulty_level": 3,
+      "description": "Parler de la nature, des animaux, du changement climatique, de l'écologie.",
+      "vocabulary": [
+        {
+          "french": "la nature / l'environnement",
+          "english": "nature / environment",
+          "gender": "a",
+          "part_of_speech": "noun",
+          "example_sentence": "Protégeons notre environnement."
+        },
+        {
+          "french": "la planète / la Terre",
+          "english": "planet / Earth",
+          "gender": "f",
+          "part_of_speech": "noun",
+          "example_sentence": "La planète se réchauffe."
+        },
+        {
+          "french": "le climat / le changement climatique",
+          "english": "climate / climate change",
+          "gender": "m",
+          "part_of_speech": "noun",
+          "example_sentence": "Le changement climatique est une réalité."
+        },
+        {
+          "french": "le réchauffement climatique",
+          "english": "global warming",
+          "gender": "m",
+          "part_of_speech": "noun",
+          "example_sentence": "Le réchauffement climatique accélère."
+        },
+        {
+          "french": "la pollution / polluer / polluant(e)",
+          "english": "pollution / to pollute",
+          "gender": "f",
+          "part_of_speech": "noun",
+          "example_sentence": "La pollution de l'air est un problème majeur."
+        },
+        {
+          "french": "les déchets / le recyclage / recycler",
+          "english": "waste / recycling",
+          "gender": "m",
+          "part_of_speech": "noun",
+          "example_sentence": "Triez vos déchets pour le recyclage."
+        },
+        {
+          "french": "le plastique / l'emballage",
+          "english": "plastic / packaging",
+          "gender": "m",
+          "part_of_speech": "noun",
+          "example_sentence": "Trop de plastique dans les océans."
+        },
+        {
+          "french": "l'énergie / renouvelable / fossile",
+          "english": "energy / renewable / fossil",
+          "gender": "f",
+          "part_of_speech": "noun",
+          "example_sentence": "Les énergies renouvelables se développent."
+        },
+        {
+          "french": "le solaire / l'éolien / le nucléaire",
+          "english": "solar / wind / nuclear",
+          "gender": "a",
+          "part_of_speech": "noun",
+          "example_sentence": "L'éolien représente 8 % de l'électricité française."
+        },
+        {
+          "french": "le pétrole / le gaz / le charbon",
+          "english": "oil / gas / coal",
+          "gender": "m",
+          "part_of_speech": "noun",
+          "example_sentence": "Le pétrole reste dominant mais en baisse."
+        },
+        {
+          "french": "la forêt / l'arbre / le bois",
+          "english": "forest / tree / wood",
+          "gender": "f",
+          "part_of_speech": "noun",
+          "example_sentence": "La forêt amazonienne est en danger."
+        },
+        {
+          "french": "la mer / l'océan / la rivière / le fleuve",
+          "english": "sea / ocean / river",
+          "gender": "a",
+          "part_of_speech": "noun",
+          "example_sentence": "Le fleuve traverse la ville."
+        },
+        {
+          "french": "la montagne / la vallée / le désert",
+          "english": "mountain / valley / desert",
+          "gender": "a",
+          "part_of_speech": "noun",
+          "example_sentence": "Nous avons grimpé la montagne."
+        },
+        {
+          "french": "l'animal / la faune / la flore",
+          "english": "animal / fauna / flora",
+          "gender": "a",
+          "part_of_speech": "noun",
+          "example_sentence": "La biodiversité est menacée."
+        },
+        {
+          "french": "l'espèce (en voie d'extinction)",
+          "english": "(endangered) species",
+          "gender": "f",
+          "part_of_speech": "noun",
+          "example_sentence": "Cette espèce est en voie d'extinction."
+        },
+        {
+          "french": "la biodiversité / l'écosystème",
+          "english": "biodiversity / ecosystem",
+          "gender": "f",
+          "part_of_speech": "noun",
+          "example_sentence": "Chaque écosystème est unique."
+        },
+        {
+          "french": "la déforestation / la désertification",
+          "english": "deforestation / desertification",
+          "gender": "f",
+          "part_of_speech": "noun",
+          "example_sentence": "La déforestation accélère le changement climatique."
+        },
+        {
+          "french": "la sécheresse / l'inondation / la tempête / l'ouragan",
+          "english": "drought / flood / storm / hurricane",
+          "gender": "a",
+          "part_of_speech": "noun",
+          "example_sentence": "Les sécheresses sont plus fréquentes."
+        },
+        {
+          "french": "écologique / bio / vert(e)",
+          "english": "ecological / organic / green",
+          "gender": "a",
+          "part_of_speech": "adjective",
+          "example_sentence": "J'achète des produits bio."
+        },
+        {
+          "french": "économiser / gaspiller",
+          "english": "to save / to waste",
+          "gender": "a",
+          "part_of_speech": "verb",
+          "example_sentence": "Économisons l'eau et l'énergie."
+        },
+        {
+          "french": "le développement durable",
+          "english": "sustainable development",
+          "gender": "m",
+          "part_of_speech": "noun",
+          "example_sentence": "Le développement durable doit être notre priorité."
+        },
+        {
+          "french": "l'empreinte carbone / les émissions",
+          "english": "carbon footprint / emissions",
+          "gender": "f",
+          "part_of_speech": "noun",
+          "example_sentence": "Réduisons notre empreinte carbone."
+        },
+        {
+          "french": "l'écologiste / le militant / la militante",
+          "english": "environmentalist / activist",
+          "gender": "a",
+          "part_of_speech": "noun",
+          "example_sentence": "Les militants écologistes manifestent."
+        },
+        {
+          "french": "agir / la prise de conscience",
+          "english": "to act / awareness",
+          "gender": "a",
+          "part_of_speech": "verb",
+          "example_sentence": "Il faut agir maintenant."
+        },
+        {
+          "french": "le tri sélectif / la poubelle jaune",
+          "english": "selective sorting / yellow bin",
+          "gender": "m",
+          "part_of_speech": "noun",
+          "example_sentence": "Le carton va dans la poubelle jaune."
+        }
+      ],
+      "phrases": [
+        {
+          "fr": "Je trie mes déchets.",
+          "en": "I sort my trash.",
+          "note": "Common ecological habit."
+        },
+        {
+          "fr": "Je fais attention à ma consommation d'énergie.",
+          "en": "I watch my energy use.",
+          "note": "Practical ecology."
+        },
+        {
+          "fr": "Il faut sauver la planète.",
+          "en": "We must save the planet.",
+          "note": "Common rallying cry."
+        },
+        {
+          "fr": "Le changement climatique m'inquiète.",
+          "en": "Climate change worries me.",
+          "note": "Honest concern."
+        },
+        {
+          "fr": "Je préfère le vélo à la voiture.",
+          "en": "I prefer the bike to the car.",
+          "note": "Lifestyle choice."
+        },
+        {
+          "fr": "On consomme trop, on produit trop de déchets.",
+          "en": "We consume too much, produce too much waste.",
+          "note": "Critical observation."
+        },
+        {
+          "fr": "L'écologie, ce n'est pas une mode.",
+          "en": "Ecology isn't a fad.",
+          "note": "Strong opinion."
+        },
+        {
+          "fr": "Mon empreinte carbone est encore trop grande.",
+          "en": "My carbon footprint is still too big.",
+          "note": "Honest admission."
+        },
+        {
+          "fr": "Les enfants seront fiers ou en colère.",
+          "en": "Children will be proud or angry.",
+          "note": "Generational reflection."
+        },
+        {
+          "fr": "Il faut consommer moins et mieux.",
+          "en": "We must consume less and better.",
+          "note": "Common slogan."
+        },
+        {
+          "fr": "La nature reprend ses droits.",
+          "en": "Nature is reclaiming its rights.",
+          "note": "Often said after rewilding stories."
+        },
+        {
+          "fr": "Chaque petit geste compte.",
+          "en": "Every small action counts.",
+          "note": "Encouraging phrase."
+        }
+      ],
+      "reading": {
+        "title": "Une famille engagée pour la planète",
+        "content_fr": "Quand mes parents ont décidé, il y a cinq ans, de changer radicalement leur mode de vie pour l'environnement, ma sœur et moi avons levé les yeux au ciel. « Encore une lubie de papa », pensions-nous. Aujourd'hui, je dois reconnaître qu'ils avaient raison.\n\nLes changements ont été nombreux. **Plus de voiture** : ils ont vendu la berline familiale et acheté deux vélos électriques et un abonnement aux trains régionaux. Pour les longs trajets, ils louent une voiture trois ou quatre fois par an.\n\n**Plus de viande** ou presque : ma mère a appris à cuisiner végétarien, et la maison ne mange de la viande que le dimanche, et encore, du poulet local en petite quantité. Au début, j'ai trouvé ça frustrant. Aujourd'hui, je préfère ce mode d'alimentation.\n\n**Plus de fast-fashion** : ils n'achètent que du vintage ou de la seconde main, en magasin Emmaüs ou sur Vinted. Mon père porte les vêtements qu'il avait à 25 ans — heureusement, il n'a presque pas grossi.\n\n**Un jardin potager** : ils ont transformé leur petit jardin en potager. En été, ils mangent presque exclusivement leurs tomates, leurs courgettes, leurs herbes. Le surplus va aux voisins, dans le cadre d'un réseau d'échange du quartier.\n\nEt les **résultats** ? Ils ont calculé leur empreinte carbone : elle a diminué de 65 %. Leur consommation d'eau et d'électricité a baissé de moitié. Ils dépensent aussi moins d'argent, paradoxalement.\n\nSurtout, je vois qu'ils sont **plus heureux**. Ils ont du temps pour leurs amis, pour la nature, pour leurs petites passions. Moins de stress, moins de courses, moins d'écrans.\n\nÀ 28 ans, je n'arrive pas encore à vivre comme eux. Mais leur exemple me trotte dans la tête. La transition écologique, c'est aussi une transition vers une vie plus simple — et peut-être plus juste.",
+        "content_en": "When my parents decided, five years ago, to radically change their lifestyle for the environment, my sister and I rolled our eyes. 'Another of Dad's whims,' we thought. Today, I have to admit they were right.\n\nThe changes were numerous. No more car: they sold the family sedan and bought two electric bikes and a regional train subscription. For long trips, they rent a car three or four times a year.\n\nLess meat, or almost none: my mother learned to cook vegetarian, and the house only eats meat on Sundays, and even then, local chicken in small quantities. At first, I found it frustrating. Today, I prefer this diet.\n\nNo more fast fashion: they only buy vintage or second-hand, at Emmaüs stores or on Vinted. My father wears the clothes he had at 25 — luckily, he barely gained weight.\n\nA vegetable garden: they transformed their small garden into a vegetable patch. In summer, they eat almost exclusively their tomatoes, zucchini, herbs. The surplus goes to neighbors, through a neighborhood exchange network.\n\nAnd the results? They calculated their carbon footprint: it's down 65%. Their water and electricity consumption is cut in half. They also spend less money, paradoxically.\n\nMost importantly, I see they're happier. They have time for friends, for nature, for their little passions. Less stress, fewer errands, fewer screens.\n\nAt 28, I can't yet live like them. But their example stays in my head. The ecological transition is also a transition to a simpler — and perhaps fairer — life.",
+        "comprehension_questions": [
+          {
+            "q": "Comment se déplacent les parents pour les petits trajets ?",
+            "a": "À vélo électrique et en train régional."
+          },
+          {
+            "q": "À quelle fréquence mangent-ils de la viande ?",
+            "a": "Seulement le dimanche, et en petite quantité."
+          },
+          {
+            "q": "Où achètent-ils leurs vêtements ?",
+            "a": "Chez Emmaüs ou sur Vinted, en vintage ou seconde main."
+          },
+          {
+            "q": "De combien a diminué leur empreinte carbone ?",
+            "a": "De 65 %."
+          }
+        ]
+      },
+      "cultural_note": "La France est officiellement engagée dans la **transition écologique** : sortie du charbon en 2027, fermeture progressive des centrales nucléaires (mais avec un débat majeur), objectif de **neutralité carbone en 2050**. Pratiques courantes : **le tri sélectif** (poubelles vertes, jaunes, marrons), **les marchés de producteurs locaux**, **les AMAP** (Associations pour le Maintien d'une Agriculture Paysanne — paniers de légumes bio chaque semaine). Les **mouvements écologistes** sont nombreux : Greenpeace, WWF France, Alternatiba. Les jeunes sont massivement préoccupés : 80 % des 18-25 ans déclarent l'écologie comme priorité politique."
+    },
+    {
+      "name_fr": "Les voyages et le tourisme",
+      "name_en": "Travel and tourism",
+      "icon": "✈️",
+      "order": 580,
+      "difficulty_level": 3,
+      "description": "Préparer un voyage, raconter ses voyages, parler de ses destinations.",
+      "vocabulary": [
+        {
+          "french": "le voyage / voyager",
+          "english": "trip / to travel",
+          "gender": "m",
+          "part_of_speech": "noun",
+          "example_sentence": "Mon prochain voyage sera au Japon."
+        },
+        {
+          "french": "le tourisme / le touriste",
+          "english": "tourism / tourist",
+          "gender": "m",
+          "part_of_speech": "noun",
+          "example_sentence": "Le tourisme est important pour l'économie."
+        },
+        {
+          "french": "les vacances / partir en vacances",
+          "english": "vacation / to go on vacation",
+          "gender": "f",
+          "part_of_speech": "noun",
+          "example_sentence": "Je pars en vacances la semaine prochaine."
+        },
+        {
+          "french": "le séjour / la durée",
+          "english": "stay / duration",
+          "gender": "m",
+          "part_of_speech": "noun",
+          "example_sentence": "Un séjour d'une semaine à Rome."
+        },
+        {
+          "french": "la destination / le pays",
+          "english": "destination / country",
+          "gender": "f",
+          "part_of_speech": "noun",
+          "example_sentence": "Quelle est ta destination de rêve ?"
+        },
+        {
+          "french": "réserver / la réservation",
+          "english": "to book / reservation",
+          "gender": "a",
+          "part_of_speech": "verb",
+          "example_sentence": "J'ai réservé l'hôtel en ligne."
+        },
+        {
+          "french": "l'hôtel / l'auberge de jeunesse / la chambre d'hôte / l'Airbnb",
+          "english": "hotel / hostel / B&B",
+          "gender": "a",
+          "part_of_speech": "noun",
+          "example_sentence": "On dort dans une auberge de jeunesse."
+        },
+        {
+          "french": "le vol / le billet d'avion",
+          "english": "flight / plane ticket",
+          "gender": "m",
+          "part_of_speech": "noun",
+          "example_sentence": "Mon vol décolle à 7 h."
+        },
+        {
+          "french": "l'aéroport / la valise / le bagage",
+          "english": "airport / suitcase / luggage",
+          "gender": "m",
+          "part_of_speech": "noun",
+          "example_sentence": "Mon bagage est perdu !"
+        },
+        {
+          "french": "le passeport / le visa",
+          "english": "passport / visa",
+          "gender": "m",
+          "part_of_speech": "noun",
+          "example_sentence": "Vérifiez la validité de votre passeport."
+        },
+        {
+          "french": "la frontière / la douane",
+          "english": "border / customs",
+          "gender": "f",
+          "part_of_speech": "noun",
+          "example_sentence": "Le contrôle à la douane était rapide."
+        },
+        {
+          "french": "le guide / le plan / la carte",
+          "english": "guidebook / map",
+          "gender": "a",
+          "part_of_speech": "noun",
+          "example_sentence": "J'ai acheté un guide du Lonely Planet."
+        },
+        {
+          "french": "la visite guidée / l'excursion",
+          "english": "guided tour / excursion",
+          "gender": "f",
+          "part_of_speech": "noun",
+          "example_sentence": "Une visite guidée du Louvre dure deux heures."
+        },
+        {
+          "french": "le monument / le site touristique",
+          "english": "monument / tourist site",
+          "gender": "m",
+          "part_of_speech": "noun",
+          "example_sentence": "Notre-Dame est un monument magnifique."
+        },
+        {
+          "french": "la plage / la mer / la montagne / la campagne",
+          "english": "beach / sea / mountain / countryside",
+          "gender": "a",
+          "part_of_speech": "noun",
+          "example_sentence": "Je préfère la mer à la montagne."
+        },
+        {
+          "french": "l'aventure / le voyage organisé / le voyage en solo",
+          "english": "adventure / package tour / solo trip",
+          "gender": "a",
+          "part_of_speech": "noun",
+          "example_sentence": "Mon premier voyage en solo m'a transformé(e)."
+        },
+        {
+          "french": "le dépaysement / l'expérience",
+          "english": "change of scenery / experience",
+          "gender": "m",
+          "part_of_speech": "noun",
+          "example_sentence": "J'ai besoin de dépaysement."
+        },
+        {
+          "french": "découvrir / explorer / visiter",
+          "english": "to discover / explore / visit",
+          "gender": "a",
+          "part_of_speech": "verb",
+          "example_sentence": "Nous explorons la ville à pied."
+        },
+        {
+          "french": "le sac à dos / le routard",
+          "english": "backpack / backpacker",
+          "gender": "m",
+          "part_of_speech": "noun",
+          "example_sentence": "Un voyage en sac à dos en Asie du Sud-Est."
+        },
+        {
+          "french": "le décalage horaire",
+          "english": "jet lag",
+          "gender": "m",
+          "part_of_speech": "noun",
+          "example_sentence": "Je souffre encore du décalage horaire."
+        },
+        {
+          "french": "la culture / les coutumes / la cuisine locale",
+          "english": "culture / customs / local cuisine",
+          "gender": "a",
+          "part_of_speech": "noun",
+          "example_sentence": "Goûte la cuisine locale, c'est essentiel !"
+        },
+        {
+          "french": "le souvenir / la carte postale",
+          "english": "souvenir / postcard",
+          "gender": "m",
+          "part_of_speech": "noun",
+          "example_sentence": "Je collectionne les cartes postales."
+        },
+        {
+          "french": "le passionné de voyage / le grand voyageur",
+          "english": "travel enthusiast",
+          "gender": "m",
+          "part_of_speech": "noun",
+          "example_sentence": "Ma grand-mère était une grande voyageuse."
+        },
+        {
+          "french": "la basse saison / la haute saison",
+          "english": "off-season / high season",
+          "gender": "f",
+          "part_of_speech": "noun",
+          "example_sentence": "Voyager en basse saison coûte moins cher."
+        },
+        {
+          "french": "le pourboire / la monnaie locale",
+          "english": "tip / local currency",
+          "gender": "m",
+          "part_of_speech": "noun",
+          "example_sentence": "Le pourboire est obligatoire aux États-Unis."
+        }
+      ],
+      "phrases": [
+        {
+          "fr": "Tu pars où en vacances ?",
+          "en": "Where are you going on vacation?",
+          "note": "Classic summer question in France."
+        },
+        {
+          "fr": "J'ai réservé un Airbnb à Lisbonne.",
+          "en": "I booked an Airbnb in Lisbon.",
+          "note": "Modern travel habit."
+        },
+        {
+          "fr": "Je voyage léger.",
+          "en": "I travel light.",
+          "note": "Statement of style."
+        },
+        {
+          "fr": "Mon vol a été annulé.",
+          "en": "My flight was cancelled.",
+          "note": "Common annoyance."
+        },
+        {
+          "fr": "Tu as fait bonne route ?",
+          "en": "Did you have a good trip?",
+          "note": "Standard arrival question."
+        },
+        {
+          "fr": "C'était le voyage de ma vie.",
+          "en": "It was the trip of my life.",
+          "note": "Strong praise."
+        },
+        {
+          "fr": "Je rêve d'aller en Patagonie.",
+          "en": "I dream of going to Patagonia.",
+          "note": "Aspirational statement."
+        },
+        {
+          "fr": "Tu connais un bon plan ?",
+          "en": "Do you have a good tip?",
+          "note": "Asking for travel recommendation."
+        },
+        {
+          "fr": "Je prends quelques jours pour me reposer.",
+          "en": "I'm taking a few days to rest.",
+          "note": "Short break."
+        },
+        {
+          "fr": "On profite vraiment de notre séjour.",
+          "en": "We're really enjoying our stay.",
+          "note": "Positive vacation report."
+        },
+        {
+          "fr": "J'ai eu un coup de cœur pour cette ville.",
+          "en": "I fell in love with this city.",
+          "note": "Strong positive impression."
+        },
+        {
+          "fr": "Je préfère voyager hors saison.",
+          "en": "I prefer traveling off-season.",
+          "note": "Travel philosophy."
+        }
+      ],
+      "reading": {
+        "title": "Un voyage en sac à dos en Asie",
+        "content_fr": "Il y a six mois, j'ai pris la décision de ma vie : quitter mon emploi de cinq ans pour partir en Asie du Sud-Est avec un sac à dos. Trois mois, six pays, un budget serré. C'est ainsi que je suis devenu(e), à 30 ans, ce qu'on appelle un(e) **routard(e)**.\n\nLa première étape : la **Thaïlande**. J'ai atterri à Bangkok un dimanche soir, en pleine chaleur tropicale. L'auberge de jeunesse où j'avais réservé était un dortoir de 12 lits — mon premier dortoir depuis l'université. Le lendemain, j'ai pris le train de nuit pour Chiang Mai, dans le nord. Trains de nuit en Asie : une expérience unique. On dort dans une cabine étroite, le train tangue, on entend les vendeurs ambulants à chaque gare.\n\nEn Thaïlande, j'ai appris à voyager **lentement**. Une semaine dans chaque ville, pas une nuit. Le matin, je faisais du yoga sur le toit de l'auberge. Le midi, je mangeais à la rue (3 € le repas, délicieux). L'après-midi, je visitais les temples ou je nageais. Le soir, je discutais avec d'autres voyageurs autour d'une bière. **Pas de planning rigide**, juste de la disponibilité.\n\nPuis **le Vietnam** : 1 700 km du nord au sud, en train, en bus et en moto. J'ai passé trois jours dans la baie d'Halong, sur un petit bateau. La beauté m'a coupé le souffle. **Le Laos** : la lenteur absolue. Les habitants sont d'une douceur inouïe. **Le Cambodge** : Angkor au lever du soleil, un moment dont je me souviendrai toujours.\n\nDeux mois en Asie m'ont enseigné des choses que dix ans de vie de bureau ne m'avaient pas apprises : qu'on a besoin de beaucoup moins de choses qu'on ne le croit ; que les rencontres comptent plus que les monuments ; que ralentir, c'est aussi exister.\n\nDe retour à Paris en septembre, j'ai pris un nouveau travail — mais avec une condition : un mois de vacances par an, pour repartir. Ce voyage a réorganisé ma vie autour de ce qui compte vraiment.",
+        "content_en": "Six months ago, I made the decision of my life: quit my five-year job to backpack through Southeast Asia. Three months, six countries, a tight budget. That's how I became, at 30, what they call a backpacker.\n\nThe first stop: Thailand. I landed in Bangkok on a Sunday evening, in tropical heat. The hostel I'd booked was a 12-bed dorm — my first dorm since university. The next day, I took the night train to Chiang Mai, in the north. Night trains in Asia: a unique experience. You sleep in a narrow cabin, the train sways, you hear street vendors at every station.\n\nIn Thailand, I learned to travel slowly. A week in each city, not one night. In the morning, I did yoga on the hostel roof. At noon, I ate street food (3 € a meal, delicious). In the afternoon, I visited temples or swam. In the evening, I chatted with other travelers over a beer. No rigid planning, just availability.\n\nThen Vietnam: 1,700 km from north to south, by train, bus and motorcycle. I spent three days in Ha Long Bay, on a small boat. The beauty took my breath away. Laos: absolute slowness. The locals are incredibly gentle. Cambodia: Angkor at sunrise, a moment I'll always remember.\n\nTwo months in Asia taught me things that ten years of office life hadn't: that you need far fewer things than you think; that encounters matter more than monuments; that slowing down is also existing.\n\nBack in Paris in September, I took a new job — but with one condition: a month of vacation per year, to leave again. This trip reorganized my life around what truly matters.",
+        "comprehension_questions": [
+          {
+            "q": "Combien de temps a duré son voyage ?",
+            "a": "Trois mois (puis deux mois en Asie spécifiquement)."
+          },
+          {
+            "q": "Quels pays a-t-il visités ?",
+            "a": "Thaïlande, Vietnam, Laos, Cambodge (et d'autres en Asie du Sud-Est)."
+          },
+          {
+            "q": "Que coûte un repas dans la rue en Thaïlande ?",
+            "a": "Environ 3 euros."
+          },
+          {
+            "q": "Quelle leçon a-t-il retenue ?",
+            "a": "On a besoin de moins de choses qu'on ne le croit ; les rencontres comptent plus que les monuments ; ralentir, c'est aussi exister."
+          }
+        ]
+      },
+      "cultural_note": "Les **vacances** sont une institution en France : tout le monde a droit à 5 semaines minimum par an. Les périodes phares : **juillet-août** (les fameux 'juilletistes' et 'aoûtiens'), **Noël** (10-15 jours), **février** (ski). Le pays se vide partiellement en août — beaucoup d'entreprises et commerces ferment. **Destinations préférées** : la France elle-même (60 % des séjours), l'Espagne, l'Italie, le Portugal, et l'Asie du Sud-Est pour les grands voyages. Le **'pont'** est un jour de congé entre un férié et un week-end, permettant des escapades fréquentes. Les **passeports français** donnent accès sans visa à 188 pays (3e meilleur passeport au monde)."
+    },
+    {
+      "name_fr": "La cuisine française et la gastronomie",
+      "name_en": "French cuisine and gastronomy",
+      "icon": "🥐",
+      "order": 590,
+      "difficulty_level": 3,
+      "description": "Parler de la gastronomie française, des spécialités régionales, du repas à la française.",
+      "vocabulary": [
+        {
+          "french": "la gastronomie / la cuisine",
+          "english": "gastronomy / cuisine",
+          "gender": "f",
+          "part_of_speech": "noun",
+          "example_sentence": "La gastronomie française est mondialement reconnue."
+        },
+        {
+          "french": "le chef / la cheffe",
+          "english": "chef",
+          "gender": "a",
+          "part_of_speech": "noun",
+          "example_sentence": "Cette cheffe a deux étoiles Michelin."
+        },
+        {
+          "french": "le restaurant gastronomique / le bistrot / la brasserie",
+          "english": "fine restaurant / bistro / brasserie",
+          "gender": "m",
+          "part_of_speech": "noun",
+          "example_sentence": "Ce bistrot est typique."
+        },
+        {
+          "french": "l'étoile Michelin / le guide Michelin",
+          "english": "Michelin star / Michelin guide",
+          "gender": "f",
+          "part_of_speech": "noun",
+          "example_sentence": "Trois étoiles Michelin, c'est l'excellence."
+        },
+        {
+          "french": "la spécialité (régionale)",
+          "english": "regional specialty",
+          "gender": "f",
+          "part_of_speech": "noun",
+          "example_sentence": "Chaque région a ses spécialités."
+        },
+        {
+          "french": "l'entrée / le plat / le dessert / le fromage",
+          "english": "starter / main / dessert / cheese",
+          "gender": "a",
+          "part_of_speech": "noun",
+          "example_sentence": "Le fromage avant le dessert, c'est la tradition."
+        },
+        {
+          "french": "le menu / la carte / le menu dégustation",
+          "english": "menu / à la carte / tasting menu",
+          "gender": "m",
+          "part_of_speech": "noun",
+          "example_sentence": "Le menu dégustation a sept plats."
+        },
+        {
+          "french": "le pain / la baguette / le croissant",
+          "english": "bread / baguette / croissant",
+          "gender": "m",
+          "part_of_speech": "noun",
+          "example_sentence": "La baguette traditionnelle est protégée."
+        },
+        {
+          "french": "le fromage / la fondue / le camembert / le roquefort",
+          "english": "cheese / fondue / camembert / roquefort",
+          "gender": "m",
+          "part_of_speech": "noun",
+          "example_sentence": "La France a plus de 400 fromages."
+        },
+        {
+          "french": "le vin (rouge / blanc / rosé) / le champagne",
+          "english": "wine (red / white / rosé) / champagne",
+          "gender": "m",
+          "part_of_speech": "noun",
+          "example_sentence": "Un verre de vin rouge, s'il vous plaît."
+        },
+        {
+          "french": "le terroir / le millésime / le cépage",
+          "english": "terroir / vintage / grape variety",
+          "gender": "m",
+          "part_of_speech": "noun",
+          "example_sentence": "Ce vin a un terroir exceptionnel."
+        },
+        {
+          "french": "le foie gras / les escargots / les huîtres",
+          "english": "foie gras / snails / oysters",
+          "gender": "a",
+          "part_of_speech": "noun",
+          "example_sentence": "Le foie gras est servi à Noël."
+        },
+        {
+          "french": "la viande / le poisson / les fruits de mer",
+          "english": "meat / fish / seafood",
+          "gender": "a",
+          "part_of_speech": "noun",
+          "example_sentence": "Les fruits de mer sont meilleurs en mer."
+        },
+        {
+          "french": "la sauce / la béchamel / la vinaigrette",
+          "english": "sauce / béchamel / vinaigrette",
+          "gender": "f",
+          "part_of_speech": "noun",
+          "example_sentence": "La sauce fait toute la différence."
+        },
+        {
+          "french": "rôti / grillé / mijoté / poêlé",
+          "english": "roasted / grilled / simmered / pan-fried",
+          "gender": "a",
+          "part_of_speech": "adjective",
+          "example_sentence": "Un boeuf bourguignon mijoté pendant 4 heures."
+        },
+        {
+          "french": "la pâtisserie / le pâtissier",
+          "english": "pastry / pastry chef",
+          "gender": "f",
+          "part_of_speech": "noun",
+          "example_sentence": "La pâtisserie française est célèbre."
+        },
+        {
+          "french": "l'éclair / la tarte / le macaron / l'opéra",
+          "english": "éclair / tart / macaron / opéra cake",
+          "gender": "a",
+          "part_of_speech": "noun",
+          "example_sentence": "Les macarons de Ladurée sont divins."
+        },
+        {
+          "french": "savoureux / délicieux / fade",
+          "english": "tasty / delicious / bland",
+          "gender": "a",
+          "part_of_speech": "adjective",
+          "example_sentence": "Ce plat est savoureux mais un peu fade."
+        },
+        {
+          "french": "épicé / salé / sucré / aigre",
+          "english": "spicy / salty / sweet / sour",
+          "gender": "a",
+          "part_of_speech": "adjective",
+          "example_sentence": "Trop épicé pour moi."
+        },
+        {
+          "french": "le terroir / le marché / le producteur",
+          "english": "local origin / market / producer",
+          "gender": "m",
+          "part_of_speech": "noun",
+          "example_sentence": "J'achète directement chez le producteur."
+        },
+        {
+          "french": "l'AOC / l'AOP (appellation d'origine)",
+          "english": "controlled designation of origin",
+          "gender": "f",
+          "part_of_speech": "noun",
+          "example_sentence": "Le Roquefort AOC est protégé depuis 1925."
+        },
+        {
+          "french": "la boulangerie / la pâtisserie / la fromagerie",
+          "english": "bakery / pastry shop / cheese shop",
+          "gender": "f",
+          "part_of_speech": "noun",
+          "example_sentence": "La boulangerie ouvre à 7 h."
+        },
+        {
+          "french": "le repas / le déjeuner / le dîner",
+          "english": "meal / lunch / dinner",
+          "gender": "m",
+          "part_of_speech": "noun",
+          "example_sentence": "Le repas dominical est sacré."
+        },
+        {
+          "french": "l'apéritif / le digestif",
+          "english": "aperitif / digestif",
+          "gender": "m",
+          "part_of_speech": "noun",
+          "example_sentence": "Un apéritif avant le dîner ?"
+        },
+        {
+          "french": "la convivialité / partager un repas",
+          "english": "conviviality / sharing a meal",
+          "gender": "f",
+          "part_of_speech": "noun",
+          "example_sentence": "Le repas français, c'est avant tout de la convivialité."
+        }
+      ],
+      "phrases": [
+        {
+          "fr": "Bon appétit !",
+          "en": "Enjoy your meal!",
+          "note": "Universal phrase before eating."
+        },
+        {
+          "fr": "À ta santé ! / Tchin !",
+          "en": "Cheers!",
+          "note": "Look in the eyes when clinking glasses."
+        },
+        {
+          "fr": "C'est un délice !",
+          "en": "It's a delight!",
+          "note": "Strong food compliment."
+        },
+        {
+          "fr": "Tu me passes le pain ?",
+          "en": "Pass me the bread?",
+          "note": "Common table request. Bread is always present."
+        },
+        {
+          "fr": "Vous avez très bien mangé.",
+          "en": "You ate very well.",
+          "note": "Polite way to compliment the host."
+        },
+        {
+          "fr": "Le dessert maison est obligatoire.",
+          "en": "The homemade dessert is a must.",
+          "note": "When invited to dinner."
+        },
+        {
+          "fr": "Un bon vin, ça se respecte.",
+          "en": "A good wine deserves respect.",
+          "note": "Cultural attitude."
+        },
+        {
+          "fr": "Je ne mange pas de viande.",
+          "en": "I don't eat meat.",
+          "note": "Increasingly common in France."
+        },
+        {
+          "fr": "C'est un plat de mémoire.",
+          "en": "It's a comfort food / nostalgic dish.",
+          "note": "Emotional food."
+        },
+        {
+          "fr": "On va se régaler !",
+          "en": "We're going to feast!",
+          "note": "Excitement before a meal."
+        },
+        {
+          "fr": "Tu peux me donner la recette ?",
+          "en": "Can you give me the recipe?",
+          "note": "Compliment + curiosity."
+        },
+        {
+          "fr": "Encore un petit peu ? — Non merci, j'ai assez mangé.",
+          "en": "A little more? — No thanks, I've had enough.",
+          "note": "Common dinner-table exchange."
+        }
+      ],
+      "reading": {
+        "title": "Un repas dominical en famille",
+        "content_fr": "Chaque dimanche midi, ma famille se retrouve chez mes grands-parents, en Bourgogne. C'est une tradition que rien ne peut interrompre. Mes grands-parents ont 78 et 80 ans ; mes oncles, tantes, cousins viennent de partout en France pour ce rituel. Nous sommes parfois quinze à table.\n\nLe repas commence vers **midi pile**, jamais avant, jamais après. Mon grand-père sert l'**apéritif** : un kir (vin blanc + crème de cassis), accompagné de petits cubes de fromage et de saucisson. On reste debout dans le salon, on rit, on raconte la semaine. Cela dure 30 minutes.\n\nVers 12 h 30, ma grand-mère annonce : « À table ! » Tout le monde s'assied. Elle a préparé la table avec soin : nappe blanche, verres pour l'eau et le vin, serviettes en tissu, fleurs au centre.\n\nL'**entrée** est traditionnelle pour la saison. En automne : une terrine de campagne avec des cornichons. En hiver : un velouté de potiron. Au printemps : des asperges à la vinaigrette. En été : un melon avec du jambon de Bayonne.\n\nLe **plat principal** est toujours du **bœuf bourguignon**, la spécialité de la maison. Ma grand-mère le commence le vendredi soir. Le bœuf mijote dans le vin rouge avec des lardons, des oignons et des champignons, pendant six heures. Servi avec des pommes de terre vapeur ou des tagliatelles. Personne ne fait un meilleur bourguignon qu'elle, j'en suis certain(e).\n\nVient ensuite le **fromage**. Un plateau avec trois ou quatre fromages locaux : époisses, comté, chèvre frais. On mange avec du pain, sans beurre. Mon grand-père dit : « Le pain doit accompagner le fromage, jamais le couvrir. »\n\nEnfin le **dessert** : souvent une tarte aux pommes maison, parfois un fondant au chocolat. Avec un café.\n\nLe repas dure **trois heures, parfois quatre**. On se lève fatigués, mais heureux. On a parlé de tout — politique, famille, projets, souvenirs. C'est ça, le repas français : un acte d'amour autant qu'un repas.",
+        "content_en": "Every Sunday at noon, my family gathers at my grandparents' in Burgundy. It's a tradition nothing can interrupt. My grandparents are 78 and 80; my uncles, aunts, cousins come from all over France for this ritual. We're sometimes fifteen at the table.\n\nThe meal starts at noon sharp, never before, never after. My grandfather serves the aperitif: a kir (white wine + blackcurrant liqueur), with small cubes of cheese and dry sausage. We stand in the living room, laugh, share the week's news. It lasts 30 minutes.\n\nAround 12:30, my grandmother announces: 'To the table!' Everyone sits down. She's carefully set the table: white tablecloth, water and wine glasses, cloth napkins, flowers in the center.\n\nThe starter is traditional for the season. In autumn: a country terrine with pickles. In winter: pumpkin velouté. In spring: asparagus with vinaigrette. In summer: melon with Bayonne ham.\n\nThe main course is always boeuf bourguignon, the family specialty. My grandmother starts it Friday evening. The beef simmers in red wine with bacon, onions, mushrooms, for six hours. Served with steamed potatoes or tagliatelle. No one makes a better bourguignon than her, I'm sure.\n\nThen comes the cheese. A board with three or four local cheeses: époisses, comté, fresh goat cheese. We eat with bread, no butter. My grandfather says: 'Bread must accompany cheese, never cover it.'\n\nFinally dessert: often homemade apple tart, sometimes fondant au chocolat. With coffee.\n\nThe meal lasts three hours, sometimes four. We get up tired but happy. We've talked about everything — politics, family, plans, memories. That's the French meal: an act of love as much as a meal.",
+        "comprehension_questions": [
+          {
+            "q": "À quelle heure commence le repas ?",
+            "a": "À midi pile."
+          },
+          {
+            "q": "Quel est le plat principal traditionnel ?",
+            "a": "Le bœuf bourguignon."
+          },
+          {
+            "q": "Combien de temps ma grand-mère mijote-t-elle le bœuf ?",
+            "a": "Six heures."
+          },
+          {
+            "q": "Quelle est la règle de mon grand-père au sujet du fromage ?",
+            "a": "« Le pain doit accompagner le fromage, jamais le couvrir. »"
+          }
+        ]
+      },
+      "cultural_note": "Le **repas gastronomique français** est inscrit au patrimoine mondial de l'UNESCO (2010). Sa structure : **apéritif, entrée, plat, fromage, dessert**. Le **pain** est toujours présent, jamais coupé au couteau (on le rompt à la main). Le **vin** accompagne presque toujours, avec une logique : blanc avec le poisson, rouge avec la viande, vin sucré avec le dessert. La France compte plus de **400 fromages** (Charles de Gaulle disait : « Comment voulez-vous gouverner un pays qui a plus de 400 fromages ? »). Les **AOC/AOP** protègent l'origine de centaines de produits. Le **repas du dimanche midi** en famille reste une tradition forte, surtout en province."
+    },
+    {
+      "name_fr": "Les arts et la culture",
+      "name_en": "Arts and culture",
+      "icon": "🎭",
+      "order": 600,
+      "difficulty_level": 3,
+      "description": "Parler de littérature, de musique, de cinéma, de peinture — donner son avis sur les arts.",
+      "vocabulary": [
+        {
+          "french": "l'art / les arts",
+          "english": "art / the arts",
+          "gender": "m",
+          "part_of_speech": "noun",
+          "example_sentence": "L'art a toujours fait partie de ma vie."
+        },
+        {
+          "french": "la culture / culturel(le)",
+          "english": "culture / cultural",
+          "gender": "f",
+          "part_of_speech": "noun",
+          "example_sentence": "Paris a une vie culturelle intense."
+        },
+        {
+          "french": "la littérature / le roman / la poésie / l'essai",
+          "english": "literature / novel / poetry / essay",
+          "gender": "a",
+          "part_of_speech": "noun",
+          "example_sentence": "J'adore la littérature du 19e siècle."
+        },
+        {
+          "french": "l'écrivain / l'auteur / l'auteure",
+          "english": "writer / author",
+          "gender": "a",
+          "part_of_speech": "noun",
+          "example_sentence": "Annie Ernaux est une grande auteure."
+        },
+        {
+          "french": "le livre / le chapitre / le personnage",
+          "english": "book / chapter / character",
+          "gender": "m",
+          "part_of_speech": "noun",
+          "example_sentence": "Le personnage principal est complexe."
+        },
+        {
+          "french": "la musique / le musicien / le chanteur / la chanteuse",
+          "english": "music / musician / singer",
+          "gender": "a",
+          "part_of_speech": "noun",
+          "example_sentence": "Mes musiciens préférés sont français."
+        },
+        {
+          "french": "la chanson / l'album / le concert",
+          "english": "song / album / concert",
+          "gender": "a",
+          "part_of_speech": "noun",
+          "example_sentence": "Cette chanson me touche profondément."
+        },
+        {
+          "french": "le classique / le jazz / le rock / la chanson française",
+          "english": "classical / jazz / rock / French chanson",
+          "gender": "a",
+          "part_of_speech": "noun",
+          "example_sentence": "Brel et Brassens, c'est la chanson française."
+        },
+        {
+          "french": "le cinéma / le film / le réalisateur",
+          "english": "cinema / film / director",
+          "gender": "a",
+          "part_of_speech": "noun",
+          "example_sentence": "Truffaut est un réalisateur emblématique."
+        },
+        {
+          "french": "l'acteur / l'actrice / le rôle",
+          "english": "actor / actress / role",
+          "gender": "a",
+          "part_of_speech": "noun",
+          "example_sentence": "Elle joue un rôle complexe."
+        },
+        {
+          "french": "le théâtre / la pièce / la scène",
+          "english": "theater / play / stage",
+          "gender": "a",
+          "part_of_speech": "noun",
+          "example_sentence": "Je vais voir une pièce de Molière."
+        },
+        {
+          "french": "la peinture / le peintre / le tableau",
+          "english": "painting / painter / picture",
+          "gender": "a",
+          "part_of_speech": "noun",
+          "example_sentence": "Le tableau est magnifique."
+        },
+        {
+          "french": "la sculpture / le sculpteur / la statue",
+          "english": "sculpture / sculptor / statue",
+          "gender": "a",
+          "part_of_speech": "noun",
+          "example_sentence": "Cette sculpture de Rodin est célèbre."
+        },
+        {
+          "french": "le musée / l'exposition / la galerie",
+          "english": "museum / exhibition / gallery",
+          "gender": "a",
+          "part_of_speech": "noun",
+          "example_sentence": "L'exposition au Louvre est extraordinaire."
+        },
+        {
+          "french": "la photographie / le photographe",
+          "english": "photography / photographer",
+          "gender": "f",
+          "part_of_speech": "noun",
+          "example_sentence": "Cette photo a été prise par Cartier-Bresson."
+        },
+        {
+          "french": "l'architecture / l'architecte / le bâtiment",
+          "english": "architecture / architect / building",
+          "gender": "f",
+          "part_of_speech": "noun",
+          "example_sentence": "L'architecture haussmannienne est emblématique."
+        },
+        {
+          "french": "la danse / le danseur / la danseuse / le ballet",
+          "english": "dance / dancer / ballet",
+          "gender": "f",
+          "part_of_speech": "noun",
+          "example_sentence": "Le ballet de l'Opéra de Paris."
+        },
+        {
+          "french": "l'oeuvre / la création / l'inspiration",
+          "english": "work (artistic) / creation / inspiration",
+          "gender": "f",
+          "part_of_speech": "noun",
+          "example_sentence": "Cette œuvre a changé ma vision du monde."
+        },
+        {
+          "french": "le mouvement (artistique) / le courant",
+          "english": "movement / current",
+          "gender": "m",
+          "part_of_speech": "noun",
+          "example_sentence": "L'impressionnisme est né en France."
+        },
+        {
+          "french": "classique / moderne / contemporain(e)",
+          "english": "classical / modern / contemporary",
+          "gender": "a",
+          "part_of_speech": "adjective",
+          "example_sentence": "L'art contemporain me fascine."
+        },
+        {
+          "french": "l'opéra / le festival / la première",
+          "english": "opera / festival / premiere",
+          "gender": "a",
+          "part_of_speech": "noun",
+          "example_sentence": "Cannes accueille un grand festival de cinéma."
+        },
+        {
+          "french": "critiquer / la critique / le critique",
+          "english": "to criticize / review / critic",
+          "gender": "a",
+          "part_of_speech": "verb",
+          "example_sentence": "Cette critique est sévère mais juste."
+        },
+        {
+          "french": "émouvant(e) / bouleversant(e) / poétique",
+          "english": "moving / shattering / poetic",
+          "gender": "a",
+          "part_of_speech": "adjective",
+          "example_sentence": "Un film bouleversant sur la perte."
+        },
+        {
+          "french": "ennuyeux / prétentieux / superficiel",
+          "english": "boring / pretentious / shallow",
+          "gender": "a",
+          "part_of_speech": "adjective",
+          "example_sentence": "Je trouve ce film prétentieux."
+        },
+        {
+          "french": "le chef-d'œuvre / le navet",
+          "english": "masterpiece / flop",
+          "gender": "m",
+          "part_of_speech": "noun",
+          "example_sentence": "Citizen Kane est un chef-d'œuvre."
+        }
+      ],
+      "phrases": [
+        {
+          "fr": "Qu'est-ce que tu lis en ce moment ?",
+          "en": "What are you reading right now?",
+          "note": "Good conversation starter."
+        },
+        {
+          "fr": "Tu as vu le dernier film de... ?",
+          "en": "Have you seen the latest film by...?",
+          "note": "Common discussion opener."
+        },
+        {
+          "fr": "Ça m'a beaucoup touché(e).",
+          "en": "It really moved me.",
+          "note": "Emotional response."
+        },
+        {
+          "fr": "C'est un coup de cœur.",
+          "en": "It's a favorite of mine.",
+          "note": "Strong positive."
+        },
+        {
+          "fr": "J'ai trouvé ça trop long.",
+          "en": "I found it too long.",
+          "note": "Honest assessment."
+        },
+        {
+          "fr": "Je n'ai rien compris à la fin.",
+          "en": "I didn't understand the ending.",
+          "note": "Honest reaction."
+        },
+        {
+          "fr": "C'est un classique.",
+          "en": "It's a classic.",
+          "note": "Cultural seal of approval."
+        },
+        {
+          "fr": "Tu vas voir cette expo ?",
+          "en": "Are you going to see this exhibit?",
+          "note": "Common cultural invitation."
+        },
+        {
+          "fr": "Quelle musique tu écoutes ?",
+          "en": "What music do you listen to?",
+          "note": "Personal question."
+        },
+        {
+          "fr": "Cet artiste a du talent.",
+          "en": "This artist has talent.",
+          "note": "Standard praise."
+        },
+        {
+          "fr": "Je ne suis pas du tout d'accord avec la critique.",
+          "en": "I don't agree at all with the review.",
+          "note": "Disagreement."
+        },
+        {
+          "fr": "L'art, c'est subjectif.",
+          "en": "Art is subjective.",
+          "note": "Common reflection."
+        }
+      ],
+      "reading": {
+        "title": "Une soirée au musée d'Orsay",
+        "content_fr": "Vendredi dernier, ma cousine m'a invité(e) à une nocturne au musée d'Orsay. Tous les jeudis, le musée reste ouvert jusqu'à 21 h 45 — une belle occasion de visiter dans une atmosphère calme, après le travail.\n\nLe musée d'Orsay est l'un des plus beaux du monde, à mon avis. C'est une ancienne gare, transformée en musée en 1986. La grande verrière, l'horloge gigantesque, l'espace ouvert : déjà, le bâtiment est une œuvre d'art.\n\nNous y allons surtout pour les **impressionnistes**. Au cinquième étage, on trouve les chefs-d'œuvre que tout le monde connaît : Monet, Renoir, Degas, Pissarro, Sisley, Manet, Caillebotte. Devant chaque tableau, je m'arrête, je m'approche, je m'éloigne, je regarde la touche, les couleurs, la lumière.\n\nMon œuvre préférée : « **Le déjeuner sur l'herbe** » de Manet. Quel scandale en son temps ! Cette femme nue, en pleine nature, à côté d'hommes habillés — la société du Second Empire en a été choquée. Aujourd'hui, on y voit surtout la liberté du regard, la composition audacieuse.\n\nMa cousine, elle, préfère Degas et ses danseuses. « Regarde la légèreté des tutus, me dit-elle. On dirait qu'elles vont s'envoler. »\n\nNous passons aussi par les salles de Van Gogh. Devant **La Chambre de Van Gogh à Arles**, je reste sans voix. Les couleurs, les angles, l'émotion qui se dégage de cette modeste chambre — c'est presque palpable. Van Gogh n'a vendu qu'un seul tableau de son vivant. Aujourd'hui, chacune de ses œuvres vaut des millions.\n\nVers 21 h, ma cousine et moi terminons par un verre au café-restaurant du musée, au cinquième étage, derrière la grande horloge. La vue sur la Seine et le Louvre est exceptionnelle. Nous parlons de ce qu'on a vu, de ce qui nous a marqués.\n\n« L'art, me dit ma cousine, c'est ce qui nous reste quand tout le reste s'efface. » Je crois qu'elle a raison.",
+        "content_en": "Last Friday, my cousin invited me to a late opening at the Musée d'Orsay. Every Thursday, the museum stays open until 9:45 PM — a great opportunity to visit in a calm atmosphere, after work.\n\nMusée d'Orsay is one of the most beautiful museums in the world, in my opinion. It's a former train station, transformed into a museum in 1986. The great glass roof, the gigantic clock, the open space: the building itself is a work of art.\n\nWe go mainly for the Impressionists. On the fifth floor, you find the masterpieces everyone knows: Monet, Renoir, Degas, Pissarro, Sisley, Manet, Caillebotte. In front of each painting, I stop, get closer, step back, look at the brushwork, the colors, the light.\n\nMy favorite work: 'Le déjeuner sur l'herbe' by Manet. What a scandal in its time! That naked woman, in nature, next to clothed men — Second Empire society was shocked. Today, we mainly see the freedom of gaze, the bold composition.\n\nMy cousin prefers Degas and his dancers. 'Look at the lightness of the tutus,' she tells me. 'They look like they're about to fly away.'\n\nWe also walk through the Van Gogh rooms. In front of 'Van Gogh's Bedroom in Arles,' I'm speechless. The colors, the angles, the emotion that emanates from that modest room — it's almost palpable. Van Gogh sold only one painting in his lifetime. Today, each of his works is worth millions.\n\nAround 9 PM, my cousin and I finish with a drink at the museum's café-restaurant, on the fifth floor, behind the great clock. The view of the Seine and the Louvre is exceptional. We talk about what we saw, what struck us.\n\n'Art,' my cousin tells me, 'is what remains when everything else fades.' I think she's right.",
+        "comprehension_questions": [
+          {
+            "q": "Quand le musée d'Orsay est-il ouvert tard ?",
+            "a": "Tous les jeudis jusqu'à 21 h 45 (nocturne)."
+          },
+          {
+            "q": "Quelle est l'origine du bâtiment ?",
+            "a": "C'est une ancienne gare, transformée en musée en 1986."
+          },
+          {
+            "q": "Quel tableau de Manet est mentionné comme préféré ?",
+            "a": "« Le déjeuner sur l'herbe »."
+          },
+          {
+            "q": "Combien de tableaux Van Gogh a-t-il vendus de son vivant ?",
+            "a": "Un seul."
+          }
+        ]
+      },
+      "cultural_note": "La France est l'un des pays les plus visités au monde, en partie pour sa **richesse culturelle**. Les **grands musées parisiens** : le Louvre (le plus visité au monde), Orsay (impressionnistes), Pompidou (art moderne et contemporain), Rodin, l'Orangerie (les Nymphéas de Monet), Picasso. **Entrée gratuite** dans les musées nationaux le **premier dimanche du mois** et pour les moins de 26 ans citoyens européens. Les **mouvements artistiques français** majeurs : impressionnisme (Monet, Renoir), cubisme (Braque, Picasso ayant vécu en France), surréalisme (Magritte, Dalí ayant exposé à Paris). La **littérature française** a 16 prix Nobel — record mondial."
+    },
+    {
+      "name_fr": "Raconter une histoire ou une anecdote",
+      "name_en": "Telling a story or anecdote",
+      "icon": "📖",
+      "order": 610,
+      "difficulty_level": 3,
+      "description": "Structurer un récit oral ou écrit, utiliser les bons temps du passé, captiver son auditoire.",
+      "vocabulary": [
+        {
+          "french": "raconter / le récit / le narrateur",
+          "english": "to tell / story / narrator",
+          "gender": "a",
+          "part_of_speech": "verb",
+          "example_sentence": "Il sait merveilleusement raconter."
+        },
+        {
+          "french": "l'histoire / l'anecdote",
+          "english": "story / anecdote",
+          "gender": "a",
+          "part_of_speech": "noun",
+          "example_sentence": "Il a toujours une anecdote drôle à raconter."
+        },
+        {
+          "french": "le début / le milieu / la fin",
+          "english": "beginning / middle / end",
+          "gender": "a",
+          "part_of_speech": "noun",
+          "example_sentence": "La fin de l'histoire m'a surpris."
+        },
+        {
+          "french": "le personnage / le héros / l'héroïne",
+          "english": "character / hero / heroine",
+          "gender": "a",
+          "part_of_speech": "noun",
+          "example_sentence": "Le héros est complexe et émouvant."
+        },
+        {
+          "french": "l'intrigue / le scénario",
+          "english": "plot / script",
+          "gender": "f",
+          "part_of_speech": "noun",
+          "example_sentence": "L'intrigue est tortueuse."
+        },
+        {
+          "french": "le contexte / la situation",
+          "english": "context / situation",
+          "gender": "m",
+          "part_of_speech": "noun",
+          "example_sentence": "Le contexte explique tout."
+        },
+        {
+          "french": "l'événement / l'incident",
+          "english": "event / incident",
+          "gender": "m",
+          "part_of_speech": "noun",
+          "example_sentence": "Cet événement a tout changé."
+        },
+        {
+          "french": "le rebondissement / la péripétie",
+          "english": "twist / development",
+          "gender": "m",
+          "part_of_speech": "noun",
+          "example_sentence": "Quel rebondissement à la fin !"
+        },
+        {
+          "french": "la chute / le dénouement",
+          "english": "punchline / resolution",
+          "gender": "a",
+          "part_of_speech": "noun",
+          "example_sentence": "La chute de la blague est inattendue."
+        },
+        {
+          "french": "incroyable / inattendu / surprenant",
+          "english": "incredible / unexpected / surprising",
+          "gender": "a",
+          "part_of_speech": "adjective",
+          "example_sentence": "C'est incroyable, ce qui m'est arrivé !"
+        },
+        {
+          "french": "marrant / amusant / hilarant",
+          "english": "funny / amusing / hilarious",
+          "gender": "a",
+          "part_of_speech": "adjective",
+          "example_sentence": "Une anecdote vraiment hilarante."
+        },
+        {
+          "french": "triste / émouvant / poignant",
+          "english": "sad / moving / poignant",
+          "gender": "a",
+          "part_of_speech": "adjective",
+          "example_sentence": "Une histoire poignante."
+        },
+        {
+          "french": "soudain / tout à coup / brusquement",
+          "english": "suddenly",
+          "gender": "a",
+          "part_of_speech": "adverb",
+          "example_sentence": "Soudain, la porte s'est ouverte."
+        },
+        {
+          "french": "ensuite / puis / après / alors",
+          "english": "then / next",
+          "gender": "a",
+          "part_of_speech": "adverb",
+          "example_sentence": "Puis, elle s'est mise à pleurer."
+        },
+        {
+          "french": "enfin / finalement",
+          "english": "finally",
+          "gender": "a",
+          "part_of_speech": "adverb",
+          "example_sentence": "Enfin, j'ai compris la blague."
+        },
+        {
+          "french": "d'abord / au début / premièrement",
+          "english": "first / at the beginning",
+          "gender": "a",
+          "part_of_speech": "adverb",
+          "example_sentence": "D'abord, je ne comprenais rien."
+        },
+        {
+          "french": "le passé composé / l'imparfait / le plus-que-parfait",
+          "english": "passé composé / imparfait / pluperfect",
+          "gender": "m",
+          "part_of_speech": "noun",
+          "example_sentence": "Mélanger les temps du passé est essentiel."
+        },
+        {
+          "french": "raconter au présent (présent de narration)",
+          "english": "telling in the present (narrative present)",
+          "gender": "a",
+          "part_of_speech": "phrase",
+          "example_sentence": "À l'oral, on raconte souvent au présent."
+        },
+        {
+          "french": "le suspense / la surprise",
+          "english": "suspense / surprise",
+          "gender": "a",
+          "part_of_speech": "noun",
+          "example_sentence": "Quel suspense dans cette histoire !"
+        },
+        {
+          "french": "captiver / fasciner / ennuyer",
+          "english": "to captivate / fascinate / bore",
+          "gender": "a",
+          "part_of_speech": "verb",
+          "example_sentence": "Son histoire m'a captivé(e)."
+        },
+        {
+          "french": "le souvenir / se souvenir / se rappeler",
+          "english": "memory / to remember",
+          "gender": "m",
+          "part_of_speech": "noun",
+          "example_sentence": "Je me souviens de ce voyage comme si c'était hier."
+        },
+        {
+          "french": "le détail / précis / vague",
+          "english": "detail / precise / vague",
+          "gender": "a",
+          "part_of_speech": "noun",
+          "example_sentence": "Je me souviens des moindres détails."
+        },
+        {
+          "french": "vrai / inventé / exagéré",
+          "english": "true / invented / exaggerated",
+          "gender": "a",
+          "part_of_speech": "adjective",
+          "example_sentence": "Cette histoire est totalement vraie."
+        },
+        {
+          "french": "le témoin / témoigner",
+          "english": "witness / to testify",
+          "gender": "m",
+          "part_of_speech": "noun",
+          "example_sentence": "Il y avait deux témoins de la scène."
+        },
+        {
+          "french": "la conclusion / la morale",
+          "english": "conclusion / moral",
+          "gender": "f",
+          "part_of_speech": "noun",
+          "example_sentence": "La morale de l'histoire est claire."
+        }
+      ],
+      "phrases": [
+        {
+          "fr": "Tu veux que je te raconte une histoire ?",
+          "en": "Want me to tell you a story?",
+          "note": "Standard opener."
+        },
+        {
+          "fr": "Je vais te raconter ce qui m'est arrivé hier.",
+          "en": "I'll tell you what happened to me yesterday.",
+          "note": "Anecdote intro."
+        },
+        {
+          "fr": "Il était une fois...",
+          "en": "Once upon a time...",
+          "note": "Classic fairy-tale opening."
+        },
+        {
+          "fr": "Tu ne vas pas me croire, mais...",
+          "en": "You won't believe me, but...",
+          "note": "Builds suspense."
+        },
+        {
+          "fr": "Bref, pour faire court...",
+          "en": "Anyway, to make it short...",
+          "note": "Speeding up a story."
+        },
+        {
+          "fr": "Et là, devine ce qu'il a fait !",
+          "en": "And then, guess what he did!",
+          "note": "Engaging the listener."
+        },
+        {
+          "fr": "Au final / Finalement...",
+          "en": "In the end...",
+          "note": "Closing a story."
+        },
+        {
+          "fr": "Et c'est comme ça que...",
+          "en": "And that's how...",
+          "note": "Anecdote resolution."
+        },
+        {
+          "fr": "Je m'en souviens encore.",
+          "en": "I still remember it.",
+          "note": "Personal memory note."
+        },
+        {
+          "fr": "Tu l'aurais vu(e), c'était dingue !",
+          "en": "You should have seen it, it was crazy!",
+          "note": "Emphatic recall."
+        },
+        {
+          "fr": "À l'époque, je ne savais pas que...",
+          "en": "At the time, I didn't know that...",
+          "note": "Adds dramatic irony."
+        },
+        {
+          "fr": "Pour la petite histoire...",
+          "en": "Fun fact / for context...",
+          "note": "Adds context to a story."
+        }
+      ],
+      "reading": {
+        "title": "La nuit la plus longue de ma vie",
+        "content_fr": "Je vais te raconter quelque chose qui m'est arrivé il y a deux ans. C'est l'histoire la plus folle de ma vie — tu vas voir.\n\nC'était un samedi soir, en mars. J'étais à un mariage, en Bretagne, à une heure de Saint-Brieuc. Vers minuit, ma voiture avait un petit problème mécanique. Je me suis dit : « Je rentre à Paris demain, ça ira. »\n\nLe lendemain matin, je quitte le mariage à 8 heures. Cinq minutes après être parti(e), ma voiture s'arrête au milieu de la route. Plus rien. Tout est mort. Le moteur, les phares, l'autoradio. Sur une petite route bretonne, en pleine campagne. Personne autour. Mon téléphone : 5 % de batterie.\n\nJe descends. Je marche. Pas une voiture. Pas un village. Pas un humain. **Le néant total.**\n\nAprès 30 minutes, je vois un petit panneau : « Village à 3 km ». Je marche. J'arrive enfin dans un hameau, qui compte peut-être douze maisons. Toutes fermées, tout est silencieux. C'est dimanche matin, les Bretons dorment.\n\nJe frappe à une porte. Une vieille dame, en robe de chambre, m'ouvre, méfiante. Je lui explique. Elle me regarde longuement. Puis, sans rien dire, elle me fait entrer. Elle me sert un café, des tartines. Elle me dit qu'elle s'appelle Marie-Christine, qu'elle vit seule depuis dix ans, que son mari est mort de la même chose que moi — « **une bonne panne** ».\n\nElle a téléphoné à son neveu, mécanicien, qui est arrivé deux heures plus tard. Pendant ces deux heures, Marie-Christine m'a raconté toute sa vie. Son enfance dans les années 50, son mariage, ses deux enfants, ses petits-enfants qui ne viennent plus.\n\nLe neveu a réparé ma voiture en 20 minutes — une simple batterie. J'ai voulu payer. Marie-Christine a refusé : « Non, mon petit. Reste juste plus longtemps la prochaine fois. »\n\nC'est ainsi qu'une panne de voiture est devenue **le plus beau dimanche de mon année**. Depuis, je m'arrête souvent dans des villages perdus, juste pour voir.",
+        "content_en": "I'm going to tell you something that happened to me two years ago. It's the craziest story of my life — you'll see.\n\nIt was a Saturday evening, in March. I was at a wedding in Brittany, an hour from Saint-Brieuc. Around midnight, my car had a small mechanical issue. I told myself: 'I'm driving back to Paris tomorrow, it'll be fine.'\n\nThe next morning, I leave the wedding at 8. Five minutes after leaving, my car stops in the middle of the road. Nothing. Everything's dead. Engine, headlights, radio. On a small Breton road, in the middle of the countryside. No one around. My phone: 5 % battery.\n\nI get out. I walk. Not a car. Not a village. Not a human being. Total nothingness.\n\nAfter 30 minutes, I see a small sign: 'Village 3 km.' I walk. I finally arrive in a hamlet, with maybe twelve houses. All closed, everything silent. It's Sunday morning, the Bretons are sleeping.\n\nI knock on a door. An old lady, in a dressing gown, opens, suspicious. I explain. She looks at me for a long time. Then, without saying anything, she lets me in. She serves me coffee, tartines. She tells me her name is Marie-Christine, that she's lived alone for ten years, that her husband died of the same thing as me — 'a good breakdown.'\n\nShe called her nephew, a mechanic, who arrived two hours later. During those two hours, Marie-Christine told me her whole life. Her childhood in the 50s, her wedding, her two children, her grandchildren who no longer visit.\n\nThe nephew fixed my car in 20 minutes — a simple battery. I wanted to pay. Marie-Christine refused: 'No, my dear. Just stay longer next time.'\n\nThat's how a car breakdown became the most beautiful Sunday of my year. Since then, I often stop in lost villages, just to see.",
+        "comprehension_questions": [
+          {
+            "q": "Où se trouvait-il quand sa voiture est tombée en panne ?",
+            "a": "En pleine campagne bretonne, sur une petite route, à 3 km d'un hameau."
+          },
+          {
+            "q": "Qui l'a aidé(e) ?",
+            "a": "Une vieille dame, Marie-Christine, qui a appelé son neveu mécanicien."
+          },
+          {
+            "q": "Combien de temps a-t-il/elle passé chez Marie-Christine ?",
+            "a": "Environ deux heures, le temps que le neveu arrive."
+          },
+          {
+            "q": "Qu'a répondu Marie-Christine quand il/elle a voulu payer ?",
+            "a": "« Non, mon petit. Reste juste plus longtemps la prochaine fois. »"
+          }
+        ]
+      },
+      "cultural_note": "Pour raconter une histoire au passé en français, on alterne **deux temps fondamentaux** : l'**imparfait** (décor, état, habitude) et le **passé composé** (action ponctuelle, événement). *Il pleuvait* (décor) *quand le téléphone a sonné* (événement). À l'oral, on utilise aussi beaucoup le **présent de narration** — *« Je rentre chez moi, et là, je vois... »* — qui rend le récit plus vivant. Les Français adorent les **histoires bien racontées** : un bon raconteur d'anecdotes est valorisé socialement. Évitez les histoires trop longues sans chute, qui ennuient — *« Bref, pour faire court... »* est une transition utile."
+    },
+    {
+      "name_fr": "La consommation et la publicité",
+      "name_en": "Consumption and advertising",
+      "icon": "🛍️",
+      "order": 620,
+      "difficulty_level": 3,
+      "description": "Parler de la société de consommation, de la publicité, des marques.",
+      "vocabulary": [
+        {
+          "french": "la consommation / consommer",
+          "english": "consumption / to consume",
+          "gender": "f",
+          "part_of_speech": "noun",
+          "example_sentence": "Notre consommation a doublé en 50 ans."
+        },
+        {
+          "french": "le consommateur / la consommatrice",
+          "english": "consumer",
+          "gender": "a",
+          "part_of_speech": "noun",
+          "example_sentence": "Le consommateur a des droits."
+        },
+        {
+          "french": "la société de consommation",
+          "english": "consumer society",
+          "gender": "f",
+          "part_of_speech": "noun",
+          "example_sentence": "La société de consommation a ses limites."
+        },
+        {
+          "french": "le pouvoir d'achat",
+          "english": "purchasing power",
+          "gender": "m",
+          "part_of_speech": "noun",
+          "example_sentence": "Le pouvoir d'achat baisse depuis 2022."
+        },
+        {
+          "french": "la publicité / la pub (familier)",
+          "english": "advertising / ad",
+          "gender": "f",
+          "part_of_speech": "noun",
+          "example_sentence": "Cette pub est trop agressive."
+        },
+        {
+          "french": "la marque / le logo / le slogan",
+          "english": "brand / logo / slogan",
+          "gender": "a",
+          "part_of_speech": "noun",
+          "example_sentence": "Cette marque est devenue mondiale."
+        },
+        {
+          "french": "le produit / l'article",
+          "english": "product / item",
+          "gender": "m",
+          "part_of_speech": "noun",
+          "example_sentence": "Ce produit est de très bonne qualité."
+        },
+        {
+          "french": "le marketing / la stratégie commerciale",
+          "english": "marketing / sales strategy",
+          "gender": "m",
+          "part_of_speech": "noun",
+          "example_sentence": "Le marketing influence nos choix."
+        },
+        {
+          "french": "vendre / acheter / l'achat",
+          "english": "to sell / buy / purchase",
+          "gender": "a",
+          "part_of_speech": "verb",
+          "example_sentence": "Mon dernier achat était un café."
+        },
+        {
+          "french": "le prix / coûter / cher / abordable",
+          "english": "price / to cost / expensive / affordable",
+          "gender": "a",
+          "part_of_speech": "noun",
+          "example_sentence": "Le prix est trop élevé."
+        },
+        {
+          "french": "les soldes / la promotion / la réduction",
+          "english": "sales / promotion / discount",
+          "gender": "a",
+          "part_of_speech": "noun",
+          "example_sentence": "Les soldes d'été commencent en juin."
+        },
+        {
+          "french": "la qualité / la fiabilité / la durabilité",
+          "english": "quality / reliability / durability",
+          "gender": "f",
+          "part_of_speech": "noun",
+          "example_sentence": "La qualité prime sur la quantité."
+        },
+        {
+          "french": "le luxe / le bas de gamme / le haut de gamme",
+          "english": "luxury / low-end / high-end",
+          "gender": "m",
+          "part_of_speech": "noun",
+          "example_sentence": "C'est du haut de gamme."
+        },
+        {
+          "french": "la grande surface / le commerce de proximité",
+          "english": "big-box store / local shop",
+          "gender": "f",
+          "part_of_speech": "noun",
+          "example_sentence": "Je préfère les commerces de proximité."
+        },
+        {
+          "french": "le shopping / faire les magasins",
+          "english": "shopping",
+          "gender": "m",
+          "part_of_speech": "noun",
+          "example_sentence": "Aller faire les magasins, c'est ma détente."
+        },
+        {
+          "french": "l'achat compulsif / l'impulsion",
+          "english": "impulse buying / impulse",
+          "gender": "m",
+          "part_of_speech": "noun",
+          "example_sentence": "Je dois éviter les achats compulsifs."
+        },
+        {
+          "french": "la qualité-prix / le rapport qualité-prix",
+          "english": "value for money",
+          "gender": "f",
+          "part_of_speech": "noun",
+          "example_sentence": "Le rapport qualité-prix est excellent."
+        },
+        {
+          "french": "l'obsolescence programmée",
+          "english": "planned obsolescence",
+          "gender": "f",
+          "part_of_speech": "noun",
+          "example_sentence": "L'obsolescence programmée est interdite en France."
+        },
+        {
+          "french": "la garantie / le service après-vente",
+          "english": "warranty / after-sales service",
+          "gender": "f",
+          "part_of_speech": "noun",
+          "example_sentence": "La garantie est de deux ans."
+        },
+        {
+          "french": "le client / la cliente",
+          "english": "client / customer",
+          "gender": "a",
+          "part_of_speech": "noun",
+          "example_sentence": "Le client a toujours raison, soi-disant."
+        },
+        {
+          "french": "le marketing d'influence / l'influenceur",
+          "english": "influencer marketing / influencer",
+          "gender": "a",
+          "part_of_speech": "noun",
+          "example_sentence": "Le marketing d'influence cible les jeunes."
+        },
+        {
+          "french": "manipuler / influencer",
+          "english": "to manipulate / influence",
+          "gender": "a",
+          "part_of_speech": "verb",
+          "example_sentence": "Les pubs nous influencent plus qu'on ne croit."
+        },
+        {
+          "french": "le greenwashing / le marketing vert",
+          "english": "greenwashing / green marketing",
+          "gender": "m",
+          "part_of_speech": "noun",
+          "example_sentence": "Beaucoup de marques font du greenwashing."
+        },
+        {
+          "french": "le commerce équitable / l'éthique",
+          "english": "fair trade / ethics",
+          "gender": "m",
+          "part_of_speech": "noun",
+          "example_sentence": "J'achète du café équitable."
+        },
+        {
+          "french": "la minimalisme / la sobriété",
+          "english": "minimalism / sobriety (in consumption)",
+          "gender": "m",
+          "part_of_speech": "noun",
+          "example_sentence": "Le minimalisme me parle de plus en plus."
+        }
+      ],
+      "phrases": [
+        {
+          "fr": "Je n'aime pas les pubs.",
+          "en": "I don't like ads.",
+          "note": "Common complaint."
+        },
+        {
+          "fr": "Cette pub est vraiment trop intrusive.",
+          "en": "This ad is really too intrusive.",
+          "note": "Specific complaint."
+        },
+        {
+          "fr": "Je suis devenu(e) immunisé(e) contre la pub.",
+          "en": "I've become immune to advertising.",
+          "note": "Modern attitude."
+        },
+        {
+          "fr": "Acheter, c'est voter.",
+          "en": "Buying is voting.",
+          "note": "Ethical consumption slogan."
+        },
+        {
+          "fr": "Je préfère acheter local.",
+          "en": "I prefer buying local.",
+          "note": "Ethical preference."
+        },
+        {
+          "fr": "Cette marque exploite ses ouvriers.",
+          "en": "This brand exploits its workers.",
+          "note": "Ethical critique."
+        },
+        {
+          "fr": "Le rapport qualité-prix est imbattable.",
+          "en": "The value for money is unbeatable.",
+          "note": "Standard recommendation."
+        },
+        {
+          "fr": "Je n'achète plus rien sans réfléchir.",
+          "en": "I don't buy anything without thinking anymore.",
+          "note": "Conscious consumer attitude."
+        },
+        {
+          "fr": "Tu es trop influencé(e) par les pubs.",
+          "en": "You're too influenced by ads.",
+          "note": "Friend's observation."
+        },
+        {
+          "fr": "Les marques se moquent de nous.",
+          "en": "The brands are mocking us.",
+          "note": "Cynical view."
+        },
+        {
+          "fr": "C'est du marketing, rien de plus.",
+          "en": "It's marketing, nothing more.",
+          "note": "Skeptical reaction."
+        },
+        {
+          "fr": "Je préfère réparer que jeter.",
+          "en": "I prefer repairing to throwing away.",
+          "note": "Modern ecology mantra."
+        }
+      ],
+      "reading": {
+        "title": "Confessions d'un ancien shopaholic",
+        "content_fr": "Pendant longtemps, j'ai été ce qu'on appelle un(e) **shopaholic** — accro au shopping. À 28 ans, je gagnais bien ma vie, mais à la fin du mois, j'étais souvent à découvert. Mon garde-robe débordait. Mes étagères ploiaient sous des objets que je n'utilisais pas. Et pourtant, je ne pouvais pas m'empêcher d'acheter.\n\nLa **publicité** y était pour beaucoup. Sur Instagram, je suivais des dizaines d'influenceuses qui présentaient leur \"lifestyle\" — toujours impeccable, toujours nouveau. À chaque scroll, une nouvelle marque, une nouvelle envie. Le **marketing d'influence** est subtil : on a l'impression de regarder une amie, alors qu'on regarde en fait une publicité non-déclarée.\n\nMa **chute** a eu lieu un matin de janvier. J'ai ouvert mon dressing, et j'ai compté : 37 chemisiers. Je portais peut-être 4 d'entre eux régulièrement. Les autres étaient là, parfois avec l'étiquette encore accrochée. **J'avais payé 4 000 euros, sur trois ans, pour des vêtements que je ne portais pas.**\n\nJ'ai pris une décision radicale : **un an sans rien acheter** (sauf la nourriture et les essentiels). Au début, c'était physique : ma main cherchait automatiquement le panier Amazon, mes yeux balayaient les vitrines. Mais semaine après semaine, l'envie s'est apaisée.\n\nJ'ai aussi désinstallé Instagram. Et j'ai commencé à **réparer** ce qui me servait — coudre un trou, recharger un appareil, repeindre un meuble. Cette habitude m'a appris une chose : **les objets ont une histoire**, et on s'y attache quand on les fait durer.\n\nUn an plus tard, mon compte en banque allait beaucoup mieux. Mais surtout, **ma tête allait mieux**. Sans cette quête constante du nouveau produit, j'avais l'esprit plus libre, plus calme.\n\nJe ne suis pas devenu(e) **minimaliste extrême**. J'achète encore. Mais je me pose désormais trois questions avant chaque achat : « Est-ce que j'en ai vraiment besoin ? Est-ce que je vais le garder cinq ans ? Est-ce que ça améliore vraiment ma vie ? » Si les trois réponses ne sont pas « oui », je passe mon chemin.\n\nLa publicité m'avait convaincu(e) que j'avais besoin de posséder pour exister. Aujourd'hui, je sais que c'est l'inverse : j'existe **mieux** quand je possède moins.",
+        "content_en": "For a long time, I was what you'd call a shopaholic. At 28, I earned a good salary, but by month's end I was often overdrawn. My wardrobe overflowed. My shelves bent under objects I didn't use. And yet, I couldn't stop buying.\n\nAdvertising had a lot to do with it. On Instagram, I followed dozens of influencers who presented their 'lifestyle' — always perfect, always new. With each scroll, a new brand, a new desire. Influencer marketing is subtle: you feel like you're watching a friend, when you're actually watching an undeclared ad.\n\nMy fall came one morning in January. I opened my closet, and counted: 37 shirts. I wore maybe 4 of them regularly. The others were there, sometimes with the tag still attached. I had spent 4,000 euros over three years on clothes I didn't wear.\n\nI made a radical decision: a year without buying anything (except food and essentials). At first, it was physical: my hand automatically reached for the Amazon cart, my eyes scanned the windows. But week after week, the urge calmed.\n\nI also uninstalled Instagram. And I started repairing what I had — sewing a hole, recharging a device, repainting a piece of furniture. This habit taught me something: objects have a story, and you become attached when you make them last.\n\nA year later, my bank account was much better. But mostly, my head was better. Without this constant quest for the new product, I had a freer, calmer mind.\n\nI haven't become an extreme minimalist. I still buy. But I now ask myself three questions before each purchase: 'Do I really need it? Will I keep it for five years? Does it really improve my life?' If the three answers aren't 'yes,' I pass.\n\nAdvertising had convinced me I needed to possess to exist. Today, I know it's the opposite: I exist better when I possess less.",
+        "comprehension_questions": [
+          {
+            "q": "Combien de chemisiers avait-il/elle ?",
+            "a": "37 chemisiers, mais il/elle n'en portait que 4 régulièrement."
+          },
+          {
+            "q": "Quelle décision radicale a-t-il/elle prise ?",
+            "a": "Un an sans rien acheter, sauf la nourriture et les essentiels."
+          },
+          {
+            "q": "Quel rôle jouait Instagram ?",
+            "a": "Le marketing d'influence donnait l'impression de regarder une amie, alors qu'on regardait des publicités non-déclarées."
+          },
+          {
+            "q": "Quelles sont ses trois questions avant chaque achat ?",
+            "a": "« Est-ce que j'en ai vraiment besoin ? Est-ce que je vais le garder cinq ans ? Est-ce que ça améliore vraiment ma vie ? »"
+          }
+        ]
+      },
+      "cultural_note": "La France est l'**un des pays les plus régulés en matière de publicité** : interdiction de la pub pour l'alcool (loi Évin 1991), restriction de la pub pour la nourriture grasse et sucrée auprès des enfants, **mention obligatoire** pour la malbouffe (« Pour votre santé, mangez 5 fruits et légumes par jour »). Le **commerce équitable** (Max Havelaar, Fairtrade) se développe. Les **soldes** sont réglementées (deux périodes officielles de 4 semaines par an). Le mouvement **'consommer mieux'** (achat local, seconde main, réparation) gagne du terrain — Le Bon Coin, Vinted et Emmaüs sont des géants français du marché de l'occasion."
+    }
+  ]
+}

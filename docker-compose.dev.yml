@@ -8,12 +8,12 @@ services:
       - "6379:6379"
 
   django:
-    build: ./backend
     env_file: .env
     environment:
       DJANGO_SETTINGS_MODULE: config.settings.dev
     volumes:
       - ./backend:/app
+      - ./data:/data:ro
       - static_files:/app/staticfiles
       - media_files:/app/media
     ports:

@@ -136,7 +136,7 @@ jobs:
       # we ship, not just the requirements.txt. Skipping `--push`, this
       # is a throwaway image local to the runner.
       - name: Build backend image
-        run: docker build -t lingaru-backend:scan ./backend
+        run: docker build -t lingaru-backend:scan -f backend/Dockerfile .
 
       # Findings print directly into the job log as a table. Code scanning
       # (Security tab integration) is intentionally disabled — re-enable

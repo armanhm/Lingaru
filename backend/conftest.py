@@ -23,3 +23,9 @@ def create_user(db, user_data):
 @pytest.fixture
 def api_client():
     return APIClient()
+
+
+@pytest.fixture
+def authenticated_client(api_client, create_user):
+    api_client.force_authenticate(user=create_user)
+    return api_client

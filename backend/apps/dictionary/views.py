@@ -1,12 +1,12 @@
-import json
 import logging
-import re
 
 from rest_framework import permissions, status
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
+from apps.dictionary.cache import CacheMissResult, cached_or_call
 from apps.dictionary.models import DictionaryCache
+from apps.dictionary.parsing import parse_json_response
 from services.llm.factory import create_llm_router
 
 logger = logging.getLogger(__name__)
@@ -52,21 +52,9 @@ CONJUGATE_SYSTEM_PROMPT = (
 )
 
 
-def _parse_json_response(text: str) -> dict | None:
-    """Extract and parse JSON from LLM response, stripping markdown if present."""
-    text = text.strip()
-    text = re.sub(r"^```(?:json)?\s*", "", text)
-    text = re.sub(r"\s*```$", "", text)
-    try:
-        return json.loads(text)
-    except json.JSONDecodeError:
-        match = re.search(r"\{.*\}", text, re.DOTALL)
-        if match:
-            try:
-                return json.loads(match.group())
-            except json.JSONDecodeError:
-                pass
-    return None
+# Re-exported for callers that imported the parser from this module.
+# Source of truth is apps.dictionary.parsing.parse_json_response.
+_parse_json_response = parse_json_response
 
 
 class DictionaryLookupView(APIView):
@@ -78,11 +66,6 @@ class DictionaryLookupView(APIView):
             return Response({"detail": "word is required."}, status=status.HTTP_400_BAD_REQUEST)
         if len(word) > 100:
             return Response({"detail": "word is too long."}, status=status.HTTP_400_BAD_REQUEST)
-
-        # Check cache first
-        cached = DictionaryCache.objects.filter(kind=DictionaryCache.LOOKUP, key=word).first()
-        if cached:
-            return Response({"result": cached.result, "provider": "cache"})
 
         if request.user.target_language == "en":
             system_prompt = (
@@ -104,30 +87,37 @@ class DictionaryLookupView(APIView):
         else:
             system_prompt = LOOKUP_SYSTEM_PROMPT_FR
 
-        try:
+        def lookup_llm() -> dict:
             router = create_llm_router()
             llm_result = router.generate(
                 messages=[{"role": "user", "content": word}],
                 system_prompt=system_prompt,
             )
-            data = _parse_json_response(llm_result.content)
-            if data is None:
-                return Response(
-                    {"detail": "Could not parse dictionary response. Try again."},
-                    status=status.HTTP_502_BAD_GATEWAY,
-                )
-            DictionaryCache.objects.update_or_create(
+            parsed = _parse_json_response(llm_result.content)
+            if parsed is None:
+                # Caller (cached_or_call) translates None to CacheMissResult.
+                return {"result": None, "provider": llm_result.provider}
+            return {"result": parsed, "provider": llm_result.provider}
+
+        try:
+            payload = cached_or_call(
                 kind=DictionaryCache.LOOKUP,
                 key=word,
-                defaults={"result": data},
+                llm_fn=lookup_llm,
+                default_cefr=getattr(request.user, "target_level", None),
             )
-            return Response({"result": data, "provider": llm_result.provider})
-        except Exception as e:
-            logger.error("Dictionary lookup failed for %r: %s", word, e)
+        except CacheMissResult:
+            return Response(
+                {"detail": "Could not parse dictionary response. Try again."},
+                status=status.HTTP_502_BAD_GATEWAY,
+            )
+        except Exception as exc:
+            logger.error("Dictionary lookup failed for %r: %s", word, exc)
             return Response(
                 {"detail": "Dictionary lookup failed. Please try again."},
                 status=status.HTTP_502_BAD_GATEWAY,
             )
+        return Response(payload)
 
 
 class VerbConjugatorView(APIView):
@@ -149,32 +139,33 @@ class VerbConjugatorView(APIView):
         if len(verb) > 60:
             return Response({"detail": "verb is too long."}, status=status.HTTP_400_BAD_REQUEST)
 
-        # Check cache first
-        cached = DictionaryCache.objects.filter(kind=DictionaryCache.CONJUGATION, key=verb).first()
-        if cached:
-            return Response({"result": cached.result, "provider": "cache"})
-
-        try:
+        def conjugate_llm() -> dict:
             router = create_llm_router()
             llm_result = router.generate(
                 messages=[{"role": "user", "content": verb}],
                 system_prompt=CONJUGATE_SYSTEM_PROMPT,
             )
-            data = _parse_json_response(llm_result.content)
-            if data is None:
-                return Response(
-                    {"detail": "Could not parse conjugation response. Try again."},
-                    status=status.HTTP_502_BAD_GATEWAY,
-                )
-            DictionaryCache.objects.update_or_create(
+            parsed = _parse_json_response(llm_result.content)
+            if parsed is None:
+                return {"result": None, "provider": llm_result.provider}
+            return {"result": parsed, "provider": llm_result.provider}
+
+        try:
+            payload = cached_or_call(
                 kind=DictionaryCache.CONJUGATION,
                 key=verb,
-                defaults={"result": data},
+                llm_fn=conjugate_llm,
+                default_cefr=getattr(request.user, "target_level", None),
             )
-            return Response({"result": data, "provider": llm_result.provider})
-        except Exception as e:
-            logger.error("Conjugation failed for %r: %s", verb, e)
+        except CacheMissResult:
+            return Response(
+                {"detail": "Could not parse conjugation response. Try again."},
+                status=status.HTTP_502_BAD_GATEWAY,
+            )
+        except Exception as exc:
+            logger.error("Conjugation failed for %r: %s", verb, exc)
             return Response(
                 {"detail": "Conjugation failed. Please try again."},
                 status=status.HTTP_502_BAD_GATEWAY,
             )
+        return Response(payload)

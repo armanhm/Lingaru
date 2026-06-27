@@ -1,0 +1,3353 @@
+{
+  "_meta": {
+    "language": "fr",
+    "cefr_level": "A1",
+    "title": "Lingaru Topics — Niveau A1 (Découverte)",
+    "description": "Les fondations : survivre et se présenter en français."
+  },
+  "topics": [
+    {
+      "name_fr": "Salutations et présentations",
+      "name_en": "Greetings and introductions",
+      "icon": "👋",
+      "order": 100,
+      "difficulty_level": 1,
+      "description": "Dire bonjour, se présenter, demander comment ça va, prendre congé.",
+      "vocabulary": [
+        {
+          "french": "Bonjour",
+          "english": "Hello / Good morning",
+          "gender": "a",
+          "part_of_speech": "interjection",
+          "example_sentence": "Bonjour, madame, comment allez-vous ?"
+        },
+        {
+          "french": "Bonsoir",
+          "english": "Good evening",
+          "gender": "a",
+          "part_of_speech": "interjection",
+          "example_sentence": "Bonsoir, vous avez bien dîné ?"
+        },
+        {
+          "french": "Salut",
+          "english": "Hi / Bye (informal)",
+          "gender": "a",
+          "part_of_speech": "interjection",
+          "example_sentence": "Salut, ça va ?"
+        },
+        {
+          "french": "Au revoir",
+          "english": "Goodbye",
+          "gender": "a",
+          "part_of_speech": "interjection",
+          "example_sentence": "Au revoir, à demain !"
+        },
+        {
+          "french": "À bientôt",
+          "english": "See you soon",
+          "gender": "a",
+          "part_of_speech": "phrase",
+          "example_sentence": "À bientôt, prends soin de toi."
+        },
+        {
+          "french": "À demain",
+          "english": "See you tomorrow",
+          "gender": "a",
+          "part_of_speech": "phrase",
+          "example_sentence": "Bonne nuit et à demain."
+        },
+        {
+          "french": "À tout à l'heure",
+          "english": "See you later (same day)",
+          "gender": "a",
+          "part_of_speech": "phrase",
+          "example_sentence": "Je sors faire les courses, à tout à l'heure."
+        },
+        {
+          "french": "Bonne journée",
+          "english": "Have a good day",
+          "gender": "a",
+          "part_of_speech": "phrase",
+          "example_sentence": "Merci pour votre aide, bonne journée !"
+        },
+        {
+          "french": "Bonne soirée",
+          "english": "Have a good evening",
+          "gender": "a",
+          "part_of_speech": "phrase",
+          "example_sentence": "Au revoir et bonne soirée."
+        },
+        {
+          "french": "S'il vous plaît",
+          "english": "Please (formal)",
+          "gender": "a",
+          "part_of_speech": "phrase",
+          "example_sentence": "Un café, s'il vous plaît."
+        },
+        {
+          "french": "S'il te plaît",
+          "english": "Please (informal)",
+          "gender": "a",
+          "part_of_speech": "phrase",
+          "example_sentence": "Passe-moi le sel, s'il te plaît."
+        },
+        {
+          "french": "Merci",
+          "english": "Thank you",
+          "gender": "a",
+          "part_of_speech": "interjection",
+          "example_sentence": "Merci beaucoup pour ce cadeau."
+        },
+        {
+          "french": "Merci beaucoup",
+          "english": "Thank you very much",
+          "gender": "a",
+          "part_of_speech": "phrase",
+          "example_sentence": "Merci beaucoup de m'avoir invité."
+        },
+        {
+          "french": "De rien",
+          "english": "You're welcome",
+          "gender": "a",
+          "part_of_speech": "phrase",
+          "example_sentence": "— Merci. — De rien, c'est normal."
+        },
+        {
+          "french": "Je vous en prie",
+          "english": "You're welcome (formal)",
+          "gender": "a",
+          "part_of_speech": "phrase",
+          "example_sentence": "— Merci, monsieur. — Je vous en prie."
+        },
+        {
+          "french": "Pardon",
+          "english": "Sorry / Excuse me",
+          "gender": "a",
+          "part_of_speech": "interjection",
+          "example_sentence": "Pardon, je ne vous avais pas vu."
+        },
+        {
+          "french": "Excusez-moi",
+          "english": "Excuse me (formal)",
+          "gender": "a",
+          "part_of_speech": "phrase",
+          "example_sentence": "Excusez-moi, où sont les toilettes ?"
+        },
+        {
+          "french": "Comment ça va ?",
+          "english": "How are you? (informal)",
+          "gender": "a",
+          "part_of_speech": "phrase",
+          "example_sentence": "Salut Paul ! Comment ça va ?"
+        },
+        {
+          "french": "Comment allez-vous ?",
+          "english": "How are you? (formal)",
+          "gender": "a",
+          "part_of_speech": "phrase",
+          "example_sentence": "Bonjour madame, comment allez-vous ?"
+        },
+        {
+          "french": "Ça va",
+          "english": "I'm fine / OK",
+          "gender": "a",
+          "part_of_speech": "phrase",
+          "example_sentence": "— Ça va ? — Ça va, merci."
+        },
+        {
+          "french": "Très bien",
+          "english": "Very well",
+          "gender": "a",
+          "part_of_speech": "adverb",
+          "example_sentence": "Je vais très bien, merci."
+        },
+        {
+          "french": "Pas mal",
+          "english": "Not bad",
+          "gender": "a",
+          "part_of_speech": "phrase",
+          "example_sentence": "— Comment ça va ? — Pas mal, et toi ?"
+        },
+        {
+          "french": "Et toi ?",
+          "english": "And you? (informal)",
+          "gender": "a",
+          "part_of_speech": "phrase",
+          "example_sentence": "Je vais bien. Et toi ?"
+        },
+        {
+          "french": "Et vous ?",
+          "english": "And you? (formal)",
+          "gender": "a",
+          "part_of_speech": "phrase",
+          "example_sentence": "Je vais bien, merci. Et vous ?"
+        },
+        {
+          "french": "Enchanté(e)",
+          "english": "Pleased to meet you",
+          "gender": "a",
+          "part_of_speech": "adjective",
+          "example_sentence": "— Je m'appelle Marie. — Enchanté."
+        },
+        {
+          "french": "Bienvenue",
+          "english": "Welcome",
+          "gender": "a",
+          "part_of_speech": "interjection",
+          "example_sentence": "Bienvenue chez nous !"
+        }
+      ],
+      "phrases": [
+        {
+          "fr": "Je m'appelle Marie.",
+          "en": "My name is Marie.",
+          "note": "Standard introduction, both formal and informal."
+        },
+        {
+          "fr": "Comment vous appelez-vous ?",
+          "en": "What's your name? (formal)",
+          "note": "Use with strangers, in professional contexts."
+        },
+        {
+          "fr": "Comment tu t'appelles ?",
+          "en": "What's your name? (informal)",
+          "note": "Among peers, with children, in casual settings."
+        },
+        {
+          "fr": "Ravi(e) de vous rencontrer.",
+          "en": "Pleased to meet you.",
+          "note": "More formal than 'Enchanté'."
+        },
+        {
+          "fr": "Je vais bien, merci.",
+          "en": "I'm doing well, thank you.",
+          "note": "Standard polite response."
+        },
+        {
+          "fr": "Comme ci comme ça.",
+          "en": "So-so.",
+          "note": "Used when you're not great but not bad either."
+        },
+        {
+          "fr": "Bonne nuit.",
+          "en": "Good night.",
+          "note": "Only when going to bed — not as a farewell at evening."
+        },
+        {
+          "fr": "Faites comme chez vous.",
+          "en": "Make yourself at home.",
+          "note": "Welcoming a guest, formal version."
+        },
+        {
+          "fr": "Quoi de neuf ?",
+          "en": "What's new?",
+          "note": "Informal, between friends."
+        },
+        {
+          "fr": "À plus !",
+          "en": "See you! (very informal)",
+          "note": "Common among young people, written 'à plus' or 'a+'."
+        },
+        {
+          "fr": "Tout va bien ?",
+          "en": "Everything okay?",
+          "note": "Concerned but casual, equivalent to 'You alright?'."
+        },
+        {
+          "fr": "Je m'excuse.",
+          "en": "I apologize.",
+          "note": "More formal than 'pardon'."
+        }
+      ],
+      "reading": {
+        "title": "Une nouvelle rencontre",
+        "content_fr": "Marie entre dans la salle de classe pour la première fois. Elle ne connaît personne. Le professeur lui sourit et lui dit :\n\n— Bonjour ! Bienvenue. Vous êtes la nouvelle élève ?\n\n— Oui, bonjour. Je m'appelle Marie.\n\n— Enchanté, Marie. Moi, c'est Monsieur Dubois, le professeur de français. Asseyez-vous, je vous en prie.\n\nMarie s'assoit à côté d'une jeune femme qui lui sourit aussi.\n\n— Salut ! Moi, c'est Sophie. Tu es nouvelle ?\n\n— Oui, c'est mon premier jour. Comment ça va ici ?\n\n— Ça va très bien ! Les gens sont sympas. Tu viens d'où ?\n\n— Je viens du Canada. Et toi ?\n\n— Moi, je suis française, de Lyon. Bienvenue à Paris !\n\nÀ la fin du cours, Marie a déjà fait sa première amie. En sortant, elle dit au professeur :\n\n— Au revoir, monsieur, bonne journée !\n\n— Au revoir, Marie, à demain.",
+        "content_en": "Marie enters the classroom for the first time. She doesn't know anyone. The teacher smiles at her and says:\n\n— Hello! Welcome. Are you the new student?\n\n— Yes, hello. My name is Marie.\n\n— Pleased to meet you, Marie. I'm Mister Dubois, the French teacher. Please have a seat.\n\nMarie sits next to a young woman who smiles at her too.\n\n— Hi! I'm Sophie. Are you new?\n\n— Yes, it's my first day. How are things here?\n\n— Very well! People are nice. Where are you from?\n\n— I'm from Canada. And you?\n\n— I'm French, from Lyon. Welcome to Paris!\n\nAt the end of class, Marie has already made her first friend. As she leaves, she tells the teacher:\n\n— Goodbye, sir, have a good day!\n\n— Goodbye, Marie, see you tomorrow.",
+        "comprehension_questions": [
+          {
+            "q": "Comment s'appelle la nouvelle élève ?",
+            "a": "Elle s'appelle Marie."
+          },
+          {
+            "q": "D'où vient Marie ?",
+            "a": "Elle vient du Canada."
+          },
+          {
+            "q": "Qui est Sophie ?",
+            "a": "Sophie est une élève française de Lyon, assise à côté de Marie."
+          },
+          {
+            "q": "Comment Marie dit-elle au revoir au professeur ?",
+            "a": "Elle dit : « Au revoir, monsieur, bonne journée ! »"
+          }
+        ]
+      },
+      "cultural_note": "En français, on distingue 'tu' (informel, entre amis, en famille, avec les enfants) et 'vous' (formel, avec des inconnus, dans un contexte professionnel, ou avec des personnes âgées). La règle d'or : commencez toujours par 'vous' avec un nouvel adulte, et attendez qu'il vous propose le 'tu' (« On peut se tutoyer ? »). Au Québec, le tutoiement est plus rapide et plus généralisé qu'en France."
+    },
+    {
+      "name_fr": "L'identité et les nationalités",
+      "name_en": "Identity and nationalities",
+      "icon": "🆔",
+      "order": 110,
+      "difficulty_level": 1,
+      "description": "Donner son nom, son âge, sa nationalité, sa profession. Présenter quelqu'un.",
+      "vocabulary": [
+        {
+          "french": "le nom",
+          "english": "the last name",
+          "gender": "m",
+          "part_of_speech": "noun",
+          "example_sentence": "Mon nom est Dupont."
+        },
+        {
+          "french": "le prénom",
+          "english": "the first name",
+          "gender": "m",
+          "part_of_speech": "noun",
+          "example_sentence": "Mon prénom est Marie."
+        },
+        {
+          "french": "l'âge",
+          "english": "age",
+          "gender": "m",
+          "part_of_speech": "noun",
+          "example_sentence": "Quel âge avez-vous ?"
+        },
+        {
+          "french": "la nationalité",
+          "english": "nationality",
+          "gender": "f",
+          "part_of_speech": "noun",
+          "example_sentence": "Quelle est votre nationalité ?"
+        },
+        {
+          "french": "la profession",
+          "english": "profession",
+          "gender": "f",
+          "part_of_speech": "noun",
+          "example_sentence": "Quelle est votre profession ?"
+        },
+        {
+          "french": "le métier",
+          "english": "job, trade",
+          "gender": "m",
+          "part_of_speech": "noun",
+          "example_sentence": "J'aime mon métier."
+        },
+        {
+          "french": "français / française",
+          "english": "French (m/f)",
+          "gender": "a",
+          "part_of_speech": "adjective",
+          "example_sentence": "Il est français et elle est française."
+        },
+        {
+          "french": "anglais / anglaise",
+          "english": "English (m/f)",
+          "gender": "a",
+          "part_of_speech": "adjective",
+          "example_sentence": "Je suis anglais."
+        },
+        {
+          "french": "américain / américaine",
+          "english": "American (m/f)",
+          "gender": "a",
+          "part_of_speech": "adjective",
+          "example_sentence": "Elle est américaine."
+        },
+        {
+          "french": "canadien / canadienne",
+          "english": "Canadian (m/f)",
+          "gender": "a",
+          "part_of_speech": "adjective",
+          "example_sentence": "Je suis canadien, de Montréal."
+        },
+        {
+          "french": "québécois / québécoise",
+          "english": "Quebecker (m/f)",
+          "gender": "a",
+          "part_of_speech": "adjective",
+          "example_sentence": "Marie est québécoise."
+        },
+        {
+          "french": "espagnol / espagnole",
+          "english": "Spanish (m/f)",
+          "gender": "a",
+          "part_of_speech": "adjective",
+          "example_sentence": "Carlos est espagnol."
+        },
+        {
+          "french": "italien / italienne",
+          "english": "Italian (m/f)",
+          "gender": "a",
+          "part_of_speech": "adjective",
+          "example_sentence": "Sofia est italienne."
+        },
+        {
+          "french": "allemand / allemande",
+          "english": "German (m/f)",
+          "gender": "a",
+          "part_of_speech": "adjective",
+          "example_sentence": "Hans est allemand."
+        },
+        {
+          "french": "chinois / chinoise",
+          "english": "Chinese (m/f)",
+          "gender": "a",
+          "part_of_speech": "adjective",
+          "example_sentence": "Elle parle chinois."
+        },
+        {
+          "french": "marocain / marocaine",
+          "english": "Moroccan (m/f)",
+          "gender": "a",
+          "part_of_speech": "adjective",
+          "example_sentence": "Ahmed est marocain."
+        },
+        {
+          "french": "habiter",
+          "english": "to live (in a place)",
+          "gender": "a",
+          "part_of_speech": "verb",
+          "example_sentence": "J'habite à Paris."
+        },
+        {
+          "french": "venir de",
+          "english": "to come from",
+          "gender": "a",
+          "part_of_speech": "verb",
+          "example_sentence": "Je viens de Berlin."
+        },
+        {
+          "french": "parler",
+          "english": "to speak",
+          "gender": "a",
+          "part_of_speech": "verb",
+          "example_sentence": "Je parle français et anglais."
+        },
+        {
+          "french": "le pays",
+          "english": "the country",
+          "gender": "m",
+          "part_of_speech": "noun",
+          "example_sentence": "La France est un beau pays."
+        },
+        {
+          "french": "la ville",
+          "english": "the city",
+          "gender": "f",
+          "part_of_speech": "noun",
+          "example_sentence": "J'habite dans une grande ville."
+        },
+        {
+          "french": "l'étudiant / l'étudiante",
+          "english": "student",
+          "gender": "a",
+          "part_of_speech": "noun",
+          "example_sentence": "Je suis étudiant à l'université."
+        },
+        {
+          "french": "le professeur / la professeure",
+          "english": "teacher",
+          "gender": "a",
+          "part_of_speech": "noun",
+          "example_sentence": "Madame Dubois est professeure."
+        },
+        {
+          "french": "l'ingénieur(e)",
+          "english": "engineer",
+          "gender": "a",
+          "part_of_speech": "noun",
+          "example_sentence": "Mon père est ingénieur."
+        },
+        {
+          "french": "le médecin",
+          "english": "doctor",
+          "gender": "m",
+          "part_of_speech": "noun",
+          "example_sentence": "Elle est médecin à l'hôpital."
+        },
+        {
+          "french": "marié(e) / célibataire",
+          "english": "married / single",
+          "gender": "a",
+          "part_of_speech": "adjective",
+          "example_sentence": "Je suis célibataire et lui est marié."
+        }
+      ],
+      "phrases": [
+        {
+          "fr": "Je suis français.",
+          "en": "I am French.",
+          "note": "Nationality as adjective — no article."
+        },
+        {
+          "fr": "Je suis professeur.",
+          "en": "I am a teacher.",
+          "note": "Profession with être — no article ('un'/'une') unlike English."
+        },
+        {
+          "fr": "J'ai 25 ans.",
+          "en": "I'm 25 years old.",
+          "note": "Age uses 'avoir' (have), not 'être' (be)."
+        },
+        {
+          "fr": "Quel âge avez-vous ?",
+          "en": "How old are you?",
+          "note": "Formal. Informal: 'Tu as quel âge ?'"
+        },
+        {
+          "fr": "Je viens du Canada.",
+          "en": "I come from Canada.",
+          "note": "'du' = 'de + le' for masculine countries (le Canada, le Japon, le Maroc...)."
+        },
+        {
+          "fr": "Je viens de France.",
+          "en": "I come from France.",
+          "note": "'de' (no article) for feminine countries (la France, l'Italie...)."
+        },
+        {
+          "fr": "Je parle un peu français.",
+          "en": "I speak a little French.",
+          "note": "Useful to soften and show modesty."
+        },
+        {
+          "fr": "Vous parlez anglais ?",
+          "en": "Do you speak English?",
+          "note": "Common when traveling."
+        },
+        {
+          "fr": "Je ne comprends pas.",
+          "en": "I don't understand.",
+          "note": "Essential survival phrase."
+        },
+        {
+          "fr": "Pouvez-vous répéter, s'il vous plaît ?",
+          "en": "Could you repeat, please?",
+          "note": "Polite request to repeat."
+        },
+        {
+          "fr": "Je suis désolé(e), je ne parle pas très bien français.",
+          "en": "I'm sorry, I don't speak French very well.",
+          "note": "Apology + invitation to slow down."
+        },
+        {
+          "fr": "Comment ça s'écrit ?",
+          "en": "How is it spelled?",
+          "note": "When you don't catch a name or word."
+        },
+        {
+          "fr": "Je suis né(e) en 1990.",
+          "en": "I was born in 1990.",
+          "note": "'né' for males, 'née' for females (silent 'e')."
+        }
+      ],
+      "reading": {
+        "title": "Une fiche d'inscription",
+        "content_fr": "Ahmed remplit une fiche d'inscription à l'école de langue. La secrétaire lui pose des questions :\n\n— Bonjour, monsieur. Quel est votre nom ?\n\n— Mon nom est Benani, B-E-N-A-N-I.\n\n— Et votre prénom ?\n\n— Ahmed.\n\n— Quelle est votre nationalité ?\n\n— Je suis marocain, mais j'habite en France depuis deux ans.\n\n— Quel âge avez-vous ?\n\n— J'ai 29 ans.\n\n— Quelle est votre profession ?\n\n— Je suis ingénieur. Je travaille dans une entreprise de technologie.\n\n— Très bien. Vous parlez d'autres langues ?\n\n— Je parle arabe, français et un peu anglais. Je voudrais améliorer mon français.\n\n— Parfait. Voici votre carte d'étudiant. Le cours commence demain à neuf heures.\n\n— Merci beaucoup, madame. À demain !",
+        "content_en": "Ahmed fills out a registration form at the language school. The secretary asks him questions:\n\n— Hello, sir. What is your last name?\n\n— My last name is Benani, B-E-N-A-N-I.\n\n— And your first name?\n\n— Ahmed.\n\n— What is your nationality?\n\n— I'm Moroccan, but I've been living in France for two years.\n\n— How old are you?\n\n— I'm 29.\n\n— What is your profession?\n\n— I'm an engineer. I work in a technology company.\n\n— Very good. Do you speak other languages?\n\n— I speak Arabic, French, and a little English. I'd like to improve my French.\n\n— Perfect. Here's your student card. The class starts tomorrow at nine o'clock.\n\n— Thank you very much, madam. See you tomorrow!",
+        "comprehension_questions": [
+          {
+            "q": "Quelle est la nationalité d'Ahmed ?",
+            "a": "Il est marocain."
+          },
+          {
+            "q": "Quelle est sa profession ?",
+            "a": "Il est ingénieur."
+          },
+          {
+            "q": "Quelles langues parle-t-il ?",
+            "a": "Il parle arabe, français et un peu anglais."
+          },
+          {
+            "q": "Quand commence le cours ?",
+            "a": "Le cours commence demain à neuf heures."
+          }
+        ]
+      },
+      "cultural_note": "En français, les noms de pays prennent presque toujours un article (la France, le Canada, les États-Unis), et le genre influence la préposition : 'je vais en France/en Italie' (féminin → en), 'je vais au Canada/au Japon' (masculin → au), 'je vais aux États-Unis' (pluriel → aux). Les nationalités s'écrivent avec une **minuscule** en français quand elles sont adjectifs (« un homme français »), mais avec une **majuscule** quand elles sont noms (« un Français »)."
+    },
+    {
+      "name_fr": "La famille et les relations",
+      "name_en": "Family and relationships",
+      "icon": "👨‍👩‍👧‍👦",
+      "order": 120,
+      "difficulty_level": 1,
+      "description": "Présenter sa famille, parler de ses relations proches.",
+      "vocabulary": [
+        {
+          "french": "la famille",
+          "english": "family",
+          "gender": "f",
+          "part_of_speech": "noun",
+          "example_sentence": "Ma famille habite à Lyon."
+        },
+        {
+          "french": "le père / papa",
+          "english": "father / dad",
+          "gender": "m",
+          "part_of_speech": "noun",
+          "example_sentence": "Mon père est très gentil."
+        },
+        {
+          "french": "la mère / maman",
+          "english": "mother / mom",
+          "gender": "f",
+          "part_of_speech": "noun",
+          "example_sentence": "Ma mère cuisine très bien."
+        },
+        {
+          "french": "les parents",
+          "english": "parents",
+          "gender": "m",
+          "part_of_speech": "noun",
+          "example_sentence": "Mes parents habitent au Canada."
+        },
+        {
+          "french": "le fils",
+          "english": "son",
+          "gender": "m",
+          "part_of_speech": "noun",
+          "example_sentence": "Leur fils a six ans."
+        },
+        {
+          "french": "la fille",
+          "english": "daughter / girl",
+          "gender": "f",
+          "part_of_speech": "noun",
+          "example_sentence": "Ma fille étudie à l'université."
+        },
+        {
+          "french": "le frère",
+          "english": "brother",
+          "gender": "m",
+          "part_of_speech": "noun",
+          "example_sentence": "J'ai deux frères."
+        },
+        {
+          "french": "la sœur",
+          "english": "sister",
+          "gender": "f",
+          "part_of_speech": "noun",
+          "example_sentence": "Ma sœur s'appelle Léa."
+        },
+        {
+          "french": "le grand-père / papi",
+          "english": "grandfather / grandpa",
+          "gender": "m",
+          "part_of_speech": "noun",
+          "example_sentence": "Mon grand-père a 80 ans."
+        },
+        {
+          "french": "la grand-mère / mamie",
+          "english": "grandmother / granny",
+          "gender": "f",
+          "part_of_speech": "noun",
+          "example_sentence": "Ma grand-mère fait des gâteaux délicieux."
+        },
+        {
+          "french": "les grands-parents",
+          "english": "grandparents",
+          "gender": "m",
+          "part_of_speech": "noun",
+          "example_sentence": "Mes grands-parents vivent à la campagne."
+        },
+        {
+          "french": "l'oncle",
+          "english": "uncle",
+          "gender": "m",
+          "part_of_speech": "noun",
+          "example_sentence": "Mon oncle est très drôle."
+        },
+        {
+          "french": "la tante",
+          "english": "aunt",
+          "gender": "f",
+          "part_of_speech": "noun",
+          "example_sentence": "Ma tante habite à New York."
+        },
+        {
+          "french": "le cousin / la cousine",
+          "english": "cousin",
+          "gender": "a",
+          "part_of_speech": "noun",
+          "example_sentence": "J'ai cinq cousins."
+        },
+        {
+          "french": "le neveu / la nièce",
+          "english": "nephew / niece",
+          "gender": "a",
+          "part_of_speech": "noun",
+          "example_sentence": "Mon neveu adore le foot."
+        },
+        {
+          "french": "le mari / le conjoint",
+          "english": "husband / partner",
+          "gender": "m",
+          "part_of_speech": "noun",
+          "example_sentence": "Son mari est médecin."
+        },
+        {
+          "french": "la femme / l'épouse",
+          "english": "wife",
+          "gender": "f",
+          "part_of_speech": "noun",
+          "example_sentence": "Sa femme est avocate."
+        },
+        {
+          "french": "le copain / la copine",
+          "english": "boyfriend / girlfriend or friend",
+          "gender": "a",
+          "part_of_speech": "noun",
+          "example_sentence": "J'ai un nouveau copain."
+        },
+        {
+          "french": "l'ami / l'amie",
+          "english": "friend",
+          "gender": "a",
+          "part_of_speech": "noun",
+          "example_sentence": "C'est ma meilleure amie."
+        },
+        {
+          "french": "le voisin / la voisine",
+          "english": "neighbor",
+          "gender": "a",
+          "part_of_speech": "noun",
+          "example_sentence": "Mon voisin est très sympa."
+        },
+        {
+          "french": "l'enfant",
+          "english": "child",
+          "gender": "a",
+          "part_of_speech": "noun",
+          "example_sentence": "J'ai trois enfants."
+        },
+        {
+          "french": "le bébé",
+          "english": "baby",
+          "gender": "m",
+          "part_of_speech": "noun",
+          "example_sentence": "Le bébé dort."
+        },
+        {
+          "french": "l'aîné(e)",
+          "english": "eldest",
+          "gender": "a",
+          "part_of_speech": "noun",
+          "example_sentence": "Je suis l'aîné de la famille."
+        },
+        {
+          "french": "le cadet / la cadette",
+          "english": "youngest",
+          "gender": "a",
+          "part_of_speech": "noun",
+          "example_sentence": "Ma sœur est la cadette."
+        },
+        {
+          "french": "l'animal de compagnie",
+          "english": "pet",
+          "gender": "m",
+          "part_of_speech": "noun",
+          "example_sentence": "Nous avons un chien et un chat."
+        }
+      ],
+      "phrases": [
+        {
+          "fr": "Voici ma mère.",
+          "en": "This is my mother.",
+          "note": "Used to introduce family members. 'Voici' = 'here is'."
+        },
+        {
+          "fr": "Je te présente mon frère.",
+          "en": "Let me introduce my brother.",
+          "note": "More formal introduction."
+        },
+        {
+          "fr": "Nous sommes cinq dans la famille.",
+          "en": "There are five of us in the family.",
+          "note": "Stating family size."
+        },
+        {
+          "fr": "J'ai un grand frère et une petite sœur.",
+          "en": "I have an older brother and a younger sister.",
+          "note": "'Grand' (older) / 'petit' (younger) for siblings."
+        },
+        {
+          "fr": "Mes parents sont mariés depuis 30 ans.",
+          "en": "My parents have been married for 30 years.",
+          "note": "'Depuis' = 'since/for' with present tense for ongoing situations."
+        },
+        {
+          "fr": "Je suis fils unique / fille unique.",
+          "en": "I'm an only child.",
+          "note": "No siblings."
+        },
+        {
+          "fr": "Il est divorcé.",
+          "en": "He is divorced.",
+          "note": "Marital status."
+        },
+        {
+          "fr": "Elle est veuve.",
+          "en": "She is a widow.",
+          "note": "Use sensitively."
+        },
+        {
+          "fr": "Nous nous entendons bien.",
+          "en": "We get along well.",
+          "note": "About relationships in general."
+        },
+        {
+          "fr": "Ils ont deux enfants : un garçon et une fille.",
+          "en": "They have two children: a boy and a girl.",
+          "note": "Standard way to describe family composition."
+        },
+        {
+          "fr": "J'aime beaucoup mes grands-parents.",
+          "en": "I love my grandparents very much.",
+          "note": "Affection towards family."
+        },
+        {
+          "fr": "Ma famille me manque.",
+          "en": "I miss my family.",
+          "note": "Note the reverse construction: 'la famille me manque' = 'family is missing to me'."
+        }
+      ],
+      "reading": {
+        "title": "La famille de Léa",
+        "content_fr": "Bonjour, je m'appelle Léa. Je vais vous présenter ma famille. Nous sommes six à la maison.\n\nMon père s'appelle Pierre. Il a 50 ans et il est architecte. Il aime beaucoup la musique et le jardinage. Ma mère, Catherine, a 48 ans. Elle est infirmière à l'hôpital de la ville. Elle est très douce et très patiente.\n\nJ'ai un grand frère et une petite sœur. Mon frère Thomas a 22 ans, il est étudiant à l'université. Il étudie l'informatique. Ma petite sœur Camille a 12 ans, elle est encore au collège. Elle adore les chevaux.\n\nNous avons aussi un chien qui s'appelle Max. C'est un labrador noir, très gentil. Il a six ans.\n\nMes grands-parents habitent à la campagne, dans une petite maison près d'un lac. Nous allons les voir tous les week-ends en été. Mes cousins viennent souvent aussi, et nous faisons des grands repas en famille.\n\nDans ma famille, nous nous entendons très bien. Bien sûr, parfois nous nous disputons — surtout avec ma petite sœur ! — mais nous sommes très proches.",
+        "content_en": "Hello, my name is Léa. I'm going to introduce my family. There are six of us at home.\n\nMy father's name is Pierre. He's 50 and he's an architect. He loves music and gardening. My mother, Catherine, is 48. She's a nurse at the city hospital. She's very gentle and very patient.\n\nI have an older brother and a younger sister. My brother Thomas is 22, he's a university student. He's studying computer science. My little sister Camille is 12, she's still in middle school. She adores horses.\n\nWe also have a dog named Max. He's a black Labrador, very nice. He's six years old.\n\nMy grandparents live in the countryside, in a little house near a lake. We go to see them every weekend in the summer. My cousins often come too, and we have big family meals.\n\nIn my family, we get along very well. Of course, sometimes we argue — especially with my little sister! — but we are very close.",
+        "comprehension_questions": [
+          {
+            "q": "Combien de personnes y a-t-il dans la famille de Léa ?",
+            "a": "Ils sont six à la maison (Léa, ses parents, son frère, sa sœur, plus le chien)."
+          },
+          {
+            "q": "Quelle est la profession de la mère de Léa ?",
+            "a": "Elle est infirmière."
+          },
+          {
+            "q": "Où habitent les grands-parents ?",
+            "a": "Ils habitent à la campagne, dans une petite maison près d'un lac."
+          },
+          {
+            "q": "Comment Léa décrit-elle les relations dans sa famille ?",
+            "a": "Ils s'entendent très bien et sont très proches, même s'ils se disputent parfois."
+          }
+        ]
+      },
+      "cultural_note": "En France, le concept de 'famille' évolue. Le mariage civil reste fréquent mais le PACS (Pacte civil de solidarité), une union civile plus souple, est devenu très populaire depuis 1999. Les familles recomposées (parents séparés, demi-frères/demi-sœurs) sont aussi très communes. Au repas du dimanche, la tradition de réunir la famille élargie reste forte, surtout en province."
+    },
+    {
+      "name_fr": "Les nombres, l'heure et les dates",
+      "name_en": "Numbers, time, and dates",
+      "icon": "🕐",
+      "order": 130,
+      "difficulty_level": 1,
+      "description": "Compter, dire l'heure, parler des jours, mois, années.",
+      "vocabulary": [
+        {
+          "french": "zéro",
+          "english": "zero",
+          "gender": "a",
+          "part_of_speech": "number",
+          "example_sentence": "Il fait zéro degré."
+        },
+        {
+          "french": "un, deux, trois",
+          "english": "one, two, three",
+          "gender": "a",
+          "part_of_speech": "number",
+          "example_sentence": "J'ai trois enfants."
+        },
+        {
+          "french": "dix",
+          "english": "ten",
+          "gender": "a",
+          "part_of_speech": "number",
+          "example_sentence": "Le cours dure dix minutes."
+        },
+        {
+          "french": "vingt",
+          "english": "twenty",
+          "gender": "a",
+          "part_of_speech": "number",
+          "example_sentence": "J'ai vingt ans."
+        },
+        {
+          "french": "trente",
+          "english": "thirty",
+          "gender": "a",
+          "part_of_speech": "number",
+          "example_sentence": "Le bus passe toutes les trente minutes."
+        },
+        {
+          "french": "cinquante",
+          "english": "fifty",
+          "gender": "a",
+          "part_of_speech": "number",
+          "example_sentence": "Mon père a cinquante ans."
+        },
+        {
+          "french": "soixante-dix",
+          "english": "seventy (lit. 'sixty-ten')",
+          "gender": "a",
+          "part_of_speech": "number",
+          "example_sentence": "Ma grand-mère a soixante-dix ans."
+        },
+        {
+          "french": "quatre-vingts",
+          "english": "eighty (lit. 'four-twenties')",
+          "gender": "a",
+          "part_of_speech": "number",
+          "example_sentence": "Il a quatre-vingts ans."
+        },
+        {
+          "french": "quatre-vingt-dix",
+          "english": "ninety",
+          "gender": "a",
+          "part_of_speech": "number",
+          "example_sentence": "Le tableau coûte quatre-vingt-dix euros."
+        },
+        {
+          "french": "cent",
+          "english": "one hundred",
+          "gender": "a",
+          "part_of_speech": "number",
+          "example_sentence": "Il y a cent personnes ici."
+        },
+        {
+          "french": "mille",
+          "english": "one thousand",
+          "gender": "a",
+          "part_of_speech": "number",
+          "example_sentence": "Cette ville a mille habitants."
+        },
+        {
+          "french": "l'heure",
+          "english": "the hour / time",
+          "gender": "f",
+          "part_of_speech": "noun",
+          "example_sentence": "Quelle heure est-il ?"
+        },
+        {
+          "french": "la minute",
+          "english": "the minute",
+          "gender": "f",
+          "part_of_speech": "noun",
+          "example_sentence": "Attends une minute."
+        },
+        {
+          "french": "midi / minuit",
+          "english": "noon / midnight",
+          "gender": "m",
+          "part_of_speech": "noun",
+          "example_sentence": "Il est midi, on déjeune ?"
+        },
+        {
+          "french": "le matin",
+          "english": "the morning",
+          "gender": "m",
+          "part_of_speech": "noun",
+          "example_sentence": "Je travaille le matin."
+        },
+        {
+          "french": "l'après-midi",
+          "english": "the afternoon",
+          "gender": "m",
+          "part_of_speech": "noun",
+          "example_sentence": "L'après-midi, je fais du sport."
+        },
+        {
+          "french": "le soir",
+          "english": "the evening",
+          "gender": "m",
+          "part_of_speech": "noun",
+          "example_sentence": "Le soir, je lis."
+        },
+        {
+          "french": "la nuit",
+          "english": "the night",
+          "gender": "f",
+          "part_of_speech": "noun",
+          "example_sentence": "Je dors la nuit."
+        },
+        {
+          "french": "le jour / la journée",
+          "english": "day",
+          "gender": "a",
+          "part_of_speech": "noun",
+          "example_sentence": "Aujourd'hui est un beau jour."
+        },
+        {
+          "french": "la semaine",
+          "english": "the week",
+          "gender": "f",
+          "part_of_speech": "noun",
+          "example_sentence": "Cette semaine est chargée."
+        },
+        {
+          "french": "le mois",
+          "english": "the month",
+          "gender": "m",
+          "part_of_speech": "noun",
+          "example_sentence": "Le mois de mai est mon préféré."
+        },
+        {
+          "french": "l'année / l'an",
+          "english": "year",
+          "gender": "a",
+          "part_of_speech": "noun",
+          "example_sentence": "Bonne année !"
+        },
+        {
+          "french": "lundi, mardi, mercredi",
+          "english": "Monday, Tuesday, Wednesday",
+          "gender": "m",
+          "part_of_speech": "noun",
+          "example_sentence": "On se voit lundi ?"
+        },
+        {
+          "french": "jeudi, vendredi",
+          "english": "Thursday, Friday",
+          "gender": "m",
+          "part_of_speech": "noun",
+          "example_sentence": "Vendredi, c'est le week-end !"
+        },
+        {
+          "french": "samedi, dimanche",
+          "english": "Saturday, Sunday",
+          "gender": "m",
+          "part_of_speech": "noun",
+          "example_sentence": "Le dimanche, je me repose."
+        },
+        {
+          "french": "janvier, février, mars",
+          "english": "January, February, March",
+          "gender": "m",
+          "part_of_speech": "noun",
+          "example_sentence": "Mon anniversaire est en mars."
+        },
+        {
+          "french": "aujourd'hui / hier / demain",
+          "english": "today / yesterday / tomorrow",
+          "gender": "a",
+          "part_of_speech": "adverb",
+          "example_sentence": "Hier, j'étais malade. Aujourd'hui, ça va mieux."
+        }
+      ],
+      "phrases": [
+        {
+          "fr": "Quelle heure est-il ?",
+          "en": "What time is it?",
+          "note": "Standard question. Informal: 'Il est quelle heure ?'"
+        },
+        {
+          "fr": "Il est huit heures.",
+          "en": "It's eight o'clock.",
+          "note": "'Il est' is impersonal."
+        },
+        {
+          "fr": "Il est huit heures et quart.",
+          "en": "It's a quarter past eight (8:15).",
+          "note": "'Et quart' = +15 minutes."
+        },
+        {
+          "fr": "Il est huit heures et demie.",
+          "en": "It's half past eight (8:30).",
+          "note": "'Et demie' = +30 minutes."
+        },
+        {
+          "fr": "Il est neuf heures moins le quart.",
+          "en": "It's a quarter to nine (8:45).",
+          "note": "'Moins le quart' = -15 minutes."
+        },
+        {
+          "fr": "À quelle heure ?",
+          "en": "At what time?",
+          "note": "Note the preposition 'à' for 'at'."
+        },
+        {
+          "fr": "À dix heures précises.",
+          "en": "At ten o'clock sharp.",
+          "note": "'Précises' adds 'exactly'."
+        },
+        {
+          "fr": "Quel jour sommes-nous ?",
+          "en": "What day is it?",
+          "note": "Literally 'What day are we?'."
+        },
+        {
+          "fr": "Nous sommes lundi.",
+          "en": "It's Monday.",
+          "note": "'On est lundi' is more casual."
+        },
+        {
+          "fr": "Quelle est la date aujourd'hui ?",
+          "en": "What is the date today?",
+          "note": "For exact date."
+        },
+        {
+          "fr": "C'est le 15 mars.",
+          "en": "It's March 15.",
+          "note": "'Le' + number + month. No 'th' suffix."
+        },
+        {
+          "fr": "Je suis né(e) le premier janvier.",
+          "en": "I was born on January 1st.",
+          "note": "Only the 1st is 'premier'; other days use cardinal numbers (le deux, le trois...)."
+        },
+        {
+          "fr": "L'année dernière / cette année / l'année prochaine",
+          "en": "Last year / this year / next year",
+          "note": "Time markers."
+        },
+        {
+          "fr": "Il est tard.",
+          "en": "It's late.",
+          "note": "Common observation."
+        },
+        {
+          "fr": "Tu es à l'heure.",
+          "en": "You're on time.",
+          "note": "Opposite: 'tu es en retard'."
+        }
+      ],
+      "reading": {
+        "title": "Une journée typique",
+        "content_fr": "Je m'appelle Julien et je vais vous raconter ma journée typique de la semaine.\n\nLe matin, je me réveille à six heures et demie. Je prends une douche, puis je prépare un café. À sept heures, je prends mon petit déjeuner : du pain, du beurre, de la confiture et un grand café au lait.\n\nÀ huit heures moins le quart, je sors de la maison et je prends le métro pour aller au travail. Le trajet dure vingt minutes. J'arrive au bureau à huit heures vingt.\n\nJe travaille de huit heures et demie à midi. À midi pile, je vais déjeuner avec mes collègues dans un petit restaurant près du bureau. Le déjeuner dure environ une heure.\n\nL'après-midi, je travaille de treize heures à dix-huit heures. Le soir, je rentre chez moi vers dix-neuf heures. Je dîne à vingt heures, je regarde un peu la télé, puis je lis avant de dormir.\n\nLe week-end, c'est différent : samedi et dimanche, je dors jusqu'à neuf ou dix heures du matin !\n\nMa journée préférée de la semaine ? Le vendredi, bien sûr — parce que le lendemain, c'est le week-end !",
+        "content_en": "My name is Julien and I'm going to tell you about my typical weekday.\n\nIn the morning, I wake up at half past six. I take a shower, then I make coffee. At seven, I have breakfast: bread, butter, jam, and a big café au lait.\n\nAt a quarter to eight, I leave the house and take the metro to work. The journey takes twenty minutes. I arrive at the office at eight twenty.\n\nI work from half past eight to noon. At noon sharp, I go to lunch with my colleagues at a little restaurant near the office. Lunch lasts about an hour.\n\nIn the afternoon, I work from 1 PM to 6 PM. In the evening, I get home around 7 PM. I have dinner at 8 PM, I watch a little TV, then I read before sleeping.\n\nOn weekends, it's different: Saturday and Sunday, I sleep until nine or ten in the morning!\n\nMy favorite day of the week? Friday, of course — because the next day, it's the weekend!",
+        "comprehension_questions": [
+          {
+            "q": "À quelle heure Julien se réveille-t-il en semaine ?",
+            "a": "Il se réveille à six heures et demie."
+          },
+          {
+            "q": "Comment va-t-il au travail ?",
+            "a": "Il prend le métro."
+          },
+          {
+            "q": "Combien de temps dure son déjeuner ?",
+            "a": "Environ une heure."
+          },
+          {
+            "q": "Pourquoi le vendredi est-il son jour préféré ?",
+            "a": "Parce que le lendemain, c'est le week-end."
+          }
+        ]
+      },
+      "cultural_note": "En France et au Québec, l'**heure officielle utilise le format 24 h** (« le train part à 17 h 30 »), mais à l'oral entre amis, on utilise souvent le format 12 h avec 'du matin', 'de l'après-midi', 'du soir' (« On se voit à 5 h de l'après-midi »). Les nombres 70, 80, 90 sont notoirement bizarres en français standard (*soixante-dix, quatre-vingts, quatre-vingt-dix*), mais en Belgique et en Suisse, on dit *septante, octante/huitante, nonante* — plus logique !"
+    },
+    {
+      "name_fr": "La maison et le logement",
+      "name_en": "House and lodging",
+      "icon": "🏠",
+      "order": 140,
+      "difficulty_level": 1,
+      "description": "Décrire son logement, les pièces, les meubles.",
+      "vocabulary": [
+        {
+          "french": "la maison",
+          "english": "house",
+          "gender": "f",
+          "part_of_speech": "noun",
+          "example_sentence": "J'habite dans une grande maison."
+        },
+        {
+          "french": "l'appartement",
+          "english": "apartment",
+          "gender": "m",
+          "part_of_speech": "noun",
+          "example_sentence": "Mon appartement est au 5e étage."
+        },
+        {
+          "french": "le studio",
+          "english": "studio apartment",
+          "gender": "m",
+          "part_of_speech": "noun",
+          "example_sentence": "Je vis dans un petit studio."
+        },
+        {
+          "french": "la chambre",
+          "english": "bedroom",
+          "gender": "f",
+          "part_of_speech": "noun",
+          "example_sentence": "Ma chambre est petite mais confortable."
+        },
+        {
+          "french": "le salon",
+          "english": "living room",
+          "gender": "m",
+          "part_of_speech": "noun",
+          "example_sentence": "Le salon est très lumineux."
+        },
+        {
+          "french": "la cuisine",
+          "english": "kitchen",
+          "gender": "f",
+          "part_of_speech": "noun",
+          "example_sentence": "Je cuisine dans la cuisine."
+        },
+        {
+          "french": "la salle à manger",
+          "english": "dining room",
+          "gender": "f",
+          "part_of_speech": "noun",
+          "example_sentence": "Nous dînons dans la salle à manger."
+        },
+        {
+          "french": "la salle de bains",
+          "english": "bathroom",
+          "gender": "f",
+          "part_of_speech": "noun",
+          "example_sentence": "La salle de bains est à côté de ma chambre."
+        },
+        {
+          "french": "les toilettes",
+          "english": "toilet/restroom",
+          "gender": "f",
+          "part_of_speech": "noun",
+          "example_sentence": "Où sont les toilettes ?"
+        },
+        {
+          "french": "le couloir",
+          "english": "hallway",
+          "gender": "m",
+          "part_of_speech": "noun",
+          "example_sentence": "Le couloir mène à la cuisine."
+        },
+        {
+          "french": "le balcon",
+          "english": "balcony",
+          "gender": "m",
+          "part_of_speech": "noun",
+          "example_sentence": "Le balcon donne sur la rue."
+        },
+        {
+          "french": "le jardin",
+          "english": "garden",
+          "gender": "m",
+          "part_of_speech": "noun",
+          "example_sentence": "Nous avons un beau jardin."
+        },
+        {
+          "french": "la porte",
+          "english": "door",
+          "gender": "f",
+          "part_of_speech": "noun",
+          "example_sentence": "Ferme la porte, s'il te plaît."
+        },
+        {
+          "french": "la fenêtre",
+          "english": "window",
+          "gender": "f",
+          "part_of_speech": "noun",
+          "example_sentence": "Ouvre la fenêtre, il fait chaud."
+        },
+        {
+          "french": "le mur",
+          "english": "wall",
+          "gender": "m",
+          "part_of_speech": "noun",
+          "example_sentence": "Les murs sont blancs."
+        },
+        {
+          "french": "le sol",
+          "english": "floor",
+          "gender": "m",
+          "part_of_speech": "noun",
+          "example_sentence": "Le sol est en parquet."
+        },
+        {
+          "french": "le plafond",
+          "english": "ceiling",
+          "gender": "m",
+          "part_of_speech": "noun",
+          "example_sentence": "Le plafond est haut."
+        },
+        {
+          "french": "le lit",
+          "english": "bed",
+          "gender": "m",
+          "part_of_speech": "noun",
+          "example_sentence": "Je vais au lit à 23 heures."
+        },
+        {
+          "french": "la table",
+          "english": "table",
+          "gender": "f",
+          "part_of_speech": "noun",
+          "example_sentence": "Mets le sel sur la table."
+        },
+        {
+          "french": "la chaise",
+          "english": "chair",
+          "gender": "f",
+          "part_of_speech": "noun",
+          "example_sentence": "Assieds-toi sur la chaise."
+        },
+        {
+          "french": "le canapé",
+          "english": "sofa",
+          "gender": "m",
+          "part_of_speech": "noun",
+          "example_sentence": "Le chien dort sur le canapé."
+        },
+        {
+          "french": "l'armoire",
+          "english": "wardrobe",
+          "gender": "f",
+          "part_of_speech": "noun",
+          "example_sentence": "Mes vêtements sont dans l'armoire."
+        },
+        {
+          "french": "le frigo / réfrigérateur",
+          "english": "fridge",
+          "gender": "m",
+          "part_of_speech": "noun",
+          "example_sentence": "Il n'y a plus de lait dans le frigo."
+        },
+        {
+          "french": "la télé / télévision",
+          "english": "TV",
+          "gender": "f",
+          "part_of_speech": "noun",
+          "example_sentence": "Allume la télé."
+        },
+        {
+          "french": "l'étage",
+          "english": "floor (of a building)",
+          "gender": "m",
+          "part_of_speech": "noun",
+          "example_sentence": "J'habite au troisième étage."
+        },
+        {
+          "french": "louer / acheter",
+          "english": "to rent / to buy",
+          "gender": "a",
+          "part_of_speech": "verb",
+          "example_sentence": "Je loue un appartement. Mes parents ont acheté une maison."
+        }
+      ],
+      "phrases": [
+        {
+          "fr": "J'habite dans un appartement de trois pièces.",
+          "en": "I live in a three-room apartment.",
+          "note": "In France, room count excludes kitchen and bathroom."
+        },
+        {
+          "fr": "C'est au rez-de-chaussée.",
+          "en": "It's on the ground floor.",
+          "note": "Note: ground floor = rez-de-chaussée; '1st floor' (premier étage) = American 2nd floor."
+        },
+        {
+          "fr": "L'appartement fait 50 mètres carrés.",
+          "en": "The apartment is 50 square meters.",
+          "note": "Standard way to give size."
+        },
+        {
+          "fr": "Il y a deux chambres et un salon.",
+          "en": "There are two bedrooms and a living room.",
+          "note": "'Il y a' = 'there is/are'."
+        },
+        {
+          "fr": "Ma chambre donne sur la cour.",
+          "en": "My bedroom faces the courtyard.",
+          "note": "'Donne sur' = 'faces, looks onto'."
+        },
+        {
+          "fr": "Le loyer est de 800 euros par mois.",
+          "en": "The rent is 800 euros per month.",
+          "note": "Useful for housing discussions."
+        },
+        {
+          "fr": "Faites comme chez vous.",
+          "en": "Make yourself at home.",
+          "note": "Polite welcome to a guest."
+        },
+        {
+          "fr": "Je vis chez mes parents.",
+          "en": "I live with my parents.",
+          "note": "'Chez' + person = at their home."
+        },
+        {
+          "fr": "Je cherche un logement.",
+          "en": "I'm looking for a place to live.",
+          "note": "Common when moving."
+        },
+        {
+          "fr": "C'est lumineux et calme.",
+          "en": "It's bright and quiet.",
+          "note": "Standard apartment-listing adjectives."
+        },
+        {
+          "fr": "L'appartement est meublé.",
+          "en": "The apartment is furnished.",
+          "note": "Important rental detail in France."
+        },
+        {
+          "fr": "Bienvenue chez moi !",
+          "en": "Welcome to my place!",
+          "note": "Welcoming a guest."
+        }
+      ],
+      "reading": {
+        "title": "Mon nouvel appartement",
+        "content_fr": "Je viens de déménager dans un nouvel appartement à Paris. C'est un petit deux-pièces de 35 mètres carrés, au troisième étage d'un vieux bâtiment du 19e siècle. Il n'y a pas d'ascenseur, donc je monte les escaliers à pied — c'est bon pour la santé !\n\nQuand on entre, il y a un petit couloir avec un placard. À gauche, c'est la cuisine. Elle est toute équipée : il y a un frigo, un four, une plaque de cuisson et un lave-vaisselle. C'est petit mais pratique.\n\nÀ droite du couloir, c'est la salle de bains. Il y a une douche, un lavabo et les toilettes. Pas de baignoire, malheureusement.\n\nAu bout du couloir, c'est le salon-salle à manger. C'est la pièce la plus lumineuse de l'appartement : il y a deux grandes fenêtres qui donnent sur la rue. J'ai mis un canapé bleu, une petite table et deux chaises. Ma télé est en face du canapé.\n\nMa chambre est juste à côté du salon. Elle est petite mais confortable. Il y a mon lit, une armoire et un bureau pour travailler.\n\nLe loyer est de 950 euros par mois, ce qui est normal pour Paris. Je suis très content : c'est mon premier vrai chez-moi !",
+        "content_en": "I just moved into a new apartment in Paris. It's a little one-bedroom of 35 square meters, on the third floor of an old 19th-century building. There's no elevator, so I walk up the stairs — it's good for the health!\n\nWhen you enter, there's a small hallway with a closet. To the left, there's the kitchen. It's fully equipped: there's a fridge, an oven, a cooktop, and a dishwasher. It's small but practical.\n\nTo the right of the hallway is the bathroom. There's a shower, a sink, and a toilet. No bathtub, unfortunately.\n\nAt the end of the hallway is the living room / dining room. It's the brightest room of the apartment: there are two big windows looking onto the street. I put a blue sofa, a small table, and two chairs. My TV is across from the sofa.\n\nMy bedroom is right next to the living room. It's small but comfortable. There's my bed, a wardrobe, and a desk for working.\n\nThe rent is 950 euros per month, which is normal for Paris. I'm very happy: it's my first real home!",
+        "comprehension_questions": [
+          {
+            "q": "À quel étage se trouve l'appartement ?",
+            "a": "Au troisième étage."
+          },
+          {
+            "q": "Quelle est la pièce la plus lumineuse ?",
+            "a": "Le salon-salle à manger, parce qu'il a deux grandes fenêtres."
+          },
+          {
+            "q": "Y a-t-il un ascenseur dans l'immeuble ?",
+            "a": "Non, il n'y a pas d'ascenseur."
+          },
+          {
+            "q": "Combien coûte le loyer ?",
+            "a": "950 euros par mois."
+          }
+        ]
+      },
+      "cultural_note": "En France, le marché immobilier est notoirement compétitif, surtout à Paris. Les appartements y sont petits et chers (souvent plus de 30 €/m² par mois en location). Un 'studio' = une seule pièce + salle d'eau ; un 'deux-pièces' = chambre + salon séparés. Le 'numéro de pièces' (T1, T2, T3...) exclut toujours la cuisine, la salle de bains et les toilettes. La plupart des logements parisiens datent du 19e siècle (style 'Haussmannien') et n'ont pas d'ascenseur — courant jusqu'au 6e étage !"
+    },
+    {
+      "name_fr": "La routine quotidienne",
+      "name_en": "Daily routine",
+      "icon": "⏰",
+      "order": 150,
+      "difficulty_level": 1,
+      "description": "Décrire ses habitudes quotidiennes avec les verbes pronominaux et l'heure.",
+      "vocabulary": [
+        {
+          "french": "se réveiller",
+          "english": "to wake up",
+          "gender": "a",
+          "part_of_speech": "verb",
+          "example_sentence": "Je me réveille à 7 heures."
+        },
+        {
+          "french": "se lever",
+          "english": "to get up",
+          "gender": "a",
+          "part_of_speech": "verb",
+          "example_sentence": "Je me lève tôt le matin."
+        },
+        {
+          "french": "se laver",
+          "english": "to wash oneself",
+          "gender": "a",
+          "part_of_speech": "verb",
+          "example_sentence": "Je me lave les mains avant de manger."
+        },
+        {
+          "french": "se doucher / prendre une douche",
+          "english": "to shower",
+          "gender": "a",
+          "part_of_speech": "verb",
+          "example_sentence": "Je me douche tous les matins."
+        },
+        {
+          "french": "se brosser les dents",
+          "english": "to brush one's teeth",
+          "gender": "a",
+          "part_of_speech": "verb",
+          "example_sentence": "Brosse-toi les dents avant de dormir."
+        },
+        {
+          "french": "s'habiller",
+          "english": "to get dressed",
+          "gender": "a",
+          "part_of_speech": "verb",
+          "example_sentence": "Je m'habille rapidement."
+        },
+        {
+          "french": "se coiffer",
+          "english": "to do one's hair",
+          "gender": "a",
+          "part_of_speech": "verb",
+          "example_sentence": "Elle se coiffe devant le miroir."
+        },
+        {
+          "french": "se maquiller",
+          "english": "to put on makeup",
+          "gender": "a",
+          "part_of_speech": "verb",
+          "example_sentence": "Elle se maquille tous les jours."
+        },
+        {
+          "french": "prendre le petit déjeuner",
+          "english": "to have breakfast",
+          "gender": "a",
+          "part_of_speech": "verb",
+          "example_sentence": "Je prends mon petit déjeuner à 7 h 30."
+        },
+        {
+          "french": "déjeuner",
+          "english": "to have lunch",
+          "gender": "a",
+          "part_of_speech": "verb",
+          "example_sentence": "Je déjeune au bureau."
+        },
+        {
+          "french": "dîner",
+          "english": "to have dinner",
+          "gender": "a",
+          "part_of_speech": "verb",
+          "example_sentence": "Nous dînons à 20 heures."
+        },
+        {
+          "french": "aller au travail",
+          "english": "to go to work",
+          "gender": "a",
+          "part_of_speech": "verb",
+          "example_sentence": "Je vais au travail en bus."
+        },
+        {
+          "french": "travailler",
+          "english": "to work",
+          "gender": "a",
+          "part_of_speech": "verb",
+          "example_sentence": "Je travaille de 9 h à 17 h."
+        },
+        {
+          "french": "rentrer",
+          "english": "to come/go home",
+          "gender": "a",
+          "part_of_speech": "verb",
+          "example_sentence": "Je rentre chez moi vers 18 heures."
+        },
+        {
+          "french": "se reposer",
+          "english": "to rest",
+          "gender": "a",
+          "part_of_speech": "verb",
+          "example_sentence": "Je me repose après le travail."
+        },
+        {
+          "french": "regarder la télé",
+          "english": "to watch TV",
+          "gender": "a",
+          "part_of_speech": "verb",
+          "example_sentence": "Le soir, je regarde la télé."
+        },
+        {
+          "french": "lire",
+          "english": "to read",
+          "gender": "a",
+          "part_of_speech": "verb",
+          "example_sentence": "J'aime lire avant de dormir."
+        },
+        {
+          "french": "se coucher",
+          "english": "to go to bed",
+          "gender": "a",
+          "part_of_speech": "verb",
+          "example_sentence": "Je me couche à 23 heures."
+        },
+        {
+          "french": "s'endormir",
+          "english": "to fall asleep",
+          "gender": "a",
+          "part_of_speech": "verb",
+          "example_sentence": "Je m'endors vite."
+        },
+        {
+          "french": "dormir",
+          "english": "to sleep",
+          "gender": "a",
+          "part_of_speech": "verb",
+          "example_sentence": "Je dors huit heures par nuit."
+        },
+        {
+          "french": "le matin / l'après-midi / le soir",
+          "english": "morning/afternoon/evening",
+          "gender": "a",
+          "part_of_speech": "noun",
+          "example_sentence": "Je travaille le matin et l'après-midi."
+        },
+        {
+          "french": "tôt / tard",
+          "english": "early / late",
+          "gender": "a",
+          "part_of_speech": "adverb",
+          "example_sentence": "Je me lève tôt et je me couche tard."
+        },
+        {
+          "french": "tous les jours",
+          "english": "every day",
+          "gender": "a",
+          "part_of_speech": "phrase",
+          "example_sentence": "Je cours tous les jours."
+        },
+        {
+          "french": "le week-end",
+          "english": "the weekend",
+          "gender": "m",
+          "part_of_speech": "noun",
+          "example_sentence": "Le week-end, je me repose."
+        },
+        {
+          "french": "d'habitude",
+          "english": "usually",
+          "gender": "a",
+          "part_of_speech": "adverb",
+          "example_sentence": "D'habitude, je me lève à 7 heures."
+        }
+      ],
+      "phrases": [
+        {
+          "fr": "Je me lève à six heures.",
+          "en": "I get up at six.",
+          "note": "Pronominal verb 'se lever' — note the reflexive 'me'."
+        },
+        {
+          "fr": "Tu te réveilles à quelle heure ?",
+          "en": "What time do you wake up?",
+          "note": "Informal question with intonation."
+        },
+        {
+          "fr": "Tous les matins, je prends un café.",
+          "en": "Every morning, I have a coffee.",
+          "note": "Time marker at beginning."
+        },
+        {
+          "fr": "Je commence à travailler à 9 heures.",
+          "en": "I start working at 9.",
+          "note": "'Commencer à' + infinitive."
+        },
+        {
+          "fr": "Je fais une pause à midi.",
+          "en": "I take a break at noon.",
+          "note": "'Faire une pause' = standard expression."
+        },
+        {
+          "fr": "Le soir, je me détends.",
+          "en": "In the evening, I relax.",
+          "note": "'Se détendre' is pronominal."
+        },
+        {
+          "fr": "Je vais au lit vers 23 heures.",
+          "en": "I go to bed around 11 PM.",
+          "note": "'Vers' = 'around, about' for approximate times."
+        },
+        {
+          "fr": "Je dors huit heures par nuit.",
+          "en": "I sleep eight hours a night.",
+          "note": "Standard duration."
+        },
+        {
+          "fr": "Le week-end, je fais la grasse matinée.",
+          "en": "On weekends, I sleep in.",
+          "note": "'Faire la grasse matinée' = a beautiful idiom for sleeping in."
+        },
+        {
+          "fr": "Je n'aime pas me lever tôt.",
+          "en": "I don't like getting up early.",
+          "note": "Pronominal infinitive after a conjugated verb."
+        },
+        {
+          "fr": "Je suis du matin / du soir.",
+          "en": "I'm a morning/evening person.",
+          "note": "Personality expression."
+        },
+        {
+          "fr": "Le matin, je n'ai pas d'énergie.",
+          "en": "In the morning, I have no energy.",
+          "note": "Common complaint."
+        }
+      ],
+      "reading": {
+        "title": "La routine de Sophie",
+        "content_fr": "Bonjour ! Je m'appelle Sophie et j'ai 28 ans. Je travaille dans une banque à Lyon. Voici ma routine de la semaine.\n\nLe matin, je me réveille à six heures et demie. Je n'aime pas me lever tôt, mais je n'ai pas le choix ! Je prends une douche rapide, je me brosse les dents, et je m'habille. Pendant ce temps, mon mari prépare le café.\n\nÀ sept heures, nous prenons notre petit déjeuner ensemble : un grand bol de café au lait, des tartines avec du beurre et de la confiture. C'est le seul moment calme de la journée.\n\nÀ sept heures et demie, je quitte la maison. Je prends le tramway pour aller au travail. Le trajet dure environ vingt-cinq minutes. J'en profite pour lire un livre ou écouter de la musique.\n\nJe travaille de huit heures et demie à dix-sept heures, avec une pause d'une heure pour déjeuner. Je mange souvent un sandwich avec mes collègues.\n\nLe soir, je rentre chez moi vers dix-huit heures. Je fais du sport trois fois par semaine — je vais à la salle de gym. Sinon, je cuisine ou je me repose. Mon mari et moi dînons à vingt heures. Après, nous regardons un film ou nous lisons.\n\nJe me couche vers vingt-trois heures. Mais le week-end, ah ! Le week-end, je fais la grasse matinée jusqu'à dix heures !",
+        "content_en": "Hello! My name is Sophie and I'm 28. I work at a bank in Lyon. Here's my weekly routine.\n\nIn the morning, I wake up at six-thirty. I don't like getting up early, but I don't have a choice! I take a quick shower, brush my teeth, and get dressed. Meanwhile, my husband makes coffee.\n\nAt seven, we have breakfast together: a big bowl of café au lait, slices of bread with butter and jam. It's the only calm moment of the day.\n\nAt seven-thirty, I leave the house. I take the tram to work. The journey takes about twenty-five minutes. I use that time to read a book or listen to music.\n\nI work from eight-thirty to five PM, with a one-hour lunch break. I often eat a sandwich with my colleagues.\n\nIn the evening, I get home around six PM. I exercise three times a week — I go to the gym. Otherwise, I cook or rest. My husband and I have dinner at eight. Afterwards, we watch a movie or read.\n\nI go to bed around eleven PM. But on weekends, ah! On weekends, I sleep in until ten!",
+        "comprehension_questions": [
+          {
+            "q": "Quelle est la profession de Sophie ?",
+            "a": "Elle travaille dans une banque à Lyon."
+          },
+          {
+            "q": "Comment va-t-elle au travail ?",
+            "a": "Elle prend le tramway."
+          },
+          {
+            "q": "Combien de fois par semaine fait-elle du sport ?",
+            "a": "Trois fois par semaine."
+          },
+          {
+            "q": "À quelle heure se lève-t-elle le week-end ?",
+            "a": "Vers dix heures, elle fait la grasse matinée."
+          }
+        ]
+      },
+      "cultural_note": "Les Français travaillent en moyenne 35 heures par semaine — c'est la durée légale du travail depuis 2000. La pause déjeuner est longue (une heure ou plus), considérée comme un moment social important. Beaucoup de bureaux ferment encore à midi et reprennent à 14 h. Au Québec, la routine est plus 'nord-américaine' : journée plus continue, pause déjeuner plus courte (30-45 minutes), souvent un repas pris au bureau."
+    },
+    {
+      "name_fr": "Nourriture et boissons",
+      "name_en": "Food and drinks",
+      "icon": "🥖",
+      "order": 160,
+      "difficulty_level": 1,
+      "description": "Les aliments de base, les boissons, les goûts.",
+      "vocabulary": [
+        {
+          "french": "le pain",
+          "english": "bread",
+          "gender": "m",
+          "part_of_speech": "noun",
+          "example_sentence": "J'achète du pain tous les jours."
+        },
+        {
+          "french": "la baguette",
+          "english": "baguette",
+          "gender": "f",
+          "part_of_speech": "noun",
+          "example_sentence": "Une baguette, s'il vous plaît."
+        },
+        {
+          "french": "le croissant",
+          "english": "croissant",
+          "gender": "m",
+          "part_of_speech": "noun",
+          "example_sentence": "Je mange un croissant au petit déjeuner."
+        },
+        {
+          "french": "le beurre",
+          "english": "butter",
+          "gender": "m",
+          "part_of_speech": "noun",
+          "example_sentence": "Du beurre sur le pain, s'il vous plaît."
+        },
+        {
+          "french": "la confiture",
+          "english": "jam",
+          "gender": "f",
+          "part_of_speech": "noun",
+          "example_sentence": "J'aime la confiture de fraises."
+        },
+        {
+          "french": "le fromage",
+          "english": "cheese",
+          "gender": "m",
+          "part_of_speech": "noun",
+          "example_sentence": "La France a beaucoup de fromages."
+        },
+        {
+          "french": "le lait",
+          "english": "milk",
+          "gender": "m",
+          "part_of_speech": "noun",
+          "example_sentence": "Je bois du lait chaud le soir."
+        },
+        {
+          "french": "les œufs",
+          "english": "eggs",
+          "gender": "m",
+          "part_of_speech": "noun",
+          "example_sentence": "Je mange deux œufs au petit déjeuner."
+        },
+        {
+          "french": "la viande",
+          "english": "meat",
+          "gender": "f",
+          "part_of_speech": "noun",
+          "example_sentence": "Je ne mange pas beaucoup de viande."
+        },
+        {
+          "french": "le poulet",
+          "english": "chicken",
+          "gender": "m",
+          "part_of_speech": "noun",
+          "example_sentence": "Le poulet rôti est délicieux."
+        },
+        {
+          "french": "le bœuf",
+          "english": "beef",
+          "gender": "m",
+          "part_of_speech": "noun",
+          "example_sentence": "Un steak de bœuf, saignant."
+        },
+        {
+          "french": "le poisson",
+          "english": "fish",
+          "gender": "m",
+          "part_of_speech": "noun",
+          "example_sentence": "On mange souvent du poisson le vendredi."
+        },
+        {
+          "french": "les légumes",
+          "english": "vegetables",
+          "gender": "m",
+          "part_of_speech": "noun",
+          "example_sentence": "Il faut manger des légumes."
+        },
+        {
+          "french": "les fruits",
+          "english": "fruits",
+          "gender": "m",
+          "part_of_speech": "noun",
+          "example_sentence": "Les fruits sont bons pour la santé."
+        },
+        {
+          "french": "la pomme / la banane",
+          "english": "apple / banana",
+          "gender": "f",
+          "part_of_speech": "noun",
+          "example_sentence": "Une pomme par jour, c'est bien."
+        },
+        {
+          "french": "la tomate / la salade",
+          "english": "tomato / salad",
+          "gender": "f",
+          "part_of_speech": "noun",
+          "example_sentence": "Je fais une salade de tomates."
+        },
+        {
+          "french": "les pâtes",
+          "english": "pasta",
+          "gender": "f",
+          "part_of_speech": "noun",
+          "example_sentence": "J'aime les pâtes à la bolognaise."
+        },
+        {
+          "french": "le riz",
+          "english": "rice",
+          "gender": "m",
+          "part_of_speech": "noun",
+          "example_sentence": "Du riz blanc avec le poulet."
+        },
+        {
+          "french": "l'eau",
+          "english": "water",
+          "gender": "f",
+          "part_of_speech": "noun",
+          "example_sentence": "Un verre d'eau, s'il vous plaît."
+        },
+        {
+          "french": "le café",
+          "english": "coffee",
+          "gender": "m",
+          "part_of_speech": "noun",
+          "example_sentence": "Un café noir, sans sucre."
+        },
+        {
+          "french": "le thé",
+          "english": "tea",
+          "gender": "m",
+          "part_of_speech": "noun",
+          "example_sentence": "Du thé vert, s'il vous plaît."
+        },
+        {
+          "french": "le jus",
+          "english": "juice",
+          "gender": "m",
+          "part_of_speech": "noun",
+          "example_sentence": "Un jus d'orange frais."
+        },
+        {
+          "french": "le vin / la bière",
+          "english": "wine / beer",
+          "gender": "a",
+          "part_of_speech": "noun",
+          "example_sentence": "Un verre de vin rouge, s'il vous plaît."
+        },
+        {
+          "french": "le sucre / le sel",
+          "english": "sugar / salt",
+          "gender": "m",
+          "part_of_speech": "noun",
+          "example_sentence": "Pas de sucre dans mon café."
+        },
+        {
+          "french": "le poivre",
+          "english": "pepper",
+          "gender": "m",
+          "part_of_speech": "noun",
+          "example_sentence": "Sel et poivre, s'il vous plaît."
+        },
+        {
+          "french": "manger / boire",
+          "english": "to eat / to drink",
+          "gender": "a",
+          "part_of_speech": "verb",
+          "example_sentence": "Je mange une pomme et je bois de l'eau."
+        },
+        {
+          "french": "avoir faim / avoir soif",
+          "english": "to be hungry / thirsty",
+          "gender": "a",
+          "part_of_speech": "phrase",
+          "example_sentence": "J'ai faim ! On mange ?"
+        }
+      ],
+      "phrases": [
+        {
+          "fr": "Qu'est-ce que tu manges ?",
+          "en": "What are you eating?",
+          "note": "Casual question."
+        },
+        {
+          "fr": "J'ai très faim.",
+          "en": "I'm very hungry.",
+          "note": "'Avoir faim' — use 'avoir' (have), not 'être'."
+        },
+        {
+          "fr": "Bon appétit !",
+          "en": "Enjoy your meal!",
+          "note": "Said before everyone starts eating."
+        },
+        {
+          "fr": "C'est délicieux !",
+          "en": "It's delicious!",
+          "note": "Standard compliment."
+        },
+        {
+          "fr": "J'aime le chocolat.",
+          "en": "I love chocolate.",
+          "note": "'Aimer' + definite article for general preferences."
+        },
+        {
+          "fr": "Je n'aime pas les épinards.",
+          "en": "I don't like spinach.",
+          "note": "Article remains 'les' even after negation when expressing preference."
+        },
+        {
+          "fr": "Tu veux quelque chose à boire ?",
+          "en": "Want something to drink?",
+          "note": "Casual offer."
+        },
+        {
+          "fr": "Je suis végétarien(ne).",
+          "en": "I'm a vegetarian.",
+          "note": "Increasingly common in France."
+        },
+        {
+          "fr": "C'est trop salé / sucré.",
+          "en": "It's too salty / sweet.",
+          "note": "Common complaint."
+        },
+        {
+          "fr": "Je n'en peux plus, j'ai trop mangé.",
+          "en": "I can't anymore, I ate too much.",
+          "note": "After a big meal."
+        },
+        {
+          "fr": "Tu peux me passer le sel ?",
+          "en": "Can you pass me the salt?",
+          "note": "Polite request at the table."
+        },
+        {
+          "fr": "À ta santé ! / Santé !",
+          "en": "Cheers!",
+          "note": "Toast. Look people in the eye when clinking glasses!"
+        }
+      ],
+      "reading": {
+        "title": "Une journée gourmande",
+        "content_fr": "Ce matin, je me suis levée tôt parce que j'avais très faim. J'ai pris un petit déjeuner traditionnel français : un café au lait, du pain frais avec du beurre et de la confiture, et un croissant que j'ai acheté à la boulangerie d'en bas. La boulangère m'a dit : « Bonjour ! Et voilà, ils sont encore tout chauds. »\n\nÀ midi, j'ai déjeuné avec mes collègues. Nous sommes allés dans un petit restaurant italien. J'ai pris une salade de tomates, du poulet rôti avec des pâtes, et un verre de vin rouge. C'était délicieux ! Comme dessert, j'ai partagé une tarte aux pommes avec ma collègue Anne.\n\nL'après-midi, j'avais envie d'un thé. Je suis allée dans un café et j'ai pris un thé vert avec un petit gâteau au chocolat. C'est ma petite récompense !\n\nLe soir, à la maison, j'ai cuisiné simple : un poisson grillé avec des légumes et du riz. J'ai bu un verre d'eau et un verre de vin blanc. Pour finir, un morceau de fromage et un fruit — c'est très français, le fromage avant le dessert !\n\nMon mari trouve que je mange trop. Mais moi, je dis que la vie est trop courte pour ne pas profiter des bonnes choses !",
+        "content_en": "This morning, I got up early because I was very hungry. I had a traditional French breakfast: a café au lait, fresh bread with butter and jam, and a croissant I bought at the bakery downstairs. The baker said: 'Hello! Here you go, they're still hot.'\n\nAt noon, I had lunch with my colleagues. We went to a little Italian restaurant. I had a tomato salad, roast chicken with pasta, and a glass of red wine. It was delicious! For dessert, I shared an apple tart with my colleague Anne.\n\nIn the afternoon, I felt like having tea. I went to a café and had a green tea with a little chocolate cake. It's my little reward!\n\nIn the evening, at home, I cooked simply: grilled fish with vegetables and rice. I drank a glass of water and a glass of white wine. To finish, a piece of cheese and a fruit — that's very French, cheese before dessert!\n\nMy husband thinks I eat too much. But I say life is too short not to enjoy the good things!",
+        "comprehension_questions": [
+          {
+            "q": "Qu'est-ce qu'elle a pris au petit déjeuner ?",
+            "a": "Un café au lait, du pain avec du beurre et de la confiture, et un croissant."
+          },
+          {
+            "q": "Où a-t-elle déjeuné ?",
+            "a": "Dans un petit restaurant italien avec ses collègues."
+          },
+          {
+            "q": "Qu'a-t-elle mangé le soir ?",
+            "a": "Un poisson grillé avec des légumes et du riz, puis du fromage et un fruit."
+          },
+          {
+            "q": "Pourquoi mange-t-elle autant selon elle ?",
+            "a": "Parce que la vie est trop courte pour ne pas profiter des bonnes choses."
+          }
+        ]
+      },
+      "cultural_note": "La gastronomie française est inscrite au patrimoine mondial de l'UNESCO. Les repas suivent souvent l'ordre traditionnel : entrée, plat principal, fromage, puis dessert (oui, le fromage AVANT le dessert !). Le pain est sacré et présent à tous les repas. Évitez de couper la salade au couteau (utilisez le côté de la fourchette pour la plier). Au restaurant, on appelle le serveur 's'il vous plaît', jamais 'garçon' (vieillot et impoli). En France, le déjeuner reste souvent un repas chaud assis ; le 'sandwich rapide' est une habitude plus anglo-saxonne."
+    },
+    {
+      "name_fr": "Au restaurant et au café",
+      "name_en": "At the restaurant and café",
+      "icon": "🍽️",
+      "order": 170,
+      "difficulty_level": 1,
+      "description": "Commander, demander l'addition, échanger avec un serveur.",
+      "vocabulary": [
+        {
+          "french": "le restaurant",
+          "english": "restaurant",
+          "gender": "m",
+          "part_of_speech": "noun",
+          "example_sentence": "On va au restaurant ce soir ?"
+        },
+        {
+          "french": "le café",
+          "english": "café",
+          "gender": "m",
+          "part_of_speech": "noun",
+          "example_sentence": "Rendez-vous au café à 15 h."
+        },
+        {
+          "french": "le bar",
+          "english": "bar",
+          "gender": "m",
+          "part_of_speech": "noun",
+          "example_sentence": "On boit un verre au bar ?"
+        },
+        {
+          "french": "la brasserie",
+          "english": "brasserie",
+          "gender": "f",
+          "part_of_speech": "noun",
+          "example_sentence": "Cette brasserie sert toute la journée."
+        },
+        {
+          "french": "le serveur / la serveuse",
+          "english": "waiter / waitress",
+          "gender": "a",
+          "part_of_speech": "noun",
+          "example_sentence": "Le serveur arrive avec les plats."
+        },
+        {
+          "french": "la carte / le menu",
+          "english": "menu",
+          "gender": "a",
+          "part_of_speech": "noun",
+          "example_sentence": "La carte, s'il vous plaît."
+        },
+        {
+          "french": "la table",
+          "english": "table",
+          "gender": "f",
+          "part_of_speech": "noun",
+          "example_sentence": "Une table pour deux, s'il vous plaît."
+        },
+        {
+          "french": "la réservation",
+          "english": "reservation",
+          "gender": "f",
+          "part_of_speech": "noun",
+          "example_sentence": "J'ai une réservation au nom de Martin."
+        },
+        {
+          "french": "commander",
+          "english": "to order",
+          "gender": "a",
+          "part_of_speech": "verb",
+          "example_sentence": "Qu'est-ce que vous commandez ?"
+        },
+        {
+          "french": "l'entrée",
+          "english": "starter / appetizer",
+          "gender": "f",
+          "part_of_speech": "noun",
+          "example_sentence": "Comme entrée, je prends une salade."
+        },
+        {
+          "french": "le plat / le plat principal",
+          "english": "main course",
+          "gender": "m",
+          "part_of_speech": "noun",
+          "example_sentence": "Le plat du jour est un steak frites."
+        },
+        {
+          "french": "le dessert",
+          "english": "dessert",
+          "gender": "m",
+          "part_of_speech": "noun",
+          "example_sentence": "Comme dessert, une crème brûlée."
+        },
+        {
+          "french": "l'apéritif / l'apéro",
+          "english": "aperitif / pre-meal drink",
+          "gender": "m",
+          "part_of_speech": "noun",
+          "example_sentence": "On prend un apéro avant de dîner ?"
+        },
+        {
+          "french": "la boisson",
+          "english": "drink",
+          "gender": "f",
+          "part_of_speech": "noun",
+          "example_sentence": "Une boisson avec ça ?"
+        },
+        {
+          "french": "l'eau plate / l'eau gazeuse",
+          "english": "still water / sparkling water",
+          "gender": "f",
+          "part_of_speech": "phrase",
+          "example_sentence": "De l'eau plate, s'il vous plaît."
+        },
+        {
+          "french": "la carafe d'eau",
+          "english": "pitcher of (tap) water",
+          "gender": "f",
+          "part_of_speech": "noun",
+          "example_sentence": "Une carafe d'eau, s'il vous plaît."
+        },
+        {
+          "french": "l'addition",
+          "english": "the bill / check",
+          "gender": "f",
+          "part_of_speech": "noun",
+          "example_sentence": "L'addition, s'il vous plaît !"
+        },
+        {
+          "french": "le pourboire",
+          "english": "tip",
+          "gender": "m",
+          "part_of_speech": "noun",
+          "example_sentence": "Je laisse un pourboire ?"
+        },
+        {
+          "french": "la carte bancaire",
+          "english": "credit/debit card",
+          "gender": "f",
+          "part_of_speech": "noun",
+          "example_sentence": "Vous prenez la carte ?"
+        },
+        {
+          "french": "le plat du jour",
+          "english": "daily special",
+          "gender": "m",
+          "part_of_speech": "noun",
+          "example_sentence": "Quel est le plat du jour ?"
+        },
+        {
+          "french": "saignant / à point / bien cuit",
+          "english": "rare / medium / well done",
+          "gender": "a",
+          "part_of_speech": "adjective",
+          "example_sentence": "Le steak à point, s'il vous plaît."
+        },
+        {
+          "french": "végétarien(ne)",
+          "english": "vegetarian",
+          "gender": "a",
+          "part_of_speech": "adjective",
+          "example_sentence": "Vous avez un plat végétarien ?"
+        },
+        {
+          "french": "l'addition / la note",
+          "english": "bill / check",
+          "gender": "a",
+          "part_of_speech": "noun",
+          "example_sentence": "On demande l'addition."
+        },
+        {
+          "french": "un café / un crème / un noisette",
+          "english": "espresso / coffee with milk / espresso with milk drop",
+          "gender": "m",
+          "part_of_speech": "noun",
+          "example_sentence": "Un café et un crème, s'il vous plaît."
+        },
+        {
+          "french": "le pichet / le verre / la bouteille",
+          "english": "small jug / glass / bottle",
+          "gender": "a",
+          "part_of_speech": "noun",
+          "example_sentence": "Un verre de vin ou une bouteille ?"
+        }
+      ],
+      "phrases": [
+        {
+          "fr": "Bonjour, une table pour deux, s'il vous plaît.",
+          "en": "Hello, a table for two, please.",
+          "note": "Standard restaurant entry."
+        },
+        {
+          "fr": "Vous avez une réservation ?",
+          "en": "Do you have a reservation?",
+          "note": "Common question from staff."
+        },
+        {
+          "fr": "Au nom de Martin.",
+          "en": "Under the name of Martin.",
+          "note": "Giving your reservation name."
+        },
+        {
+          "fr": "La carte, s'il vous plaît.",
+          "en": "The menu, please.",
+          "note": "When you sit down."
+        },
+        {
+          "fr": "Qu'est-ce que vous me conseillez ?",
+          "en": "What do you recommend?",
+          "note": "Asking the server's opinion."
+        },
+        {
+          "fr": "Je vais prendre...",
+          "en": "I'll have...",
+          "note": "Standard way to order: 'Je vais prendre une salade'."
+        },
+        {
+          "fr": "Comme entrée, je voudrais...",
+          "en": "For starter, I'd like...",
+          "note": "Structuring your order by course."
+        },
+        {
+          "fr": "Et comme boisson ?",
+          "en": "And to drink?",
+          "note": "Server's question."
+        },
+        {
+          "fr": "Une carafe d'eau, s'il vous plaît.",
+          "en": "A pitcher of (tap) water, please.",
+          "note": "Free in France! Always ask for this if you don't want to pay for bottled water."
+        },
+        {
+          "fr": "C'est tout pour moi, merci.",
+          "en": "That's all for me, thanks.",
+          "note": "Closing your order."
+        },
+        {
+          "fr": "L'addition, s'il vous plaît.",
+          "en": "The bill, please.",
+          "note": "How to ask for the check. Discreet hand signal also works."
+        },
+        {
+          "fr": "Vous prenez la carte ?",
+          "en": "Do you take cards?",
+          "note": "Check before assuming."
+        },
+        {
+          "fr": "C'était délicieux, merci.",
+          "en": "That was delicious, thank you.",
+          "note": "Polite compliment to staff."
+        },
+        {
+          "fr": "Le service est compris ?",
+          "en": "Is service included?",
+          "note": "In France, yes (15%), but small extra tip appreciated."
+        }
+      ],
+      "reading": {
+        "title": "Dîner dans un bistrot parisien",
+        "content_fr": "Marc et Léa entrent dans un petit bistrot du quartier Saint-Germain. Il est dix-neuf heures trente et l'endroit est encore calme.\n\n— Bonsoir ! Vous avez une réservation ?\n\n— Bonsoir, oui, au nom de Martin, pour deux personnes.\n\n— Très bien, suivez-moi. Voici votre table. La carte arrive.\n\nLe serveur leur donne la carte et un menu en papier avec les plats du jour. Marc et Léa étudient les options pendant quelques minutes.\n\n— Vous avez choisi ? demande le serveur.\n\n— Oui. Comme entrée, je vais prendre la soupe à l'oignon, dit Marc. Et comme plat, le steak frites, à point s'il vous plaît.\n\n— Pour moi, commence Léa, une salade de chèvre chaud, et ensuite le poisson du jour. C'est quoi exactement ?\n\n— C'est du saumon grillé avec des légumes de saison, répond le serveur.\n\n— Parfait, je prends ça.\n\n— Et comme boisson ?\n\n— Un verre de vin rouge pour moi, dit Marc.\n\n— Et une carafe d'eau, ajoute Léa.\n\nUne heure plus tard, après deux délicieux desserts, ils demandent l'addition.\n\n— L'addition, s'il vous plaît !\n\n— Bien sûr. Cela fait 58 euros. Vous payez comment, par carte ou en espèces ?\n\n— Par carte, merci. Et tout était excellent, vraiment.\n\n— Merci à vous, et bonne soirée !",
+        "content_en": "Marc and Léa enter a little bistro in the Saint-Germain neighborhood. It's 7:30 PM and the place is still quiet.\n\n— Good evening! Do you have a reservation?\n\n— Good evening, yes, under the name of Martin, for two.\n\n— Very good, follow me. Here's your table. The menu is coming.\n\nThe waiter gives them the menu and a paper sheet with the daily specials. Marc and Léa study the options for a few minutes.\n\n— Have you chosen? asks the waiter.\n\n— Yes. For starter, I'll have the onion soup, says Marc. And for the main, the steak with fries, medium please.\n\n— For me, starts Léa, a warm goat cheese salad, and then the fish of the day. What is it exactly?\n\n— It's grilled salmon with seasonal vegetables, replies the waiter.\n\n— Perfect, I'll take that.\n\n— And to drink?\n\n— A glass of red wine for me, says Marc.\n\n— And a pitcher of water, adds Léa.\n\nAn hour later, after two delicious desserts, they ask for the bill.\n\n— The bill, please!\n\n— Of course. That's 58 euros. How are you paying, card or cash?\n\n— By card, thanks. And everything was excellent, really.\n\n— Thank you, and have a good evening!",
+        "comprehension_questions": [
+          {
+            "q": "À quelle heure arrivent Marc et Léa ?",
+            "a": "À dix-neuf heures trente."
+          },
+          {
+            "q": "Qu'est-ce que Marc commande comme plat principal ?",
+            "a": "Un steak frites, à point."
+          },
+          {
+            "q": "Quel est le poisson du jour ?",
+            "a": "Du saumon grillé avec des légumes de saison."
+          },
+          {
+            "q": "Combien coûte le repas ?",
+            "a": "58 euros."
+          }
+        ]
+      },
+      "cultural_note": "Au restaurant en France, **le service est toujours inclus** dans l'addition (par la loi, 15 % de service compris). Un pourboire (en français : 'un pourboire') est appréciable mais pas obligatoire — 1 à 2 euros pour un café, 5 à 10 % pour un bon repas. **L'eau du robinet** (carafe d'eau) est gratuite et de qualité — n'hésitez pas à la demander, même dans les restaurants chics. Les serveurs sont des **professionnels** (souvent leur carrière), pas des étudiants en transition : on les traite avec respect, comme des experts."
+    },
+    {
+      "name_fr": "Les achats et les vêtements",
+      "name_en": "Shopping and clothing",
+      "icon": "👕",
+      "order": 180,
+      "difficulty_level": 1,
+      "description": "Faire des courses, parler des vêtements, des tailles, des prix.",
+      "vocabulary": [
+        {
+          "french": "le magasin",
+          "english": "shop, store",
+          "gender": "m",
+          "part_of_speech": "noun",
+          "example_sentence": "Le magasin ouvre à 9 heures."
+        },
+        {
+          "french": "la boutique",
+          "english": "small shop, boutique",
+          "gender": "f",
+          "part_of_speech": "noun",
+          "example_sentence": "C'est une jolie petite boutique."
+        },
+        {
+          "french": "le supermarché",
+          "english": "supermarket",
+          "gender": "m",
+          "part_of_speech": "noun",
+          "example_sentence": "Je vais au supermarché le samedi."
+        },
+        {
+          "french": "le marché",
+          "english": "market",
+          "gender": "m",
+          "part_of_speech": "noun",
+          "example_sentence": "Le marché du dimanche matin est animé."
+        },
+        {
+          "french": "le centre commercial",
+          "english": "shopping mall",
+          "gender": "m",
+          "part_of_speech": "noun",
+          "example_sentence": "Nous allons au centre commercial."
+        },
+        {
+          "french": "le vêtement",
+          "english": "garment, clothing",
+          "gender": "m",
+          "part_of_speech": "noun",
+          "example_sentence": "Je cherche des vêtements d'hiver."
+        },
+        {
+          "french": "le pantalon",
+          "english": "trousers",
+          "gender": "m",
+          "part_of_speech": "noun",
+          "example_sentence": "Ce pantalon est trop long."
+        },
+        {
+          "french": "le jean",
+          "english": "jeans",
+          "gender": "m",
+          "part_of_speech": "noun",
+          "example_sentence": "J'aime ce jean bleu."
+        },
+        {
+          "french": "la chemise / le chemisier",
+          "english": "shirt / blouse",
+          "gender": "a",
+          "part_of_speech": "noun",
+          "example_sentence": "Il porte une chemise blanche."
+        },
+        {
+          "french": "le tee-shirt / le t-shirt",
+          "english": "T-shirt",
+          "gender": "m",
+          "part_of_speech": "noun",
+          "example_sentence": "J'ai un tee-shirt noir."
+        },
+        {
+          "french": "le pull / le pull-over",
+          "english": "sweater",
+          "gender": "m",
+          "part_of_speech": "noun",
+          "example_sentence": "Mets ton pull, il fait froid."
+        },
+        {
+          "french": "la veste",
+          "english": "jacket",
+          "gender": "f",
+          "part_of_speech": "noun",
+          "example_sentence": "Cette veste est très élégante."
+        },
+        {
+          "french": "le manteau",
+          "english": "coat",
+          "gender": "m",
+          "part_of_speech": "noun",
+          "example_sentence": "En hiver, je porte un long manteau."
+        },
+        {
+          "french": "la robe",
+          "english": "dress",
+          "gender": "f",
+          "part_of_speech": "noun",
+          "example_sentence": "Elle porte une robe rouge."
+        },
+        {
+          "french": "la jupe",
+          "english": "skirt",
+          "gender": "f",
+          "part_of_speech": "noun",
+          "example_sentence": "Cette jupe est courte."
+        },
+        {
+          "french": "les chaussures",
+          "english": "shoes",
+          "gender": "f",
+          "part_of_speech": "noun",
+          "example_sentence": "Mes chaussures sont usées."
+        },
+        {
+          "french": "les baskets",
+          "english": "sneakers",
+          "gender": "f",
+          "part_of_speech": "noun",
+          "example_sentence": "Je porte des baskets pour courir."
+        },
+        {
+          "french": "le sac",
+          "english": "bag",
+          "gender": "m",
+          "part_of_speech": "noun",
+          "example_sentence": "Où est mon sac ?"
+        },
+        {
+          "french": "la taille",
+          "english": "size",
+          "gender": "f",
+          "part_of_speech": "noun",
+          "example_sentence": "Quelle taille faites-vous ?"
+        },
+        {
+          "french": "la pointure",
+          "english": "shoe size",
+          "gender": "f",
+          "part_of_speech": "noun",
+          "example_sentence": "Ma pointure est 40."
+        },
+        {
+          "french": "essayer",
+          "english": "to try on",
+          "gender": "a",
+          "part_of_speech": "verb",
+          "example_sentence": "Je peux essayer ce pull ?"
+        },
+        {
+          "french": "la cabine d'essayage",
+          "english": "fitting room",
+          "gender": "f",
+          "part_of_speech": "noun",
+          "example_sentence": "La cabine d'essayage est au fond."
+        },
+        {
+          "french": "acheter / vendre",
+          "english": "to buy / to sell",
+          "gender": "a",
+          "part_of_speech": "verb",
+          "example_sentence": "J'achète, tu vends."
+        },
+        {
+          "french": "le prix / coûter",
+          "english": "price / to cost",
+          "gender": "a",
+          "part_of_speech": "noun",
+          "example_sentence": "Quel est le prix ? Ça coûte combien ?"
+        },
+        {
+          "french": "cher / pas cher",
+          "english": "expensive / cheap",
+          "gender": "a",
+          "part_of_speech": "adjective",
+          "example_sentence": "Ce restaurant est cher."
+        },
+        {
+          "french": "les soldes",
+          "english": "sales",
+          "gender": "m",
+          "part_of_speech": "noun",
+          "example_sentence": "Les soldes commencent en janvier."
+        }
+      ],
+      "phrases": [
+        {
+          "fr": "Je peux vous aider ?",
+          "en": "Can I help you?",
+          "note": "Standard greeting from staff."
+        },
+        {
+          "fr": "Je regarde, merci.",
+          "en": "I'm just looking, thanks.",
+          "note": "Polite way to refuse help."
+        },
+        {
+          "fr": "Je cherche un pantalon.",
+          "en": "I'm looking for trousers.",
+          "note": "Stating what you need."
+        },
+        {
+          "fr": "Quelle taille faites-vous ?",
+          "en": "What size are you?",
+          "note": "Sizes are different in EU (38, 40, 42...)."
+        },
+        {
+          "fr": "Je fais du 38.",
+          "en": "I wear a 38.",
+          "note": "'Faire du' + size."
+        },
+        {
+          "fr": "Je peux essayer ?",
+          "en": "Can I try (it) on?",
+          "note": "Essential in clothing stores."
+        },
+        {
+          "fr": "Vous avez la taille au-dessus / au-dessous ?",
+          "en": "Do you have one size up/down?",
+          "note": "When something doesn't fit."
+        },
+        {
+          "fr": "Ça vous va très bien.",
+          "en": "It looks great on you.",
+          "note": "Compliment from salesperson."
+        },
+        {
+          "fr": "C'est trop grand / trop petit.",
+          "en": "It's too big / too small.",
+          "note": "Feedback after trying."
+        },
+        {
+          "fr": "Ça coûte combien ? / C'est combien ?",
+          "en": "How much does it cost?",
+          "note": "Both are common, second more casual."
+        },
+        {
+          "fr": "C'est trop cher.",
+          "en": "It's too expensive.",
+          "note": "Honest assessment."
+        },
+        {
+          "fr": "Vous acceptez la carte ?",
+          "en": "Do you take cards?",
+          "note": "Worth asking in small shops."
+        },
+        {
+          "fr": "Je voudrais le rembourser.",
+          "en": "I'd like to return it.",
+          "note": "For returns. 'Le rembourser' = get a refund."
+        }
+      ],
+      "reading": {
+        "title": "Shopping aux Galeries Lafayette",
+        "content_fr": "Marie a besoin de nouveaux vêtements pour son nouveau travail. Elle va aux Galeries Lafayette, un grand magasin célèbre à Paris. Le bâtiment est magnifique, avec son immense coupole en verre.\n\nMarie monte au deuxième étage, au rayon femme. Une vendeuse s'approche.\n\n— Bonjour ! Je peux vous aider ?\n\n— Oui, je cherche un tailleur classique pour le travail. Je commence dans une banque la semaine prochaine.\n\n— Très bien. Quelle taille faites-vous ?\n\n— Je fais du 38.\n\nLa vendeuse lui montre plusieurs tailleurs. Marie en choisit trois et va à la cabine d'essayage.\n\nLe premier tailleur, noir, lui va parfaitement, mais elle le trouve un peu trop strict. Le deuxième, gris, est joli mais un peu trop grand. Elle demande la taille au-dessous. Le troisième, bleu marine, est parfait.\n\n— Ça vous va très bien ! dit la vendeuse. Le bleu marine est très élégant pour le travail.\n\n— Oui, je le prends. Il coûte combien ?\n\n— Le tailleur est à 189 euros. Avec les soldes, il est à 132 euros.\n\n— Parfait, je prends. Vous acceptez la carte ?\n\n— Bien sûr.\n\nMarie est très contente : un beau tailleur, à prix soldé, et un nouveau départ professionnel !",
+        "content_en": "Marie needs new clothes for her new job. She goes to Galeries Lafayette, a famous department store in Paris. The building is magnificent, with its immense glass dome.\n\nMarie goes up to the second floor, to the women's section. A saleswoman approaches.\n\n— Hello! Can I help you?\n\n— Yes, I'm looking for a classic suit for work. I'm starting at a bank next week.\n\n— Very good. What size are you?\n\n— I wear a 38.\n\nThe saleswoman shows her several suits. Marie picks three and goes to the fitting room.\n\nThe first suit, black, fits perfectly, but she finds it a bit too strict. The second, gray, is pretty but a bit too big. She asks for the size below. The third, navy blue, is perfect.\n\n— It looks great on you! says the saleswoman. Navy blue is very elegant for work.\n\n— Yes, I'll take it. How much does it cost?\n\n— The suit is 189 euros. With sales, it's 132 euros.\n\n— Perfect, I'll take it. Do you take cards?\n\n— Of course.\n\nMarie is very happy: a beautiful suit, on sale, and a new professional start!",
+        "comprehension_questions": [
+          {
+            "q": "Pourquoi Marie a-t-elle besoin de nouveaux vêtements ?",
+            "a": "Parce qu'elle commence un nouveau travail dans une banque."
+          },
+          {
+            "q": "Combien de tailleurs essaie-t-elle ?",
+            "a": "Trois tailleurs."
+          },
+          {
+            "q": "Quel tailleur choisit-elle ?",
+            "a": "Le tailleur bleu marine."
+          },
+          {
+            "q": "Combien coûte le tailleur avec les soldes ?",
+            "a": "132 euros."
+          }
+        ]
+      },
+      "cultural_note": "En France, les **soldes** sont règlementées par la loi : elles ont lieu deux fois par an (janvier et juin/juillet), pendant 4 semaines précisément, dans tous les magasins du pays. C'est l'occasion d'avoir des **réductions de 30 à 70 %**. Le **rayon** désigne une section du magasin (rayon femme, homme, enfants, etc.). Pour les tailles : la **taille 38** française = US 6, **40** = US 8. Pour les chaussures, on parle de **pointure** : 38 fr = US 7.5. Au Québec, on utilise plus volontiers les tailles nord-américaines (Small, Medium, Large)."
+    },
+    {
+      "name_fr": "Les couleurs et les descriptions physiques",
+      "name_en": "Colors and physical descriptions",
+      "icon": "🎨",
+      "order": 190,
+      "difficulty_level": 1,
+      "description": "Décrire l'apparence physique et les couleurs.",
+      "vocabulary": [
+        {
+          "french": "la couleur",
+          "english": "color",
+          "gender": "f",
+          "part_of_speech": "noun",
+          "example_sentence": "Quelle est ta couleur préférée ?"
+        },
+        {
+          "french": "rouge",
+          "english": "red",
+          "gender": "a",
+          "part_of_speech": "adjective",
+          "example_sentence": "Une voiture rouge."
+        },
+        {
+          "french": "bleu / bleue",
+          "english": "blue",
+          "gender": "a",
+          "part_of_speech": "adjective",
+          "example_sentence": "Le ciel est bleu."
+        },
+        {
+          "french": "vert / verte",
+          "english": "green",
+          "gender": "a",
+          "part_of_speech": "adjective",
+          "example_sentence": "Les arbres sont verts."
+        },
+        {
+          "french": "jaune",
+          "english": "yellow",
+          "gender": "a",
+          "part_of_speech": "adjective",
+          "example_sentence": "Le soleil est jaune."
+        },
+        {
+          "french": "noir / noire",
+          "english": "black",
+          "gender": "a",
+          "part_of_speech": "adjective",
+          "example_sentence": "Un chat noir traverse la rue."
+        },
+        {
+          "french": "blanc / blanche",
+          "english": "white",
+          "gender": "a",
+          "part_of_speech": "adjective",
+          "example_sentence": "La neige est blanche."
+        },
+        {
+          "french": "gris / grise",
+          "english": "gray",
+          "gender": "a",
+          "part_of_speech": "adjective",
+          "example_sentence": "Un costume gris."
+        },
+        {
+          "french": "marron",
+          "english": "brown (invariable!)",
+          "gender": "a",
+          "part_of_speech": "adjective",
+          "example_sentence": "Des yeux marron."
+        },
+        {
+          "french": "orange",
+          "english": "orange (invariable!)",
+          "gender": "a",
+          "part_of_speech": "adjective",
+          "example_sentence": "Des chaussures orange."
+        },
+        {
+          "french": "rose",
+          "english": "pink",
+          "gender": "a",
+          "part_of_speech": "adjective",
+          "example_sentence": "Une jolie robe rose."
+        },
+        {
+          "french": "violet / violette",
+          "english": "purple",
+          "gender": "a",
+          "part_of_speech": "adjective",
+          "example_sentence": "Une fleur violette."
+        },
+        {
+          "french": "grand / grande",
+          "english": "tall / big",
+          "gender": "a",
+          "part_of_speech": "adjective",
+          "example_sentence": "Mon frère est grand."
+        },
+        {
+          "french": "petit / petite",
+          "english": "small / short",
+          "gender": "a",
+          "part_of_speech": "adjective",
+          "example_sentence": "Une petite fille."
+        },
+        {
+          "french": "gros / grosse",
+          "english": "fat / large",
+          "gender": "a",
+          "part_of_speech": "adjective",
+          "example_sentence": "Un gros chien sympa."
+        },
+        {
+          "french": "mince",
+          "english": "thin, slim",
+          "gender": "a",
+          "part_of_speech": "adjective",
+          "example_sentence": "Elle est très mince."
+        },
+        {
+          "french": "beau / belle",
+          "english": "handsome / beautiful",
+          "gender": "a",
+          "part_of_speech": "adjective",
+          "example_sentence": "Une belle femme. Un bel homme."
+        },
+        {
+          "french": "joli / jolie",
+          "english": "pretty",
+          "gender": "a",
+          "part_of_speech": "adjective",
+          "example_sentence": "C'est un joli village."
+        },
+        {
+          "french": "jeune / vieux / vieille",
+          "english": "young / old",
+          "gender": "a",
+          "part_of_speech": "adjective",
+          "example_sentence": "Mon grand-père est vieux."
+        },
+        {
+          "french": "les cheveux",
+          "english": "hair",
+          "gender": "m",
+          "part_of_speech": "noun",
+          "example_sentence": "Elle a les cheveux longs."
+        },
+        {
+          "french": "blond / brun / roux",
+          "english": "blond / brunette / redhead",
+          "gender": "a",
+          "part_of_speech": "adjective",
+          "example_sentence": "Elle est blonde, lui est brun."
+        },
+        {
+          "french": "court / long",
+          "english": "short / long",
+          "gender": "a",
+          "part_of_speech": "adjective",
+          "example_sentence": "Cheveux courts ou longs ?"
+        },
+        {
+          "french": "les yeux",
+          "english": "eyes",
+          "gender": "m",
+          "part_of_speech": "noun",
+          "example_sentence": "Il a les yeux bleus."
+        },
+        {
+          "french": "porter (des lunettes)",
+          "english": "to wear (glasses)",
+          "gender": "a",
+          "part_of_speech": "verb",
+          "example_sentence": "Je porte des lunettes pour lire."
+        },
+        {
+          "french": "ressembler à",
+          "english": "to look like",
+          "gender": "a",
+          "part_of_speech": "verb",
+          "example_sentence": "Tu ressembles à ta mère."
+        }
+      ],
+      "phrases": [
+        {
+          "fr": "Il/Elle est comment ?",
+          "en": "What does he/she look like?",
+          "note": "Standard question for description."
+        },
+        {
+          "fr": "Il est grand et brun.",
+          "en": "He is tall and brunette.",
+          "note": "Adjectives agree in gender/number."
+        },
+        {
+          "fr": "Elle a les yeux verts.",
+          "en": "She has green eyes.",
+          "note": "Note: 'a' (has), not 'est' (is) for features."
+        },
+        {
+          "fr": "Elle a les cheveux longs et raides.",
+          "en": "She has long straight hair.",
+          "note": "Common description structure."
+        },
+        {
+          "fr": "Il porte des lunettes.",
+          "en": "He wears glasses.",
+          "note": "'Porter' = to wear."
+        },
+        {
+          "fr": "Quelle est ta couleur préférée ?",
+          "en": "What's your favorite color?",
+          "note": "Casual question."
+        },
+        {
+          "fr": "Ma couleur préférée, c'est le bleu.",
+          "en": "My favorite color is blue.",
+          "note": "Note 'le bleu' with definite article."
+        },
+        {
+          "fr": "Il ressemble beaucoup à son père.",
+          "en": "He looks a lot like his father.",
+          "note": "'Ressembler à' is followed by 'à + person'."
+        },
+        {
+          "fr": "Elle est plutôt grande.",
+          "en": "She's rather tall.",
+          "note": "'Plutôt' softens an assertion."
+        },
+        {
+          "fr": "Tu peux le décrire ?",
+          "en": "Can you describe him?",
+          "note": "Asking for a description."
+        },
+        {
+          "fr": "Il est de taille moyenne.",
+          "en": "He's of medium height.",
+          "note": "Neutral height description."
+        },
+        {
+          "fr": "Il a une barbe / une moustache.",
+          "en": "He has a beard / a moustache.",
+          "note": "Facial hair."
+        }
+      ],
+      "reading": {
+        "title": "Une description amoureuse",
+        "content_fr": "Ma sœur Élise vient de me parler de son nouveau copain. Elle est très amoureuse, et elle voulait absolument me le décrire.\n\n— Il s'appelle Antoine, m'a-t-elle dit. Il a 30 ans, il est ingénieur. Il est grand, mesure environ un mètre quatre-vingt-cinq. Il est sportif, donc il est mince mais musclé. Il a les cheveux bruns, courts, et il a une petite barbe très bien taillée.\n\n— Et ses yeux ? ai-je demandé.\n\n— Ah, ses yeux ! Ils sont magnifiques. Ils sont marron avec des reflets verts. Et il a un beau sourire, très chaleureux.\n\n— Il porte des lunettes ?\n\n— Non, il n'en porte pas. Il dit qu'il a une bonne vue. Et il s'habille toujours bien : souvent un jean bleu foncé et une chemise blanche ou bleu clair. Très simple mais très élégant.\n\n— Il ressemble à quelqu'un de connu ?\n\n— Hmm, je dirais qu'il ressemble un peu à un acteur français, mais en plus naturel. Et tu sais ce qui me plaît le plus ? Il a un visage très ouvert, on a envie de lui parler tout de suite.\n\n— Je vois que tu es vraiment amoureuse, Élise.\n\n— Oui, complètement. Tu vas le rencontrer ce week-end, tu vas voir.",
+        "content_en": "My sister Élise just told me about her new boyfriend. She's very in love, and she absolutely wanted to describe him to me.\n\n— His name is Antoine, she said. He's 30, he's an engineer. He's tall, about one meter eighty-five. He's athletic, so he's thin but muscular. He has short brown hair, and he has a small, well-trimmed beard.\n\n— And his eyes? I asked.\n\n— Ah, his eyes! They're magnificent. They're brown with green reflections. And he has a beautiful smile, very warm.\n\n— Does he wear glasses?\n\n— No, he doesn't. He says he has good eyesight. And he always dresses well: often dark blue jeans and a white or light blue shirt. Very simple but very elegant.\n\n— Does he look like anyone famous?\n\n— Hmm, I'd say he looks a bit like a French actor, but more natural. And you know what I like most? He has a very open face, you want to talk to him right away.\n\n— I see that you're really in love, Élise.\n\n— Yes, completely. You're going to meet him this weekend, you'll see.",
+        "comprehension_questions": [
+          {
+            "q": "Quel âge a Antoine ?",
+            "a": "Il a 30 ans."
+          },
+          {
+            "q": "Comment sont ses cheveux ?",
+            "a": "Bruns et courts."
+          },
+          {
+            "q": "De quelle couleur sont ses yeux ?",
+            "a": "Marron avec des reflets verts."
+          },
+          {
+            "q": "Porte-t-il des lunettes ?",
+            "a": "Non, il n'en porte pas car il a une bonne vue."
+          }
+        ]
+      },
+      "cultural_note": "En français, certaines **couleurs sont invariables** : 'marron' et 'orange' ne s'accordent jamais ('des yeux marron', 'des chaussures orange'). Les **couleurs composées** sont aussi invariables : 'bleu marine', 'vert foncé', 'rose pâle' (pas d'accord). Pour décrire physiquement quelqu'un, le français préfère 'il/elle est' + adjectif ('elle est grande') et 'il/elle a' + nom ('elle a les yeux bleus'). Évitez de commenter le poids des gens — c'est considéré comme impoli en France."
+    },
+    {
+      "name_fr": "La ville et les directions",
+      "name_en": "City and directions",
+      "icon": "🏙️",
+      "order": 200,
+      "difficulty_level": 1,
+      "description": "Demander et indiquer un chemin, parler des lieux de la ville.",
+      "vocabulary": [
+        {
+          "french": "la ville",
+          "english": "city",
+          "gender": "f",
+          "part_of_speech": "noun",
+          "example_sentence": "J'habite dans une grande ville."
+        },
+        {
+          "french": "le village",
+          "english": "village",
+          "gender": "m",
+          "part_of_speech": "noun",
+          "example_sentence": "Mes grands-parents vivent dans un petit village."
+        },
+        {
+          "french": "la rue",
+          "english": "street",
+          "gender": "f",
+          "part_of_speech": "noun",
+          "example_sentence": "J'habite rue Victor Hugo."
+        },
+        {
+          "french": "l'avenue",
+          "english": "avenue",
+          "gender": "f",
+          "part_of_speech": "noun",
+          "example_sentence": "L'avenue des Champs-Élysées."
+        },
+        {
+          "french": "le boulevard",
+          "english": "boulevard",
+          "gender": "m",
+          "part_of_speech": "noun",
+          "example_sentence": "Le boulevard Saint-Germain est célèbre."
+        },
+        {
+          "french": "la place",
+          "english": "square, plaza",
+          "gender": "f",
+          "part_of_speech": "noun",
+          "example_sentence": "On se retrouve place de la République."
+        },
+        {
+          "french": "le pont",
+          "english": "bridge",
+          "gender": "m",
+          "part_of_speech": "noun",
+          "example_sentence": "Traversez le pont, c'est juste après."
+        },
+        {
+          "french": "le carrefour / le coin",
+          "english": "intersection / corner",
+          "gender": "m",
+          "part_of_speech": "noun",
+          "example_sentence": "Au prochain carrefour, tournez à droite."
+        },
+        {
+          "french": "la mairie",
+          "english": "city hall",
+          "gender": "f",
+          "part_of_speech": "noun",
+          "example_sentence": "La mairie est sur la place principale."
+        },
+        {
+          "french": "la poste",
+          "english": "post office",
+          "gender": "f",
+          "part_of_speech": "noun",
+          "example_sentence": "La poste ferme à 18 heures."
+        },
+        {
+          "french": "la banque",
+          "english": "bank",
+          "gender": "f",
+          "part_of_speech": "noun",
+          "example_sentence": "Il y a une banque au coin de la rue."
+        },
+        {
+          "french": "la gare",
+          "english": "train station",
+          "gender": "f",
+          "part_of_speech": "noun",
+          "example_sentence": "La gare de Lyon est immense."
+        },
+        {
+          "french": "l'hôpital",
+          "english": "hospital",
+          "gender": "m",
+          "part_of_speech": "noun",
+          "example_sentence": "L'hôpital est à dix minutes."
+        },
+        {
+          "french": "la pharmacie",
+          "english": "pharmacy",
+          "gender": "f",
+          "part_of_speech": "noun",
+          "example_sentence": "La pharmacie a une croix verte."
+        },
+        {
+          "french": "le musée",
+          "english": "museum",
+          "gender": "m",
+          "part_of_speech": "noun",
+          "example_sentence": "Le musée du Louvre est très grand."
+        },
+        {
+          "french": "l'église / la cathédrale",
+          "english": "church / cathedral",
+          "gender": "a",
+          "part_of_speech": "noun",
+          "example_sentence": "Notre-Dame est une magnifique cathédrale."
+        },
+        {
+          "french": "le parc / le jardin public",
+          "english": "park / public garden",
+          "gender": "m",
+          "part_of_speech": "noun",
+          "example_sentence": "Allons au parc avec les enfants."
+        },
+        {
+          "french": "à droite / à gauche",
+          "english": "right / left",
+          "gender": "a",
+          "part_of_speech": "adverb",
+          "example_sentence": "Tournez à droite, puis à gauche."
+        },
+        {
+          "french": "tout droit",
+          "english": "straight ahead",
+          "gender": "a",
+          "part_of_speech": "adverb",
+          "example_sentence": "Continuez tout droit pendant 200 mètres."
+        },
+        {
+          "french": "près de / loin de",
+          "english": "near / far from",
+          "gender": "a",
+          "part_of_speech": "preposition",
+          "example_sentence": "C'est près d'ici ou loin ?"
+        },
+        {
+          "french": "à côté de",
+          "english": "next to",
+          "gender": "a",
+          "part_of_speech": "preposition",
+          "example_sentence": "La boulangerie est à côté de la pharmacie."
+        },
+        {
+          "french": "en face de",
+          "english": "across from",
+          "gender": "a",
+          "part_of_speech": "preposition",
+          "example_sentence": "L'hôtel est en face de la gare."
+        },
+        {
+          "french": "derrière / devant",
+          "english": "behind / in front of",
+          "gender": "a",
+          "part_of_speech": "preposition",
+          "example_sentence": "Le parking est derrière l'immeuble."
+        },
+        {
+          "french": "entre",
+          "english": "between",
+          "gender": "a",
+          "part_of_speech": "preposition",
+          "example_sentence": "La poste est entre la banque et le café."
+        },
+        {
+          "french": "tourner / traverser",
+          "english": "to turn / to cross",
+          "gender": "a",
+          "part_of_speech": "verb",
+          "example_sentence": "Tournez à gauche, puis traversez la rue."
+        }
+      ],
+      "phrases": [
+        {
+          "fr": "Pardon, monsieur, je cherche la gare.",
+          "en": "Excuse me, sir, I'm looking for the train station.",
+          "note": "Polite way to start asking directions."
+        },
+        {
+          "fr": "Pour aller à la place de l'Étoile ?",
+          "en": "How to get to Place de l'Étoile?",
+          "note": "Common quick way to ask directions."
+        },
+        {
+          "fr": "Vous prenez la première rue à droite.",
+          "en": "Take the first street on the right.",
+          "note": "Standard direction phrase."
+        },
+        {
+          "fr": "Continuez tout droit.",
+          "en": "Continue straight ahead.",
+          "note": "'Tout droit' = straight ahead."
+        },
+        {
+          "fr": "C'est à 200 mètres environ.",
+          "en": "It's about 200 meters away.",
+          "note": "Estimating distance."
+        },
+        {
+          "fr": "C'est à cinq minutes à pied.",
+          "en": "It's a five-minute walk.",
+          "note": "'À pied' = on foot."
+        },
+        {
+          "fr": "Vous vous êtes perdu(e) ?",
+          "en": "Are you lost?",
+          "note": "Polite offer of help."
+        },
+        {
+          "fr": "Je suis perdu(e).",
+          "en": "I'm lost.",
+          "note": "Honest admission."
+        },
+        {
+          "fr": "C'est juste là.",
+          "en": "It's right there.",
+          "note": "'Juste là' = right there."
+        },
+        {
+          "fr": "Vous le verrez sur votre gauche.",
+          "en": "You'll see it on your left.",
+          "note": "Future tense to predict what they'll see."
+        },
+        {
+          "fr": "Au feu rouge, tournez à droite.",
+          "en": "At the red light, turn right.",
+          "note": "Using a landmark."
+        },
+        {
+          "fr": "C'est en face de la mairie.",
+          "en": "It's across from the city hall.",
+          "note": "'En face de' = across from / opposite."
+        }
+      ],
+      "reading": {
+        "title": "Demander son chemin",
+        "content_fr": "Un touriste arrive à la gare de Bordeaux. Il cherche son hôtel mais il est complètement perdu. Il s'approche d'une dame à la sortie de la gare.\n\n— Pardon, madame, je cherche l'hôtel Continental, rue Sainte-Catherine. Vous savez où c'est ?\n\n— Oui, bien sûr ! C'est dans le centre-ville. Ce n'est pas très loin, mais c'est un peu compliqué à pied. Vous avez le temps ?\n\n— Oui, j'ai tout mon temps.\n\n— Alors, vous sortez de la gare. Vous prenez l'avenue de la République juste devant vous. Vous continuez tout droit pendant environ dix minutes. Vous allez passer un grand jardin public sur votre droite.\n\n— D'accord.\n\n— Après le jardin, vous arrivez à une grande place. C'est la place de la Comédie. Au milieu, il y a une fontaine. Vous traversez la place, et de l'autre côté, il y a la rue Sainte-Catherine. C'est une rue piétonne très commerciale.\n\n— Et l'hôtel ?\n\n— L'hôtel Continental est à environ 200 mètres dans la rue Sainte-Catherine, sur votre gauche. Vous verrez, il y a une grande enseigne dorée. C'est en face d'une boulangerie célèbre.\n\n— Merci beaucoup, madame ! C'est très gentil.\n\n— De rien. Bon séjour à Bordeaux !",
+        "content_en": "A tourist arrives at Bordeaux train station. He's looking for his hotel but he's completely lost. He approaches a lady at the station exit.\n\n— Excuse me, madam, I'm looking for the Hotel Continental, on Rue Sainte-Catherine. Do you know where it is?\n\n— Yes, of course! It's in the city center. It's not very far, but it's a bit complicated on foot. Do you have time?\n\n— Yes, I have all the time in the world.\n\n— So, you leave the station. You take Avenue de la République right in front of you. You continue straight ahead for about ten minutes. You'll pass a large public garden on your right.\n\n— Okay.\n\n— After the garden, you arrive at a big square. It's Place de la Comédie. In the middle, there's a fountain. You cross the square, and on the other side, there's Rue Sainte-Catherine. It's a very commercial pedestrian street.\n\n— And the hotel?\n\n— The Hotel Continental is about 200 meters down Rue Sainte-Catherine, on your left. You'll see, there's a big golden sign. It's across from a famous bakery.\n\n— Thank you very much, madam! That's very kind.\n\n— You're welcome. Have a good stay in Bordeaux!",
+        "comprehension_questions": [
+          {
+            "q": "Quel hôtel cherche le touriste ?",
+            "a": "L'hôtel Continental, rue Sainte-Catherine."
+          },
+          {
+            "q": "Quelle avenue doit-il prendre ?",
+            "a": "L'avenue de la République, devant la gare."
+          },
+          {
+            "q": "Qu'y a-t-il sur la place de la Comédie ?",
+            "a": "Une fontaine."
+          },
+          {
+            "q": "Qu'y a-t-il en face de l'hôtel ?",
+            "a": "Une boulangerie célèbre."
+          }
+        ]
+      },
+      "cultural_note": "Les villes françaises ont presque toutes un **centre historique** avec une place principale, une église/cathédrale et une mairie. Le **plan en damier** est rare ; les rues serpentent. Les **rues piétonnes** sont très répandues, surtout dans les centres-villes. Pour vous repérer, les Français utilisent souvent des **points de repère** (le café X, la pharmacie Y) plus que les numéros de rue. Les distances en ville se mesurent en minutes à pied : 'à dix minutes à pied' est plus parlant que '500 mètres'."
+    },
+    {
+      "name_fr": "La météo et les saisons",
+      "name_en": "Weather and seasons",
+      "icon": "🌤️",
+      "order": 210,
+      "difficulty_level": 1,
+      "description": "Parler du temps qu'il fait, des saisons et du climat.",
+      "vocabulary": [
+        {
+          "french": "le temps / la météo",
+          "english": "weather",
+          "gender": "a",
+          "part_of_speech": "noun",
+          "example_sentence": "Quel temps fait-il ? Je regarde la météo."
+        },
+        {
+          "french": "le soleil",
+          "english": "sun",
+          "gender": "m",
+          "part_of_speech": "noun",
+          "example_sentence": "Il y a du soleil aujourd'hui."
+        },
+        {
+          "french": "la pluie",
+          "english": "rain",
+          "gender": "f",
+          "part_of_speech": "noun",
+          "example_sentence": "J'aime le bruit de la pluie."
+        },
+        {
+          "french": "le vent",
+          "english": "wind",
+          "gender": "m",
+          "part_of_speech": "noun",
+          "example_sentence": "Il y a beaucoup de vent."
+        },
+        {
+          "french": "la neige",
+          "english": "snow",
+          "gender": "f",
+          "part_of_speech": "noun",
+          "example_sentence": "Les enfants jouent dans la neige."
+        },
+        {
+          "french": "le nuage",
+          "english": "cloud",
+          "gender": "m",
+          "part_of_speech": "noun",
+          "example_sentence": "Le ciel est plein de nuages."
+        },
+        {
+          "french": "le ciel",
+          "english": "sky",
+          "gender": "m",
+          "part_of_speech": "noun",
+          "example_sentence": "Le ciel est bleu."
+        },
+        {
+          "french": "le brouillard",
+          "english": "fog",
+          "gender": "m",
+          "part_of_speech": "noun",
+          "example_sentence": "Il y a du brouillard ce matin."
+        },
+        {
+          "french": "l'orage",
+          "english": "thunderstorm",
+          "gender": "m",
+          "part_of_speech": "noun",
+          "example_sentence": "Un gros orage approche."
+        },
+        {
+          "french": "l'éclair / le tonnerre",
+          "english": "lightning / thunder",
+          "gender": "m",
+          "part_of_speech": "noun",
+          "example_sentence": "J'ai peur du tonnerre."
+        },
+        {
+          "french": "la température",
+          "english": "temperature",
+          "gender": "f",
+          "part_of_speech": "noun",
+          "example_sentence": "La température est de 20 degrés."
+        },
+        {
+          "french": "le degré",
+          "english": "degree",
+          "gender": "m",
+          "part_of_speech": "noun",
+          "example_sentence": "Il fait 25 degrés."
+        },
+        {
+          "french": "chaud / froid",
+          "english": "hot / cold",
+          "gender": "a",
+          "part_of_speech": "adjective",
+          "example_sentence": "Il fait chaud aujourd'hui."
+        },
+        {
+          "french": "doux / frais",
+          "english": "mild / cool",
+          "gender": "a",
+          "part_of_speech": "adjective",
+          "example_sentence": "L'automne est doux cette année."
+        },
+        {
+          "french": "humide / sec",
+          "english": "humid / dry",
+          "gender": "a",
+          "part_of_speech": "adjective",
+          "example_sentence": "Le temps est humide en automne."
+        },
+        {
+          "french": "ensoleillé / nuageux",
+          "english": "sunny / cloudy",
+          "gender": "a",
+          "part_of_speech": "adjective",
+          "example_sentence": "Un ciel ensoleillé."
+        },
+        {
+          "french": "le printemps",
+          "english": "spring",
+          "gender": "m",
+          "part_of_speech": "noun",
+          "example_sentence": "Au printemps, les fleurs poussent."
+        },
+        {
+          "french": "l'été",
+          "english": "summer",
+          "gender": "m",
+          "part_of_speech": "noun",
+          "example_sentence": "L'été, on va à la plage."
+        },
+        {
+          "french": "l'automne",
+          "english": "autumn / fall",
+          "gender": "m",
+          "part_of_speech": "noun",
+          "example_sentence": "En automne, les feuilles tombent."
+        },
+        {
+          "french": "l'hiver",
+          "english": "winter",
+          "gender": "m",
+          "part_of_speech": "noun",
+          "example_sentence": "L'hiver est long en Russie."
+        },
+        {
+          "french": "pleuvoir",
+          "english": "to rain",
+          "gender": "a",
+          "part_of_speech": "verb",
+          "example_sentence": "Il pleut depuis hier."
+        },
+        {
+          "french": "neiger",
+          "english": "to snow",
+          "gender": "a",
+          "part_of_speech": "verb",
+          "example_sentence": "Il neige dans les Alpes."
+        },
+        {
+          "french": "faire beau / faire mauvais",
+          "english": "to be nice/bad (weather)",
+          "gender": "a",
+          "part_of_speech": "phrase",
+          "example_sentence": "Il fait beau / Il fait mauvais."
+        },
+        {
+          "french": "souffler (vent)",
+          "english": "to blow (wind)",
+          "gender": "a",
+          "part_of_speech": "verb",
+          "example_sentence": "Le vent souffle fort."
+        },
+        {
+          "french": "le climat",
+          "english": "climate",
+          "gender": "m",
+          "part_of_speech": "noun",
+          "example_sentence": "Le climat méditerranéen est doux."
+        }
+      ],
+      "phrases": [
+        {
+          "fr": "Quel temps fait-il ?",
+          "en": "What's the weather like?",
+          "note": "Standard question. Note: 'fait' (does, makes) is the verb."
+        },
+        {
+          "fr": "Il fait beau / mauvais.",
+          "en": "It's nice / bad weather.",
+          "note": "Weather expressions use 'il fait' impersonally."
+        },
+        {
+          "fr": "Il fait chaud / froid.",
+          "en": "It's hot / cold.",
+          "note": "Same 'il fait' construction."
+        },
+        {
+          "fr": "Il pleut.",
+          "en": "It's raining.",
+          "note": "'Pleuvoir' — impersonal verb."
+        },
+        {
+          "fr": "Il neige.",
+          "en": "It's snowing.",
+          "note": "'Neiger' — impersonal verb."
+        },
+        {
+          "fr": "Il y a du soleil.",
+          "en": "It's sunny.",
+          "note": "'Il y a' + noun for weather elements."
+        },
+        {
+          "fr": "Il y a du vent / du brouillard.",
+          "en": "It's windy / foggy.",
+          "note": "Same 'il y a' construction."
+        },
+        {
+          "fr": "La température est de 20 degrés.",
+          "en": "The temperature is 20 degrees.",
+          "note": "Celsius, always."
+        },
+        {
+          "fr": "Il fait moins 5.",
+          "en": "It's minus 5.",
+          "note": "Below zero."
+        },
+        {
+          "fr": "Quelle chaleur !",
+          "en": "What heat!",
+          "note": "Exclamation when it's hot."
+        },
+        {
+          "fr": "Il fait un temps de chien.",
+          "en": "The weather is awful.",
+          "note": "Common idiom — literally 'dog weather'."
+        },
+        {
+          "fr": "On annonce de la pluie pour demain.",
+          "en": "Rain is forecast for tomorrow.",
+          "note": "Weather forecast verb 'annoncer'."
+        }
+      ],
+      "reading": {
+        "title": "Les quatre saisons",
+        "content_fr": "En France, il y a quatre saisons bien distinctes : le printemps, l'été, l'automne et l'hiver. Chaque saison a son charme.\n\nLe **printemps** commence en mars et finit en juin. Les températures montent doucement, les arbres bourgeonnent et les fleurs s'ouvrent. Il pleut souvent, mais le soleil revient vite. C'est ma saison préférée parce que la nature renaît.\n\nL'**été** dure de juin à septembre. Il fait chaud, parfois très chaud — surtout en juillet et août. Les températures peuvent monter à 30 ou 35 degrés. Les Français partent en vacances, souvent à la mer ou à la montagne. À Paris, beaucoup de magasins ferment au mois d'août.\n\nL'**automne** arrive en septembre. Les feuilles des arbres jaunissent, puis rougissent, puis tombent. Il fait plus frais, il pleut souvent. C'est la saison des champignons et de la rentrée des classes.\n\nL'**hiver** est de décembre à mars. Il fait froid, parfois moins 5 ou moins 10 degrés. Il neige dans les régions montagneuses (les Alpes, les Pyrénées) et parfois aussi en plaine. Les jours sont courts : le soleil se couche à 17 heures.\n\nLe climat est différent selon les régions : doux et humide en Bretagne, chaud et sec en Provence, continental en Alsace, méditerranéen sur la Côte d'Azur. Et au Québec, n'en parlons pas — l'hiver dure six mois et il fait souvent moins 20 !",
+        "content_en": "In France, there are four distinct seasons: spring, summer, autumn, and winter. Each season has its charm.\n\nSpring begins in March and ends in June. Temperatures rise gently, trees bud, and flowers open. It often rains, but the sun comes back quickly. It's my favorite season because nature is reborn.\n\nSummer lasts from June to September. It's hot, sometimes very hot — especially in July and August. Temperatures can rise to 30 or 35 degrees. The French go on vacation, often to the sea or mountains. In Paris, many shops close in August.\n\nAutumn arrives in September. Tree leaves turn yellow, then red, then fall. It gets cooler, it rains often. It's the season of mushrooms and the back-to-school period.\n\nWinter is from December to March. It's cold, sometimes minus 5 or minus 10 degrees. It snows in mountainous regions (Alps, Pyrenees) and sometimes in the plains too. Days are short: the sun sets at 5 PM.\n\nThe climate is different by region: mild and humid in Brittany, hot and dry in Provence, continental in Alsace, Mediterranean on the Riviera. And in Quebec, don't even talk about it — winter lasts six months and it's often minus 20!",
+        "comprehension_questions": [
+          {
+            "q": "Quand commence le printemps en France ?",
+            "a": "En mars."
+          },
+          {
+            "q": "Que se passe-t-il à Paris au mois d'août ?",
+            "a": "Beaucoup de magasins ferment, et les Parisiens partent en vacances."
+          },
+          {
+            "q": "Quelles régions ont un climat méditerranéen ?",
+            "a": "La Provence et la Côte d'Azur."
+          },
+          {
+            "q": "Comment est l'hiver au Québec ?",
+            "a": "Il dure six mois et il fait souvent moins 20 degrés."
+          }
+        ]
+      },
+      "cultural_note": "En France, la **météo** est un sujet de conversation universel pour briser la glace ('Il fait beau aujourd'hui, non ?'). Les Français suivent **'la météo' à la télévision** chaque soir avant le journal. Le pays a quatre saisons bien marquées, mais le climat varie énormément entre le Nord (océanique, humide), le Sud (méditerranéen), l'Est (continental) et la montagne. Au Québec, l'hiver est extrême (jusqu'à -30 °C !) et le passage entre saisons est brutal ; on parle de cinq saisons en blaguant : printemps, été, automne, hiver, et 'la slush' (transition boueuse)."
+    }
+  ]
+}

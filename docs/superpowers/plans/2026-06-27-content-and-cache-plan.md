@@ -25,7 +25,7 @@ Goals:
 | # | Phase | Ships | Effort | LLM calls killed |
 |---|---|---|---|---|
 | 1 | Dictionary pre-warm + CEFR tagging + cache-first view | `seed_dictionary_fr.py`, migration adding `cefr_level`, top 3 000 lemmas pre-warmed at seed time | 1 session | Dictionary lookups (cache hit + miss-then-cache) |
-| 2 | Conjugator pre-warm | `seed_conjugations_fr.py` — top ~300 verbs × 8 tenses → `DictionaryCache(kind=CONJUGATION)`, cache-first view | 1 session | Verb conjugations |
+| 2 | Conjugator pre-warm | `seed_conjugations_fr.py` — top ~300 verbs → `DictionaryCache(kind=DictionaryCache.CONJUGATION)` (one row per verb holds all 8 tenses; the LLM prompt returns the full table), cache-first view | 1 session | Verb conjugations |
 | 3 | Discover → JSON bank | `data/discover_fr.json` (~200 trivia + ~200 Word-of-the-Day + ~100 culture cards), `seed_discover_fr.py`. News drops the LLM fallback (RSS-only). | 2 sessions | Trivia + news daily generation |
 | 4 | Exam Prep → JSON | `data/exam_prep_fr.json` (4 sections × 6 levels), `seed_exam_prep_fr.py`. EE/EO grading still LLM. | 2 sessions | Exam content sourcing (was hardcoded Python; now JSON + richer) |
 | 5 | Reading-text variety | `data/readings_extra/<level>.json` — 3-5 alternate readings per topic | 1 session per level | Zero LLM calls killed; UX gain only |
@@ -52,7 +52,7 @@ See [the cache spec](../specs/2026-06-27-llm-cache-layer-design.md) for full des
 
 1. **Schema migration** — `apps/dictionary/migrations/000X_add_cefr_level_to_cache.py`.
 2. **`data/dictionary_seed_fr.csv`** — top 3 000 lemmas with rank → CEFR bucket. Just metadata; the entries themselves are LLM-populated at seed time.
-3. **`apps/dictionary/management/commands/seed_dictionary_fr.py`** — reads the CSV, calls the LLM router for each missing entry, writes to `DictionaryCache(kind=LOOKUP, cefr_level=...)`. Idempotent — re-runs skip already-cached rows. Flags: `--limit N` (for partial runs), `--dry-run`, `--retry-failed`.
+3. **`apps/dictionary/management/commands/seed_dictionary_fr.py`** — reads the CSV, calls the LLM router for each missing entry, writes to `DictionaryCache(kind=DictionaryCache.LOOKUP, cefr_level=..., source="seed")`. Idempotent — re-runs skip already-cached rows. Flags: `--limit N` (for partial runs), `--dry-run`, `--retry-failed`.
 4. **Dictionary view change** — `apps/dictionary/views.py`: cache-first; on miss, LLM call writes back with derived CEFR (lemma not in the seeded list defaults to the user's current `target_level`).
 5. **Tests** — cache hit, cache miss writes back, CEFR derivation from rank.
 

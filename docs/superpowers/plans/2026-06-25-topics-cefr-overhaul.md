@@ -106,7 +106,14 @@ The original `.dockerignore` had `**/media` and `**/staticfiles` — patterns th
 - Desktop: 6-column tab row spanning the same width as the 3-column card grid. Mobile: wraps to 2-3 columns.
 - Card badge fixed: used to look up a `DIFFICULTY_BADGE` dict by string (`"A1"`) but the API returns integers — so cards showed the raw digit. Now the badge string is derived from the active level.
 
-Also disabled DRF pagination on `TopicListView` (`pagination_class = None`). The frontend's `getTopics()` reads `res.data.results` without paginating, so the default 20-per-page silently capped visible topics. Topic lists are small enough that returning the full set in one response is cheap; updated `TestTopicListView` accordingly.
+Also disabled DRF pagination on `TopicListView` (`pagination_class = None`). The frontend's `getTopics()` was reading `res.data.results` without paginating, so the default 20-per-page silently capped visible topics. Topic lists are small enough that returning the full set in one response is cheap.
+
+This is a **coupled change** — backend and frontend ship together in PR #44:
+- Backend: response shape changes from `{results: [...], count: N, ...}` to a plain `[...]` array.
+- Frontend: `getTopics().then((res) => setTopics(res.data.results || res.data))` already falls back to the bare array, so it works for both shapes.
+- Tests: `TestTopicListView` updated — `response.data["results"]` → `response.data`.
+
+Any other client of `/api/content/topics/` (mobile, bot, embeds) must read `res.data` as a list, not look for `.results`. The frontend was the only consumer at the time of the change.
 
 ## Migrations
 

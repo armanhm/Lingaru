@@ -1,0 +1,2991 @@
+{
+  "_meta": {
+    "language": "fr",
+    "cefr_level": "A2",
+    "title": "Lingaru Topics — Niveau A2 (Survie)",
+    "description": "Vivre les situations quotidiennes et raconter le passé récent."
+  },
+  "topics": [
+    {
+      "name_fr": "Le travail et les métiers",
+      "name_en": "Work and professions",
+      "icon": "💼",
+      "order": 300,
+      "difficulty_level": 2,
+      "description": "Parler de son travail, des métiers, des horaires et des conditions de travail.",
+      "vocabulary": [
+        {
+          "french": "le travail",
+          "english": "work, job",
+          "gender": "m",
+          "part_of_speech": "noun",
+          "example_sentence": "J'aime mon travail."
+        },
+        {
+          "french": "le métier",
+          "english": "trade, profession",
+          "gender": "m",
+          "part_of_speech": "noun",
+          "example_sentence": "Quel est ton métier ?"
+        },
+        {
+          "french": "la profession",
+          "english": "profession",
+          "gender": "f",
+          "part_of_speech": "noun",
+          "example_sentence": "Sa profession est avocate."
+        },
+        {
+          "french": "l'emploi",
+          "english": "employment, job",
+          "gender": "m",
+          "part_of_speech": "noun",
+          "example_sentence": "Je cherche un emploi à temps plein."
+        },
+        {
+          "french": "le boulot (familier)",
+          "english": "job (colloquial)",
+          "gender": "m",
+          "part_of_speech": "noun",
+          "example_sentence": "Mon boulot est intéressant."
+        },
+        {
+          "french": "le bureau",
+          "english": "office",
+          "gender": "m",
+          "part_of_speech": "noun",
+          "example_sentence": "Je travaille au bureau du lundi au vendredi."
+        },
+        {
+          "french": "l'entreprise / la société",
+          "english": "company",
+          "gender": "f",
+          "part_of_speech": "noun",
+          "example_sentence": "Notre entreprise emploie 200 personnes."
+        },
+        {
+          "french": "le patron / la patronne",
+          "english": "boss",
+          "gender": "a",
+          "part_of_speech": "noun",
+          "example_sentence": "Mon patron est très exigeant."
+        },
+        {
+          "french": "le collègue / la collègue",
+          "english": "colleague",
+          "gender": "a",
+          "part_of_speech": "noun",
+          "example_sentence": "Mes collègues sont sympas."
+        },
+        {
+          "french": "le client / la cliente",
+          "english": "client, customer",
+          "gender": "a",
+          "part_of_speech": "noun",
+          "example_sentence": "Le client a toujours raison."
+        },
+        {
+          "french": "l'employé / l'employée",
+          "english": "employee",
+          "gender": "a",
+          "part_of_speech": "noun",
+          "example_sentence": "L'entreprise a 50 employés."
+        },
+        {
+          "french": "le salaire",
+          "english": "salary",
+          "gender": "m",
+          "part_of_speech": "noun",
+          "example_sentence": "Mon salaire est correct."
+        },
+        {
+          "french": "les horaires",
+          "english": "working hours",
+          "gender": "m",
+          "part_of_speech": "noun",
+          "example_sentence": "Mes horaires sont flexibles."
+        },
+        {
+          "french": "à temps plein / à temps partiel",
+          "english": "full-time / part-time",
+          "gender": "a",
+          "part_of_speech": "phrase",
+          "example_sentence": "Je travaille à temps plein."
+        },
+        {
+          "french": "le contrat",
+          "english": "contract",
+          "gender": "m",
+          "part_of_speech": "noun",
+          "example_sentence": "J'ai signé un contrat de deux ans."
+        },
+        {
+          "french": "les congés / les vacances",
+          "english": "leave / vacation",
+          "gender": "a",
+          "part_of_speech": "noun",
+          "example_sentence": "J'ai cinq semaines de congés par an."
+        },
+        {
+          "french": "le médecin",
+          "english": "doctor",
+          "gender": "m",
+          "part_of_speech": "noun",
+          "example_sentence": "Mon père est médecin."
+        },
+        {
+          "french": "l'avocat / l'avocate",
+          "english": "lawyer",
+          "gender": "a",
+          "part_of_speech": "noun",
+          "example_sentence": "Elle est avocate à Paris."
+        },
+        {
+          "french": "l'enseignant / l'enseignante",
+          "english": "teacher",
+          "gender": "a",
+          "part_of_speech": "noun",
+          "example_sentence": "Mon oncle est enseignant."
+        },
+        {
+          "french": "l'infirmier / l'infirmière",
+          "english": "nurse",
+          "gender": "a",
+          "part_of_speech": "noun",
+          "example_sentence": "Les infirmières travaillent dur."
+        },
+        {
+          "french": "le cuisinier / la cuisinière",
+          "english": "cook, chef",
+          "gender": "a",
+          "part_of_speech": "noun",
+          "example_sentence": "Le cuisinier prépare le déjeuner."
+        },
+        {
+          "french": "l'informaticien / l'informaticienne",
+          "english": "IT specialist",
+          "gender": "a",
+          "part_of_speech": "noun",
+          "example_sentence": "Mon frère est informaticien."
+        },
+        {
+          "french": "le commerçant / la commerçante",
+          "english": "shopkeeper",
+          "gender": "a",
+          "part_of_speech": "noun",
+          "example_sentence": "Le commerçant ouvre tôt."
+        },
+        {
+          "french": "travailler / chercher un emploi",
+          "english": "to work / to job-hunt",
+          "gender": "a",
+          "part_of_speech": "verb",
+          "example_sentence": "Je cherche un emploi depuis trois mois."
+        },
+        {
+          "french": "embaucher / licencier",
+          "english": "to hire / to fire",
+          "gender": "a",
+          "part_of_speech": "verb",
+          "example_sentence": "L'entreprise va embaucher dix personnes."
+        }
+      ],
+      "phrases": [
+        {
+          "fr": "Qu'est-ce que vous faites dans la vie ?",
+          "en": "What do you do for a living?",
+          "note": "Standard polite question about profession."
+        },
+        {
+          "fr": "Je suis ingénieur dans une grande entreprise.",
+          "en": "I'm an engineer at a large company.",
+          "note": "Note: no article ('un') before profession with être."
+        },
+        {
+          "fr": "Je travaille à mon compte.",
+          "en": "I'm self-employed.",
+          "note": "Idiom for freelance/independent work."
+        },
+        {
+          "fr": "Je suis au chômage.",
+          "en": "I'm unemployed.",
+          "note": "Common in everyday French — 'le chômage' = unemployment."
+        },
+        {
+          "fr": "Je suis en arrêt maladie.",
+          "en": "I'm on sick leave.",
+          "note": "Standard administrative phrase."
+        },
+        {
+          "fr": "Comment ça se passe au travail ?",
+          "en": "How's work going?",
+          "note": "Casual question among colleagues/friends."
+        },
+        {
+          "fr": "J'ai beaucoup de travail en ce moment.",
+          "en": "I have a lot of work right now.",
+          "note": "Common complaint."
+        },
+        {
+          "fr": "Je commence à 9 heures et je finis à 17 heures.",
+          "en": "I start at 9 and finish at 5.",
+          "note": "Typical office hours."
+        },
+        {
+          "fr": "Je suis débordé(e).",
+          "en": "I'm swamped.",
+          "note": "Common expression for being overwhelmed."
+        },
+        {
+          "fr": "C'est un travail intéressant mais stressant.",
+          "en": "It's interesting but stressful work.",
+          "note": "Balanced description."
+        },
+        {
+          "fr": "Je voudrais changer de métier.",
+          "en": "I'd like to change careers.",
+          "note": "'Changer de' + noun without article."
+        },
+        {
+          "fr": "Je viens de finir mon stage.",
+          "en": "I just finished my internship.",
+          "note": "'Venir de' + infinitive = just did."
+        }
+      ],
+      "reading": {
+        "title": "Une journée au bureau",
+        "content_fr": "Camille, 32 ans, est chef de projet dans une entreprise de marketing à Lyon. Elle nous raconte sa journée typique.\n\n« J'arrive au bureau vers huit heures et demie. Je salue mes collègues, je me prépare un café, et je consulte mes mails pendant une demi-heure. Il y en a toujours beaucoup le matin !\n\nÀ neuf heures, j'ai une réunion d'équipe avec mes cinq collaborateurs. Nous discutons des projets en cours et de ce qu'il faut faire dans la journée. C'est un moment important pour bien commencer.\n\nDe dix heures à midi, je travaille sur mes dossiers. Cette semaine, je prépare une présentation pour un nouveau client important. J'écris, je modifie, je consulte des données. Quand j'ai besoin d'avis, je vais voir mes collègues.\n\nÀ midi, je déjeune à la cafétéria de l'entreprise avec deux collègues. On parle de tout sauf de travail — c'est notre règle !\n\nL'après-midi, j'ai souvent des rendez-vous : avec des clients, avec mon patron, avec d'autres équipes. Je termine vers dix-huit heures, parfois plus tard quand il y a une urgence.\n\nC'est un métier stressant mais passionnant. J'aime particulièrement le contact avec les clients et la diversité des projets. Et j'ai cinq semaines de congés par an — c'est important pour moi ! »",
+        "content_en": "Camille, 32, is a project manager at a marketing company in Lyon. She tells us about her typical day.\n\n'I arrive at the office around eight-thirty. I greet my colleagues, make myself a coffee, and check my emails for half an hour. There are always so many in the morning!\n\nAt nine, I have a team meeting with my five collaborators. We discuss ongoing projects and what needs to be done that day. It's an important moment to start well.\n\nFrom ten to noon, I work on my files. This week, I'm preparing a presentation for an important new client. I write, modify, consult data. When I need an opinion, I go see my colleagues.\n\nAt noon, I eat at the company cafeteria with two colleagues. We talk about everything except work — that's our rule!\n\nIn the afternoon, I often have appointments: with clients, with my boss, with other teams. I finish around six PM, sometimes later when there's an emergency.\n\nIt's a stressful but exciting job. I particularly love the contact with clients and the diversity of projects. And I have five weeks of vacation per year — that's important to me!'",
+        "comprehension_questions": [
+          {
+            "q": "Quel est le métier de Camille ?",
+            "a": "Elle est chef de projet dans une entreprise de marketing."
+          },
+          {
+            "q": "Combien de personnes travaillent dans son équipe ?",
+            "a": "Cinq collaborateurs."
+          },
+          {
+            "q": "À quelle heure commence sa journée ?",
+            "a": "Vers huit heures et demie."
+          },
+          {
+            "q": "De combien de semaines de congés bénéficie-t-elle ?",
+            "a": "Cinq semaines par an."
+          }
+        ]
+      },
+      "cultural_note": "En France, la durée légale du travail est de 35 heures par semaine, et les salariés bénéficient de cinq semaines de congés payés par an (souvent six avec les jours RTT). La pause déjeuner est sacrée — entre 12 h et 14 h, beaucoup d'entreprises ferment, et on prend un vrai repas, pas un sandwich. L'usage du tutoiement entre collègues s'est généralisé dans les entreprises modernes (start-up, tech), mais reste rare avec les supérieurs hiérarchiques."
+    },
+    {
+      "name_fr": "L'école et les études",
+      "name_en": "School and studies",
+      "icon": "🎓",
+      "order": 310,
+      "difficulty_level": 2,
+      "description": "Parler de l'école, des études supérieures, des matières et des examens.",
+      "vocabulary": [
+        {
+          "french": "l'école",
+          "english": "school",
+          "gender": "f",
+          "part_of_speech": "noun",
+          "example_sentence": "Mon fils va à l'école primaire."
+        },
+        {
+          "french": "le collège",
+          "english": "middle school (11-15 yrs)",
+          "gender": "m",
+          "part_of_speech": "noun",
+          "example_sentence": "Ma fille est au collège."
+        },
+        {
+          "french": "le lycée",
+          "english": "high school (15-18 yrs)",
+          "gender": "m",
+          "part_of_speech": "noun",
+          "example_sentence": "Le lycée se termine par le bac."
+        },
+        {
+          "french": "l'université / la fac",
+          "english": "university",
+          "gender": "f",
+          "part_of_speech": "noun",
+          "example_sentence": "J'étudie à l'université de Lyon."
+        },
+        {
+          "french": "l'élève",
+          "english": "pupil (school)",
+          "gender": "a",
+          "part_of_speech": "noun",
+          "example_sentence": "Les élèves sont en classe."
+        },
+        {
+          "french": "l'étudiant / l'étudiante",
+          "english": "student (uni)",
+          "gender": "a",
+          "part_of_speech": "noun",
+          "example_sentence": "Je suis étudiant en droit."
+        },
+        {
+          "french": "le professeur / la professeure / le prof (familier)",
+          "english": "teacher / prof",
+          "gender": "a",
+          "part_of_speech": "noun",
+          "example_sentence": "Mon prof de maths est sévère."
+        },
+        {
+          "french": "la matière",
+          "english": "subject",
+          "gender": "f",
+          "part_of_speech": "noun",
+          "example_sentence": "Quelle est ta matière préférée ?"
+        },
+        {
+          "french": "les mathématiques / les maths",
+          "english": "mathematics",
+          "gender": "f",
+          "part_of_speech": "noun",
+          "example_sentence": "Je suis nul en maths."
+        },
+        {
+          "french": "le français / l'anglais / l'histoire",
+          "english": "French / English / history",
+          "gender": "m",
+          "part_of_speech": "noun",
+          "example_sentence": "J'aime bien l'histoire."
+        },
+        {
+          "french": "la physique / la chimie / la biologie",
+          "english": "physics / chemistry / biology",
+          "gender": "f",
+          "part_of_speech": "noun",
+          "example_sentence": "La chimie est compliquée."
+        },
+        {
+          "french": "la philosophie / la philo",
+          "english": "philosophy",
+          "gender": "f",
+          "part_of_speech": "noun",
+          "example_sentence": "J'ai un bon prof de philo."
+        },
+        {
+          "french": "le cours",
+          "english": "class, course",
+          "gender": "m",
+          "part_of_speech": "noun",
+          "example_sentence": "Le cours commence à 10 heures."
+        },
+        {
+          "french": "la classe",
+          "english": "class, classroom",
+          "gender": "f",
+          "part_of_speech": "noun",
+          "example_sentence": "Il y a 30 élèves dans ma classe."
+        },
+        {
+          "french": "le devoir",
+          "english": "homework, assignment",
+          "gender": "m",
+          "part_of_speech": "noun",
+          "example_sentence": "Je fais mes devoirs après l'école."
+        },
+        {
+          "french": "l'examen",
+          "english": "exam",
+          "gender": "m",
+          "part_of_speech": "noun",
+          "example_sentence": "J'ai un examen demain."
+        },
+        {
+          "french": "le bac / le baccalauréat",
+          "english": "high school diploma",
+          "gender": "m",
+          "part_of_speech": "noun",
+          "example_sentence": "Elle a eu son bac avec mention."
+        },
+        {
+          "french": "la note",
+          "english": "grade, mark",
+          "gender": "f",
+          "part_of_speech": "noun",
+          "example_sentence": "J'ai eu une bonne note en français."
+        },
+        {
+          "french": "la mention",
+          "english": "honors, distinction",
+          "gender": "f",
+          "part_of_speech": "noun",
+          "example_sentence": "Mention très bien à son bac."
+        },
+        {
+          "french": "réussir / échouer / rater",
+          "english": "to pass / to fail",
+          "gender": "a",
+          "part_of_speech": "verb",
+          "example_sentence": "Il a réussi son examen ; elle l'a raté."
+        },
+        {
+          "french": "redoubler",
+          "english": "to repeat a grade",
+          "gender": "a",
+          "part_of_speech": "verb",
+          "example_sentence": "Il a redoublé sa terminale."
+        },
+        {
+          "french": "étudier / apprendre",
+          "english": "to study / to learn",
+          "gender": "a",
+          "part_of_speech": "verb",
+          "example_sentence": "J'étudie le français depuis trois ans."
+        },
+        {
+          "french": "le diplôme",
+          "english": "diploma, degree",
+          "gender": "m",
+          "part_of_speech": "noun",
+          "example_sentence": "Elle a un diplôme d'ingénieur."
+        },
+        {
+          "french": "la licence / le master / le doctorat",
+          "english": "bachelor's / master's / doctorate",
+          "gender": "a",
+          "part_of_speech": "noun",
+          "example_sentence": "Je prépare un master en économie."
+        },
+        {
+          "french": "la bourse",
+          "english": "scholarship",
+          "gender": "f",
+          "part_of_speech": "noun",
+          "example_sentence": "Elle a une bourse pour étudier à l'étranger."
+        }
+      ],
+      "phrases": [
+        {
+          "fr": "Tu es en quelle classe ?",
+          "en": "What grade/year are you in?",
+          "note": "Standard question to a school-age student."
+        },
+        {
+          "fr": "Je suis en troisième / seconde / terminale.",
+          "en": "I'm in 9th / 10th / 12th grade.",
+          "note": "French grades count downward."
+        },
+        {
+          "fr": "Tu étudies quoi ?",
+          "en": "What are you studying?",
+          "note": "Casual question to a uni student."
+        },
+        {
+          "fr": "J'étudie l'informatique à l'université.",
+          "en": "I'm studying computer science at university.",
+          "note": "Subject + 'à l'université' for location."
+        },
+        {
+          "fr": "J'ai eu 15 sur 20 à mon devoir.",
+          "en": "I got 15 out of 20 on my assignment.",
+          "note": "French grades are out of 20."
+        },
+        {
+          "fr": "C'est une bonne note.",
+          "en": "That's a good grade.",
+          "note": "12+/20 is good in the French system."
+        },
+        {
+          "fr": "Je dois réviser pour mon examen.",
+          "en": "I have to revise for my exam.",
+          "note": "'Réviser' = to study for, more than 'apprendre'."
+        },
+        {
+          "fr": "Je passe mon bac cette année.",
+          "en": "I'm taking my bac this year.",
+          "note": "'Passer' an exam = to take it (false friend with 'pass')."
+        },
+        {
+          "fr": "Il a séché les cours hier.",
+          "en": "He skipped class yesterday.",
+          "note": "Idiom: 'sécher' = to skip, literally 'dry out'."
+        },
+        {
+          "fr": "Je suis nul(le) en maths.",
+          "en": "I'm terrible at math.",
+          "note": "Self-deprecating, common."
+        },
+        {
+          "fr": "Je suis fort(e) en langues.",
+          "en": "I'm good at languages.",
+          "note": "Opposite of 'nul'."
+        },
+        {
+          "fr": "Tu prépares quoi comme diplôme ?",
+          "en": "What degree are you preparing?",
+          "note": "Asking about study plans."
+        }
+      ],
+      "reading": {
+        "title": "Le système scolaire français",
+        "content_fr": "En France, l'école est obligatoire jusqu'à 16 ans. Le système est très structuré.\n\nLes enfants commencent à **l'école maternelle** (3-6 ans), puis à **l'école primaire** (6-11 ans). Ils apprennent à lire, à écrire et à compter.\n\nÀ 11 ans, ils entrent au **collège** : sixième, cinquième, quatrième, troisième. À la fin de la troisième, ils passent leur premier examen : le **brevet des collèges**.\n\nEnsuite vient le **lycée** : seconde, première, terminale. Trois ans pour préparer le **baccalauréat** (le 'bac'), un examen célèbre et stressant. Avec le bac, on peut entrer à l'université.\n\nÀ l'université, il y a trois cycles : la **licence** (3 ans, équivalent du Bachelor), le **master** (2 ans) et le **doctorat** (3 à 5 ans). Les universités françaises sont publiques et peu chères (environ 200 à 400 euros par an).\n\nLes notes vont de 0 à 20. Avoir 10 sur 20, c'est la moyenne. Avoir 15 sur 20, c'est très bien. Avoir 20 sur 20 est rarissime — les professeurs français sont sévères !\n\nLes étudiants peuvent demander une **bourse** s'ils n'ont pas beaucoup d'argent. Beaucoup partent étudier à l'étranger via le programme **Erasmus**. C'est une expérience formidable.",
+        "content_en": "In France, school is mandatory until age 16. The system is very structured.\n\nChildren start at preschool (ages 3-6), then primary school (6-11). They learn to read, write, and count.\n\nAt 11, they enter middle school: sixth, fifth, fourth, third grade. At the end of third grade, they take their first exam: the brevet des collèges.\n\nThen comes high school: second, first, terminale. Three years to prepare for the baccalauréat (the 'bac'), a famous and stressful exam. With the bac, you can enter university.\n\nAt university, there are three cycles: the licence (3 years, equivalent to a Bachelor's), the master (2 years), and the doctorat (3-5 years). French universities are public and inexpensive (about 200-400 euros per year).\n\nGrades go from 0 to 20. Getting 10 out of 20 is the average. Getting 15 out of 20 is very good. Getting 20 out of 20 is extremely rare — French teachers are tough!\n\nStudents can apply for a scholarship if they don't have much money. Many go abroad through the Erasmus program. It's a wonderful experience.",
+        "comprehension_questions": [
+          {
+            "q": "Jusqu'à quel âge l'école est-elle obligatoire en France ?",
+            "a": "Jusqu'à 16 ans."
+          },
+          {
+            "q": "Quel est le premier examen important ?",
+            "a": "Le brevet des collèges, à la fin de la troisième."
+          },
+          {
+            "q": "Combien d'années dure une licence ?",
+            "a": "Trois ans."
+          },
+          {
+            "q": "Sur combien sont notées les copies en France ?",
+            "a": "Sur 20."
+          }
+        ]
+      },
+      "cultural_note": "Le **baccalauréat** est presque un rite de passage en France — un événement médiatique chaque année en juin. La **moyenne** (10/20) est la note de passage, et au bac, une 'mention' (Assez bien à 12, Bien à 14, Très bien à 16) ouvre des portes : prestige social, accès facilité à certaines écoles. Les **grandes écoles** (Polytechnique, HEC, Sciences Po, ENS...) sont des établissements ultra-sélectifs après le bac, souvent accessibles via des classes préparatoires (les 'prépas'), connues pour leur intensité."
+    },
+    {
+      "name_fr": "La santé et le corps",
+      "name_en": "Health and the body",
+      "icon": "🫀",
+      "order": 320,
+      "difficulty_level": 2,
+      "description": "Les parties du corps, parler de sa santé, des petits maux.",
+      "vocabulary": [
+        {
+          "french": "le corps",
+          "english": "the body",
+          "gender": "m",
+          "part_of_speech": "noun",
+          "example_sentence": "Le corps humain est complexe."
+        },
+        {
+          "french": "la tête",
+          "english": "head",
+          "gender": "f",
+          "part_of_speech": "noun",
+          "example_sentence": "J'ai mal à la tête."
+        },
+        {
+          "french": "le visage",
+          "english": "face",
+          "gender": "m",
+          "part_of_speech": "noun",
+          "example_sentence": "Son visage est rond."
+        },
+        {
+          "french": "les yeux (l'œil)",
+          "english": "eyes (eye)",
+          "gender": "m",
+          "part_of_speech": "noun",
+          "example_sentence": "Elle a les yeux bleus."
+        },
+        {
+          "french": "le nez",
+          "english": "nose",
+          "gender": "m",
+          "part_of_speech": "noun",
+          "example_sentence": "Mon nez coule."
+        },
+        {
+          "french": "la bouche",
+          "english": "mouth",
+          "gender": "f",
+          "part_of_speech": "noun",
+          "example_sentence": "Ferme la bouche en mangeant."
+        },
+        {
+          "french": "l'oreille",
+          "english": "ear",
+          "gender": "f",
+          "part_of_speech": "noun",
+          "example_sentence": "J'ai mal aux oreilles."
+        },
+        {
+          "french": "la dent",
+          "english": "tooth",
+          "gender": "f",
+          "part_of_speech": "noun",
+          "example_sentence": "Brosse-toi les dents."
+        },
+        {
+          "french": "le cou / la gorge",
+          "english": "neck / throat",
+          "gender": "a",
+          "part_of_speech": "noun",
+          "example_sentence": "J'ai mal à la gorge."
+        },
+        {
+          "french": "l'épaule",
+          "english": "shoulder",
+          "gender": "f",
+          "part_of_speech": "noun",
+          "example_sentence": "Il a mal à l'épaule."
+        },
+        {
+          "french": "le bras",
+          "english": "arm",
+          "gender": "m",
+          "part_of_speech": "noun",
+          "example_sentence": "Je me suis cassé le bras."
+        },
+        {
+          "french": "la main",
+          "english": "hand",
+          "gender": "f",
+          "part_of_speech": "noun",
+          "example_sentence": "Lave-toi les mains."
+        },
+        {
+          "french": "le doigt",
+          "english": "finger",
+          "gender": "m",
+          "part_of_speech": "noun",
+          "example_sentence": "Je me suis coupé le doigt."
+        },
+        {
+          "french": "le ventre / l'estomac",
+          "english": "stomach",
+          "gender": "m",
+          "part_of_speech": "noun",
+          "example_sentence": "J'ai mal au ventre."
+        },
+        {
+          "french": "le dos",
+          "english": "back",
+          "gender": "m",
+          "part_of_speech": "noun",
+          "example_sentence": "J'ai mal au dos depuis hier."
+        },
+        {
+          "french": "la jambe",
+          "english": "leg",
+          "gender": "f",
+          "part_of_speech": "noun",
+          "example_sentence": "Mes jambes sont fatiguées."
+        },
+        {
+          "french": "le genou (les genoux)",
+          "english": "knee",
+          "gender": "m",
+          "part_of_speech": "noun",
+          "example_sentence": "Il a mal au genou."
+        },
+        {
+          "french": "le pied",
+          "english": "foot",
+          "gender": "m",
+          "part_of_speech": "noun",
+          "example_sentence": "Mes pieds sont gelés."
+        },
+        {
+          "french": "le cœur",
+          "english": "heart",
+          "gender": "m",
+          "part_of_speech": "noun",
+          "example_sentence": "Mon cœur bat vite."
+        },
+        {
+          "french": "la santé",
+          "english": "health",
+          "gender": "f",
+          "part_of_speech": "noun",
+          "example_sentence": "La santé, c'est important."
+        },
+        {
+          "french": "être malade / en bonne santé",
+          "english": "to be sick / healthy",
+          "gender": "a",
+          "part_of_speech": "phrase",
+          "example_sentence": "Je suis malade depuis hier."
+        },
+        {
+          "french": "avoir mal à",
+          "english": "to have a pain in",
+          "gender": "a",
+          "part_of_speech": "phrase",
+          "example_sentence": "J'ai mal au dos."
+        },
+        {
+          "french": "la fièvre / le rhume / la grippe",
+          "english": "fever / cold / flu",
+          "gender": "a",
+          "part_of_speech": "noun",
+          "example_sentence": "J'ai un gros rhume."
+        },
+        {
+          "french": "tousser / éternuer",
+          "english": "to cough / to sneeze",
+          "gender": "a",
+          "part_of_speech": "verb",
+          "example_sentence": "Je tousse beaucoup la nuit."
+        },
+        {
+          "french": "se sentir bien / mal",
+          "english": "to feel well / ill",
+          "gender": "a",
+          "part_of_speech": "verb",
+          "example_sentence": "Je ne me sens pas bien."
+        }
+      ],
+      "phrases": [
+        {
+          "fr": "Comment vas-tu ? — Pas très bien, je suis malade.",
+          "en": "How are you? — Not great, I'm sick.",
+          "note": "Standard exchange."
+        },
+        {
+          "fr": "J'ai mal à la tête.",
+          "en": "I have a headache.",
+          "note": "'Avoir mal à' + body part. Note the article."
+        },
+        {
+          "fr": "J'ai de la fièvre.",
+          "en": "I have a fever.",
+          "note": "'De la' partitive article."
+        },
+        {
+          "fr": "Je tousse depuis trois jours.",
+          "en": "I've been coughing for three days.",
+          "note": "'Depuis' + duration."
+        },
+        {
+          "fr": "Je dois aller chez le médecin.",
+          "en": "I need to go to the doctor.",
+          "note": "'Chez le médecin' — note 'chez' for a person/professional."
+        },
+        {
+          "fr": "Je prends des médicaments.",
+          "en": "I'm taking medication.",
+          "note": "'Prendre' for medication."
+        },
+        {
+          "fr": "Reposez-vous bien.",
+          "en": "Rest well.",
+          "note": "Standard advice to someone sick."
+        },
+        {
+          "fr": "Soigne-toi !",
+          "en": "Take care!",
+          "note": "Common when leaving a sick person."
+        },
+        {
+          "fr": "Je suis allergique au pollen.",
+          "en": "I'm allergic to pollen.",
+          "note": "'Allergique à' + cause."
+        },
+        {
+          "fr": "Il faut que tu te reposes.",
+          "en": "You need to rest.",
+          "note": "Subjunctive after 'il faut que'."
+        },
+        {
+          "fr": "À tes / vos souhaits !",
+          "en": "Bless you!",
+          "note": "After someone sneezes. 'À tes souhaits' (informal), 'à vos souhaits' (formal)."
+        },
+        {
+          "fr": "Je suis crevé(e).",
+          "en": "I'm exhausted.",
+          "note": "Colloquial."
+        }
+      ],
+      "reading": {
+        "title": "Un mauvais rhume",
+        "content_fr": "Depuis lundi, je ne me sens pas bien. Tout a commencé par un mal de gorge léger. Je suis quand même allé(e) au travail, parce que j'avais beaucoup de choses à faire.\n\nMardi, ça allait moins bien. J'avais le nez qui coulait et je commençais à tousser. Mes collègues m'ont dit : « Tu devrais rentrer chez toi, tu as vraiment l'air fatigué. » Mais j'ai continué.\n\nMercredi matin, je me suis réveillé(e) avec 38,5 degrés de fièvre, un mal de tête horrible, et tout le corps qui me faisait mal. Cette fois, c'était clair : j'avais la grippe.\n\nJ'ai téléphoné au médecin pour prendre rendez-vous. Il m'a reçu(e) à 14 heures. Il m'a examiné(e) : il a regardé ma gorge, écouté ma poitrine, pris ma température. « Vous avez une bonne grippe, m'a-t-il dit. Rentrez chez vous, reposez-vous, buvez beaucoup d'eau, et prenez du paracétamol pour la fièvre. Si ça ne va pas mieux dans une semaine, revenez me voir. »\n\nIl m'a aussi donné un **arrêt maladie** de cinq jours. Au moins, je vais pouvoir me reposer.\n\nMaintenant, je suis à la maison, sur le canapé, sous une couverture, avec une tisane. La leçon ? Quand on est malade, il faut s'arrêter tout de suite. Sinon, ça empire.",
+        "content_en": "Since Monday, I haven't been feeling well. It all started with a mild sore throat. I still went to work because I had a lot to do.\n\nTuesday, things were worse. My nose was running and I was starting to cough. My colleagues said: 'You should go home, you really look tired.' But I kept going.\n\nWednesday morning, I woke up with a 38.5 degree fever, a horrible headache, and my whole body aching. This time, it was clear: I had the flu.\n\nI called the doctor to make an appointment. He saw me at 2 PM. He examined me: looked at my throat, listened to my chest, took my temperature. 'You have a bad flu,' he told me. 'Go home, rest, drink lots of water, and take paracetamol for the fever. If you're not better in a week, come back to see me.'\n\nHe also gave me a five-day sick note. At least, I can rest.\n\nNow I'm home, on the couch, under a blanket, with an herbal tea. The lesson? When you're sick, you have to stop immediately. Otherwise, it gets worse.",
+        "comprehension_questions": [
+          {
+            "q": "Quels étaient les premiers symptômes ?",
+            "a": "Un mal de gorge léger."
+          },
+          {
+            "q": "Quelle température avait-il/elle mercredi matin ?",
+            "a": "38,5 degrés."
+          },
+          {
+            "q": "Que lui a conseillé le médecin ?",
+            "a": "De rentrer chez lui/elle, se reposer, boire beaucoup d'eau et prendre du paracétamol."
+          },
+          {
+            "q": "Combien de jours d'arrêt maladie a-t-il/elle reçu ?",
+            "a": "Cinq jours."
+          }
+        ]
+      },
+      "cultural_note": "En France, **la Sécurité sociale** ('la Sécu') rembourse une grande partie des frais médicaux, et tout salarié peut obtenir un **arrêt maladie** du médecin pour rester chez lui sans perdre son salaire (les premiers jours sont à la charge de l'employeur, ensuite c'est la Sécu). Le médecin **généraliste** est le médecin de famille, qu'on consulte d'abord avant les spécialistes (sauf urgences). La consultation coûte environ 25 € en cabinet libéral, presque entièrement remboursée."
+    },
+    {
+      "name_fr": "Chez le médecin et à la pharmacie",
+      "name_en": "At the doctor's and pharmacy",
+      "icon": "💊",
+      "order": 330,
+      "difficulty_level": 2,
+      "description": "Prendre rendez-vous, expliquer ses symptômes, comprendre une ordonnance.",
+      "vocabulary": [
+        {
+          "french": "le médecin généraliste",
+          "english": "general practitioner",
+          "gender": "m",
+          "part_of_speech": "noun",
+          "example_sentence": "Je vais chez mon médecin généraliste."
+        },
+        {
+          "french": "le spécialiste",
+          "english": "specialist",
+          "gender": "m",
+          "part_of_speech": "noun",
+          "example_sentence": "Le généraliste m'envoie chez un spécialiste."
+        },
+        {
+          "french": "le cabinet médical",
+          "english": "doctor's office",
+          "gender": "m",
+          "part_of_speech": "noun",
+          "example_sentence": "Son cabinet est rue Saint-Michel."
+        },
+        {
+          "french": "la salle d'attente",
+          "english": "waiting room",
+          "gender": "f",
+          "part_of_speech": "noun",
+          "example_sentence": "La salle d'attente est pleine."
+        },
+        {
+          "french": "le rendez-vous",
+          "english": "appointment",
+          "gender": "m",
+          "part_of_speech": "noun",
+          "example_sentence": "J'ai un rendez-vous à 15 heures."
+        },
+        {
+          "french": "l'ordonnance",
+          "english": "prescription",
+          "gender": "f",
+          "part_of_speech": "noun",
+          "example_sentence": "Le médecin m'a fait une ordonnance."
+        },
+        {
+          "french": "le médicament",
+          "english": "medicine",
+          "gender": "m",
+          "part_of_speech": "noun",
+          "example_sentence": "Je prends ce médicament trois fois par jour."
+        },
+        {
+          "french": "le comprimé / le cachet",
+          "english": "tablet, pill",
+          "gender": "m",
+          "part_of_speech": "noun",
+          "example_sentence": "Prenez un comprimé après les repas."
+        },
+        {
+          "french": "la pilule",
+          "english": "pill (often contraceptive)",
+          "gender": "f",
+          "part_of_speech": "noun",
+          "example_sentence": "Elle prend la pilule."
+        },
+        {
+          "french": "le sirop",
+          "english": "syrup (cough medicine)",
+          "gender": "m",
+          "part_of_speech": "noun",
+          "example_sentence": "Du sirop pour la toux."
+        },
+        {
+          "french": "la pommade / la crème",
+          "english": "ointment / cream",
+          "gender": "f",
+          "part_of_speech": "noun",
+          "example_sentence": "Mettez de la crème sur la blessure."
+        },
+        {
+          "french": "le pansement",
+          "english": "bandage",
+          "gender": "m",
+          "part_of_speech": "noun",
+          "example_sentence": "Un pansement pour la coupure."
+        },
+        {
+          "french": "l'antibiotique",
+          "english": "antibiotic",
+          "gender": "m",
+          "part_of_speech": "noun",
+          "example_sentence": "On évite les antibiotiques sans raison."
+        },
+        {
+          "french": "le symptôme",
+          "english": "symptom",
+          "gender": "m",
+          "part_of_speech": "noun",
+          "example_sentence": "Décrivez-moi vos symptômes."
+        },
+        {
+          "french": "la douleur",
+          "english": "pain",
+          "gender": "f",
+          "part_of_speech": "noun",
+          "example_sentence": "La douleur est forte."
+        },
+        {
+          "french": "ausculter / examiner",
+          "english": "to examine",
+          "gender": "a",
+          "part_of_speech": "verb",
+          "example_sentence": "Le médecin va vous examiner."
+        },
+        {
+          "french": "prendre la température / la tension",
+          "english": "to take temperature / blood pressure",
+          "gender": "a",
+          "part_of_speech": "phrase",
+          "example_sentence": "L'infirmière prend ma tension."
+        },
+        {
+          "french": "la prise de sang",
+          "english": "blood test",
+          "gender": "f",
+          "part_of_speech": "noun",
+          "example_sentence": "Il faut faire une prise de sang."
+        },
+        {
+          "french": "la carte vitale",
+          "english": "French health insurance card",
+          "gender": "f",
+          "part_of_speech": "noun",
+          "example_sentence": "Présentez votre carte vitale."
+        },
+        {
+          "french": "la sécurité sociale / la Sécu",
+          "english": "social security / health insurance",
+          "gender": "f",
+          "part_of_speech": "noun",
+          "example_sentence": "La Sécu rembourse une partie."
+        },
+        {
+          "french": "la mutuelle",
+          "english": "supplementary insurance",
+          "gender": "f",
+          "part_of_speech": "noun",
+          "example_sentence": "Ma mutuelle paie le reste."
+        },
+        {
+          "french": "rembourser",
+          "english": "to reimburse",
+          "gender": "a",
+          "part_of_speech": "verb",
+          "example_sentence": "La Sécu rembourse 70 %."
+        },
+        {
+          "french": "le pharmacien / la pharmacienne",
+          "english": "pharmacist",
+          "gender": "a",
+          "part_of_speech": "noun",
+          "example_sentence": "Le pharmacien m'a bien conseillé(e)."
+        },
+        {
+          "french": "guérir / soigner",
+          "english": "to heal / to treat",
+          "gender": "a",
+          "part_of_speech": "verb",
+          "example_sentence": "Cette pommade guérit vite."
+        },
+        {
+          "french": "l'urgence",
+          "english": "emergency",
+          "gender": "f",
+          "part_of_speech": "noun",
+          "example_sentence": "Il faut aller aux urgences !"
+        }
+      ],
+      "phrases": [
+        {
+          "fr": "Je voudrais prendre rendez-vous avec le docteur.",
+          "en": "I'd like to make an appointment with the doctor.",
+          "note": "Polite phone phrase."
+        },
+        {
+          "fr": "C'est pour quel motif ?",
+          "en": "What's it about?",
+          "note": "Standard secretary question."
+        },
+        {
+          "fr": "J'ai mal au ventre depuis trois jours.",
+          "en": "I've had stomach pain for three days.",
+          "note": "Reporting duration of symptoms."
+        },
+        {
+          "fr": "Vous avez de la fièvre ?",
+          "en": "Do you have a fever?",
+          "note": "Common doctor's question."
+        },
+        {
+          "fr": "Je vais vous ausculter.",
+          "en": "I'm going to examine you.",
+          "note": "Doctor announcing examination."
+        },
+        {
+          "fr": "Respirez profondément.",
+          "en": "Breathe deeply.",
+          "note": "Standard medical instruction."
+        },
+        {
+          "fr": "Ouvrez la bouche, tirez la langue.",
+          "en": "Open your mouth, stick out your tongue.",
+          "note": "Standard exam phrase."
+        },
+        {
+          "fr": "Je vous fais une ordonnance.",
+          "en": "I'll write you a prescription.",
+          "note": "Doctor's announcement."
+        },
+        {
+          "fr": "Prenez un comprimé matin et soir, après le repas.",
+          "en": "Take one tablet morning and evening, after meals.",
+          "note": "Standard dosage instruction."
+        },
+        {
+          "fr": "Bonjour, j'ai une ordonnance.",
+          "en": "Hello, I have a prescription.",
+          "note": "Standard pharmacy entry."
+        },
+        {
+          "fr": "Avez-vous votre carte vitale ?",
+          "en": "Do you have your health insurance card?",
+          "note": "Asked at pharmacy and doctor's."
+        },
+        {
+          "fr": "Cela fait 8 euros 50, payés par la Sécu.",
+          "en": "That's 8.50 euros, paid by Social Security.",
+          "note": "Confirms direct billing."
+        }
+      ],
+      "reading": {
+        "title": "Première visite chez le médecin",
+        "content_fr": "Ahmed vient d'arriver en France. Il a des douleurs au ventre depuis plusieurs jours. Il décide d'aller voir un médecin.\n\nIl appelle le cabinet le matin : « Bonjour, je voudrais prendre rendez-vous avec le docteur Martin, s'il vous plaît. — Bien sûr. C'est pour quel motif ? — J'ai des douleurs au ventre. — Je vous propose cet après-midi à 15 heures. Vous avez votre carte vitale ? — Je viens d'arriver en France, je n'en ai pas encore. — Pas de problème, vous paierez 25 euros et vous serez remboursé plus tard. »\n\nÀ 14 h 45, Ahmed arrive au cabinet. Il y a une salle d'attente avec d'autres patients. À 15 h 10, le médecin l'appelle.\n\n« Bonjour, monsieur. Asseyez-vous. Alors, qu'est-ce qui ne va pas ?\n\n— Bonjour, docteur. J'ai mal au ventre depuis quatre jours. C'est surtout après les repas.\n\n— Vous avez des nausées ? De la fièvre ?\n\n— Pas de fièvre, mais quelques nausées le matin.\n\n— Allongez-vous, je vais vous examiner. »\n\nLe médecin examine Ahmed pendant cinq minutes, lui pose des questions sur son alimentation et son stress.\n\n« Ce n'est pas grave, dit-il. Vous avez probablement une petite gastrite, due au stress du déménagement. Je vais vous prescrire un médicament pour l'estomac, à prendre avant les repas pendant deux semaines. Évitez le café, l'alcool et les plats épicés. Et essayez de vous détendre.\n\n— Merci, docteur. »\n\nAhmed paie la consultation, prend l'ordonnance, et va à la pharmacie d'à côté. Le pharmacien lui explique comment prendre les médicaments. En sortant, Ahmed se sent déjà mieux — peut-être juste parce qu'il a parlé à quelqu'un.",
+        "content_en": "Ahmed has just arrived in France. He's had stomach pain for several days. He decides to see a doctor.\n\nHe calls the office in the morning: 'Hello, I'd like to make an appointment with Dr. Martin, please. — Of course. What's it about? — I have stomach pain. — I can offer you this afternoon at 3 PM. Do you have your carte vitale? — I just arrived in France, I don't have one yet. — No problem, you'll pay 25 euros and be reimbursed later.'\n\nAt 2:45 PM, Ahmed arrives at the office. There's a waiting room with other patients. At 3:10 PM, the doctor calls him in.\n\n'Hello, sir. Please sit down. So, what's wrong?\n\n— Hello, doctor. I've had stomach pain for four days. Especially after meals.\n\n— Do you have nausea? Fever?\n\n— No fever, but some nausea in the morning.\n\n— Lie down, I'm going to examine you.'\n\nThe doctor examines Ahmed for five minutes, asks him questions about his diet and stress.\n\n'It's not serious,' he says. 'You probably have a small gastritis, due to the stress of moving. I'll prescribe stomach medication, to take before meals for two weeks. Avoid coffee, alcohol, and spicy foods. And try to relax.\n\n— Thank you, doctor.'\n\nAhmed pays for the consultation, takes the prescription, and goes to the pharmacy next door. The pharmacist explains how to take the medication. As he leaves, Ahmed already feels better — maybe just because he talked to someone.",
+        "comprehension_questions": [
+          {
+            "q": "Depuis combien de temps Ahmed a-t-il mal au ventre ?",
+            "a": "Depuis quatre jours."
+          },
+          {
+            "q": "A-t-il une carte vitale ?",
+            "a": "Non, parce qu'il vient d'arriver en France."
+          },
+          {
+            "q": "Quel est le diagnostic du médecin ?",
+            "a": "Une petite gastrite due au stress."
+          },
+          {
+            "q": "Qu'est-ce qu'il doit éviter ?",
+            "a": "Le café, l'alcool et les plats épicés."
+          }
+        ]
+      },
+      "cultural_note": "En France, la **carte vitale** est essentielle : c'est une carte à puce verte qui sert à transmettre les remboursements de la Sécurité sociale. Sans elle, vous payez à 100 % et vous êtes remboursé par chèque ou virement après. Les **pharmacies** sont signalées par une **croix verte** et offrent des **conseils médicaux** : pour de petits problèmes (rhume, mal de tête, allergie), inutile d'aller chez le médecin — le pharmacien peut vous orienter. Pour une urgence : composez le **15** (SAMU) ou le **112** (numéro européen)."
+    },
+    {
+      "name_fr": "Les transports et les déplacements",
+      "name_en": "Transportation and travel",
+      "icon": "🚆",
+      "order": 340,
+      "difficulty_level": 2,
+      "description": "Acheter un billet, prendre un train, parler de ses déplacements.",
+      "vocabulary": [
+        {
+          "french": "le transport",
+          "english": "transport",
+          "gender": "m",
+          "part_of_speech": "noun",
+          "example_sentence": "Les transports en commun sont rapides."
+        },
+        {
+          "french": "la voiture / l'auto",
+          "english": "car",
+          "gender": "f",
+          "part_of_speech": "noun",
+          "example_sentence": "Ma voiture est en panne."
+        },
+        {
+          "french": "le vélo / le bicyclette",
+          "english": "bike / bicycle",
+          "gender": "m",
+          "part_of_speech": "noun",
+          "example_sentence": "Je vais au travail à vélo."
+        },
+        {
+          "french": "le bus / l'autobus",
+          "english": "bus",
+          "gender": "m",
+          "part_of_speech": "noun",
+          "example_sentence": "Le bus passe toutes les dix minutes."
+        },
+        {
+          "french": "le tramway / le tram",
+          "english": "tram",
+          "gender": "m",
+          "part_of_speech": "noun",
+          "example_sentence": "Le tram va jusqu'à la gare."
+        },
+        {
+          "french": "le métro",
+          "english": "subway",
+          "gender": "m",
+          "part_of_speech": "noun",
+          "example_sentence": "Le métro de Paris est très pratique."
+        },
+        {
+          "french": "le train / le TGV",
+          "english": "train / high-speed train",
+          "gender": "m",
+          "part_of_speech": "noun",
+          "example_sentence": "Le TGV va de Paris à Lyon en deux heures."
+        },
+        {
+          "french": "l'avion",
+          "english": "plane",
+          "gender": "m",
+          "part_of_speech": "noun",
+          "example_sentence": "Je prends l'avion pour Montréal."
+        },
+        {
+          "french": "le bateau",
+          "english": "boat",
+          "gender": "m",
+          "part_of_speech": "noun",
+          "example_sentence": "Le bateau quitte le port à 8 heures."
+        },
+        {
+          "french": "le taxi / l'Uber",
+          "english": "taxi / Uber",
+          "gender": "m",
+          "part_of_speech": "noun",
+          "example_sentence": "Je prends un taxi à la gare."
+        },
+        {
+          "french": "la trottinette électrique",
+          "english": "electric scooter",
+          "gender": "f",
+          "part_of_speech": "noun",
+          "example_sentence": "Les trottinettes sont partout en ville."
+        },
+        {
+          "french": "la gare / la station",
+          "english": "train station / metro station",
+          "gender": "f",
+          "part_of_speech": "noun",
+          "example_sentence": "La gare est près du centre."
+        },
+        {
+          "french": "l'arrêt",
+          "english": "stop",
+          "gender": "m",
+          "part_of_speech": "noun",
+          "example_sentence": "L'arrêt de bus est juste là."
+        },
+        {
+          "french": "l'aéroport",
+          "english": "airport",
+          "gender": "m",
+          "part_of_speech": "noun",
+          "example_sentence": "L'aéroport est à 30 km."
+        },
+        {
+          "french": "le quai",
+          "english": "platform",
+          "gender": "m",
+          "part_of_speech": "noun",
+          "example_sentence": "Le train part du quai 5."
+        },
+        {
+          "french": "le billet / le ticket",
+          "english": "ticket",
+          "gender": "m",
+          "part_of_speech": "noun",
+          "example_sentence": "Un billet pour Lyon, s'il vous plaît."
+        },
+        {
+          "french": "l'aller simple / l'aller-retour",
+          "english": "one-way / round trip",
+          "gender": "m",
+          "part_of_speech": "noun",
+          "example_sentence": "Un aller-retour Paris-Marseille."
+        },
+        {
+          "french": "le départ / l'arrivée",
+          "english": "departure / arrival",
+          "gender": "a",
+          "part_of_speech": "noun",
+          "example_sentence": "Heure de départ : 14 h 30."
+        },
+        {
+          "french": "le retard / à l'heure",
+          "english": "delay / on time",
+          "gender": "a",
+          "part_of_speech": "phrase",
+          "example_sentence": "Le train a 15 minutes de retard."
+        },
+        {
+          "french": "prendre / monter / descendre",
+          "english": "to take / get on / get off",
+          "gender": "a",
+          "part_of_speech": "verb",
+          "example_sentence": "Je monte dans le bus et je descends à la place."
+        },
+        {
+          "french": "conduire / rouler",
+          "english": "to drive",
+          "gender": "a",
+          "part_of_speech": "verb",
+          "example_sentence": "Je conduis depuis 10 ans."
+        },
+        {
+          "french": "voyager / partir / arriver",
+          "english": "to travel / leave / arrive",
+          "gender": "a",
+          "part_of_speech": "verb",
+          "example_sentence": "Je voyage souvent pour le travail."
+        },
+        {
+          "french": "l'embouteillage / le bouchon",
+          "english": "traffic jam",
+          "gender": "m",
+          "part_of_speech": "noun",
+          "example_sentence": "Il y a un gros bouchon sur l'autoroute."
+        },
+        {
+          "french": "le permis de conduire",
+          "english": "driver's license",
+          "gender": "m",
+          "part_of_speech": "noun",
+          "example_sentence": "Je passe mon permis le mois prochain."
+        },
+        {
+          "french": "la voie / l'autoroute / la route",
+          "english": "lane / highway / road",
+          "gender": "a",
+          "part_of_speech": "noun",
+          "example_sentence": "L'autoroute A7 va vers le sud."
+        }
+      ],
+      "phrases": [
+        {
+          "fr": "Comment vous allez à votre travail ?",
+          "en": "How do you get to work?",
+          "note": "Standard question."
+        },
+        {
+          "fr": "Je prends le métro tous les jours.",
+          "en": "I take the metro every day.",
+          "note": "'Prendre' for public transport."
+        },
+        {
+          "fr": "Je vais au bureau à pied / à vélo / en voiture.",
+          "en": "I go to the office on foot / by bike / by car.",
+          "note": "Prepositions: 'à' for foot/bike, 'en' for vehicles."
+        },
+        {
+          "fr": "Un aller-retour pour Lyon, s'il vous plaît.",
+          "en": "A round trip to Lyon, please.",
+          "note": "Standard ticket request."
+        },
+        {
+          "fr": "À quelle heure part le prochain train ?",
+          "en": "What time does the next train leave?",
+          "note": "Common question."
+        },
+        {
+          "fr": "Le train part dans cinq minutes !",
+          "en": "The train leaves in five minutes!",
+          "note": "Urgent."
+        },
+        {
+          "fr": "Vous êtes à la bonne voie.",
+          "en": "You're on the right platform.",
+          "note": "Reassuring info."
+        },
+        {
+          "fr": "Le vol est retardé d'une heure.",
+          "en": "The flight is delayed by an hour.",
+          "note": "Airport announcement style."
+        },
+        {
+          "fr": "J'ai loué une voiture pour le week-end.",
+          "en": "I rented a car for the weekend.",
+          "note": "'Louer' = to rent."
+        },
+        {
+          "fr": "On est coincé dans les bouchons.",
+          "en": "We're stuck in traffic.",
+          "note": "Common complaint."
+        },
+        {
+          "fr": "Je suis en retard à cause du métro.",
+          "en": "I'm late because of the metro.",
+          "note": "Frequent excuse in big cities."
+        },
+        {
+          "fr": "Vous descendez à la prochaine ?",
+          "en": "Are you getting off at the next stop?",
+          "note": "On crowded transport, politely asking to pass."
+        }
+      ],
+      "reading": {
+        "title": "Un voyage en TGV",
+        "content_fr": "Pour son week-end à Marseille, Léa décide de prendre le TGV. C'est le moyen de transport le plus rapide et le plus confortable.\n\nElle achète son billet en ligne, une semaine à l'avance : un aller-retour Paris-Marseille pour 89 euros. Pas mal !\n\nLe vendredi à 18 heures, elle arrive à la gare de Lyon. La gare est immense et très animée — des voyageurs avec des valises, des annonces au haut-parleur, l'odeur du café. Elle regarde le grand panneau d'affichage : son train, le TGV 6131, part du quai 12, à 18 h 45.\n\nElle achète un sandwich et une bouteille d'eau, puis monte dans le train. Sa place est en voiture 18, place 45, côté fenêtre. C'est parfait pour regarder le paysage.\n\nÀ 18 h 45 précises, le train démarre. Il accélère vite — le TGV peut rouler à 300 km/h ! Léa lit un livre, mais elle regarde aussi par la fenêtre : les champs, les villes, les rivières qui défilent.\n\nLe train est ponctuel : il arrive à Marseille Saint-Charles à 21 h 30, juste à l'heure. Léa descend, sort de la gare, et respire l'air doux du sud. Le ciel est encore lumineux. Son hôtel est à dix minutes à pied.\n\nElle adore cette sensation : être à Paris à 18 heures, être à Marseille à 21 h 30. Pour elle, c'est presque magique.",
+        "content_en": "For her weekend in Marseille, Léa decides to take the TGV. It's the fastest and most comfortable transport.\n\nShe buys her ticket online, a week in advance: a round trip Paris-Marseille for 89 euros. Not bad!\n\nFriday at 6 PM, she arrives at Gare de Lyon. The station is huge and bustling — travelers with suitcases, loudspeaker announcements, the smell of coffee. She looks at the big display: her train, TGV 6131, leaves from platform 12, at 6:45 PM.\n\nShe buys a sandwich and a water bottle, then boards the train. Her seat is in car 18, seat 45, window side. Perfect for watching the scenery.\n\nAt 6:45 PM sharp, the train departs. It accelerates quickly — the TGV can run at 300 km/h! Léa reads a book, but also looks out the window: fields, towns, rivers flying by.\n\nThe train is punctual: it arrives at Marseille Saint-Charles at 9:30 PM, right on time. Léa gets off, leaves the station, and breathes the mild southern air. The sky is still bright. Her hotel is a ten-minute walk away.\n\nShe loves this feeling: being in Paris at 6 PM, being in Marseille at 9:30 PM. For her, it's almost magical.",
+        "comprehension_questions": [
+          {
+            "q": "Combien Léa a-t-elle payé son billet ?",
+            "a": "89 euros pour un aller-retour."
+          },
+          {
+            "q": "De quelle gare part-elle ?",
+            "a": "De la gare de Lyon, à Paris."
+          },
+          {
+            "q": "À quelle vitesse peut rouler le TGV ?",
+            "a": "Jusqu'à 300 km/h."
+          },
+          {
+            "q": "Combien de temps dure le voyage Paris-Marseille ?",
+            "a": "Environ 3 heures (départ 18 h 45, arrivée 21 h 30)."
+          }
+        ]
+      },
+      "cultural_note": "Le **TGV** (Train à Grande Vitesse) est une fierté française : il relie Paris aux grandes villes en 2-4 heures, à 300 km/h. **La SNCF** (Société nationale des chemins de fer français) gère le réseau ferroviaire. Réservez en ligne via le site **SNCF Connect** — les billets sont moins chers à l'avance. Pour Paris, le réseau **RATP** (métro, bus, RER) est dense et efficace ; un **Navigo Pass** (forfait mensuel ~85 €) donne accès illimité. Évitez les heures de pointe (8 h-9 h et 17 h-19 h) si possible : c'est bondé !"
+    },
+    {
+      "name_fr": "Les loisirs et le temps libre",
+      "name_en": "Hobbies and free time",
+      "icon": "🎨",
+      "order": 350,
+      "difficulty_level": 2,
+      "description": "Parler de ses loisirs, de ce qu'on aime faire pour se détendre.",
+      "vocabulary": [
+        {
+          "french": "les loisirs",
+          "english": "hobbies, leisure",
+          "gender": "m",
+          "part_of_speech": "noun",
+          "example_sentence": "Quels sont tes loisirs ?"
+        },
+        {
+          "french": "le temps libre",
+          "english": "free time",
+          "gender": "m",
+          "part_of_speech": "noun",
+          "example_sentence": "Que fais-tu pendant ton temps libre ?"
+        },
+        {
+          "french": "le hobby / le passe-temps",
+          "english": "hobby",
+          "gender": "m",
+          "part_of_speech": "noun",
+          "example_sentence": "Mon passe-temps préféré est la lecture."
+        },
+        {
+          "french": "la lecture / lire",
+          "english": "reading / to read",
+          "gender": "a",
+          "part_of_speech": "noun",
+          "example_sentence": "J'aime la lecture, surtout les romans."
+        },
+        {
+          "french": "le livre / le roman",
+          "english": "book / novel",
+          "gender": "m",
+          "part_of_speech": "noun",
+          "example_sentence": "Je lis un bon roman policier."
+        },
+        {
+          "french": "la musique / écouter de la musique",
+          "english": "music / to listen to music",
+          "gender": "f",
+          "part_of_speech": "noun",
+          "example_sentence": "J'écoute de la musique en travaillant."
+        },
+        {
+          "french": "le cinéma / le film",
+          "english": "cinema / film",
+          "gender": "m",
+          "part_of_speech": "noun",
+          "example_sentence": "On va au cinéma ce soir."
+        },
+        {
+          "french": "la série / la télévision",
+          "english": "TV series / television",
+          "gender": "f",
+          "part_of_speech": "noun",
+          "example_sentence": "Je regarde une série française."
+        },
+        {
+          "french": "le théâtre / le concert",
+          "english": "theater / concert",
+          "gender": "m",
+          "part_of_speech": "noun",
+          "example_sentence": "Je vais au théâtre une fois par mois."
+        },
+        {
+          "french": "le musée / l'exposition",
+          "english": "museum / exhibition",
+          "gender": "a",
+          "part_of_speech": "noun",
+          "example_sentence": "L'exposition se termine dimanche."
+        },
+        {
+          "french": "la peinture / dessiner",
+          "english": "painting / to draw",
+          "gender": "a",
+          "part_of_speech": "noun",
+          "example_sentence": "Je fais de la peinture le week-end."
+        },
+        {
+          "french": "la photographie / prendre des photos",
+          "english": "photography / to take photos",
+          "gender": "a",
+          "part_of_speech": "noun",
+          "example_sentence": "Il prend de belles photos."
+        },
+        {
+          "french": "le jardinage / jardiner",
+          "english": "gardening",
+          "gender": "m",
+          "part_of_speech": "noun",
+          "example_sentence": "Le jardinage me détend."
+        },
+        {
+          "french": "la cuisine / cuisiner",
+          "english": "cooking",
+          "gender": "f",
+          "part_of_speech": "noun",
+          "example_sentence": "J'adore cuisiner pour mes amis."
+        },
+        {
+          "french": "voyager",
+          "english": "to travel",
+          "gender": "a",
+          "part_of_speech": "verb",
+          "example_sentence": "Voyager, c'est ma passion."
+        },
+        {
+          "french": "sortir avec des amis",
+          "english": "to go out with friends",
+          "gender": "a",
+          "part_of_speech": "phrase",
+          "example_sentence": "Je sors avec mes amis le samedi."
+        },
+        {
+          "french": "jouer aux jeux vidéo",
+          "english": "to play video games",
+          "gender": "a",
+          "part_of_speech": "phrase",
+          "example_sentence": "Mon fils joue aux jeux vidéo trop souvent."
+        },
+        {
+          "french": "jouer d'un instrument",
+          "english": "to play an instrument",
+          "gender": "a",
+          "part_of_speech": "phrase",
+          "example_sentence": "Elle joue du piano depuis l'enfance."
+        },
+        {
+          "french": "la guitare / le piano / le violon",
+          "english": "guitar / piano / violin",
+          "gender": "a",
+          "part_of_speech": "noun",
+          "example_sentence": "J'apprends la guitare."
+        },
+        {
+          "french": "se détendre / se reposer",
+          "english": "to relax",
+          "gender": "a",
+          "part_of_speech": "verb",
+          "example_sentence": "J'ai besoin de me détendre."
+        },
+        {
+          "french": "s'amuser",
+          "english": "to have fun",
+          "gender": "a",
+          "part_of_speech": "verb",
+          "example_sentence": "On s'amuse bien ce soir !"
+        },
+        {
+          "french": "s'ennuyer",
+          "english": "to be bored",
+          "gender": "a",
+          "part_of_speech": "verb",
+          "example_sentence": "Je m'ennuie le dimanche."
+        },
+        {
+          "french": "passionnant / ennuyeux",
+          "english": "exciting / boring",
+          "gender": "a",
+          "part_of_speech": "adjective",
+          "example_sentence": "Ce film est passionnant."
+        },
+        {
+          "french": "le club / l'association",
+          "english": "club / association",
+          "gender": "a",
+          "part_of_speech": "noun",
+          "example_sentence": "Je fais partie d'un club de lecture."
+        },
+        {
+          "french": "la passion",
+          "english": "passion",
+          "gender": "f",
+          "part_of_speech": "noun",
+          "example_sentence": "La photographie est ma passion."
+        }
+      ],
+      "phrases": [
+        {
+          "fr": "Qu'est-ce que tu fais pendant ton temps libre ?",
+          "en": "What do you do in your free time?",
+          "note": "Standard ice-breaker."
+        },
+        {
+          "fr": "J'aime beaucoup lire.",
+          "en": "I love reading.",
+          "note": "Standard preference statement."
+        },
+        {
+          "fr": "Mon passe-temps préféré, c'est la musique.",
+          "en": "My favorite hobby is music.",
+          "note": "'C'est' for emphasis."
+        },
+        {
+          "fr": "Je fais du jardinage le week-end.",
+          "en": "I garden on weekends.",
+          "note": "'Faire de' + activity (du/de la/de l')."
+        },
+        {
+          "fr": "Je joue de la guitare.",
+          "en": "I play the guitar.",
+          "note": "'Jouer de' for musical instruments."
+        },
+        {
+          "fr": "Je joue au tennis.",
+          "en": "I play tennis.",
+          "note": "'Jouer à' for sports/games."
+        },
+        {
+          "fr": "On peut sortir ce week-end ?",
+          "en": "Want to go out this weekend?",
+          "note": "Friendly invitation."
+        },
+        {
+          "fr": "Tu as envie de faire quelque chose ce soir ?",
+          "en": "Feel like doing something tonight?",
+          "note": "Casual."
+        },
+        {
+          "fr": "Je n'ai pas le temps en semaine.",
+          "en": "I don't have time during the week.",
+          "note": "Common excuse."
+        },
+        {
+          "fr": "Ça m'intéresse beaucoup.",
+          "en": "I'm very interested in that.",
+          "note": "Expression of interest."
+        },
+        {
+          "fr": "Je m'ennuie comme un rat mort.",
+          "en": "I'm bored to death.",
+          "note": "Colloquial idiom — literally 'as a dead rat'."
+        },
+        {
+          "fr": "Quel film passe au cinéma ?",
+          "en": "What's playing at the cinema?",
+          "note": "'Passer' = to play (a film)."
+        }
+      ],
+      "reading": {
+        "title": "Mes activités préférées",
+        "content_fr": "Le week-end, je n'ai qu'une envie : me détendre et faire des choses que j'aime.\n\nLe samedi matin, je commence toujours par le marché, près de chez moi. J'adore l'ambiance, les couleurs des fruits et des légumes, l'odeur du pain frais. J'achète de quoi cuisiner pour la semaine.\n\nL'après-midi, ça dépend du temps. S'il fait beau, je vais au parc avec un bon livre. En ce moment, je lis un roman policier suédois, c'est passionnant. S'il pleut, je reste chez moi et je regarde une série. J'aime les séries françaises et les séries anglaises.\n\nLe samedi soir, je sors souvent avec des amis. On va dans un restaurant, ou parfois on fait un dîner chez l'un de nous. On parle, on rit, on boit du vin — c'est ma façon préférée de finir la semaine.\n\nLe dimanche, c'est plus calme. Le matin, je fais du yoga à la maison (j'ai pris des cours en ligne pendant le confinement et j'ai continué). L'après-midi, je vais souvent au cinéma, ou je rends visite à mes parents qui habitent à 30 km.\n\nMon vrai loisir, c'est la photographie. Je sors avec mon appareil photo et je capture la ville, les gens, la lumière. J'expose parfois mes photos sur Instagram. Ça me donne beaucoup de plaisir.\n\nLe dimanche soir, vers 22 heures, je commence à penser au lundi matin. Et là, la semaine reprend !",
+        "content_en": "On weekends, I have only one desire: to relax and do things I love.\n\nSaturday morning, I always start with the market, near my place. I love the atmosphere, the colors of fruits and vegetables, the smell of fresh bread. I buy what I need to cook for the week.\n\nIn the afternoon, it depends on the weather. If it's nice, I go to the park with a good book. Right now, I'm reading a Swedish crime novel, it's gripping. If it rains, I stay home and watch a series. I like French series and English series.\n\nSaturday evening, I often go out with friends. We go to a restaurant, or sometimes we have dinner at one of our places. We talk, laugh, drink wine — it's my favorite way to end the week.\n\nSunday is quieter. In the morning, I do yoga at home (I took online classes during lockdown and kept it up). In the afternoon, I often go to the cinema, or visit my parents who live 30 km away.\n\nMy real hobby is photography. I go out with my camera and capture the city, the people, the light. I sometimes share my photos on Instagram. It gives me a lot of joy.\n\nSunday evening, around 10 PM, I start thinking about Monday morning. And there, the week begins again!",
+        "comprehension_questions": [
+          {
+            "q": "Que fait-elle le samedi matin ?",
+            "a": "Elle va au marché près de chez elle."
+          },
+          {
+            "q": "Quel genre de livre lit-elle en ce moment ?",
+            "a": "Un roman policier suédois."
+          },
+          {
+            "q": "Quand a-t-elle commencé le yoga ?",
+            "a": "Pendant le confinement."
+          },
+          {
+            "q": "Quel est son vrai loisir ?",
+            "a": "La photographie."
+          }
+        ]
+      },
+      "cultural_note": "Les **loisirs culturels** sont fortement valorisés en France : cinéma, théâtre, expositions, musées. Beaucoup de musées proposent une **entrée gratuite le premier dimanche du mois**. La **culture du marché** reste vivante : presque chaque ville a son marché 1-3 fois par semaine — un moment social autant qu'un lieu d'achats. Les **associations** (clubs, amicales) sont très nombreuses : sport, art, jardinage, lecture... c'est une façon répandue de se faire des amis. **Inscription** : souvent quelques dizaines d'euros par an."
+    },
+    {
+      "name_fr": "Le sport et les activités physiques",
+      "name_en": "Sports and physical activities",
+      "icon": "⚽",
+      "order": 360,
+      "difficulty_level": 2,
+      "description": "Les sports, leur pratique, le vocabulaire de l'effort.",
+      "vocabulary": [
+        {
+          "french": "le sport",
+          "english": "sport",
+          "gender": "m",
+          "part_of_speech": "noun",
+          "example_sentence": "Le sport est bon pour la santé."
+        },
+        {
+          "french": "l'activité physique",
+          "english": "physical activity",
+          "gender": "f",
+          "part_of_speech": "noun",
+          "example_sentence": "Je fais une activité physique tous les jours."
+        },
+        {
+          "french": "faire du sport",
+          "english": "to do sport",
+          "gender": "a",
+          "part_of_speech": "phrase",
+          "example_sentence": "Tu fais du sport régulièrement ?"
+        },
+        {
+          "french": "le football / le foot",
+          "english": "soccer / football",
+          "gender": "m",
+          "part_of_speech": "noun",
+          "example_sentence": "Le foot est le sport le plus populaire."
+        },
+        {
+          "french": "le tennis",
+          "english": "tennis",
+          "gender": "m",
+          "part_of_speech": "noun",
+          "example_sentence": "Je joue au tennis le samedi."
+        },
+        {
+          "french": "le basket / le basket-ball",
+          "english": "basketball",
+          "gender": "m",
+          "part_of_speech": "noun",
+          "example_sentence": "Mon frère joue au basket."
+        },
+        {
+          "french": "le rugby / le volley",
+          "english": "rugby / volleyball",
+          "gender": "m",
+          "part_of_speech": "noun",
+          "example_sentence": "Le rugby est populaire dans le Sud."
+        },
+        {
+          "french": "la natation / nager",
+          "english": "swimming / to swim",
+          "gender": "f",
+          "part_of_speech": "noun",
+          "example_sentence": "Je fais de la natation deux fois par semaine."
+        },
+        {
+          "french": "la course à pied / courir",
+          "english": "running / to run",
+          "gender": "f",
+          "part_of_speech": "noun",
+          "example_sentence": "Je cours le matin avant le travail."
+        },
+        {
+          "french": "le vélo / le cyclisme",
+          "english": "cycling",
+          "gender": "m",
+          "part_of_speech": "noun",
+          "example_sentence": "Je fais du vélo le dimanche."
+        },
+        {
+          "french": "le ski / le snowboard",
+          "english": "skiing / snowboarding",
+          "gender": "m",
+          "part_of_speech": "noun",
+          "example_sentence": "Nous allons au ski en février."
+        },
+        {
+          "french": "la randonnée / la marche",
+          "english": "hiking / walking",
+          "gender": "f",
+          "part_of_speech": "noun",
+          "example_sentence": "J'adore la randonnée en montagne."
+        },
+        {
+          "french": "le yoga / la méditation",
+          "english": "yoga / meditation",
+          "gender": "a",
+          "part_of_speech": "noun",
+          "example_sentence": "Le yoga me détend."
+        },
+        {
+          "french": "la salle de sport / la salle de gym",
+          "english": "gym",
+          "gender": "f",
+          "part_of_speech": "noun",
+          "example_sentence": "Je vais à la salle trois fois par semaine."
+        },
+        {
+          "french": "le terrain / le stade",
+          "english": "field / stadium",
+          "gender": "a",
+          "part_of_speech": "noun",
+          "example_sentence": "Le stade est plein ce soir."
+        },
+        {
+          "french": "la piscine",
+          "english": "swimming pool",
+          "gender": "f",
+          "part_of_speech": "noun",
+          "example_sentence": "La piscine municipale ouvre à 7 h."
+        },
+        {
+          "french": "le match / le tournoi",
+          "english": "match / tournament",
+          "gender": "m",
+          "part_of_speech": "noun",
+          "example_sentence": "Le match commence à 20 h."
+        },
+        {
+          "french": "l'équipe / le joueur",
+          "english": "team / player",
+          "gender": "a",
+          "part_of_speech": "noun",
+          "example_sentence": "Mon équipe préférée a gagné !"
+        },
+        {
+          "french": "gagner / perdre / faire match nul",
+          "english": "to win / lose / tie",
+          "gender": "a",
+          "part_of_speech": "verb",
+          "example_sentence": "On a gagné 2 à 1."
+        },
+        {
+          "french": "le score / le but",
+          "english": "score / goal",
+          "gender": "m",
+          "part_of_speech": "noun",
+          "example_sentence": "Quel est le score final ?"
+        },
+        {
+          "french": "l'entraînement / s'entraîner",
+          "english": "training / to train",
+          "gender": "m",
+          "part_of_speech": "noun",
+          "example_sentence": "Je m'entraîne deux fois par semaine."
+        },
+        {
+          "french": "le coach / l'entraîneur",
+          "english": "coach",
+          "gender": "m",
+          "part_of_speech": "noun",
+          "example_sentence": "Notre coach est très sévère."
+        },
+        {
+          "french": "en forme / fatigué(e)",
+          "english": "in shape / tired",
+          "gender": "a",
+          "part_of_speech": "phrase",
+          "example_sentence": "Je suis en pleine forme aujourd'hui !"
+        },
+        {
+          "french": "transpirer / la sueur",
+          "english": "to sweat / sweat",
+          "gender": "a",
+          "part_of_speech": "verb",
+          "example_sentence": "Je transpire beaucoup en courant."
+        },
+        {
+          "french": "se blesser / la blessure",
+          "english": "to get hurt / injury",
+          "gender": "a",
+          "part_of_speech": "verb",
+          "example_sentence": "Il s'est blessé au genou."
+        }
+      ],
+      "phrases": [
+        {
+          "fr": "Tu fais du sport ?",
+          "en": "Do you do sports?",
+          "note": "Common ice-breaker."
+        },
+        {
+          "fr": "Je fais du tennis depuis dix ans.",
+          "en": "I've been playing tennis for ten years.",
+          "note": "'Depuis' + duration = ongoing activity."
+        },
+        {
+          "fr": "Je joue au foot le samedi.",
+          "en": "I play football on Saturdays.",
+          "note": "'Jouer à' for sports with ball or team aspect."
+        },
+        {
+          "fr": "Je fais de la natation.",
+          "en": "I swim.",
+          "note": "'Faire de la' + sport (more passive ones)."
+        },
+        {
+          "fr": "Quel est ton sport préféré ?",
+          "en": "What's your favorite sport?",
+          "note": "Standard question."
+        },
+        {
+          "fr": "Je vais à la salle de gym trois fois par semaine.",
+          "en": "I go to the gym three times a week.",
+          "note": "Frequency."
+        },
+        {
+          "fr": "Je suis crevé(e), je viens de courir.",
+          "en": "I'm exhausted, I just went running.",
+          "note": "Colloquial after exercise."
+        },
+        {
+          "fr": "Tu as vu le match hier soir ?",
+          "en": "Did you see the match last night?",
+          "note": "Common between fans."
+        },
+        {
+          "fr": "L'équipe a gagné 3 à 1.",
+          "en": "The team won 3 to 1.",
+          "note": "Reporting a score."
+        },
+        {
+          "fr": "Je dois me remettre en forme.",
+          "en": "I have to get back in shape.",
+          "note": "Common New Year's resolution."
+        },
+        {
+          "fr": "Le sport, c'est important pour la santé.",
+          "en": "Sport is important for health.",
+          "note": "Common motivation."
+        },
+        {
+          "fr": "Je suis nul(le) en sport.",
+          "en": "I'm terrible at sport.",
+          "note": "Self-deprecating common admission."
+        }
+      ],
+      "reading": {
+        "title": "Le marathon de Paris",
+        "content_fr": "Cette année, j'ai décidé de courir mon premier marathon : le Marathon de Paris, en avril. Mon objectif : finir en moins de quatre heures.\n\nLe Marathon de Paris, c'est 42 kilomètres à travers les plus beaux monuments de la ville : la place de la Concorde, les Champs-Élysées, la Bastille, le Bois de Boulogne... Imaginez : courir devant la Tour Eiffel à six heures du matin !\n\nPour bien me préparer, j'ai commencé l'entraînement six mois avant. Au début, je courais 5 km, puis 10, puis 15. Maintenant, je fais 30 km le dimanche. C'est long, c'est dur, mais c'est gratifiant.\n\nMa routine : je m'entraîne quatre fois par semaine. Deux fois en semaine, après le travail (séances courtes mais intenses), et deux fois le week-end (une sortie longue, une sortie courte). Je vais aussi à la salle de sport pour le renforcement musculaire — pour éviter les blessures.\n\nL'alimentation est aussi importante. J'évite l'alcool, je mange beaucoup de pâtes et de riz, je bois beaucoup d'eau. Et je dors au moins huit heures par nuit.\n\nLe jour J approche. Je suis nerveux mais aussi très excité. Mes parents et ma copine viendront m'encourager. Quel que soit mon temps, j'aurai accompli quelque chose dont je suis fier. Et après ? Je m'inscris peut-être pour le marathon de New York l'année prochaine !",
+        "content_en": "This year, I decided to run my first marathon: the Paris Marathon, in April. My goal: to finish in under four hours.\n\nThe Paris Marathon is 42 kilometers through the most beautiful monuments of the city: Place de la Concorde, the Champs-Élysées, the Bastille, the Bois de Boulogne... Imagine: running in front of the Eiffel Tower at six in the morning!\n\nTo prepare well, I started training six months in advance. At first, I ran 5 km, then 10, then 15. Now I do 30 km on Sundays. It's long, it's hard, but it's rewarding.\n\nMy routine: I train four times a week. Twice during the week, after work (short but intense sessions), and twice on weekends (one long run, one short run). I also go to the gym for strength training — to prevent injuries.\n\nNutrition is also important. I avoid alcohol, eat lots of pasta and rice, drink lots of water. And I sleep at least eight hours a night.\n\nThe big day is approaching. I'm nervous but also very excited. My parents and my girlfriend will come to cheer me on. Whatever my time, I'll have accomplished something I'm proud of. And after? Maybe I'll sign up for the New York Marathon next year!",
+        "comprehension_questions": [
+          {
+            "q": "Quelle est la distance du marathon ?",
+            "a": "42 kilomètres."
+          },
+          {
+            "q": "Quand a-t-il commencé son entraînement ?",
+            "a": "Six mois avant le marathon."
+          },
+          {
+            "q": "Combien de fois par semaine s'entraîne-t-il ?",
+            "a": "Quatre fois par semaine."
+          },
+          {
+            "q": "Quel est son objectif ?",
+            "a": "Finir en moins de quatre heures."
+          }
+        ]
+      },
+      "cultural_note": "Les **Français adorent le sport** — surtout le football, le rugby, le cyclisme et le tennis. Le **Tour de France** (juillet) est un événement national majeur, tout comme **Roland-Garros** (tennis, fin mai) et la **Coupe du Monde de football**. Pour pratiquer, les **associations sportives** (clubs, centres municipaux) sont peu chères et accessibles. Le **vélo en ville** se développe énormément (Vélib' à Paris, Bicloo à Nantes...). Et bien sûr, **les Alpes** et **les Pyrénées** offrent des stations de ski parmi les meilleures du monde !"
+    },
+    {
+      "name_fr": "Les fêtes et les traditions",
+      "name_en": "Festivals and traditions",
+      "icon": "🎉",
+      "order": 370,
+      "difficulty_level": 2,
+      "description": "Les fêtes calendaires françaises, les traditions familiales et culturelles.",
+      "vocabulary": [
+        {
+          "french": "la fête",
+          "english": "festival, party",
+          "gender": "f",
+          "part_of_speech": "noun",
+          "example_sentence": "C'est ma fête préférée !"
+        },
+        {
+          "french": "la tradition / la coutume",
+          "english": "tradition / custom",
+          "gender": "f",
+          "part_of_speech": "noun",
+          "example_sentence": "C'est une tradition familiale."
+        },
+        {
+          "french": "Noël",
+          "english": "Christmas",
+          "gender": "m",
+          "part_of_speech": "noun",
+          "example_sentence": "Joyeux Noël à toute la famille !"
+        },
+        {
+          "french": "le réveillon",
+          "english": "festive evening (24th/31st Dec)",
+          "gender": "m",
+          "part_of_speech": "noun",
+          "example_sentence": "Le réveillon de Noël est en famille."
+        },
+        {
+          "french": "le Nouvel An / la Saint-Sylvestre",
+          "english": "New Year",
+          "gender": "m",
+          "part_of_speech": "noun",
+          "example_sentence": "Bonne année et bonne santé !"
+        },
+        {
+          "french": "la Saint-Valentin",
+          "english": "Valentine's Day",
+          "gender": "f",
+          "part_of_speech": "noun",
+          "example_sentence": "Pour la Saint-Valentin, je lui offre des fleurs."
+        },
+        {
+          "french": "Pâques",
+          "english": "Easter",
+          "gender": "f",
+          "part_of_speech": "noun",
+          "example_sentence": "À Pâques, on cache des œufs en chocolat."
+        },
+        {
+          "french": "la fête du Travail (1er mai)",
+          "english": "Labor Day (May 1)",
+          "gender": "f",
+          "part_of_speech": "noun",
+          "example_sentence": "Le 1er mai, on offre du muguet."
+        },
+        {
+          "french": "la fête nationale (14 juillet)",
+          "english": "Bastille Day",
+          "gender": "f",
+          "part_of_speech": "noun",
+          "example_sentence": "Le 14 juillet, il y a des feux d'artifice."
+        },
+        {
+          "french": "la Toussaint (1er novembre)",
+          "english": "All Saints' Day",
+          "gender": "f",
+          "part_of_speech": "noun",
+          "example_sentence": "À la Toussaint, on visite les cimetières."
+        },
+        {
+          "french": "Halloween",
+          "english": "Halloween",
+          "gender": "a",
+          "part_of_speech": "noun",
+          "example_sentence": "Halloween est moins populaire en France."
+        },
+        {
+          "french": "l'anniversaire",
+          "english": "birthday",
+          "gender": "m",
+          "part_of_speech": "noun",
+          "example_sentence": "Joyeux anniversaire !"
+        },
+        {
+          "french": "le mariage",
+          "english": "wedding",
+          "gender": "m",
+          "part_of_speech": "noun",
+          "example_sentence": "Le mariage de ma sœur est en juin."
+        },
+        {
+          "french": "le baptême",
+          "english": "baptism",
+          "gender": "m",
+          "part_of_speech": "noun",
+          "example_sentence": "Le baptême du bébé est dimanche."
+        },
+        {
+          "french": "fêter / célébrer",
+          "english": "to celebrate",
+          "gender": "a",
+          "part_of_speech": "verb",
+          "example_sentence": "On fête mon anniversaire ce soir."
+        },
+        {
+          "french": "le cadeau",
+          "english": "gift",
+          "gender": "m",
+          "part_of_speech": "noun",
+          "example_sentence": "Merci pour ce beau cadeau !"
+        },
+        {
+          "french": "offrir / recevoir",
+          "english": "to give / to receive",
+          "gender": "a",
+          "part_of_speech": "verb",
+          "example_sentence": "On offre des cadeaux à Noël."
+        },
+        {
+          "french": "le sapin de Noël",
+          "english": "Christmas tree",
+          "gender": "m",
+          "part_of_speech": "noun",
+          "example_sentence": "On décore le sapin en famille."
+        },
+        {
+          "french": "le feu d'artifice",
+          "english": "fireworks",
+          "gender": "m",
+          "part_of_speech": "noun",
+          "example_sentence": "Le feu d'artifice est à 22 h 30."
+        },
+        {
+          "french": "le défilé / la parade",
+          "english": "parade",
+          "gender": "m",
+          "part_of_speech": "noun",
+          "example_sentence": "Le défilé militaire du 14 juillet."
+        },
+        {
+          "french": "le jour férié",
+          "english": "public holiday",
+          "gender": "m",
+          "part_of_speech": "noun",
+          "example_sentence": "Lundi est un jour férié."
+        },
+        {
+          "french": "le réveillon / la veillée",
+          "english": "festive eve",
+          "gender": "m",
+          "part_of_speech": "noun",
+          "example_sentence": "Le réveillon du Nouvel An."
+        },
+        {
+          "french": "se déguiser / le costume",
+          "english": "to dress up / costume",
+          "gender": "a",
+          "part_of_speech": "verb",
+          "example_sentence": "Les enfants se déguisent pour le Carnaval."
+        },
+        {
+          "french": "le carnaval",
+          "english": "carnival",
+          "gender": "m",
+          "part_of_speech": "noun",
+          "example_sentence": "Le carnaval de Nice est célèbre."
+        },
+        {
+          "french": "souhaiter / les vœux",
+          "english": "to wish / wishes",
+          "gender": "a",
+          "part_of_speech": "verb",
+          "example_sentence": "Je vous souhaite une bonne année."
+        }
+      ],
+      "phrases": [
+        {
+          "fr": "Joyeux Noël !",
+          "en": "Merry Christmas!",
+          "note": "Standard Christmas greeting."
+        },
+        {
+          "fr": "Bonne année !",
+          "en": "Happy New Year!",
+          "note": "Used until end of January. Often followed by 'bonne santé'."
+        },
+        {
+          "fr": "Joyeux anniversaire !",
+          "en": "Happy birthday!",
+          "note": "Standard birthday greeting."
+        },
+        {
+          "fr": "Tous mes vœux pour la nouvelle année.",
+          "en": "All my wishes for the new year.",
+          "note": "Formal new year wishes."
+        },
+        {
+          "fr": "Qu'est-ce que tu fais pour Noël ?",
+          "en": "What are you doing for Christmas?",
+          "note": "Common holiday question."
+        },
+        {
+          "fr": "Je passe Noël en famille.",
+          "en": "I'm spending Christmas with family.",
+          "note": "Standard plan."
+        },
+        {
+          "fr": "On va au feu d'artifice ce soir ?",
+          "en": "Shall we go to the fireworks tonight?",
+          "note": "Common July 14 invitation."
+        },
+        {
+          "fr": "Demain, c'est férié.",
+          "en": "Tomorrow is a public holiday.",
+          "note": "Useful information."
+        },
+        {
+          "fr": "Tu te déguises en quoi pour Halloween ?",
+          "en": "What are you dressing up as for Halloween?",
+          "note": "More common with younger people in France."
+        },
+        {
+          "fr": "Le mariage a lieu le 12 juin.",
+          "en": "The wedding is on June 12.",
+          "note": "'Avoir lieu' = to take place."
+        },
+        {
+          "fr": "On va trinquer ! / Santé !",
+          "en": "Let's toast! / Cheers!",
+          "note": "Always look people in the eye when clinking."
+        },
+        {
+          "fr": "Merci, c'est très gentil !",
+          "en": "Thank you, that's very kind!",
+          "note": "Receiving a gift."
+        }
+      ],
+      "reading": {
+        "title": "Noël en famille",
+        "content_fr": "Pour ma famille, Noël est la fête la plus importante de l'année. C'est le moment où tout le monde se réunit, même ceux qui habitent loin.\n\nLe 24 décembre, on fait le **réveillon de Noël**. Toute la famille se retrouve chez mes grands-parents à la campagne. Ma grand-mère cuisine depuis trois jours : foie gras, huîtres, dinde aux marrons, bûche de Noël en dessert. C'est un vrai festin !\n\nVers minuit, on échange les cadeaux autour du sapin. Le sapin est immense, décoré de boules et de guirlandes. Pour les enfants, c'est le moment magique : ils croient encore au Père Noël, qui passe pendant la nuit.\n\nLe 25 décembre au matin, on prend le petit déjeuner en famille, puis on se promène dans le village. L'après-midi, on joue à des jeux de société, on se raconte des histoires, on rit beaucoup.\n\nLe 26, certains repartent, d'autres restent encore quelques jours. Mais entre Noël et le Nouvel An, c'est une période spéciale : on se sent un peu hors du temps.\n\nLe 31 décembre, on fait le **réveillon du Nouvel An**, souvent avec des amis cette fois. À minuit, on s'embrasse, on se souhaite « bonne année », et on regarde le feu d'artifice si on est dans une grande ville.\n\nNoël en France, c'est plus qu'une fête religieuse — c'est un moment où la famille reprend toute sa place, où les traditions se transmettent, où la magie revient pour quelques jours.",
+        "content_en": "For my family, Christmas is the most important holiday of the year. It's when everyone gathers, even those who live far away.\n\nOn December 24, we have Christmas Eve dinner. The whole family meets at my grandparents' in the countryside. My grandmother has been cooking for three days: foie gras, oysters, turkey with chestnuts, Yule log for dessert. It's a real feast!\n\nAround midnight, we exchange gifts around the tree. The tree is huge, decorated with ornaments and garlands. For the children, it's the magical moment: they still believe in Father Christmas, who comes during the night.\n\nDecember 25 morning, we have breakfast as a family, then walk in the village. In the afternoon, we play board games, tell stories, laugh a lot.\n\nOn the 26th, some leave, others stay a few more days. But between Christmas and New Year, it's a special time: you feel a bit outside of time.\n\nDecember 31, we celebrate New Year's Eve, often with friends this time. At midnight, we kiss, wish each other 'happy new year,' and watch the fireworks if we're in a big city.\n\nChristmas in France is more than a religious holiday — it's a moment when family reclaims its place, when traditions pass down, when magic returns for a few days.",
+        "comprehension_questions": [
+          {
+            "q": "Où passe-t-elle le réveillon de Noël ?",
+            "a": "Chez ses grands-parents à la campagne."
+          },
+          {
+            "q": "Quels plats sa grand-mère prépare-t-elle ?",
+            "a": "Foie gras, huîtres, dinde aux marrons, bûche de Noël."
+          },
+          {
+            "q": "Quand échangent-ils les cadeaux ?",
+            "a": "Vers minuit, le 24 décembre."
+          },
+          {
+            "q": "Avec qui passe-t-elle généralement le réveillon du Nouvel An ?",
+            "a": "Avec des amis."
+          }
+        ]
+      },
+      "cultural_note": "Le **calendrier français** compte 11 jours fériés : Jour de l'An, Lundi de Pâques, 1er mai (fête du Travail — on offre du **muguet** porte-bonheur), 8 mai (Victoire 1945), Ascension, Lundi de Pentecôte, 14 juillet (fête nationale, défilé et feu d'artifice), 15 août (Assomption), 1er novembre (Toussaint, on visite les tombes), 11 novembre (Armistice), 25 décembre (Noël). Quand un férié tombe un mardi ou un jeudi, beaucoup de Français font **'le pont'** (jour de congé entre férié et week-end) — la France semble alors en vacances une semaine entière."
+    },
+    {
+      "name_fr": "La technologie au quotidien",
+      "name_en": "Everyday technology",
+      "icon": "📱",
+      "order": 380,
+      "difficulty_level": 2,
+      "description": "Le téléphone, l'ordinateur, Internet — le vocabulaire du numérique quotidien.",
+      "vocabulary": [
+        {
+          "french": "la technologie / le numérique",
+          "english": "technology / digital",
+          "gender": "f",
+          "part_of_speech": "noun",
+          "example_sentence": "La technologie change vite."
+        },
+        {
+          "french": "le téléphone (portable) / le smartphone",
+          "english": "(mobile) phone / smartphone",
+          "gender": "m",
+          "part_of_speech": "noun",
+          "example_sentence": "Mon téléphone est cassé."
+        },
+        {
+          "french": "l'ordinateur / le PC",
+          "english": "computer / PC",
+          "gender": "m",
+          "part_of_speech": "noun",
+          "example_sentence": "Mon ordinateur est lent."
+        },
+        {
+          "french": "la tablette",
+          "english": "tablet",
+          "gender": "f",
+          "part_of_speech": "noun",
+          "example_sentence": "Je lis sur ma tablette."
+        },
+        {
+          "french": "l'écran / le clavier / la souris",
+          "english": "screen / keyboard / mouse",
+          "gender": "a",
+          "part_of_speech": "noun",
+          "example_sentence": "Ce clavier est très silencieux."
+        },
+        {
+          "french": "le chargeur / la batterie",
+          "english": "charger / battery",
+          "gender": "a",
+          "part_of_speech": "noun",
+          "example_sentence": "Tu as un chargeur ? Ma batterie est à 2 %."
+        },
+        {
+          "french": "le wifi / la connexion",
+          "english": "wifi / connection",
+          "gender": "a",
+          "part_of_speech": "noun",
+          "example_sentence": "Le wifi est gratuit ici."
+        },
+        {
+          "french": "Internet / le web",
+          "english": "Internet / web",
+          "gender": "m",
+          "part_of_speech": "noun",
+          "example_sentence": "Je passe trop de temps sur Internet."
+        },
+        {
+          "french": "le site (internet) / le site web",
+          "english": "website",
+          "gender": "m",
+          "part_of_speech": "noun",
+          "example_sentence": "Visitez notre site web."
+        },
+        {
+          "french": "l'application / l'appli",
+          "english": "application / app",
+          "gender": "f",
+          "part_of_speech": "noun",
+          "example_sentence": "Cette appli est très pratique."
+        },
+        {
+          "french": "le mot de passe",
+          "english": "password",
+          "gender": "m",
+          "part_of_speech": "noun",
+          "example_sentence": "J'ai oublié mon mot de passe."
+        },
+        {
+          "french": "le compte (utilisateur)",
+          "english": "user account",
+          "gender": "m",
+          "part_of_speech": "noun",
+          "example_sentence": "Crée un compte pour t'inscrire."
+        },
+        {
+          "french": "le courriel / le mail / l'e-mail",
+          "english": "email",
+          "gender": "m",
+          "part_of_speech": "noun",
+          "example_sentence": "Je vais t'envoyer un mail."
+        },
+        {
+          "french": "le SMS / le message",
+          "english": "text / message",
+          "gender": "m",
+          "part_of_speech": "noun",
+          "example_sentence": "Envoie-moi un SMS quand tu arrives."
+        },
+        {
+          "french": "appeler / téléphoner",
+          "english": "to call",
+          "gender": "a",
+          "part_of_speech": "verb",
+          "example_sentence": "Je t'appelle ce soir."
+        },
+        {
+          "french": "envoyer / recevoir",
+          "english": "to send / receive",
+          "gender": "a",
+          "part_of_speech": "verb",
+          "example_sentence": "J'ai reçu ton mail."
+        },
+        {
+          "french": "télécharger / partager",
+          "english": "to download / to share",
+          "gender": "a",
+          "part_of_speech": "verb",
+          "example_sentence": "Je télécharge l'appli maintenant."
+        },
+        {
+          "french": "se connecter / se déconnecter",
+          "english": "to log in / to log out",
+          "gender": "a",
+          "part_of_speech": "verb",
+          "example_sentence": "Connecte-toi avec ton mail."
+        },
+        {
+          "french": "naviguer / chercher",
+          "english": "to browse / to search",
+          "gender": "a",
+          "part_of_speech": "verb",
+          "example_sentence": "Je cherche un restaurant sur Google."
+        },
+        {
+          "french": "en ligne / hors ligne",
+          "english": "online / offline",
+          "gender": "a",
+          "part_of_speech": "phrase",
+          "example_sentence": "Je travaille en ligne aujourd'hui."
+        },
+        {
+          "french": "le réseau social",
+          "english": "social network",
+          "gender": "m",
+          "part_of_speech": "noun",
+          "example_sentence": "Je ne suis sur aucun réseau social."
+        },
+        {
+          "french": "la publication / le post",
+          "english": "post (social media)",
+          "gender": "f",
+          "part_of_speech": "noun",
+          "example_sentence": "Sa publication a fait beaucoup de likes."
+        },
+        {
+          "french": "la vidéo / la photo",
+          "english": "video / photo",
+          "gender": "a",
+          "part_of_speech": "noun",
+          "example_sentence": "Regarde cette vidéo, elle est drôle."
+        },
+        {
+          "french": "le bug / planter",
+          "english": "bug / to crash",
+          "gender": "a",
+          "part_of_speech": "noun",
+          "example_sentence": "Mon ordi a planté."
+        },
+        {
+          "french": "mettre à jour",
+          "english": "to update",
+          "gender": "a",
+          "part_of_speech": "verb",
+          "example_sentence": "Tu dois mettre à jour ton iPhone."
+        }
+      ],
+      "phrases": [
+        {
+          "fr": "Tu as son numéro ?",
+          "en": "Do you have his number?",
+          "note": "Standard phone request."
+        },
+        {
+          "fr": "Quel est le code wifi ?",
+          "en": "What's the wifi password?",
+          "note": "Universal question. 'Code' = 'password' in this context."
+        },
+        {
+          "fr": "Ma batterie est à 5 %.",
+          "en": "My battery is at 5%.",
+          "note": "Common modern panic."
+        },
+        {
+          "fr": "Je n'ai plus de réseau.",
+          "en": "I have no signal.",
+          "note": "Common in metros, countryside."
+        },
+        {
+          "fr": "Tu peux m'envoyer ça par mail ?",
+          "en": "Can you send me that by email?",
+          "note": "'Par mail' (not 'par courriel' which is more Canadian)."
+        },
+        {
+          "fr": "Mon écran ne marche plus.",
+          "en": "My screen isn't working anymore.",
+          "note": "Common technical complaint."
+        },
+        {
+          "fr": "J'ai téléchargé une nouvelle appli.",
+          "en": "I downloaded a new app.",
+          "note": "'Téléchargé' / 'app' standard."
+        },
+        {
+          "fr": "Tu as vu sa publication sur Instagram ?",
+          "en": "Did you see her post on Instagram?",
+          "note": "Common gossip starter."
+        },
+        {
+          "fr": "Je dois recharger mon téléphone.",
+          "en": "I need to charge my phone.",
+          "note": "Constant modern need."
+        },
+        {
+          "fr": "Mon ordinateur est en panne.",
+          "en": "My computer is broken.",
+          "note": "'En panne' = out of order, broken."
+        },
+        {
+          "fr": "Je suis débranché du monde.",
+          "en": "I'm disconnected from the world.",
+          "note": "Modern expression for being offline."
+        },
+        {
+          "fr": "C'est un peu daté comme techno.",
+          "en": "It's a bit old tech.",
+          "note": "Casual."
+        }
+      ],
+      "reading": {
+        "title": "Vivre sans téléphone",
+        "content_fr": "Pendant mes vacances cet été, j'ai fait quelque chose de très inhabituel : j'ai laissé mon smartphone à la maison pendant une semaine. Pour quelqu'un qui regarde son téléphone 50 fois par jour, c'était un défi.\n\nLes premiers jours, c'était difficile. À chaque pause, je voulais sortir mon téléphone pour vérifier mes mails, regarder Instagram, lire les actualités. Mais il n'était pas là. Alors, je regardais autour de moi. Et j'ai vu des choses que je n'avais jamais remarquées avant.\n\nDans le train, par exemple. Avant, je passais le trajet entier sur mon écran. Cette fois, j'ai parlé à mon voisin de banc — un retraité qui m'a raconté sa vie pendant trois heures. Fascinant.\n\nAu restaurant, j'ai mangé en regardant les gens, pas mon téléphone. J'ai entendu les conversations autour de moi, j'ai senti vraiment les saveurs. C'était comme manger pour la première fois.\n\nLe soir, je me suis ennuyé(e) un peu. Je ne pouvais pas regarder des vidéos sur YouTube pour m'endormir. J'ai sorti un livre — un vrai livre, en papier — et j'ai lu jusqu'à tard.\n\nUne semaine sans téléphone, c'est court. Mais ça m'a appris quelque chose : le téléphone est une habitude, pas une nécessité. Je ne vais pas le jeter, bien sûr. Mais je vais essayer de le poser plus souvent. Surtout au moment du repas, et le soir avant de dormir.\n\nLa technologie est merveilleuse. Mais la vie hors écran existe aussi.",
+        "content_en": "During my vacation this summer, I did something very unusual: I left my smartphone at home for a week. For someone who looks at their phone 50 times a day, it was a challenge.\n\nThe first few days were hard. At each break, I wanted to take out my phone to check emails, look at Instagram, read the news. But it wasn't there. So I looked around me. And I saw things I'd never noticed before.\n\nOn the train, for example. Before, I'd spend the whole trip on my screen. This time, I talked to my seatmate — a retiree who told me his life story for three hours. Fascinating.\n\nAt the restaurant, I ate while watching people, not my phone. I heard the conversations around me, I really felt the flavors. It was like eating for the first time.\n\nIn the evening, I was a little bored. I couldn't watch YouTube videos to fall asleep. I pulled out a book — a real, paper book — and read late into the night.\n\nA week without a phone is short. But it taught me something: the phone is a habit, not a necessity. I won't throw it away, of course. But I'll try to put it down more often. Especially at meal times, and in the evening before sleeping.\n\nTechnology is wonderful. But life off-screen exists too.",
+        "comprehension_questions": [
+          {
+            "q": "Pourquoi est-ce un défi de vivre sans téléphone ?",
+            "a": "Parce qu'il regardait son téléphone 50 fois par jour."
+          },
+          {
+            "q": "Que s'est-il passé dans le train ?",
+            "a": "Il a parlé avec un retraité pendant trois heures."
+          },
+          {
+            "q": "Comment s'est-il endormi le soir ?",
+            "a": "Il a lu un livre en papier."
+          },
+          {
+            "q": "Que va-t-il changer ?",
+            "a": "Il va essayer de poser son téléphone plus souvent, surtout au repas et le soir."
+          }
+        ]
+      },
+      "cultural_note": "Comme partout, les Français sont **très connectés** : 95 % ont un smartphone. WhatsApp et SMS dominent les communications privées. **Les applications populaires** en France : Doctolib (médecin), Citymapper (transports), Le Bon Coin (petites annonces), Vinted (vêtements d'occasion), Yuka (alimentation). Côté **règles de politesse numérique** : la photo au restaurant est tolérée, mais le téléphone à table reste considéré comme impoli, surtout en famille. Beaucoup d'écoles interdisent désormais les téléphones."
+    },
+    {
+      "name_fr": "Les souvenirs et le passé",
+      "name_en": "Memories and the past",
+      "icon": "📸",
+      "order": 390,
+      "difficulty_level": 2,
+      "description": "Raconter le passé récent, parler de l'enfance, des souvenirs.",
+      "vocabulary": [
+        {
+          "french": "le souvenir",
+          "english": "memory, souvenir",
+          "gender": "m",
+          "part_of_speech": "noun",
+          "example_sentence": "J'ai de bons souvenirs de mon enfance."
+        },
+        {
+          "french": "se souvenir de",
+          "english": "to remember",
+          "gender": "a",
+          "part_of_speech": "verb",
+          "example_sentence": "Je me souviens de ce voyage."
+        },
+        {
+          "french": "se rappeler",
+          "english": "to recall",
+          "gender": "a",
+          "part_of_speech": "verb",
+          "example_sentence": "Tu te rappelles de Marie ?"
+        },
+        {
+          "french": "oublier",
+          "english": "to forget",
+          "gender": "a",
+          "part_of_speech": "verb",
+          "example_sentence": "J'ai oublié ton nom, désolé."
+        },
+        {
+          "french": "l'enfance / l'adolescence",
+          "english": "childhood / adolescence",
+          "gender": "f",
+          "part_of_speech": "noun",
+          "example_sentence": "Mon enfance était heureuse."
+        },
+        {
+          "french": "la jeunesse",
+          "english": "youth",
+          "gender": "f",
+          "part_of_speech": "noun",
+          "example_sentence": "Dans ma jeunesse, j'étais sportif."
+        },
+        {
+          "french": "autrefois / avant / dans le temps",
+          "english": "in the past / before",
+          "gender": "a",
+          "part_of_speech": "adverb",
+          "example_sentence": "Autrefois, on écrivait des lettres."
+        },
+        {
+          "french": "il y a (deux ans)",
+          "english": "ago (two years ago)",
+          "gender": "a",
+          "part_of_speech": "phrase",
+          "example_sentence": "Je l'ai vu il y a trois mois."
+        },
+        {
+          "french": "à l'époque",
+          "english": "at the time",
+          "gender": "a",
+          "part_of_speech": "phrase",
+          "example_sentence": "À l'époque, j'habitais à Marseille."
+        },
+        {
+          "french": "quand j'étais petit(e)",
+          "english": "when I was little",
+          "gender": "a",
+          "part_of_speech": "phrase",
+          "example_sentence": "Quand j'étais petit, j'aimais les dinosaures."
+        },
+        {
+          "french": "raconter / dire",
+          "english": "to tell / say",
+          "gender": "a",
+          "part_of_speech": "verb",
+          "example_sentence": "Raconte-moi ton voyage."
+        },
+        {
+          "french": "l'histoire / l'anecdote",
+          "english": "story / anecdote",
+          "gender": "a",
+          "part_of_speech": "noun",
+          "example_sentence": "Il raconte de belles histoires."
+        },
+        {
+          "french": "l'événement",
+          "english": "event",
+          "gender": "m",
+          "part_of_speech": "noun",
+          "example_sentence": "Cet événement a changé ma vie."
+        },
+        {
+          "french": "le voyage / les vacances",
+          "english": "trip / vacation",
+          "gender": "a",
+          "part_of_speech": "noun",
+          "example_sentence": "Nos vacances en Italie étaient super."
+        },
+        {
+          "french": "la photo / l'album",
+          "english": "photo / album",
+          "gender": "a",
+          "part_of_speech": "noun",
+          "example_sentence": "J'ai retrouvé un vieil album de photos."
+        },
+        {
+          "french": "nostalgique / la nostalgie",
+          "english": "nostalgic / nostalgia",
+          "gender": "a",
+          "part_of_speech": "adjective",
+          "example_sentence": "Cette chanson me rend nostalgique."
+        },
+        {
+          "french": "le bon vieux temps",
+          "english": "the good old days",
+          "gender": "m",
+          "part_of_speech": "phrase",
+          "example_sentence": "Ah, le bon vieux temps !"
+        },
+        {
+          "french": "récent / ancien",
+          "english": "recent / old",
+          "gender": "a",
+          "part_of_speech": "adjective",
+          "example_sentence": "C'est une histoire récente."
+        },
+        {
+          "french": "passé / dernier",
+          "english": "past / last",
+          "gender": "a",
+          "part_of_speech": "adjective",
+          "example_sentence": "Le mois dernier, j'étais malade."
+        },
+        {
+          "french": "naître / mourir",
+          "english": "to be born / to die",
+          "gender": "a",
+          "part_of_speech": "verb",
+          "example_sentence": "Mon grand-père est né en 1935."
+        },
+        {
+          "french": "grandir / vieillir",
+          "english": "to grow up / age",
+          "gender": "a",
+          "part_of_speech": "verb",
+          "example_sentence": "Mes enfants grandissent vite."
+        },
+        {
+          "french": "déménager",
+          "english": "to move (house)",
+          "gender": "a",
+          "part_of_speech": "verb",
+          "example_sentence": "On a déménagé l'année dernière."
+        },
+        {
+          "french": "se marier / divorcer",
+          "english": "to get married / divorced",
+          "gender": "a",
+          "part_of_speech": "verb",
+          "example_sentence": "Ils se sont mariés en 2015."
+        },
+        {
+          "french": "la rencontre / rencontrer",
+          "english": "meeting / to meet",
+          "gender": "a",
+          "part_of_speech": "noun",
+          "example_sentence": "Notre rencontre a été magique."
+        },
+        {
+          "french": "perdre / retrouver",
+          "english": "to lose / find again",
+          "gender": "a",
+          "part_of_speech": "verb",
+          "example_sentence": "J'ai perdu, puis retrouvé ce livre."
+        }
+      ],
+      "phrases": [
+        {
+          "fr": "Tu te souviens de notre voyage en Espagne ?",
+          "en": "Do you remember our trip to Spain?",
+          "note": "'Se souvenir de' + thing/person."
+        },
+        {
+          "fr": "Je me rappelle, oui !",
+          "en": "Yes, I remember!",
+          "note": "'Se rappeler' takes direct object (no 'de'); but 'se souvenir' takes 'de'."
+        },
+        {
+          "fr": "Quand j'étais petit, j'habitais en banlieue.",
+          "en": "When I was little, I lived in the suburbs.",
+          "note": "Imperfect tense for repeated past actions."
+        },
+        {
+          "fr": "Il y a dix ans, j'ai déménagé à Paris.",
+          "en": "Ten years ago, I moved to Paris.",
+          "note": "'Il y a' + duration = ago."
+        },
+        {
+          "fr": "À l'époque, je travaillais dans une banque.",
+          "en": "At the time, I worked at a bank.",
+          "note": "Imperfect for ongoing past states."
+        },
+        {
+          "fr": "Autrefois, les gens écrivaient des lettres.",
+          "en": "In the past, people wrote letters.",
+          "note": "Nostalgic register."
+        },
+        {
+          "fr": "Je n'oublierai jamais ce moment.",
+          "en": "I'll never forget that moment.",
+          "note": "Future with negation."
+        },
+        {
+          "fr": "C'est un souvenir d'enfance.",
+          "en": "It's a childhood memory.",
+          "note": "Common phrase."
+        },
+        {
+          "fr": "Raconte-moi ton enfance.",
+          "en": "Tell me about your childhood.",
+          "note": "Invitation to share."
+        },
+        {
+          "fr": "Je suis né(e) à Lyon.",
+          "en": "I was born in Lyon.",
+          "note": "'Né' (m), 'née' (f) — silent 'e'."
+        },
+        {
+          "fr": "L'année dernière, j'ai voyagé en Asie.",
+          "en": "Last year, I traveled in Asia.",
+          "note": "Passé composé for completed past."
+        },
+        {
+          "fr": "Ça me rappelle quelque chose.",
+          "en": "That reminds me of something.",
+          "note": "'Rappeler' as a transitive verb."
+        }
+      ],
+      "reading": {
+        "title": "Le tiroir aux souvenirs",
+        "content_fr": "Hier, j'ai vidé un vieux tiroir dans le bureau de ma mère. Je voulais l'aider à ranger. Mais ce que j'ai trouvé était bien plus qu'un tas d'objets : c'était trente ans de souvenirs.\n\nIl y avait des photos en noir et blanc de mes grands-parents, jeunes et amoureux. Sur l'une, ma grand-mère porte une robe à pois et un sourire timide. À côté d'elle, mon grand-père, en costume gris, la regarde comme s'il venait de gagner le grand prix.\n\nJ'ai trouvé aussi des lettres : des lettres d'amour de mes parents, écrites quand mon père faisait son service militaire. L'écriture est belle, ancienne, pleine d'émotion. « Ma chère Catherine, je pense à toi tous les soirs... » C'était il y a quarante ans, mais on aurait dit hier.\n\nUne boîte contenait mes dessins d'enfant. À cinq ans, j'avais dessiné toute la famille, en couleurs vives, avec des têtes énormes et des bras minuscules. Ma mère avait écrit derrière chaque dessin la date et un petit mot.\n\nIl y avait aussi un cahier d'école de quand j'avais huit ans. Ma première rédaction : « Ma maison idéale ». J'avais écrit que je voulais une maison avec une piscine et un dragon dans le jardin. Ma maîtresse avait écrit : « Très bonne imagination ! »\n\nQuand j'ai montré tout ça à ma mère, elle a souri, puis pleuré, puis ri. « Le bon vieux temps, m'a-t-elle dit. Tu te souviens comme tu étais petit ? » Non, je ne me souvenais pas vraiment. Mais grâce à ce tiroir, maintenant, je me rappelle un peu.",
+        "content_en": "Yesterday, I emptied an old drawer in my mother's office. I wanted to help her tidy up. But what I found was much more than a pile of objects: it was thirty years of memories.\n\nThere were black-and-white photos of my grandparents, young and in love. In one, my grandmother wears a polka-dot dress and a shy smile. Next to her, my grandfather, in a gray suit, looks at her as if he'd just won the grand prize.\n\nI also found letters: love letters from my parents, written when my father was doing his military service. The handwriting is beautiful, old-fashioned, full of emotion. 'My dear Catherine, I think of you every evening...' It was forty years ago, but it felt like yesterday.\n\nA box contained my childhood drawings. At five, I'd drawn the whole family, in bright colors, with huge heads and tiny arms. My mother had written behind each drawing the date and a little note.\n\nThere was also a school notebook from when I was eight. My first essay: 'My ideal house'. I'd written that I wanted a house with a swimming pool and a dragon in the garden. My teacher had written: 'Great imagination!'\n\nWhen I showed all this to my mother, she smiled, then cried, then laughed. 'The good old days,' she told me. 'Do you remember how little you were?' No, I didn't really remember. But thanks to this drawer, now, I remember a little.",
+        "comprehension_questions": [
+          {
+            "q": "Que fait-il pour aider sa mère ?",
+            "a": "Il vide un vieux tiroir dans son bureau."
+          },
+          {
+            "q": "Qui apparaît sur les photos en noir et blanc ?",
+            "a": "Ses grands-parents, jeunes et amoureux."
+          },
+          {
+            "q": "Que faisait son père quand il a écrit les lettres ?",
+            "a": "Il faisait son service militaire."
+          },
+          {
+            "q": "Qu'avait-il dessiné enfant ?",
+            "a": "Toute la famille, en couleurs vives, avec des têtes énormes."
+          }
+        ]
+      },
+      "cultural_note": "En français, deux temps du passé dominent : le **passé composé** (action ponctuelle terminée : *J'ai déménagé l'année dernière*) et **l'imparfait** (description ou habitude : *Quand j'étais petit, je jouais au foot*). Pour raconter une histoire, on alterne les deux : *Il pleuvait (décor) quand le téléphone a sonné (événement)*. Les Français aiment le **'devoir de mémoire'** : la France honore régulièrement son passé (Révolution française, guerres mondiales, Résistance...). Les **albums photo papier** sont en train de disparaître au profit du téléphone — un changement de société profond."
+    },
+    {
+      "name_fr": "Faire des projets et des invitations",
+      "name_en": "Making plans and invitations",
+      "icon": "📅",
+      "order": 400,
+      "difficulty_level": 2,
+      "description": "Proposer une activité, accepter ou refuser, organiser un rendez-vous.",
+      "vocabulary": [
+        {
+          "french": "le projet / le plan",
+          "english": "project / plan",
+          "gender": "m",
+          "part_of_speech": "noun",
+          "example_sentence": "J'ai un grand projet pour cet été."
+        },
+        {
+          "french": "faire des projets",
+          "english": "to make plans",
+          "gender": "a",
+          "part_of_speech": "phrase",
+          "example_sentence": "On fait des projets pour les vacances."
+        },
+        {
+          "french": "l'invitation / inviter",
+          "english": "invitation / to invite",
+          "gender": "a",
+          "part_of_speech": "noun",
+          "example_sentence": "Merci pour l'invitation !"
+        },
+        {
+          "french": "le rendez-vous / le rdv",
+          "english": "appointment / date",
+          "gender": "m",
+          "part_of_speech": "noun",
+          "example_sentence": "On a rendez-vous à 14 h."
+        },
+        {
+          "french": "fixer un rendez-vous",
+          "english": "to set an appointment",
+          "gender": "a",
+          "part_of_speech": "phrase",
+          "example_sentence": "On fixe un rdv pour la semaine prochaine ?"
+        },
+        {
+          "french": "accepter / refuser",
+          "english": "to accept / refuse",
+          "gender": "a",
+          "part_of_speech": "verb",
+          "example_sentence": "J'accepte votre invitation avec plaisir."
+        },
+        {
+          "french": "avoir envie de",
+          "english": "to feel like",
+          "gender": "a",
+          "part_of_speech": "phrase",
+          "example_sentence": "J'ai envie d'aller au cinéma."
+        },
+        {
+          "french": "être libre / occupé(e)",
+          "english": "to be free / busy",
+          "gender": "a",
+          "part_of_speech": "phrase",
+          "example_sentence": "Tu es libre samedi ?"
+        },
+        {
+          "french": "disponible / indisponible",
+          "english": "available / unavailable",
+          "gender": "a",
+          "part_of_speech": "adjective",
+          "example_sentence": "Je suis disponible vendredi."
+        },
+        {
+          "french": "ce soir / demain / la semaine prochaine",
+          "english": "tonight / tomorrow / next week",
+          "gender": "a",
+          "part_of_speech": "adverb",
+          "example_sentence": "On se voit la semaine prochaine ?"
+        },
+        {
+          "french": "annuler / reporter",
+          "english": "to cancel / postpone",
+          "gender": "a",
+          "part_of_speech": "verb",
+          "example_sentence": "Je dois annuler notre rendez-vous."
+        },
+        {
+          "french": "confirmer",
+          "english": "to confirm",
+          "gender": "a",
+          "part_of_speech": "verb",
+          "example_sentence": "Confirme-moi par SMS."
+        },
+        {
+          "french": "proposer / suggérer",
+          "english": "to propose / suggest",
+          "gender": "a",
+          "part_of_speech": "verb",
+          "example_sentence": "Je te propose un café ?"
+        },
+        {
+          "french": "venir à / aller à",
+          "english": "to come / go to",
+          "gender": "a",
+          "part_of_speech": "verb",
+          "example_sentence": "Tu viens à ma fête ?"
+        },
+        {
+          "french": "passer (chez quelqu'un)",
+          "english": "to drop by",
+          "gender": "a",
+          "part_of_speech": "verb",
+          "example_sentence": "Je passe te voir vers 18 h."
+        },
+        {
+          "french": "retrouver / se retrouver",
+          "english": "to meet (planned)",
+          "gender": "a",
+          "part_of_speech": "verb",
+          "example_sentence": "On se retrouve devant le cinéma."
+        },
+        {
+          "french": "la fête / la soirée",
+          "english": "party / evening event",
+          "gender": "a",
+          "part_of_speech": "noun",
+          "example_sentence": "Tu viens à la soirée ?"
+        },
+        {
+          "french": "le dîner / le déjeuner",
+          "english": "dinner / lunch",
+          "gender": "m",
+          "part_of_speech": "noun",
+          "example_sentence": "Tu viens dîner ce soir ?"
+        },
+        {
+          "french": "désolé(e), je ne peux pas",
+          "english": "sorry, I can't",
+          "gender": "a",
+          "part_of_speech": "phrase",
+          "example_sentence": "Désolé, je ne peux pas vendredi."
+        },
+        {
+          "french": "ça me ferait plaisir",
+          "english": "I'd love to",
+          "gender": "a",
+          "part_of_speech": "phrase",
+          "example_sentence": "Ça me ferait plaisir de te revoir."
+        },
+        {
+          "french": "avec plaisir / volontiers",
+          "english": "gladly",
+          "gender": "a",
+          "part_of_speech": "phrase",
+          "example_sentence": "Avec plaisir, je viens !"
+        },
+        {
+          "french": "peut-être / sans doute",
+          "english": "maybe / probably",
+          "gender": "a",
+          "part_of_speech": "adverb",
+          "example_sentence": "Je viendrai peut-être."
+        },
+        {
+          "french": "sûrement / certainement",
+          "english": "surely",
+          "gender": "a",
+          "part_of_speech": "adverb",
+          "example_sentence": "Je viendrai certainement."
+        },
+        {
+          "french": "tu es disponible quand ?",
+          "en": "when are you free?",
+          "gender": "a",
+          "part_of_speech": "phrase",
+          "example_sentence": "Tu es disponible quand cette semaine ?"
+        },
+        {
+          "french": "ça te dit ?",
+          "english": "do you feel like it?",
+          "gender": "a",
+          "part_of_speech": "phrase",
+          "example_sentence": "On va boire un verre, ça te dit ?"
+        }
+      ],
+      "phrases": [
+        {
+          "fr": "Tu es libre ce soir ?",
+          "en": "Are you free tonight?",
+          "note": "Standard invitation lead-in."
+        },
+        {
+          "fr": "On se voit quand ?",
+          "en": "When are we meeting?",
+          "note": "Casual phrasing."
+        },
+        {
+          "fr": "Ça te dirait d'aller au ciné ?",
+          "en": "Feel like going to the cinema?",
+          "note": "'Ça te dit' / 'ça te dirait' = would you like to."
+        },
+        {
+          "fr": "Avec plaisir !",
+          "en": "With pleasure!",
+          "note": "Standard happy acceptance."
+        },
+        {
+          "fr": "Désolé(e), je suis pris(e) ce soir.",
+          "en": "Sorry, I'm busy tonight.",
+          "note": "'Pris(e)' = taken, busy."
+        },
+        {
+          "fr": "Ça te va à 19 heures ?",
+          "en": "Does 7 PM work for you?",
+          "note": "Time confirmation."
+        },
+        {
+          "fr": "On se retrouve où ?",
+          "en": "Where shall we meet?",
+          "note": "Asking for location."
+        },
+        {
+          "fr": "Devant le cinéma à 18 h ?",
+          "en": "In front of the cinema at 6?",
+          "note": "Proposing a location and time."
+        },
+        {
+          "fr": "Tu peux confirmer demain ?",
+          "en": "Can you confirm tomorrow?",
+          "note": "Asking for confirmation."
+        },
+        {
+          "fr": "Désolé, je dois annuler.",
+          "en": "Sorry, I have to cancel.",
+          "note": "Cancelling politely."
+        },
+        {
+          "fr": "On reporte à la semaine prochaine ?",
+          "en": "Shall we postpone to next week?",
+          "note": "Suggesting a postponement."
+        },
+        {
+          "fr": "À samedi alors !",
+          "en": "See you Saturday then!",
+          "note": "Closing confirmation."
+        }
+      ],
+      "reading": {
+        "title": "Organiser une soirée",
+        "content_fr": "Marie veut organiser une petite soirée chez elle samedi prochain. Elle envoie un message à son groupe d'amis sur WhatsApp.\n\n**Marie** : Coucou les amis ! Je voulais vous inviter chez moi samedi prochain pour une petite soirée. On serait six ou sept. Vers 20 heures, dîner et puis on verra. Vous êtes dispos ?\n\n**Paul** : Salut Marie ! Super idée. Moi je suis libre samedi. Je viens avec plaisir.\n\n**Sophie** : Ah, samedi je ne peux pas, j'ai déjà un dîner familial. C'est dommage. Une autre fois ?\n\n**Thomas** : Salut ! Je viens, mais je serai en retard, vers 21 heures. Ça te va ?\n\n**Marie** : Pas de souci Thomas, viens quand tu peux. Et toi Sophie, on refait quelque chose le week-end d'après ?\n\n**Sophie** : Volontiers !\n\n**Léa** : Coucou ! Je suis dispo, je viens. Je peux apporter quelque chose ?\n\n**Marie** : Si tu veux, apporte un dessert ou du vin. Mais c'est moi qui m'occupe du plat principal.\n\n**Antoine** : Salut tous ! Je suis libre, mais je suis en déplacement professionnel cette semaine et je rentre samedi à 19 h. Je ferai un saut. Je peux passer vers 21 h aussi ?\n\n**Marie** : Bien sûr ! L'essentiel c'est que tu viennes.\n\nLe samedi à 20 h, Paul et Léa sonnent à la porte. Léa apporte une bouteille de bon vin rouge. À 21 h, Thomas et Antoine arrivent. La soirée commence vraiment. Marie a fait des lasagnes pour tout le monde — son plat fétiche.\n\nIls dînent, ils discutent jusqu'à minuit, ils écoutent de la musique. Quand Antoine part vers 1 heure du matin, il dit à Marie : « Merci, c'était parfait. À très vite ! »",
+        "content_en": "Marie wants to organize a small party at her place next Saturday. She sends a message to her group of friends on WhatsApp.\n\n**Marie**: Hi friends! I wanted to invite you over next Saturday for a small party. There'd be six or seven of us. Around 8 PM, dinner and then we'll see. Are you free?\n\n**Paul**: Hi Marie! Great idea. I'm free Saturday. I'll come gladly.\n\n**Sophie**: Ah, I can't Saturday, I already have a family dinner. It's a pity. Another time?\n\n**Thomas**: Hi! I'll come, but I'll be late, around 9 PM. Does that work?\n\n**Marie**: No worries Thomas, come when you can. And Sophie, shall we do something the weekend after?\n\n**Sophie**: Gladly!\n\n**Léa**: Hi! I'm free, I'll come. Can I bring something?\n\n**Marie**: If you want, bring a dessert or wine. But I'm handling the main dish.\n\n**Antoine**: Hi all! I'm free, but I'm on a business trip this week and I get back Saturday at 7 PM. I'll drop in. Can I come around 9 too?\n\n**Marie**: Of course! The main thing is that you come.\n\nSaturday at 8 PM, Paul and Léa ring the doorbell. Léa brings a bottle of good red wine. At 9 PM, Thomas and Antoine arrive. The party really begins. Marie made lasagna for everyone — her signature dish.\n\nThey dine, talk until midnight, listen to music. When Antoine leaves around 1 AM, he tells Marie: 'Thanks, it was perfect. See you very soon!'",
+        "comprehension_questions": [
+          {
+            "q": "Qui organise la soirée ?",
+            "a": "Marie, chez elle."
+          },
+          {
+            "q": "Pourquoi Sophie ne peut-elle pas venir ?",
+            "a": "Elle a déjà un dîner familial samedi."
+          },
+          {
+            "q": "À quelle heure arrivent Thomas et Antoine ?",
+            "a": "Vers 21 heures."
+          },
+          {
+            "q": "Qu'a préparé Marie pour le dîner ?",
+            "a": "Des lasagnes, son plat fétiche."
+          }
+        ]
+      },
+      "cultural_note": "En France, organiser une **soirée chez soi** est très courant — souvent un dîner suivi de musique et de discussions. **L'invité apporte généralement quelque chose** : une bouteille de vin, un dessert, des fleurs pour l'hôtesse. Arriver **15-30 minutes après l'heure** indiquée est normal (le 'quart d'heure de politesse'). Quand on se quitte tard, on dit : *« à la prochaine »* ou *« à très vite »*. Pour **inviter quelqu'un en dernier moment**, WhatsApp et SMS sont la norme entre amis ; pour un rendez-vous plus formel, un email reste de bon ton."
+    }
+  ]
+}

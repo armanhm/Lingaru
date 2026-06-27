@@ -23,9 +23,18 @@ export default function Topics() {
   const [topics, setTopics] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  // Initial tab; may be wrong on first render because AuthContext loads
+  // the profile asynchronously (user is null until /users/me/ resolves).
+  // The effect below corrects it once target_level is known.
   const [activeLevel, setActiveLevel] = useState(() => {
     return LEVEL_BY_KEY[user?.target_level] ? user.target_level : "B2";
   });
+
+  useEffect(() => {
+    if (user?.target_level && LEVEL_BY_KEY[user.target_level]) {
+      setActiveLevel(user.target_level);
+    }
+  }, [user?.target_level]);
 
   useEffect(() => {
     getTopics()

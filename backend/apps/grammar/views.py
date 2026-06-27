@@ -1,5 +1,6 @@
 import random
 
+from django.db.models import Count, Prefetch
 from django.utils import timezone
 from rest_framework import permissions, status
 from rest_framework.response import Response
@@ -29,6 +30,25 @@ from .serializers import (
 # ── XP for grammar drills ───────────────────────────────────────
 XP_PER_CORRECT_DRILL = 3
 XP_DRILL_PERFECT_BONUS = 10
+
+
+def _topics_qs_with_prefetches(user):
+    """Active grammar topics for the user's target language, with the two
+    serializer-fed N+1s eliminated:
+
+    - drill_count_annotated:  Count("drills") in one aggregate query
+    - _prefetched_user_mastery: GrammarMastery rows for this user, attached
+      to each topic as a 0/1-element list (matches the serializer contract)
+    """
+    user_mastery = GrammarMastery.objects.filter(user=user)
+    return (
+        GrammarTopic.objects.filter(is_active=True, language=user.target_language)
+        .select_related("category")
+        .annotate(drill_count_annotated=Count("drills"))
+        .prefetch_related(
+            Prefetch("mastery_records", queryset=user_mastery, to_attr="_prefetched_user_mastery")
+        )
+    )
 
 
 class HubView(APIView):
@@ -142,9 +162,7 @@ class TopicListView(APIView):
     permission_classes = (permissions.IsAuthenticated,)
 
     def get(self, request):
-        qs = GrammarTopic.objects.filter(
-            is_active=True, language=request.user.target_language
-        ).select_related("category")
+        qs = _topics_qs_with_prefetches(request.user)
 
         category_slug = request.query_params.get("category")
         if category_slug:

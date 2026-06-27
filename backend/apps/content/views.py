@@ -1,3 +1,4 @@
+from django.db.models import Count
 from rest_framework import generics, permissions, status
 from rest_framework.response import Response
 from rest_framework.views import APIView
@@ -18,7 +19,13 @@ class TopicListView(generics.ListAPIView):
     pagination_class = None
 
     def get_queryset(self):
-        return Topic.objects.filter(language=self.request.user.target_language).order_by("order")
+        # Annotate lesson_count via a single COUNT() instead of
+        # `source="lessons.count"` which fires one query per topic.
+        return (
+            Topic.objects.filter(language=self.request.user.target_language)
+            .annotate(lesson_count_annotated=Count("lessons"))
+            .order_by("order")
+        )
 
 
 class TopicDetailView(generics.RetrieveAPIView):

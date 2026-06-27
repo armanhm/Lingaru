@@ -54,17 +54,29 @@ class NewsListSerializer(serializers.ModelSerializer):
             "interacted",
         )
 
+    def _content(self, obj):
+        # Memoize the content_json dict on the obj for the lifetime of the
+        # serializer pass. Without this, each of the three derived fields
+        # below re-reads obj.content_json from the row (it's a JSONField, so
+        # the dict is in-process — but the .get() chain was still firing for
+        # every field × every row). One read per row instead of three.
+        cached = getattr(obj, "_content_cache", None)
+        if cached is None:
+            cached = obj.content_json or {}
+            obj._content_cache = cached
+        return cached
+
     def get_read_minutes(self, obj):
-        article = (obj.content_json or {}).get("article_fr", "")
+        article = self._content(obj).get("article_fr", "")
         words = len(article.split()) if article else 0
         # Roughly 130 words/min for B1-B2 reader
         return max(1, round(words / 130))
 
     def get_source_name(self, obj):
-        return (obj.content_json or {}).get("source_name") or ""
+        return self._content(obj).get("source_name") or ""
 
     def get_source_domain(self, obj):
-        return (obj.content_json or {}).get("source_domain") or ""
+        return self._content(obj).get("source_domain") or ""
 
 
 class NewsDetailSerializer(serializers.ModelSerializer):

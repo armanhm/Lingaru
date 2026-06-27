@@ -78,6 +78,9 @@ class AgentRunSerializer(serializers.ModelSerializer):
 
     conversation_id = serializers.IntegerField(source="conversation.id", read_only=True)
     title = serializers.CharField(source="conversation.title", read_only=True)
+    # The view annotates queryset rows with this aggregate so a 20-run list
+    # is one COUNT, not 20. Falls back to obj.conversation.messages.count()
+    # for callers that don't pre-annotate (single-object views, tests).
     message_count = serializers.SerializerMethodField()
 
     class Meta:
@@ -85,6 +88,9 @@ class AgentRunSerializer(serializers.ModelSerializer):
         fields = ("id", "conversation_id", "title", "started_at", "message_count")
 
     def get_message_count(self, obj):
+        annotated = getattr(obj, "message_count_annotated", None)
+        if annotated is not None:
+            return annotated
         return obj.conversation.messages.count() if obj.conversation_id else 0
 
 

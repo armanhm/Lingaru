@@ -66,10 +66,13 @@ class AgentRunsView(APIView):
     permission_classes = (permissions.IsAuthenticated,)
 
     def get(self, request, slug):
+        from django.db.models import Count
+
         agent = get_object_or_404(Agent, slug=slug, is_active=True)
         runs = (
             AgentRun.objects.filter(user=request.user, agent=agent)
             .select_related("conversation")
+            .annotate(message_count_annotated=Count("conversation__messages"))
             .order_by("-started_at")[:20]
         )
         return Response(AgentRunSerializer(runs, many=True).data)

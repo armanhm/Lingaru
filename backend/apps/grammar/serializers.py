@@ -41,12 +41,23 @@ class GrammarTopicListSerializer(serializers.ModelSerializer):
         )
 
     def get_drill_count(self, obj):
+        # The view annotates the queryset with drill_count so a 20-topic list
+        # is one COUNT, not 20. Fall back to .count() for unannotated callers.
+        annotated = getattr(obj, "drill_count_annotated", None)
+        if annotated is not None:
+            return annotated
         return obj.drills.count()
 
     def _user_mastery(self, obj):
         request = self.context.get("request")
         if not request or not request.user.is_authenticated:
             return None
+        # The view prefetches mastery_records pre-filtered to the requesting
+        # user, populating `_prefetched_user_mastery` as a 0/1-item list. If
+        # the prefetch is present we never hit the DB here.
+        prefetched = getattr(obj, "_prefetched_user_mastery", None)
+        if prefetched is not None:
+            return prefetched[0] if prefetched else None
         return GrammarMastery.objects.filter(user=request.user, topic=obj).first()
 
     def get_mastery(self, obj):

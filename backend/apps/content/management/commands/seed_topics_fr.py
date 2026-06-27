@@ -9,14 +9,14 @@ calls — the JSON is the source of truth.
 import json
 from pathlib import Path
 
+from django.conf import settings
 from django.core.management.base import BaseCommand, CommandError
 from django.db import transaction
 
 from apps.content.models import Lesson, ReadingText, Topic, Vocabulary
 
-# backend/apps/content/management/commands/seed_topics_fr.py -> repo root
-REPO_ROOT = Path(__file__).resolve().parents[5]
-DATA_DIR = REPO_ROOT / "data"
+# settings.BASE_DIR points at backend/; data/ lives one level up at the repo root.
+DATA_DIR = Path(settings.BASE_DIR).parent / "data"
 
 LEVELS = ["a1", "a2", "b1", "b2", "c1c2"]
 
@@ -106,32 +106,39 @@ class Command(BaseCommand):
             prefix = f"[{i}/{total}]"
             name_fr = topic_spec["name_fr"]
 
-            topic, topic_created = Topic.objects.update_or_create(
-                name_fr=name_fr,
-                language="fr",
-                defaults={
-                    "name_en": topic_spec.get("name_en", name_fr),
-                    "description": topic_spec.get("description", ""),
-                    "icon": topic_spec.get("icon", ""),
-                    "order": topic_spec.get("order", 0),
-                    "difficulty_level": topic_spec.get("difficulty_level", 1),
-                },
-            )
+            try:
+                with transaction.atomic():
+                    topic, topic_created = Topic.objects.update_or_create(
+                        name_fr=name_fr,
+                        language="fr",
+                        defaults={
+                            "name_en": topic_spec.get("name_en", name_fr),
+                            "description": topic_spec.get("description", ""),
+                            "icon": topic_spec.get("icon", ""),
+                            "order": topic_spec.get("order", 0),
+                            "difficulty_level": topic_spec.get("difficulty_level", 1),
+                        },
+                    )
 
-            if topic_created:
-                action = "created"
-                created += 1
-            elif opts["force"]:
-                action = "updated (force)"
-                updated += 1
-                topic.lessons.filter(language="fr").delete()
-            else:
-                self.stdout.write(f"{prefix} {name_fr} (skipped, exists)")
-                skipped += 1
-                continue
+                    if topic_created:
+                        action = "created"
+                        created += 1
+                    elif opts["force"] or opts["reset"]:
+                        # --reset wipes lessons earlier in _reset(); --force does it
+                        # here on a per-topic basis. Either path needs to recreate the
+                        # lessons, otherwise we'd leave the topic with no content.
+                        action = "updated"
+                        updated += 1
+                        if opts["force"]:
+                            topic.lessons.filter(language="fr").delete()
+                    else:
+                        self.stdout.write(f"{prefix} {name_fr} (skipped, exists)")
+                        skipped += 1
+                        continue
 
-            with transaction.atomic():
-                self._create_lessons(topic, topic_spec)
+                    self._create_lessons(topic, topic_spec)
+            except Exception as exc:
+                raise CommandError(f"Failed to seed topic '{name_fr}': {exc}") from exc
 
             self.stdout.write(f"{prefix} {name_fr} ({action})")
 
@@ -155,8 +162,8 @@ class Command(BaseCommand):
                 language="fr",
             )
             order += 10
-            for v in topic_spec["vocabulary"]:
-                Vocabulary.objects.create(
+            vocab_objs = [
+                Vocabulary(
                     lesson=vocab_lesson,
                     french=v["french"],
                     english=v.get("english", ""),
@@ -166,6 +173,9 @@ class Command(BaseCommand):
                     part_of_speech=v.get("part_of_speech", ""),
                     language="fr",
                 )
+                for v in topic_spec["vocabulary"]
+            ]
+            Vocabulary.objects.bulk_create(vocab_objs)
 
         # Reading text lesson
         reading = topic_spec.get("reading")

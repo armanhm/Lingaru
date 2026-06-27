@@ -11,6 +11,8 @@
 **/.env.*
 **/db.sqlite3
 **/.DS_Store
-**/staticfiles
-**/media
+# Only Django's runtime upload/static dirs, NOT apps named `media`
+# (e.g. backend/apps/media/ which is a Django app).
+backend/staticfiles
+backend/media
 docs/

@@ -15,6 +15,7 @@ from .serializers import (
 class TopicListView(generics.ListAPIView):
     serializer_class = TopicListSerializer
     permission_classes = (permissions.IsAuthenticated,)
+    pagination_class = None
 
     def get_queryset(self):
         return Topic.objects.filter(language=self.request.user.target_language).order_by("order")

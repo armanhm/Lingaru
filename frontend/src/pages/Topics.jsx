@@ -1,19 +1,40 @@
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { Link } from "react-router-dom";
 import { getTopics } from "../api/content";
+import { useAuth } from "../contexts/AuthContext";
 import { staggerDelay } from "../hooks/useAnimations";
 import { PageHeader, SkeletonCard, EmptyState } from "../components/ui";
 
-const DIFFICULTY_BADGE = {
-  A1: "badge-success", A2: "badge-success",
-  B1: "badge-info",    B2: "badge-info",
-  C1: "badge-warn",    C2: "badge-danger",
-};
+// CEFR levels share difficulty_level=5 for C1/C2 because the seed content
+// bundles them as a single "C1-C2" level. Keep the user-facing tabs split.
+const LEVELS = [
+  { key: "A1", difficulty: 1, badge: "badge-success", label: "Beginner" },
+  { key: "A2", difficulty: 2, badge: "badge-success", label: "Elementary" },
+  { key: "B1", difficulty: 3, badge: "badge-info",    label: "Intermediate" },
+  { key: "B2", difficulty: 4, badge: "badge-info",    label: "Upper Intermediate" },
+  { key: "C1", difficulty: 5, badge: "badge-warn",    label: "Advanced" },
+  { key: "C2", difficulty: 5, badge: "badge-danger",  label: "Proficiency" },
+];
+
+const LEVEL_BY_KEY = Object.fromEntries(LEVELS.map((l) => [l.key, l]));
 
 export default function Topics() {
+  const { user } = useAuth();
   const [topics, setTopics] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  // Initial tab; may be wrong on first render because AuthContext loads
+  // the profile asynchronously (user is null until /users/me/ resolves).
+  // The effect below corrects it once target_level is known.
+  const [activeLevel, setActiveLevel] = useState(() => {
+    return LEVEL_BY_KEY[user?.target_level] ? user.target_level : "B2";
+  });
+
+  useEffect(() => {
+    if (user?.target_level && LEVEL_BY_KEY[user.target_level]) {
+      setActiveLevel(user.target_level);
+    }
+  }, [user?.target_level]);
 
   useEffect(() => {
     getTopics()
@@ -21,6 +42,21 @@ export default function Topics() {
       .catch((err) => setError(err.response?.data?.detail || "Failed to load topics."))
       .finally(() => setLoading(false));
   }, []);
+
+  const countsByLevel = useMemo(() => {
+    const counts = Object.fromEntries(LEVELS.map((l) => [l.key, 0]));
+    for (const t of topics) {
+      for (const l of LEVELS) {
+        if (t.difficulty_level === l.difficulty) counts[l.key] += 1;
+      }
+    }
+    return counts;
+  }, [topics]);
+
+  const visibleTopics = useMemo(() => {
+    const target = LEVEL_BY_KEY[activeLevel]?.difficulty;
+    return topics.filter((t) => t.difficulty_level === target);
+  }, [topics, activeLevel]);
 
   if (loading) {
     return (
@@ -59,11 +95,56 @@ export default function Topics() {
         gradient
       />
 
-      {topics.length === 0 ? (
-        <EmptyState icon="📚" title="No topics yet" subtitle="Content is being added, check back soon." />
+      {/* Level tabs — defaults to the user's target_level from settings.
+          On md+ they span the same width as the 3-column card grid below
+          (6 equal columns), on mobile they wrap with a flexible gap. */}
+      <div
+        role="tablist"
+        aria-label="CEFR level"
+        className="mb-6 grid grid-cols-2 sm:grid-cols-3 md:grid-cols-6 gap-2"
+      >
+        {LEVELS.map((level) => {
+          const isActive = activeLevel === level.key;
+          const count = countsByLevel[level.key];
+          return (
+            <button
+              key={level.key}
+              role="tab"
+              aria-selected={isActive}
+              onClick={() => setActiveLevel(level.key)}
+              className={`w-full flex items-center justify-between gap-3 px-4 py-2.5 rounded-xl text-left transition-all focus-ring ${
+                isActive
+                  ? "bg-primary-500 text-white shadow-sm"
+                  : "bg-surface-100 dark:bg-surface-800 text-surface-700 dark:text-surface-200 hover:bg-surface-200 dark:hover:bg-surface-700"
+              }`}
+            >
+              <span className="flex flex-col leading-tight">
+                <span className="text-sm font-bold">{level.key}</span>
+                <span className={`text-[11px] ${isActive ? "opacity-90" : "opacity-60"}`}>
+                  {level.label}
+                </span>
+              </span>
+              <span
+                className={`text-xs font-semibold tabular-nums ${
+                  isActive ? "opacity-90" : "opacity-60"
+                }`}
+              >
+                {count}
+              </span>
+            </button>
+          );
+        })}
+      </div>
+
+      {visibleTopics.length === 0 ? (
+        <EmptyState
+          icon="📚"
+          title={`No ${activeLevel} topics yet`}
+          subtitle="Pick another level above, or check back soon."
+        />
       ) : (
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-          {topics.map((topic, i) => (
+          {visibleTopics.map((topic, i) => (
             <Link
               key={topic.id}
               to={`/topics/${topic.id}`}
@@ -78,8 +159,8 @@ export default function Topics() {
                   <div className="w-12 h-12 rounded-2xl bg-gradient-to-br from-surface-100 to-surface-200 dark:from-surface-800 dark:to-surface-700 flex items-center justify-center text-2xl group-hover:scale-110 group-hover:rotate-3 transition-all duration-300">
                     {topic.icon || "📘"}
                   </div>
-                  <span className={DIFFICULTY_BADGE[topic.difficulty_level] || "badge-neutral"}>
-                    {topic.difficulty_level}
+                  <span className={LEVEL_BY_KEY[activeLevel]?.badge || "badge-neutral"}>
+                    {activeLevel}
                   </span>
                 </div>
 

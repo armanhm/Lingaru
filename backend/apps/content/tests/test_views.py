@@ -89,9 +89,10 @@ def populated_lesson(sample_lesson):
 @pytest.mark.django_db
 class TestTopicListView:
     def test_list_topics_authenticated(self, authenticated_client, sample_topic):
+        # TopicListView disables pagination, so response.data is a plain list.
         response = authenticated_client.get("/api/content/topics/")
         assert response.status_code == 200
-        results = response.data["results"]
+        results = response.data
         assert len(results) == 1
         assert results[0]["name_fr"] == "Les salutations"
         assert "lesson_count" in results[0]
@@ -104,7 +105,7 @@ class TestTopicListView:
         Topic.objects.create(name_fr="Second", name_en="Second", order=2, difficulty_level=1)
         Topic.objects.create(name_fr="First", name_en="First", order=1, difficulty_level=1)
         response = authenticated_client.get("/api/content/topics/")
-        results = response.data["results"]
+        results = response.data
         assert results[0]["name_fr"] == "First"
         assert results[1]["name_fr"] == "Second"
 

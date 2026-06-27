@@ -25,7 +25,7 @@ services:
       retries: 5
 
   django:
-    build:
+    build: &backend-build
       context: .
       dockerfile: backend/Dockerfile
     env_file: .env
@@ -45,9 +45,7 @@ services:
              gunicorn config.wsgi:application --bind 0.0.0.0:8000 --workers 3"
 
   celery:
-    build:
-      context: .
-      dockerfile: backend/Dockerfile
+    build: *backend-build
     env_file: .env
     environment:
       DJANGO_SETTINGS_MODULE: config.settings.prod
@@ -59,9 +57,7 @@ services:
     command: celery -A config worker -l info
 
   celery-beat:
-    build:
-      context: .
-      dockerfile: backend/Dockerfile
+    build: *backend-build
     env_file: .env
     environment:
       DJANGO_SETTINGS_MODULE: config.settings.prod
@@ -73,9 +69,7 @@ services:
     command: celery -A config beat -l info
 
   bot:
-    build:
-      context: .
-      dockerfile: backend/Dockerfile
+    build: *backend-build
     env_file: .env
     environment:
       DJANGO_SETTINGS_MODULE: config.settings.prod

@@ -86,36 +86,21 @@ def generate_grammar_card(language: str = "fr") -> Optional[DiscoverCard]:
 
 
 def generate_trivia_card(language: str = "fr") -> Optional[DiscoverCard]:
-    """Generate a trivia card using the LLM, in the target language."""
-    user_msg = (
-        "Generate an English trivia fact about an English-speaking country "
-        "(UK, US, Canada, Australia, Ireland, New Zealand)."
-        if language == "en"
-        else "Generate a French trivia fact."
-    )
-    try:
-        router = create_llm_router()
-        response = router.generate(
-            messages=[{"role": "user", "content": user_msg}],
-            system_prompt=get_system_prompt(language, "trivia_generator"),
-        )
-        data = json.loads(response.content)
-    except (RuntimeError, json.JSONDecodeError, KeyError) as exc:
-        logger.warning("Failed to generate trivia card (language=%s): %s", language, exc)
-        return None
+    """Pick a random trivia card from the hand-authored JSON bank.
 
-    now = timezone.now()
-    card = DiscoverCard.objects.create(
-        type="trivia",
-        title=data.get("title", "French Trivia"),
-        summary=data.get("summary", ""),
-        content_json={
-            "fact_fr": data.get("fact_fr", ""),
-            "fact_en": data.get("fact_en", ""),
-        },
-        generated_at=now,
-        expires_at=now + timedelta(hours=CARD_EXPIRY_HOURS),
-    )
+    Phase 3 replaced the previous LLM-generated path with a deterministic
+    bank lookup. EN bank not yet seeded; until then EN trivia is skipped
+    (the daily task degrades gracefully). The bank is populated via
+    `manage.py seed_discover_trivia_fr`.
+    """
+    from apps.discover.trivia import generate_daily_trivia_card
+
+    card = generate_daily_trivia_card(language=language)
+    if card is None:
+        logger.info(
+            "No trivia card generated for language=%s (bank empty or missing).",
+            language,
+        )
     return card
 
 

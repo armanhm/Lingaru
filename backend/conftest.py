@@ -1,5 +1,6 @@
 import pytest
 from django.contrib.auth import get_user_model
+from rest_framework.test import APIClient
 
 User = get_user_model()
 
@@ -17,3 +18,8 @@ def user_data():
 def create_user(db, user_data):
     user = User.objects.create_user(**user_data)
     return user
+
+
+@pytest.fixture
+def api_client():
+    return APIClient()

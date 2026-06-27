@@ -166,7 +166,16 @@ class VideoLessonSerializer(serializers.ModelSerializer):
 
 
 class TopicListSerializer(serializers.ModelSerializer):
-    lesson_count = serializers.IntegerField(source="lessons.count", read_only=True)
+    # SerializerMethodField so the view's annotation hits in the fast path and
+    # we transparently fall back to .count() for single-object callers (detail
+    # endpoints, tests) that don't pre-annotate.
+    lesson_count = serializers.SerializerMethodField()
+
+    def get_lesson_count(self, obj):
+        annotated = getattr(obj, "lesson_count_annotated", None)
+        if annotated is not None:
+            return annotated
+        return obj.lessons.count()
 
     class Meta:
         model = Topic

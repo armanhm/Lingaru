@@ -74,7 +74,7 @@ jobs:
       # plus diff vs. base branch. Skipped on push events.
       - name: Coverage comment on PR
         if: github.event_name == 'pull_request'
-        uses: MishaKav/pytest-coverage-comment@v1.7.2
+        uses: MishaKav/pytest-coverage-comment@v1.8.0
         with:
           pytest-xml-coverage-path: backend/coverage.xml
           title: Backend test coverage

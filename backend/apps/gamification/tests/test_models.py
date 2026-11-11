@@ -2,6 +2,7 @@ from datetime import date
 
 import pytest
 from django.contrib.auth import get_user_model
+from django.db import IntegrityError, transaction
 
 from apps.gamification.models import Badge, UserBadge, UserStats, XPTransaction
 
@@ -55,6 +56,40 @@ class TestXPTransaction:
             source_id="session_42",
         )
         assert txn.source_id == "session_42"
+
+    def test_duplicate_source_id_rejected(self):
+        user = User.objects.create_user(username="dup1", password="testpass123")
+        XPTransaction.objects.create(
+            user=user, activity_type="dictation", xp_amount=15, source_id="clip_1"
+        )
+        with pytest.raises(IntegrityError), transaction.atomic():
+            XPTransaction.objects.create(
+                user=user, activity_type="dictation", xp_amount=15, source_id="clip_1"
+            )
+
+    def test_same_source_id_allowed_across_activity_types_and_users(self):
+        user = User.objects.create_user(
+            username="dup2", email="dup2@example.com", password="testpass123"
+        )
+        other = User.objects.create_user(
+            username="dup3", email="dup3@example.com", password="testpass123"
+        )
+        XPTransaction.objects.create(
+            user=user, activity_type="quiz_correct", xp_amount=5, source_id="s1"
+        )
+        XPTransaction.objects.create(
+            user=user, activity_type="quiz_perfect", xp_amount=25, source_id="s1"
+        )
+        XPTransaction.objects.create(
+            user=other, activity_type="quiz_correct", xp_amount=5, source_id="s1"
+        )
+        assert XPTransaction.objects.count() == 3
+
+    def test_null_source_id_not_constrained(self):
+        user = User.objects.create_user(username="dup4", password="testpass123")
+        XPTransaction.objects.create(user=user, activity_type="mini_game_x", xp_amount=2)
+        XPTransaction.objects.create(user=user, activity_type="mini_game_x", xp_amount=2)
+        assert XPTransaction.objects.filter(user=user).count() == 2
 
 
 @pytest.mark.django_db

@@ -1,10 +1,12 @@
 import pytest
+from datetime import date
 from unittest.mock import patch, MagicMock
 from django.contrib.auth import get_user_model
 from django.core.files.uploadedfile import SimpleUploadedFile
 from rest_framework.test import APIClient
 from apps.media.models import AudioClip, PronunciationAttempt
 from apps.content.models import Topic, Lesson, Vocabulary
+from apps.gamification.models import UserStats, XPTransaction
 
 User = get_user_model()
 
@@ -283,3 +285,76 @@ class TestDictationCheckView:
             format="json",
         )
         assert response.status_code == 401
+
+
+def _stt_returning(MockSTT, transcription):
+    instance = MagicMock()
+    instance.transcribe.return_value = MagicMock(
+        transcription=transcription, provider="groq_whisper", language="fr",
+    )
+    MockSTT.return_value = instance
+
+
+def _post_pronunciation(client, expected_text):
+    audio = SimpleUploadedFile("t.webm", b"fake audio", content_type="audio/webm")
+    return client.post(
+        "/api/media/pronunciation/check/",
+        {"audio": audio, "expected_text": expected_text},
+        format="multipart",
+    )
+
+
+@pytest.mark.django_db
+class TestMediaXPIdempotency:
+    @patch("apps.media.views.GroqWhisperProvider")
+    def test_repeat_pronunciation_of_same_text_awards_once_per_day(
+        self, MockSTT, authenticated_client, user,
+    ):
+        _stt_returning(MockSTT, "bonjour")
+        assert _post_pronunciation(authenticated_client, "Bonjour").status_code == 200
+        assert _post_pronunciation(authenticated_client, " bonjour ").status_code == 200
+        assert PronunciationAttempt.objects.count() == 2
+        txns = XPTransaction.objects.filter(user=user, activity_type="pronunciation")
+        assert txns.count() == 1
+        assert UserStats.objects.get(user=user).total_xp == 5
+
+    @patch("apps.media.views.GroqWhisperProvider")
+    def test_pronunciation_of_different_texts_awards_each(
+        self, MockSTT, authenticated_client, user,
+    ):
+        _stt_returning(MockSTT, "bonjour")
+        _post_pronunciation(authenticated_client, "Bonjour")
+        _post_pronunciation(authenticated_client, "Merci")
+        assert XPTransaction.objects.filter(user=user, activity_type="pronunciation").count() == 2
+
+    @patch("apps.media.views.GroqWhisperProvider")
+    def test_pronunciation_on_a_later_day_awards_again(
+        self, MockSTT, authenticated_client, user,
+    ):
+        _stt_returning(MockSTT, "bonjour")
+        with patch("django.utils.timezone.localdate", return_value=date(2026, 11, 10)):
+            _post_pronunciation(authenticated_client, "Bonjour")
+        with patch("django.utils.timezone.localdate", return_value=date(2026, 11, 11)):
+            _post_pronunciation(authenticated_client, "Bonjour")
+        assert XPTransaction.objects.filter(user=user, activity_type="pronunciation").count() == 2
+
+    def test_repeat_dictation_of_same_clip_awards_once_per_day(self, authenticated_client, user):
+        clip = AudioClip.objects.create(
+            text_content="Bonjour le monde", audio_file="audio/test.mp3", language="fr",
+        )
+        body = {"audio_clip_id": clip.id, "user_text": "Bonjour le monde"}
+        with patch("django.utils.timezone.localdate", return_value=date(2026, 11, 10)):
+            for _ in range(3):
+                authenticated_client.post("/api/media/dictation/check/", body, format="json")
+        with patch("django.utils.timezone.localdate", return_value=date(2026, 11, 11)):
+            authenticated_client.post("/api/media/dictation/check/", body, format="json")
+        keys = set(
+            XPTransaction.objects.filter(user=user, activity_type="dictation").values_list(
+                "source_id", flat=True,
+            )
+        )
+        assert keys == {
+            f"dictation_clip_{clip.id}_2026-11-10",
+            f"dictation_clip_{clip.id}_2026-11-11",
+        }
+        assert UserStats.objects.get(user=user).total_xp == 30

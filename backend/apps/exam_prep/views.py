@@ -318,7 +318,14 @@ class SessionCompleteView(APIView):
         if pct == 100:
             xp += XP_EXAM_PERFECT
 
-        award_xp(request.user, activity_type=f"exam_{session.section}_{session.mode}", xp_amount=xp)
+        _, txn, _ = award_xp(
+            request.user,
+            activity_type=f"exam_{session.section}_{session.mode}",
+            xp_amount=xp,
+            source_id=f"exam_session_{session.id}",
+        )
+        if txn is None:
+            xp = 0
         check_streak(request.user)
 
         # Update progress

@@ -5,6 +5,7 @@ from typing import Optional
 
 from django.contrib.auth import get_user_model
 from django.db import transaction
+from django.db.models import F
 
 from .constants import LEVEL_THRESHOLDS
 from .models import Badge, UserBadge, UserStats, XPTransaction
@@ -30,38 +31,66 @@ def get_or_create_stats(user) -> UserStats:
     return stats
 
 
+def _locked_stats(user) -> UserStats:
+    """Return the user's UserStats row locked for update (caller must be atomic).
+
+    The lock serialises concurrent awards and streak updates for one user, so the
+    duplicate check in award_xp and the streak read-modify-write cannot interleave.
+    """
+    stats, _ = UserStats.objects.select_for_update().get_or_create(user=user)
+    return stats
+
+
 @transaction.atomic
 def award_xp(
     user,
     activity_type: str,
     xp_amount: int,
     source_id: Optional[str] = None,
-) -> tuple[UserStats, XPTransaction, list[UserBadge]]:
-    """Award XP to a user.
+) -> tuple[UserStats, Optional[XPTransaction], list[UserBadge]]:
+    """Award XP to a user, at most once per (activity_type, source_id).
 
-    Creates an XPTransaction, updates UserStats (total_xp, level),
-    and checks for newly earned badges.
+    source_id is the idempotency key: it must identify the real-world event the
+    XP is for (e.g. a quiz session, or a card review on a given day). If the user
+    already has a transaction with the same activity_type and source_id, nothing
+    is awarded. Awards without a source_id are never de-duplicated.
 
-    Returns (updated_stats, transaction, list_of_new_badges).
+    Returns (stats, transaction, new_badges). transaction is None and new_badges
+    is empty when the award was a duplicate.
     """
-    txn = XPTransaction.objects.create(
-        user=user,
-        activity_type=activity_type,
-        xp_amount=xp_amount,
-        source_id=source_id,
-    )
+    stats = _locked_stats(user)
 
-    stats = get_or_create_stats(user)
-    stats.total_xp += xp_amount
-    _, level_idx = get_level(stats.total_xp)
-    stats.level = level_idx
-    stats.save()
+    if source_id is None:
+        txn = XPTransaction.objects.create(
+            user=user,
+            activity_type=activity_type,
+            xp_amount=xp_amount,
+        )
+    else:
+        # get_or_create also absorbs an IntegrityError from the unique constraint.
+        txn, created = XPTransaction.objects.get_or_create(
+            user=user,
+            activity_type=activity_type,
+            source_id=source_id,
+            defaults={"xp_amount": xp_amount},
+        )
+        if not created:
+            return stats, None, []
+
+    UserStats.objects.filter(pk=stats.pk).update(total_xp=F("total_xp") + xp_amount)
+    stats.refresh_from_db(fields=["total_xp"])
+    _, stats.level = get_level(stats.total_xp)
+    stats.save(update_fields=["level"])
 
     new_badges = check_badges(user)
 
     return stats, txn, new_badges
 
 
+_STREAK_FIELDS = ["current_streak", "longest_streak", "last_active_date"]
+
+
+@transaction.atomic
 def check_streak(user, today: Optional[date] = None) -> UserStats:
     """Update the user's streak based on last_active_date.
 
@@ -69,18 +98,20 @@ def check_streak(user, today: Optional[date] = None) -> UserStats:
     If today is the day after last_active_date, increment streak.
     If today == last_active_date, do nothing.
     If there is a gap of 2+ days, reset streak to 1.
+
+    Only the streak fields are written, so a concurrent award_xp is never undone.
     """
     if today is None:
         today = date.today()
 
-    stats = get_or_create_stats(user)
+    stats = _locked_stats(user)
 
     if stats.last_active_date is None:
         # First ever activity
         stats.current_streak = 1
         stats.longest_streak = 1
         stats.last_active_date = today
-        stats.save()
+        stats.save(update_fields=_STREAK_FIELDS)
         return stats
 
     if stats.last_active_date == today:
@@ -98,7 +129,7 @@ def check_streak(user, today: Optional[date] = None) -> UserStats:
 
     stats.longest_streak = max(stats.longest_streak, stats.current_streak)
     stats.last_active_date = today
-    stats.save()
+    stats.save(update_fields=_STREAK_FIELDS)
     return stats
 
 

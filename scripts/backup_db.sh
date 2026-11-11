@@ -54,8 +54,9 @@ docker compose exec -T postgres \
   </dev/null | gzip > "$PARTIAL"
 
 gzip -t "$PARTIAL"
-if ! gunzip -c "$PARTIAL" | head -c1 | grep -q .; then
-  log "ERROR: dump is empty" >&2
+# tail reads all input (no SIGPIPE under pipefail); pg_dump ends with this trailer.
+if ! gunzip -c "$PARTIAL" | tail -n 5 | grep -q 'PostgreSQL database dump complete'; then
+  log "ERROR: dump is empty or truncated (no completion trailer)" >&2
   exit 1
 fi
 mv "$PARTIAL" "$OUT"

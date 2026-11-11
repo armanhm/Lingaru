@@ -34,8 +34,9 @@ jobs:
     #               while the old app containers are still serving
     #   5. restart  `compose up -d` swaps app containers onto the new code
     #   6. smoke    health check
-    #   7. rollback (only on failure) code, plus DB restore iff this deploy
-    #               actually applied migrations
+    #   7. rollback (only on failure) code back to the previous SHA; the DB
+    #               dump is kept and the manual restore command is printed
+    #               (automatic restore only if opted in, see the step comment)
     steps:
       - name: Configure SSH
         env:
@@ -190,6 +191,11 @@ jobs:
           main() {
             DEPLOY_PATH=$1 PREV_SHA=$2 BACKUP_FILE=$3 PENDING_BEFORE=$4 RESTORE=$5
             cd "$DEPLOY_PATH" || return 1
+            # A step timeout kills only the ssh client; make sure a one-off
+            # migrate container from this deploy is not still running.
+            docker ps -q --filter label=com.docker.compose.oneoff=True \
+              --filter "label=com.docker.compose.project.working_dir=$PWD" </dev/null \
+              | xargs -r docker rm -f </dev/null || true
             pending_now() {
               local plan
               plan=$(docker compose run --rm -T django python manage.py showmigrations --plan </dev/null) || return 1
@@ -221,7 +227,7 @@ jobs:
             elif [ "$APPLIED" != no ]; then
               echo "::warning::Migrations were (or may have been) applied. Code is rolled back; the DB was NOT restored."
               echo "::warning::Old code runs on the new schema (safe under expand/contract). To restore the pre-deploy data, on the server:"
-              echo "::warning::  cd $DEPLOY_PATH && docker compose stop django celery celery-beat bot nginx && scripts/restore_db.sh $BACKUP_FILE && docker compose up -d"
+              echo "::warning::  cd $DEPLOY_PATH && docker compose stop django celery celery-beat bot nginx && git checkout origin/main -- scripts/backup_db.sh scripts/restore_db.sh && scripts/restore_db.sh $BACKUP_FILE && docker compose up -d"
               echo "::warning::Writes made since the backup are lost on restore; restore saves current data to a lingaru-prerestore-* dump first."
             fi
 

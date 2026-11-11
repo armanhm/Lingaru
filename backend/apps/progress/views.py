@@ -1,4 +1,4 @@
-from django.db.models import Q
+from django.core.cache import cache
 from django.utils import timezone
 from rest_framework import generics, permissions, status
 from rest_framework.response import Response
@@ -211,11 +211,11 @@ class ConjugationCheckView(APIView):
 
         # Look up the correct conjugation from Question records (type=conjugation)
         # Prompt format: "Conjugate {verb} ({tense}, {subject})"
+        # Exact match: substring matching made "voir" resolve avoir/pouvoir/etc.
         question = Question.objects.filter(
-            Q(type="conjugation")
-            & Q(prompt__icontains=verb)
-            & Q(prompt__icontains=tense)
-            & Q(prompt__icontains=subject)
+            type="conjugation",
+            language=request.user.target_language,
+            prompt=f"Conjugate {verb} ({tense}, {subject})",
         ).first()
 
         if question is None:
@@ -262,7 +262,13 @@ class ConjugationListView(APIView):
     permission_classes = (permissions.IsAuthenticated,)
 
     def get(self, request):
-        questions = Question.objects.filter(type="conjugation")
+        language = request.user.target_language
+        cache_key = f"conjugation_verbs:{language}"
+        cached = cache.get(cache_key)
+        if cached is not None:
+            return Response(cached)
+
+        questions = Question.objects.filter(type="conjugation", language=language)
 
         # Extract unique verbs from prompts (format: "Conjugate {verb} (...)")
         verbs = set()
@@ -276,9 +282,10 @@ class ConjugationListView(APIView):
                 verbs.add(verb_part)
                 tenses.add(tense_part)
 
-        return Response(
-            {
-                "verbs": sorted(verbs),
-                "tenses": sorted(tenses),
-            }
-        )
+        data = {
+            "verbs": sorted(verbs),
+            "tenses": sorted(tenses),
+        }
+        # Seed data is static, so a long TTL is safe.
+        cache.set(cache_key, data, 60 * 60)
+        return Response(data)

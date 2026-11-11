@@ -8,6 +8,15 @@ from apps.progress.models import MistakeEntry
 User = get_user_model()
 
 
+@pytest.fixture(autouse=True)
+def _clear_cache():
+    from django.core.cache import cache
+
+    cache.clear()
+    yield
+    cache.clear()
+
+
 @pytest.fixture
 def api_client():
     return APIClient()
@@ -115,3 +124,84 @@ class TestConjugationList:
         assert "manger" in response.data["verbs"]
         assert "avoir" in response.data["verbs"]
         assert "present" in response.data["tenses"]
+
+
+@pytest.fixture
+def colliding_questions(conjugation_questions):
+    lesson = conjugation_questions[0].lesson
+    rows = [
+        ("Conjugate avoir (present, tu)", "as", "fr"),
+        ("Conjugate voir (present, tu)", "vois", "fr"),
+        ("Conjugate prendre (present, je)", "prends", "fr"),
+        ("Conjugate comprendre (present, je)", "comprends", "fr"),
+        ("Conjugate manger (futur_simple, tu)", "mangeras", "fr"),
+        ("Conjugate manger (present, tu)", "manges", "fr"),
+        ("Conjugate voir (present, tu)", "EN-voir", "en"),
+    ]
+    for prompt, answer, lang in rows:
+        Question.objects.create(
+            lesson=lesson,
+            type="conjugation",
+            prompt=prompt,
+            correct_answer=answer,
+            wrong_answers=[],
+            explanation="",
+            difficulty=2,
+            language=lang,
+        )
+
+
+@pytest.mark.django_db
+class TestConjugationExactMatch:
+    def _check(self, client, verb, tense, subject, answer):
+        return client.post(
+            "/api/progress/conjugation/check/",
+            {"verb": verb, "tense": tense, "subject": subject, "answer": answer},
+            format="json",
+        )
+
+    def test_voir_does_not_resolve_avoir(self, authenticated_client, colliding_questions, user):
+        response = self._check(authenticated_client, "voir", "present", "tu", "vois")
+        assert response.status_code == 200
+        assert response.data["is_correct"] is True
+        assert MistakeEntry.objects.filter(user=user).count() == 0
+
+    def test_prendre_does_not_resolve_comprendre(self, authenticated_client, colliding_questions):
+        response = self._check(authenticated_client, "prendre", "present", "je", "prends")
+        assert response.data["is_correct"] is True
+        assert response.data["correct_answer"] == "prends"
+
+    def test_tu_futur_simple_does_not_match_other_tense(
+        self, authenticated_client, colliding_questions
+    ):
+        response = self._check(authenticated_client, "manger", "present", "tu", "manges")
+        assert response.data["is_correct"] is True
+
+    def test_partial_verb_is_404(self, authenticated_client, colliding_questions):
+        response = self._check(authenticated_client, "oir", "present", "tu", "x")
+        assert response.status_code == 404
+
+    def test_lookup_filters_by_user_language(self, authenticated_client, colliding_questions, user):
+        user.target_language = "en"
+        user.save()
+        response = self._check(authenticated_client, "voir", "present", "tu", "EN-voir")
+        assert response.status_code == 200
+        assert response.data["is_correct"] is True
+
+
+@pytest.mark.django_db
+class TestConjugationListCached:
+    def test_second_call_hits_cache(
+        self, authenticated_client, conjugation_questions, django_assert_num_queries
+    ):
+        authenticated_client.get("/api/progress/conjugation/verbs/")
+        with django_assert_num_queries(0):
+            response = authenticated_client.get("/api/progress/conjugation/verbs/")
+        assert "manger" in response.data["verbs"]
+
+    def test_list_is_per_language(self, authenticated_client, conjugation_questions, user):
+        authenticated_client.get("/api/progress/conjugation/verbs/")
+        user.target_language = "en"
+        user.save()
+        response = authenticated_client.get("/api/progress/conjugation/verbs/")
+        assert response.data["verbs"] == []

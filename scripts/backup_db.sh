@@ -51,10 +51,10 @@ log "starting backup -> $OUT"
 # dump portable to a fresh DB on restore.
 docker compose exec -T postgres \
   sh -c 'pg_dump --no-owner --clean --if-exists --username="$POSTGRES_USER" "$POSTGRES_DB"' \
-  | gzip > "$PARTIAL"
+  </dev/null | gzip > "$PARTIAL"
 
 gzip -t "$PARTIAL"
-if [ ! -s "$PARTIAL" ]; then
+if ! gunzip -c "$PARTIAL" | head -c1 | grep -q .; then
   log "ERROR: dump is empty" >&2
   exit 1
 fi

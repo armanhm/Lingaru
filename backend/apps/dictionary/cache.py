@@ -5,7 +5,7 @@ Implements the policy from the design spec:
 - on miss, call llm_fn() and persist; raise on None / failed parse
 - never overwrite a seeded row's cefr_level from a runtime call
 - accept the rare duplicate LLM call from concurrent misses (the
-  unique (kind, key) constraint makes the second writer lose cleanly).
+  unique (kind, language, key) constraint makes the second writer lose cleanly).
 """
 
 from typing import Callable
@@ -25,12 +25,16 @@ def cached_or_call(
     key: str,
     llm_fn: Callable[[], dict],
     default_cefr: str | None = None,
+    *,
+    language: str,
 ) -> dict:
     """Return cached result, or call llm_fn and persist on miss.
 
     Args:
         kind: DictionaryCache.LOOKUP or .CONJUGATION
         key: normalized lemma (lookup) or infinitive (conjugation)
+        language: content language of the entry (e.g. the user's target_language);
+            the same key can exist once per language.
         llm_fn: zero-arg callable returning {"result": dict | None, "provider": str}.
             Two equivalent failure modes are supported:
               1. Raise any exception (network error, timeout, etc.).
@@ -47,7 +51,7 @@ def cached_or_call(
          "cefr_level": ..., "source": ...}
     """
     try:
-        row = DictionaryCache.objects.get(kind=kind, key=key)
+        row = DictionaryCache.objects.get(kind=kind, language=language, key=key)
         return {
             "result": row.result,
             "provider": "cache",
@@ -59,13 +63,14 @@ def cached_or_call(
 
     fresh = llm_fn()
     if not fresh or fresh.get("result") is None:
-        raise CacheMissResult(f"LLM returned no usable result for {kind}:{key}")
+        raise CacheMissResult(f"LLM returned no usable result for {kind}:{language}:{key}")
 
     # get_or_create (not update_or_create): if a concurrent winner already
     # wrote, return their row unchanged — we do not overwrite an existing
     # row's cefr_level / source from a runtime path.
     row, created = DictionaryCache.objects.get_or_create(
         kind=kind,
+        language=language,
         key=key,
         defaults={
             "result": fresh["result"],

@@ -7,14 +7,32 @@ on:
       - "frontend/**"
       - ".github/workflows/visual-regression.yml"
   workflow_dispatch:
+    inputs:
+      update_snapshots:
+        description: >-
+          Regenerate the baseline screenshots instead of comparing. The new
+          PNGs are uploaded as the "updated-baselines" artifact; download it
+          and commit the files into frontend/e2e/__screenshots__/.
+        type: boolean
+        default: false
 
 # Visual regression is intentionally PR-only. Failures are usually
 # intentional UI changes that need a baseline update; we don't want
 # them blocking deploys to main.
+#
+# Screenshots are rendered inside the official Playwright image so fonts,
+# browser build and OS libraries are identical on every run and match the
+# committed baselines, independent of what `ubuntu-*` runners ship.
+# Keep the image tag equal to the @playwright/test version in
+# frontend/package-lock.json (the first step enforces this).
 jobs:
   playwright:
     name: Playwright snapshots
     runs-on: ubuntu-24.04
+    container:
+      image: mcr.microsoft.com/playwright:v1.59.1-noble
+    env:
+      PLAYWRIGHT_IMAGE_VERSION: "1.59.1"
     defaults:
       run:
         working-directory: frontend
@@ -22,24 +40,35 @@ jobs:
     steps:
       - uses: actions/checkout@v7
 
-      - name: Set up Node
-        uses: actions/setup-node@v7
-        with:
-          node-version: "20"
-          cache: npm
-          cache-dependency-path: frontend/package-lock.json
+      - name: Check Playwright image matches the locked version
+        run: |
+          locked=$(node -p "require('./package-lock.json').packages['node_modules/@playwright/test'].version")
+          if [ "$locked" != "$PLAYWRIGHT_IMAGE_VERSION" ]; then
+            echo "::error::@playwright/test is $locked but the container image is $PLAYWRIGHT_IMAGE_VERSION; bump both together."
+            exit 1
+          fi
 
       - name: Install dependencies
-        run: npm ci --legacy-peer-deps
-
-      - name: Install Playwright browsers
-        run: npx playwright install --with-deps chromium
+        run: npm ci
 
       - name: Build production bundle
         run: npm run build
 
       - name: Run visual tests
+        if: ${{ !inputs.update_snapshots }}
         run: npm run test:visual
+
+      - name: Regenerate baselines
+        if: ${{ inputs.update_snapshots }}
+        run: npm run test:visual:update
+
+      - name: Upload regenerated baselines
+        if: ${{ inputs.update_snapshots }}
+        uses: actions/upload-artifact@v4
+        with:
+          name: updated-baselines
+          path: frontend/e2e/__screenshots__/
+          retention-days: 14
 
       # Upload the HTML report + any diff PNGs on failure so the PR
       # author can inspect what changed.

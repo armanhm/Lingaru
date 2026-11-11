@@ -1,5 +1,6 @@
 services:
   postgres:
+    restart: unless-stopped
     image: postgres:16-alpine
     volumes:
       - postgres_data:/var/lib/postgresql/data
@@ -15,6 +16,7 @@ services:
       retries: 5
 
   redis:
+    restart: unless-stopped
     image: redis:7-alpine
     volumes:
       - redis_data:/data
@@ -25,6 +27,7 @@ services:
       retries: 5
 
   django:
+    restart: unless-stopped
     build: &backend-build
       context: .
       dockerfile: backend/Dockerfile
@@ -39,12 +42,15 @@ services:
         condition: service_healthy
       redis:
         condition: service_healthy
+    # Migrations are NOT run at container start: the deploy runs them once
+    # as a one-off (docker compose run --rm django python manage.py migrate)
+    # before app containers are swapped. On a fresh host run that by hand.
     command: >
-      sh -c "python manage.py migrate &&
-             python manage.py collectstatic --noinput &&
+      sh -c "python manage.py collectstatic --noinput &&
              gunicorn config.wsgi:application --bind 0.0.0.0:8000 --workers 3"
 
   celery:
+    restart: unless-stopped
     build: *backend-build
     env_file: .env
     environment:
@@ -57,6 +63,7 @@ services:
     command: celery -A config worker -l info
 
   celery-beat:
+    restart: unless-stopped
     build: *backend-build
     env_file: .env
     environment:
@@ -69,6 +76,7 @@ services:
     command: celery -A config beat -l info
 
   bot:
+    restart: unless-stopped
     build: *backend-build
     env_file: .env
     environment:
@@ -79,9 +87,9 @@ services:
       redis:
         condition: service_healthy
     command: python manage.py run_bot
-    restart: unless-stopped
 
   nginx:
+    restart: unless-stopped
     build:
       # Build from the repo root so the Dockerfile can copy ./frontend
       # in for the multi-stage build.

@@ -1,5 +1,7 @@
 from django.db import models
 
+from apps.users.constants import LANGUAGE_CHOICES
+
 
 class DictionaryCache(models.Model):
     """Cache LLM-generated dictionary/conjugation results for instant repeat lookups."""
@@ -22,6 +24,12 @@ class DictionaryCache(models.Model):
     ]
 
     kind = models.CharField(max_length=12, choices=KIND_CHOICES)
+    language = models.CharField(
+        max_length=8,
+        choices=LANGUAGE_CHOICES,
+        default="fr",
+        db_index=True,
+    )
     key = models.CharField(max_length=120, db_index=True)
     result = models.JSONField()
     cefr_level = models.CharField(
@@ -32,7 +40,7 @@ class DictionaryCache(models.Model):
     updated_at = models.DateTimeField(auto_now=True)
 
     class Meta:
-        unique_together = ("kind", "key")
+        unique_together = ("kind", "language", "key")
 
     def __str__(self):
-        return f"{self.kind}:{self.key}"
+        return f"{self.kind}:{self.language}:{self.key}"

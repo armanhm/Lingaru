@@ -103,6 +103,7 @@ class DictionaryLookupView(APIView):
             payload = cached_or_call(
                 kind=DictionaryCache.LOOKUP,
                 key=word,
+                language=request.user.target_language,
                 llm_fn=lookup_llm,
                 default_cefr=getattr(request.user, "target_level", None),
             )
@@ -154,6 +155,7 @@ class VerbConjugatorView(APIView):
             payload = cached_or_call(
                 kind=DictionaryCache.CONJUGATION,
                 key=verb,
+                language=request.user.target_language,
                 llm_fn=conjugate_llm,
                 default_cefr=getattr(request.user, "target_level", None),
             )

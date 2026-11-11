@@ -100,7 +100,7 @@ class Command(BaseCommand):
         # into one. We update the set as we create rows so re-seeds
         # within the same run stay consistent.
         existing_keys: set[str] = set(
-            DictionaryCache.objects.filter(kind=DictionaryCache.LOOKUP).values_list(
+            DictionaryCache.objects.filter(kind=DictionaryCache.LOOKUP, language="fr").values_list(
                 "key", flat=True
             )
         )
@@ -127,6 +127,7 @@ class Command(BaseCommand):
 
                 DictionaryCache.objects.create(
                     kind=DictionaryCache.LOOKUP,
+                    language="fr",
                     key=lemma,
                     result=parsed,
                     cefr_level=cefr,

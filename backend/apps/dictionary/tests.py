@@ -62,7 +62,9 @@ def test_cache_hit_does_not_call_llm():
         calls.append(1)
         return {"result": {"word": "bonjour-fresh"}, "provider": "gemini"}
 
-    out = cached_or_call(DictionaryCache.LOOKUP, "bonjour", llm_fn, default_cefr="B2")
+    out = cached_or_call(
+        DictionaryCache.LOOKUP, "bonjour", llm_fn, default_cefr="B2", language="fr"
+    )
 
     assert calls == [], "LLM must not be called on cache hit"
     assert out["provider"] == "cache"
@@ -78,7 +80,9 @@ def test_cache_miss_writes_back_and_tags_runtime():
     def llm_fn():
         return {"result": {"word": "appartement"}, "provider": "gemini"}
 
-    out = cached_or_call(DictionaryCache.LOOKUP, "appartement", llm_fn, default_cefr="B1")
+    out = cached_or_call(
+        DictionaryCache.LOOKUP, "appartement", llm_fn, default_cefr="B1", language="fr"
+    )
 
     assert out["provider"] == "gemini"
     assert out["result"] == {"word": "appartement"}
@@ -97,7 +101,9 @@ def test_none_result_raises_and_does_not_cache():
         return {"result": None, "provider": "gemini"}
 
     with pytest.raises(CacheMissResult):
-        cached_or_call(DictionaryCache.LOOKUP, "weirdword", llm_fn, default_cefr="B2")
+        cached_or_call(
+            DictionaryCache.LOOKUP, "weirdword", llm_fn, default_cefr="B2", language="fr"
+        )
 
     assert DictionaryCache.objects.filter(key="weirdword").count() == 0
 
@@ -116,7 +122,7 @@ def test_runtime_call_does_not_overwrite_seeded_cefr():
     def llm_fn():
         return {"result": {"word": "oui-new"}, "provider": "gemini"}
 
-    out = cached_or_call(DictionaryCache.LOOKUP, "oui", llm_fn, default_cefr="C1")
+    out = cached_or_call(DictionaryCache.LOOKUP, "oui", llm_fn, default_cefr="C1", language="fr")
 
     # Hit returns the seeded row; the runtime caller's default_cefr is ignored.
     assert out["cefr_level"] == "A1"
@@ -147,3 +153,81 @@ def test_lookup_view_cache_hit_returns_seeded_row(authenticated_client):
     assert response.data["provider"] == "cache"
     assert response.data["cefr_level"] == "A1"
     assert response.data["source"] == DictionaryCache.SEED
+
+
+# ---- language scoping (#73) ---------------------------------------------------
+
+
+@pytest.mark.django_db
+def test_same_word_cached_separately_per_language():
+    DictionaryCache.objects.create(
+        kind=DictionaryCache.LOOKUP,
+        language="fr",
+        key="pain",
+        result={"word": "pain", "definitions": [{"en": "bread"}]},
+        source=DictionaryCache.SEED,
+    )
+
+    def llm_fn():
+        return {"result": {"word": "pain", "definitions": [{"en": "ache"}]}, "provider": "gemini"}
+
+    out = cached_or_call(DictionaryCache.LOOKUP, "pain", llm_fn, language="en")
+
+    assert out["provider"] == "gemini", "EN lookup must not be served the FR row"
+    assert out["result"]["definitions"] == [{"en": "ache"}]
+    assert DictionaryCache.objects.filter(kind=DictionaryCache.LOOKUP, key="pain").count() == 2
+
+    fr = cached_or_call(DictionaryCache.LOOKUP, "pain", llm_fn, language="fr")
+    assert fr["provider"] == "cache"
+    assert fr["result"]["definitions"] == [{"en": "bread"}]
+
+
+@pytest.mark.django_db
+def test_lookup_view_scopes_cache_by_user_language(authenticated_client, create_user):
+    DictionaryCache.objects.create(
+        kind=DictionaryCache.LOOKUP,
+        language="fr",
+        key="chat",
+        result={"word": "chat", "definitions": [{"en": "cat"}]},
+        source=DictionaryCache.SEED,
+    )
+    create_user.target_language = "en"
+    create_user.save()
+
+    with patch("apps.dictionary.views.create_llm_router") as mock_router:
+        mock_router.return_value.generate.return_value = type(
+            "R", (), {"content": '{"word": "chat", "definitions": []}', "provider": "gemini"}
+        )()
+        response = authenticated_client.post(
+            "/api/dictionary/lookup/", {"word": "chat"}, format="json"
+        )
+
+    assert response.status_code == 200, response.data
+    assert mock_router.called is True
+    assert response.data["provider"] == "gemini"
+    row = DictionaryCache.objects.get(kind=DictionaryCache.LOOKUP, key="chat", language="en")
+    assert row.result == {"word": "chat", "definitions": []}
+
+
+@pytest.mark.django_db
+def test_seed_command_writes_language_fr(tmp_path):
+    from django.core.management import call_command
+
+    csv_path = tmp_path / "seed.csv"
+    csv_path.write_text("rank,lemma,part_of_speech\n1,bonjour,interj\n", encoding="utf-8")
+    DictionaryCache.objects.create(
+        kind=DictionaryCache.LOOKUP,
+        language="en",
+        key="bonjour",
+        result={"word": "bonjour-en"},
+        source=DictionaryCache.RUNTIME,
+    )
+
+    with patch("apps.dictionary.management.commands.seed_dictionary_fr.create_llm_router") as m:
+        m.return_value.generate.return_value = type(
+            "R", (), {"content": '{"word": "bonjour"}', "provider": "gemini"}
+        )()
+        call_command("seed_dictionary_fr", path=str(csv_path))
+
+    row = DictionaryCache.objects.get(kind=DictionaryCache.LOOKUP, key="bonjour", language="fr")
+    assert row.source == DictionaryCache.SEED

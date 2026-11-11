@@ -2,6 +2,7 @@ import { useState, useEffect, useCallback, useRef } from "react";
 import { Link } from "react-router-dom";
 import { getRandomVocabulary } from "../api/content";
 import { submitMiniGameScore } from "../api/gamification";
+import useScoreSubmitErrorToast from "../hooks/useScoreSubmitErrorToast";
 import { useCountUp } from "../hooks/useAnimations";
 import { useAuth } from "../contexts/AuthContext";
 
@@ -84,6 +85,7 @@ export default function MatchPairs() {
   const PAIR_COUNT = user?.preferences?.match_pairs_count ?? DEFAULT_PAIR_COUNT;
   const PREVIEW_SECONDS = user?.preferences?.match_pairs_preview ?? DEFAULT_PREVIEW;
 
+  const notifyScoreError = useScoreSubmitErrorToast();
   const [phase, setPhase] = useState("loading"); // loading | preview | playing | done
   const [cards, setCards] = useState([]);
   const [flippedIds, setFlippedIds] = useState([]); // currently flipped (max 2)
@@ -190,8 +192,8 @@ export default function MatchPairs() {
     const finalScore = PAIR_COUNT + bonusMoves;
     submitMiniGameScore("match_pairs", finalScore, PAIR_COUNT * 2)
       .then((res) => setXpEarned(res.data.xp_earned))
-      .catch(() => {});
-  }, [matchCount, phase, moves]);
+      .catch(notifyScoreError);
+  }, [matchCount, phase, moves, notifyScoreError]);
 
   // Keyboard: Escape to go back
   useEffect(() => {

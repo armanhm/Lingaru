@@ -2,6 +2,7 @@ import { useState, useEffect, useCallback, useRef } from "react";
 import { Link } from "react-router-dom";
 import { getRandomVocabulary } from "../api/content";
 import { submitMiniGameScore } from "../api/gamification";
+import useScoreSubmitErrorToast from "../hooks/useScoreSubmitErrorToast";
 import AudioPlayButton from "../components/AudioPlayButton";
 import { useCountUp, staggerDelay } from "../hooks/useAnimations";
 import { useAuth } from "../contexts/AuthContext";
@@ -95,6 +96,7 @@ export default function WordScramble() {
   const ROUNDS = user?.preferences?.word_scramble_rounds ?? DEFAULT_ROUNDS;
   const TIME_PER_ROUND = user?.preferences?.word_scramble_timer ?? DEFAULT_TIMER;
 
+  const notifyScoreError = useScoreSubmitErrorToast();
   const [phase, setPhase] = useState("loading"); // loading | playing | done
   const [words, setWords] = useState([]);
   const [round, setRound] = useState(0);
@@ -262,9 +264,9 @@ export default function WordScramble() {
       setPhase("done");
       submitMiniGameScore("word_scramble", score, words.length)
         .then((res) => setXpEarned(res.data.xp_earned))
-        .catch(() => {});
+        .catch(notifyScoreError);
     }
-  }, [round, words.length, score]);
+  }, [round, words.length, score, notifyScoreError]);
 
   // Skip word
   const handleSkip = () => {

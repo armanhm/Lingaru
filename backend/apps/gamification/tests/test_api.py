@@ -132,3 +132,36 @@ class TestHistoryEndpoint:
         assert resp.status_code == 200
         data = resp.json()
         assert len(data["results"]) == 3
+
+
+# Every game id the frontend passes to submitMiniGameScore (frontend/src/pages/*).
+FRONTEND_GAME_IDS = [
+    "word_scramble",
+    "match_pairs",
+    "gender_snap",
+    "speed_round",
+    "missing_letter",
+    "listening_challenge",
+]
+
+
+@pytest.mark.django_db
+class TestMiniGameScore:
+    @pytest.mark.parametrize("game", FRONTEND_GAME_IDS)
+    def test_frontend_game_awards_xp(self, auth_client, user, game):
+        resp = auth_client.post(
+            "/api/gamification/mini-game/score/",
+            {"game": game, "score": 5, "total": 10},
+            format="json",
+        )
+        assert resp.status_code == 200
+        assert resp.data["xp_earned"] == 10
+        assert XPTransaction.objects.filter(user=user, activity_type=f"mini_game_{game}").exists()
+
+    def test_unknown_game_rejected(self, auth_client):
+        resp = auth_client.post(
+            "/api/gamification/mini-game/score/",
+            {"game": "nope", "score": 5, "total": 10},
+            format="json",
+        )
+        assert resp.status_code == 400

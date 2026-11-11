@@ -10,6 +10,7 @@ the view; they don't need this path.
 
 import json
 import logging
+import math
 import re
 
 from celery import shared_task
@@ -17,7 +18,7 @@ from django.utils import timezone
 
 from apps.exam_prep.models import ExamResponse
 from services.llm.factory import create_llm_router
-from services.llm.prompts import SYSTEM_PROMPTS
+from services.llm.prompts import get_system_prompt
 
 logger = logging.getLogger(__name__)
 
@@ -41,6 +42,28 @@ def _parse_grading_json(text: str) -> dict | None:
             except json.JSONDecodeError:
                 pass
     return None
+
+
+def _validated_score(grading, max_score: float) -> tuple[float, float]:
+    """Return (score, max_score) with score coerced to float and clamped.
+
+    The row's own max_score is authoritative (the session total was built
+    from it), so an LLM-supplied max_score is ignored. Raises ValueError on
+    a non-dict payload or a missing/non-numeric/non-finite score so the
+    caller's retry / GRADING_FAILED path handles it.
+    """
+    if not isinstance(grading, dict):
+        raise ValueError("LLM grading payload is not an object")
+    raw = grading.get("score")
+    if raw is None or isinstance(raw, bool):
+        raise ValueError(f"LLM grading has invalid score: {raw!r}")
+    try:
+        score = float(raw)
+    except (TypeError, ValueError):
+        raise ValueError(f"LLM grading has non-numeric score: {raw!r}") from None
+    if not math.isfinite(score):
+        raise ValueError(f"LLM grading has non-finite score: {raw!r}")
+    return min(max(score, 0.0), float(max_score)), float(max_score)
 
 
 @shared_task(
@@ -80,8 +103,8 @@ def grade_response(self, response_id: int) -> dict:
         return {"error": "section_not_graded", "section": section}
 
     prompt_key = "exam_ee_grading" if section == "EE" else "exam_eo_grading"
-    system_prompt = SYSTEM_PROMPTS.get(prompt_key, "")
     exercise = response.exercise
+    system_prompt = get_system_prompt(exercise.language, prompt_key)
     task_prompt = exercise.content.get("prompt_fr", exercise.content.get("prompt_en", ""))
     rubric = exercise.content.get("rubric", "")
     user_msg = (
@@ -105,6 +128,8 @@ def grade_response(self, response_id: int) -> dict:
         grading = _parse_grading_json(llm_result.content)
         if grading is None:
             raise ValueError("LLM returned unparseable JSON")
+        ai_score, ai_max = _validated_score(grading, response.max_score)
+        grading["score"], grading["max_score"] = ai_score, ai_max
     except Exception as exc:
         if self.request.retries >= self.max_retries:
             response.grading_status = ExamResponse.GRADING_FAILED
@@ -118,8 +143,6 @@ def grade_response(self, response_id: int) -> dict:
         # Not the final retry: let Celery's autoretry kick in.
         raise
 
-    ai_score = grading.get("score", 0)
-    ai_max = grading.get("max_score", 20)
     response.score = ai_score
     response.max_score = ai_max
     response.ai_feedback = json.dumps(grading, ensure_ascii=False)

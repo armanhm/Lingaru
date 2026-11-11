@@ -93,7 +93,14 @@ class MiniGameScoreView(APIView):
 
     permission_classes = (permissions.IsAuthenticated,)
 
-    VALID_GAMES = {"word_scramble", "match_pairs", "gender_snap", "speed_round", "missing_letter"}
+    VALID_GAMES = {
+        "word_scramble",
+        "match_pairs",
+        "gender_snap",
+        "speed_round",
+        "missing_letter",
+        "listening_challenge",
+    }
     XP_PER_CORRECT = 2
 
     def post(self, request):

@@ -2,6 +2,7 @@ import { useState, useEffect, useCallback, useRef } from "react";
 import { Link } from "react-router-dom";
 import { getRandomVocabulary } from "../api/content";
 import { submitMiniGameScore } from "../api/gamification";
+import useScoreSubmitErrorToast from "../hooks/useScoreSubmitErrorToast";
 import { useCountUp, staggerDelay } from "../hooks/useAnimations";
 import { useAuth } from "../contexts/AuthContext";
 
@@ -49,6 +50,7 @@ export default function SpeedRound() {
   const TOTAL_QUESTIONS = user?.preferences?.speed_round_questions ?? DEFAULT_QUESTIONS;
   const TIME_LIMIT = user?.preferences?.speed_round_timer ?? DEFAULT_TIMER;
 
+  const notifyScoreError = useScoreSubmitErrorToast();
   const [phase, setPhase] = useState("loading"); // loading | countdown | playing | done
   const [questions, setQuestions] = useState([]);
   const [current, setCurrent] = useState(0);
@@ -131,7 +133,7 @@ export default function SpeedRound() {
             setPhase("done");
             submitMiniGameScore("speed_round", score, TOTAL_QUESTIONS)
               .then((res) => setXpEarned(res.data.xp_earned))
-              .catch(() => {});
+              .catch(notifyScoreError);
           }
           return 0;
         }
@@ -139,7 +141,7 @@ export default function SpeedRound() {
       });
     }, 1000);
     return () => clearInterval(timerRef.current);
-  }, [phase]);
+  }, [phase, notifyScoreError]);
 
   const handleAnswer = useCallback((userSaidTrue) => {
     if (phase !== "playing" || flash) return;
@@ -161,10 +163,10 @@ export default function SpeedRound() {
         const finalScore = correct ? score + 1 : score;
         submitMiniGameScore("speed_round", finalScore, TOTAL_QUESTIONS)
           .then((res) => setXpEarned(res.data.xp_earned))
-          .catch(() => {});
+          .catch(notifyScoreError);
       }
     }, 500);
-  }, [phase, flash, questions, current, score]);
+  }, [phase, flash, questions, current, score, notifyScoreError]);
 
   // Keyboard: left = False, right = True, or F/T keys
   useEffect(() => {

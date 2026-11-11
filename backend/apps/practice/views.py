@@ -197,9 +197,18 @@ class QuizCompleteView(APIView):
             )
 
         correct_count = session.answers.filter(is_correct=True).count()
+        completed_at = timezone.now()
+        # Conditional update so only one of two concurrent requests completes the session.
+        claimed = QuizSession.objects.filter(pk=session.pk, completed_at__isnull=True).update(
+            score=correct_count, completed_at=completed_at
+        )
+        if claimed != 1:
+            return Response(
+                {"detail": "This quiz is already completed."},
+                status=status.HTTP_400_BAD_REQUEST,
+            )
         session.score = correct_count
-        session.completed_at = timezone.now()
-        session.save()
+        session.completed_at = completed_at
 
         # --- Gamification: award XP ---
         source = f"quiz_session_{session.id}"

@@ -28,6 +28,12 @@ updates:
         patterns: ["@sentry/*"]
       eslint:
         patterns: ["eslint*", "@eslint/*"]
+    ignore:
+      # eslint-plugin-react 7.x supports ESLint <= 9; revisit when it adds ESLint 10.
+      - dependency-name: "eslint"
+        update-types: ["version-update:semver-major"]
+      - dependency-name: "@eslint/js"
+        update-types: ["version-update:semver-major"]
 
   - package-ecosystem: github-actions
     directory: /

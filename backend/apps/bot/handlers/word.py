@@ -4,6 +4,7 @@ from asgiref.sync import sync_to_async
 from telegram import Update
 from telegram.ext import ContextTypes
 
+from apps.bot.handlers.common import HTML, esc, italic
 from apps.content.models import Vocabulary
 from services.tts.service import get_or_create_audio
 
@@ -25,20 +26,20 @@ async def word_command(update: Update, context: ContextTypes.DEFAULT_TYPE) -> No
         return
 
     parts = [
-        f"**{vocab.french}**, {vocab.english}",
+        f"<b>{esc(vocab.french)}</b>, {esc(vocab.english)}",
     ]
     if vocab.pronunciation:
-        parts.append(f"Pronunciation: {vocab.pronunciation}")
+        parts.append(f"Pronunciation: {esc(vocab.pronunciation)}")
     if vocab.part_of_speech:
-        parts.append(f"Part of speech: {vocab.part_of_speech}")
+        parts.append(f"Part of speech: {esc(vocab.part_of_speech)}")
     if vocab.gender and vocab.gender != "a":
         gender_map = {"m": "masculine", "f": "feminine", "n": "neutral"}
-        parts.append(f"Gender: {gender_map.get(vocab.gender, vocab.gender)}")
+        parts.append(f"Gender: {esc(gender_map.get(vocab.gender, vocab.gender))}")
     if vocab.example_sentence:
-        parts.append(f"\nExample: _{vocab.example_sentence}_")
+        parts.append("\nExample: " + italic(vocab.example_sentence))
 
     message = "\n".join(parts)
-    await update.message.reply_text(message, parse_mode="Markdown")
+    await update.message.reply_text(message, parse_mode=HTML)
 
     # Send audio of the French word (TTS + ORM both sync, wrap them)
     try:

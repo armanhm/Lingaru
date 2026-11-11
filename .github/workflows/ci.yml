@@ -13,12 +13,12 @@ concurrency:
 jobs:
   backend-lint:
     name: Backend lint (Ruff)
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     defaults:
       run:
         working-directory: backend
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
@@ -32,7 +32,7 @@ jobs:
 
   backend:
     name: Backend (Django)
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     permissions:
       contents: read
       pull-requests: write
@@ -40,13 +40,36 @@ jobs:
       run:
         working-directory: backend
 
+    # Prod runs Postgres; SQLite hides integer overflow, check constraints,
+    # order_by("?") and .extra() differences. test.py switches to Postgres
+    # whenever DB_HOST is set in the environment.
+    services:
+      postgres:
+        image: postgres:16
+        env:
+          POSTGRES_DB: lingaru
+          POSTGRES_USER: lingaru
+          POSTGRES_PASSWORD: lingaru
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd "pg_isready -U lingaru"
+          --health-interval 5s
+          --health-timeout 5s
+          --health-retries 10
+
     env:
       DJANGO_SETTINGS_MODULE: config.settings.test
       DJANGO_SECRET_KEY: ci-only-not-secret
       DEBUG: "True"
+      DB_NAME: lingaru
+      DB_USER: lingaru
+      DB_PASSWORD: lingaru
+      DB_HOST: localhost
+      DB_PORT: "5432"
 
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
 
       - name: Set up Python
         uses: actions/setup-python@v5
@@ -84,12 +107,12 @@ jobs:
 
   frontend-lint:
     name: Frontend lint (ESLint)
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     defaults:
       run:
         working-directory: frontend
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
       - name: Set up Node
         uses: actions/setup-node@v4
         with:
@@ -103,13 +126,13 @@ jobs:
 
   frontend:
     name: Frontend (Vite)
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     defaults:
       run:
         working-directory: frontend
 
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
 
       - name: Set up Node
         uses: actions/setup-node@v4
@@ -126,11 +149,11 @@ jobs:
 
   security-scan:
     name: Security scan (Trivy)
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     permissions:
       contents: read
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
 
       # Build the backend image so Trivy can scan the actual artifact
       # we ship, not just the requirements.txt. Skipping `--push`, this

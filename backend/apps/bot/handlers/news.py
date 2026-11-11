@@ -15,6 +15,7 @@ from asgiref.sync import sync_to_async
 from telegram import Update
 from telegram.ext import ContextTypes
 
+from apps.bot.handlers.common import HTML, esc, esc_attr, italic, reply_long
 from apps.discover.models import DiscoverCard
 
 logger = logging.getLogger(__name__)
@@ -34,41 +35,43 @@ def get_random_discover_card():
 
 
 def _format_news_card(card) -> str:
-    """Format a news-type card for Telegram (Markdown)."""
+    """Format a news-type card for Telegram (HTML; all card text is escaped)."""
     content = card.content_json or {}
-    parts = [f"*{card.title}*"]
+    parts = [f"<b>{esc(card.title)}</b>"]
 
     source_name = content.get("source_name")
     if source_name:
-        parts.append(f"_{source_name}_")
+        parts.append(italic(source_name))
 
     if content.get("article_fr"):
-        parts.append(f"\n{content['article_fr']}")
+        parts.append(f"\n{esc(content['article_fr'])}")
     if content.get("article_en"):
-        parts.append(f"\n_{content['article_en']}_")
+        parts.append("\n" + italic(content["article_en"]))
 
     # The RSS pipeline saves under `vocabulary`; older synthetic cards used
     # `key_vocabulary`. Read both so we don't break on legacy rows.
     vocab = content.get("vocabulary") or content.get("key_vocabulary") or []
     if vocab:
-        vocab_lines = [f"  • {v.get('french', '')}, {v.get('english', '')}" for v in vocab[:5]]
-        parts.append("\n*Vocabulaire:*\n" + "\n".join(vocab_lines))
+        vocab_lines = [
+            f"  • {esc(v.get('french', ''))}, {esc(v.get('english', ''))}" for v in vocab[:5]
+        ]
+        parts.append("\n<b>Vocabulaire:</b>\n" + "\n".join(vocab_lines))
 
     if card.source_url:
-        parts.append(f"\n[Lire l'article original →]({card.source_url})")
+        parts.append(f'\n<a href="{esc_attr(card.source_url)}">Lire l\'article original →</a>')
 
     return "\n".join(parts)
 
 
 def _format_trivia_card(card) -> str:
-    """Format a trivia-type card for Telegram (Markdown)."""
+    """Format a trivia-type card for Telegram (HTML; all card text is escaped)."""
     content = card.content_json or {}
-    parts = [f"*{card.title}*"]
+    parts = [f"<b>{esc(card.title)}</b>"]
 
     if content.get("fact_fr"):
-        parts.append(f"\n{content['fact_fr']}")
+        parts.append(f"\n{esc(content['fact_fr'])}")
     if content.get("fact_en"):
-        parts.append(f"\n_{content['fact_en']}_")
+        parts.append("\n" + italic(content["fact_en"]))
 
     return "\n".join(parts)
 
@@ -89,8 +92,4 @@ async def news_command(update: Update, context: ContextTypes.DEFAULT_TYPE) -> No
     else:
         text = _format_trivia_card(card)
 
-    await update.message.reply_text(
-        text,
-        parse_mode="Markdown",
-        disable_web_page_preview=False,
-    )
+    await reply_long(update.message, text, parse_mode=HTML, disable_web_page_preview=False)

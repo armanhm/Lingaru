@@ -10,6 +10,7 @@ from telegram.ext import (
     filters,
 )
 
+from apps.bot.handlers.common import HTML, esc, reply_long
 from apps.content.models import Vocabulary
 from services.stt.scoring import calculate_accuracy, generate_feedback
 from services.tts.service import get_or_create_audio
@@ -63,14 +64,14 @@ async def dictation_answer(update: Update, context: ContextTypes.DEFAULT_TYPE) -
 
     emoji = "\u2705" if is_correct else "\u274c"
     parts = [
-        f"{emoji} **Accuracy: {int(accuracy * 100)}%**",
-        f"Expected: _{expected}_",
-        f"You wrote: _{user_text}_",
+        f"{emoji} <b>Accuracy: {int(accuracy * 100)}%</b>",
+        f"Expected: <i>{esc(expected)}</i>",
+        f"You wrote: <i>{esc(user_text)}</i>",
         "",
-        feedback,
+        esc(feedback),
     ]
 
-    await update.message.reply_text("\n".join(parts), parse_mode="Markdown")
+    await reply_long(update.message, "\n".join(parts), parse_mode=HTML)
 
     # Clean up context
     context.user_data.pop("dictation_clip_id", None)

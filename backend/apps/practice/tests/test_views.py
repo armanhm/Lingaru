@@ -1,8 +1,11 @@
+from unittest.mock import patch
+
 import pytest
 from django.contrib.auth import get_user_model
 from rest_framework.test import APIClient
 
 from apps.content.models import Lesson, Question, Topic
+from apps.gamification.models import UserStats, XPTransaction
 from apps.practice.models import QuizAnswer, QuizSession
 
 User = get_user_model()
@@ -320,6 +323,52 @@ class TestQuizCompleteView:
         )
         assert response.status_code == 400
         assert "already completed" in response.data["detail"].lower()
+
+    def _perfect_session(self, client, lesson, questions):
+        session_id = client.post(
+            "/api/practice/quiz/start/", {"lesson_id": lesson.id}, format="json"
+        ).data["session_id"]
+        for q in questions:
+            client.post(
+                f"/api/practice/quiz/{session_id}/answer/",
+                {"question_id": q.id, "answer": q.correct_answer},
+                format="json",
+            )
+        return session_id
+
+    def test_double_complete_awards_once(
+        self, authenticated_client, user, sample_lesson, sample_questions
+    ):
+        session_id = self._perfect_session(authenticated_client, sample_lesson, sample_questions)
+        url = f"/api/practice/quiz/{session_id}/complete/"
+        assert authenticated_client.post(url, format="json").status_code == 200
+        assert authenticated_client.post(url, format="json").status_code == 400
+
+        txns = XPTransaction.objects.filter(user=user, source_id=f"quiz_session_{session_id}")
+        assert sorted(txns.values_list("activity_type", flat=True)) == [
+            "quiz_correct",
+            "quiz_perfect",
+        ]
+        assert UserStats.objects.get(user=user).total_xp == 3 * 5 + 25
+
+    def test_concurrent_complete_with_stale_read_awards_once(
+        self, authenticated_client, user, sample_lesson, sample_questions
+    ):
+        """Two requests that both read completed_at=None: only one may complete."""
+        session_id = self._perfect_session(authenticated_client, sample_lesson, sample_questions)
+        stale = QuizSession.objects.select_related("lesson").get(pk=session_id)
+        url = f"/api/practice/quiz/{session_id}/complete/"
+        assert authenticated_client.post(url, format="json").status_code == 200
+        first_completed_at = QuizSession.objects.get(pk=session_id).completed_at
+
+        with patch.object(QuizSession.objects, "select_related") as select_related:
+            select_related.return_value.get.return_value = stale
+            response = authenticated_client.post(url, format="json")
+
+        assert response.status_code == 400
+        assert QuizSession.objects.get(pk=session_id).completed_at == first_completed_at
+        assert XPTransaction.objects.filter(user=user).count() == 2
+        assert UserStats.objects.get(user=user).total_xp == 3 * 5 + 25
 
 
 @pytest.mark.django_db

@@ -1,3 +1,6 @@
+import hashlib
+
+from django.utils import timezone
 from rest_framework import permissions, status
 from rest_framework.response import Response
 from rest_framework.views import APIView
@@ -72,12 +75,15 @@ class PronunciationCheckView(APIView):
             feedback=feedback,
         )
 
-        # Award XP for pronunciation practice
+        # One award per phrase per day; retries of the same phrase add attempts, not XP.
+        phrase_key = hashlib.sha1(
+            expected_text.strip().lower().encode(), usedforsecurity=False
+        ).hexdigest()[:16]
         award_xp(
             request.user,
             activity_type="pronunciation",
             xp_amount=5,
-            source_id=f"pronunciation_{attempt.id}",
+            source_id=f"pronunciation_{phrase_key}_{timezone.localdate().isoformat()}",
         )
         check_streak(request.user)
 
@@ -136,12 +142,12 @@ class DictationCheckView(APIView):
         is_correct = accuracy >= 0.9
         feedback = generate_feedback(accuracy, expected, user_text)
 
-        # Award XP for dictation
+        # Award XP for dictation, once per clip per day
         award_xp(
             request.user,
             activity_type="dictation",
             xp_amount=15,
-            source_id=f"dictation_clip_{clip.id}",
+            source_id=f"dictation_clip_{clip.id}_{timezone.localdate().isoformat()}",
         )
         check_streak(request.user)
 

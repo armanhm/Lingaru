@@ -341,7 +341,14 @@ class CompleteSessionView(APIView):
         if session.total > 0 and session.score == session.total:
             xp += XP_DRILL_PERFECT_BONUS
         if xp > 0:
-            award_xp(request.user, activity_type=f"grammar_{session.mode}", xp_amount=xp)
+            _, txn, _ = award_xp(
+                request.user,
+                activity_type=f"grammar_{session.mode}",
+                xp_amount=xp,
+                source_id=f"grammar_session_{session.id}",
+            )
+            if txn is None:
+                xp = 0
         check_streak(request.user)
 
         data = CompleteSessionSerializer(session).data

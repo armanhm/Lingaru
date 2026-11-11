@@ -14,6 +14,7 @@ should keep using /chat. /agents is for one-shot specialist queries
 ("correct this sentence", "explain this grammar").
 """
 
+import asyncio
 import logging
 
 from asgiref.sync import sync_to_async
@@ -28,6 +29,7 @@ from telegram.ext import (
 )
 
 from apps.agents.models import Agent
+from apps.bot.handlers.common import HTML, esc, reply_long
 from services.llm.factory import create_llm_router
 
 logger = logging.getLogger(__name__)
@@ -80,11 +82,14 @@ async def agents_command(update: Update, context: ContextTypes.DEFAULT_TYPE) -> 
         )
         return
 
-    lines = ["*Specialist agents*", ""]
+    lines = ["<b>Specialist agents</b>", ""]
     keyboard_rows = []
     row = []
     for agent in agents:
-        lines.append(f"{agent.emoji} *{agent.name}*, {agent.tagline or agent.description[:80]}")
+        lines.append(
+            f"{esc(agent.emoji)} <b>{esc(agent.name)}</b>, "
+            f"{esc(agent.tagline or agent.description[:80])}"
+        )
         row.append(
             InlineKeyboardButton(
                 f"{agent.emoji} {agent.name}",
@@ -99,7 +104,7 @@ async def agents_command(update: Update, context: ContextTypes.DEFAULT_TYPE) -> 
 
     await update.message.reply_text(
         "\n".join(lines),
-        parse_mode="Markdown",
+        parse_mode=HTML,
         reply_markup=InlineKeyboardMarkup(keyboard_rows),
     )
 
@@ -117,9 +122,9 @@ async def agent_picked(update: Update, context: ContextTypes.DEFAULT_TYPE) -> in
 
     context.user_data["pending_agent_slug"] = slug
     await query.edit_message_text(
-        f"{agent.emoji} *{agent.name}*, send me the text you'd like me to run "
+        f"{esc(agent.emoji)} <b>{esc(agent.name)}</b>, send me the text you'd like me to run "
         f"this on. Use /cancel to abort.",
-        parse_mode="Markdown",
+        parse_mode=HTML,
     )
     return ASK_INPUT
 
@@ -142,12 +147,10 @@ async def agent_run(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
         return ASK_INPUT
 
     await update.message.chat.send_action("typing")
-    reply = await sync_to_async(_run_agent_sync)(agent, user_text)
+    # Pure LLM call (no ORM): run it on a worker thread, not the event loop.
+    reply = await asyncio.to_thread(_run_agent_sync, agent, user_text)
 
-    # Telegram caps messages at 4096 chars; chunk if longer.
-    chunks = [reply[i : i + 3800] for i in range(0, len(reply), 3800)] or ["(no response)"]
-    for chunk in chunks:
-        await update.message.reply_text(chunk)
+    await reply_long(update.message, reply or "(no response)")
 
     return ConversationHandler.END
 

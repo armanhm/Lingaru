@@ -2,6 +2,7 @@ import { useState, useEffect, useCallback, useRef } from "react";
 import { Link } from "react-router-dom";
 import { getRandomVocabulary } from "../api/content";
 import { submitMiniGameScore } from "../api/gamification";
+import useScoreSubmitErrorToast from "../hooks/useScoreSubmitErrorToast";
 import { generateTTS } from "../api/media";
 import { useCountUp, staggerDelay } from "../hooks/useAnimations";
 import { useAuth } from "../contexts/AuthContext";
@@ -68,6 +69,7 @@ export default function ListeningChallenge() {
   const { user } = useAuth();
   const ROUNDS = user?.preferences?.listening_challenge_rounds ?? DEFAULT_ROUNDS;
 
+  const notifyScoreError = useScoreSubmitErrorToast();
   const [phase, setPhase] = useState("loading"); // loading | playing | done
   const [words, setWords] = useState([]);
   const [round, setRound] = useState(0);
@@ -172,9 +174,9 @@ export default function ListeningChallenge() {
       setPhase("done");
       submitMiniGameScore("listening_challenge", score, words.length)
         .then((res) => setXpEarned(res.data.xp_earned))
-        .catch(() => {});
+        .catch(notifyScoreError);
     }
-  }, [round, words.length, score]);
+  }, [round, words.length, score, notifyScoreError]);
 
   const handleHint = () => {
     if (hintsUsed < 2) setHintsUsed((h) => h + 1);

@@ -2,6 +2,7 @@ import { useState, useEffect, useCallback, useRef } from "react";
 import { Link } from "react-router-dom";
 import { getRandomVocabulary } from "../api/content";
 import { submitMiniGameScore } from "../api/gamification";
+import useScoreSubmitErrorToast from "../hooks/useScoreSubmitErrorToast";
 import AudioPlayButton from "../components/AudioPlayButton";
 import { useCountUp, staggerDelay } from "../hooks/useAnimations";
 import { useAuth } from "../contexts/AuthContext";
@@ -84,6 +85,7 @@ export default function MissingLetter() {
   const ROUNDS = user?.preferences?.missing_letter_rounds ?? DEFAULT_ROUNDS;
   const MAX_LIVES = 3;
 
+  const notifyScoreError = useScoreSubmitErrorToast();
   const [phase, setPhase] = useState("loading"); // loading | playing | done
   const [words, setWords] = useState([]);
   const [round, setRound] = useState(0);
@@ -150,9 +152,9 @@ export default function MissingLetter() {
       setPhase("done");
       submitMiniGameScore("missing_letter", score, words.length)
         .then((res) => setXpEarned(res.data.xp_earned))
-        .catch(() => {});
+        .catch(notifyScoreError);
     }
-  }, [round, words.length, lives, score]);
+  }, [round, words.length, lives, score, notifyScoreError]);
 
   // Type a letter into the focused blank
   const handleType = useCallback((key) => {

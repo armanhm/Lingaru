@@ -61,7 +61,7 @@ docker compose up -d --build
 # Or use dev mode (hot reload, exposed ports)
 docker compose -f docker-compose.yml -f docker-compose.dev.yml up -d --build
 
-# Run migrations (handled automatically on startup, but can also run manually)
+# Run migrations (NOT run at container start; run once after the first start and after each pull)
 docker compose exec django python manage.py migrate
 
 # Create a superuser
@@ -266,9 +266,9 @@ The app is designed for deployment on a Hetzner Linux server via Docker Compose.
 git pull origin main
 docker compose up -d --build
 
-# Migrations run automatically on startup via the django service command.
-# To run manually:
-docker compose exec django python manage.py migrate
+# Migrations are not run at container start; apply them as a one-off
+# before restarting (the deploy workflow does this):
+docker compose run --rm django python manage.py migrate
 ```
 
 **Production checklist:**

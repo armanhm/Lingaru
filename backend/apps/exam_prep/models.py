@@ -116,6 +116,12 @@ class ExamResponse(models.Model):
 
     class Meta:
         db_table = "exam_prep_responses"
+        constraints = [
+            models.UniqueConstraint(
+                fields=["session", "exercise", "question_index"],
+                name="unique_exam_response_per_question",
+            ),
+        ]
 
     def __str__(self):
         return f"Response #{self.question_index} in session {self.session_id}"

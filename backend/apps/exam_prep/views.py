@@ -1,3 +1,4 @@
+from django.db import transaction
 from django.utils import timezone
 from rest_framework import permissions, status
 from rest_framework.response import Response
@@ -167,6 +168,19 @@ class SessionRespondView(APIView):
         except ExamExercise.DoesNotExist:
             return Response({"detail": "Exercise not found."}, status=status.HTTP_404_NOT_FOUND)
 
+        if exercise.section != session.section or exercise.cefr_level != session.cefr_level:
+            return Response(
+                {"detail": "Exercise does not belong to this session's section and level."},
+                status=status.HTTP_400_BAD_REQUEST,
+            )
+
+        # EE/EO exercises are a single prompt, so only index 0 is valid; this
+        # keeps the total bounded by session.max_score.
+        if session.section in ("EE", "EO") and question_index != 0:
+            return Response(
+                {"detail": "Invalid question index."}, status=status.HTTP_400_BAD_REQUEST
+            )
+
         # MCQ-based sections (CE, CO)
         if session.section in ("CE", "CO"):
             questions = exercise.content.get("questions", [])
@@ -179,14 +193,16 @@ class SessionRespondView(APIView):
             correct_answer = question.get("correct_answer", "")
             is_correct = user_answer.strip().lower() == correct_answer.strip().lower()
 
-            response = ExamResponse.objects.create(
+            response, _ = ExamResponse.objects.update_or_create(
                 session=session,
                 exercise=exercise,
                 question_index=question_index,
-                user_answer=user_answer,
-                is_correct=is_correct,
-                score=1 if is_correct else 0,
-                max_score=1,
+                defaults={
+                    "user_answer": user_answer,
+                    "is_correct": is_correct,
+                    "score": 1 if is_correct else 0,
+                    "max_score": 1,
+                },
             )
 
             result = ResponseResultSerializer(response).data
@@ -201,7 +217,6 @@ class SessionRespondView(APIView):
         if session.section in ("EE", "EO"):
             import uuid
 
-            from django.db import transaction
             from django.urls import reverse
 
             from apps.exam_prep.tasks import grade_response as grade_task
@@ -212,16 +227,22 @@ class SessionRespondView(APIView):
             # that hasn't actually committed yet (would 404 the .get() on
             # the task's first attempt and consume a retry needlessly).
             task_id = str(uuid.uuid4())
-            response = ExamResponse.objects.create(
+            # Latest answer wins: a re-answer resets the row to pending and
+            # re-queues grading.
+            response, _ = ExamResponse.objects.update_or_create(
                 session=session,
                 exercise=exercise,
                 question_index=question_index,
-                user_answer=user_answer,
-                is_correct=None,
-                score=0,
-                max_score=20,
-                grading_status=ExamResponse.GRADING_PENDING,
-                grading_task_id=task_id,
+                defaults={
+                    "user_answer": user_answer,
+                    "is_correct": None,
+                    "score": 0,
+                    "max_score": 20,
+                    "ai_feedback": "",
+                    "grading_status": ExamResponse.GRADING_PENDING,
+                    "grading_task_id": task_id,
+                    "grading_completed_at": None,
+                },
             )
 
             transaction.on_commit(
@@ -293,48 +314,62 @@ class SessionCompleteView(APIView):
     permission_classes = (permissions.IsAuthenticated,)
 
     def post(self, request, session_id):
-        try:
-            session = ExamSession.objects.get(pk=session_id, user=request.user)
-        except ExamSession.DoesNotExist:
-            return Response({"detail": "Session not found."}, status=status.HTTP_404_NOT_FOUND)
+        with transaction.atomic():
+            try:
+                session = ExamSession.objects.select_for_update().get(
+                    pk=session_id, user=request.user
+                )
+            except ExamSession.DoesNotExist:
+                return Response({"detail": "Session not found."}, status=status.HTTP_404_NOT_FOUND)
 
-        if session.completed_at:
-            return Response(
-                {"detail": "Session already completed."}, status=status.HTTP_400_BAD_REQUEST
-            )
+            if session.completed_at:
+                return Response(
+                    {"detail": "Session already completed."}, status=status.HTTP_400_BAD_REQUEST
+                )
 
-        # Calculate score
-        responses = session.responses.all()
-        total_score = sum(r.score for r in responses)
-        total_max = sum(r.max_score for r in responses) or 1
-        session.score = total_score
-        session.max_score = total_max
-        session.completed_at = timezone.now()
-        session.save()
+            responses = list(session.responses.all())
+            if any(r.grading_status == ExamResponse.GRADING_PENDING for r in responses):
+                return Response(
+                    {"detail": "Grading is still in progress. Try again shortly."},
+                    status=status.HTTP_409_CONFLICT,
+                )
 
-        # Award XP
-        pct = (total_score / total_max) * 100 if total_max > 0 else 0
-        xp = XP_EXAM_MOCK_COMPLETE if session.mode == "mock" else XP_EXAM_PRACTICE
-        if pct == 100:
-            xp += XP_EXAM_PERFECT
+            total_score = sum(r.score for r in responses)
+            # session.max_score is fixed at start; the fallback only covers
+            # legacy rows created without one.
+            total_max = session.max_score or sum(r.max_score for r in responses)
+            total_score = min(total_score, total_max)
+            session.score = total_score
+            session.max_score = total_max
+            session.completed_at = timezone.now()
+            session.save()
 
-        _, txn, _ = award_xp(
-            request.user,
-            activity_type=f"exam_{session.section}_{session.mode}",
-            xp_amount=xp,
-            source_id=f"exam_session_{session.id}",
-        )
-        if txn is None:
+            pct = (total_score / total_max) * 100 if total_max else 0
             xp = 0
-        check_streak(request.user)
+            if responses:
+                xp = XP_EXAM_MOCK_COMPLETE if session.mode == "mock" else XP_EXAM_PRACTICE
+                if pct == 100:
+                    xp += XP_EXAM_PERFECT
 
-        # Update progress
-        progress, _ = ExamProgress.objects.get_or_create(user=request.user, section=session.section)
-        progress.sessions_completed += 1
-        if pct > progress.best_score_pct:
-            progress.best_score_pct = pct
-        progress.estimated_cefr_level = score_to_cefr(progress.best_score_pct)
-        progress.save()
+                progress, _ = ExamProgress.objects.get_or_create(
+                    user=request.user, section=session.section
+                )
+                progress.sessions_completed += 1
+                if pct > progress.best_score_pct:
+                    progress.best_score_pct = pct
+                progress.estimated_cefr_level = score_to_cefr(progress.best_score_pct)
+                progress.save()
+
+        if xp:
+            _, txn, _ = award_xp(
+                request.user,
+                activity_type=f"exam_{session.section}_{session.mode}",
+                xp_amount=xp,
+                source_id=f"exam_session_{session.id}",
+            )
+            if txn is None:
+                xp = 0
+            check_streak(request.user)
 
         data = SessionCompleteSerializer(session).data
         data["xp_earned"] = xp

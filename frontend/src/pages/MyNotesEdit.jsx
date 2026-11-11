@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
+import { createSaveQueue } from "../lib/saveQueue";
 import { useTranslation } from "react-i18next";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
@@ -39,7 +40,7 @@ const ACTION_DESCRIPTION_KEY = {
   suggest_tags: "suggestTagsDescription",
 };
 
-function MarkdownToolbar({ textareaRef, value, setValue, noteId, onAIResult, onAIError }) {
+function MarkdownToolbar({ textareaRef, value, setValue, noteId, onAIResult, onAIError, onBeforeAI }) {
   const { t } = useTranslation();
   const [aiOpen, setAiOpen] = useState(false);
   const [aiLoadingAction, setAiLoadingAction] = useState(null);
@@ -75,6 +76,11 @@ function MarkdownToolbar({ textareaRef, value, setValue, noteId, onAIResult, onA
     if (aiDisabled || aiLoadingAction) return;
     setAiLoadingAction(actionKey);
     try {
+      // The server runs the action on its stored copy, so persist local edits first.
+      if (onBeforeAI && !(await onBeforeAI())) {
+        onAIError?.();
+        return;
+      }
       const res = await runMyNoteAIAction(noteId, actionKey);
       onAIResult?.(actionKey, res.data || {});
       setAiOpen(false);
@@ -284,6 +290,8 @@ function normalizeTags(arr) {
 export default function MyNotesEdit() {
   const { id: paramId } = useParams();
   const navigate = useNavigate();
+  const navigateRef = useRef(navigate);
+  useEffect(() => { navigateRef.current = navigate; }, [navigate]);
   const { user } = useAuth();
   const { t } = useTranslation();
   const { showToast } = useToast();
@@ -358,10 +366,10 @@ export default function MyNotesEdit() {
   const [aiModalState, setAIModalState] = useState(null);
   const [suggestedTags, setSuggestedTags] = useState([]);
 
-  const dirtyRef = useRef(false);
   const saveTimerRef = useRef(null);
-  const inFlightRef = useRef(false);
-  const latestStateRef = useRef(null);
+  const latestDraftRef = useRef({ payload: null, hasContent: false });
+  const createdIdRef = useRef(null);
+  const queueRef = useRef(null);
   const noteIdRef = useRef(noteId);
   const bodyRef = useRef(null);
   const isMountedRef = useRef(true);
@@ -372,6 +380,9 @@ export default function MyNotesEdit() {
       setLoading(false);
       return;
     }
+    // The route changed because we just created this note: local state is
+    // already current, refetching would flash the skeleton and drop edits.
+    if (paramId === createdIdRef.current) return;
     setLoading(true);
     setLoadError(false);
     getMyNote(paramId)
@@ -409,58 +420,74 @@ export default function MyNotesEdit() {
     is_public: isPublic,
   }), [title, kind, body, tags, language, isFavorite, isPublic, t]);
 
-  const performSave = useCallback(async () => {
-    if (inFlightRef.current) {
-      latestStateRef.current = buildPayload();
-      return;
-    }
-    const currentId = noteIdRef.current;
-    if (!currentId && !hasContent) return;
-
-    inFlightRef.current = true;
-    setSaveState("saving");
-    const payload = buildPayload();
-    try {
-      let res;
-      if (currentId) {
-        res = await updateMyNote(currentId, payload);
-      } else {
-        res = await createMyNote(payload);
-        if (res.data?.id) {
-          setNoteId(res.data.id);
-          noteIdRef.current = res.data.id;
-          window.history.replaceState(null, "", `/my-notes/${res.data.id}`);
-        }
-      }
-      if (res.data?.updated_at && isMountedRef.current) setUpdatedAt(res.data.updated_at);
-      if (isMountedRef.current) setSaveState("saved");
-      dirtyRef.current = false;
-    } catch (err) {
-      if (isMountedRef.current) setSaveState("error");
-      // DRF returns either a single `detail` string or per-field error
-      // arrays (e.g. {title: ["This field is required."]}). Indexing a
-      // string with [0] returns its first character — guard with
-      // Array.isArray so we surface the full error message.
-      const firstOf = (e) => (Array.isArray(e) ? e[0] : e);
-      const detail =
-        err.response?.data?.detail ||
-        firstOf(err.response?.data?.title) ||
-        firstOf(err.response?.data?.tags) ||
-        firstOf(err.response?.data?.body_markdown) ||
-        err.message ||
-        "Save failed.";
-      if (isMountedRef.current) showToast(detail, "error");
-    } finally {
-      inFlightRef.current = false;
-      if (latestStateRef.current) {
-        latestStateRef.current = null;
-        performSave();
-      }
-    }
+  // Keep the freshest draft in a ref so the save queue never sends a stale
+  // closure's payload.
+  useEffect(() => {
+    latestDraftRef.current = { payload: buildPayload(), hasContent };
   }, [buildPayload, hasContent]);
 
+  if (!queueRef.current) {
+    queueRef.current = createSaveQueue({
+      getPayload: () => {
+        const { payload, hasContent: draftHasContent } = latestDraftRef.current;
+        return noteIdRef.current || draftHasContent ? payload : null;
+      },
+      save: async (payload) => {
+        const currentId = noteIdRef.current;
+        let res;
+        if (currentId) {
+          res = await updateMyNote(currentId, payload);
+        } else {
+          res = await createMyNote(payload);
+          if (res.data?.id) {
+            noteIdRef.current = res.data.id;
+            createdIdRef.current = String(res.data.id);
+            if (isMountedRef.current) {
+              setNoteId(res.data.id);
+              navigateRef.current(`/my-notes/${res.data.id}`, { replace: true });
+            }
+          }
+        }
+        if (res.data?.updated_at && isMountedRef.current) setUpdatedAt(res.data.updated_at);
+      },
+      onStatus: (status) => {
+        if (isMountedRef.current) setSaveState(status);
+      },
+    });
+  }
+
+  const performSave = useCallback(async () => {
+    const result = await queueRef.current.flush();
+    if (!result.ok) {
+      const err = result.error;
+      // DRF returns either a single `detail` string or per-field error
+      // arrays (e.g. {title: ["This field is required."]}). Indexing a
+      // string with [0] returns its first character, so guard with
+      // Array.isArray to surface the full error message.
+      const firstOf = (e) => (Array.isArray(e) ? e[0] : e);
+      const detail =
+        err?.response?.data?.detail ||
+        firstOf(err?.response?.data?.title) ||
+        firstOf(err?.response?.data?.tags) ||
+        firstOf(err?.response?.data?.body_markdown) ||
+        err?.message ||
+        "Save failed.";
+      if (isMountedRef.current) showToast(detail, "error");
+    }
+    return result;
+  }, [showToast]);
+
+  const flushPendingSave = useCallback(async () => {
+    if (saveTimerRef.current) {
+      clearTimeout(saveTimerRef.current);
+      saveTimerRef.current = null;
+    }
+    const result = await performSave();
+    return result.ok;
+  }, [performSave]);
+
   const scheduleAutosave = useCallback(() => {
-    dirtyRef.current = true;
+    queueRef.current.markDirty();
     if (saveTimerRef.current) clearTimeout(saveTimerRef.current);
     saveTimerRef.current = setTimeout(() => {
       performSave();
@@ -480,7 +507,7 @@ export default function MyNotesEdit() {
         clearTimeout(saveTimerRef.current);
         saveTimerRef.current = null;
       }
-      if (dirtyRef.current && !inFlightRef.current) {
+      if (queueRef.current.isDirty()) {
         performSaveRef.current();
       }
     };
@@ -496,7 +523,7 @@ export default function MyNotesEdit() {
   }, [title, kind, body, tags, isFavorite, isPublic, language]);
 
   const handleBlur = () => {
-    if (dirtyRef.current) {
+    if (queueRef.current.isDirty()) {
       if (saveTimerRef.current) clearTimeout(saveTimerRef.current);
       performSave();
     }
@@ -504,8 +531,8 @@ export default function MyNotesEdit() {
 
   const handleManualSave = async () => {
     if (saveTimerRef.current) clearTimeout(saveTimerRef.current);
-    await performSave();
-    showToast(t("myNotes.saved"), "success");
+    const result = await performSave();
+    if (result.ok) showToast(t("myNotes.saved"), "success");
   };
 
   const handleAddTag = (raw) => {
@@ -640,7 +667,7 @@ export default function MyNotesEdit() {
               clearTimeout(saveTimerRef.current);
               saveTimerRef.current = null;
             }
-            if (dirtyRef.current) {
+            if (queueRef.current.isDirty()) {
               await performSave();
             }
             navigate("/my-notes");
@@ -834,6 +861,7 @@ export default function MyNotesEdit() {
             noteId={noteId}
             onAIResult={handleAIResult}
             onAIError={handleAIError}
+            onBeforeAI={flushPendingSave}
           />
           <textarea
             ref={bodyRef}

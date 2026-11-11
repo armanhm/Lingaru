@@ -96,9 +96,9 @@ export default function App() {
           <Route path="our-notes/review/:id" element={<OurNotesReview />} />
           <Route path="our-notes/:id" element={<OurNotesDetail />} />
           <Route path="my-notes" element={<MyNotes />} />
-          <Route path="my-notes/new" element={<MyNotesEdit />} />
+          <Route path="my-notes/new" element={<MyNotesEdit key="my-note-editor" />} />
           <Route path="my-notes/public/:id" element={<MyNotesPublic />} />
-          <Route path="my-notes/:id" element={<MyNotesEdit />} />
+          <Route path="my-notes/:id" element={<MyNotesEdit key="my-note-editor" />} />
           <Route path="mini-games" element={<MiniGames />} />
           <Route path="mini-games/word-scramble" element={<WordScramble />} />
           <Route path="mini-games/match-pairs" element={<MatchPairs />} />

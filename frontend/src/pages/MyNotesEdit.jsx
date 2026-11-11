@@ -1,6 +1,5 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
-import { createSaveQueue } from "../lib/saveQueue";
 import { useTranslation } from "react-i18next";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
@@ -13,6 +12,7 @@ import {
 } from "../api/myNotes";
 import { useAuth } from "../contexts/AuthContext";
 import { useToast } from "../contexts/ToastContext";
+import { createSaveQueue } from "../lib/saveQueue";
 import { EmptyState } from "../components/ui";
 import AIResultModal from "../components/notes/AIResultModal";
 
@@ -77,10 +77,8 @@ function MarkdownToolbar({ textareaRef, value, setValue, noteId, onAIResult, onA
     setAiLoadingAction(actionKey);
     try {
       // The server runs the action on its stored copy, so persist local edits first.
-      if (onBeforeAI && !(await onBeforeAI())) {
-        onAIError?.();
-        return;
-      }
+      // A failed flush already toasted its own error, so just stop here.
+      if (onBeforeAI && !(await onBeforeAI())) return;
       const res = await runMyNoteAIAction(noteId, actionKey);
       onAIResult?.(actionKey, res.data || {});
       setAiOpen(false);
@@ -287,7 +285,7 @@ function normalizeTags(arr) {
   return out;
 }
 
-export default function MyNotesEdit() {
+function MyNotesEditor({ onCreated }) {
   const { id: paramId } = useParams();
   const navigate = useNavigate();
   const navigateRef = useRef(navigate);
@@ -382,7 +380,10 @@ export default function MyNotesEdit() {
     }
     // The route changed because we just created this note: local state is
     // already current, refetching would flash the skeleton and drop edits.
-    if (paramId === createdIdRef.current) return;
+    if (paramId === createdIdRef.current) {
+      createdIdRef.current = null;
+      return;
+    }
     setLoading(true);
     setLoadError(false);
     getMyNote(paramId)
@@ -442,6 +443,7 @@ export default function MyNotesEdit() {
           if (res.data?.id) {
             noteIdRef.current = res.data.id;
             createdIdRef.current = String(res.data.id);
+            onCreated?.(res.data.id);
             if (isMountedRef.current) {
               setNoteId(res.data.id);
               navigateRef.current(`/my-notes/${res.data.id}`, { replace: true });
@@ -962,4 +964,22 @@ export default function MyNotesEdit() {
       )}
     </div>
   );
+}
+
+// The two note routes share this element so that creating a note (/new ->
+// /:id) keeps the editor mounted. Any other id change (open another note, or
+// start a new one) bumps the key so state from the previous note cannot leak.
+export default function MyNotesEdit() {
+  const { id } = useParams();
+  const createdIdRef = useRef(null);
+  const lastIdRef = useRef(id);
+  const generationRef = useRef(0);
+  if (id !== lastIdRef.current) {
+    if (id !== createdIdRef.current) generationRef.current += 1;
+    lastIdRef.current = id;
+  }
+  const handleCreated = useCallback((newId) => {
+    createdIdRef.current = String(newId);
+  }, []);
+  return <MyNotesEditor key={generationRef.current} onCreated={handleCreated} />;
 }

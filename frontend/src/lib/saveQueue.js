@@ -17,15 +17,22 @@ export function createSaveQueue({ getPayload, save, onStatus = () => {} }) {
   let running = null;
 
   const run = async () => {
-    onStatus("saving");
+    // Yield first so flush() has assigned `running` before this body (and its
+    // finally) can run; otherwise an all-null flush would leave it stuck.
+    await null;
+    let didSave = false;
     try {
       while (savedVersion < version) {
         const startedAt = version;
         const payload = getPayload();
-        if (payload != null) await save(payload);
+        if (payload != null) {
+          if (!didSave) onStatus("saving");
+          await save(payload);
+          didSave = true;
+        }
         savedVersion = startedAt;
       }
-      onStatus("saved");
+      if (didSave) onStatus("saved");
       return { ok: true };
     } catch (error) {
       onStatus("error");

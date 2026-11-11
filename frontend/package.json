@@ -13,7 +13,7 @@
     "test:visual:update": "playwright test --update-snapshots"
   },
   "dependencies": {
-    "@sentry/react": "^10.62.0",
+    "@sentry/react": "^11.11.0",
     "@tailwindcss/typography": "^0.5.19",
     "axios": "^1.7.0",
     "i18next": "^26.0.10",

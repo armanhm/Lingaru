@@ -15,6 +15,17 @@ export const checkPronunciation = (audioBlob, expectedText, vocabularyId) => {
   });
 };
 
+export const transcribeAudio = (audioBlob, exerciseId) => {
+  const formData = new FormData();
+  formData.append("audio", audioBlob, "recording.webm");
+  if (exerciseId) {
+    formData.append("exercise_id", exerciseId);
+  }
+  return client.post("/media/transcribe/", formData, {
+    headers: { "Content-Type": "multipart/form-data" },
+  });
+};
+
 export const startDictation = () =>
   client.get("/media/dictation/start/");
 

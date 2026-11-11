@@ -40,10 +40,33 @@ jobs:
       run:
         working-directory: backend
 
+    # Prod runs Postgres; SQLite hides integer overflow, check constraints,
+    # order_by("?") and .extra() differences. test.py switches to Postgres
+    # whenever DB_HOST is set in the environment.
+    services:
+      postgres:
+        image: postgres:16
+        env:
+          POSTGRES_DB: lingaru
+          POSTGRES_USER: lingaru
+          POSTGRES_PASSWORD: lingaru
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd "pg_isready -U lingaru"
+          --health-interval 5s
+          --health-timeout 5s
+          --health-retries 10
+
     env:
       DJANGO_SETTINGS_MODULE: config.settings.test
       DJANGO_SECRET_KEY: ci-only-not-secret
       DEBUG: "True"
+      DB_NAME: lingaru
+      DB_USER: lingaru
+      DB_PASSWORD: lingaru
+      DB_HOST: localhost
+      DB_PORT: "5432"
 
     steps:
       - uses: actions/checkout@v4

@@ -1,53 +1,80 @@
 #!/usr/bin/env bash
 #
-# Nightly Postgres backup for Lingaru on Hetzner.
+# Postgres backup for Lingaru on Hetzner.
 #
-# Dumps the lingaru database to a timestamped gzipped file, keeps the
-# last 14 days, prunes older ones. Designed to be run from cron as the
-# `lingaru` user.
+# Usage:  scripts/backup_db.sh [label]
 #
-# Setup (one-time, on the server, as the lingaru user):
+#   (no label)  nightly backup: lingaru-<ts>.sql.gz, pruned after
+#               RETENTION_DAYS (default 14).
+#   <label>     labelled backup, e.g. "predeploy": lingaru-<label>-<ts>.sql.gz,
+#               the newest KEEP_LAST (default 10) per label are kept.
+#
+# The dump is written to a .partial file, verified with gzip -t, and only
+# then renamed, so a failed run never leaves a plausible-looking bad dump
+# and never prunes anything. The last line printed is BACKUP_FILE=<path>
+# so callers (the deploy workflow) can pick the file up.
+#
+# Nightly setup (one-time, on the server, as the lingaru user):
 #
 #   mkdir -p ~/backups
 #   crontab -e
-#   # add:
 #   0 3 * * *  /home/lingaru/Lingaru/scripts/backup_db.sh >> ~/backups/backup.log 2>&1
-#
-# That runs the backup nightly at 03:00 server time. Adjust the path if
-# the project lives elsewhere. The script is idempotent and noisy on
-# failure, look at backup.log if a backup goes missing.
 
 set -euo pipefail
 
-# Resolve project root from script location so we can run docker compose.
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 PROJECT_ROOT="$(dirname "$SCRIPT_DIR")"
 BACKUP_DIR="${BACKUP_DIR:-$HOME/backups}"
 RETENTION_DAYS="${RETENTION_DAYS:-14}"
+KEEP_LAST="${KEEP_LAST:-10}"
+LABEL="${1:-}"
+
+log() { echo "[$(date -u +%Y-%m-%dT%H:%M:%SZ)] $*"; }
 
 mkdir -p "$BACKUP_DIR"
 
 TIMESTAMP="$(date -u +%Y%m%d-%H%M%S)"
-OUT="$BACKUP_DIR/lingaru-${TIMESTAMP}.sql.gz"
+if [ -n "$LABEL" ]; then
+  OUT="$BACKUP_DIR/lingaru-${LABEL}-${TIMESTAMP}.sql.gz"
+else
+  OUT="$BACKUP_DIR/lingaru-${TIMESTAMP}.sql.gz"
+fi
+PARTIAL="$OUT.partial"
+trap 'rm -f "$PARTIAL"' EXIT
 
 cd "$PROJECT_ROOT"
 
-echo "[$(date -u +%Y-%m-%dT%H:%M:%SZ)] starting backup -> $OUT"
+log "starting backup -> $OUT"
 
-# Stream pg_dump out of the running postgres container, gzip on the fly.
-# Using --no-owner / --clean / --if-exists makes the dump portable to a
-# fresh DB on restore.
+# pg_dump runs inside the container, which already has POSTGRES_USER and
+# POSTGRES_DB from compose. --no-owner / --clean / --if-exists keep the
+# dump portable to a fresh DB on restore.
 docker compose exec -T postgres \
-  pg_dump --no-owner --clean --if-exists --username=lingaru lingaru \
-  | gzip > "$OUT"
+  sh -c 'pg_dump --no-owner --clean --if-exists --username="$POSTGRES_USER" "$POSTGRES_DB"' \
+  | gzip > "$PARTIAL"
+
+gzip -t "$PARTIAL"
+if [ ! -s "$PARTIAL" ]; then
+  log "ERROR: dump is empty" >&2
+  exit 1
+fi
+mv "$PARTIAL" "$OUT"
 
 SIZE=$(du -h "$OUT" | cut -f1)
-echo "[$(date -u +%Y-%m-%dT%H:%M:%SZ)] wrote $OUT ($SIZE)"
+log "wrote $OUT ($SIZE)"
 
-# Prune anything older than $RETENTION_DAYS days.
-PRUNED=$(find "$BACKUP_DIR" -maxdepth 1 -type f -name 'lingaru-*.sql.gz' -mtime "+$RETENTION_DAYS" -print -delete | wc -l)
-if [ "$PRUNED" -gt 0 ]; then
-  echo "[$(date -u +%Y-%m-%dT%H:%M:%SZ)] pruned $PRUNED old backup(s) (>${RETENTION_DAYS}d)"
+if [ -n "$LABEL" ]; then
+  # Keep only the newest KEEP_LAST files for this label (timestamps sort).
+  find "$BACKUP_DIR" -maxdepth 1 -type f -name "lingaru-${LABEL}-*.sql.gz" \
+    | sort -r | tail -n "+$((KEEP_LAST + 1))" \
+    | while read -r old; do rm -f "$old" && log "pruned $old (keeping last $KEEP_LAST)"; done
+else
+  # Nightly files start with a digit after "lingaru-"; labelled ones do not.
+  PRUNED=$(find "$BACKUP_DIR" -maxdepth 1 -type f -name 'lingaru-[0-9]*.sql.gz' -mtime "+$RETENTION_DAYS" -print -delete | wc -l)
+  if [ "$PRUNED" -gt 0 ]; then
+    log "pruned $PRUNED old backup(s) (>${RETENTION_DAYS}d)"
+  fi
 fi
 
-echo "[$(date -u +%Y-%m-%dT%H:%M:%SZ)] done"
+log "done"
+echo "BACKUP_FILE=$OUT"

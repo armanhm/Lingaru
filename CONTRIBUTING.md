@@ -89,3 +89,13 @@ For **security issues**, see [SECURITY.md](SECURITY.md) -- please don't file tho
 ## Code of Conduct
 
 Be kind. Assume good intent. Disagree on technical merit, not on people. Project maintainer reserves the right to close threads that turn personal.
+
+## Database migrations and deploys
+
+Deploys (`.github/workflows/deploy.yml`) take a `pg_dump` via `scripts/backup_db.sh predeploy`, run `migrate` exactly once as a one-off container (`docker compose run --rm django python manage.py migrate`), and only then restart the app containers. Migrations are not run at container start. Old app containers keep serving while the migration runs, and on failure the code is rolled back to the previous SHA, so migrations must follow expand/contract:
+
+- **Expand** (deploy 1): additive, backwards-compatible changes only: new nullable columns or columns with defaults, new tables, new indexes. Old code must keep working on the new schema.
+- **Migrate data / switch code** (deploy 2): backfill and move reads and writes to the new shape.
+- **Contract** (deploy 3+): drop or rename columns and tables only after no running code uses them. Never drop, rename or tighten (NOT NULL, unique) in the same deploy that stops using the old shape.
+
+If a deploy fails after migrations were applied, the workflow restores the pre-deploy dump (saving the current DB to a `prerestore` dump first) and rolls the code back; writes made between the backup and the failure are not in the restored data. Opt out with the `restore_db_on_failure=false` dispatch input or the `DEPLOY_DB_RESTORE=false` repository variable. Manual restore: `scripts/restore_db.sh <dump>`.

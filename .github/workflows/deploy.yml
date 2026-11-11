@@ -6,6 +6,16 @@ on:
     types: [completed]
     branches: [main]
   workflow_dispatch:
+    inputs:
+      restore_db_on_failure:
+        description: >-
+          If this deploy applied migrations and then fails, restore the
+          pre-deploy DB backup while rolling back (a safety dump of the
+          current DB is always saved first). Set to "false" to roll back
+          code only.
+        type: choice
+        options: ["true", "false"]
+        default: "true"
 
 concurrency:
   group: deploy-prod
@@ -17,6 +27,16 @@ jobs:
     runs-on: ubuntu-latest
     if: ${{ github.event.workflow_run.conclusion == 'success' || github.event_name == 'workflow_dispatch' }}
 
+    # Deploy sequence (each step is one ssh round trip, in order):
+    #   1. prev     record the SHA currently live
+    #   2. backup   pg_dump via scripts/backup_db.sh (aborts the deploy on failure)
+    #   3. pull     git fetch + reset to origin/main, build images (nothing restarted yet)
+    #   4. migrate  one-off `compose run --rm django migrate`, exactly once,
+    #               while the old app containers are still serving
+    #   5. restart  `compose up -d` swaps app containers onto the new code
+    #   6. smoke    health check
+    #   7. rollback (only on failure) code, plus DB restore iff this deploy
+    #               actually applied migrations
     steps:
       - name: Configure SSH
         env:
@@ -29,8 +49,7 @@ jobs:
           ssh-keyscan -H "$SSH_HOST" >> ~/.ssh/known_hosts 2>/dev/null
 
       # Record the SHA currently live on the server so we can roll back
-      # later if migrations or the smoke test fail. Stored as a step
-      # output for downstream steps to reference.
+      # later if migrations or the smoke test fail.
       - name: Capture previous SHA (for rollback)
         id: prev
         env:
@@ -43,7 +62,33 @@ jobs:
           echo "Previous live SHA: $PREV"
           echo "sha=$PREV" >> "$GITHUB_OUTPUT"
 
-      - name: Pull + rebuild on server
+      # First remote step that changes anything: dump the DB before any
+      # new code or migration touches it. Fails closed: if the backup
+      # fails, nothing else runs. The backup/restore scripts are taken
+      # from origin/main first so this works even when the server still
+      # has an older copy of them (the later reset --hard overwrites them).
+      - name: Pre-deploy database backup
+        id: backup
+        env:
+          SSH_HOST: ${{ secrets.HETZNER_HOST }}
+          SSH_USER: ${{ secrets.HETZNER_USER }}
+          DEPLOY_PATH: ${{ secrets.HETZNER_DEPLOY_PATH }}
+        run: |
+          OUT=$(ssh -i ~/.ssh/id_ed25519 -o StrictHostKeyChecking=accept-new \
+            "$SSH_USER@$SSH_HOST" \
+            "cd $DEPLOY_PATH && git fetch origin main && git checkout origin/main -- scripts/backup_db.sh scripts/restore_db.sh && scripts/backup_db.sh predeploy")
+          echo "$OUT"
+          FILE=$(printf '%s\n' "$OUT" | sed -n 's/^BACKUP_FILE=//p' | tail -n 1)
+          if [ -z "$FILE" ]; then
+            echo "::error::Backup did not report a file; aborting deploy"
+            exit 1
+          fi
+          echo "file=$FILE" >> "$GITHUB_OUTPUT"
+
+      # Builds on the server (no restart yet), so the migrate step below
+      # runs the new code's migrations from the new image.
+      - name: Pull and build on server
+        id: pull
         env:
           SSH_HOST: ${{ secrets.HETZNER_HOST }}
           SSH_USER: ${{ secrets.HETZNER_USER }}
@@ -51,21 +96,36 @@ jobs:
         run: |
           ssh -i ~/.ssh/id_ed25519 -o StrictHostKeyChecking=accept-new \
             "$SSH_USER@$SSH_HOST" \
-            "cd $DEPLOY_PATH && git fetch origin main && git reset --hard origin/main && docker compose up -d --build && docker compose ps"
+            "cd $DEPLOY_PATH && git reset --hard origin/main && docker compose build"
 
-      - name: Wait for django to come up
-        run: sleep 15
-
-      - name: Run database migrations
+      # Migrations run exactly once, here, as a one-off container, while
+      # the old app containers keep serving (hence the expand/contract
+      # rule in CONTRIBUTING.md). The pending count is published before
+      # migrating so the rollback step knows whether this deploy changed
+      # the schema.
+      - name: Run database migrations (once)
         id: migrate
         env:
           SSH_HOST: ${{ secrets.HETZNER_HOST }}
           SSH_USER: ${{ secrets.HETZNER_USER }}
           DEPLOY_PATH: ${{ secrets.HETZNER_DEPLOY_PATH }}
         run: |
+          SSH="ssh -i $HOME/.ssh/id_ed25519 -o StrictHostKeyChecking=accept-new $SSH_USER@$SSH_HOST"
+          PENDING=$($SSH "cd $DEPLOY_PATH && docker compose run --rm -T django python manage.py showmigrations --plan | grep -c '\[ \]' || true")
+          echo "Pending migrations: $PENDING"
+          echo "pending=$PENDING" >> "$GITHUB_OUTPUT"
+          $SSH "cd $DEPLOY_PATH && docker compose run --rm -T django python manage.py migrate --noinput"
+
+      - name: Restart app containers on new code
+        env:
+          SSH_HOST: ${{ secrets.HETZNER_HOST }}
+          SSH_USER: ${{ secrets.HETZNER_USER }}
+          DEPLOY_PATH: ${{ secrets.HETZNER_DEPLOY_PATH }}
+        run: |
           ssh -i ~/.ssh/id_ed25519 -o StrictHostKeyChecking=accept-new \
             "$SSH_USER@$SSH_HOST" \
-            "cd $DEPLOY_PATH && docker compose exec -T django python manage.py migrate --noinput"
+            "cd $DEPLOY_PATH && docker compose up -d && docker compose ps"
+          sleep 15
 
       - name: Smoke test (health endpoint)
         id: smoke
@@ -86,24 +146,73 @@ jobs:
           echo "Health check failed after 5 attempts"
           exit 1
 
-      # Self-healing rollback. Fires only when the migrate or smoke-test
-      # step above failed. Resets the server to the SHA that was live
-      # before this deploy, rebuilds, and re-checks health. The job
-      # itself still ends as failed so you get notified, but the live
-      # site is restored to a known-good state.
+      # Self-healing rollback, only when a step after the backup failed.
+      # Code: reset to the SHA that was live before this deploy and rebuild.
+      # Data: the pre-deploy dump is restored ONLY if this deploy actually
+      # applied migrations (pending count before > pending count now), so a
+      # failure that never touched the schema never discards new writes.
+      # The restore script saves a "prerestore" dump of the current DB
+      # first, and everything is logged. Opt out with the dispatch input
+      # restore_db_on_failure=false or the repo variable
+      # DEPLOY_DB_RESTORE=false (code-only rollback; the pre-deploy dump
+      # stays on the server for a manual restore). The job still ends as
+      # failed so you get notified.
       - name: Rollback on failure
-        if: failure() && steps.prev.outputs.sha != ''
+        if: failure() && steps.prev.outputs.sha != '' && steps.backup.conclusion == 'success'
         env:
           SSH_HOST: ${{ secrets.HETZNER_HOST }}
           SSH_USER: ${{ secrets.HETZNER_USER }}
           DEPLOY_PATH: ${{ secrets.HETZNER_DEPLOY_PATH }}
           PREV_SHA: ${{ steps.prev.outputs.sha }}
+          BACKUP_FILE: ${{ steps.backup.outputs.file }}
+          PENDING_BEFORE: ${{ steps.migrate.outputs.pending }}
+          INPUT_RESTORE: ${{ github.event.inputs.restore_db_on_failure }}
+          VAR_RESTORE: ${{ vars.DEPLOY_DB_RESTORE }}
           HEALTH_URL: ${{ secrets.HEALTH_URL }}
         run: |
           echo "::warning::Deploy failed, rolling back to $PREV_SHA"
+          RESTORE=true
+          if [ "$INPUT_RESTORE" = "false" ] || [ "$VAR_RESTORE" = "false" ]; then
+            RESTORE=false
+            echo "DB restore disabled by opt-out; rolling back code only"
+          fi
           ssh -i ~/.ssh/id_ed25519 -o StrictHostKeyChecking=accept-new \
             "$SSH_USER@$SSH_HOST" \
-            "cd $DEPLOY_PATH && git reset --hard $PREV_SHA && docker compose up -d --build && docker compose ps"
+            bash -s -- "$DEPLOY_PATH" "$PREV_SHA" "$BACKUP_FILE" "${PENDING_BEFORE:-none}" "$RESTORE" <<'REMOTE'
+          set -uo pipefail
+          DEPLOY_PATH=$1 PREV_SHA=$2 BACKUP_FILE=$3 PENDING_BEFORE=$4 RESTORE=$5
+          cd "$DEPLOY_PATH"
+          pending_now() {
+            docker compose run --rm -T django python manage.py showmigrations --plan 2>/dev/null | grep -c '\[ \]'
+          }
+
+          # Decide while still on the new code/image, before the reset.
+          APPLIED=no
+          if [ "$PENDING_BEFORE" != none ] && [ "$PENDING_BEFORE" -gt 0 ]; then
+            NOW=$(pending_now || true)
+            if [ -z "$NOW" ] || [ "$NOW" -lt "$PENDING_BEFORE" ]; then
+              APPLIED=yes
+            fi
+          fi
+          echo "rollback: migrations applied by this deploy: $APPLIED (pending before: $PENDING_BEFORE, now: ${NOW:-n/a})"
+
+          if [ "$APPLIED" = yes ] && [ "$RESTORE" = true ]; then
+            echo "rollback: stopping app containers, restoring $BACKUP_FILE"
+            docker compose stop django celery celery-beat bot nginx
+            if scripts/restore_db.sh --yes "$BACKUP_FILE"; then
+              echo "rollback: DB restored from $BACKUP_FILE (current data saved in a lingaru-prerestore-* dump)"
+            else
+              echo "::error::DB restore FAILED; database left as is. Dump: $BACKUP_FILE. Not restarting old code on an unknown schema."
+              exit 1
+            fi
+          elif [ "$APPLIED" = yes ]; then
+            echo "::warning::Migrations were applied but DB restore is disabled. Old code is running on the NEW schema. Pre-deploy dump: $BACKUP_FILE"
+          fi
+
+          git reset --hard "$PREV_SHA"
+          docker compose up -d --build
+          docker compose ps
+          REMOTE
           sleep 15
           URL="${HEALTH_URL:-https://app.armanflower.shop/api/health/}"
           if curl -fsS --max-time 10 "$URL" | grep -q '"status": "ok"'; then

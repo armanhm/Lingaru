@@ -37,6 +37,15 @@ class XPTransaction(models.Model):
     class Meta:
         db_table = "gamification_xp_transactions"
         ordering = ["-created_at"]
+        constraints = [
+            # source_id is the idempotency key: one award per (user, activity, unit).
+            # Awards without a source_id are repeatable by design.
+            models.UniqueConstraint(
+                fields=["user", "activity_type", "source_id"],
+                condition=models.Q(source_id__isnull=False),
+                name="unique_xp_award_per_source",
+            ),
+        ]
 
     def __str__(self):
         return f"{self.user.username} +{self.xp_amount} XP ({self.activity_type})"

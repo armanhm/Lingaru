@@ -1,4 +1,5 @@
 import io
+from unittest.mock import patch
 
 from django.core.files.uploadedfile import SimpleUploadedFile
 from django.test import TestCase
@@ -20,8 +21,11 @@ class TestDocumentUploadView(TestCase):
         )
         self.client.force_authenticate(user=self.user)
 
-    def test_upload_txt_file(self):
+    @patch("services.rag.pipeline.GeminiEmbedder")
+    def test_upload_txt_file(self, mock_embedder_cls):
         """Uploading a .txt file creates a Document."""
+        # Celery runs eagerly in tests, so the upload also runs the pipeline.
+        mock_embedder_cls.return_value.embed_batch.return_value = [[0.1] * 768]
         file = SimpleUploadedFile(
             "notes.txt",
             b"Bonjour le monde. C'est un texte en francais.",
@@ -39,6 +43,8 @@ class TestDocumentUploadView(TestCase):
         doc = Document.objects.first()
         self.assertEqual(doc.title, "My French Notes")
         self.assertEqual(doc.file_type, "txt")
+        self.assertTrue(doc.processed)
+        self.assertEqual(DocumentChunk.objects.filter(document=doc).count(), 1)
 
     def test_upload_pdf_file(self):
         """Uploading a .pdf file creates a Document with pdf file_type."""

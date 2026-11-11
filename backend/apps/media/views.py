@@ -1,4 +1,5 @@
 import hashlib
+import logging
 
 from django.utils import timezone
 from rest_framework import permissions, status
@@ -20,6 +21,8 @@ from .serializers import (
     TranscribeSerializer,
     DictationCheckRequestSerializer,
 )
+
+logger = logging.getLogger(__name__)
 
 
 class TTSView(APIView):
@@ -117,9 +120,10 @@ class TranscribeView(APIView):
 
         try:
             result = GroqWhisperProvider().transcribe(audio_file=audio_file, language=language)
-        except Exception as exc:
+        except Exception:
+            logger.exception("Transcribe STT failed")
             return Response(
-                {"detail": f"Speech recognition failed: {exc}"},
+                {"detail": "Speech recognition failed. Please try again."},
                 status=status.HTTP_503_SERVICE_UNAVAILABLE,
             )
         return Response({"transcription": result.transcription}, status=status.HTTP_200_OK)

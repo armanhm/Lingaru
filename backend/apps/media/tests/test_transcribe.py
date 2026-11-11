@@ -105,6 +105,7 @@ class TestTranscribeView:
             "/api/media/transcribe/", {"audio": _audio()}, format="multipart",
         )
         assert response.status_code == 503
+        assert "boom" not in response.content.decode()
 
     @patch("apps.media.views.GroqWhisperProvider")
     def test_unauthenticated_returns_401(self, MockSTT, api_client):
@@ -113,3 +114,16 @@ class TestTranscribeView:
         )
         assert response.status_code == 401
         MockSTT.assert_not_called()
+
+    @patch("apps.media.views.GroqWhisperProvider")
+    def test_unknown_exercise_falls_back_to_user_language(
+        self, MockSTT, authenticated_client, user,
+    ):
+        stt = _stt(MockSTT)
+        response = authenticated_client.post(
+            "/api/media/transcribe/",
+            {"audio": _audio(), "exercise_id": 999999},
+            format="multipart",
+        )
+        assert response.status_code == 200
+        assert stt.transcribe.call_args.kwargs["language"] == user.target_language

@@ -181,6 +181,7 @@ export default function ExamExercise() {
       const sttRes = await transcribeAudio(blob, currentExercise.id);
       const text = sttRes.data?.transcription || "";
       if (!text.trim()) {
+        pendingBlobRef.current = null; // a silent blob would fail again; make the user re-record
         setSpeakingRetry("We could not hear anything in that recording. Please try again.");
         return;
       }

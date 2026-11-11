@@ -30,9 +30,13 @@ def pick_quiz_lesson(topic_name: str | None) -> Lesson | None:
     partial match against name_en or name_fr). Returns None if no
     suitable lesson is found.
     """
-    lessons = Lesson.objects.annotate(
-        question_count=Count("questions"),
-    ).filter(question_count__gt=0)
+    # select_related: the async handler reads lesson.topic.name_en, and a lazy
+    # FK load on the event loop raises SynchronousOnlyOperation.
+    lessons = (
+        Lesson.objects.select_related("topic")
+        .annotate(question_count=Count("questions"))
+        .filter(question_count__gt=0)
+    )
 
     if topic_name:
         lessons = lessons.filter(

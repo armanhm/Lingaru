@@ -4,6 +4,7 @@ from asgiref.sync import sync_to_async
 from telegram import Update
 from telegram.ext import ContextTypes
 
+from apps.bot.handlers.common import HTML, esc, reply_long
 from apps.progress.services import get_due_cards
 from apps.users.models import User
 
@@ -41,8 +42,8 @@ async def daily_command(update: Update, context: ContextTypes.DEFAULT_TYPE) -> N
 
     lines = [f"You have {len(cards)} card(s) due for review:\n"]
     for i, card in enumerate(cards, 1):
-        lines.append(f"{i}. **{card.vocabulary.french}**, {card.vocabulary.english}")
+        lines.append(f"{i}. <b>{esc(card.vocabulary.french)}</b>, {esc(card.vocabulary.english)}")
 
     lines.append("\nVisit the app to start your review session.")
 
-    await update.message.reply_text("\n".join(lines), parse_mode="Markdown")
+    await reply_long(update.message, "\n".join(lines), parse_mode=HTML)

@@ -1,3 +1,4 @@
+import asyncio
 import io
 import logging
 
@@ -12,6 +13,7 @@ from telegram.ext import (
 )
 
 from apps.assistant.models import Conversation, ImageQuery, Message
+from apps.bot.handlers.common import reply_long
 from apps.bot.handlers.start import get_or_create_telegram_user
 from services.llm.factory import create_llm_router
 from services.llm.prompts import get_system_prompt
@@ -80,6 +82,30 @@ def _save_image_query(user, conversation, image_data, caption, ai_response):
     )
 
 
+def _generate_sync(messages, system_prompt):
+    return create_llm_router().generate(messages=messages, system_prompt=system_prompt)
+
+
+async def _generate(messages, system_prompt):
+    """Run the blocking LLM call in a worker thread so the bot loop stays responsive."""
+    return await asyncio.to_thread(_generate_sync, messages, system_prompt)
+
+
+def _generate_with_image(messages, image_data, mime_type, system_prompt):
+    return create_llm_router().generate_with_image(
+        messages=messages,
+        image_data=image_data,
+        image_mime_type=mime_type,
+        system_prompt=system_prompt,
+    )
+
+
+def _transcribe(audio_bytes):
+    audio_io = io.BytesIO(audio_bytes)
+    audio_io.name = "voice.ogg"
+    return GroqWhisperProvider().transcribe(audio_file=audio_io, language="fr")
+
+
 async def _download_telegram_file(file_obj):
     """Download a file from Telegram and return (bytes, mime_type)."""
     byte_array = await file_obj.download_as_bytearray()
@@ -135,12 +161,10 @@ async def chat_message(update: Update, context: ContextTypes.DEFAULT_TYPE) -> in
 
     user = await sync_to_async(User.objects.get)(pk=context.user_data.get("user_id"))
 
-    # Call LLM
+    # Call LLM (blocking SDK call, keep it off the event loop)
     try:
-        router = create_llm_router()
-        llm_response = router.generate(
-            messages=messages,
-            system_prompt=get_system_prompt(user.target_language, "conversation"),
+        llm_response = await _generate(
+            messages, get_system_prompt(user.target_language, "conversation")
         )
     except Exception as exc:
         logger.error("LLM call failed in Telegram chat: %s", exc)
@@ -164,7 +188,7 @@ async def chat_message(update: Update, context: ContextTypes.DEFAULT_TYPE) -> in
         llm_response.tokens_used,
     )
 
-    await update.message.reply_text(prose)
+    await reply_long(update.message, prose)
     return CHATTING
 
 
@@ -200,12 +224,12 @@ async def chat_photo(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
     user = await sync_to_async(User.objects.get)(pk=context.user_data.get("user_id"))
 
     try:
-        router = create_llm_router()
-        llm_response = router.generate_with_image(
-            messages=messages,
-            image_data=image_data,
-            image_mime_type=mime_type,
-            system_prompt=get_system_prompt(user.target_language, "image_query"),
+        llm_response = await asyncio.to_thread(
+            _generate_with_image,
+            messages,
+            image_data,
+            mime_type,
+            get_system_prompt(user.target_language, "image_query"),
         )
     except Exception as exc:
         logger.error("Vision LLM failed in Telegram: %s", exc)
@@ -230,7 +254,7 @@ async def chat_photo(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
         llm_response.tokens_used,
     )
 
-    await update.message.reply_text(llm_response.content)
+    await reply_long(update.message, llm_response.content)
     return CHATTING
 
 
@@ -255,10 +279,7 @@ async def chat_voice(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
 
     # STT: transcribe
     try:
-        stt = GroqWhisperProvider()
-        audio_io = io.BytesIO(bytes(audio_bytes))
-        audio_io.name = "voice.ogg"
-        stt_result = stt.transcribe(audio_file=audio_io, language="fr")
+        stt_result = await asyncio.to_thread(_transcribe, bytes(audio_bytes))
     except Exception as exc:
         logger.error("STT failed in Telegram voice chat: %s", exc)
         await update.message.reply_text("Sorry, I couldn't understand the audio. Please try again.")
@@ -278,10 +299,8 @@ async def chat_voice(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
 
     # LLM: generate response
     try:
-        router = create_llm_router()
-        llm_response = router.generate(
-            messages=messages,
-            system_prompt=get_system_prompt(user.target_language, "conversation"),
+        llm_response = await _generate(
+            messages, get_system_prompt(user.target_language, "conversation")
         )
     except Exception as exc:
         logger.error("LLM failed in Telegram voice chat: %s", exc)
@@ -307,7 +326,7 @@ async def chat_voice(update: Update, context: ContextTypes.DEFAULT_TYPE) -> int:
         logger.warning("TTS failed in Telegram voice chat: %s", exc)
 
     # Always send text too
-    await update.message.reply_text(llm_response.content)
+    await reply_long(update.message, llm_response.content)
     return CHATTING
 
 

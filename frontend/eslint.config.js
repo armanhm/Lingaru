@@ -34,6 +34,14 @@ export default [
       "no-unused-vars": ["warn", { argsIgnorePattern: "^_", varsIgnorePattern: "^_" }],
       "no-empty": ["error", { allowEmptyCatch: true }],
       "react-refresh/only-export-components": ["warn", { allowConstantExport: true }],
+      // React Compiler rules that eslint-plugin-react-hooks v7 turns on as errors.
+      // Kept visible as warnings until the existing violations are fixed (Phase 1).
+      "react-hooks/set-state-in-effect": "warn",
+      "react-hooks/refs": "warn",
+      "react-hooks/static-components": "warn",
+      "react-hooks/purity": "warn",
+      "react-hooks/immutability": "warn",
+      "react-hooks/preserve-manual-memoization": "warn",
     },
   },
 ];

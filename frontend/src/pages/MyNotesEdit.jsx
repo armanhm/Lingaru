@@ -975,7 +975,9 @@ export default function MyNotesEdit() {
   const lastIdRef = useRef(id);
   const generationRef = useRef(0);
   if (id !== lastIdRef.current) {
-    if (id !== createdIdRef.current) generationRef.current += 1;
+    // Consume the marker so returning to this note later remounts normally.
+    if (id === createdIdRef.current) createdIdRef.current = null;
+    else generationRef.current += 1;
     lastIdRef.current = id;
   }
   const handleCreated = useCallback((newId) => {

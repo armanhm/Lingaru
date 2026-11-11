@@ -3,6 +3,9 @@ name: Visual regression
 on:
   pull_request:
     branches: [main, dev]
+    paths:
+      - "frontend/**"
+      - ".github/workflows/visual-regression.yml"
   workflow_dispatch:
 
 # Visual regression is intentionally PR-only. Failures are usually
@@ -11,7 +14,7 @@ on:
 jobs:
   playwright:
     name: Playwright snapshots
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     defaults:
       run:
         working-directory: frontend

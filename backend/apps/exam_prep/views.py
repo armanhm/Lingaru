@@ -174,6 +174,13 @@ class SessionRespondView(APIView):
                 status=status.HTTP_400_BAD_REQUEST,
             )
 
+        # EE/EO exercises are a single prompt, so only index 0 is valid; this
+        # keeps the total bounded by session.max_score.
+        if session.section in ("EE", "EO") and question_index != 0:
+            return Response(
+                {"detail": "Invalid question index."}, status=status.HTTP_400_BAD_REQUEST
+            )
+
         # MCQ-based sections (CE, CO)
         if session.section in ("CE", "CO"):
             questions = exercise.content.get("questions", [])
@@ -331,6 +338,7 @@ class SessionCompleteView(APIView):
             # session.max_score is fixed at start; the fallback only covers
             # legacy rows created without one.
             total_max = session.max_score or sum(r.max_score for r in responses)
+            total_score = min(total_score, total_max)
             session.score = total_score
             session.max_score = total_max
             session.completed_at = timezone.now()

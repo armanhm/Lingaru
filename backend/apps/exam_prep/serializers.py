@@ -38,7 +38,7 @@ class SessionStartSerializer(serializers.Serializer):
 
 class RespondSerializer(serializers.Serializer):
     exercise_id = serializers.IntegerField()
-    question_index = serializers.IntegerField()
+    question_index = serializers.IntegerField(min_value=0)
     answer = serializers.CharField()
 
 

@@ -249,3 +249,41 @@ def test_ee_reanswer_resets_grading_and_requeues(user, api_client):
     assert row.score == 0
     assert row.user_answer == "new text"
     apply.assert_called_once()
+
+
+@pytest.mark.django_db
+@pytest.mark.parametrize("idx", [-1, 2, 99])
+def test_mcq_out_of_range_or_negative_index_rejected(user, api_client, idx):
+    api_client.force_authenticate(user=user)
+    ex, s = _mcq_setup(user)
+    assert _answer(api_client, s, ex, idx, "a").status_code == 400
+    assert ExamResponse.objects.filter(session=s).count() == 0
+
+
+@pytest.mark.django_db(transaction=True)
+@pytest.mark.parametrize("idx", [-1, 1, 5])
+def test_ee_nonzero_index_rejected(user, api_client, idx):
+    api_client.force_authenticate(user=user)
+    row = _ee_response(user)
+    with patch("apps.exam_prep.tasks.grade_response.apply_async") as apply:
+        r = _answer(api_client, row.session, row.exercise, idx, "text")
+    assert r.status_code == 400
+    apply.assert_not_called()
+    assert ExamResponse.objects.filter(session=row.session).count() == 1
+
+
+@pytest.mark.django_db
+def test_complete_never_exceeds_session_max(user, api_client):
+    api_client.force_authenticate(user=user)
+    ex, s = _mcq_setup(user)
+    for i in range(2):
+        ExamResponse.objects.create(
+            session=s, exercise=ex, question_index=i, user_answer="a", score=1, max_score=1
+        )
+    ExamResponse.objects.create(
+        session=s, exercise=ex, question_index=7, user_answer="a", score=1, max_score=1
+    )
+    resp = api_client.post(f"/api/exam-prep/sessions/{s.id}/complete/")
+    assert resp.status_code == 200
+    s.refresh_from_db()
+    assert s.score == s.max_score == 2

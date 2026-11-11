@@ -35,6 +35,21 @@ class PronunciationCheckSerializer(serializers.Serializer):
     vocabulary_id = serializers.IntegerField(required=False, allow_null=True)
 
 
+MAX_TRANSCRIBE_BYTES = 10 * 1024 * 1024
+
+
+class TranscribeSerializer(serializers.Serializer):
+    audio = serializers.FileField()
+    exercise_id = serializers.IntegerField(required=False, allow_null=True)
+
+    def validate_audio(self, value):
+        if value.size == 0:
+            raise serializers.ValidationError("Audio file is empty.")
+        if value.size > MAX_TRANSCRIBE_BYTES:
+            raise serializers.ValidationError("Audio file is too large (max 10 MB).")
+        return value
+
+
 class PronunciationResultSerializer(serializers.ModelSerializer):
     class Meta:
         model = PronunciationAttempt

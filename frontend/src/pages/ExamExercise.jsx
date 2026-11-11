@@ -20,7 +20,7 @@ function pollErrorMessage(err, fallback) {
   }
   return fallback;
 }
-import { generateTTS } from "../api/media";
+import { generateTTS, transcribeAudio } from "../api/media";
 import AudioPlayButton from "../components/AudioPlayButton";
 import useVoiceRecorder from "../hooks/useVoiceRecorder";
 import { useCountUp, staggerDelay } from "../hooks/useAnimations";
@@ -50,6 +50,8 @@ export default function ExamExercise() {
   const [transcription, setTranscription] = useState(null);
   const [speakingGrading, setSpeakingGrading] = useState(null);
   const [submittingSpeaking, setSubmittingSpeaking] = useState(false);
+  const [speakingRetry, setSpeakingRetry] = useState(null);
+  const pendingBlobRef = useRef(null);
 
   // Session data is passed via location state from ExamSection
   const [exercises, setExercises] = useState([]);
@@ -143,6 +145,8 @@ export default function ExamExercise() {
       setWritingGrading(null);
       setTranscription(null);
       setSpeakingGrading(null);
+      setSpeakingRetry(null);
+      pendingBlobRef.current = null;
       return;
     }
 
@@ -166,6 +170,45 @@ export default function ExamExercise() {
     window.addEventListener("keydown", handler);
     return () => window.removeEventListener("keydown", handler);
   }, [feedback, handleContinue]);
+
+  // Transcribe (STT only) then grade. The blob is kept so a failure can be
+  // retried without asking the user to record again.
+  const transcribeAndGrade = async (blob) => {
+    setSubmittingSpeaking(true);
+    setSpeakingRetry(null);
+    let stage = "transcribe";
+    try {
+      const sttRes = await transcribeAudio(blob, currentExercise.id);
+      const text = sttRes.data?.transcription || "";
+      if (!text.trim()) {
+        pendingBlobRef.current = null; // a silent blob would fail again; make the user re-record
+        setSpeakingRetry("We could not hear anything in that recording. Please try again.");
+        return;
+      }
+      setTranscription(text);
+      stage = "grade";
+      // Submit for AI grading (async: 202 + poll)
+      const submit = await submitExamResponse(sessionId, currentExercise.id, 0, text);
+      const result = await pollExamGrading(submit.data.response_id);
+      if (result.status === "done") {
+        setSpeakingGrading(result.grading || {});
+        setScore((s) => s + (result.grading?.score || 0));
+        // Only count the question as answered on success; otherwise the
+        // progress bar advances while the user is stuck on the recording screen.
+        setTotalAnswered((c) => c + 1);
+        pendingBlobRef.current = null;
+      } else {
+        setSpeakingRetry("Grading failed. Please try again.");
+      }
+    } catch (err) {
+      const fallback = stage === "transcribe"
+        ? "We could not transcribe your recording. Please try again."
+        : "Grading failed. Please try again.";
+      setSpeakingRetry(pollErrorMessage(err, fallback));
+    } finally {
+      setSubmittingSpeaking(false);
+    }
+  };
 
   if (loading) {
     return (
@@ -465,35 +508,10 @@ export default function ExamExercise() {
                     if (isRecording) {
                       const blob = await stopRecording();
                       if (!blob) return;
-                      setSubmittingSpeaking(true);
-                      try {
-                        // Transcribe via STT then grade
-                        const formData = new FormData();
-                        formData.append("audio", blob, "recording.webm");
-                        const sttRes = await fetch(`${API_BASE_URL}/media/voice-chat/`, {
-                          method: "POST",
-                          headers: { Authorization: `Bearer ${localStorage.getItem("access_token")}` },
-                          body: formData,
-                        });
-                        const sttData = await sttRes.json();
-                        const text = sttData.transcription || "";
-                        setTranscription(text);
-                        // Submit for AI grading (async: 202 + poll)
-                        const submit = await submitExamResponse(sessionId, currentExercise.id, 0, text);
-                        const result = await pollExamGrading(submit.data.response_id);
-                        if (result.status === "done") {
-                          setSpeakingGrading(result.grading || {});
-                          setScore((s) => s + (result.grading?.score || 0));
-                          // Only count the question as answered on success;
-                          // otherwise the progress bar advances while the user
-                          // is stuck on the recording screen.
-                          setTotalAnswered((c) => c + 1);
-                        } else {
-                          setError("Grading failed. Please try again.");
-                        }
-                      } catch (err) { setError(pollErrorMessage(err, "Recording or grading failed.")); }
-                      finally { setSubmittingSpeaking(false); }
+                      pendingBlobRef.current = blob;
+                      await transcribeAndGrade(blob);
                     } else {
+                      setSpeakingRetry(null);
                       try { await startRecording(); } catch { setError("Microphone access required."); }
                     }
                   }}
@@ -515,6 +533,16 @@ export default function ExamExercise() {
                 <p className="text-xs text-surface-400 dark:text-surface-500">
                   {submittingSpeaking ? "Analyzing your speech..." : isRecording ? "Recording... tap to stop" : "Tap to start recording"}
                 </p>
+                {speakingRetry && !submittingSpeaking && !isRecording && (
+                  <div className="text-center space-y-2" role="alert">
+                    <p className="text-sm text-danger-600 dark:text-danger-400">{speakingRetry}</p>
+                    {pendingBlobRef.current && (
+                      <button onClick={() => transcribeAndGrade(pendingBlobRef.current)} className="btn-primary btn-md">
+                        Retry
+                      </button>
+                    )}
+                  </div>
+                )}
               </div>
             </div>
           )}

@@ -1,4 +1,5 @@
 import hashlib
+import logging
 
 from django.utils import timezone
 from rest_framework import permissions, status
@@ -11,13 +12,17 @@ from services.stt.scoring import calculate_accuracy, generate_feedback
 from apps.gamification.services import award_xp, check_streak
 from .models import AudioClip, PronunciationAttempt
 from apps.content.models import Vocabulary
+from apps.exam_prep.models import ExamExercise
 from .serializers import (
     TTSRequestSerializer,
     AudioClipSerializer,
     PronunciationCheckSerializer,
     PronunciationResultSerializer,
+    TranscribeSerializer,
     DictationCheckRequestSerializer,
 )
+
+logger = logging.getLogger(__name__)
 
 
 class TTSView(APIView):
@@ -91,6 +96,37 @@ class PronunciationCheckView(APIView):
             PronunciationResultSerializer(attempt).data,
             status=status.HTTP_200_OK,
         )
+
+
+class TranscribeView(APIView):
+    """STT only: no LLM turn, no TTS, nothing persisted."""
+
+    permission_classes = (permissions.IsAuthenticated,)
+
+    def post(self, request):
+        serializer = TranscribeSerializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+
+        audio_file = serializer.validated_data["audio"]
+        language = request.user.target_language
+        exercise_id = serializer.validated_data.get("exercise_id")
+        if exercise_id:
+            exercise_language = (
+                ExamExercise.objects.filter(pk=exercise_id)
+                .values_list("language", flat=True)
+                .first()
+            )
+            language = exercise_language or language
+
+        try:
+            result = GroqWhisperProvider().transcribe(audio_file=audio_file, language=language)
+        except Exception:
+            logger.exception("Transcribe STT failed")
+            return Response(
+                {"detail": "Speech recognition failed. Please try again."},
+                status=status.HTTP_503_SERVICE_UNAVAILABLE,
+            )
+        return Response({"transcription": result.transcription}, status=status.HTTP_200_OK)
 
 
 class DictationStartView(APIView):

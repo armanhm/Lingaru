@@ -13,7 +13,7 @@ concurrency:
 jobs:
   backend-lint:
     name: Backend lint (Ruff)
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     defaults:
       run:
         working-directory: backend
@@ -32,7 +32,7 @@ jobs:
 
   backend:
     name: Backend (Django)
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     permissions:
       contents: read
       pull-requests: write
@@ -84,7 +84,7 @@ jobs:
 
   frontend-lint:
     name: Frontend lint (ESLint)
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     defaults:
       run:
         working-directory: frontend
@@ -103,7 +103,7 @@ jobs:
 
   frontend:
     name: Frontend (Vite)
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     defaults:
       run:
         working-directory: frontend
@@ -126,7 +126,7 @@ jobs:
 
   security-scan:
     name: Security scan (Trivy)
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     permissions:
       contents: read
     steps:

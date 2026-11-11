@@ -46,3 +46,15 @@ Thumbs.db
 
 # Superpowers brainstorm (visual companion)
 .superpowers/
+
+# Celery beat local schedule DB
+celerybeat-schedule*
+
+# Private, never-committed notes (e.g. unresolved security audit)
+.private/
+
+# Coverage
+.coverage
+.coverage.*
+htmlcov/
+coverage.xml

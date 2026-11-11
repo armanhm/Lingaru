@@ -70,10 +70,11 @@ A PR that ships behavior change without a test will probably get nudged for one.
 
 ## Where to Look
 
-- [`docs/ARCHITECTURE.md`](docs/ARCHITECTURE.md) -- system overview and conventions.
-- [`docs/superpowers/specs/2026-04-04-lingaru-system-design.md`](docs/superpowers/specs/2026-04-04-lingaru-system-design.md) -- the original design doc.
-- [`docs/superpowers/plans/`](docs/superpowers/plans/) -- per-phase plans. If you're adding a new phase, follow the same shape.
-- [`README.md#api-endpoints`](README.md#api-endpoints) -- REST surface, kept in sync with `backend/config/urls.py`.
+- [`docs/README.md`](docs/README.md): documentation index.
+- [`docs/wiki/Architecture.md`](docs/wiki/Architecture.md) and [`docs/wiki/Conventions.md`](docs/wiki/Conventions.md): the big picture and the rules.
+- [`docs/specs/`](docs/README.md#specs): the contract for each domain. **If your PR changes behaviour or an endpoint, update the matching spec in the same PR.**
+- [`docs/review/2026-11-phase0-review.md`](docs/review/2026-11-phase0-review.md): current roadmap; pick work from the [milestones](https://github.com/armanhm/Lingaru/milestones).
+- [`docs/superpowers/`](docs/superpowers/): historical design docs and per-phase plans.
 
 ## Reporting Bugs
 

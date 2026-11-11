@@ -21,5 +21,5 @@ gTTS>=2.5.0,<3.0
 PyPDF2>=3.0.0,<4.0
 youtube-transcript-api>=0.6.0,<1.0
 Pillow==13.0.0
-feedparser>=6.0.10,<7.0
+feedparser>=6.0.14,<7.0
 sentry-sdk[django,celery]>=2.74.0,<3.0

@@ -1,4 +1,5 @@
 from django.db.models import Q
+from django.utils import timezone
 from rest_framework import generics, permissions, status
 from rest_framework.response import Response
 from rest_framework.views import APIView
@@ -50,12 +51,12 @@ class SRSReviewView(APIView):
 
         updated_card = review_card(card, quality)
 
-        # Award XP for SRS review session (10 XP per session, deduplicated per card)
+        # A card is scheduled at most once per day, so one award per card per day.
         award_xp(
             request.user,
             activity_type="srs_review",
             xp_amount=10,
-            source_id=f"srs_card_{card.id}_{card.repetitions}",
+            source_id=f"srs_card_{card.id}_{timezone.localdate().isoformat()}",
         )
         check_streak(request.user)
 

@@ -95,18 +95,7 @@ npm install
 npm run dev
 ```
 
-Create `backend/config/settings/local.py` if it doesn't exist -- it should import from `dev.py` and override the database to use SQLite:
-
-```python
-from .dev import *
-
-DATABASES = {
-    "default": {
-        "ENGINE": "django.db.backends.sqlite3",
-        "NAME": BASE_DIR / "db.sqlite3",
-    }
-}
-```
+`backend/config/settings/local.py` (SQLite, eager Celery, local-memory cache) is included in the repo.
 
 ## Project Structure
 
@@ -152,163 +141,26 @@ Lingaru/
 
 ## API Endpoints
 
-> **v2.0.0 note:** all content-listing endpoints filter by the authenticated user's `target_language`. Detail / slug endpoints return 404 on cross-language access; list endpoints return 200 with an empty payload.
+All endpoints live under `/api/` and (except registration, login and `/api/health/`) require a JWT `Authorization: Bearer` header. Content endpoints are scoped to the user's `target_language`. The full contract for each domain (every endpoint, request and response shape, status codes) is in its spec:
 
-### Users (`/api/users/`)
-
-| Method | Endpoint | Description |
-|--------|----------|-------------|
-| POST | `/api/users/register/` | Create account |
-| POST | `/api/users/login/` | Obtain JWT token |
-| POST | `/api/users/token/refresh/` | Refresh JWT token |
-| GET | `/api/users/me/` | Current user profile |
-| POST | `/api/users/change-password/` | Change password |
-
-### Content (`/api/content/`)
-
-| Method | Endpoint | Description |
-|--------|----------|-------------|
-| GET | `/api/content/topics/` | List all topics |
-| GET | `/api/content/topics/{id}/` | Topic detail with lessons |
-| GET | `/api/content/lessons/{id}/` | Full lesson (vocab, grammar, questions) |
-
-### Practice (`/api/practice/`)
-
-| Method | Endpoint | Description |
-|--------|----------|-------------|
-| POST | `/api/practice/quiz/start/` | Start quiz session |
-| POST | `/api/practice/quiz/{session_id}/answer/` | Submit answer |
-| POST | `/api/practice/quiz/{session_id}/complete/` | Complete quiz |
-| GET | `/api/practice/quiz/history/` | Quiz attempt history |
-
-### Progress (`/api/progress/`)
-
-| Method | Endpoint | Description |
-|--------|----------|-------------|
-| GET | `/api/progress/srs/due/` | SRS cards due for review |
-| POST | `/api/progress/srs/review/` | Submit SRS review result |
-| GET | `/api/progress/mistakes/` | Mistake journal entries |
-| POST | `/api/progress/mistakes/reviewed/` | Mark mistakes as reviewed |
-| POST | `/api/progress/conjugation/check/` | Check conjugation answers |
-| GET | `/api/progress/conjugation/verbs/` | List verbs for drills |
-
-### Gamification (`/api/gamification/`)
-
-| Method | Endpoint | Description |
-|--------|----------|-------------|
-| GET | `/api/gamification/stats/` | XP, level, streak |
-| GET | `/api/gamification/badges/` | Earned and available badges |
-| GET | `/api/gamification/leaderboard/` | User rankings |
-| GET | `/api/gamification/history/` | XP transaction history |
-
-### Assistant (`/api/assistant/`)
-
-| Method | Endpoint | Description |
-|--------|----------|-------------|
-| POST | `/api/assistant/chat/` | Send message, get AI response |
-| POST | `/api/assistant/image-query/` | Upload image for AI analysis |
-| POST | `/api/assistant/voice-chat/` | Voice-based AI conversation |
-| GET | `/api/assistant/conversations/` | Conversation list |
-| GET | `/api/assistant/conversations/{id}/` | Conversation detail |
-
-### Media (`/api/media/`)
-
-| Method | Endpoint | Description |
-|--------|----------|-------------|
-| POST | `/api/media/tts/` | Generate audio for text |
-| POST | `/api/media/pronunciation/check/` | Check pronunciation accuracy |
-| POST | `/api/media/dictation/start/` | Start dictation exercise |
-| POST | `/api/media/dictation/check/` | Check dictation transcription |
-
-### Discover (`/api/discover/`)
-
-The Discover feed surfaces short word, grammar, and trivia cards. **News has its own dedicated `/api/news/` namespace** (see below).
-
-| Method | Endpoint | Description |
-|--------|----------|-------------|
-| GET | `/api/discover/feed/` | Explore feed cards (excludes news) |
-| POST | `/api/discover/generate-more/` | Generate fresh word + grammar + trivia cards |
-| POST | `/api/discover/cards/{id}/interact/` | Mark card as seen, award XP |
-
-### News (`/api/news/`)
-
-A dedicated practice surface -- French news articles with vocabulary, expressions, and grammar points pulled out for guided study. Falls back to a curated 9-topic offline mock library when the LLM is unavailable.
-
-| Method | Endpoint | Description |
-|--------|----------|-------------|
-| GET | `/api/news/?topic={slug}` | Paginated list (filter by topic: `politics`, `sports`, `culture`, `economy`, `science`, `tech`, `society`, `environ`, `world`) |
-| GET | `/api/news/{id}/` | Full article + `vocabulary[]`, `expressions[]`, `grammar_points[]` |
-| POST | `/api/news/generate/` | Generate a new article (optional `{ "topic": "…" }`) |
-| POST | `/api/news/{id}/interact/` | Mark as read, award XP |
-
-### Grammar Booster (`/api/grammar/`)
-
-| Method | Endpoint | Description |
-|--------|----------|-------------|
-| GET | `/api/grammar/hub/` | Categories + mastery aggregates + recommended-next topic |
-| GET | `/api/grammar/categories/` | List all 6 grammar categories |
-| GET | `/api/grammar/topics/` | List topics, filterable by category and CEFR level |
-| GET | `/api/grammar/topics/{slug}/` | Topic detail (markdown explanation, formula, examples, exceptions, common mistakes) |
-| POST | `/api/grammar/sessions/start/` | Start a drill session (`{ topic_id?, mode: "drill"\|"diagnostic" }`) |
-| POST | `/api/grammar/sessions/{id}/answer/` | Submit a drill answer |
-| POST | `/api/grammar/sessions/{id}/complete/` | Finish session, update SM-2 mastery, award XP |
-
-### Exam Prep (`/api/exam-prep/`)
-
-| Method | Endpoint | Description |
-|--------|----------|-------------|
-| GET | `/api/exam-prep/hub/` | Countdown, readiness gauge, week plan, weak topics |
-| GET | `/api/exam-prep/exercises/` | List exercises (filter by exam, section, level) |
-| POST | `/api/exam-prep/sessions/start/` | Start a section drill or full mock |
-| POST | `/api/exam-prep/sessions/{id}/respond/` | Submit an answer |
-| POST | `/api/exam-prep/sessions/{id}/complete/` | Finish, score, persist to history |
-| GET | `/api/exam-prep/sessions/history/` | Past mocks and section drills |
-
-### Dictionary (`/api/dictionary/`)
-
-| Method | Endpoint | Description |
-|--------|----------|-------------|
-| POST | `/api/dictionary/lookup/` | Look up a French word -- POS, gender, definitions, examples, synonyms, antonyms, etymology |
-| POST | `/api/dictionary/conjugate/` | Conjugate a verb across 8 tenses |
-
-### Documents (`/api/documents/`)
-
-| Method | Endpoint | Description |
-|--------|----------|-------------|
-| POST | `/api/documents/upload/` | Upload PDF for RAG indexing |
-| GET | `/api/documents/` | List uploaded documents |
-| DELETE | `/api/documents/{id}/` | Delete a document |
-| GET | `/api/documents/{id}/chunks/` | View document chunks |
-
-### Agents (`/api/agents/`)
-
-Specialised assistants, each with their own system prompt, suggested questions, and capabilities. Agents are admin-editable (via Django admin) so the gallery can be tuned without redeploying. The chat composer `@-mention` popover and the `/agents` gallery share the same source of truth.
-
-| Method | Endpoint | Description |
-|--------|----------|-------------|
-| GET | `/api/agents/` | Gallery payload (lean -- no system prompt) |
-| GET | `/api/agents/{slug}/` | Full agent detail for the run page |
-| POST | `/api/agents/{slug}/start/` | Create a fresh conversation pinned to this agent |
-| GET | `/api/agents/{slug}/runs/` | User's recent conversations with this agent (last 20) |
-
-### Memory (`/api/memory/`)
-
-User-curated notes the assistant remembers across conversations. Notes are scoped to the authenticated user; the assistant cannot edit or delete them, only the user can. Phase A: CRUD only. Phase B will wire these into the chat system prompt and add auto-detection.
-
-| Method | Endpoint | Description |
-|--------|----------|-------------|
-| GET | `/api/memory/notes/` | List active notes. Add `?include_inactive=true` to also include soft-deleted ones. |
-| POST | `/api/memory/notes/` | Create a note (`{content, category?}`). `category` defaults to `"other"`. |
-| PATCH | `/api/memory/notes/{id}/` | Edit content, category, or `is_active`. |
-| DELETE | `/api/memory/notes/{id}/` | Soft-delete (sets `is_active=False`). Idempotent. |
-
-Categories: `goal`, `preference`, `background`, `weakness`, `other`.
-
-### Health (`/api/health/`)
-
-| Method | Endpoint | Description |
-|--------|----------|-------------|
-| GET | `/api/health/` | Liveness + readiness probe (returns 200 if Django can reach the DB, 503 otherwise). Used by the deploy smoke test. |
+| Prefix | Domain | Spec |
+|--------|--------|------|
+| `/api/users/` | Registration, login, token refresh, profile | [users-auth](docs/specs/users-auth.md) |
+| `/api/content/` | Topics, lessons, vocabulary, video lessons | [content](docs/specs/content.md) |
+| `/api/practice/` | Lesson quiz sessions | [practice](docs/specs/practice.md) |
+| `/api/progress/` | SRS, mistakes, conjugation, lesson/topic progress | [progress-srs](docs/specs/progress-srs.md) |
+| `/api/gamification/` | XP, streaks, badges, leaderboard, trend, mini-games | [gamification](docs/specs/gamification.md) |
+| `/api/assistant/` | Chat, voice, image, conversations | [assistant](docs/specs/assistant.md) |
+| `/api/agents/` | Specialised assistants | [agents](docs/specs/agents.md) |
+| `/api/memory/` | Learner memory notes | [memory](docs/specs/memory.md) |
+| `/api/documents/` | Uploads for RAG | [documents-rag](docs/specs/documents-rag.md) |
+| `/api/media/` | TTS, pronunciation, dictation | [media-audio](docs/specs/media-audio.md) |
+| `/api/discover/`, `/api/news/` | Explore feed, News | [discover-news](docs/specs/discover-news.md) |
+| `/api/dictionary/` | Lookup, conjugator | [dictionary](docs/specs/dictionary.md) |
+| `/api/exam-prep/` | TCF/TEF practice | [exam-prep](docs/specs/exam-prep.md) |
+| `/api/grammar/` | Grammar Booster | [grammar-booster](docs/specs/grammar-booster.md) |
+| `/api/notes/`, `/api/my-notes/` | Our Notes, My Notes | [notes](docs/specs/notes.md) |
+| `/api/health/` | Liveness + DB probe (200 / 503) | [infrastructure](docs/specs/infrastructure.md) |
 
 ## Telegram Bot Setup
 
@@ -443,13 +295,13 @@ docker compose exec django python manage.py migrate
 
 ## Documentation
 
-Deeper docs live in [`docs/`](docs/):
+Full docs live in [`docs/`](docs/README.md) and are mirrored to the [GitHub Wiki](https://github.com/armanhm/Lingaru/wiki):
 
-- [`docs/ARCHITECTURE.md`](docs/ARCHITECTURE.md) -- system overview, request lifecycle, key conventions
-- [`docs/superpowers/specs/2026-04-04-lingaru-system-design.md`](docs/superpowers/specs/2026-04-04-lingaru-system-design.md) -- full original system design
-- [`docs/superpowers/plans/`](docs/superpowers/plans/) -- per-phase implementation plans (phases 1 through 17 are written up; 18 through 21 are documented inline in the features table and commit history)
-- [`CONTRIBUTING.md`](CONTRIBUTING.md) -- dev workflow, commit conventions, how to run tests/lint locally
-- [`SECURITY.md`](SECURITY.md) -- vulnerability disclosure policy
+- [Wiki Home](docs/wiki/Home.md): how every part works, with [Getting Started](docs/wiki/Getting-Started.md), [Architecture](docs/wiki/Architecture.md) and [Conventions](docs/wiki/Conventions.md)
+- [Specs](docs/README.md#specs): the current contract for each domain (API, data model, rules)
+- [Phase 0 Review and Roadmap](docs/review/2026-11-phase0-review.md): current priorities, linked to GitHub issues
+- [`CONTRIBUTING.md`](CONTRIBUTING.md) and [`SECURITY.md`](SECURITY.md)
+- [`docs/superpowers/`](docs/superpowers/): historical design docs and per-phase plans
 
 ## License
 

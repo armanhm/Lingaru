@@ -195,7 +195,7 @@ jobs:
             # migrate container from this deploy is not still running.
             docker ps -q --filter label=com.docker.compose.oneoff=True \
               --filter "label=com.docker.compose.project.working_dir=$PWD" </dev/null \
-              | xargs -r docker rm -f </dev/null || true
+              | xargs -r docker rm -f || true
             pending_now() {
               local plan
               plan=$(docker compose run --rm -T django python manage.py showmigrations --plan </dev/null) || return 1

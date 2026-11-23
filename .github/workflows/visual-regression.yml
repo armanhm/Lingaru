@@ -23,16 +23,16 @@ on:
 # Screenshots are rendered inside the official Playwright image so fonts,
 # browser build and OS libraries are identical on every run and match the
 # committed baselines, independent of what `ubuntu-*` runners ship.
-# Keep the image tag equal to the @playwright/test version in
+# Keep the image tag equal to the exact @playwright/test pin in
 # frontend/package-lock.json (the first step enforces this).
 jobs:
   playwright:
     name: Playwright snapshots
     runs-on: ubuntu-24.04
     container:
-      image: mcr.microsoft.com/playwright:v1.59.1-noble
+      image: mcr.microsoft.com/playwright:v1.65.1-noble
     env:
-      PLAYWRIGHT_IMAGE_VERSION: "1.59.1"
+      PLAYWRIGHT_IMAGE_VERSION: "1.65.1"
     defaults:
       run:
         working-directory: frontend

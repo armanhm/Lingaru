@@ -17,7 +17,7 @@
     "@tailwindcss/typography": "^0.5.19",
     "axios": "^1.7.0",
     "i18next": "^26.0.10",
-    "i18next-browser-languagedetector": "^8.2.1",
+    "i18next-browser-languagedetector": "^8.3.0",
     "react": "^19.3.1",
     "react-dom": "^19.3.1",
     "react-i18next": "^17.0.7",

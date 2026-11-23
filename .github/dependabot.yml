@@ -34,6 +34,12 @@ updates:
         update-types: ["version-update:semver-major"]
       - dependency-name: "@eslint/js"
         update-types: ["version-update:semver-major"]
+      # Tailwind 4 is a breaking migration; it is done with the design-system work.
+      - dependency-name: "tailwindcss"
+        update-types: ["version-update:semver-major"]
+      # The Playwright version must match the visual-regression container image;
+      # bump both together in one PR.
+      - dependency-name: "@playwright/test"
 
   - package-ecosystem: github-actions
     directory: /

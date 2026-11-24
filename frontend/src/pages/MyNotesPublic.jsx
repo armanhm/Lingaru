@@ -38,7 +38,7 @@ export default function MyNotesPublic() {
   if (loading) {
     return (
       <div className="max-w-3xl mx-auto animate-fade-in">
-        <div className="skeleton h-4 w-24 rounded mb-3" />
+        <div className="skeleton h-4 w-24 rounded-sm mb-3" />
         <div className="skeleton h-10 w-72 rounded-lg mb-3" />
         <div className="skeleton h-[400px] w-full rounded-2xl" />
       </div>
@@ -117,7 +117,7 @@ export default function MyNotesPublic() {
         <div className="prose dark:prose-invert max-w-none
           prose-p:my-2 prose-headings:mt-4 prose-headings:mb-2
           prose-strong:font-semibold prose-em:italic
-          prose-code:bg-surface-100 prose-code:dark:bg-surface-700 prose-code:px-1 prose-code:rounded prose-code:text-xs">
+          prose-code:bg-surface-100 dark:prose-code:bg-surface-700 prose-code:px-1 prose-code:rounded-sm prose-code:text-xs">
           <ReactMarkdown remarkPlugins={[remarkGfm]}>
             {note.body_markdown || ""}
           </ReactMarkdown>

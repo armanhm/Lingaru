@@ -202,7 +202,7 @@ export default function Pronunciation() {
 
       {word && (
         <div className="card relative overflow-hidden p-8 animate-scale-in" key={word.id}>
-          <div className="absolute inset-x-0 top-0 h-1 bg-gradient-to-r from-primary-500 via-purple-500 to-accent-500" />
+          <div className="absolute inset-x-0 top-0 h-1 bg-linear-to-r from-primary-500 via-purple-500 to-accent-500" />
           <div className="absolute -top-12 -right-12 w-48 h-48 bg-primary-200/30 dark:bg-primary-700/20 rounded-full blur-3xl pointer-events-none" />
 
           {/* Word display */}
@@ -239,8 +239,8 @@ export default function Pronunciation() {
                 disabled={loading}
                 className={`inline-flex items-center gap-2 px-8 py-4 font-bold rounded-2xl transition-all active:scale-95 ${
                   recording
-                    ? "bg-gradient-to-br from-danger-500 to-accent-600 text-white animate-recording-pulse shadow-glow-danger"
-                    : "bg-gradient-to-br from-primary-600 to-purple-700 text-white hover:scale-105 shadow-glow-primary"
+                    ? "bg-linear-to-br from-danger-500 to-accent-600 text-white animate-recording-pulse shadow-glow-danger"
+                    : "bg-linear-to-br from-primary-600 to-purple-700 text-white hover:scale-105 shadow-glow-primary"
                 } disabled:opacity-50`}
               >
                 {recording ? (
@@ -288,7 +288,7 @@ export default function Pronunciation() {
                   </p>
                 </div>
 
-                <div className="rounded-xl bg-gradient-to-br from-surface-50 to-primary-50/30 dark:from-surface-700/40 dark:to-primary-900/10 border border-surface-200 dark:border-surface-700 p-4 space-y-3">
+                <div className="rounded-xl bg-linear-to-br from-surface-50 to-primary-50/30 dark:from-surface-700/40 dark:to-primary-900/10 border border-surface-200 dark:border-surface-700 p-4 space-y-3">
                   <div className="flex items-baseline gap-2 flex-wrap">
                     <span className="section-label">We heard</span>
                     <span className="text-body font-semibold text-surface-900 dark:text-surface-100">{result.transcription}</span>

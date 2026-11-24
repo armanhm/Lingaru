@@ -39,7 +39,7 @@ export default function InlineRoundWidget({
       {/* Header */}
       <div className="px-4 pt-4 pb-3 flex items-center gap-3 border-b border-surface-100 dark:border-surface-700/50">
         {emoji && (
-          <span className="w-9 h-9 rounded-xl mode-grad-bg text-white flex items-center justify-center text-lg shadow-sm shrink-0">
+          <span className="w-9 h-9 rounded-xl mode-grad-bg text-white flex items-center justify-center text-lg shadow-xs shrink-0">
             {emoji}
           </span>
         )}
@@ -76,7 +76,7 @@ export default function InlineRoundWidget({
             {emptyCtaTo && emptyCtaLabel && (
               <Link
                 to={emptyCtaTo}
-                className="mt-1 inline-flex items-center gap-1 text-[12px] font-bold mode-accent-text hover:underline focus-ring rounded px-2 py-1"
+                className="mt-1 inline-flex items-center gap-1 text-[12px] font-bold mode-accent-text hover:underline focus-ring rounded-sm px-2 py-1"
               >
                 {emptyCtaLabel}
               </Link>
@@ -94,7 +94,7 @@ export default function InlineRoundWidget({
             <button
               type="button"
               onClick={onAgain}
-              className="px-3 py-1.5 rounded-lg text-[12px] font-bold mode-grad-bg text-white shadow-sm hover:shadow-md active:scale-95 transition-all focus-ring"
+              className="px-3 py-1.5 rounded-lg text-[12px] font-bold mode-grad-bg text-white shadow-xs hover:shadow-md active:scale-95 transition-all focus-ring"
             >
               {againLabel}
             </button>
@@ -102,7 +102,7 @@ export default function InlineRoundWidget({
           {fullSessionTo && (
             <Link
               to={fullSessionTo}
-              className="text-[12px] font-bold mode-accent-text hover:underline focus-ring rounded px-1"
+              className="text-[12px] font-bold mode-accent-text hover:underline focus-ring rounded-sm px-1"
             >
               {fullSessionLabel}
             </Link>

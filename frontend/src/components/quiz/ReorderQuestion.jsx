@@ -77,7 +77,7 @@ export default function ReorderQuestion({ words: initialWords, correctSentence, 
             key={w.id}
             onClick={() => handleWordClick(w)}
             disabled={disabled}
-            className="px-3 py-1.5 rounded-lg bg-white dark:bg-surface-800 border-2 border-surface-200 dark:border-surface-600 text-surface-800 dark:text-surface-200 text-sm font-medium hover:border-primary-400 hover:scale-105 active:scale-95 transition-all shadow-sm"
+            className="px-3 py-1.5 rounded-lg bg-white dark:bg-surface-800 border-2 border-surface-200 dark:border-surface-600 text-surface-800 dark:text-surface-200 text-sm font-medium hover:border-primary-400 hover:scale-105 active:scale-95 transition-all shadow-xs"
           >
             {w.text}
           </button>

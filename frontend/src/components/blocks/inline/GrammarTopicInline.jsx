@@ -50,7 +50,7 @@ export default function GrammarTopicInline({ config = {} }) {
             {topic.title}
           </h3>
           {topic.level && (
-            <span className="inline-block text-[10px] font-mono uppercase tracking-wider px-1.5 py-0.5 rounded bg-surface-100 dark:bg-surface-800 text-surface-600 dark:text-surface-400">
+            <span className="inline-block text-[10px] font-mono uppercase tracking-wider px-1.5 py-0.5 rounded-sm bg-surface-100 dark:bg-surface-800 text-surface-600 dark:text-surface-400">
               {topic.level}
             </span>
           )}

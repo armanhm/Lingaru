@@ -33,7 +33,7 @@ export default function Login() {
   return (
     <div className="min-h-screen flex bg-surface-50 dark:bg-surface-950">
       {/* Left, gradient branding panel (hidden on mobile) */}
-      <div className="hidden lg:flex lg:w-1/2 relative overflow-hidden items-center justify-center p-12 bg-gradient-to-br from-primary-600 via-primary-700 to-purple-800">
+      <div className="hidden lg:flex lg:w-1/2 relative overflow-hidden items-center justify-center p-12 bg-linear-to-br from-primary-600 via-primary-700 to-purple-800">
         {/* Decorative mesh blobs */}
         <div className="absolute inset-0 opacity-30 pointer-events-none">
           <div className="absolute top-10 left-10 w-72 h-72 bg-accent-400 rounded-full blur-3xl animate-float" />
@@ -55,7 +55,7 @@ export default function Login() {
           <div className="space-y-4">
             <h2 className="text-display font-extrabold leading-[1.1] tracking-tight">
               Learn French,<br />
-              <span className="bg-gradient-to-r from-white via-accent-200 to-white bg-clip-text text-transparent bg-[size:200%_auto] animate-gradient-shift">one word at a time.</span>
+              <span className="bg-linear-to-r from-white via-accent-200 to-white bg-clip-text text-transparent bg-size-[200%_auto] animate-gradient-shift">one word at a time.</span>
             </h2>
             <p className="text-body-lg text-white/75 leading-relaxed">
               Interactive lessons, AI conversations, mini games, and spaced repetition, everything you need to become fluent.
@@ -68,7 +68,7 @@ export default function Login() {
               { n: "6", l: "Mini games", icon: "🎮" },
               { n: "AI", l: "Tutor", icon: "🤖" },
             ].map((s) => (
-              <div key={s.l} className="rounded-2xl bg-white/10 backdrop-blur-sm border border-white/15 p-3 text-center hover:bg-white/15 transition-colors">
+              <div key={s.l} className="rounded-2xl bg-white/10 backdrop-blur-xs border border-white/15 p-3 text-center hover:bg-white/15 transition-colors">
                 <p className="text-2xl">{s.icon}</p>
                 <p className="text-h4 font-extrabold mt-1">{s.n}</p>
                 <p className="text-eyebrow uppercase text-white/60 mt-0.5">{s.l}</p>
@@ -87,7 +87,7 @@ export default function Login() {
         <div className="relative w-full max-w-md space-y-7 animate-fade-in-up">
           {/* Mobile logo */}
           <div className="lg:hidden flex items-center justify-center gap-2.5 mb-2">
-            <span className="w-11 h-11 bg-gradient-to-br from-primary-500 to-purple-600 rounded-2xl flex items-center justify-center text-white font-extrabold text-lg shadow-glow-primary">L</span>
+            <span className="w-11 h-11 bg-linear-to-br from-primary-500 to-purple-600 rounded-2xl flex items-center justify-center text-white font-extrabold text-lg shadow-glow-primary">L</span>
             <span className="text-2xl font-extrabold text-gradient-primary">Lingaru</span>
           </div>
 

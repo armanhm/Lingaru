@@ -297,14 +297,14 @@ export default function OurNotesReview() {
       <div className="relative overflow-visible" style={{ minHeight: 400 }}>
         <aside className="hidden lg:flex absolute left-0 top-0 -translate-x-[calc(100%+1rem)] h-full z-20 flex-col items-center pointer-events-none">
           <div className="sticky top-0 pointer-events-auto">
-            <div className="flex flex-col gap-2 p-2 rounded-2xl bg-white/90 dark:bg-surface-800/90 backdrop-blur-md border border-surface-200 dark:border-surface-700 shadow-lg ring-1 ring-black/[0.03] dark:ring-white/[0.04]">
+            <div className="flex flex-col gap-2 p-2 rounded-2xl bg-white/90 dark:bg-surface-800/90 backdrop-blur-md border border-surface-200 dark:border-surface-700 shadow-lg ring-1 ring-black/3 dark:ring-white/4">
               {actionButtons.map((btn) => (
                 <button
                   key={btn.key}
                   type="button"
                   onClick={btn.onClick}
                   disabled={btn.disabled}
-                  className="group relative w-14 h-14 flex items-center justify-center rounded-xl bg-surface-50 dark:bg-surface-700/60 border border-surface-100 dark:border-surface-600/40 text-2xl shadow-sm hover:bg-primary-50 dark:hover:bg-primary-900/30 hover:border-primary-200 dark:hover:border-primary-700 hover:shadow-md hover:scale-110 active:scale-95 transition-all duration-200 ease-out focus-ring disabled:opacity-40 disabled:cursor-not-allowed disabled:hover:scale-100"
+                  className="group relative w-14 h-14 flex items-center justify-center rounded-xl bg-surface-50 dark:bg-surface-700/60 border border-surface-100 dark:border-surface-600/40 text-2xl shadow-xs hover:bg-primary-50 dark:hover:bg-primary-900/30 hover:border-primary-200 dark:hover:border-primary-700 hover:shadow-md hover:scale-110 active:scale-95 transition-all duration-200 ease-out focus-ring disabled:opacity-40 disabled:cursor-not-allowed disabled:hover:scale-100"
                   aria-label={btn.label}
                 >
                   <span aria-hidden>{btn.icon}</span>
@@ -359,8 +359,8 @@ export default function OurNotesReview() {
             <div className="space-y-3">
               {[...Array(4)].map((_, i) => (
                 <div key={i} className="space-y-1.5">
-                  <div className="skeleton h-4 w-3/4 rounded bg-surface-700/60" />
-                  <div className="skeleton h-3 w-1/2 rounded bg-surface-700/40 ml-4" />
+                  <div className="skeleton h-4 w-3/4 rounded-sm bg-surface-700/60" />
+                  <div className="skeleton h-3 w-1/2 rounded-sm bg-surface-700/40 ml-4" />
                 </div>
               ))}
             </div>
@@ -447,7 +447,7 @@ export default function OurNotesReview() {
                     ref={(el) => {
                       if (active && el && !dragging && !exiting) el.scrollIntoView({ block: "nearest", behavior: "smooth" });
                     }}
-                    className={`origin-right w-24 text-center whitespace-nowrap px-3 py-1 rounded-md text-sm font-medium transition-all duration-200 ease-out focus-ring backdrop-blur shadow-sm hover:scale-150 hover:font-bold hover:shadow-md hover:z-10 relative ${
+                    className={`origin-right w-24 text-center whitespace-nowrap px-3 py-1 rounded-md text-sm font-medium transition-all duration-200 ease-out focus-ring backdrop-blur-sm shadow-xs hover:scale-150 hover:font-bold hover:shadow-md hover:z-10 relative ${
                       active
                         ? "bg-primary-600 text-white scale-110 ring-2 ring-primary-300 dark:ring-primary-700"
                         : "bg-white/85 dark:bg-surface-800/85 text-surface-700 dark:text-surface-300 hover:bg-primary-50 dark:hover:bg-primary-900/30 hover:text-primary-700 dark:hover:text-primary-300"

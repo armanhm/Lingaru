@@ -457,7 +457,7 @@ function Drawer({ open, onClose, side = "left", title, children }) {
 
   return (
     <div className="fixed inset-0 z-50" onClick={onClose}>
-      <div className="absolute inset-0 bg-black/30 backdrop-blur-sm animate-fade-in" />
+      <div className="absolute inset-0 bg-black/30 backdrop-blur-xs animate-fade-in" />
       <aside
         onClick={(e) => e.stopPropagation()}
         className={`absolute top-0 bottom-0 w-[340px] max-w-[90vw] bg-white dark:bg-surface-900 ${borderClass} border-surface-100 dark:border-surface-800 shadow-card-elevated flex flex-col ${slideClass}`}
@@ -502,7 +502,7 @@ function HistoryDrawer({
       <div className="p-3 border-b border-surface-100 dark:border-surface-800 space-y-3">
         <button
           onClick={() => { onNewChat(); onClose(); }}
-          className="w-full flex items-center justify-center gap-2 bg-gradient-to-br from-primary-600 to-purple-700 text-white px-3 py-2.5 rounded-xl font-semibold text-[13px] shadow-glow-primary hover:scale-[1.02] active:scale-95 transition-all focus-ring"
+          className="w-full flex items-center justify-center gap-2 bg-linear-to-br from-primary-600 to-purple-700 text-white px-3 py-2.5 rounded-xl font-semibold text-[13px] shadow-glow-primary hover:scale-[1.02] active:scale-95 transition-all focus-ring"
         >
           <Ic.sparkle className="w-3.5 h-3.5" /> {t("assistant.drawer.newConversation")}
         </button>
@@ -512,7 +512,7 @@ function HistoryDrawer({
             value={search}
             onChange={(e) => setSearch(e.target.value)}
             placeholder={t("assistant.drawer.search")}
-            className="w-full pl-8 pr-3 py-2 text-[12.5px] rounded-lg bg-surface-50 dark:bg-surface-800/60 border border-surface-100 dark:border-surface-700 text-surface-900 dark:text-surface-100 placeholder:text-surface-400 focus:outline-none focus:ring-2 focus:ring-primary-200 dark:focus:ring-primary-900/40 focus:border-primary-400"
+            className="w-full pl-8 pr-3 py-2 text-[12.5px] rounded-lg bg-surface-50 dark:bg-surface-800/60 border border-surface-100 dark:border-surface-700 text-surface-900 dark:text-surface-100 placeholder:text-surface-400 focus:outline-hidden focus:ring-2 focus:ring-primary-200 dark:focus:ring-primary-900/40 focus:border-primary-400"
           />
         </div>
       </div>
@@ -623,7 +623,7 @@ function TuteurDrawer({ open, onClose, mode, onModeChange, scenario, onScenarioC
     <Drawer open={open} onClose={onClose} side="right" title={t("assistant.drawer.tuteurTitle")}>
       <div className="p-5 space-y-5">
         <div className="flex items-center gap-3">
-          <span className="w-14 h-14 rounded-full bg-gradient-to-br from-primary-400 to-primary-600 flex items-center justify-center text-[26px] shadow-glow-primary shrink-0">{TUTOR.emoji}</span>
+          <span className="w-14 h-14 rounded-full bg-linear-to-br from-primary-400 to-primary-600 flex items-center justify-center text-[26px] shadow-glow-primary shrink-0">{TUTOR.emoji}</span>
           <div className="min-w-0">
             <p className="text-[16px] font-bold text-surface-900 dark:text-surface-50">{TUTOR.name}</p>
             <p className="text-[12px] text-surface-500 dark:text-surface-400">{TUTOR.region} · {TUTOR.style}</p>
@@ -769,12 +769,12 @@ function ChatBubble({ msg, onUndoMemorySave, t }) {
         </div>
 
         {msg.imagePreview && (
-          <img src={msg.imagePreview} alt="Uploaded" className="max-w-[280px] max-h-48 rounded-2xl mb-1.5 shadow-sm" />
+          <img src={msg.imagePreview} alt="Uploaded" className="max-w-[280px] max-h-48 rounded-2xl mb-1.5 shadow-xs" />
         )}
 
-        <div className={`relative group/bubble rounded-2xl px-4 py-3 text-[14px] leading-relaxed shadow-sm ${
+        <div className={`relative group/bubble rounded-2xl px-4 py-3 text-[14px] leading-relaxed shadow-xs ${
           isUser
-            ? "bg-gradient-to-br from-purple-800 to-surface-700 text-white rounded-br-sm"
+            ? "bg-linear-to-br from-purple-800 to-surface-700 text-white rounded-br-sm"
             : "bg-white dark:bg-surface-900/80 border border-surface-100 dark:border-surface-800 text-surface-900 dark:text-surface-50 rounded-bl-sm"
         }`}>
           {isUser ? (
@@ -785,7 +785,7 @@ function ChatBubble({ msg, onUndoMemorySave, t }) {
               prose-h3:text-base prose-h3:font-semibold
               prose-ul:my-1 prose-ol:my-1 prose-li:my-0.5
               prose-strong:font-semibold prose-em:italic
-              prose-code:bg-surface-100 prose-code:dark:bg-surface-700 prose-code:px-1 prose-code:rounded prose-code:text-xs
+              prose-code:bg-surface-100 dark:prose-code:bg-surface-700 prose-code:px-1 prose-code:rounded-sm prose-code:text-xs
               prose-table:my-2 prose-table:text-[12.5px] prose-table:border-collapse
               prose-th:bg-surface-50 dark:prose-th:bg-surface-800 prose-th:px-2 prose-th:py-1.5 prose-th:font-semibold prose-th:text-left prose-th:border prose-th:border-surface-200 dark:prose-th:border-surface-700
               prose-td:px-2 prose-td:py-1 prose-td:border prose-td:border-surface-200 dark:prose-td:border-surface-700">
@@ -872,8 +872,8 @@ function ChatBubble({ msg, onUndoMemorySave, t }) {
 function TypingIndicator() {
   return (
     <div className="flex gap-3 animate-fade-in-up">
-      <span className="shrink-0 w-9 h-9 rounded-full bg-gradient-to-br from-primary-500 to-purple-600 text-white flex items-center justify-center text-[16px] shadow-sm">{TUTOR.emoji}</span>
-      <div className="bg-white dark:bg-surface-900/80 border border-surface-100 dark:border-surface-800 rounded-2xl rounded-bl-sm px-4 py-3 flex items-center gap-1 shadow-sm">
+      <span className="shrink-0 w-9 h-9 rounded-full bg-linear-to-br from-primary-500 to-purple-600 text-white flex items-center justify-center text-[16px] shadow-xs">{TUTOR.emoji}</span>
+      <div className="bg-white dark:bg-surface-900/80 border border-surface-100 dark:border-surface-800 rounded-2xl rounded-bl-sm px-4 py-3 flex items-center gap-1 shadow-xs">
         <span className="w-1.5 h-1.5 rounded-full bg-surface-400 animate-pulse" style={{ animationDelay: "0ms" }} />
         <span className="w-1.5 h-1.5 rounded-full bg-surface-400 animate-pulse" style={{ animationDelay: "150ms" }} />
         <span className="w-1.5 h-1.5 rounded-full bg-surface-400 animate-pulse" style={{ animationDelay: "300ms" }} />
@@ -899,7 +899,7 @@ function ImagePreviewBanner({ file, onRemove }) {
 
   return (
     <div className="flex items-center gap-2.5 px-4 py-2.5 border-y border-info-200 dark:border-info-800 bg-info-50 dark:bg-info-900/20 animate-slide-in-down">
-      <img src={preview} alt="Preview" className="h-12 w-12 object-cover rounded-lg shadow-sm" />
+      <img src={preview} alt="Preview" className="h-12 w-12 object-cover rounded-lg shadow-xs" />
       <span className="text-sm font-medium text-info-700 dark:text-info-300 flex-1 truncate">{file.name}</span>
       <button
         onClick={onRemove}
@@ -946,11 +946,11 @@ function MentionPopover({ open, query, onPick, onClose, activeIndex, setActiveIn
                 aria-selected={active}
                 className={`w-full flex items-center gap-3 px-3 py-2 text-left transition-colors ${
                   active
-                    ? "bg-gradient-to-r from-primary-50 to-purple-50 dark:from-primary-900/40 dark:to-purple-900/30"
+                    ? "bg-linear-to-r from-primary-50 to-purple-50 dark:from-primary-900/40 dark:to-purple-900/30"
                     : "hover:bg-surface-50 dark:hover:bg-surface-800/40"
                 }`}
               >
-                <span className="shrink-0 w-8 h-8 rounded-lg bg-gradient-to-br from-primary-500 to-purple-600 text-white flex items-center justify-center text-base shadow-sm">
+                <span className="shrink-0 w-8 h-8 rounded-lg bg-linear-to-br from-primary-500 to-purple-600 text-white flex items-center justify-center text-base shadow-xs">
                   {a.emoji}
                 </span>
                 <div className="min-w-0 flex-1">
@@ -1421,7 +1421,7 @@ export default function Assistant() {
             title={t("assistant.header.tutor")}
             className="flex items-center gap-2 h-9 pl-1.5 pr-2 sm:pr-3 rounded-lg border border-surface-200 dark:border-surface-700 hover:border-primary-300 dark:hover:border-primary-700 bg-white dark:bg-surface-900 transition-colors focus-ring"
           >
-            <span className="w-6 h-6 rounded-full bg-gradient-to-br from-primary-500 to-purple-600 flex items-center justify-center text-[14px] shadow-sm">{TUTOR.emoji}</span>
+            <span className="w-6 h-6 rounded-full bg-linear-to-br from-primary-500 to-purple-600 flex items-center justify-center text-[14px] shadow-xs">{TUTOR.emoji}</span>
             <span className="hidden sm:inline text-[12px] font-semibold text-surface-700 dark:text-surface-200">{TUTOR.name}</span>
             <Ic.chevDown className="w-3 h-3 text-surface-400 hidden sm:inline" />
           </button>
@@ -1502,7 +1502,7 @@ export default function Assistant() {
           <div className="max-w-3xl mx-auto space-y-6 animate-fade-in-up">
             {/* Scene setup card */}
             <div className="rounded-2xl border border-dashed border-surface-300 dark:border-surface-700 bg-white/60 dark:bg-surface-900/40 p-5 text-center">
-              <div className="w-14 h-14 mx-auto mb-3 rounded-2xl bg-gradient-to-br from-primary-500 to-purple-600 text-white flex items-center justify-center text-2xl shadow-glow-primary">
+              <div className="w-14 h-14 mx-auto mb-3 rounded-2xl bg-linear-to-br from-primary-500 to-purple-600 text-white flex items-center justify-center text-2xl shadow-glow-primary">
                 {mode === "roleplay" ? sc.emoji : activeMode.emoji}
               </div>
               <p className="text-[10px] uppercase tracking-[0.14em] font-semibold text-surface-400 dark:text-surface-500 mb-1">
@@ -1523,7 +1523,7 @@ export default function Assistant() {
                   <button
                     key={i}
                     onClick={() => handleTemplate(starter)}
-                    className="text-left px-4 py-3 rounded-xl border border-surface-200 dark:border-surface-700 bg-white dark:bg-surface-900 hover:border-primary-300 dark:hover:border-primary-700 hover:bg-primary-50/40 dark:hover:bg-primary-900/20 hover:-translate-y-0.5 hover:shadow-sm transition-all animate-fade-in-up focus-ring"
+                    className="text-left px-4 py-3 rounded-xl border border-surface-200 dark:border-surface-700 bg-white dark:bg-surface-900 hover:border-primary-300 dark:hover:border-primary-700 hover:bg-primary-50/40 dark:hover:bg-primary-900/20 hover:-translate-y-0.5 hover:shadow-xs transition-all animate-fade-in-up focus-ring"
                     style={{ animationDelay: `${i * 50}ms` }}
                   >
                     <p className="text-[13px] text-surface-800 dark:text-surface-100 leading-snug">
@@ -1570,7 +1570,7 @@ export default function Assistant() {
 
           {/* Echo strip, shows the typed message with @mentions colored, only when at least one mention is present */}
           {parseMentions(input).length > 0 && (
-            <div className="mb-1.5 px-3 py-1.5 rounded-lg bg-primary-50/40 dark:bg-primary-900/15 border border-primary-100 dark:border-primary-900/40 text-[12.5px] leading-snug text-surface-700 dark:text-surface-200 break-words">
+            <div className="mb-1.5 px-3 py-1.5 rounded-lg bg-primary-50/40 dark:bg-primary-900/15 border border-primary-100 dark:border-primary-900/40 text-[12.5px] leading-snug text-surface-700 dark:text-surface-200 wrap-break-word">
               <span className="text-[10px] font-mono uppercase tracking-[0.14em] text-primary-600 dark:text-primary-400 font-semibold mr-2">{t("assistant.composer.preview")}</span>
               <MentionedText text={input} />
             </div>
@@ -1587,7 +1587,7 @@ export default function Assistant() {
               placeholder={placeholder}
               rows={2}
               disabled={loading}
-              className="w-full px-4 py-3 bg-transparent text-[14px] resize-none focus:outline-none text-surface-900 dark:text-surface-50 placeholder:text-surface-400 dark:placeholder:text-surface-500 disabled:opacity-60"
+              className="w-full px-4 py-3 bg-transparent text-[14px] resize-none focus:outline-hidden text-surface-900 dark:text-surface-50 placeholder:text-surface-400 dark:placeholder:text-surface-500 disabled:opacity-60"
             />
             <div className="flex items-center gap-1 px-2 pb-2 pt-1">
               {/* Image upload */}
@@ -1629,7 +1629,7 @@ export default function Assistant() {
               <button
                 onClick={handleSend}
                 disabled={loading || (!input.trim() && !imageFile)}
-                className="ml-auto bg-gradient-to-br from-primary-600 to-purple-700 disabled:from-surface-300 disabled:to-surface-400 dark:disabled:from-surface-700 dark:disabled:to-surface-600 text-white px-4 py-2 rounded-lg text-[13px] font-bold flex items-center gap-1.5 disabled:opacity-60 disabled:cursor-not-allowed shadow-sm hover:shadow-glow-primary active:scale-95 transition-all focus-ring"
+                className="ml-auto bg-linear-to-br from-primary-600 to-purple-700 disabled:from-surface-300 disabled:to-surface-400 dark:disabled:from-surface-700 dark:disabled:to-surface-600 text-white px-4 py-2 rounded-lg text-[13px] font-bold flex items-center gap-1.5 disabled:opacity-60 disabled:cursor-not-allowed shadow-xs hover:shadow-glow-primary active:scale-95 transition-all focus-ring"
               >
                 {t("assistant.composer.send")} <Ic.arrowUp className="w-3.5 h-3.5" />
               </button>

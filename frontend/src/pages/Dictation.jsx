@@ -131,7 +131,7 @@ export default function Dictation() {
       />
 
       {totalXP > 0 && (
-        <div className="mb-5 inline-flex items-center gap-2 bg-gradient-to-br from-warn-50 to-accent-50 dark:from-warn-900/30 dark:to-accent-900/30 border border-warn-200 dark:border-warn-800 text-warn-800 dark:text-warn-200 rounded-xl px-4 py-2 text-sm font-bold animate-pop-in shadow-sm">
+        <div className="mb-5 inline-flex items-center gap-2 bg-linear-to-br from-warn-50 to-accent-50 dark:from-warn-900/30 dark:to-accent-900/30 border border-warn-200 dark:border-warn-800 text-warn-800 dark:text-warn-200 rounded-xl px-4 py-2 text-sm font-bold animate-pop-in shadow-xs">
           <span>⚡</span>
           <span>XP this session</span>
           <span className="text-warn-700 dark:text-warn-300">{animatedXP}</span>
@@ -147,11 +147,11 @@ export default function Dictation() {
 
       {phase === "idle" && (
         <div className="card relative overflow-hidden p-12 text-center animate-fade-in-up">
-          <div className="absolute inset-x-0 top-0 h-1 bg-gradient-to-r from-info-500 via-primary-500 to-purple-500" />
+          <div className="absolute inset-x-0 top-0 h-1 bg-linear-to-r from-info-500 via-primary-500 to-purple-500" />
           <div className="absolute -top-12 -right-12 w-48 h-48 bg-info-200/30 dark:bg-info-700/20 rounded-full blur-3xl pointer-events-none" />
 
           <div className="relative inline-block mb-6 animate-bounce-in">
-            <div className="w-20 h-20 mx-auto rounded-2xl bg-gradient-to-br from-info-500 to-primary-600 text-white flex items-center justify-center text-4xl shadow-glow-primary animate-float">
+            <div className="w-20 h-20 mx-auto rounded-2xl bg-linear-to-br from-info-500 to-primary-600 text-white flex items-center justify-center text-4xl shadow-glow-primary animate-float">
               🎧
             </div>
           </div>
@@ -172,7 +172,7 @@ export default function Dictation() {
 
       {phase === "listening" && (
         <div className="card relative overflow-hidden p-8 animate-scale-in">
-          <div className="absolute inset-x-0 top-0 h-1 bg-gradient-to-r from-info-500 to-primary-500" />
+          <div className="absolute inset-x-0 top-0 h-1 bg-linear-to-r from-info-500 to-primary-500" />
 
           <div className="flex items-center justify-center mb-6">
             <button
@@ -199,7 +199,7 @@ export default function Dictation() {
               onChange={(e) => setUserText(e.target.value)}
               placeholder="Type the French sentence…"
               autoFocus
-              className="w-full px-4 py-3 border-2 border-surface-200 dark:border-surface-600 rounded-xl text-base bg-white dark:bg-surface-700 text-surface-900 dark:text-surface-100 placeholder:text-surface-400 focus:border-primary-500 focus:ring-2 focus:ring-primary-500/20 focus:outline-none transition-all"
+              className="w-full px-4 py-3 border-2 border-surface-200 dark:border-surface-600 rounded-xl text-base bg-white dark:bg-surface-700 text-surface-900 dark:text-surface-100 placeholder:text-surface-400 focus:border-primary-500 focus:ring-2 focus:ring-primary-500/20 focus:outline-hidden transition-all"
             />
             <button
               type="submit"
@@ -219,14 +219,14 @@ export default function Dictation() {
               result.correct ? "animate-fade-in-up" : "animate-shake"
             }`}
           >
-            <div className={`absolute inset-x-0 top-0 h-1.5 bg-gradient-to-r ${
+            <div className={`absolute inset-x-0 top-0 h-1.5 bg-linear-to-r ${
               result.correct ? "from-success-500 to-info-500" : "from-danger-500 to-accent-500"
             }`} />
             <div className="flex items-center gap-3 mb-5">
-              <div className={`shrink-0 w-12 h-12 rounded-xl text-white flex items-center justify-center text-2xl shadow-sm ${
+              <div className={`shrink-0 w-12 h-12 rounded-xl text-white flex items-center justify-center text-2xl shadow-xs ${
                 result.correct
-                  ? "bg-gradient-to-br from-success-500 to-info-500"
-                  : "bg-gradient-to-br from-danger-500 to-accent-500"
+                  ? "bg-linear-to-br from-success-500 to-info-500"
+                  : "bg-linear-to-br from-danger-500 to-accent-500"
               }`}>
                 {result.correct ? "✓" : "✕"}
               </div>

@@ -18,7 +18,7 @@ const MD_PROSE = "prose prose-sm dark:prose-invert max-w-none " +
   "prose-headings:mt-3 prose-headings:mb-1 prose-h3:text-base prose-h3:font-semibold " +
   "prose-ul:my-1.5 prose-ol:my-1.5 prose-li:my-0.5 " +
   "prose-strong:font-semibold prose-em:italic " +
-  "prose-code:bg-surface-100 prose-code:dark:bg-surface-700 prose-code:px-1 prose-code:rounded prose-code:text-xs " +
+  "prose-code:bg-surface-100 dark:prose-code:bg-surface-700 prose-code:px-1 prose-code:rounded-sm prose-code:text-xs " +
   "prose-table:my-3 prose-table:text-[12.5px] prose-table:border-collapse " +
   "prose-th:bg-surface-50 dark:prose-th:bg-surface-800 prose-th:px-2 prose-th:py-1.5 prose-th:font-semibold prose-th:text-left prose-th:border prose-th:border-surface-200 dark:prose-th:border-surface-700 " +
   "prose-td:px-2 prose-td:py-1 prose-td:border prose-td:border-surface-200 dark:prose-td:border-surface-700";
@@ -106,7 +106,7 @@ function GrammarSection({ rules }) {
               <Markdown>{rule.explanation}</Markdown>
             </div>
             {rule.formula && (
-              <div className="bg-gradient-to-r from-primary-50 to-violet-50 dark:from-primary-900/20 dark:to-violet-900/20 rounded-xl px-4 py-2.5 mb-3 font-mono text-sm text-primary-800 dark:text-primary-300 border border-primary-100 dark:border-primary-800/30">
+              <div className="bg-linear-to-r from-primary-50 to-violet-50 dark:from-primary-900/20 dark:to-violet-900/20 rounded-xl px-4 py-2.5 mb-3 font-mono text-sm text-primary-800 dark:text-primary-300 border border-primary-100 dark:border-primary-800/30">
                 {rule.formula}
               </div>
             )}
@@ -283,7 +283,7 @@ export default function LessonDetail() {
       </Link>
 
       <div className="mb-8 flex items-start gap-3">
-        <div className="shrink-0 w-12 h-12 rounded-2xl bg-gradient-to-br from-primary-500 to-primary-700 text-white flex items-center justify-center text-2xl shadow-glow-primary">
+        <div className="shrink-0 w-12 h-12 rounded-2xl bg-linear-to-br from-primary-500 to-primary-700 text-white flex items-center justify-center text-2xl shadow-glow-primary">
           {TYPE_ICON[lesson.type] || "📄"}
         </div>
         <div>

@@ -97,12 +97,12 @@ export default function MissingLetterInline() {
                     onChange={(e) => !result && setGuess(e.target.value)}
                     onKeyDown={(e) => e.key === "Enter" && submit()}
                     disabled={!!result}
-                    className={`w-10 h-12 text-center rounded-lg border-2 outline-none transition-all uppercase ${
+                    className={`w-10 h-12 text-center rounded-lg border-2 outline-hidden transition-all uppercase ${
                       result === "correct"
                         ? "border-success-500 bg-success-50 dark:bg-success-900/30 text-success-700 dark:text-success-300"
                         : result === "wrong"
                         ? "border-danger-500 bg-danger-50 dark:bg-danger-900/30 text-danger-700 dark:text-danger-300"
-                        : "border-[color:var(--mode-accent)] bg-white dark:bg-surface-800 focus:ring-2 focus:ring-[color:var(--mode-accent)]/30"
+                        : "border-(--mode-accent) bg-white dark:bg-surface-800 focus:ring-2 focus:ring-(--mode-accent)/30"
                     }`}
                   />
                 );
@@ -119,7 +119,7 @@ export default function MissingLetterInline() {
                 type="button"
                 onClick={submit}
                 disabled={!guess}
-                className="px-4 py-1.5 rounded-lg text-[12px] font-bold mode-grad-bg text-white shadow-sm active:scale-95 transition-all disabled:opacity-40 focus-ring"
+                className="px-4 py-1.5 rounded-lg text-[12px] font-bold mode-grad-bg text-white shadow-xs active:scale-95 transition-all disabled:opacity-40 focus-ring"
               >
                 Valider
               </button>

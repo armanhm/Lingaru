@@ -88,7 +88,7 @@ export default function MatchPairsQuestion({ pairs, onAnswer, disabled }) {
                     : isWrong
                       ? "border-danger-400 bg-danger-50 dark:bg-danger-700/20 text-danger-600 animate-shake"
                       : isSelected
-                        ? "border-primary-500 bg-primary-50 dark:bg-primary-900/20 text-primary-700 dark:text-primary-300 scale-[1.02] shadow-sm"
+                        ? "border-primary-500 bg-primary-50 dark:bg-primary-900/20 text-primary-700 dark:text-primary-300 scale-[1.02] shadow-xs"
                         : "border-surface-200 dark:border-surface-600 bg-white dark:bg-surface-800 text-surface-800 dark:text-surface-200 hover:border-primary-300"
                 }`}
               >

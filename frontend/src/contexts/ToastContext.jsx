@@ -37,7 +37,7 @@ export function ToastProvider({ children }) {
     <ToastContext.Provider value={{ showToast }}>
       {children}
       {/* Bottom-right stack with proper gap and mobile bottom-safe padding */}
-      <div className="fixed bottom-4 right-4 z-[100] flex flex-col gap-2 pointer-events-none max-w-[calc(100vw-2rem)]">
+      <div className="fixed bottom-4 right-4 z-100 flex flex-col gap-2 pointer-events-none max-w-[calc(100vw-2rem)]">
         {toasts.map((toast) => (
           <Toast
             key={toast.id}

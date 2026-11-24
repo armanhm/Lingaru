@@ -356,7 +356,7 @@ export default function MissingLetter() {
 
       {/* Score + lives */}
       <div className="flex items-center justify-between px-1">
-        <div className="flex items-center gap-3 bg-white dark:bg-surface-800 border border-surface-100 dark:border-surface-700 rounded-full px-4 py-1.5 shadow-sm">
+        <div className="flex items-center gap-3 bg-white dark:bg-surface-800 border border-surface-100 dark:border-surface-700 rounded-full px-4 py-1.5 shadow-xs">
           <span className="text-xs text-surface-400">Score</span>
           <span className="text-sm font-bold text-primary-600">{score}/{round + (resultState ? 1 : 0)}</span>
         </div>
@@ -364,7 +364,7 @@ export default function MissingLetter() {
       </div>
 
       {/* Game card */}
-      <div className="bg-white dark:bg-surface-800 rounded-2xl shadow-sm border border-surface-100 dark:border-surface-700 overflow-hidden animate-scale-in" key={round}>
+      <div className="bg-white dark:bg-surface-800 rounded-2xl shadow-xs border border-surface-100 dark:border-surface-700 overflow-hidden animate-scale-in" key={round}>
         <div className="px-6 pt-6 pb-4 space-y-4">
           {/* Hint */}
           <div className="text-center space-y-1">

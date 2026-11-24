@@ -76,7 +76,7 @@ export default function GrammarLibrary() {
               onClick={() => { const n = new URLSearchParams(params); n.delete("category"); setParams(n, { replace: true }); }}
               className={`px-3 py-1.5 rounded-full text-caption font-semibold transition-all focus-ring ${
                 !category
-                  ? "bg-primary-600 text-white shadow-sm"
+                  ? "bg-primary-600 text-white shadow-xs"
                   : "bg-surface-100 dark:bg-surface-800 text-surface-600 dark:text-surface-400 hover:bg-surface-200 dark:hover:bg-surface-700"
               }`}
             >
@@ -88,7 +88,7 @@ export default function GrammarLibrary() {
                 onClick={() => { const n = new URLSearchParams(params); n.set("category", c.slug); setParams(n, { replace: true }); }}
                 className={`px-3 py-1.5 rounded-full text-caption font-semibold transition-all focus-ring ${
                   category === c.slug
-                    ? "bg-primary-600 text-white shadow-sm"
+                    ? "bg-primary-600 text-white shadow-xs"
                     : "bg-surface-100 dark:bg-surface-800 text-surface-600 dark:text-surface-400 hover:bg-surface-200 dark:hover:bg-surface-700"
                 }`}
               >
@@ -107,7 +107,7 @@ export default function GrammarLibrary() {
                 onClick={() => setLevelFilter(l)}
                 className={`px-3 py-1.5 rounded-xl text-caption font-bold transition-all focus-ring ${
                   (l === "all" && !level) || level === l
-                    ? "bg-white dark:bg-surface-800 text-primary-600 dark:text-primary-400 shadow-sm"
+                    ? "bg-white dark:bg-surface-800 text-primary-600 dark:text-primary-400 shadow-xs"
                     : "text-surface-500 dark:text-surface-400 hover:text-surface-800 dark:hover:text-surface-200"
                 }`}
               >
@@ -123,7 +123,7 @@ export default function GrammarLibrary() {
                 onClick={() => setStatusFilter(s)}
                 className={`px-3 py-1.5 rounded-xl text-caption font-bold transition-all focus-ring capitalize ${
                   statusFilter === s
-                    ? "bg-white dark:bg-surface-800 text-primary-600 dark:text-primary-400 shadow-sm"
+                    ? "bg-white dark:bg-surface-800 text-primary-600 dark:text-primary-400 shadow-xs"
                     : "text-surface-500 dark:text-surface-400 hover:text-surface-800 dark:hover:text-surface-200"
                 }`}
               >
@@ -152,13 +152,13 @@ export default function GrammarLibrary() {
                 className="group relative overflow-hidden card card-hover p-5 focus-ring animate-fade-in-up flex gap-4"
                 style={staggerDelay(i, 30)}
               >
-                <div className="shrink-0 w-12 h-12 rounded-2xl bg-gradient-to-br from-surface-100 to-surface-200 dark:from-surface-800 dark:to-surface-700 flex items-center justify-center text-2xl group-hover:scale-110 group-hover:rotate-3 transition-all duration-300">
+                <div className="shrink-0 w-12 h-12 rounded-2xl bg-linear-to-br from-surface-100 to-surface-200 dark:from-surface-800 dark:to-surface-700 flex items-center justify-center text-2xl group-hover:scale-110 group-hover:rotate-3 transition-all duration-300">
                   {t.category_icon}
                 </div>
                 <div className="flex-1 min-w-0">
                   <div className="flex items-center gap-2 flex-wrap mb-1">
                     <span className={status.className}><MasteryDot status={t.status} /> {status.label}</span>
-                    <span className="badge-neutral !text-[10px]">{t.cefr_level}</span>
+                    <span className="badge-neutral text-[10px]!">{t.cefr_level}</span>
                   </div>
                   <h3 className="text-h4 text-surface-900 dark:text-surface-100 group-hover:text-primary-600 dark:group-hover:text-primary-400 transition-colors truncate">
                     {t.title}

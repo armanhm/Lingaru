@@ -35,7 +35,7 @@ function LetterTile({ letter, index, selected, onClick, disabled }) {
         transition-all duration-200
         ${selected
           ? "bg-surface-100 dark:bg-surface-700 text-surface-300 dark:text-surface-600 scale-90"
-          : "bg-white dark:bg-surface-700 text-surface-900 dark:text-surface-100 border-2 border-surface-200 dark:border-surface-600 shadow-sm hover:border-primary-400 hover:shadow-md hover:-translate-y-0.5 hover:scale-105 active:scale-95"
+          : "bg-white dark:bg-surface-700 text-surface-900 dark:text-surface-100 border-2 border-surface-200 dark:border-surface-600 shadow-xs hover:border-primary-400 hover:shadow-md hover:-translate-y-0.5 hover:scale-105 active:scale-95"
         }
         ${disabled ? "cursor-default" : "cursor-pointer"}
       `}
@@ -409,7 +409,7 @@ export default function WordScramble() {
       </div>
 
       {/* Game card */}
-      <div className="bg-white dark:bg-surface-800 rounded-2xl shadow-sm border border-surface-100 dark:border-surface-700 overflow-hidden animate-scale-in" key={round}>
+      <div className="bg-white dark:bg-surface-800 rounded-2xl shadow-xs border border-surface-100 dark:border-surface-700 overflow-hidden animate-scale-in" key={round}>
         {/* Top row: score + timer */}
         <div className="flex items-center justify-between px-6 pt-5 pb-2">
           <div className="flex items-center gap-3">

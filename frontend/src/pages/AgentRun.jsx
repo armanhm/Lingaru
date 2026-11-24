@@ -44,10 +44,10 @@ function Bubble({ msg, agent }) {
   return (
     <div className={`flex gap-3 ${isUser ? "flex-row-reverse" : ""} animate-fade-in-up`}>
       <span
-        className={`shrink-0 w-9 h-9 rounded-full flex items-center justify-center text-[16px] shadow-sm ${
+        className={`shrink-0 w-9 h-9 rounded-full flex items-center justify-center text-[16px] shadow-xs ${
           isUser
-            ? "bg-gradient-to-br from-accent-500 to-warn-500 text-white"
-            : `bg-gradient-to-br ${agent?.tint || "from-primary-500 to-purple-600"} text-white`
+            ? "bg-linear-to-br from-accent-500 to-warn-500 text-white"
+            : `bg-linear-to-br ${agent?.tint || "from-primary-500 to-purple-600"} text-white`
         }`}
       >
         {isUser ? "🧑" : (agent?.emoji || "🤖")}
@@ -57,9 +57,9 @@ function Bubble({ msg, agent }) {
           <span>{isUser ? "Vous" : (agent?.name || "Agent")}</span>
         </div>
         <div
-          className={`relative group/bubble rounded-2xl px-4 py-3 text-[14px] leading-relaxed shadow-sm ${
+          className={`relative group/bubble rounded-2xl px-4 py-3 text-[14px] leading-relaxed shadow-xs ${
             isUser
-              ? "bg-gradient-to-br from-primary-600 to-purple-700 text-white rounded-br-sm whitespace-pre-wrap"
+              ? "bg-linear-to-br from-primary-600 to-purple-700 text-white rounded-br-sm whitespace-pre-wrap"
               : "bg-white dark:bg-surface-900/80 border border-surface-100 dark:border-surface-800 text-surface-900 dark:text-surface-50 rounded-bl-sm"
           }`}
         >
@@ -78,7 +78,7 @@ function Bubble({ msg, agent }) {
               prose-strong:font-semibold prose-em:italic
               prose-code:bg-surface-100 dark:prose-code:bg-surface-700/70
               prose-code:text-surface-800 dark:prose-code:text-surface-100
-              prose-code:px-1 prose-code:rounded prose-code:text-xs prose-code:font-medium
+              prose-code:px-1 prose-code:rounded-sm prose-code:text-xs prose-code:font-medium
               prose-code:before:content-none prose-code:after:content-none
               prose-pre:bg-surface-900 dark:prose-pre:bg-surface-800
               prose-pre:text-surface-100 prose-pre:my-2 prose-pre:rounded-lg
@@ -112,10 +112,10 @@ function Bubble({ msg, agent }) {
 function TypingIndicator({ agent }) {
   return (
     <div className="flex gap-3 animate-fade-in-up">
-      <span className={`shrink-0 w-9 h-9 rounded-full bg-gradient-to-br ${agent?.tint || "from-primary-500 to-purple-600"} text-white flex items-center justify-center text-[16px] shadow-sm`}>
+      <span className={`shrink-0 w-9 h-9 rounded-full bg-linear-to-br ${agent?.tint || "from-primary-500 to-purple-600"} text-white flex items-center justify-center text-[16px] shadow-xs`}>
         {agent?.emoji || "🤖"}
       </span>
-      <div className="bg-white dark:bg-surface-900/80 border border-surface-100 dark:border-surface-800 rounded-2xl rounded-bl-sm px-4 py-3 flex items-center gap-1 shadow-sm">
+      <div className="bg-white dark:bg-surface-900/80 border border-surface-100 dark:border-surface-800 rounded-2xl rounded-bl-sm px-4 py-3 flex items-center gap-1 shadow-xs">
         <span className="w-1.5 h-1.5 rounded-full bg-surface-400 animate-pulse" style={{ animationDelay: "0ms" }} />
         <span className="w-1.5 h-1.5 rounded-full bg-surface-400 animate-pulse" style={{ animationDelay: "150ms" }} />
         <span className="w-1.5 h-1.5 rounded-full bg-surface-400 animate-pulse" style={{ animationDelay: "300ms" }} />
@@ -232,9 +232,9 @@ export default function AgentRun() {
     return (
       <div className="max-w-5xl mx-auto">
         <div className="space-y-2 mb-6">
-          <div className="skeleton h-3 w-32 rounded" />
+          <div className="skeleton h-3 w-32 rounded-sm" />
           <div className="skeleton h-10 w-72 rounded-lg" />
-          <div className="skeleton h-3 w-96 rounded" />
+          <div className="skeleton h-3 w-96 rounded-sm" />
         </div>
         <div className="skeleton h-[400px] rounded-3xl" />
       </div>
@@ -299,9 +299,9 @@ export default function AgentRun() {
         <div className="flex flex-col flex-1 min-h-0 space-y-5">
           {/* Hero */}
           <div className="card relative overflow-hidden p-5 sm:p-6 animate-fade-in-up">
-            <div className={`absolute inset-x-0 top-0 h-1 bg-gradient-to-r ${agent.tint}`} />
+            <div className={`absolute inset-x-0 top-0 h-1 bg-linear-to-r ${agent.tint}`} />
             <div className="flex items-start gap-4 flex-wrap">
-              <div className={`shrink-0 w-16 h-16 rounded-2xl bg-gradient-to-br ${agent.tint} text-white flex items-center justify-center text-3xl shadow-glow-primary`}>
+              <div className={`shrink-0 w-16 h-16 rounded-2xl bg-linear-to-br ${agent.tint} text-white flex items-center justify-center text-3xl shadow-glow-primary`}>
                 {agent.emoji}
               </div>
               <div className="flex-1 min-w-0">
@@ -361,7 +361,7 @@ export default function AgentRun() {
                   <button
                     key={i}
                     onClick={() => handleSend(q)}
-                    className="text-left px-3 py-2.5 rounded-xl border border-surface-200 dark:border-surface-700 bg-white dark:bg-surface-900 hover:border-primary-300 dark:hover:border-primary-700 hover:bg-primary-50/40 dark:hover:bg-primary-900/20 hover:-translate-y-0.5 hover:shadow-sm transition-all text-[13px] text-surface-800 dark:text-surface-100 leading-snug focus-ring"
+                    className="text-left px-3 py-2.5 rounded-xl border border-surface-200 dark:border-surface-700 bg-white dark:bg-surface-900 hover:border-primary-300 dark:hover:border-primary-700 hover:bg-primary-50/40 dark:hover:bg-primary-900/20 hover:-translate-y-0.5 hover:shadow-xs transition-all text-[13px] text-surface-800 dark:text-surface-100 leading-snug focus-ring"
                   >
                     <span className="text-primary-500 mr-1.5">↗</span>
                     {q}
@@ -390,7 +390,7 @@ export default function AgentRun() {
           {messages.length === 0 && <div className="flex-1" />}
 
           {/* Composer, pinned at the bottom of the column with breathing room */}
-          <div className="sticky bottom-4 mb-2 rounded-2xl border border-surface-200 dark:border-surface-700 bg-white dark:bg-surface-900 focus-within:border-primary-400 focus-within:ring-2 focus-within:ring-primary-100 dark:focus-within:ring-primary-900/40 transition-all shadow-sm">
+          <div className="sticky bottom-4 mb-2 rounded-2xl border border-surface-200 dark:border-surface-700 bg-white dark:bg-surface-900 focus-within:border-primary-400 focus-within:ring-2 focus-within:ring-primary-100 dark:focus-within:ring-primary-900/40 transition-all shadow-xs">
             <textarea
               value={input}
               onChange={(e) => setInput(e.target.value)}
@@ -398,7 +398,7 @@ export default function AgentRun() {
               placeholder={agent.suggested_questions?.[0] || "Posez votre question…"}
               rows={2}
               disabled={sending}
-              className="w-full px-4 py-3 bg-transparent text-[14px] resize-none focus:outline-none text-surface-900 dark:text-surface-50 placeholder:text-surface-400 dark:placeholder:text-surface-500 disabled:opacity-60"
+              className="w-full px-4 py-3 bg-transparent text-[14px] resize-none focus:outline-hidden text-surface-900 dark:text-surface-50 placeholder:text-surface-400 dark:placeholder:text-surface-500 disabled:opacity-60"
             />
             <div className="flex items-center px-2 pb-2 pt-1">
               <p className="text-[10px] font-mono text-surface-400 dark:text-surface-500 px-2">
@@ -407,7 +407,7 @@ export default function AgentRun() {
               <button
                 onClick={() => handleSend()}
                 disabled={sending || !input.trim()}
-                className="ml-auto bg-gradient-to-br from-primary-600 to-purple-700 disabled:from-surface-300 disabled:to-surface-400 dark:disabled:from-surface-700 dark:disabled:to-surface-600 text-white px-4 py-2 rounded-lg text-[13px] font-bold flex items-center gap-1.5 disabled:opacity-60 disabled:cursor-not-allowed shadow-sm hover:shadow-glow-primary active:scale-95 transition-all focus-ring"
+                className="ml-auto bg-linear-to-br from-primary-600 to-purple-700 disabled:from-surface-300 disabled:to-surface-400 dark:disabled:from-surface-700 dark:disabled:to-surface-600 text-white px-4 py-2 rounded-lg text-[13px] font-bold flex items-center gap-1.5 disabled:opacity-60 disabled:cursor-not-allowed shadow-xs hover:shadow-glow-primary active:scale-95 transition-all focus-ring"
               >
                 Envoyer <Ic.send className="w-3.5 h-3.5" />
               </button>

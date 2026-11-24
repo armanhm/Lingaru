@@ -23,7 +23,7 @@ function CEFRBar({ level }) {
     <div className="flex items-center gap-1 mt-3">
       {CEFR_LEVELS.map((l, i) => (
         <div key={l} className="flex-1">
-          <div className={`h-1 rounded-full transition-all ${i <= idx ? "bg-gradient-to-r from-primary-500 to-primary-600" : "bg-surface-200 dark:bg-surface-800"}`} />
+          <div className={`h-1 rounded-full transition-all ${i <= idx ? "bg-linear-to-r from-primary-500 to-primary-600" : "bg-surface-200 dark:bg-surface-800"}`} />
           <span className={`block text-[8px] mt-1 text-center font-semibold ${i === idx ? "text-primary-600 dark:text-primary-400" : "text-surface-400 dark:text-surface-600"}`}>
             {l}
           </span>
@@ -46,9 +46,9 @@ export default function ExamPrepHub() {
     return (
       <div className="max-w-5xl mx-auto">
         <div className="mb-7 space-y-2">
-          <div className="skeleton h-4 w-24 rounded" />
+          <div className="skeleton h-4 w-24 rounded-sm" />
           <div className="skeleton h-10 w-72 rounded-lg" />
-          <div className="skeleton h-4 w-96 rounded" />
+          <div className="skeleton h-4 w-96 rounded-sm" />
         </div>
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
           {[...Array(4)].map((_, i) => <SkeletonCard key={i} height="h-48" />)}
@@ -83,17 +83,17 @@ export default function ExamPrepHub() {
               style={staggerDelay(i, 70)}
             >
               {/* Gradient top band */}
-              <div className={`h-1.5 bg-gradient-to-r ${cfg.gradient}`} />
+              <div className={`h-1.5 bg-linear-to-r ${cfg.gradient}`} />
 
               <div className="p-5">
                 <div className="flex items-start justify-between mb-3">
-                  <div className={`w-14 h-14 bg-gradient-to-br ${cfg.gradient} rounded-2xl flex items-center justify-center text-3xl shadow-lg group-hover:scale-110 group-hover:rotate-3 transition-all duration-300`}>
+                  <div className={`w-14 h-14 bg-linear-to-br ${cfg.gradient} rounded-2xl flex items-center justify-center text-3xl shadow-lg group-hover:scale-110 group-hover:rotate-3 transition-all duration-300`}>
                     {cfg.emoji}
                   </div>
                   {s.estimated_cefr ? (
                     <span className="badge-primary">{s.estimated_cefr}</span>
                   ) : (
-                    <span className="badge-neutral !text-[10px]">Not started</span>
+                    <span className="badge-neutral text-[10px]!">Not started</span>
                   )}
                 </div>
 
@@ -132,17 +132,17 @@ export default function ExamPrepHub() {
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
         {/* TEF card */}
         <div className="card p-0 overflow-hidden relative animate-fade-in-up">
-          <div className="h-1.5 bg-gradient-to-r from-info-500 via-primary-500 to-purple-600" />
+          <div className="h-1.5 bg-linear-to-r from-info-500 via-primary-500 to-purple-600" />
           <div className="p-5">
             <div className="flex items-baseline justify-between gap-2 mb-3">
               <div className="flex items-center gap-2.5">
-                <span className="w-10 h-10 rounded-xl bg-gradient-to-br from-info-500 to-primary-600 text-white flex items-center justify-center text-lg shadow-sm">🇨🇦</span>
+                <span className="w-10 h-10 rounded-xl bg-linear-to-br from-info-500 to-primary-600 text-white flex items-center justify-center text-lg shadow-xs">🇨🇦</span>
                 <div>
                   <h3 className="text-h4 text-surface-900 dark:text-surface-100">TEF</h3>
                   <p className="text-[11px] text-surface-500 dark:text-surface-400 leading-tight">Test d'évaluation de français</p>
                 </div>
               </div>
-              <span className="badge-info !text-[10px]">CCI Paris</span>
+              <span className="badge-info text-[10px]!">CCI Paris</span>
             </div>
 
             <p className="text-caption text-surface-700 dark:text-surface-200 leading-relaxed mb-4">
@@ -167,17 +167,17 @@ export default function ExamPrepHub() {
 
         {/* TCF card */}
         <div className="card p-0 overflow-hidden relative animate-fade-in-up" style={staggerDelay(1, 70)}>
-          <div className="h-1.5 bg-gradient-to-r from-accent-500 via-warn-500 to-danger-500" />
+          <div className="h-1.5 bg-linear-to-r from-accent-500 via-warn-500 to-danger-500" />
           <div className="p-5">
             <div className="flex items-baseline justify-between gap-2 mb-3">
               <div className="flex items-center gap-2.5">
-                <span className="w-10 h-10 rounded-xl bg-gradient-to-br from-accent-500 to-danger-500 text-white flex items-center justify-center text-lg shadow-sm">🇫🇷</span>
+                <span className="w-10 h-10 rounded-xl bg-linear-to-br from-accent-500 to-danger-500 text-white flex items-center justify-center text-lg shadow-xs">🇫🇷</span>
                 <div>
                   <h3 className="text-h4 text-surface-900 dark:text-surface-100">TCF</h3>
                   <p className="text-[11px] text-surface-500 dark:text-surface-400 leading-tight">Test de connaissance du français</p>
                 </div>
               </div>
-              <span className="badge-accent !text-[10px]">France Éducation</span>
+              <span className="badge-accent text-[10px]!">France Éducation</span>
             </div>
 
             <p className="text-caption text-surface-700 dark:text-surface-200 leading-relaxed mb-4">

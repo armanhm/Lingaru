@@ -137,7 +137,7 @@ function UserMenu({ user, collapsed, onLogout }) {
         className={`flex items-center gap-2 w-full px-2 py-2 rounded-xl hover:bg-surface-100 dark:hover:bg-surface-700/50 transition-colors ${collapsed ? "justify-center" : ""}`}
         title={collapsed ? user.username : undefined}
       >
-        <span className="w-7 h-7 bg-gradient-to-br from-primary-400 to-primary-600 text-white rounded-full flex items-center justify-center text-xs font-bold shrink-0">
+        <span className="w-7 h-7 bg-linear-to-br from-primary-400 to-primary-600 text-white rounded-full flex items-center justify-center text-xs font-bold shrink-0">
           {user.username?.[0]?.toUpperCase() || "U"}
         </span>
         {!collapsed && (
@@ -166,7 +166,7 @@ function UserMenu({ user, collapsed, onLogout }) {
               className={`relative inline-flex h-5 w-9 shrink-0 rounded-full transition-colors duration-200 ${dark ? "bg-primary-600" : "bg-surface-200"}`}
               aria-label="Toggle theme"
             >
-              <span className={`inline-block h-4 w-4 mt-0.5 rounded-full bg-white shadow transform transition-transform duration-200 ${dark ? "translate-x-4" : "translate-x-0.5"}`} />
+              <span className={`inline-block h-4 w-4 mt-0.5 rounded-full bg-white shadow-sm transform transition-transform duration-200 ${dark ? "translate-x-4" : "translate-x-0.5"}`} />
             </button>
           </div>
 
@@ -275,7 +275,7 @@ export default function Layout() {
           re-tints the brand instantly. */}
       <div className={`flex items-center gap-3 px-4 py-5 border-b border-surface-100 dark:border-surface-700/50 ${collapsed ? "justify-center" : ""}`}>
         <Link to="/" onClick={onNav} className="flex items-center gap-2.5 shrink-0">
-          <span className="mode-grad-bg w-8 h-8 rounded-xl flex items-center justify-center text-white font-extrabold text-sm shrink-0 shadow-sm">L</span>
+          <span className="mode-grad-bg w-8 h-8 rounded-xl flex items-center justify-center text-white font-extrabold text-sm shrink-0 shadow-xs">L</span>
           {!collapsed && (
             <div className="flex flex-col leading-tight">
               <div className="flex items-center gap-2">
@@ -348,7 +348,7 @@ export default function Layout() {
                         title={collapsed ? itemLabel : undefined}
                         className={`flex items-center gap-3 px-3 py-2 rounded-xl text-sm font-medium transition-all duration-200 focus-ring ${
                           active
-                            ? "bg-gradient-to-r from-primary-50 to-primary-100/50 dark:from-primary-900/40 dark:to-primary-900/20 text-primary-700 dark:text-primary-300 shadow-sm ring-1 ring-primary-200/50 dark:ring-primary-800/50"
+                            ? "bg-linear-to-r from-primary-50 to-primary-100/50 dark:from-primary-900/40 dark:to-primary-900/20 text-primary-700 dark:text-primary-300 shadow-xs ring-1 ring-primary-200/50 dark:ring-primary-800/50"
                             : "text-surface-600 dark:text-surface-400 hover:bg-surface-100 dark:hover:bg-surface-800/60 hover:text-surface-900 dark:hover:text-surface-100"
                         } ${collapsed ? "justify-center" : ""}`}
                       >
@@ -386,7 +386,7 @@ export default function Layout() {
       {collapsed && (
         <button
           onClick={() => setCollapsed(false)}
-          className="hidden md:flex fixed left-16 top-1/2 -translate-y-1/2 z-40 w-5 h-10 bg-white dark:bg-surface-800 border border-surface-200 dark:border-surface-700 rounded-r-lg items-center justify-center text-surface-400 hover:text-primary-600 transition-colors shadow-sm"
+          className="hidden md:flex fixed left-16 top-1/2 -translate-y-1/2 z-40 w-5 h-10 bg-white dark:bg-surface-800 border border-surface-200 dark:border-surface-700 rounded-r-lg items-center justify-center text-surface-400 hover:text-primary-600 transition-colors shadow-xs"
           title="Expand sidebar"
         >
           <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -397,7 +397,7 @@ export default function Layout() {
 
       {/* Mobile overlay */}
       {mobileOpen && (
-        <div className="md:hidden fixed inset-0 z-40 bg-black/40 backdrop-blur-sm" onClick={() => setMobileOpen(false)} />
+        <div className="md:hidden fixed inset-0 z-40 bg-black/40 backdrop-blur-xs" onClick={() => setMobileOpen(false)} />
       )}
 
       {/* Mobile sidebar */}

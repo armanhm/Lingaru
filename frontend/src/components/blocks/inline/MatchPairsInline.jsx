@@ -93,10 +93,10 @@ export default function MatchPairsInline() {
             {cards.map((c) => {
               const isSel = selected.includes(c.id);
               const isWrong = wrongFlash.includes(c.id);
-              let cls = "border-surface-200 dark:border-surface-700 bg-white dark:bg-surface-800 text-surface-900 dark:text-surface-50 hover:border-[color:var(--mode-accent)]";
+              let cls = "border-surface-200 dark:border-surface-700 bg-white dark:bg-surface-800 text-surface-900 dark:text-surface-50 hover:border-(--mode-accent)";
               if (c.matched) cls = "border-success-500 bg-success-50 dark:bg-success-900/30 text-success-700 dark:text-success-300 opacity-70 cursor-default";
               else if (isWrong) cls = "border-danger-500 bg-danger-50 dark:bg-danger-900/30 text-danger-700 dark:text-danger-300";
-              else if (isSel) cls = "border-[color:var(--mode-accent)] bg-[color:var(--mode-shell-tint)]";
+              else if (isSel) cls = "border-(--mode-accent) mode-shell";
               return (
                 <button
                   key={c.id}

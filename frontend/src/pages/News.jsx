@@ -51,15 +51,15 @@ function NewsCard({ article, i }) {
       className="group relative rounded-2xl border border-surface-100 dark:border-surface-800 bg-white dark:bg-surface-900/60 p-5 pt-6 flex flex-col gap-3 h-full overflow-hidden hover:shadow-card-hover hover:-translate-y-1 transition-all duration-300 focus-ring animate-fade-in-up"
       style={staggerDelay(i, 60)}
     >
-      <div className={`absolute inset-x-0 top-0 h-1 bg-gradient-to-r ${topic.tint}`} />
+      <div className={`absolute inset-x-0 top-0 h-1 bg-linear-to-r ${topic.tint}`} />
 
       <div className="flex items-center justify-between gap-2 flex-wrap">
-        <span className={`inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[11px] font-bold bg-gradient-to-br ${topic.tint} text-white shadow-sm`}>
+        <span className={`inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[11px] font-bold bg-linear-to-br ${topic.tint} text-white shadow-xs`}>
           <span>{topic.emoji}</span>
           {topic.label}
         </span>
         {article.level && (
-          <span className={`inline-flex items-center px-2 py-0.5 text-[10px] font-bold rounded border ${levelClass}`}>
+          <span className={`inline-flex items-center px-2 py-0.5 text-[10px] font-bold rounded-sm border ${levelClass}`}>
             {article.level}
           </span>
         )}
@@ -77,7 +77,7 @@ function NewsCard({ article, i }) {
 
       <div className="mt-auto pt-1 space-y-1.5">
         {(article.source_name || article.source_domain) && (
-          <div className="flex items-center gap-1.5 text-[10px] uppercase tracking-[0.1em] font-semibold text-surface-500 dark:text-surface-400">
+          <div className="flex items-center gap-1.5 text-[10px] uppercase tracking-widest font-semibold text-surface-500 dark:text-surface-400">
             <svg className="w-3 h-3 shrink-0" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" d="M19 11a7 7 0 01-7 7m0 0a7 7 0 01-7-7m7 7v4m0-11a7 7 0 017-7m-7 7a7 7 0 00-7-7m7 0V3" />
             </svg>
@@ -191,11 +191,11 @@ export default function News() {
               onClick={() => setActiveTopic(t.key)}
               className={`relative inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full text-[13px] font-semibold transition-all focus-ring ${
                 active
-                  ? "text-white shadow-sm"
+                  ? "text-white shadow-xs"
                   : "bg-white dark:bg-surface-900/60 border border-surface-200 dark:border-surface-700 text-surface-700 dark:text-surface-300 hover:border-primary-300 dark:hover:border-primary-700"
               }`}
             >
-              {active && <span className={`absolute inset-0 rounded-full bg-gradient-to-br ${t.tint}`} />}
+              {active && <span className={`absolute inset-0 rounded-full bg-linear-to-br ${t.tint}`} />}
               <span className="relative z-10">{t.emoji}</span>
               <span className="relative z-10">{t.label}</span>
             </button>

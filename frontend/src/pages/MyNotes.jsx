@@ -9,14 +9,14 @@ import { staggerDelay } from "../hooks/useAnimations";
 import { PageHeader, SkeletonCard, EmptyState } from "../components/ui";
 
 const CARD_PROSE = "prose prose-sm dark:prose-invert max-w-none " +
-  "prose-p:my-0 prose-p:leading-snug prose-p:text-surface-500 prose-p:dark:text-surface-400 " +
-  "prose-headings:my-0 prose-headings:text-sm prose-headings:font-semibold prose-headings:text-surface-600 prose-headings:dark:text-surface-300 " +
-  "prose-ul:my-0 prose-ol:my-0 prose-li:my-0 prose-li:text-surface-500 prose-li:dark:text-surface-400 " +
-  "prose-strong:font-semibold prose-strong:text-surface-700 prose-strong:dark:text-surface-200 " +
+  "prose-p:my-0 prose-p:leading-snug prose-p:text-surface-500 dark:prose-p:text-surface-400 " +
+  "prose-headings:my-0 prose-headings:text-sm prose-headings:font-semibold prose-headings:text-surface-600 dark:prose-headings:text-surface-300 " +
+  "prose-ul:my-0 prose-ol:my-0 prose-li:my-0 prose-li:text-surface-500 dark:prose-li:text-surface-400 " +
+  "prose-strong:font-semibold prose-strong:text-surface-700 dark:prose-strong:text-surface-200 " +
   "prose-em:italic " +
-  "prose-code:bg-surface-100 prose-code:dark:bg-surface-700 prose-code:px-1 prose-code:rounded prose-code:text-xs " +
-  "prose-a:text-primary-600 prose-a:dark:text-primary-400 prose-a:no-underline " +
-  "prose-blockquote:my-0 prose-blockquote:pl-2 prose-blockquote:border-l-2 prose-blockquote:border-surface-300 prose-blockquote:dark:border-surface-600 prose-blockquote:italic " +
+  "prose-code:bg-surface-100 dark:prose-code:bg-surface-700 prose-code:px-1 prose-code:rounded-sm prose-code:text-xs " +
+  "prose-a:text-primary-600 dark:prose-a:text-primary-400 prose-a:no-underline " +
+  "prose-blockquote:my-0 prose-blockquote:pl-2 prose-blockquote:border-l-2 prose-blockquote:border-surface-300 dark:prose-blockquote:border-surface-600 prose-blockquote:italic " +
   "prose-hr:my-2";
 
 const KINDS = [

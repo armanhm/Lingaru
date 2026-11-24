@@ -59,7 +59,7 @@ function VocabRow({ item, i, isEn }) {
         <span className="font-sans font-bold text-[18px] leading-tight text-surface-900 dark:text-surface-50">{headword}</span>
         <AudioPlayButton text={headword} />
         {item.pos && (
-          <span className="text-[10px] uppercase tracking-[0.12em] font-bold text-surface-500 dark:text-surface-400 bg-surface-100 dark:bg-surface-800 px-1.5 py-0.5 rounded">
+          <span className="text-[10px] uppercase tracking-[0.12em] font-bold text-surface-500 dark:text-surface-400 bg-surface-100 dark:bg-surface-800 px-1.5 py-0.5 rounded-sm">
             {item.pos}
           </span>
         )}
@@ -80,7 +80,7 @@ function ExpressionRow({ item, i, isEn }) {
   const headword = isEn ? item.en : item.fr;
   return (
     <div
-      className="rounded-xl border border-accent-100 dark:border-accent-900/40 bg-gradient-to-br from-accent-50/60 to-white dark:from-accent-950/30 dark:to-surface-900/40 p-3.5 animate-fade-in-up"
+      className="rounded-xl border border-accent-100 dark:border-accent-900/40 bg-linear-to-br from-accent-50/60 to-white dark:from-accent-950/30 dark:to-surface-900/40 p-3.5 animate-fade-in-up"
       style={staggerDelay(i, 50)}
     >
       <div className="flex items-baseline gap-2 flex-wrap">
@@ -102,11 +102,11 @@ function ExpressionRow({ item, i, isEn }) {
 function GrammarRow({ item, i }) {
   return (
     <div
-      className="rounded-xl border border-purple-100 dark:border-purple-900/40 bg-gradient-to-br from-purple-50/60 to-white dark:from-purple-950/30 dark:to-surface-900/40 p-4 animate-fade-in-up"
+      className="rounded-xl border border-purple-100 dark:border-purple-900/40 bg-linear-to-br from-purple-50/60 to-white dark:from-purple-950/30 dark:to-surface-900/40 p-4 animate-fade-in-up"
       style={staggerDelay(i, 60)}
     >
       <div className="flex items-center gap-2 mb-2">
-        <span className="w-7 h-7 rounded-lg bg-gradient-to-br from-purple-500 to-primary-600 text-white flex items-center justify-center text-xs font-bold shadow-sm">
+        <span className="w-7 h-7 rounded-lg bg-linear-to-br from-purple-500 to-primary-600 text-white flex items-center justify-center text-xs font-bold shadow-xs">
           {i + 1}
         </span>
         <h4 className="text-[14px] font-bold text-surface-900 dark:text-surface-50">{item.title}</h4>
@@ -158,9 +158,9 @@ export default function NewsArticle() {
     return (
       <div className="max-w-4xl mx-auto">
         <div className="space-y-2 mb-6">
-          <div className="skeleton h-3 w-32 rounded" />
+          <div className="skeleton h-3 w-32 rounded-sm" />
           <div className="skeleton h-10 w-full rounded-lg" />
-          <div className="skeleton h-3 w-2/3 rounded" />
+          <div className="skeleton h-3 w-2/3 rounded-sm" />
         </div>
         <div className="skeleton h-[400px] rounded-3xl" />
       </div>
@@ -202,16 +202,16 @@ export default function NewsArticle() {
 
       {/* ─── Article body (full width) ────────────────────────────── */}
       <article className="card relative overflow-hidden p-6 sm:p-8 animate-fade-in-up">
-        <div className={`absolute inset-x-0 top-0 h-1 bg-gradient-to-r ${topicTint}`} />
+        <div className={`absolute inset-x-0 top-0 h-1 bg-linear-to-r ${topicTint}`} />
 
         <div className="flex items-center justify-between gap-3 flex-wrap mb-4">
-          <span className={`inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[11px] font-bold bg-gradient-to-br ${topicTint} text-white shadow-sm`}>
+          <span className={`inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[11px] font-bold bg-linear-to-br ${topicTint} text-white shadow-xs`}>
             <span>{topicEmoji}</span>
             {topicLabel}
           </span>
           <div className="flex items-center gap-2">
             {article.level && (
-              <span className={`inline-flex items-center px-2 py-0.5 text-[10px] font-bold rounded border ${levelClass}`}>
+              <span className={`inline-flex items-center px-2 py-0.5 text-[10px] font-bold rounded-sm border ${levelClass}`}>
                 {article.level}
               </span>
             )}
@@ -248,7 +248,7 @@ export default function NewsArticle() {
                 href={article.source_url}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center gap-1 text-[12px] font-semibold text-primary-600 dark:text-primary-400 hover:text-primary-700 dark:hover:text-primary-300 hover:underline focus-ring rounded px-1 -mx-1"
+                className="inline-flex items-center gap-1 text-[12px] font-semibold text-primary-600 dark:text-primary-400 hover:text-primary-700 dark:hover:text-primary-300 hover:underline focus-ring rounded-sm px-1 -mx-1"
               >
                 {t("news.readOriginal")}
                 <svg className="w-3 h-3" fill="none" stroke="currentColor" strokeWidth={2.5} viewBox="0 0 24 24">
@@ -272,7 +272,7 @@ export default function NewsArticle() {
           <>
             <button
               onClick={() => setShowTranslation((v) => !v)}
-              className="mt-5 inline-flex items-center gap-1.5 text-[12px] font-semibold text-primary-600 dark:text-primary-400 hover:gap-2 transition-all focus-ring rounded px-1 -mx-1"
+              className="mt-5 inline-flex items-center gap-1.5 text-[12px] font-semibold text-primary-600 dark:text-primary-400 hover:gap-2 transition-all focus-ring rounded-sm px-1 -mx-1"
             >
               {showTranslation ? t("news.hideTranslation") : t("news.showTranslation")}
             </button>
@@ -289,7 +289,7 @@ export default function NewsArticle() {
 
       {/* ─── Guided practice (full width, big tabs) ─────────────── */}
       <section className="mt-6 card relative overflow-hidden p-5 sm:p-6 animate-fade-in-up">
-        <div className="absolute inset-x-0 top-0 h-1 bg-gradient-to-r from-primary-500 via-purple-500 to-accent-500" />
+        <div className="absolute inset-x-0 top-0 h-1 bg-linear-to-r from-primary-500 via-purple-500 to-accent-500" />
 
         <div className="flex items-baseline justify-between gap-3 flex-wrap mb-4">
           <div>
@@ -318,10 +318,10 @@ export default function NewsArticle() {
                 className={`relative flex flex-col sm:flex-row items-center justify-center gap-1.5 sm:gap-2.5 px-3 py-3 sm:py-4 rounded-2xl text-[13px] sm:text-[14px] font-semibold transition-all overflow-hidden focus-ring active:scale-[0.98] ${
                   active
                     ? "text-white shadow-card-hover"
-                    : "bg-white dark:bg-surface-900/60 border border-surface-200 dark:border-surface-700 text-surface-700 dark:text-surface-200 hover:border-primary-300 dark:hover:border-primary-700 hover:shadow-sm"
+                    : "bg-white dark:bg-surface-900/60 border border-surface-200 dark:border-surface-700 text-surface-700 dark:text-surface-200 hover:border-primary-300 dark:hover:border-primary-700 hover:shadow-xs"
                 }`}
               >
-                {active && <span className={`absolute inset-0 bg-gradient-to-br ${meta.tint}`} />}
+                {active && <span className={`absolute inset-0 bg-linear-to-br ${meta.tint}`} />}
                 <span className="relative z-10 text-xl sm:text-base">{meta.emoji}</span>
                 <span className="relative z-10 truncate">{t(labelKey)}</span>
                 {count > 0 && (

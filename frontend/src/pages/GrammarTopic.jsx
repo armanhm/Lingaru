@@ -36,7 +36,7 @@ export default function GrammarTopic() {
   if (loading) {
     return (
       <div className="max-w-3xl mx-auto space-y-4">
-        <div className="skeleton h-5 w-32 rounded" />
+        <div className="skeleton h-5 w-32 rounded-sm" />
         <div className="skeleton h-12 w-2/3 rounded-lg" />
         <SkeletonCard height="h-48" />
       </div>
@@ -75,8 +75,8 @@ export default function GrammarTopic() {
           <div className="w-full bg-surface-100 dark:bg-surface-800 rounded-full h-2 overflow-hidden">
             <div
               className={`h-2 rounded-full transition-all duration-700 ${
-                status === "mastered" ? "bg-gradient-to-r from-success-400 to-success-600"
-                  : "bg-gradient-to-r from-primary-500 via-primary-400 to-accent-500"
+                status === "mastered" ? "bg-linear-to-r from-success-400 to-success-600"
+                  : "bg-linear-to-r from-primary-500 via-primary-400 to-accent-500"
               }`}
               style={{ width: `${masteryPct}%` }}
             />
@@ -86,7 +86,7 @@ export default function GrammarTopic() {
 
       {/* CTA */}
       <div className="card-elevated p-5 mb-6 flex items-center gap-4 animate-fade-in-up">
-        <div className="shrink-0 w-12 h-12 rounded-2xl bg-gradient-to-br from-primary-500 to-purple-600 text-white flex items-center justify-center text-2xl shadow-glow-primary">
+        <div className="shrink-0 w-12 h-12 rounded-2xl bg-linear-to-br from-primary-500 to-purple-600 text-white flex items-center justify-center text-2xl shadow-glow-primary">
           🎯
         </div>
         <div className="flex-1 min-w-0">
@@ -107,8 +107,8 @@ export default function GrammarTopic() {
           <h2 className="text-h4 text-surface-900 dark:text-surface-100">Explanation</h2>
         </div>
         <div className="prose prose-sm dark:prose-invert max-w-none
-          prose-p:my-2 prose-p:text-surface-700 prose-p:dark:text-surface-300 prose-p:leading-relaxed
-          prose-strong:text-surface-900 prose-strong:dark:text-surface-100
+          prose-p:my-2 prose-p:text-surface-700 dark:prose-p:text-surface-300 prose-p:leading-relaxed
+          prose-strong:text-surface-900 dark:prose-strong:text-surface-100
           prose-li:my-1 prose-ul:my-2">
           <ReactMarkdown>{topic.explanation}</ReactMarkdown>
         </div>
@@ -118,7 +118,7 @@ export default function GrammarTopic() {
       {topic.formula && (
         <section className="mb-5">
           <p className="section-label mb-2">Formula</p>
-          <div className="rounded-2xl px-5 py-4 bg-gradient-to-r from-primary-50 to-purple-50 dark:from-primary-900/30 dark:to-purple-900/20 border border-primary-100 dark:border-primary-800/40 font-mono text-sm text-primary-800 dark:text-primary-200">
+          <div className="rounded-2xl px-5 py-4 bg-linear-to-r from-primary-50 to-purple-50 dark:from-primary-900/30 dark:to-purple-900/20 border border-primary-100 dark:border-primary-800/40 font-mono text-sm text-primary-800 dark:text-primary-200">
             {topic.formula}
           </div>
         </section>

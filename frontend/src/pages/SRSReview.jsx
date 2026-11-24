@@ -310,7 +310,7 @@ export default function SRSReview() {
       {/* Progress bar */}
       <div className="w-full bg-surface-200 dark:bg-surface-700 rounded-full h-2 mb-5 overflow-hidden">
         <div
-          className="h-full rounded-full bg-gradient-to-r from-primary-500 to-purple-600 transition-all duration-500 ease-out"
+          className="h-full rounded-full bg-linear-to-r from-primary-500 to-purple-600 transition-all duration-500 ease-out"
           style={{ width: `${progress}%` }}
         />
       </div>
@@ -342,7 +342,7 @@ export default function SRSReview() {
           }}
         >
           {/* Top accent band */}
-          <div className="absolute inset-x-0 top-0 h-1 bg-gradient-to-r from-primary-500 via-purple-500 to-accent-500" />
+          <div className="absolute inset-x-0 top-0 h-1 bg-linear-to-r from-primary-500 via-purple-500 to-accent-500" />
 
           {/* Swipe overlays */}
           {dragging && showAnswer && (
@@ -397,21 +397,21 @@ export default function SRSReview() {
                 <div className="grid grid-cols-3 gap-2">
                   <button
                     onClick={() => handleRate(1, "left")}
-                    className="bg-gradient-to-br from-danger-500 to-danger-600 hover:shadow-glow-danger text-white rounded-xl py-3 flex flex-col items-center gap-0.5 transition-all active:scale-95 font-bold"
+                    className="bg-linear-to-br from-danger-500 to-danger-600 hover:shadow-glow-danger text-white rounded-xl py-3 flex flex-col items-center gap-0.5 transition-all active:scale-95 font-bold"
                   >
                     <span className="text-sm">Again</span>
                     <span className="text-xs opacity-90">←</span>
                   </button>
                   <button
                     onClick={() => handleRate(3, "down")}
-                    className="bg-gradient-to-br from-warn-500 to-accent-500 hover:shadow-glow-accent text-white rounded-xl py-3 flex flex-col items-center gap-0.5 transition-all active:scale-95 font-bold"
+                    className="bg-linear-to-br from-warn-500 to-accent-500 hover:shadow-glow-accent text-white rounded-xl py-3 flex flex-col items-center gap-0.5 transition-all active:scale-95 font-bold"
                   >
                     <span className="text-sm">Hard</span>
                     <span className="text-xs opacity-90">↓</span>
                   </button>
                   <button
                     onClick={() => handleRate(5, "right")}
-                    className="bg-gradient-to-br from-success-500 to-info-500 hover:shadow-glow-success text-white rounded-xl py-3 flex flex-col items-center gap-0.5 transition-all active:scale-95 font-bold"
+                    className="bg-linear-to-br from-success-500 to-info-500 hover:shadow-glow-success text-white rounded-xl py-3 flex flex-col items-center gap-0.5 transition-all active:scale-95 font-bold"
                   >
                     <span className="text-sm">Easy</span>
                     <span className="text-xs opacity-90">→</span>

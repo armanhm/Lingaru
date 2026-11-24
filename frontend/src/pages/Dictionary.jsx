@@ -55,7 +55,7 @@ function SearchBar({ value, onChange, onSubmit, loading, placeholder }) {
           value={value}
           onChange={(e) => onChange(e.target.value)}
           placeholder={placeholder}
-          className="w-full pl-11 pr-4 py-3 border border-surface-200 dark:border-surface-600 rounded-xl text-base bg-white dark:bg-surface-800 text-surface-900 dark:text-surface-100 placeholder:text-surface-400 focus:outline-none focus:border-primary-500 focus:ring-2 focus:ring-primary-500/20 transition-all"
+          className="w-full pl-11 pr-4 py-3 border border-surface-200 dark:border-surface-600 rounded-xl text-base bg-white dark:bg-surface-800 text-surface-900 dark:text-surface-100 placeholder:text-surface-400 focus:outline-hidden focus:border-primary-500 focus:ring-2 focus:ring-primary-500/20 transition-all"
         />
       </div>
       <button
@@ -120,7 +120,7 @@ function DictionaryResult({ result }) {
           <ol className="space-y-2.5">
             {definitions.map((def, i) => (
               <li key={i} className="flex gap-3 animate-fade-in-up" style={staggerDelay(i, 60)}>
-                <span className="shrink-0 w-6 h-6 rounded-full bg-gradient-to-br from-primary-500 to-purple-600 text-white text-xs font-bold flex items-center justify-center mt-0.5 shadow-sm">
+                <span className="shrink-0 w-6 h-6 rounded-full bg-linear-to-br from-primary-500 to-purple-600 text-white text-xs font-bold flex items-center justify-center mt-0.5 shadow-xs">
                   {i + 1}
                 </span>
                 <div>
@@ -181,7 +181,7 @@ function DictionaryResult({ result }) {
 
       {/* Etymology */}
       {etymology && etymology !== "null" && (
-        <div className="rounded-xl bg-gradient-to-br from-surface-50 to-primary-50/30 dark:from-surface-700/40 dark:to-primary-900/10 border border-surface-200 dark:border-surface-700 px-4 py-3">
+        <div className="rounded-xl bg-linear-to-br from-surface-50 to-primary-50/30 dark:from-surface-700/40 dark:to-primary-900/10 border border-surface-200 dark:border-surface-700 px-4 py-3">
           <h3 className="section-label mb-1.5 flex items-center gap-1.5"><span>📜</span> {t("dictionary.etymology")}</h3>
           <p className="text-sm text-surface-700 dark:text-surface-300 leading-relaxed">{etymology}</p>
         </div>
@@ -235,11 +235,11 @@ function ConjugationResult({ result }) {
             onClick={() => setActiveTab(tense)}
             className={`relative px-3.5 py-1.5 rounded-lg text-xs font-semibold transition-all ${
               activeTab === tense
-                ? "text-white shadow-sm"
+                ? "text-white shadow-xs"
                 : "bg-surface-100 dark:bg-surface-700 text-surface-600 dark:text-surface-300 hover:bg-surface-200 dark:hover:bg-surface-600"
             }`}
           >
-            {activeTab === tense && <span className="absolute inset-0 rounded-lg bg-gradient-to-br from-primary-500 to-purple-600" />}
+            {activeTab === tense && <span className="absolute inset-0 rounded-lg bg-linear-to-br from-primary-500 to-purple-600" />}
             <span className="relative z-10">{tense}</span>
           </button>
         ))}
@@ -419,22 +419,22 @@ export default function Dictionary() {
           onClick={() => setTab("dictionary")}
           className={`relative px-5 py-2 rounded-lg text-sm font-semibold transition-all ${
             tab === "dictionary"
-              ? "text-white shadow-sm"
+              ? "text-white shadow-xs"
               : "text-surface-600 dark:text-surface-300 hover:bg-surface-100 dark:hover:bg-surface-700"
           }`}
         >
-          {tab === "dictionary" && <span className="absolute inset-0 rounded-lg bg-gradient-to-br from-primary-500 to-purple-600" />}
+          {tab === "dictionary" && <span className="absolute inset-0 rounded-lg bg-linear-to-br from-primary-500 to-purple-600" />}
           <span className="relative z-10">{t("dictionary.tabDictionary")}</span>
         </button>
         <button
           onClick={() => setTab("conjugator")}
           className={`relative px-5 py-2 rounded-lg text-sm font-semibold transition-all ${
             tab === "conjugator"
-              ? "text-white shadow-sm"
+              ? "text-white shadow-xs"
               : "text-surface-600 dark:text-surface-300 hover:bg-surface-100 dark:hover:bg-surface-700"
           }`}
         >
-          {tab === "conjugator" && <span className="absolute inset-0 rounded-lg bg-gradient-to-br from-info-500 to-primary-600" />}
+          {tab === "conjugator" && <span className="absolute inset-0 rounded-lg bg-linear-to-br from-info-500 to-primary-600" />}
           <span className="relative z-10">{t("dictionary.tabConjugator")}</span>
         </button>
       </div>
@@ -488,7 +488,7 @@ export default function Dictionary() {
 
           {dictResult && !dictLoading && (
             <div className="card relative overflow-hidden p-6 animate-scale-in">
-              <div className="absolute inset-x-0 top-0 h-1 bg-gradient-to-r from-primary-500 via-purple-500 to-info-500" />
+              <div className="absolute inset-x-0 top-0 h-1 bg-linear-to-r from-primary-500 via-purple-500 to-info-500" />
               <DictionaryResult result={dictResult} />
               {dictResult.part_of_speech === "verb" && !isEn && (
                 <div className="mt-5 pt-4 border-t border-surface-100 dark:border-surface-700">
@@ -570,7 +570,7 @@ export default function Dictionary() {
 
           {conjResult && !conjLoading && (
             <div className="card relative overflow-hidden p-6 animate-scale-in">
-              <div className="absolute inset-x-0 top-0 h-1 bg-gradient-to-r from-info-500 via-primary-500 to-purple-500" />
+              <div className="absolute inset-x-0 top-0 h-1 bg-linear-to-r from-info-500 via-primary-500 to-purple-500" />
               <ConjugationResult result={conjResult} />
             </div>
           )}

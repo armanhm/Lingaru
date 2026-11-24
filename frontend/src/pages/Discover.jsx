@@ -94,7 +94,7 @@ export default function Discover() {
     return (
       <div className="max-w-6xl mx-auto">
         <div className="space-y-2 mb-7">
-          <div className="skeleton h-4 w-32 rounded" />
+          <div className="skeleton h-4 w-32 rounded-sm" />
           <div className="skeleton h-10 w-72 rounded-lg" />
         </div>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">

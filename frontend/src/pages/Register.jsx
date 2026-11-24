@@ -50,7 +50,7 @@ export default function Register() {
   return (
     <div className="min-h-screen flex bg-surface-50 dark:bg-surface-950">
       {/* Left, gradient branding panel (hidden on mobile) */}
-      <div className="hidden lg:flex lg:w-1/2 relative overflow-hidden items-center justify-center p-12 bg-gradient-to-br from-primary-600 via-primary-700 to-purple-800">
+      <div className="hidden lg:flex lg:w-1/2 relative overflow-hidden items-center justify-center p-12 bg-linear-to-br from-primary-600 via-primary-700 to-purple-800">
         <div className="absolute inset-0 opacity-30 pointer-events-none">
           <div className="absolute top-20 right-10 w-72 h-72 bg-accent-400 rounded-full blur-3xl animate-float" />
           <div className="absolute bottom-20 left-10 w-64 h-64 bg-purple-300 rounded-full blur-3xl" />
@@ -70,7 +70,7 @@ export default function Register() {
           <div className="space-y-4">
             <h2 className="text-display font-extrabold leading-[1.1] tracking-tight">
               Start your French<br />
-              <span className="bg-gradient-to-r from-white via-accent-200 to-white bg-clip-text text-transparent bg-[size:200%_auto] animate-gradient-shift">adventure today.</span>
+              <span className="bg-linear-to-r from-white via-accent-200 to-white bg-clip-text text-transparent bg-size-[200%_auto] animate-gradient-shift">adventure today.</span>
             </h2>
             <p className="text-body-lg text-white/75 leading-relaxed">
               Join thousands of learners mastering French through interactive lessons, AI roleplay, and fun mini games.
@@ -83,7 +83,7 @@ export default function Register() {
               { icon: "🧠", t: "Grammar Booster", s: "Master tenses, pronouns, articles" },
               { icon: "🎮", t: "6 mini games", s: "Word scramble, gender snap & more" },
             ].map((f) => (
-              <div key={f.t} className="flex items-center gap-3 rounded-xl bg-white/10 backdrop-blur-sm border border-white/15 px-3 py-2.5">
+              <div key={f.t} className="flex items-center gap-3 rounded-xl bg-white/10 backdrop-blur-xs border border-white/15 px-3 py-2.5">
                 <span className="text-2xl shrink-0">{f.icon}</span>
                 <div>
                   <p className="text-sm font-semibold leading-tight">{f.t}</p>
@@ -103,7 +103,7 @@ export default function Register() {
         <div className="relative w-full max-w-md space-y-7 animate-fade-in-up">
           {/* Mobile logo */}
           <div className="lg:hidden flex items-center justify-center gap-2.5 mb-2">
-            <span className="w-11 h-11 bg-gradient-to-br from-primary-500 to-purple-600 rounded-2xl flex items-center justify-center text-white font-extrabold text-lg shadow-glow-primary">L</span>
+            <span className="w-11 h-11 bg-linear-to-br from-primary-500 to-purple-600 rounded-2xl flex items-center justify-center text-white font-extrabold text-lg shadow-glow-primary">L</span>
             <span className="text-2xl font-extrabold text-gradient-primary">Lingaru</span>
           </div>
 

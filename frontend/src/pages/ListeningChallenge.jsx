@@ -292,14 +292,14 @@ export default function ListeningChallenge() {
 
       {/* Score */}
       <div className="flex justify-center">
-        <div className="flex items-center gap-4 bg-white dark:bg-surface-800 border border-surface-100 dark:border-surface-700 rounded-full px-4 py-1.5 shadow-sm text-xs">
+        <div className="flex items-center gap-4 bg-white dark:bg-surface-800 border border-surface-100 dark:border-surface-700 rounded-full px-4 py-1.5 shadow-xs text-xs">
           <span className="text-surface-400">Score</span>
           <span className="font-bold text-primary-600">{score}/{round + (resultState ? 1 : 0)}</span>
         </div>
       </div>
 
       {/* Game card */}
-      <div className="bg-white dark:bg-surface-800 rounded-2xl shadow-sm border border-surface-100 dark:border-surface-700 overflow-hidden animate-scale-in" key={round}>
+      <div className="bg-white dark:bg-surface-800 rounded-2xl shadow-xs border border-surface-100 dark:border-surface-700 overflow-hidden animate-scale-in" key={round}>
         <div className="px-6 pt-8 pb-4 space-y-5">
           {/* Play button */}
           <div className="flex flex-col items-center gap-3">
@@ -357,7 +357,7 @@ export default function ListeningChallenge() {
               autoCorrect="off"
               spellCheck={false}
               className={`w-full px-4 py-3 border-2 rounded-xl text-center text-lg font-medium
-                focus:outline-none transition-colors
+                focus:outline-hidden transition-colors
                 ${resultState === "correct"
                   ? "border-success-400 dark:border-success-600 bg-success-50 dark:bg-success-900/20 text-success-700 dark:text-success-300"
                   : resultState === "wrong"

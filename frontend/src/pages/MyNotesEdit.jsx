@@ -626,9 +626,9 @@ function MyNotesEditor({ onCreated }) {
     return (
       <div className="max-w-5xl mx-auto animate-fade-in">
         <div className="space-y-2 mb-7">
-          <div className="skeleton h-4 w-28 rounded" />
+          <div className="skeleton h-4 w-28 rounded-sm" />
           <div className="skeleton h-10 w-72 rounded-lg" />
-          <div className="skeleton h-4 w-40 rounded" />
+          <div className="skeleton h-4 w-40 rounded-sm" />
         </div>
         <div className="skeleton h-[420px] w-full rounded-2xl" />
       </div>
@@ -751,7 +751,7 @@ function MyNotesEditor({ onCreated }) {
         onChange={(e) => setTitle(e.target.value)}
         onBlur={handleBlur}
         placeholder={t("myNotes.untitled")}
-        className="w-full bg-transparent border-0 outline-none focus:ring-0 px-0 text-h2 font-bold text-surface-900 dark:text-surface-100 placeholder:text-surface-300 dark:placeholder:text-surface-600 mb-3"
+        className="w-full bg-transparent border-0 outline-hidden focus:ring-0 px-0 text-h2 font-bold text-surface-900 dark:text-surface-100 placeholder:text-surface-300 dark:placeholder:text-surface-600 mb-3"
       />
 
       {suggestedTags.length > 0 && (
@@ -820,7 +820,7 @@ function MyNotesEditor({ onCreated }) {
               handleBlur();
             }}
             placeholder={t("myNotes.addTag")}
-            className="bg-transparent border-0 outline-none text-sm py-1 px-1 min-w-[120px] flex-1 placeholder:text-surface-400"
+            className="bg-transparent border-0 outline-hidden text-sm py-1 px-1 min-w-[120px] flex-1 placeholder:text-surface-400"
           />
         </div>
       </div>
@@ -831,7 +831,7 @@ function MyNotesEditor({ onCreated }) {
           onClick={() => setMobilePreview(false)}
           className={`px-3 py-1 rounded-lg text-xs font-medium transition-colors ${
             !mobilePreview
-              ? "bg-white dark:bg-surface-700 text-surface-900 dark:text-surface-100 shadow-sm"
+              ? "bg-white dark:bg-surface-700 text-surface-900 dark:text-surface-100 shadow-xs"
               : "text-surface-500 dark:text-surface-400"
           }`}
         >
@@ -842,7 +842,7 @@ function MyNotesEditor({ onCreated }) {
           onClick={() => setMobilePreview(true)}
           className={`px-3 py-1 rounded-lg text-xs font-medium transition-colors ${
             mobilePreview
-              ? "bg-white dark:bg-surface-700 text-surface-900 dark:text-surface-100 shadow-sm"
+              ? "bg-white dark:bg-surface-700 text-surface-900 dark:text-surface-100 shadow-xs"
               : "text-surface-500 dark:text-surface-400"
           }`}
         >
@@ -855,7 +855,7 @@ function MyNotesEditor({ onCreated }) {
         className="flex flex-col md:flex-row gap-3 md:gap-0 min-h-[440px]"
         style={{ "--split-pct": `${splitPct}%` }}
       >
-        <div className={`${mobilePreview ? "hidden md:flex" : "flex"} flex-col w-full md:w-[var(--split-pct)] md:min-w-0`}>
+        <div className={`${mobilePreview ? "hidden md:flex" : "flex"} flex-col w-full md:w-(--split-pct) md:min-w-0`}>
           <MarkdownToolbar
             textareaRef={bodyRef}
             value={body}
@@ -892,7 +892,7 @@ function MyNotesEditor({ onCreated }) {
             }}
             placeholder={t("myNotes.bodyPlaceholder")}
             spellCheck="false"
-            className="w-full flex-1 min-h-[400px] resize-y px-4 py-3 bg-white dark:bg-surface-900/60 border border-surface-200 dark:border-surface-700 border-t-0 rounded-b-2xl text-sm leading-relaxed text-surface-900 dark:text-surface-100 placeholder:text-surface-400 focus:outline-none focus:ring-2 focus:ring-primary-500/30 focus:border-primary-500"
+            className="w-full flex-1 min-h-[400px] resize-y px-4 py-3 bg-white dark:bg-surface-900/60 border border-surface-200 dark:border-surface-700 border-t-0 rounded-b-2xl text-sm leading-relaxed text-surface-900 dark:text-surface-100 placeholder:text-surface-400 focus:outline-hidden focus:ring-2 focus:ring-primary-500/30 focus:border-primary-500"
           />
         </div>
 
@@ -912,7 +912,7 @@ function MyNotesEditor({ onCreated }) {
             prose-h3:text-base prose-h3:font-semibold
             prose-ul:my-1 prose-ol:my-1 prose-li:my-0.5
             prose-strong:font-semibold prose-em:italic
-            prose-code:bg-surface-100 prose-code:dark:bg-surface-700 prose-code:px-1 prose-code:rounded prose-code:text-xs">
+            prose-code:bg-surface-100 dark:prose-code:bg-surface-700 prose-code:px-1 prose-code:rounded-sm prose-code:text-xs">
             {body.trim() ? (
               <ReactMarkdown remarkPlugins={[remarkGfm]}>{body}</ReactMarkdown>
             ) : (
@@ -922,12 +922,12 @@ function MyNotesEditor({ onCreated }) {
         </div>
       </div>
 
-      <div className="mt-3 flex items-center justify-end text-xs text-surface-400 dark:text-surface-500 min-h-[1.25rem]">
+      <div className="mt-3 flex items-center justify-end text-xs text-surface-400 dark:text-surface-500 min-h-5">
         {saveStatusLabel}
       </div>
 
       {showDeleteConfirm && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 backdrop-blur-sm p-4">
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 backdrop-blur-xs p-4">
           <div className="card p-6 max-w-sm w-full animate-fade-in-up">
             <h3 className="text-h4 mb-4 text-surface-900 dark:text-surface-100">
               {t("myNotes.deleteConfirm")}

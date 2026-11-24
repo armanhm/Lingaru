@@ -133,9 +133,9 @@ export default function OurNotesDetail() {
     return (
       <div className="max-w-4xl mx-auto">
         <div className="space-y-2 mb-7">
-          <div className="skeleton h-4 w-28 rounded" />
+          <div className="skeleton h-4 w-28 rounded-sm" />
           <div className="skeleton h-10 w-64 rounded-lg" />
-          <div className="skeleton h-4 w-40 rounded" />
+          <div className="skeleton h-4 w-40 rounded-sm" />
         </div>
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
           {[...Array(6)].map((_, i) => <SkeletonCard key={i} height="h-28" />)}
@@ -192,7 +192,7 @@ export default function OurNotesDetail() {
       </div>
 
       <div className="mb-8 flex items-start gap-3">
-        <div className="shrink-0 w-12 h-12 rounded-2xl bg-gradient-to-br from-primary-500 to-primary-700 text-white flex items-center justify-center text-2xl shadow-glow-primary">
+        <div className="shrink-0 w-12 h-12 rounded-2xl bg-linear-to-br from-primary-500 to-primary-700 text-white flex items-center justify-center text-2xl shadow-glow-primary">
           🗒️
         </div>
         <div className="min-w-0">

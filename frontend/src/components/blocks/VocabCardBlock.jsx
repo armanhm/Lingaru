@@ -9,14 +9,14 @@ export default function VocabCardBlock({ block }) {
   if (!french || !english) return null;
 
   return (
-    <div className="rounded-xl border border-surface-100 dark:border-surface-800 bg-white dark:bg-surface-900/40 p-3.5 shadow-sm">
+    <div className="rounded-xl border border-surface-100 dark:border-surface-800 bg-white dark:bg-surface-900/40 p-3.5 shadow-xs">
       <div className="flex items-baseline gap-2 flex-wrap">
         <span className="font-sans font-bold text-[18px] leading-tight text-surface-900 dark:text-surface-50">
           {french}
         </span>
         <AudioPlayButton text={french} size="xs" />
         {pos && (
-          <span className="text-[10px] uppercase tracking-[0.12em] font-bold text-surface-500 dark:text-surface-400 bg-surface-100 dark:bg-surface-800 px-1.5 py-0.5 rounded">
+          <span className="text-[10px] uppercase tracking-[0.12em] font-bold text-surface-500 dark:text-surface-400 bg-surface-100 dark:bg-surface-800 px-1.5 py-0.5 rounded-sm">
             {pos}
           </span>
         )}

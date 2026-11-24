@@ -151,7 +151,7 @@ export default function WordScrambleInline() {
                 className={`w-8 h-9 rounded-lg text-base font-bold flex items-center justify-center transition-all ${
                   t.used
                     ? "bg-surface-100 dark:bg-surface-800 text-surface-300 dark:text-surface-600"
-                    : "bg-white dark:bg-surface-800 text-surface-900 dark:text-surface-50 border-2 border-surface-200 dark:border-surface-600 hover:border-[color:var(--mode-accent)] active:scale-95"
+                    : "bg-white dark:bg-surface-800 text-surface-900 dark:text-surface-50 border-2 border-surface-200 dark:border-surface-600 hover:border-(--mode-accent) active:scale-95"
                 }`}
               >
                 {t.letter.toUpperCase()}

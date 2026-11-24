@@ -1,9 +1,16 @@
 /**
- * Shimmer skeleton placeholders. Use instead of animate-pulse for a premium feel.
+ * Skeleton placeholders: flat Paper surface with a gentle pulse (still when
+ * the user prefers reduced motion).
  */
 
 export function Skeleton({ className = "", style }) {
-  return <div className={`skeleton ${className}`} style={style} />;
+  return (
+    <div
+      aria-hidden="true"
+      className={`bg-line-soft rounded-lg animate-pulse motion-reduce:animate-none ${className}`}
+      style={style}
+    />
+  );
 }
 
 export function SkeletonText({ lines = 3, className = "" }) {

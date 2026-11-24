@@ -5,10 +5,10 @@ ENV PYTHONUNBUFFERED=1
 
 WORKDIR /app
 
-RUN apt-get update && apt-get install -y --no-install-recommends \
-    gcc libpq-dev && \
-    rm -rf /var/lib/apt/lists/*
-
+# No compiler or libpq headers: every dependency installs from a wheel
+# (psycopg2-binary bundles libpq). If a new dependency ever needs to
+# compile, the image build fails here and in CI's scan job; add a build
+# stage for it then, not a compiler in the runtime image.
 COPY backend/requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt
 

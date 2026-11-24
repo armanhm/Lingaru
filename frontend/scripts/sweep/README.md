@@ -39,6 +39,16 @@ SWEEP_BASE_URL=http://localhost:5173 SWEEP_USER=demo SWEEP_PASSWORD=... \
 and leaves screenshots and `report.json` in `<out>` alone, so it can add
 probes to an existing baseline.
 
+`--record-probes` (needs `--compare`; not with `--probes-only`) is for a
+change that alters the look on purpose. It records `<out>/probes.json`
+without comparing it, and the screenshots only get their `diffRatio`. Such a
+run does not fail on anything: contrast violations and horizontal overflow
+are recorded in `<out>/report.json`, and whoever runs it compares them with
+the baseline's `report.json`.
+
+Unknown options, an option without its value, and `--record-probes` without
+`--compare` or with `--probes-only` are usage errors (exit 2).
+
 The script logs in through `POST /api/users/login/`, stores the tokens in
 `localStorage`, pins `lingaru-ui-language=en` (and PATCHes `ui_language` to
 `en` on the user once per run), and sets `localStorage.theme` per pass.
@@ -48,6 +58,8 @@ passes, not for the reduced-motion count.
 Output: `<out>/<route with / as _>-<theme>-<viewport>.png` and
 `<out>/report.json`. With `--compare`, each entry gets `diffRatio`
 (pixelmatch changed pixels / total pixels; 1 when dimensions differ).
+The run never fails on `diffRatio`, contrast or overflow (only on probe
+mismatches, see "Probes"): compare those with the baseline's `report.json`.
 `animatedOverReducedMotion` is measured once per route and repeated on that
 route's entries. `sweep-out/` is git-ignored; keep the baseline directory.
 
@@ -97,5 +109,6 @@ excuses a listed difference only against a baseline from another Tailwind
 major version (`default-palette`: colours only; `not-generated-in-tailwind-3`:
 a class the app never used, so Tailwind 3 emitted nothing for it).
 
-Unit tests for the comparison: `node --test scripts/sweep/*.test.mjs`.
+Unit tests for the comparison run with `npm run test:unit` (or alone:
+`node --test scripts/sweep/*.test.mjs`).
 

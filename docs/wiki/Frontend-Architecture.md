@@ -104,7 +104,7 @@ Every authenticated route is nested under `/` → `<ProtectedRoute><Layout/></Pr
 
 - `components/Layout.jsx` renders a desktop sidebar (collapsible) and a mobile drawer.
 - `NAV_SECTIONS` is a static array of `{ to, labelKey, icon }`. `filterNavForMode()` in `lib/modeConfig.js` filters it by mode and target language. In agentic mode, Dashboard and Assistant collapse into one "Home" item.
-- The per-mode favicon is swapped at runtime (`/favicon-<mode>.png`).
+- One favicon (`/favicon.svg`) serves every mode.
 - `/assistant` gets a full-bleed `<main>`; every other page is wrapped in a `max-w-7xl` container.
 - `OnboardingModal` is shown while `user.mode` is `null`. On submit it PATCHes `mode`, `proficiency_level` and `target_language`, then calls `refreshUser()`.
 

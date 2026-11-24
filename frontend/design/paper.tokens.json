@@ -1,0 +1,593 @@
+{
+  "name": "Lingaru Paper",
+  "version": 1,
+  "color": {
+    "themes": [
+      {
+        "id": "light",
+        "name": "Light"
+      },
+      {
+        "id": "dark",
+        "name": "Dark"
+      }
+    ],
+    "tokens": [
+      {
+        "name": "canvas",
+        "value": {
+          "light": "#F6F3EC",
+          "dark": "#1A1916"
+        },
+        "usage": "Page background."
+      },
+      {
+        "name": "card",
+        "value": {
+          "light": "#FFFDF8",
+          "dark": "#23211D"
+        },
+        "usage": "Cards, panels and inputs."
+      },
+      {
+        "name": "line",
+        "value": {
+          "light": "#E4DDCF",
+          "dark": "#34312B"
+        },
+        "usage": "Default borders and dividers."
+      },
+      {
+        "name": "line-soft",
+        "value": {
+          "light": "#ECE6DA",
+          "dark": "#2B2925"
+        },
+        "usage": "Subtle dividers inside cards."
+      },
+      {
+        "name": "line-strong",
+        "value": {
+          "light": "#8A8374",
+          "dark": "#7D766A"
+        },
+        "usage": "Input borders and strong outlines."
+      },
+      {
+        "name": "fg",
+        "value": {
+          "light": "#1D1B18",
+          "dark": "#EDE8DE"
+        },
+        "usage": "Primary text."
+      },
+      {
+        "name": "fg-2",
+        "value": {
+          "light": "#4A463F",
+          "dark": "#C9C2B5"
+        },
+        "usage": "Secondary text."
+      },
+      {
+        "name": "fg-3",
+        "value": {
+          "light": "#66615A",
+          "dark": "#A8A193"
+        },
+        "usage": "Tertiary text, hints and captions."
+      },
+      {
+        "name": "accent",
+        "value": {
+          "light": "#2340B8",
+          "dark": "#8FA6FF"
+        },
+        "usage": "Links, primary actions and focus rings."
+      },
+      {
+        "name": "accent-strong",
+        "value": {
+          "light": "#1B3290",
+          "dark": "#B3C2FF"
+        },
+        "usage": "Hover and pressed state of accent."
+      },
+      {
+        "name": "on-accent",
+        "value": {
+          "light": "#FFFFFF",
+          "dark": "#14130F"
+        },
+        "usage": "Text and icons on accent fills."
+      },
+      {
+        "name": "ok",
+        "value": {
+          "light": "#2D5A3A",
+          "dark": "#7CC49A"
+        },
+        "usage": "Success text and icons."
+      },
+      {
+        "name": "ok-bg",
+        "value": {
+          "light": "#EEF3EC",
+          "dark": "#1F2A22"
+        },
+        "usage": "Success panel background."
+      },
+      {
+        "name": "ok-line",
+        "value": {
+          "light": "#CFDDCB",
+          "dark": "#2F4535"
+        },
+        "usage": "Success panel border."
+      },
+      {
+        "name": "err",
+        "value": {
+          "light": "#8A3B2E",
+          "dark": "#E58C74"
+        },
+        "usage": "Error text and icons."
+      },
+      {
+        "name": "err-bg",
+        "value": {
+          "light": "#F7ECE8",
+          "dark": "#2E201C"
+        },
+        "usage": "Error panel background."
+      },
+      {
+        "name": "warn",
+        "value": {
+          "light": "#7A5A12",
+          "dark": "#E2C06B"
+        },
+        "usage": "Warning text and icons."
+      },
+      {
+        "name": "warn-bg",
+        "value": {
+          "light": "#F6EFDD",
+          "dark": "#2B261A"
+        },
+        "usage": "Warning panel background."
+      },
+      {
+        "name": "surface-50",
+        "value": "#F6F3EC",
+        "usage": "surface ramp."
+      },
+      {
+        "name": "surface-100",
+        "value": "#ECE6DA",
+        "usage": "surface ramp."
+      },
+      {
+        "name": "surface-200",
+        "value": "#E4DDCF",
+        "usage": "surface ramp."
+      },
+      {
+        "name": "surface-300",
+        "value": "#BAB4A8",
+        "usage": "surface ramp."
+      },
+      {
+        "name": "surface-400",
+        "value": "#A19B91",
+        "usage": "surface ramp."
+      },
+      {
+        "name": "surface-500",
+        "value": "#66615A",
+        "usage": "surface ramp."
+      },
+      {
+        "name": "surface-600",
+        "value": "#4A463F",
+        "usage": "surface ramp."
+      },
+      {
+        "name": "surface-700",
+        "value": "#34312B",
+        "usage": "surface ramp."
+      },
+      {
+        "name": "surface-800",
+        "value": "#2B2925",
+        "usage": "surface ramp."
+      },
+      {
+        "name": "surface-900",
+        "value": "#23211D",
+        "usage": "surface ramp."
+      },
+      {
+        "name": "surface-950",
+        "value": "#1A1916",
+        "usage": "surface ramp."
+      },
+      {
+        "name": "accent-50",
+        "value": "#EEF1FB",
+        "usage": "accent ramp."
+      },
+      {
+        "name": "accent-100",
+        "value": "#D1DAFD",
+        "usage": "accent ramp."
+      },
+      {
+        "name": "accent-200",
+        "value": "#B3C2FF",
+        "usage": "accent ramp."
+      },
+      {
+        "name": "accent-300",
+        "value": "#8FA6FF",
+        "usage": "accent ramp."
+      },
+      {
+        "name": "accent-400",
+        "value": "#7992F1",
+        "usage": "accent ramp."
+      },
+      {
+        "name": "accent-500",
+        "value": "#4762D0",
+        "usage": "accent ramp."
+      },
+      {
+        "name": "accent-600",
+        "value": "#2340B8",
+        "usage": "accent ramp."
+      },
+      {
+        "name": "accent-700",
+        "value": "#1B3290",
+        "usage": "accent ramp."
+      },
+      {
+        "name": "accent-800",
+        "value": "#162975",
+        "usage": "accent ramp."
+      },
+      {
+        "name": "accent-900",
+        "value": "#111F5B",
+        "usage": "accent ramp."
+      },
+      {
+        "name": "accent-950",
+        "value": "#0C1640",
+        "usage": "accent ramp."
+      },
+      {
+        "name": "ok-50",
+        "value": "#EEF3EC",
+        "usage": "ok ramp."
+      },
+      {
+        "name": "ok-100",
+        "value": "#DFE8DC",
+        "usage": "ok ramp."
+      },
+      {
+        "name": "ok-200",
+        "value": "#CFDDCB",
+        "usage": "ok ramp."
+      },
+      {
+        "name": "ok-300",
+        "value": "#7CC49A",
+        "usage": "ok ramp."
+      },
+      {
+        "name": "ok-400",
+        "value": "#68AA82",
+        "usage": "ok ramp."
+      },
+      {
+        "name": "ok-500",
+        "value": "#558F6A",
+        "usage": "ok ramp."
+      },
+      {
+        "name": "ok-600",
+        "value": "#417552",
+        "usage": "ok ramp."
+      },
+      {
+        "name": "ok-700",
+        "value": "#2D5A3A",
+        "usage": "ok ramp."
+      },
+      {
+        "name": "ok-800",
+        "value": "#24492F",
+        "usage": "ok ramp."
+      },
+      {
+        "name": "ok-900",
+        "value": "#1B3725",
+        "usage": "ok ramp."
+      },
+      {
+        "name": "ok-950",
+        "value": "#12261A",
+        "usage": "ok ramp."
+      },
+      {
+        "name": "err-50",
+        "value": "#F7ECE8",
+        "usage": "err ramp."
+      },
+      {
+        "name": "err-100",
+        "value": "#F1CCC1",
+        "usage": "err ramp."
+      },
+      {
+        "name": "err-200",
+        "value": "#EBAC9B",
+        "usage": "err ramp."
+      },
+      {
+        "name": "err-300",
+        "value": "#E58C74",
+        "usage": "err ramp."
+      },
+      {
+        "name": "err-400",
+        "value": "#DA826B",
+        "usage": "err ramp."
+      },
+      {
+        "name": "err-500",
+        "value": "#B86451",
+        "usage": "err ramp."
+      },
+      {
+        "name": "err-600",
+        "value": "#A14F40",
+        "usage": "err ramp."
+      },
+      {
+        "name": "err-700",
+        "value": "#8A3B2E",
+        "usage": "err ramp."
+      },
+      {
+        "name": "err-800",
+        "value": "#6B2E23",
+        "usage": "err ramp."
+      },
+      {
+        "name": "err-900",
+        "value": "#4D2019",
+        "usage": "err ramp."
+      },
+      {
+        "name": "err-950",
+        "value": "#2E130E",
+        "usage": "err ramp."
+      },
+      {
+        "name": "warn-50",
+        "value": "#F6EFDD",
+        "usage": "warn ramp."
+      },
+      {
+        "name": "warn-100",
+        "value": "#EFDFB7",
+        "usage": "warn ramp."
+      },
+      {
+        "name": "warn-200",
+        "value": "#E9D091",
+        "usage": "warn ramp."
+      },
+      {
+        "name": "warn-300",
+        "value": "#E2C06B",
+        "usage": "warn ramp."
+      },
+      {
+        "name": "warn-400",
+        "value": "#C8A755",
+        "usage": "warn ramp."
+      },
+      {
+        "name": "warn-500",
+        "value": "#AE8D3F",
+        "usage": "warn ramp."
+      },
+      {
+        "name": "warn-600",
+        "value": "#8A6A1F",
+        "usage": "warn ramp."
+      },
+      {
+        "name": "warn-700",
+        "value": "#7A5A12",
+        "usage": "warn ramp."
+      },
+      {
+        "name": "warn-800",
+        "value": "#60460E",
+        "usage": "warn ramp."
+      },
+      {
+        "name": "warn-900",
+        "value": "#45330A",
+        "usage": "warn ramp."
+      },
+      {
+        "name": "warn-950",
+        "value": "#2B1F06",
+        "usage": "warn ramp."
+      }
+    ]
+  },
+  "type": {
+    "fonts": [],
+    "families": {
+      "serif": "\"Instrument Serif\", ui-serif, Georgia, serif",
+      "sans": "\"Inter\", ui-sans-serif, system-ui, sans-serif",
+      "mono": "\"JetBrains Mono\", ui-monospace, monospace"
+    },
+    "groups": [
+      {
+        "name": "Headings",
+        "family": "serif",
+        "styles": [
+          {
+            "name": "display",
+            "fontSize": "40px",
+            "lineHeight": 1.05,
+            "fontWeight": 400
+          },
+          {
+            "name": "h1",
+            "fontSize": "34px",
+            "lineHeight": 1.1,
+            "fontWeight": 400
+          },
+          {
+            "name": "h2",
+            "fontSize": "26px",
+            "lineHeight": 1.15,
+            "fontWeight": 400
+          },
+          {
+            "name": "h3",
+            "fontSize": "22px",
+            "lineHeight": 1.2,
+            "fontWeight": 400
+          }
+        ]
+      },
+      {
+        "name": "Text",
+        "family": "sans",
+        "styles": [
+          {
+            "name": "h4",
+            "fontSize": "17px",
+            "lineHeight": 1.35,
+            "fontWeight": 600
+          },
+          {
+            "name": "body-lg",
+            "fontSize": "17px",
+            "lineHeight": 1.5,
+            "fontWeight": 400
+          },
+          {
+            "name": "body",
+            "fontSize": "16px",
+            "lineHeight": 1.5,
+            "fontWeight": 400
+          },
+          {
+            "name": "small",
+            "fontSize": "14px",
+            "lineHeight": 1.45,
+            "fontWeight": 400
+          },
+          {
+            "name": "caption",
+            "fontSize": "13px",
+            "lineHeight": 1.4,
+            "fontWeight": 400
+          },
+          {
+            "name": "eyebrow",
+            "fontSize": "11.5px",
+            "lineHeight": 1.2,
+            "fontWeight": 600,
+            "letterSpacing": "0.13em"
+          }
+        ]
+      }
+    ]
+  },
+  "spacing": {
+    "tokens": [
+      {
+        "name": "space-1",
+        "value": "4px",
+        "usage": "Tight gaps between icon and label."
+      },
+      {
+        "name": "space-2",
+        "value": "8px",
+        "usage": "Compact gaps in controls."
+      },
+      {
+        "name": "space-3",
+        "value": "12px",
+        "usage": "Small gaps between related items."
+      },
+      {
+        "name": "space-4",
+        "value": "16px",
+        "usage": "Default gap between elements."
+      },
+      {
+        "name": "space-5",
+        "value": "20px",
+        "usage": "Gap inside cards."
+      },
+      {
+        "name": "space-6",
+        "value": "24px",
+        "usage": "Card padding and section gaps."
+      },
+      {
+        "name": "space-7",
+        "value": "32px",
+        "usage": "Gaps between groups."
+      },
+      {
+        "name": "space-8",
+        "value": "48px",
+        "usage": "Large section spacing."
+      },
+      {
+        "name": "space-9",
+        "value": "64px",
+        "usage": "Page-level spacing."
+      }
+    ]
+  },
+  "radius": {
+    "tokens": [
+      {
+        "name": "radius-sm",
+        "value": "10px",
+        "usage": "Small controls, pills."
+      },
+      {
+        "name": "radius-md",
+        "value": "12px",
+        "usage": "Buttons, inputs, feedback panels."
+      },
+      {
+        "name": "radius-lg",
+        "value": "16px",
+        "usage": "Cards."
+      },
+      {
+        "name": "radius-full",
+        "value": "9999px",
+        "usage": "Round icon buttons."
+      }
+    ]
+  }
+}

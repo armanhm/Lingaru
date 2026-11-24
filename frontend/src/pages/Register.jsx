@@ -49,30 +49,23 @@ export default function Register() {
 
   return (
     <div className="min-h-screen flex bg-surface-50 dark:bg-surface-950">
-      {/* Left, gradient branding panel (hidden on mobile) */}
-      <div className="hidden lg:flex lg:w-1/2 relative overflow-hidden items-center justify-center p-12 bg-linear-to-br from-primary-600 via-primary-700 to-purple-800">
-        <div className="absolute inset-0 opacity-30 pointer-events-none">
-          <div className="absolute top-20 right-10 w-72 h-72 bg-accent-400 rounded-full blur-3xl animate-float" />
-          <div className="absolute bottom-20 left-10 w-64 h-64 bg-purple-300 rounded-full blur-3xl" />
-          <div className="absolute top-1/2 right-1/3 w-56 h-56 bg-success-400 rounded-full blur-3xl" />
-        </div>
-        <div className="absolute inset-0 opacity-[0.04]" style={{ backgroundImage: "linear-gradient(rgba(255,255,255,1) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,1) 1px, transparent 1px)", backgroundSize: "40px 40px" }} />
-
-        <div className="relative z-10 text-white max-w-md space-y-8 animate-fade-in-up">
+      {/* Left, calm brand panel (hidden on mobile) */}
+      <div className="hidden lg:flex lg:w-1/2 items-center justify-center p-12 bg-card border-r border-line">
+        <div className="max-w-md space-y-8">
           <div className="flex items-center gap-3">
-            <span className="w-14 h-14 bg-white/15 backdrop-blur-md rounded-2xl flex items-center justify-center text-3xl font-extrabold shadow-2xl ring-1 ring-white/20">L</span>
+            <span className="w-14 h-14 bg-canvas border border-line rounded-2xl flex items-center justify-center font-editorial text-3xl text-fg">L</span>
             <div>
-              <span className="text-3xl font-extrabold tracking-tight">Lingaru</span>
-              <p className="text-xs text-white/60 uppercase tracking-[0.2em] mt-0.5">Apprends. Parle. Maîtrise.</p>
+              <span className="font-editorial text-3xl text-fg">Lingaru</span>
+              <p className="text-caption text-fg-3 uppercase tracking-[0.14em] mt-0.5">Apprends. Parle. Maîtrise.</p>
             </div>
           </div>
 
           <div className="space-y-4">
-            <h2 className="text-display font-extrabold leading-[1.1] tracking-tight">
+            <h2 className="text-display text-fg">
               Start your French<br />
-              <span className="bg-linear-to-r from-white via-accent-200 to-white bg-clip-text text-transparent bg-size-[200%_auto] animate-gradient-shift">adventure today.</span>
+              <span className="text-accent">adventure today.</span>
             </h2>
-            <p className="text-body-lg text-white/75 leading-relaxed">
+            <p className="text-body-lg text-fg-2">
               Join thousands of learners mastering French through interactive lessons, AI roleplay, and fun mini games.
             </p>
           </div>
@@ -83,11 +76,11 @@ export default function Register() {
               { icon: "🧠", t: "Grammar Booster", s: "Master tenses, pronouns, articles" },
               { icon: "🎮", t: "6 mini games", s: "Word scramble, gender snap & more" },
             ].map((f) => (
-              <div key={f.t} className="flex items-center gap-3 rounded-xl bg-white/10 backdrop-blur-xs border border-white/15 px-3 py-2.5">
+              <div key={f.t} className="flex items-center gap-3 rounded-xl bg-canvas border border-line-soft px-3 py-2.5">
                 <span className="text-2xl shrink-0">{f.icon}</span>
                 <div>
-                  <p className="text-sm font-semibold leading-tight">{f.t}</p>
-                  <p className="text-xs text-white/60 leading-tight mt-0.5">{f.s}</p>
+                  <p className="text-sm font-semibold leading-tight text-fg">{f.t}</p>
+                  <p className="text-xs text-fg-3 leading-tight mt-0.5">{f.s}</p>
                 </div>
               </div>
             ))}

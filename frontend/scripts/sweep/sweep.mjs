@@ -8,6 +8,7 @@ import { PNG } from "pngjs";
 import { ROUTES, THEMES, VIEWPORTS, PUBLIC_ROUTES } from "./pages.mjs";
 import { PROBES, PROBE_ROUTE } from "./probes.mjs";
 import { compareProbes } from "./probe-compare.mjs";
+import { parseArgs, probesCompareFile, UsageError } from "./args.mjs";
 
 const BASE = (process.env.SWEEP_BASE_URL || "http://localhost:5173").replace(/\/$/, "");
 const USER = process.env.SWEEP_USER;
@@ -26,33 +27,14 @@ const PROBE_STYLES = [
 ];
 const PSEUDO_STYLES = ["color", "background-color"];
 
-function parseArgs(argv) {
-  const args = {};
-  for (let i = 0; i < argv.length; i++) {
-    if (argv[i] === "--out") args.out = argv[++i];
-    else if (argv[i] === "--compare") args.compare = argv[++i];
-    else if (argv[i] === "--probes-only") args.probesOnly = true;
-  }
-  if (!args.out) {
-    console.error("usage: npm run sweep -- --out <dir> [--compare <dir>] [--probes-only]");
+function parseArgsOrExit(argv) {
+  try {
+    return parseArgs(argv);
+  } catch (err) {
+    if (!(err instanceof UsageError)) throw err;
+    console.error(err.message);
     process.exit(2);
   }
-  if (args.compare && samePath(args.out, args.compare)) {
-    console.error(`--out and --compare must be different directories (both are ${args.compare})`);
-    process.exit(2);
-  }
-  return args;
-}
-
-function samePath(a, b) {
-  const real = (p) => {
-    try {
-      return fs.realpathSync(p);
-    } catch {
-      return path.resolve(p);
-    }
-  };
-  return real(a) === real(b);
 }
 
 async function login() {
@@ -243,11 +225,12 @@ function diffRatio(fileA, fileB) {
 }
 
 async function main() {
-  const { out, compare, probesOnly } = parseArgs(process.argv.slice(2));
+  const args = parseArgsOrExit(process.argv.slice(2));
+  const { out, compare, probesOnly } = args;
   if (compare && !fs.statSync(compare, { throwIfNoEntry: false })?.isDirectory()) {
     throw new Error(`compare directory not found: ${compare}`);
   }
-  const compareProbesFile = compare && path.join(compare, "probes.json");
+  const compareProbesFile = probesCompareFile(args);
   if (compareProbesFile && !fs.existsSync(compareProbesFile)) {
     throw new Error(`missing ${compareProbesFile}; capture it with --probes-only --out ${compare}`);
   }
@@ -319,6 +302,12 @@ async function main() {
   fs.writeFileSync(path.join(out, "probes.json"), JSON.stringify(probes, null, 2));
   console.log(`wrote ${probes.probes.length} probe readings (Tailwind ${probes.tailwind}) to ${path.join(out, "probes.json")}`);
 
+  if (compare && !compareProbesFile) {
+    console.log(
+      "probes recorded, not compared (--record-probes); screenshots got diffRatio only: " +
+        "compare contrast and overflow in report.json with the baseline's",
+    );
+  }
   if (compareProbesFile) {
     const baseline = JSON.parse(fs.readFileSync(compareProbesFile, "utf8"));
     const { mismatches, drift } = compareProbes(probes, baseline, PROBES);

@@ -37,6 +37,8 @@ describe("Tabs layout", () => {
       </Tabs>,
     );
     expect(screen.getByTestId("list")).toHaveClass("overflow-y-hidden");
+    // The list clips, so the trigger focus ring is inset to stay visible.
+    expect(screen.getByRole("tab")).toHaveClass("focus-visible:ring-inset");
     expect(screen.getByRole("tab")).not.toHaveClass("-mb-px");
   });
 });

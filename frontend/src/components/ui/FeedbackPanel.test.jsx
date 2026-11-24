@@ -1,6 +1,8 @@
-import { describe, it, expect, vi } from "vitest";
-import { render, screen } from "@testing-library/react";
+import { describe, it, expect, vi, afterEach } from "vitest";
+import { render, screen, act } from "@testing-library/react";
 import { FeedbackPanel } from "./FeedbackPanel";
+
+afterEach(() => vi.useRealTimers());
 
 const panelOf = () => screen.getByRole("status").parentElement;
 
@@ -25,6 +27,32 @@ describe("FeedbackPanel", () => {
     const live = screen.getByRole("status");
     expect(live).toHaveAttribute("aria-live", "polite");
     expect(live).toHaveTextContent("Nearly. Check the accent");
+  });
+
+  it("clears the hidden live copy after announcing, so browse mode reads the verdict once", () => {
+    vi.useFakeTimers();
+    render(
+      <FeedbackPanel state="nearly" title="Nearly">
+        Check the accent
+      </FeedbackPanel>,
+    );
+    const live = screen.getByRole("status");
+    expect(live).toHaveTextContent("Nearly. Check the accent");
+    act(() => {
+      vi.advanceTimersByTime(2000);
+    });
+    expect(live).toBeEmptyDOMElement();
+    expect(screen.getByText("Nearly")).toBeInTheDocument();
+  });
+
+  it("does not announce again when the parent re-renders with the same text", () => {
+    vi.useFakeTimers();
+    const { rerender } = render(<FeedbackPanel title="Correct">Well done</FeedbackPanel>);
+    act(() => {
+      vi.advanceTimersByTime(2000);
+    });
+    rerender(<FeedbackPanel title="Correct">Well done</FeedbackPanel>);
+    expect(screen.getByRole("status")).toBeEmptyDOMElement();
   });
 
   it("correct uses the ok classes", () => {

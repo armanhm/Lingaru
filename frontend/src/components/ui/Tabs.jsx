@@ -14,6 +14,8 @@ export const TabsList = /* @__PURE__ */ forwardRef(function TabsList({ className
   );
 });
 
+// The list clips vertically (horizontal scroll only), so the trigger ring is
+// drawn inset: it stays fully visible inside the clip.
 export const TabsTrigger = /* @__PURE__ */ forwardRef(function TabsTrigger(
   { className, ...props },
   ref,
@@ -26,8 +28,7 @@ export const TabsTrigger = /* @__PURE__ */ forwardRef(function TabsTrigger(
           "after:absolute after:inset-x-2 after:bottom-0 after:h-0.5 after:rounded-full after:bg-transparent after:content-[''] " +
           "text-body font-medium text-fg-2 cursor-pointer transition-colors duration-150 ease-out " +
           "hover:text-fg data-[state=active]:after:bg-accent data-[state=active]:text-fg " +
-          "focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-accent " +
-          "focus-visible:ring-offset-2 focus-visible:ring-offset-canvas rounded-t-lg",
+          "focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-accent rounded-t-lg",
         className,
       )}
       {...props}

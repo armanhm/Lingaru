@@ -214,4 +214,15 @@ describe("Layout shell", () => {
     await user.click(screen.getByRole("link", { name: en.layout.skipToContent }));
     expect(screen.getByRole("main")).toHaveFocus();
   });
+
+  it("still restores focus to the menu button after a resize while the menu was closed", async () => {
+    const user = userEvent.setup();
+    renderAt("/");
+    setDesktop(true);
+    setDesktop(false);
+    const opener = screen.getByRole("button", { name: en.layout.openMenu });
+    await openMenu(user);
+    await user.keyboard("{Escape}");
+    expect(opener).toHaveFocus();
+  });
 });

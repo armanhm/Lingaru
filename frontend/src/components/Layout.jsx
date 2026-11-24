@@ -244,7 +244,7 @@ function MobilePanel({ label, closeLabel, onClose, restoreFocusRef, focusFallbac
         className="absolute inset-y-0 left-0 w-72 max-w-[85vw] bg-canvas border-r border-line p-3 flex flex-col focus:outline-hidden"
       >
         <div className="flex items-center justify-between pb-2">
-          <span className="text-h3 text-fg px-3">Lingaru</span>
+          <span className="text-h3 text-fg px-6">Lingaru</span>
           <IconButton size="sm" label={closeLabel} icon={X} onClick={onClose} />
         </div>
         <div className="min-h-0 flex-1">{children}</div>
@@ -274,6 +274,7 @@ export default function Layout() {
   const location = useLocation();
   const mainRef = useRef(null);
   const restoreFocusRef = useRef(true);
+  const mobileOpenRef = useRef(false);
   const [collapsed, setCollapsed] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
   const [collapsedSections, setCollapsedSections] = useState(loadCollapsedSections);
@@ -324,12 +325,18 @@ export default function Layout() {
     const query = window.matchMedia("(min-width: 48rem)");
     const onChange = (e) => {
       if (!e.matches) return;
-      restoreFocusRef.current = false;
+      // Only an open menu loses its opener; a closed one has nothing to restore.
+      if (mobileOpenRef.current) restoreFocusRef.current = false;
       setMobileOpen(false);
     };
     query.addEventListener("change", onChange);
     return () => query.removeEventListener("change", onChange);
   }, []);
+
+  useEffect(() => {
+    mobileOpenRef.current = mobileOpen;
+    if (mobileOpen) restoreFocusRef.current = true;
+  }, [mobileOpen]);
 
   const focusMain = useCallback(() => mainRef.current?.focus(), []);
 
@@ -350,7 +357,7 @@ export default function Layout() {
       <div className="flex flex-col h-full">
         {onNav ? (
           // The drawer supplies the wordmark as its title.
-          <div className="flex items-center gap-2 px-3 pb-3 border-b border-line">
+          <div className="flex items-center gap-2 px-6 pb-3 border-b border-line">
             {user && <LearningLanguageFlag language={user.target_language} />}
             {modeChip}
           </div>

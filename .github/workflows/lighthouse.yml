@@ -47,11 +47,10 @@ jobs:
         run: npm install -g @lhci/cli@0.14.x
 
       - name: Run Lighthouse on built bundle
-        # Lighthouse boots `vite preview` itself (configured below), runs
-        # against the chosen URLs, and asserts the thresholds in
-        # lighthouserc.json. `|| true` is intentional, missing static
-        # routes (e.g. /login when auth is the only public route)
-        # shouldn't block PRs. We surface results via summary instead.
+        # Lighthouse serves `dist/` itself with an SPA fallback (see
+        # lighthouserc.json), runs against the chosen URLs, and asserts the
+        # thresholds there. `|| true` is intentional: scores are advisory
+        # and reach reviewers through the summary instead of failing PRs.
         run: lhci autorun --upload.target=temporary-public-storage || true
 
       # Tail the lighthouse output into the PR step summary so reviewers

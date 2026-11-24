@@ -30,7 +30,7 @@ This spec describes the design system as it exists in code. Section 2.2 records 
 | DS-3 | Dark mode is class-based (`html.dark`). It is applied before first paint by an inline script in `index.html` and toggled by `ThemeContext`. Role utilities (`bg-canvas`, `text-fg`, ...) flip through the `--pp-*` variables, so they need no `dark:` variant. |
 | DS-4 | There is one palette for every audience mode (general, exam, agentic). Modes change content (navigation, landing page), never colours. `ModeContext` still sets `html[data-mode]`; the `--mode-*` variables and `.mode-*` classes remain only so old markup keeps working and are flat Paper colours (§3.7). |
 | DS-5 | Shared primitives live in `frontend/src/components/ui/` and are exported from `components/ui/index.js` (except `ComingSoonBadge` and `LearningLanguageFlag`, which are imported directly from their files). |
-| DS-6 | All interactive controls show the focus ring: 2 px `accent`, 2 px offset (`ring-offset-canvas`, or `ring-offset-card` on cards). Inside clipped scroll containers the ring is drawn inset. |
+| DS-6 | All interactive controls show the focus ring: 2 px `accent`, 2 px offset (Button, IconButton, Input, Select, Textarea, Switch and Tabs use `ring-offset-canvas` even on cards and dialogs, a known cosmetic gap; the Dialog and Drawer close buttons, the toast dismiss button and the shell's theme switch use `ring-offset-card`; Checkbox uses an outline instead of a ring). Inside clipped scroll containers the ring is drawn inset. |
 | DS-7 | `prefers-reduced-motion: reduce` is honoured globally by an unlayered rule at the end of `index.css`: animation and transition durations drop to 0.01 ms and iteration counts to 1. Components also add `motion-reduce:` utilities. |
 | DS-8 | A dev-only gallery at `/dev/ui` renders every `ui/` component in every state, light and dark side by side. It exists only on the dev server (§3.9). |
 
@@ -199,7 +199,7 @@ Guarantees by component:
 | `IconButton` | `label` is the accessible name; the dev build logs an error when it is missing. |
 | `Field` | Generates ids; `aria-describedby` points to the hint and error; `aria-invalid` follows `error`. |
 | `Input`, `Textarea`, `Select` | 16 px text (no iOS zoom on focus), 3:1 border, `aria-invalid` turns the border to `err`. |
-| `Checkbox`, `Switch` | 44 px target; `Switch` is a Radix `role="switch"` with `aria-checked`. |
+| `Checkbox`, `Switch` | 44 px target (the Checkbox wrapper is a `<label>`, so a tap anywhere in it toggles the box; its focus indicator is an outline); `Switch` is a Radix `role="switch"` with `aria-checked`. |
 | `Dialog`, `Drawer` | Focus trap, Escape and outside click close, scroll lock, focus restore to the opener, `title` is the accessible name, clicks on toasts do not close them. |
 | `Tabs` | Roving focus and arrow keys (Radix); 44 px triggers; the focus ring is drawn inset because the list clips vertically. |
 | `ProgressBar`, `SegmentedProgress` | `role="progressbar"` with `aria-valuemin`, `aria-valuemax` and `aria-valuenow`; values are clamped to 0..1. |

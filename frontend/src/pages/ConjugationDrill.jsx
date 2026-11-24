@@ -179,7 +179,7 @@ export default function ConjugationDrill() {
               >
                 <div className="flex items-center gap-2.5">
                   <span className={`shrink-0 w-7 h-7 rounded-full flex items-center justify-center text-sm font-bold ${
-                    r.is_correct ? "bg-success-500 text-white" : "bg-danger-500 text-white"
+                    r.is_correct ? "bg-success-600 text-white" : "bg-danger-600 text-white"
                   }`}>
                     {r.is_correct ? "✓" : "✕"}
                   </span>

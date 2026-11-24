@@ -50,6 +50,16 @@ export function probesCompareFile({ compare, recordProbes }) {
   return compare && !recordProbes ? path.join(compare, "probes.json") : null;
 }
 
+// The probes must come from the baseline build: recording them from the build
+// under test would make the comparison vacuous.
+export function missingBaselineProbesMessage(file, compare) {
+  return (
+    `missing ${file}; capture the probes from the baseline build, not the current one: ` +
+    `serve the baseline commit (for example a dev server on a checkout of main), then run ` +
+    `the sweep with SWEEP_BASE_URL pointing at that server and --probes-only --out ${compare}`
+  );
+}
+
 function samePath(a, b) {
   const real = (p) => {
     try {

@@ -8,7 +8,7 @@ import { PNG } from "pngjs";
 import { ROUTES, THEMES, VIEWPORTS, PUBLIC_ROUTES } from "./pages.mjs";
 import { PROBES, PROBE_ROUTE } from "./probes.mjs";
 import { compareProbes } from "./probe-compare.mjs";
-import { parseArgs, probesCompareFile, UsageError } from "./args.mjs";
+import { parseArgs, probesCompareFile, missingBaselineProbesMessage, UsageError } from "./args.mjs";
 
 const BASE = (process.env.SWEEP_BASE_URL || "http://localhost:5173").replace(/\/$/, "");
 const USER = process.env.SWEEP_USER;
@@ -232,7 +232,7 @@ async function main() {
   }
   const compareProbesFile = probesCompareFile(args);
   if (compareProbesFile && !fs.existsSync(compareProbesFile)) {
-    throw new Error(`missing ${compareProbesFile}; capture it with --probes-only --out ${compare}`);
+    throw new Error(missingBaselineProbesMessage(compareProbesFile, compare));
   }
   fs.mkdirSync(out, { recursive: true });
   const tokens = await login();

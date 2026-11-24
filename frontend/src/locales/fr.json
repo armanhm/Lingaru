@@ -14,6 +14,7 @@
     "back": "Retour",
     "next": "Suivant",
     "close": "Fermer",
+    "dismissNotification": "Fermer la notification",
     "submit": "Envoyer",
     "delete": "Supprimer",
     "edit": "Modifier",
@@ -105,11 +106,10 @@
     },
     "mode": {
       "title": "Choisis ton mode",
-      "description": "Le mode adapte la page d'accueil, la navigation et la palette de couleurs de toute l'application.",
+      "description": "Le mode adapte la page d'accueil et la navigation de toute l'application.",
       "currentLevelTitle": "Niveau actuel (CECRL)",
       "currentLevelDescription": "On utilise ton niveau pour calibrer le vocabulaire et la difficulté des exercices.",
       "saveButton": "Enregistrer mode et niveau",
-      "celebrationLabel": "Mode activé",
       "errorToast": "Échec de l'enregistrement"
     },
     "appearance": {

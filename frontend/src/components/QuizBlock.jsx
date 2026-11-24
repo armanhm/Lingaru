@@ -172,7 +172,7 @@ export default function QuizBlock({ data }) {
                     : "border-danger-200 dark:border-danger-800 bg-danger-50/50 dark:bg-danger-900/20"
                 }`}
               >
-                <span className={`shrink-0 w-5 h-5 rounded-full text-white flex items-center justify-center text-[10px] font-bold ${ok ? "bg-success-500" : "bg-danger-500"}`}>
+                <span className={`shrink-0 w-5 h-5 rounded-full text-white flex items-center justify-center text-[10px] font-bold ${ok ? "bg-success-600" : "bg-danger-600"}`}>
                   {ok ? "✓" : "✕"}
                 </span>
                 <div className="min-w-0 flex-1">
@@ -280,8 +280,8 @@ export default function QuizBlock({ data }) {
                 className={`${base} ${state}`}
               >
                 <span className={`shrink-0 w-7 h-7 rounded-lg text-[12px] font-bold flex items-center justify-center ${
-                  showAsCorrect ? "bg-success-500 text-white"
-                  : showAsWrong ? "bg-danger-500 text-white"
+                  showAsCorrect ? "bg-success-600 text-white"
+                  : showAsWrong ? "bg-danger-600 text-white"
                   : isSelected ? "bg-primary-500 text-white"
                   : "bg-surface-100 dark:bg-surface-800 text-surface-600 dark:text-surface-300 group-hover:bg-primary-100 dark:group-hover:bg-primary-900/40 group-hover:text-primary-700 dark:group-hover:text-primary-300"
                 }`}>

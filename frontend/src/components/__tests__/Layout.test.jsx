@@ -2,7 +2,6 @@ import { describe, it, expect, vi, beforeEach } from "vitest";
 import { act, render, screen, within } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { MemoryRouter, Route, Routes } from "react-router-dom";
-import "../../i18n";
 import en from "../../locales/en.json";
 
 const authValue = {
@@ -115,6 +114,15 @@ describe("Layout shell", () => {
       "aria-expanded",
       "true",
     );
+  });
+
+  it("closes the phone menu when Settings is chosen from the user menu, even on /settings", async () => {
+    const user = userEvent.setup();
+    renderAt("/settings");
+    const dialog = await openMenu(user);
+    await user.click(within(dialog).getByRole("button", { name: new RegExp(authValue.user.username) }));
+    await user.click(within(dialog).getByRole("link", { name: en.nav.settings }));
+    expect(screen.queryByRole("dialog")).not.toBeInTheDocument();
   });
 
   it("opens the phone menu as a dialog and closes it with Escape", async () => {

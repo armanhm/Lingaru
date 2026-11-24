@@ -33,8 +33,8 @@ export const Switch = /* @__PURE__ */ forwardRef(function Switch(
     >
       <RadixSwitch.Thumb
         className={cx(
-          "block size-5 translate-x-1 rounded-full bg-fg-3 transition-transform duration-150 ease-out",
-          "motion-reduce:transition-none data-[state=checked]:translate-x-6 data-[state=checked]:bg-on-accent",
+          "block size-5 translate-x-[3px] rounded-full bg-fg-3 transition-transform duration-150 ease-out",
+          "motion-reduce:transition-none data-[state=checked]:translate-x-[23px] data-[state=checked]:bg-on-accent",
         )}
       />
     </RadixSwitch.Root>

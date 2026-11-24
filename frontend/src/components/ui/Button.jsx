@@ -13,7 +13,7 @@ const BASE =
 const VARIANTS = {
   primary: "bg-accent text-on-accent border-transparent hover:bg-accent-strong",
   secondary: "bg-card text-fg border-line-strong hover:bg-canvas",
-  quiet: "bg-transparent text-fg-2 border-transparent hover:bg-canvas hover:text-fg",
+  quiet: "bg-transparent text-fg-2 border-transparent hover:bg-line-soft hover:text-fg",
   danger: "bg-err-bg text-err border-err hover:bg-card",
 };
 
@@ -85,7 +85,7 @@ export const Button = /* @__PURE__ */ forwardRef(function Button(
       {...rest}
     >
       {/* Content keeps its space while loading, so the width never changes. */}
-      <span className={cx("inline-flex items-center justify-center gap-2", loading && "invisible")}>
+      <span className={cx("inline-flex items-center justify-center gap-2", loading && "opacity-0")}>
         {iconLeft}
         {children}
         {iconRight}

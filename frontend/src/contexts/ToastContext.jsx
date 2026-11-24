@@ -1,4 +1,5 @@
 import { createContext, useContext, useState, useCallback, useRef } from "react";
+import { useTranslation } from "react-i18next";
 import { CheckCircle2, AlertCircle, AlertTriangle, Info, X } from "lucide-react";
 
 const ToastContext = createContext(null);
@@ -25,6 +26,7 @@ let toastId = 0;
 // assertive (role="alert"); everything else is announced politely by the
 // status region that contains it.
 function ToastItem({ message, type, onDismiss }) {
+  const { t } = useTranslation();
   const { icon: Icon, color } = TYPE_STYLES[type] || TYPE_STYLES.info;
   return (
     <div
@@ -37,7 +39,7 @@ function ToastItem({ message, type, onDismiss }) {
       <button
         type="button"
         onClick={onDismiss}
-        aria-label="Dismiss notification"
+        aria-label={t("common.dismissNotification")}
         className="inline-flex size-11 shrink-0 items-center justify-center rounded-full text-fg-3 transition-colors duration-150 ease-out hover:bg-canvas hover:text-fg focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-card"
       >
         <X aria-hidden="true" className="size-4" />
@@ -70,8 +72,7 @@ export function ToastProvider({ children }) {
   return (
     <ToastContext.Provider value={{ showToast }}>
       {children}
-      {/* Bottom-right stack with proper gap and mobile bottom-safe padding */}
-      {/* Visible stack: not a live region, so nothing is announced twice. The
+      {/* Bottom-right stack. Visible stack: not a live region, so nothing is announced twice. The
           message text is aria-hidden here; the always-mounted sr-only regions
           below carry what screen readers announce, once per toast. */}
       <div

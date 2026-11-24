@@ -57,6 +57,35 @@ describe("Dialog", () => {
   });
 });
 
+describe("close label", () => {
+  it("Dialog and Drawer name the close button from i18n, overridable with closeLabel", () => {
+    const { rerender } = render(
+      <Dialog open onOpenChange={() => {}} title="T">
+        x
+      </Dialog>,
+    );
+    expect(screen.getByRole("button", { name: "Close" })).toBeInTheDocument();
+    rerender(
+      <Dialog open onOpenChange={() => {}} title="T" closeLabel="Fermer">
+        x
+      </Dialog>,
+    );
+    expect(screen.getByRole("button", { name: "Fermer" })).toBeInTheDocument();
+    rerender(
+      <Drawer open onOpenChange={() => {}} title="T">
+        x
+      </Drawer>,
+    );
+    expect(screen.getByRole("button", { name: "Close" })).toBeInTheDocument();
+    rerender(
+      <Drawer open onOpenChange={() => {}} title="T" closeLabel="Fermer">
+        x
+      </Drawer>,
+    );
+    expect(screen.getByRole("button", { name: "Fermer" })).toBeInTheDocument();
+  });
+});
+
 describe("Drawer", () => {
   it("is a named dialog; bottom is a rounded sheet, right is a panel", () => {
     const { rerender } = render(

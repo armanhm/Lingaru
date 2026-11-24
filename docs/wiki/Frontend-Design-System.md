@@ -79,12 +79,12 @@ Two helpers are imported from their own files: `ComingSoonBadge` and `LearningLa
 | `Button` | `variant` (`primary`, `secondary`, `quiet`, `danger`), `size` (`sm`, `md`, `lg`), `loading`, `iconLeft`, `iconRight`, `asChild` | `type` defaults to `"button"`. `asChild` renders its child (for example a router `Link`) with the button classes; icons and the spinner are not supported there. |
 | `IconButton` | `label` (required), `icon`, `variant` (`quiet`, `secondary`, `primary`, `danger`), `size` | `icon` is an element or a component such as a lucide icon. |
 | `Input`, `Textarea`, `Select` | native props; `Textarea` has `size="lg"`; `Select` takes `wrapperClassName` | 44 px tall, 16 px text. |
-| `Checkbox`, `Switch` | native props; `Switch` has `checked`, `onCheckedChange`, `label` | Inside a `Field`, leave out `Switch`'s `label`. |
+| `Checkbox`, `Switch` | native props; `label` (both); `Switch` has `checked`, `onCheckedChange` | The Checkbox wrapper is a `<label>`, so a tap anywhere in its 44 px box toggles it. Inside a `Field`, leave out `label`. |
 | `Field` | `label`, `hint`, `error`, `id` | One child. Adds `id`, `aria-describedby` and `aria-invalid` to it. |
 | `Card` | `padding` (`none`, `md`, `lg`), `as`, `interactive` | `interactive` needs `as="button"` or `as="a"`. |
 | `Badge` | `tone` (`neutral`, `accent`, `ok`, `err`, `warn`) | |
-| `Dialog` | `open`, `onOpenChange`, `title`, `description`, `footer` | `title` is required for accessibility. |
-| `Drawer` | `open`, `onOpenChange`, `title`, `description`, `side` (`bottom`, `right`) | |
+| `Dialog` | `open`, `onOpenChange`, `title`, `description`, `footer`, `closeLabel` (default: translated `common.close`) | `title` is required for accessibility. |
+| `Drawer` | `open`, `onOpenChange`, `title`, `description`, `side` (`bottom`, `right`), `closeLabel` | |
 | `Tabs`, `TabsList`, `TabsTrigger`, `TabsContent` | Radix tabs props (`defaultValue`, `value`, ...) | |
 | `ProgressBar` | `value` (0 to 1), `label` | |
 | `SegmentedProgress` | `segments` (`[{ weight, value }]`), `label` | |
@@ -162,7 +162,7 @@ Tailwind 4 is configured in CSS. The order of `frontend/src/index.css` is delibe
 
 1. `@layer theme, base, components, utilities;` and the two `@import ... layer(...)` lines for Tailwind's theme and preflight, spelled out instead of `@import "tailwindcss"`, so the component classes can live inside the utilities layer.
 2. `@import './design/tokens.css'` (generated: `@theme` ramps, fonts, type sizes, `--pp-*` variables, the serif heading utilities and `@theme inline` colour roles).
-3. `@source not '../scripts'`, `@plugin '@tailwindcss/typography'` and `@custom-variant dark (&:is(.dark *))` (the class-based dark mode).
+3. `@source not '../scripts'`, `@plugin '@tailwindcss/typography'`, `@custom-variant dark (&:is(.dark *))` (the class-based dark mode) and `@custom-variant hover (&:hover)` (Tailwind 3 behaviour: hover styles apply on tap on touch devices; without it Tailwind 4 hides every `hover:` rule behind `@media (hover: hover)`).
 4. `@theme { ... }`: animation names, Tailwind 3 line-heights, radii, shadows, gradients and keyframes.
 5. Compatibility shims: default border colour, button cursor, placeholder colour, form field backgrounds, `space-y-*`.
 6. `@layer utilities { ... }`: the legacy component classes (`.card`, `.btn-*`, `.badge-*`, `.input`, `.mode-*`, ...) and custom utilities, in the order that reproduces Tailwind 3's cascade. Do not use them in new code.

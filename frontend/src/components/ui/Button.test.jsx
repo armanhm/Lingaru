@@ -55,6 +55,14 @@ describe("Button loading and asChild states", () => {
     expect(screen.getByRole("button", { name: "Save" })).toHaveTextContent("Save");
   });
 
+  it("keeps its accessible name while loading (hidden with opacity, not visibility)", () => {
+    render(<Button loading>Continue</Button>);
+    const button = screen.getByRole("button", { name: "Continue" });
+    const content = screen.getByText("Continue");
+    expect(button.querySelector(".invisible")).toBeNull();
+    expect(content).toHaveClass("opacity-0");
+  });
+
   it("marks an asChild link aria-disabled and blocks clicks when loading", async () => {
     const onClick = vi.fn();
     render(

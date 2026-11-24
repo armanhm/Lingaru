@@ -3,15 +3,11 @@ import { useAuth } from "./AuthContext";
 
 /**
  * Mirrors the user's mode (general / exam / agentic) onto a
- * `data-mode="<mode>"` attribute on <html>, so CSS custom properties
- * scoped per-mode in index.css can re-tint the page chrome (header
- * band, hero gradients, dashboard accents) without rewriting every
- * component.
+ * `data-mode="<mode>"` attribute on <html> and exposes it through `useMode`.
  *
- * The actual palette tokens live in index.css under the
- * `html[data-mode="..."]` selectors. This context is only the bridge
- * between user state and the DOM attribute. Lightweight on purpose ,
- * dark mode does the same trick.
+ * A mode changes content (navigation, home page), not colours: every mode
+ * shares one palette, so no CSS selects on `data-mode`. The attribute is a
+ * hook for tests and tooling.
  */
 
 const ModeContext = createContext(null);

@@ -239,7 +239,7 @@ npx playwright test   # visual snapshots of /login and /register (needs a build)
 - No route-level code splitting: the whole app ships as one JS chunk of about 1.1 MB (about 294 KB gzipped).
 - No data-fetching or cache layer: each page re-implements its loading, error and data state, and few effects cancel stale requests.
 - `Assistant.jsx` (about 1,700 lines) and `Settings.jsx` (about 1,400 lines) are monoliths that should be split into feature folders.
-- `components/Layout.jsx` declares `SidebarInner` inside the render function, so the sidebar remounts and loses its scroll position on every navigation.
+- `components/Layout.jsx` builds the sidebar with a local `renderSidebar()` function that is called inline (not mounted as a component), so it does not remount on navigation. Both the desktop rail and the phone menu call it, and the function is recreated on each render.
 - The Dashboard skill compass, "today's plan", the exam countdown and the TCF sub-scores are hard-coded placeholder values, not user data.
 - In `MyNotesEdit.jsx`, a save queued while another save is in flight can send a stale payload (an autosave race).
 - `ExamExercise.jsx` posts oral-expression (EO) audio to `/api/media/voice-chat/`, which does not exist. The voice endpoint is `/api/assistant/voice-chat/`.

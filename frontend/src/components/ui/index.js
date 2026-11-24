@@ -17,3 +17,6 @@ export { Switch } from "./Switch";
 export { Dialog } from "./Dialog";
 export { Drawer } from "./Drawer";
 export { Tabs, TabsList, TabsTrigger, TabsContent } from "./Tabs";
+export { ProgressBar } from "./ProgressBar";
+export { SegmentedProgress } from "./SegmentedProgress";
+export { FeedbackPanel } from "./FeedbackPanel";

@@ -112,7 +112,7 @@ export function SurfaceSection() {
           </Card>
         ))}
       </Group>
-      <Group title="Skeleton" note="Pulse is still under prefers-reduced-motion.">
+      <Group title="Skeleton" note="The pulse stops when the system asks for reduced motion.">
         <div className="w-64"><SkeletonText lines={3} /></div>
         <div className="w-48"><SkeletonCard /></div>
         <SkeletonCircle />

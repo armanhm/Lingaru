@@ -1,3 +1,4 @@
+import { StrictMode } from "react";
 import { describe, it, expect, vi, afterEach } from "vitest";
 import { render, screen, act } from "@testing-library/react";
 import { FeedbackPanel } from "./FeedbackPanel";
@@ -53,6 +54,44 @@ describe("FeedbackPanel", () => {
     });
     rerender(<FeedbackPanel title="Correct">Well done</FeedbackPanel>);
     expect(screen.getByRole("status")).toBeEmptyDOMElement();
+  });
+
+  it("clears the live copy under StrictMode's double effect run", () => {
+    vi.useFakeTimers();
+    render(
+      <StrictMode>
+        <FeedbackPanel title="Correct">Well done</FeedbackPanel>
+      </StrictMode>,
+    );
+    const live = screen.getByRole("status");
+    expect(live).toHaveTextContent("Correct. Well done");
+    act(() => {
+      vi.advanceTimersByTime(2000);
+    });
+    expect(live).toBeEmptyDOMElement();
+  });
+
+  it("re-announces identical text when announceKey changes, then clears", () => {
+    vi.useFakeTimers();
+    const ui = (key) => (
+      <FeedbackPanel title="Correct" announceKey={key}>
+        Well done
+      </FeedbackPanel>
+    );
+    const { rerender } = render(ui(1));
+    const live = screen.getByRole("status");
+    act(() => {
+      vi.advanceTimersByTime(2000);
+    });
+    expect(live).toBeEmptyDOMElement();
+    rerender(ui(1));
+    expect(live).toBeEmptyDOMElement();
+    rerender(ui(2));
+    expect(live).toHaveTextContent("Correct. Well done");
+    act(() => {
+      vi.advanceTimersByTime(2000);
+    });
+    expect(live).toBeEmptyDOMElement();
   });
 
   it("correct uses the ok classes", () => {

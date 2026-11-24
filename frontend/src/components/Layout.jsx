@@ -56,7 +56,7 @@ const INSET_RING =
   "focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-accent";
 
 // ── UserMenu ─────────────────────────────────────────────────────────────────
-function UserMenu({ user, collapsed, onLogout }) {
+function UserMenu({ user, collapsed, onLogout, onNavigate }) {
   const { dark, toggle } = useTheme();
   const { t } = useTranslation();
   const [open, setOpen] = useState(false);
@@ -157,7 +157,14 @@ function UserMenu({ user, collapsed, onLogout }) {
 
           <div className="h-px bg-line" />
 
-          <Link to="/settings" onClick={() => setOpen(false)} className={rowClass}>
+          <Link
+            to="/settings"
+            onClick={() => {
+              setOpen(false);
+              onNavigate?.();
+            }}
+            className={rowClass}
+          >
             <Settings aria-hidden="true" size={16} strokeWidth={1.75} className="text-fg-3 shrink-0" />
             {t("nav.settings")}
           </Link>
@@ -465,7 +472,7 @@ export default function Layout() {
           })}
         </nav>
 
-        <UserMenu user={user} collapsed={compact} onLogout={handleLogout} />
+        <UserMenu user={user} collapsed={compact} onLogout={handleLogout} onNavigate={onNav} />
       </div>
     );
   };

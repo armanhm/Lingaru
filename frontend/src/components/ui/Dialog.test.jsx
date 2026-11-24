@@ -2,7 +2,6 @@ import { describe, it, expect, vi } from "vitest";
 import userEvent from "@testing-library/user-event";
 import { useState } from "react";
 import { render, screen } from "@testing-library/react";
-import "../../i18n";
 import { Dialog } from "./Dialog";
 import { Drawer } from "./Drawer";
 

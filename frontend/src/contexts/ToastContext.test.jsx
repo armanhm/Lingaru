@@ -2,7 +2,6 @@ import { describe, it, expect, vi, beforeEach, afterEach } from "vitest";
 import userEvent from "@testing-library/user-event";
 import { useEffect } from "react";
 import { act, render, screen } from "@testing-library/react";
-import "../i18n";
 import { ToastProvider, useToast } from "./ToastContext";
 
 const holder = { api: null };

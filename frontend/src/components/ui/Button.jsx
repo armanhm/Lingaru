@@ -85,7 +85,7 @@ export const Button = /* @__PURE__ */ forwardRef(function Button(
       {...rest}
     >
       {/* Content keeps its space while loading, so the width never changes. */}
-      <span className={cx("inline-flex items-center justify-center gap-2", loading && "invisible")}>
+      <span className={cx("inline-flex items-center justify-center gap-2", loading && "opacity-0")}>
         {iconLeft}
         {children}
         {iconRight}

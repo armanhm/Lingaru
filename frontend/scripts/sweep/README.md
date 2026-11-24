@@ -39,10 +39,15 @@ SWEEP_BASE_URL=http://localhost:5173 SWEEP_USER=demo SWEEP_PASSWORD=... \
 and leaves screenshots and `report.json` in `<out>` alone, so it can add
 probes to an existing baseline.
 
-`--record-probes` (with `--compare`) still records `<out>/probes.json` but
-does not compare it: use it for a change that alters the look on purpose,
-where screenshots, contrast and overflow are still compared against the
-baseline but computed styles cannot equal it.
+`--record-probes` (needs `--compare`; not with `--probes-only`) is for a
+change that alters the look on purpose. It records `<out>/probes.json`
+without comparing it, and the screenshots only get their `diffRatio`. Such a
+run does not fail on anything: contrast violations and horizontal overflow
+are recorded in `<out>/report.json`, and whoever runs it compares them with
+the baseline's `report.json`.
+
+Unknown options, an option without its value, and `--record-probes` without
+`--compare` or with `--probes-only` are usage errors (exit 2).
 
 The script logs in through `POST /api/users/login/`, stores the tokens in
 `localStorage`, pins `lingaru-ui-language=en` (and PATCHes `ui_language` to
@@ -53,6 +58,8 @@ passes, not for the reduced-motion count.
 Output: `<out>/<route with / as _>-<theme>-<viewport>.png` and
 `<out>/report.json`. With `--compare`, each entry gets `diffRatio`
 (pixelmatch changed pixels / total pixels; 1 when dimensions differ).
+The run never fails on `diffRatio`, contrast or overflow (only on probe
+mismatches, see "Probes"): compare those with the baseline's `report.json`.
 `animatedOverReducedMotion` is measured once per route and repeated on that
 route's entries. `sweep-out/` is git-ignored; keep the baseline directory.
 

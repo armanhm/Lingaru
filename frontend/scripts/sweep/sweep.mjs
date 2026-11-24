@@ -303,7 +303,10 @@ async function main() {
   console.log(`wrote ${probes.probes.length} probe readings (Tailwind ${probes.tailwind}) to ${path.join(out, "probes.json")}`);
 
   if (compare && !compareProbesFile) {
-    console.log("probes recorded, not compared (--record-probes)");
+    console.log(
+      "probes recorded, not compared (--record-probes); screenshots got diffRatio only: " +
+        "compare contrast and overflow in report.json with the baseline's",
+    );
   }
   if (compareProbesFile) {
     const baseline = JSON.parse(fs.readFileSync(compareProbesFile, "utf8"));

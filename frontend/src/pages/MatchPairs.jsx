@@ -65,7 +65,7 @@ function Card({ card, flipped, matched, onClick, preview }) {
           }`}>
             {isFr ? "FR" : "EN"}
           </span>
-          <span className={`text-sm sm:text-base font-bold text-center leading-tight ${
+          <span className={`text-sm sm:text-base font-bold text-center leading-tight sm:leading-6 ${
             matched
               ? "text-success-700 dark:text-success-300"
               : "text-surface-900 dark:text-surface-100"

@@ -170,6 +170,16 @@ export const PROBES = [
     tw3Html: `<button type="button" class="px-3 py-1.5 rounded-lg bg-white dark:bg-surface-800 border-2 border-surface-200 dark:border-surface-600 text-surface-800 dark:text-surface-200 text-sm font-medium hover:border-primary-400 hover:scale-105 active:scale-95 transition-all shadow-sm">mot</button>`,
   },
 
+  // A responsive text size next to leading-*: in Tailwind 3 the later
+  // sm:text-base line-height won; in Tailwind 4 leading-* always wins, so the
+  // source adds sm:leading-6. MatchPairs.jsx:68, the only element that
+  // combines them.
+  {
+    id: "match-pairs-word",
+    html: `<span class="text-sm sm:text-base font-bold text-center leading-tight sm:leading-6">maison</span>`,
+    tw3Html: `<span class="text-sm sm:text-base font-bold text-center leading-tight">maison</span>`,
+  },
+
   // Chat bubble tails. AgentRun.jsx:61-63 and Assistant.jsx:776-778
   // (Tailwind 3 source: `shadow-sm`, `bg-gradient-to-br`, and `rounded-br-sm` /
   // `rounded-bl-sm`, which were 2px in Tailwind 3 and are `-xs` in Tailwind 4).

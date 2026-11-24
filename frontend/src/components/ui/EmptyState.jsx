@@ -1,4 +1,5 @@
 import { isValidElement } from "react";
+import { Inbox } from "lucide-react";
 
 const TONES = {
   neutral: "text-fg-3",
@@ -19,7 +20,7 @@ function renderIcon(icon) {
  * Unified empty-state component for zero-data screens, success moments,
  * and "caught up" celebrations.
  */
-export default function EmptyState({ icon = "✨", title, subtitle, action, tone = "neutral" }) {
+export default function EmptyState({ icon = Inbox, title, subtitle, action, tone = "neutral" }) {
   return (
     <div className="flex flex-col items-center justify-center text-center px-4 py-12 sm:py-16 animate-fade-in-up">
       {icon && (

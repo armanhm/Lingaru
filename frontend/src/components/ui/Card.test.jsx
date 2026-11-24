@@ -1,4 +1,5 @@
-import { describe, it, expect } from "vitest";
+import { describe, it, expect, vi } from "vitest";
+import userEvent from "@testing-library/user-event";
 import { render, screen } from "@testing-library/react";
 import { Card } from "./Card";
 
@@ -20,13 +21,32 @@ describe("Card", () => {
     expect(el.tagName).toBe("SECTION");
     expect(el).not.toHaveClass("p-5");
   });
+});
 
-  it("adds a focus-visible ring when interactive", () => {
+describe("Card interactive", () => {
+  it("renders a focusable button with the ring class", async () => {
+    const user = userEvent.setup();
+    render(
+      <Card as="button" interactive>
+        x
+      </Card>,
+    );
+    const el = screen.getByRole("button");
+    expect(el).toHaveAttribute("type", "button");
+    expect(el).toHaveClass("focus-visible:ring-2");
+    await user.tab();
+    expect(el).toHaveFocus();
+  });
+
+  it("logs an error and adds no ring on a div", () => {
+    const spy = vi.spyOn(console, "error").mockImplementation(() => {});
     render(
       <Card interactive data-testid="c">
         x
       </Card>,
     );
-    expect(screen.getByTestId("c")).toHaveClass("focus-visible:ring-2");
+    expect(spy).toHaveBeenCalled();
+    expect(screen.getByTestId("c")).not.toHaveClass("focus-visible:ring-2");
+    spy.mockRestore();
   });
 });

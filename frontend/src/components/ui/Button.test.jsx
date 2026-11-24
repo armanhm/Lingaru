@@ -1,4 +1,4 @@
-import { describe, it, expect } from "vitest";
+import { describe, it, expect, vi } from "vitest";
 import { render, screen } from "@testing-library/react";
 import { Button } from "./Button";
 
@@ -46,5 +46,37 @@ describe("Button", () => {
     );
     expect(screen.getByTestId("l")).toBeInTheDocument();
     expect(screen.getByTestId("r")).toBeInTheDocument();
+  });
+});
+
+describe("Button loading and asChild states", () => {
+  it("keeps the label in the DOM while loading", () => {
+    render(<Button loading>Save</Button>);
+    expect(screen.getByRole("button", { name: "Save" })).toHaveTextContent("Save");
+  });
+
+  it("marks an asChild link aria-disabled and blocks clicks when loading", async () => {
+    const onClick = vi.fn();
+    render(
+      <Button asChild loading onClick={onClick}>
+        <a href="#x">Go</a>
+      </Button>,
+    );
+    const link = screen.getByRole("link", { name: "Go" });
+    expect(link).toHaveAttribute("aria-disabled", "true");
+    expect(link).toHaveAttribute("aria-busy", "true");
+    link.click();
+    expect(onClick).not.toHaveBeenCalled();
+  });
+
+  it("still calls onClick on an enabled asChild link", () => {
+    const onClick = vi.fn((e) => e.preventDefault());
+    render(
+      <Button asChild onClick={onClick}>
+        <a href="#x">Go</a>
+      </Button>,
+    );
+    screen.getByRole("link").click();
+    expect(onClick).toHaveBeenCalled();
   });
 });

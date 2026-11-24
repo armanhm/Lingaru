@@ -7,7 +7,7 @@ export function Skeleton({ className = "", style }) {
   return (
     <div
       aria-hidden="true"
-      className={`bg-line-soft rounded-lg animate-pulse motion-reduce:animate-none ${className}`}
+      className={`bg-line-soft animate-pulse motion-reduce:animate-none ${/\brounded/.test(className) ? "" : "rounded-lg "}${className}`}
       style={style}
     />
   );

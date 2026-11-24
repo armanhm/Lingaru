@@ -47,9 +47,29 @@ export const Button = /* @__PURE__ */ forwardRef(function Button(
 ) {
   const classes = cx(BASE, VARIANTS[variant], SIZES[size], className);
 
+  const inactive = disabled || loading;
+
   if (asChild) {
+    // Icons and the loading spinner are not supported with `asChild`: the
+    // child element is rendered as given. `loading` and `disabled` still make
+    // it aria-disabled, inert and visually disabled.
+    const { onClick, ...slotRest } = rest;
     return (
-      <Slot ref={ref} className={classes} {...rest}>
+      <Slot
+        ref={ref}
+        className={cx(classes, inactive && "opacity-50 pointer-events-none cursor-not-allowed")}
+        aria-disabled={inactive ? "true" : undefined}
+        aria-busy={loading ? "true" : undefined}
+        onClick={(event) => {
+          if (inactive) {
+            event.preventDefault();
+            event.stopPropagation();
+            return;
+          }
+          onClick?.(event);
+        }}
+        {...slotRest}
+      >
         {children}
       </Slot>
     );
@@ -60,17 +80,21 @@ export const Button = /* @__PURE__ */ forwardRef(function Button(
       ref={ref}
       type={type ?? "button"}
       className={classes}
-      disabled={disabled || loading}
+      disabled={inactive}
       aria-busy={loading ? "true" : undefined}
       {...rest}
     >
-      {loading ? (
-        <Loader2 aria-hidden="true" className="size-4 animate-spin motion-reduce:animate-none" />
-      ) : (
-        iconLeft
+      {/* Content keeps its space while loading, so the width never changes. */}
+      <span className={cx("inline-flex items-center justify-center gap-2", loading && "invisible")}>
+        {iconLeft}
+        {children}
+        {iconRight}
+      </span>
+      {loading && (
+        <span className="absolute inset-0 inline-flex items-center justify-center">
+          <Loader2 aria-hidden="true" className="size-4 animate-spin motion-reduce:animate-none" />
+        </span>
       )}
-      {children}
-      {!loading && iconRight}
     </button>
   );
 });

@@ -175,7 +175,7 @@ export default function GrammarLibrary() {
                     </div>
                   )}
                 </div>
-                <svg className="w-4 h-4 text-surface-300 dark:text-surface-600 group-hover:text-primary-500 group-hover:translate-x-1 transition-all shrink-0 self-center" fill="none" strokeWidth={2.5} viewBox="0 0 24 24" stroke="currentColor">
+                <svg className="w-4 h-4 text-surface-300 dark:text-surface-600 group-hover:text-primary-500 dark:group-hover:text-primary-500 group-hover:translate-x-1 transition-all shrink-0 self-center" fill="none" strokeWidth={2.5} viewBox="0 0 24 24" stroke="currentColor">
                   <path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" />
                 </svg>
               </Link>

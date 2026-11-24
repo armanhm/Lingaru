@@ -147,8 +147,9 @@ async function countAnimated(page) {
 
 // Runs in the page: computed styles of the probed element (or its pseudo-element)
 // and, for containers, the vertical gaps between consecutive children.
-function measureProbe({ hostId, pseudo, styleNames, pseudoStyleNames }) {
-  const el = document.getElementById(hostId).firstElementChild;
+function measureProbe({ hostId, measure, pseudo, styleNames, pseudoStyleNames }) {
+  const first = document.getElementById(hostId).firstElementChild;
+  const el = measure ? first.querySelector(measure) : first;
   const cs = getComputedStyle(el, pseudo || null);
   const styles = {};
   for (const name of pseudo ? pseudoStyleNames : styleNames) styles[name] = cs.getPropertyValue(name);
@@ -200,7 +201,8 @@ async function captureProbes(browser, tokens) {
     const { width, height } = VIEWPORTS.desktop;
     const measure = (probe) =>
       page.evaluate(measureProbe, {
-        hostId: PROBE_HOST_ID, pseudo: probe.pseudo, styleNames: PROBE_STYLES, pseudoStyleNames: PSEUDO_STYLES,
+        hostId: PROBE_HOST_ID, measure: probe.measure, pseudo: probe.pseudo,
+        styleNames: PROBE_STYLES, pseudoStyleNames: PSEUDO_STYLES,
       });
 
     for (const probe of PROBES) {

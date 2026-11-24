@@ -115,7 +115,7 @@ export default function TopicDetail() {
                 <div className="flex items-center gap-2 shrink-0">
                   <span className="badge-neutral text-[10px]! hidden sm:inline-flex">{TYPE_LABEL[lesson.type] || lesson.type}</span>
                   {done && <span className="badge-success text-[10px]!">Done</span>}
-                  <svg className="w-4 h-4 text-surface-300 dark:text-surface-600 group-hover:text-primary-500 group-hover:translate-x-1 transition-all" fill="none" strokeWidth={2.5} viewBox="0 0 24 24" stroke="currentColor">
+                  <svg className="w-4 h-4 text-surface-300 dark:text-surface-600 group-hover:text-primary-500 dark:group-hover:text-primary-500 group-hover:translate-x-1 transition-all" fill="none" strokeWidth={2.5} viewBox="0 0 24 24" stroke="currentColor">
                     <path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" />
                   </svg>
                 </div>

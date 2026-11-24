@@ -11,7 +11,10 @@
 //   html           snippet with the current class names
 //   tw3Html        the same snippet with the Tailwind 3 class names, used when
 //                  the page under test runs Tailwind 3 (the Stage 1 baseline)
-//   hover / focus  also record the hovered / focused state
+//   hover / focus  also record the state with the first element hovered /
+//                  focused
+//   measure        CSS selector of the probed element inside the first element
+//                  (default: the first element itself)
 //   pseudo         read getComputedStyle(el, pseudo) colours instead
 //   expectedDrift  difference that is accepted against a baseline captured
 //                  from another Tailwind major version:
@@ -168,6 +171,18 @@ export const PROBES = [
     hover: true,
     html: `<button type="button" class="px-3 py-1.5 rounded-lg bg-white dark:bg-surface-800 border-2 border-surface-200 dark:border-surface-600 text-surface-800 dark:text-surface-200 text-sm font-medium hover:border-primary-400 hover:scale-105 active:scale-95 transition-all shadow-xs">mot</button>`,
     tw3Html: `<button type="button" class="px-3 py-1.5 rounded-lg bg-white dark:bg-surface-800 border-2 border-surface-200 dark:border-surface-600 text-surface-800 dark:text-surface-200 text-sm font-medium hover:border-primary-400 hover:scale-105 active:scale-95 transition-all shadow-sm">mot</button>`,
+  },
+
+  // group-hover: beside a plain dark: colour. Tailwind 3 gave group-hover one
+  // class more specificity than dark:; Tailwind 4 does not, so the source adds
+  // dark:group-hover:. GrammarLibrary.jsx:178, TopicDetail.jsx:118 (the arrow
+  // inside the `group` link).
+  {
+    id: "group-hover-arrow",
+    hover: true,
+    measure: "svg",
+    html: `<a class="group" href="#lesson"><svg class="w-4 h-4 text-surface-300 dark:text-surface-600 group-hover:text-primary-500 dark:group-hover:text-primary-500 group-hover:translate-x-1 transition-all" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path d="M9 5l7 7-7 7"></path></svg></a>`,
+    tw3Html: `<a class="group" href="#lesson"><svg class="w-4 h-4 text-surface-300 dark:text-surface-600 group-hover:text-primary-500 group-hover:translate-x-1 transition-all" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path d="M9 5l7 7-7 7"></path></svg></a>`,
   },
 
   // A responsive text size next to leading-*: in Tailwind 3 the later

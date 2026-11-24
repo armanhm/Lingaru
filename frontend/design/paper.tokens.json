@@ -179,7 +179,7 @@
       },
       {
         "name": "surface-400",
-        "value": "#908A81",
+        "value": "#A19B91",
         "usage": "surface ramp."
       },
       {
@@ -194,7 +194,7 @@
       },
       {
         "name": "surface-700",
-        "value": "#3B3832",
+        "value": "#34312B",
         "usage": "surface ramp."
       },
       {
@@ -234,7 +234,7 @@
       },
       {
         "name": "accent-400",
-        "value": "#6B84E7",
+        "value": "#7992F1",
         "usage": "accent ramp."
       },
       {
@@ -344,7 +344,7 @@
       },
       {
         "name": "err-400",
-        "value": "#CE7863",
+        "value": "#DA826B",
         "usage": "err ramp."
       },
       {
@@ -409,7 +409,7 @@
       },
       {
         "name": "warn-600",
-        "value": "#947428",
+        "value": "#8A6A1F",
         "usage": "warn ramp."
       },
       {

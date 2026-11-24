@@ -4,10 +4,10 @@
   --color-surface-100: #ECE6DA;
   --color-surface-200: #E4DDCF;
   --color-surface-300: #BAB4A8;
-  --color-surface-400: #908A81;
+  --color-surface-400: #A19B91;
   --color-surface-500: #66615A;
   --color-surface-600: #4A463F;
-  --color-surface-700: #3B3832;
+  --color-surface-700: #34312B;
   --color-surface-800: #2B2925;
   --color-surface-900: #23211D;
   --color-surface-950: #1A1916;
@@ -15,7 +15,7 @@
   --color-accent-100: #D1DAFD;
   --color-accent-200: #B3C2FF;
   --color-accent-300: #8FA6FF;
-  --color-accent-400: #6B84E7;
+  --color-accent-400: #7992F1;
   --color-accent-500: #4762D0;
   --color-accent-600: #2340B8;
   --color-accent-700: #1B3290;
@@ -37,7 +37,7 @@
   --color-err-100: #F1CCC1;
   --color-err-200: #EBAC9B;
   --color-err-300: #E58C74;
-  --color-err-400: #CE7863;
+  --color-err-400: #DA826B;
   --color-err-500: #B86451;
   --color-err-600: #A14F40;
   --color-err-700: #8A3B2E;
@@ -50,7 +50,7 @@
   --color-warn-300: #E2C06B;
   --color-warn-400: #C8A755;
   --color-warn-500: #AE8D3F;
-  --color-warn-600: #947428;
+  --color-warn-600: #8A6A1F;
   --color-warn-700: #7A5A12;
   --color-warn-800: #60460E;
   --color-warn-900: #45330A;

@@ -4,6 +4,10 @@
 @layer theme, base, components, utilities;
 @import 'tailwindcss/theme.css' layer(theme);
 @import 'tailwindcss/preflight.css' layer(base);
+/* Paper design tokens, generated from design/tokens.json: colour ramps,
+   fonts, type sizes, the --pp-* semantic variables and the serif heading
+   utilities. */
+@import './design/tokens.css';
 
 /* The sweep scripts quote class names but are not app source: scanning them
    would generate CSS that only the sweep probes use. */
@@ -44,47 +48,6 @@
   --animate-mode-ripple-2: mode-ripple-2 1.7s ease-out forwards;
   --animate-mode-wash: mode-wash 1.9s ease-out forwards;
 
-  --font-sans:
-    'Inter', ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont,
-    'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
-  --font-display: 'Inter', ui-sans-serif, system-ui, sans-serif;
-  --font-editorial: 'Instrument Serif', ui-serif, Georgia, serif;
-  --font-mono: 'JetBrains Mono', ui-monospace, SFMono-Regular, monospace;
-
-  --text-display-xl: 3.5rem;
-  --text-display-xl--line-height: 1.05;
-  --text-display-xl--letter-spacing: -0.03em;
-  --text-display-xl--font-weight: 800;
-  --text-display: 2.75rem;
-  --text-display--line-height: 1.08;
-  --text-display--letter-spacing: -0.025em;
-  --text-display--font-weight: 800;
-  --text-h1: 2rem;
-  --text-h1--line-height: 1.15;
-  --text-h1--letter-spacing: -0.02em;
-  --text-h1--font-weight: 800;
-  --text-h2: 1.5rem;
-  --text-h2--line-height: 1.25;
-  --text-h2--letter-spacing: -0.015em;
-  --text-h2--font-weight: 700;
-  --text-h3: 1.25rem;
-  --text-h3--line-height: 1.3;
-  --text-h3--letter-spacing: -0.01em;
-  --text-h3--font-weight: 700;
-  --text-h4: 1.0625rem;
-  --text-h4--line-height: 1.35;
-  --text-h4--font-weight: 600;
-  --text-body-lg: 1rem;
-  --text-body-lg--line-height: 1.6;
-  --text-body: 0.9375rem;
-  --text-body--line-height: 1.55;
-  --text-caption: 0.8125rem;
-  --text-caption--line-height: 1.45;
-  --text-eyebrow: 0.6875rem;
-  --text-eyebrow--line-height: 1;
-  --text-eyebrow--letter-spacing: 0.08em;
-  --text-eyebrow--font-weight: 600;
-
   /* Tailwind 3 line-heights for the default sizes: fixed lengths, not ratios,
      so an element that overrides only the font size keeps its line box. */
   --text-xs--line-height: 1rem;
@@ -101,137 +64,30 @@
   --text-8xl--line-height: 1;
   --text-9xl--line-height: 1;
 
-  --color-primary-50: #eef2ff;
-  --color-primary-100: #e0e7ff;
-  --color-primary-200: #c7d2fe;
-  --color-primary-300: #a5b4fc;
-  --color-primary-400: #818cf8;
-  --color-primary-500: #6366f1;
-  --color-primary-600: #4f46e5;
-  --color-primary-700: #4338ca;
-  --color-primary-800: #3730a3;
-  --color-primary-900: #312e81;
-  --color-primary-950: #1e1b4b;
-
-  --color-accent-50: #fef7ee;
-  --color-accent-100: #fdedd4;
-  --color-accent-200: #fad8a8;
-  --color-accent-300: #f7bc71;
-  --color-accent-400: #f49a42;
-  --color-accent-500: #f07d1e;
-  --color-accent-600: #e16314;
-  --color-accent-700: #ba4a14;
-  --color-accent-800: #943c18;
-  --color-accent-900: #783317;
-
-  --color-success-50: #ecfdf5;
-  --color-success-100: #d1fae5;
-  --color-success-200: #a7f3d0;
-  --color-success-300: #6ee7b7;
-  --color-success-400: #34d399;
-  --color-success-500: #10b981;
-  --color-success-600: #059669;
-  --color-success-700: #047857;
-  --color-success-800: #065f46;
-  --color-success-900: #064e3b;
-
-  --color-danger-50: #fff1f2;
-  --color-danger-100: #ffe4e6;
-  --color-danger-200: #fecdd3;
-  --color-danger-300: #fda4af;
-  --color-danger-400: #fb7185;
-  --color-danger-500: #f43f5e;
-  --color-danger-600: #e11d48;
-  --color-danger-700: #be123c;
-  --color-danger-800: #9f1239;
-  --color-danger-900: #881337;
-
-  --color-warn-50: #fffbeb;
-  --color-warn-100: #fef3c7;
-  --color-warn-200: #fde68a;
-  --color-warn-300: #fcd34d;
-  --color-warn-400: #fbbf24;
-  --color-warn-500: #f59e0b;
-  --color-warn-600: #d97706;
-  --color-warn-700: #b45309;
-  --color-warn-800: #92400e;
-  --color-warn-900: #78350f;
-
-  --color-info-50: #f0f9ff;
-  --color-info-100: #e0f2fe;
-  --color-info-200: #bae6fd;
-  --color-info-300: #7dd3fc;
-  --color-info-400: #38bdf8;
-  --color-info-500: #0ea5e9;
-  --color-info-600: #0284c7;
-  --color-info-700: #0369a1;
-  --color-info-800: #075985;
-  --color-info-900: #0c4a6e;
-
-  --color-surface-50: #f8fafc;
-  --color-surface-100: #f1f5f9;
-  --color-surface-200: #e2e8f0;
-  --color-surface-300: #cbd5e1;
-  --color-surface-400: #94a3b8;
-  --color-surface-500: #64748b;
-  --color-surface-600: #475569;
-  --color-surface-700: #334155;
-  --color-surface-800: #1e293b;
-  --color-surface-900: #0f172a;
-  --color-surface-950: #020617;
-
-  --color-paper-50: #fbfaf6;
-  --color-paper-100: #f5f2ea;
-  --color-paper-200: #ebe6d8;
-  --color-paper-300: #d9d2bf;
-  --color-paper-400: #a8a08a;
-  --color-paper-500: #7a7361;
-  --color-paper-600: #5d5848;
-
-  --color-ink-700: #2a2a2e;
-  --color-ink-800: #1a1a1c;
-  --color-ink-900: #0f0f10;
-
   --radius-2xl: 1rem;
   --radius-3xl: 1.25rem;
   --radius-4xl: 2rem;
 
+  /* Paper depth comes from borders; these shadows keep existing page classes
+     working in warm ink and Paper hues. */
   --shadow-card:
-    0 1px 3px 0 rgba(15, 23, 42, 0.04), 0 1px 2px -1px rgba(15, 23, 42, 0.03);
+    0 1px 3px 0 rgba(29, 27, 24, 0.04), 0 1px 2px -1px rgba(29, 27, 24, 0.03);
   --shadow-card-hover:
-    0 12px 28px -6px rgba(15, 23, 42, 0.08),
-    0 4px 10px -4px rgba(15, 23, 42, 0.04);
+    0 12px 28px -6px rgba(29, 27, 24, 0.08),
+    0 4px 10px -4px rgba(29, 27, 24, 0.04);
   --shadow-card-elevated:
-    0 24px 48px -12px rgba(15, 23, 42, 0.12),
-    0 8px 16px -8px rgba(15, 23, 42, 0.08);
-  --shadow-glow-primary: 0 0 24px -4px rgba(99, 102, 241, 0.35);
-  --shadow-glow-success: 0 0 24px -4px rgba(16, 185, 129, 0.35);
-  --shadow-glow-danger: 0 0 24px -4px rgba(244, 63, 94, 0.35);
-  --shadow-glow-accent: 0 0 24px -4px rgba(240, 125, 30, 0.35);
+    0 24px 48px -12px rgba(29, 27, 24, 0.12),
+    0 8px 16px -8px rgba(29, 27, 24, 0.08);
+  --shadow-glow-primary: 0 0 24px -4px rgba(35, 64, 184, 0.25);
+  --shadow-glow-success: 0 0 24px -4px rgba(45, 90, 58, 0.25);
+  --shadow-glow-danger: 0 0 24px -4px rgba(138, 59, 46, 0.25);
+  --shadow-glow-accent: 0 0 24px -4px rgba(35, 64, 184, 0.25);
   --shadow-inner-highlight: inset 0 1px 0 0 rgba(255, 255, 255, 0.08);
 
-  --background-image-gradient-primary: linear-gradient(
-    135deg,
-    #6366f1 0%,
-    #4f46e5 50%,
-    #7c3aed 100%
-  );
-  --background-image-gradient-accent: linear-gradient(
-    135deg,
-    #f49a42 0%,
-    #f07d1e 50%,
-    #e16314 100%
-  );
-  --background-image-gradient-success: linear-gradient(
-    135deg,
-    #34d399 0%,
-    #10b981 50%,
-    #059669 100%
-  );
   --background-image-gradient-mesh:
-    radial-gradient(at 20% 20%, rgba(99, 102, 241, 0.15) 0px, transparent 50%),
-    radial-gradient(at 80% 0%, rgba(240, 125, 30, 0.1) 0px, transparent 50%),
-    radial-gradient(at 0% 100%, rgba(16, 185, 129, 0.12) 0px, transparent 50%);
+    radial-gradient(at 20% 20%, rgba(35, 64, 184, 0.1) 0px, transparent 50%),
+    radial-gradient(at 80% 0%, rgba(122, 90, 18, 0.08) 0px, transparent 50%),
+    radial-gradient(at 0% 100%, rgba(45, 90, 58, 0.08) 0px, transparent 50%);
   --background-image-shimmer: linear-gradient(
     90deg,
     transparent,
@@ -384,10 +240,10 @@
   @keyframes pulse-glow {
     0%,
     100% {
-      box-shadow: 0 0 0 0 rgba(99, 102, 241, 0.4);
+      box-shadow: 0 0 0 0 rgba(35, 64, 184, 0.4);
     }
     50% {
-      box-shadow: 0 0 0 8px rgba(99, 102, 241, 0);
+      box-shadow: 0 0 0 8px rgba(35, 64, 184, 0);
     }
   }
   @keyframes recording-pulse {
@@ -527,26 +383,20 @@
   }
 }
 
-/*
-  The default border color has changed to `currentcolor` in Tailwind CSS v4,
-  so we've added these compatibility styles to make sure everything still
-  looks the same as it did with Tailwind CSS v3.
-
-  If we ever want to remove these styles, we need to add an explicit border
-  color utility to any element that depends on these defaults.
-*/
+/* Tailwind 4 defaults borders to currentcolor; Paper draws a bare `border`
+   in the quiet line colour, so existing markup keeps a soft divider. */
 @layer base {
   *,
   ::after,
   ::before,
   ::backdrop,
   ::file-selector-button {
-    border-color: var(--color-gray-200, currentcolor);
+    border-color: var(--pp-line, currentcolor);
   }
 }
 
-/* Tailwind 3 defaults that Tailwind 4 dropped: pointer cursor on buttons and
-   gray-400 placeholder text. */
+/* Tailwind 3 defaults that Tailwind 4 dropped: pointer cursor on buttons, and
+   a placeholder colour (now the Paper tertiary text colour). */
 @layer base {
   button:not(:disabled),
   [role="button"]:not(:disabled) {
@@ -554,7 +404,7 @@
   }
   input::placeholder,
   textarea::placeholder {
-    color: var(--color-gray-400);
+    color: var(--pp-fg-3);
   }
   /* Tailwind 4's preflight also makes form fields transparent and sets
      opacity: 1 on them; Tailwind 3 left both to the browser (a white field,
@@ -605,7 +455,7 @@
    `@apply badge`). */
 @layer utilities {
   /* ── Component classes (Tailwind 3 `@layer components`) ── */
-  /* ── Focus ring, applied to all interactive elements ─── */
+  /* ── Focus ring: 2 px accent with a 2 px offset, keyboard focus only ─── */
   .focus-ring,
   .btn,
   .btn-primary,
@@ -614,67 +464,46 @@
   .btn-ghost,
   .btn-danger,
   .btn-success {
-    @apply focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-primary-500/60 focus-visible:ring-offset-2 focus-visible:ring-offset-surface-50 dark:focus-visible:ring-offset-surface-950;
+    @apply focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-canvas;
   }
 
   /* ── Mode chrome ──────────────────────────────────────────
-     Surfaces that change look per-audience-mode. Read CSS vars set
-     by html[data-mode="…"] in @layer base below. The aim is to make
-     the page feel different at navigation + dashboard level without
-     rewriting every component. */
+     One Paper palette for every mode, so these classes paint flat colour
+     (no gradients) and are kept only so existing markup works. Fills use
+     the fixed accent-600 because that markup puts white text on them in
+     both themes; text uses the mode variables set in @layer base below. */
   .mode-grad-bg {
-    background-image: linear-gradient(
-      135deg,
-      var(--mode-grad-from),
-      var(--mode-grad-to)
-    );
+    background-color: var(--color-accent-600);
   }
   .mode-grad-band {
-    background-image: linear-gradient(
-      90deg,
-      var(--mode-grad-from),
-      var(--mode-grad-to)
-    );
+    background-color: var(--mode-grad-from);
   }
   .mode-accent-text {
     color: var(--mode-accent);
   }
-  /* Gradient-clipped text in the active mode's palette. Use for the
-     wordmark and any branded display text that should re-tint with the
-     mode swap. */
+  /* Wordmark and branded display text: plain accent text. */
   .mode-grad-text {
-    background-image: linear-gradient(
-      135deg,
-      var(--mode-grad-from),
-      var(--mode-grad-to)
-    );
-    -webkit-background-clip: text;
-    background-clip: text;
-    color: transparent;
-    -webkit-text-fill-color: transparent;
+    color: var(--mode-accent);
   }
   .mode-shell {
     background-color: var(--mode-shell-tint);
   }
   /* Mode chip, small label that shows which persona is active. */
   .mode-chip {
-    @apply inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[11px] font-bold text-white shadow-xs;
-    background-image: linear-gradient(
-      135deg,
-      var(--mode-grad-from),
-      var(--mode-grad-to)
-    );
+    @apply inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[11px] font-bold text-white;
+    background-color: var(--color-accent-600);
   }
 
-  /* ── Cards ──────────────────────────────────────────── */
+  /* ── Cards: paper surface, depth from the border ─────── */
   .card {
-    @apply bg-white dark:bg-surface-900/80 rounded-2xl shadow-card border border-surface-100 dark:border-surface-800/70;
+    @apply bg-card rounded-2xl border border-line;
   }
   .card-hover {
-    @apply hover:shadow-card-hover hover:-translate-y-0.5 hover:border-surface-200 dark:hover:border-surface-700 transition-all duration-300 ease-out;
+    @apply hover:border-surface-300 dark:hover:border-surface-600 transition-colors duration-200 ease-out motion-reduce:transition-none;
   }
+  /* Raised hero cards: the same paper, plus the one soft shadow. */
   .card-elevated {
-    @apply bg-white dark:bg-surface-900/90 rounded-3xl shadow-card-elevated border border-surface-100/80 dark:border-surface-800/50 backdrop-blur-xl;
+    @apply bg-card rounded-2xl border border-line shadow-card-elevated;
   }
 
   /* ── Buttons ────────────────────────────────────────── */
@@ -685,25 +514,24 @@
   .btn-ghost,
   .btn-danger,
   .btn-success {
-    @apply inline-flex items-center justify-center gap-2 font-semibold rounded-xl transition-all duration-200 ease-out select-none active:scale-[0.98] disabled:opacity-50 disabled:cursor-not-allowed disabled:active:scale-100;
+    @apply inline-flex items-center justify-center gap-2 font-semibold rounded-xl transition-colors duration-200 ease-out motion-reduce:transition-none select-none disabled:opacity-50 disabled:cursor-not-allowed;
   }
-  .btn-primary {
-    @apply bg-linear-to-br from-primary-500 to-primary-600 text-white hover:from-primary-400 hover:to-primary-600 shadow-xs hover:shadow-glow-primary focus-visible:ring-primary-500;
-  }
+  .btn-primary,
   .btn-accent {
-    @apply bg-linear-to-br from-accent-500 to-accent-600 text-white hover:shadow-glow-accent shadow-xs focus-visible:ring-accent-500;
+    @apply bg-accent text-on-accent hover:bg-accent-strong;
   }
   .btn-secondary {
-    @apply bg-surface-100 dark:bg-surface-800 text-surface-700 dark:text-surface-200 hover:bg-surface-200 dark:hover:bg-surface-700 border border-surface-200/60 dark:border-surface-700/60 focus-visible:ring-surface-400;
+    @apply bg-card text-fg border border-line hover:bg-surface-50 dark:hover:bg-surface-800;
   }
   .btn-ghost {
-    @apply text-surface-600 dark:text-surface-400 hover:bg-surface-100 dark:hover:bg-surface-800/60 focus-visible:ring-surface-400;
+    @apply text-fg-2 hover:text-fg hover:bg-surface-100 dark:hover:bg-surface-800;
   }
+  /* Fixed deep shades so white text keeps its contrast in both themes. */
   .btn-danger {
-    @apply bg-linear-to-br from-danger-500 to-danger-600 text-white hover:shadow-glow-danger shadow-xs focus-visible:ring-danger-500;
+    @apply bg-err-700 text-white hover:bg-err-800;
   }
   .btn-success {
-    @apply bg-linear-to-br from-success-500 to-success-600 text-white hover:shadow-glow-success shadow-xs focus-visible:ring-success-500;
+    @apply bg-ok-700 text-white hover:bg-ok-800;
   }
   .btn-sm {
     @apply text-sm px-3.5 py-1.5;
@@ -729,73 +557,65 @@
   .badge-neutral {
     @apply inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-xs font-semibold;
   }
-  .badge-primary {
-    @apply bg-primary-100 dark:bg-primary-900/40 text-primary-700 dark:text-primary-300;
+  .badge-primary,
+  .badge-info,
+  .badge-accent {
+    @apply bg-accent-50 text-accent-700 dark:bg-accent-900/40 dark:text-accent-200;
   }
   .badge-success {
-    @apply bg-success-100 dark:bg-success-700/30 text-success-700 dark:text-success-300;
+    @apply bg-ok-bg text-ok;
   }
   .badge-danger {
-    @apply bg-danger-100 dark:bg-danger-700/30 text-danger-700 dark:text-danger-300;
+    @apply bg-err-bg text-err;
   }
   .badge-warn {
-    @apply bg-warn-100 dark:bg-warn-700/30 text-warn-700 dark:text-warn-300;
-  }
-  .badge-info {
-    @apply bg-info-100 dark:bg-info-700/30 text-info-700 dark:text-info-300;
-  }
-  .badge-accent {
-    @apply bg-accent-100 dark:bg-accent-900/30 text-accent-700 dark:text-accent-300;
+    @apply bg-warn-bg text-warn;
   }
   .badge-neutral {
-    @apply bg-surface-100 dark:bg-surface-800 text-surface-600 dark:text-surface-400;
+    @apply bg-surface-100 text-fg-2 dark:bg-surface-800;
   }
 
-  /* ── Inputs ─────────────────────────────────────────── */
+  /* ── Inputs: 3:1 border, accent focus ring ──────────── */
   .input {
-    @apply w-full px-4 py-2.5 bg-white dark:bg-surface-800/70 border border-surface-200 dark:border-surface-700 rounded-xl text-sm
-      placeholder:text-surface-400 dark:placeholder:text-surface-500 text-surface-900 dark:text-surface-100
-      focus:outline-hidden focus:ring-2 focus:ring-primary-500/30 focus:border-primary-500 dark:focus:border-primary-400
-      transition-all duration-200;
+    @apply w-full px-4 py-2.5 bg-card border border-line-strong rounded-xl text-sm text-fg
+      placeholder:text-fg-3
+      focus:outline-hidden focus:border-accent focus:ring-2 focus:ring-accent focus:ring-offset-2 focus:ring-offset-canvas
+      transition-colors duration-200 ease-out motion-reduce:transition-none;
   }
   .input-error {
-    @apply border-danger-300 dark:border-danger-700 focus:ring-danger-500/30 focus:border-danger-500;
+    @apply border-err focus:border-err focus:ring-err;
   }
 
   /* ── Section labels & eyebrows ───────────────────────── */
   .section-label {
-    @apply text-eyebrow uppercase text-surface-500 dark:text-surface-400;
+    @apply text-eyebrow uppercase text-fg-3;
   }
   .eyebrow-primary {
-    @apply text-eyebrow uppercase text-primary-600 dark:text-primary-400;
+    @apply text-eyebrow uppercase text-accent;
   }
 
   /* ── Stat pill ──────────────────────────────────────── */
   .stat-pill {
-    @apply inline-flex items-center gap-2 bg-white dark:bg-surface-900/70 border border-surface-100 dark:border-surface-800/70 rounded-full px-3.5 py-1.5 shadow-card;
+    @apply inline-flex items-center gap-2 bg-card border border-line rounded-full px-3.5 py-1.5;
   }
 
   /* ── Kbd key styling ────────────────────────────────── */
   .kbd {
     @apply inline-flex items-center justify-center min-w-[20px] h-5 px-1.5 text-[10px] font-mono font-semibold
-      bg-surface-100 dark:bg-surface-800 text-surface-600 dark:text-surface-400
-      border border-surface-200 dark:border-surface-700 rounded-sm;
+      bg-surface-100 dark:bg-surface-800 text-fg-2 border border-line rounded-sm;
   }
 
   /* ── Divider with label ─────────────────────────────── */
   .divider-label {
-    @apply flex items-center gap-3 my-6 text-eyebrow uppercase text-surface-400 dark:text-surface-500;
+    @apply flex items-center gap-3 my-6 text-eyebrow uppercase text-fg-3;
   }
+  /* The line colour is --pp-line, which flips with .dark, so the
+     pseudo-elements need no dark rule (a dark: variant would land after the
+     pseudo-element, which is not a valid selector). */
   .divider-label::before,
   .divider-label::after {
     content: '';
-    @apply flex-1 h-px bg-surface-200;
-  }
-  /* Written out: a dark: variant would land after the pseudo-element, which is
-     not a valid selector. */
-  .dark .divider-label::before,
-  .dark .divider-label::after {
-    @apply bg-surface-800;
+    @apply flex-1 h-px bg-line;
   }
 
   /* ── Generated utilities ── */
@@ -810,15 +630,12 @@
     @apply bg-white/50 dark:bg-surface-900/50 backdrop-blur-lg border border-white/30 dark:border-surface-700/40;
   }
 
-  /* Gradient text */
-  .text-gradient-primary {
-    @apply bg-linear-to-r from-primary-600 via-primary-500 to-primary-400 bg-clip-text text-transparent;
-  }
-  .text-gradient-accent {
-    @apply bg-linear-to-r from-accent-600 via-accent-500 to-accent-400 bg-clip-text text-transparent;
-  }
+  /* Paper has no gradient text: these names now paint the accent, which
+     flips with .dark so the text stays readable on both themes. */
+  .text-gradient-primary,
+  .text-gradient-accent,
   .text-gradient-rainbow {
-    @apply bg-linear-to-r from-primary-500 via-accent-500 to-success-500 bg-clip-text text-transparent;
+    @apply text-accent;
   }
 
   /* Shimmer skeleton */
@@ -888,39 +705,18 @@
 }
 
 @layer base {
-  /* ── Mode palettes ─────────────────────────────────────────────
-     Three audience-tailored personas of the same product. The user
-     can switch in Settings; the active mode lands on <html data-mode>
-     via ModeContext. The variables below are the page-chrome accents
-     (top bands, hero gradients, sidebar header, dashboard hero).
-     Deep components keep their normal Tailwind tokens, this re-tints
-     the chrome so the modes feel different without rewriting every
-     card. */
-  html[data-mode="general"], html:not([data-mode]) {
-    --mode-name: 'general';
-    --mode-grad-from: #6366f1;   /* primary-500   */
-    --mode-grad-to:   #7c3aed;   /* violet-700    */
-    --mode-accent:    #f07d1e;   /* coral accent  */
-    --mode-shell-tint: rgba(99, 102, 241, 0.05);
+  /* ── Mode variables ────────────────────────────────────────────
+     One Paper palette for every mode (general, exam, agentic): the
+     mode changes content, not colours. ModeContext still sets
+     <html data-mode>; these variables stay, flat and equal to the
+     accent (which flips with .dark), so mode-* classes and inline
+     styles keep working. */
+  html {
+    --mode-grad-from: var(--pp-accent);
+    --mode-grad-to: var(--pp-accent);
+    --mode-accent: var(--pp-accent);
+    --mode-shell-tint: transparent;
     --mode-radius: 1rem;
-  }
-
-  html[data-mode="exam"] {
-    --mode-name: 'exam';
-    --mode-grad-from: #e11d48;   /* rose-600, red gradient start */
-    --mode-grad-to:   #b91c1c;   /* red-700, deep red            */
-    --mode-accent:    #dc2626;   /* red-600, signal red          */
-    --mode-shell-tint: rgba(225, 29, 72, 0.06);
-    --mode-radius: 0.5rem;       /* tighter, more "paper"        */
-  }
-
-  html[data-mode="agentic"] {
-    --mode-name: 'agentic';
-    --mode-grad-from: #d97706;   /* amber-600, deep yellow */
-    --mode-grad-to:   #b45309;   /* amber-700, dark amber  */
-    --mode-accent:    #ca8a04;   /* yellow-600, signal     */
-    --mode-shell-tint: rgba(217, 119, 6, 0.07);
-    --mode-radius: 1.25rem;      /* roomier, chat-y        */
   }
 
   html {
@@ -931,7 +727,7 @@
   }
 
   body {
-    @apply bg-surface-50 text-surface-900 dark:bg-surface-950 dark:text-surface-100 transition-colors duration-200 font-sans antialiased;
+    @apply bg-canvas text-fg transition-colors duration-200 font-sans antialiased;
   }
 
   /* Scrollbar styling */
@@ -960,13 +756,14 @@
 
   /* Selection color */
   ::selection {
-    @apply bg-primary-200 text-primary-900;
+    @apply bg-accent-200 text-accent-900;
   }
   .dark ::selection {
-    @apply bg-primary-800 text-primary-100;
+    @apply bg-accent-800 text-accent-100;
   }
 
-  /* Headings inherit display font weights from size tokens */
+  /* Headings stay Inter; the serif comes only from the text-display and
+     text-h1..h3 utilities generated in design/tokens.css. */
   h1, h2, h3, h4, h5, h6 {
     /* Plain letter-spacing (not the tracking-tight utility) so text-h1 etc.
        can still set their own tracking, as they did in Tailwind 3. */

@@ -1,7 +1,7 @@
 import { test } from "node:test";
 import assert from "node:assert/strict";
 import path from "node:path";
-import { parseArgs, probesCompareFile, UsageError } from "./args.mjs";
+import { parseArgs, probesCompareFile, missingBaselineProbesMessage, UsageError } from "./args.mjs";
 
 test("--record-probes is off unless given", () => {
   assert.equal(parseArgs(["--out", "a"]).recordProbes, false);
@@ -35,4 +35,12 @@ test("--record-probes needs --compare and a screenshot pass", () => {
     () => parseArgs(["--out", "a", "--compare", "b", "--probes-only", "--record-probes"]),
     /--record-probes cannot be combined with --probes-only/,
   );
+});
+
+test("the missing-probes message points at the baseline build", () => {
+  const msg = missingBaselineProbesMessage(path.join("b", "probes.json"), "b");
+  assert.match(msg, /baseline build/);
+  assert.match(msg, /SWEEP_BASE_URL/);
+  assert.match(msg, /--probes-only --out b/);
+  assert.match(msg, /not the current one/);
 });

@@ -106,11 +106,10 @@
     },
     "mode": {
       "title": "Choose your mode",
-      "description": "Mode tailors the home page, navigation, and color palette of the entire app.",
+      "description": "Mode tailors the home page and navigation of the entire app.",
       "currentLevelTitle": "Current level (CEFR)",
       "currentLevelDescription": "We use your level to calibrate vocabulary and exercise difficulty.",
       "saveButton": "Save mode and level",
-      "celebrationLabel": "Mode activated",
       "errorToast": "Failed to save"
     },
     "appearance": {

@@ -45,7 +45,6 @@
   --animate-progress-fill: progress-fill 0.8s ease-out;
   --animate-shimmer: shimmer 2s ease-in-out infinite;
   --animate-float: float 3s ease-in-out infinite;
-  --animate-gradient-shift: gradient-shift 6s ease infinite;
   --animate-spin-slow: spin-slow 22s linear infinite;
   --animate-flame: flame 1.6s ease-in-out infinite;
   --animate-pulse-soft: pulse-soft 2.4s ease-in-out infinite;
@@ -291,15 +290,6 @@
       transform: translateY(-4px);
     }
   }
-  @keyframes gradient-shift {
-    0%,
-    100% {
-      background-position: 0% 50%;
-    }
-    50% {
-      background-position: 100% 50%;
-    }
-  }
   @keyframes spin-slow {
     from {
       transform: rotate(0deg);
@@ -424,10 +414,6 @@
     background-color: var(--mode-grad-from);
   }
   .mode-accent-text {
-    color: var(--mode-accent);
-  }
-  /* Wordmark and branded display text: plain accent text. */
-  .mode-grad-text {
     color: var(--mode-accent);
   }
   .mode-shell {

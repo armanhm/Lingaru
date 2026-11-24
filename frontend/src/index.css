@@ -20,6 +20,12 @@
    so a dark: colour still beats a plain hover: or focus: one. */
 @custom-variant dark (&:is(.dark *));
 
+/* Tailwind 3's hover: a bare :hover, which touch devices apply on tap.
+   Tailwind 4 wraps every hover: rule in @media (hover: hover), which hides
+   hover-revealed controls (chat TTS buttons, the Assistant correction
+   tooltip) on phones. */
+@custom-variant hover (&:hover);
+
 @theme {
   --animate-fade-in: fade-in 0.3s ease-out;
   --animate-fade-in-up: fade-in-up 0.4s ease-out;

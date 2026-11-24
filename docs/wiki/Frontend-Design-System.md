@@ -162,7 +162,7 @@ Tailwind 4 is configured in CSS. The order of `frontend/src/index.css` is delibe
 
 1. `@layer theme, base, components, utilities;` and the two `@import ... layer(...)` lines for Tailwind's theme and preflight, spelled out instead of `@import "tailwindcss"`, so the component classes can live inside the utilities layer.
 2. `@import './design/tokens.css'` (generated: `@theme` ramps, fonts, type sizes, `--pp-*` variables, the serif heading utilities and `@theme inline` colour roles).
-3. `@source not '../scripts'`, `@plugin '@tailwindcss/typography'` and `@custom-variant dark (&:is(.dark *))` (the class-based dark mode).
+3. `@source not '../scripts'`, `@plugin '@tailwindcss/typography'`, `@custom-variant dark (&:is(.dark *))` (the class-based dark mode) and `@custom-variant hover (&:hover)` (Tailwind 3 behaviour: hover styles apply on tap on touch devices; without it Tailwind 4 hides every `hover:` rule behind `@media (hover: hover)`).
 4. `@theme { ... }`: animation names, Tailwind 3 line-heights, radii, shadows, gradients and keyframes.
 5. Compatibility shims: default border colour, button cursor, placeholder colour, form field backgrounds, `space-y-*`.
 6. `@layer utilities { ... }`: the legacy component classes (`.card`, `.btn-*`, `.badge-*`, `.input`, `.mode-*`, ...) and custom utilities, in the order that reproduces Tailwind 3's cascade. Do not use them in new code.

@@ -41,3 +41,29 @@ describe("SegmentedProgress", () => {
     expect(screen.getByRole("progressbar")).toHaveAttribute("aria-valuenow", "0");
   });
 });
+
+describe("SegmentedProgress robustness", () => {
+  const now = (segments) => {
+    const { unmount } = render(<SegmentedProgress segments={segments} label="S" />);
+    const v = screen.getByRole("progressbar").getAttribute("aria-valuenow");
+    unmount();
+    return v;
+  };
+
+  it("treats missing segments as 0%", () => {
+    render(<SegmentedProgress label="S" />);
+    expect(screen.getByRole("progressbar")).toHaveAttribute("aria-valuenow", "0");
+  });
+
+  it("ignores non-finite or non-positive weights", () => {
+    expect(now([{ weight: NaN, value: 1 }, { weight: 2, value: 1 }])).toBe("100");
+    expect(now([{ weight: Infinity, value: 1 }, { weight: 2, value: 0 }])).toBe("0");
+    expect(now([{ weight: -3, value: 1 }, { weight: 2, value: 0.5 }])).toBe("50");
+  });
+
+  it("clamps values, Infinity to full and NaN to empty", () => {
+    expect(now([{ weight: 1, value: Infinity }])).toBe("100");
+    expect(now([{ weight: 1, value: NaN }])).toBe("0");
+    expect(now([{ weight: 1, value: -Infinity }])).toBe("0");
+  });
+});

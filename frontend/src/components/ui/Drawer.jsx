@@ -2,7 +2,7 @@ import { forwardRef } from "react";
 import * as RadixDialog from "@radix-ui/react-dialog";
 import { X } from "lucide-react";
 import { cx } from "./cx";
-import { OVERLAY, PANEL, useFocusRestore } from "./overlay";
+import { OVERLAY, PANEL, useFocusRestore, ignoreToastInteraction } from "./overlay";
 import { CLOSE_BUTTON } from "./Dialog";
 
 const SIDES = {
@@ -25,8 +25,9 @@ export const Drawer = /* @__PURE__ */ forwardRef(function Drawer(
       <RadixDialog.Portal>
         <RadixDialog.Overlay data-paper-overlay="" className={OVERLAY} />
         <RadixDialog.Content ref={ref} {...focus}
+          onInteractOutside={ignoreToastInteraction}
           {...(description ? {} : { "aria-describedby": undefined })} className={cx(PANEL, SIDES[side], className)}>
-          <RadixDialog.Title className="pr-10 font-serif text-h3 text-fg">{title}</RadixDialog.Title>
+          <RadixDialog.Title className="pr-10 text-h3 text-fg">{title}</RadixDialog.Title>
           {description ? (
             <RadixDialog.Description className="mt-2 text-body text-fg-2">
               {description}

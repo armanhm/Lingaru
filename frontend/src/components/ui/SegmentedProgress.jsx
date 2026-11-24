@@ -8,11 +8,12 @@ import { clamp01 } from "./clamp01";
  * completion across all segments.
  */
 export const SegmentedProgress = /* @__PURE__ */ forwardRef(function SegmentedProgress(
-  { segments, label, className, ...props },
+  { segments = [], label, className, ...props },
   ref,
 ) {
-  const total = segments.reduce((sum, s) => sum + Math.max(0, s.weight), 0);
-  const done = segments.reduce((sum, s) => sum + Math.max(0, s.weight) * clamp01(s.value), 0);
+  const weightOf = (s) => (Number.isFinite(s?.weight) && s.weight > 0 ? s.weight : 0);
+  const total = segments.reduce((sum, s) => sum + weightOf(s), 0);
+  const done = segments.reduce((sum, s) => sum + weightOf(s) * clamp01(s?.value), 0);
   const now = total > 0 ? Math.round((done / total) * 100) : 0;
 
   return (
@@ -31,11 +32,11 @@ export const SegmentedProgress = /* @__PURE__ */ forwardRef(function SegmentedPr
           key={i}
           data-segment=""
           className="h-full min-w-0 basis-0 overflow-hidden rounded-full bg-line-soft"
-          style={{ flexGrow: Math.max(0, s.weight) }}
+          style={{ flexGrow: weightOf(s) }}
         >
           <div
             className="h-full rounded-full bg-accent transition-[width] duration-200 ease-out motion-reduce:transition-none"
-            style={{ width: `${clamp01(s.value) * 100}%` }}
+            style={{ width: `${clamp01(s?.value) * 100}%` }}
           />
         </div>
       ))}

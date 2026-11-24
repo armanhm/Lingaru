@@ -37,7 +37,7 @@ describe("Field", () => {
     expect(input).toHaveAttribute("aria-invalid", "true");
     const ids = input.getAttribute("aria-describedby").split(" ");
     expect(ids.map((id) => document.getElementById(id)?.textContent)).toContain("Required");
-    expect(input).toHaveClass("border-err");
+    expect(input).toHaveClass("aria-invalid:border-err");
   });
 
   it("links the hint and is valid without an error", () => {
@@ -71,7 +71,9 @@ describe("Field", () => {
     );
     expect(screen.getByLabelText("Answer")).toHaveClass("text-body-lg");
     expect(screen.getByLabelText("Level").tagName).toBe("SELECT");
-    expect(screen.getByLabelText("Remember me")).toHaveAttribute("type", "checkbox");
+    const box = screen.getByLabelText("Remember me");
+    expect(box).toHaveAttribute("type", "checkbox");
+    expect(box).toHaveClass("accent-accent", "aria-invalid:outline-err");
   });
 
   it("works with Switch (button role=switch)", async () => {

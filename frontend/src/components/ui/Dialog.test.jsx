@@ -86,3 +86,22 @@ describe("Drawer", () => {
     expect(onOpenChange).toHaveBeenCalledWith(false);
   });
 });
+
+describe("Dialog with toasts", () => {
+  it("does not close when a toast is clicked", async () => {
+    const user = userEvent.setup({ pointerEventsCheck: 0 });
+    const onOpenChange = vi.fn();
+    render(
+      <>
+        <div data-paper-toasts="">
+          <button>Dismiss notification</button>
+        </div>
+        <Dialog open onOpenChange={onOpenChange} title="T">
+          x
+        </Dialog>
+      </>,
+    );
+    await user.click(screen.getByText("Dismiss notification"));
+    expect(onOpenChange).not.toHaveBeenCalled();
+  });
+});

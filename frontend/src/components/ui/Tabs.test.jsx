@@ -26,3 +26,17 @@ describe("Tabs", () => {
     expect(screen.getByText("Second")).toBeVisible();
   });
 });
+
+describe("Tabs layout", () => {
+  it("scrolls only horizontally and draws the indicator inside the trigger", () => {
+    render(
+      <Tabs defaultValue="a">
+        <TabsList aria-label="S" data-testid="list">
+          <TabsTrigger value="a">One</TabsTrigger>
+        </TabsList>
+      </Tabs>,
+    );
+    expect(screen.getByTestId("list")).toHaveClass("overflow-y-hidden");
+    expect(screen.getByRole("tab")).not.toHaveClass("-mb-px");
+  });
+});

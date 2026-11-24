@@ -28,11 +28,12 @@ function ToastItem({ message, type, onDismiss }) {
   const { icon: Icon, color } = TYPE_STYLES[type] || TYPE_STYLES.info;
   return (
     <div
-      role={type === "error" ? "alert" : undefined}
       className="pointer-events-auto flex min-w-[280px] max-w-md items-start gap-3 rounded-2xl border border-line bg-card py-2 pl-4 pr-1 shadow-card-elevated"
     >
       <Icon aria-hidden="true" className={`mt-3 size-5 shrink-0 ${color}`} />
-      <p className="min-w-0 flex-1 py-3 text-small font-medium text-fg">{message}</p>
+      <p aria-hidden="true" className="min-w-0 flex-1 py-3 text-small font-medium text-fg">
+        {message}
+      </p>
       <button
         type="button"
         onClick={onDismiss}
@@ -70,9 +71,11 @@ export function ToastProvider({ children }) {
     <ToastContext.Provider value={{ showToast }}>
       {children}
       {/* Bottom-right stack with proper gap and mobile bottom-safe padding */}
+      {/* Visible stack: not a live region, so nothing is announced twice. The
+          message text is aria-hidden here; the always-mounted sr-only regions
+          below carry what screen readers announce, once per toast. */}
       <div
-        role="status"
-        aria-live="polite"
+        data-paper-toasts=""
         className="fixed bottom-4 right-4 z-100 flex flex-col gap-2 pointer-events-none max-w-[calc(100vw-2rem)]"
       >
         {toasts.map((toast) => (
@@ -83,6 +86,20 @@ export function ToastProvider({ children }) {
             onDismiss={() => removeToast(toast.id)}
           />
         ))}
+      </div>
+      <div role="status" aria-live="polite" aria-atomic="false" className="sr-only">
+        {toasts
+          .filter((t) => t.type !== "error")
+          .map((t) => (
+            <p key={t.id}>{t.message}</p>
+          ))}
+      </div>
+      <div role="alert" aria-live="assertive" aria-atomic="false" className="sr-only">
+        {toasts
+          .filter((t) => t.type === "error")
+          .map((t) => (
+            <p key={t.id}>{t.message}</p>
+          ))}
       </div>
     </ToastContext.Provider>
   );

@@ -15,7 +15,6 @@ export const Select = /* @__PURE__ */ forwardRef(function Select(
         className={cx(
           CONTROL,
           "appearance-none py-2 pr-10 cursor-pointer",
-          props["aria-invalid"] === true && "border-err",
           className,
         )}
         {...props}

@@ -2,7 +2,7 @@ import { forwardRef } from "react";
 import * as RadixDialog from "@radix-ui/react-dialog";
 import { X } from "lucide-react";
 import { cx } from "./cx";
-import { OVERLAY, PANEL, useFocusRestore } from "./overlay";
+import { OVERLAY, PANEL, useFocusRestore, ignoreToastInteraction } from "./overlay";
 
 export const CLOSE_BUTTON =
   "absolute right-3 top-3 inline-flex size-11 items-center justify-center rounded-full text-fg-2 " +
@@ -26,6 +26,8 @@ export const Dialog = /* @__PURE__ */ forwardRef(function Dialog(
         <RadixDialog.Content
           ref={ref}
           {...focus}
+          onInteractOutside={ignoreToastInteraction}
+          
           {...(description ? {} : { "aria-describedby": undefined })}
           className={cx(
             PANEL,
@@ -33,7 +35,7 @@ export const Dialog = /* @__PURE__ */ forwardRef(function Dialog(
             className,
           )}
         >
-          <RadixDialog.Title className="pr-10 font-serif text-h3 text-fg">{title}</RadixDialog.Title>
+          <RadixDialog.Title className="pr-10 text-h3 text-fg">{title}</RadixDialog.Title>
           {description ? (
             <RadixDialog.Description className="mt-2 text-body text-fg-2">
               {description}

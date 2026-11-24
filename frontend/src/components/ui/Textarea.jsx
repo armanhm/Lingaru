@@ -15,7 +15,6 @@ export const Textarea = /* @__PURE__ */ forwardRef(function Textarea(
         CONTROL,
         "py-2.5 resize-y",
         size === "lg" && "text-body-lg",
-        props["aria-invalid"] === true && "border-err",
         className,
       )}
       {...props}

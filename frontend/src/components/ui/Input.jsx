@@ -17,7 +17,7 @@ export const Input = /* @__PURE__ */ forwardRef(function Input(
     <input
       ref={ref}
       type={type}
-      className={cx(CONTROL, "py-2", props["aria-invalid"] === true && "border-err", className)}
+      className={cx(CONTROL, "py-2", className)}
       {...props}
     />
   );

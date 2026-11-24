@@ -34,8 +34,9 @@ describe("ToastContext", () => {
     const region = screen.getByRole("status");
     expect(region).toHaveTextContent("Saved");
     expect(region).toHaveAttribute("aria-live", "polite");
+    expect(region).toHaveAttribute("aria-atomic", "false");
     act(() => vi.advanceTimersByTime(2799));
-    expect(screen.getByText("Saved")).toBeInTheDocument();
+    expect(region).toHaveTextContent("Saved");
     act(() => vi.advanceTimersByTime(2));
     expect(screen.queryByText("Saved")).not.toBeInTheDocument();
   });
@@ -46,11 +47,10 @@ describe("ToastContext", () => {
       holder.api.showToast("One", "info", 1000);
       holder.api.showToast("Two", "info", 3000);
     });
-    expect(screen.getByText("One")).toBeInTheDocument();
-    expect(screen.getByText("Two")).toBeInTheDocument();
+    expect(screen.getByRole("status")).toHaveTextContent("OneTwo");
     act(() => vi.advanceTimersByTime(1001));
     expect(screen.queryByText("One")).not.toBeInTheDocument();
-    expect(screen.getByText("Two")).toBeInTheDocument();
+    expect(screen.getByRole("status")).toHaveTextContent("Two");
   });
 
   it("makes error toasts assertive and keeps them 5 s", () => {
@@ -60,9 +60,22 @@ describe("ToastContext", () => {
     });
     expect(screen.getByRole("alert")).toHaveTextContent("Boom");
     act(() => vi.advanceTimersByTime(4900));
-    expect(screen.getByText("Boom")).toBeInTheDocument();
+    expect(screen.getByRole("alert")).toHaveTextContent("Boom");
     act(() => vi.advanceTimersByTime(200));
     expect(screen.queryByText("Boom")).not.toBeInTheDocument();
+  });
+
+  it("announces each toast once and keeps the dismiss control out of the live regions", () => {
+    setup();
+    act(() => {
+      holder.api.showToast("Saved");
+      holder.api.showToast("Boom", "error");
+    });
+    expect(screen.getByRole("status")).toHaveTextContent(/^Saved$/);
+    expect(screen.getByRole("alert")).toHaveTextContent(/^Boom$/);
+    expect(screen.getByRole("status").querySelector("button")).toBeNull();
+    expect(screen.getByRole("alert").querySelector("button")).toBeNull();
+    expect(screen.getAllByRole("button", { name: "Dismiss notification" })).toHaveLength(2);
   });
 
   it("dismisses with the close button", async () => {

@@ -59,8 +59,8 @@ function Bubble({ msg, agent }) {
         <div
           className={`relative group/bubble rounded-2xl px-4 py-3 text-[14px] leading-relaxed shadow-xs ${
             isUser
-              ? "bg-linear-to-br from-primary-600 to-purple-700 text-white rounded-br-sm whitespace-pre-wrap"
-              : "bg-white dark:bg-surface-900/80 border border-surface-100 dark:border-surface-800 text-surface-900 dark:text-surface-50 rounded-bl-sm"
+              ? "bg-linear-to-br from-primary-600 to-purple-700 text-white rounded-br-xs whitespace-pre-wrap"
+              : "bg-white dark:bg-surface-900/80 border border-surface-100 dark:border-surface-800 text-surface-900 dark:text-surface-50 rounded-bl-xs"
           }`}
         >
           {isUser ? (
@@ -115,7 +115,7 @@ function TypingIndicator({ agent }) {
       <span className={`shrink-0 w-9 h-9 rounded-full bg-linear-to-br ${agent?.tint || "from-primary-500 to-purple-600"} text-white flex items-center justify-center text-[16px] shadow-xs`}>
         {agent?.emoji || "🤖"}
       </span>
-      <div className="bg-white dark:bg-surface-900/80 border border-surface-100 dark:border-surface-800 rounded-2xl rounded-bl-sm px-4 py-3 flex items-center gap-1 shadow-xs">
+      <div className="bg-white dark:bg-surface-900/80 border border-surface-100 dark:border-surface-800 rounded-2xl rounded-bl-xs px-4 py-3 flex items-center gap-1 shadow-xs">
         <span className="w-1.5 h-1.5 rounded-full bg-surface-400 animate-pulse" style={{ animationDelay: "0ms" }} />
         <span className="w-1.5 h-1.5 rounded-full bg-surface-400 animate-pulse" style={{ animationDelay: "150ms" }} />
         <span className="w-1.5 h-1.5 rounded-full bg-surface-400 animate-pulse" style={{ animationDelay: "300ms" }} />

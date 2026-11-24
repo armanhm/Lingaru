@@ -28,6 +28,9 @@ updates:
         patterns: ["@sentry/*"]
       eslint:
         patterns: ["eslint*", "@eslint/*"]
+      # The compiler and its Vite plugin must stay on the same version.
+      tailwind:
+        patterns: ["tailwindcss", "@tailwindcss/*"]
     ignore:
       # eslint-plugin-react 7.x supports ESLint <= 9; revisit when it adds ESLint 10.
       - dependency-name: "eslint"

@@ -255,7 +255,7 @@ export default function SpeedRound() {
                   <span className="text-xs text-surface-400">=</span>
                   <span className="text-xs text-surface-500 dark:text-surface-400 truncate">{r.shownTranslation}</span>
                 </div>
-                <span className={`shrink-0 text-xs font-medium px-1.5 py-0.5 rounded ${
+                <span className={`shrink-0 text-xs font-medium px-1.5 py-0.5 rounded-sm ${
                   r.isCorrect
                     ? "bg-success-100 dark:bg-success-900/30 text-success-600"
                     : "bg-danger-100 dark:bg-danger-900/30 text-danger-600"

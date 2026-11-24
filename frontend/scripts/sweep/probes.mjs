@@ -171,20 +171,21 @@ export const PROBES = [
   },
 
   // Chat bubble tails. AgentRun.jsx:61-63 and Assistant.jsx:776-778
-  // (Tailwind 3 source: `shadow-sm`, `bg-gradient-to-br`).
+  // (Tailwind 3 source: `shadow-sm`, `bg-gradient-to-br`, and `rounded-br-sm` /
+  // `rounded-bl-sm`, which were 2px in Tailwind 3 and are `-xs` in Tailwind 4).
   {
     id: "agent-bubble-user",
-    html: `<div class="relative group/bubble rounded-2xl px-4 py-3 text-[14px] leading-relaxed shadow-xs bg-linear-to-br from-primary-600 to-purple-700 text-white rounded-br-sm whitespace-pre-wrap">Bonjour</div>`,
+    html: `<div class="relative group/bubble rounded-2xl px-4 py-3 text-[14px] leading-relaxed shadow-xs bg-linear-to-br from-primary-600 to-purple-700 text-white rounded-br-xs whitespace-pre-wrap">Bonjour</div>`,
     tw3Html: `<div class="relative group/bubble rounded-2xl px-4 py-3 text-[14px] leading-relaxed shadow-sm bg-gradient-to-br from-primary-600 to-purple-700 text-white rounded-br-sm whitespace-pre-wrap">Bonjour</div>`,
   },
   {
     id: "agent-bubble-assistant",
-    html: `<div class="relative group/bubble rounded-2xl px-4 py-3 text-[14px] leading-relaxed shadow-xs bg-white dark:bg-surface-900/80 border border-surface-100 dark:border-surface-800 text-surface-900 dark:text-surface-50 rounded-bl-sm">Salut</div>`,
+    html: `<div class="relative group/bubble rounded-2xl px-4 py-3 text-[14px] leading-relaxed shadow-xs bg-white dark:bg-surface-900/80 border border-surface-100 dark:border-surface-800 text-surface-900 dark:text-surface-50 rounded-bl-xs">Salut</div>`,
     tw3Html: `<div class="relative group/bubble rounded-2xl px-4 py-3 text-[14px] leading-relaxed shadow-sm bg-white dark:bg-surface-900/80 border border-surface-100 dark:border-surface-800 text-surface-900 dark:text-surface-50 rounded-bl-sm">Salut</div>`,
   },
   {
     id: "assistant-bubble-user",
-    html: `<div class="relative group/bubble rounded-2xl px-4 py-3 text-[14px] leading-relaxed shadow-xs bg-linear-to-br from-purple-800 to-surface-700 text-white rounded-br-sm">Bonjour</div>`,
+    html: `<div class="relative group/bubble rounded-2xl px-4 py-3 text-[14px] leading-relaxed shadow-xs bg-linear-to-br from-purple-800 to-surface-700 text-white rounded-br-xs">Bonjour</div>`,
     tw3Html: `<div class="relative group/bubble rounded-2xl px-4 py-3 text-[14px] leading-relaxed shadow-sm bg-gradient-to-br from-purple-800 to-surface-700 text-white rounded-br-sm">Bonjour</div>`,
   },
 

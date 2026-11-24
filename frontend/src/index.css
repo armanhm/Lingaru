@@ -6,7 +6,10 @@
 
 @plugin '@tailwindcss/typography';
 
-@custom-variant dark (&:where(.dark, .dark *));
+/* Tailwind 3's `darkMode: "class"`: ThemeContext puts `.dark` on <html>, and
+   dark: styles apply to its descendants with one class of extra specificity,
+   so a dark: colour still beats a plain hover: or focus: one. */
+@custom-variant dark (&:is(.dark *));
 
 @theme {
   --animate-fade-in: fade-in 0.3s ease-out;
@@ -76,6 +79,22 @@
   --text-eyebrow--line-height: 1;
   --text-eyebrow--letter-spacing: 0.08em;
   --text-eyebrow--font-weight: 600;
+
+  /* Tailwind 3 line-heights for the default sizes: fixed lengths, not ratios,
+     so an element that overrides only the font size keeps its line box. */
+  --text-xs--line-height: 1rem;
+  --text-sm--line-height: 1.25rem;
+  --text-base--line-height: 1.5rem;
+  --text-lg--line-height: 1.75rem;
+  --text-xl--line-height: 1.75rem;
+  --text-2xl--line-height: 2rem;
+  --text-3xl--line-height: 2.25rem;
+  --text-4xl--line-height: 2.5rem;
+  --text-5xl--line-height: 1;
+  --text-6xl--line-height: 1;
+  --text-7xl--line-height: 1;
+  --text-8xl--line-height: 1;
+  --text-9xl--line-height: 1;
 
   --color-primary-50: #eef2ff;
   --color-primary-100: #e0e7ff;
@@ -521,9 +540,6 @@
   }
 }
 
-/* Tailwind 3 space-y semantics: spacing goes on the top of every sibling after
-   the first and zeroes its bottom margin. Tailwind 4 sets margin-bottom with
-   zero specificity, so a child's own mb-* would win and shrink the gap. */
 /* Tailwind 3 defaults that Tailwind 4 dropped: pointer cursor on buttons and
    gray-400 placeholder text. */
 @layer base {
@@ -537,298 +553,308 @@
   }
 }
 
+/* Tailwind 3 space-y semantics: every child after the first gets the spacing
+   as margin-top and loses its margin-bottom; the first child keeps its own
+   margins. Tailwind 4 still emits its own space-y rule (margin-block-end on
+   every child but the last, zero specificity), which doubles the gap in flex
+   and grid containers, where margins do not collapse. The first rule hands
+   those children back the margins they would have without that rule:
+   `:not(template)` gives it a type selector's weight (0,0,1), enough to beat
+   the zero-specificity rule in any order, yet below a margin utility on the
+   child (0,1,0). */
 @utility space-y-* {
+  :where(& > :not(:last-child)):not(template) {
+    margin-block: revert-layer;
+  }
   & > :not([hidden]) ~ :not([hidden]) {
     margin-top: calc(var(--spacing) * --value(number));
     margin-bottom: 0;
   }
 }
 
-@utility focus-ring {
+/* Component classes, as in Tailwind 3's `@layer components`: a utility on the
+   same element overrides them, and among themselves the later rule wins.
+   Plain classes cannot be @apply'd by name, so the focus ring, button base and
+   badge base are listed once for every class that included them (Tailwind 3
+   inlined them with `@apply focus-ring`, `@apply btn` and `@apply badge`). */
+@layer components {
   /* ── Focus ring, applied to all interactive elements ─── */
-  @apply focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-primary-500/60 focus-visible:ring-offset-2 focus-visible:ring-offset-surface-50 dark:focus-visible:ring-offset-surface-950;
-}
+  .focus-ring,
+  .btn,
+  .btn-primary,
+  .btn-accent,
+  .btn-secondary,
+  .btn-ghost,
+  .btn-danger,
+  .btn-success {
+    @apply focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-primary-500/60 focus-visible:ring-offset-2 focus-visible:ring-offset-surface-50 dark:focus-visible:ring-offset-surface-950;
+  }
 
-@utility mode-grad-bg {
   /* ── Mode chrome ──────────────────────────────────────────
      Surfaces that change look per-audience-mode. Read CSS vars set
-     by html[data-mode="…"] in @layer base above. The aim is to make
+     by html[data-mode="…"] in @layer base below. The aim is to make
      the page feel different at navigation + dashboard level without
      rewriting every component. */
-  background-image: linear-gradient(
-    135deg,
-    var(--mode-grad-from),
-    var(--mode-grad-to)
-  );
-}
-
-@utility mode-grad-band {
-  background-image: linear-gradient(
-    90deg,
-    var(--mode-grad-from),
-    var(--mode-grad-to)
-  );
-}
-
-@utility mode-accent-text {
-  color: var(--mode-accent);
-}
-
-@utility mode-grad-text {
+  .mode-grad-bg {
+    background-image: linear-gradient(
+      135deg,
+      var(--mode-grad-from),
+      var(--mode-grad-to)
+    );
+  }
+  .mode-grad-band {
+    background-image: linear-gradient(
+      90deg,
+      var(--mode-grad-from),
+      var(--mode-grad-to)
+    );
+  }
+  .mode-accent-text {
+    color: var(--mode-accent);
+  }
   /* Gradient-clipped text in the active mode's palette. Use for the
      wordmark and any branded display text that should re-tint with the
      mode swap. */
-  background-image: linear-gradient(
-    135deg,
-    var(--mode-grad-from),
-    var(--mode-grad-to)
-  );
-  -webkit-background-clip: text;
-  background-clip: text;
-  color: transparent;
-  -webkit-text-fill-color: transparent;
-}
-
-@utility mode-shell {
-  background-color: var(--mode-shell-tint);
-}
-
-@utility mode-chip {
+  .mode-grad-text {
+    background-image: linear-gradient(
+      135deg,
+      var(--mode-grad-from),
+      var(--mode-grad-to)
+    );
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    -webkit-text-fill-color: transparent;
+  }
+  .mode-shell {
+    background-color: var(--mode-shell-tint);
+  }
   /* Mode chip, small label that shows which persona is active. */
-  @apply inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[11px] font-bold text-white shadow-xs;
-  background-image: linear-gradient(
-    135deg,
-    var(--mode-grad-from),
-    var(--mode-grad-to)
-  );
-}
+  .mode-chip {
+    @apply inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[11px] font-bold text-white shadow-xs;
+    background-image: linear-gradient(
+      135deg,
+      var(--mode-grad-from),
+      var(--mode-grad-to)
+    );
+  }
 
-@utility card {
   /* ── Cards ──────────────────────────────────────────── */
-  @apply bg-white dark:bg-surface-900/80 rounded-2xl shadow-card border border-surface-100 dark:border-surface-800/70;
-}
+  .card {
+    @apply bg-white dark:bg-surface-900/80 rounded-2xl shadow-card border border-surface-100 dark:border-surface-800/70;
+  }
+  .card-hover {
+    @apply hover:shadow-card-hover hover:-translate-y-0.5 hover:border-surface-200 dark:hover:border-surface-700 transition-all duration-300 ease-out;
+  }
+  .card-elevated {
+    @apply bg-white dark:bg-surface-900/90 rounded-3xl shadow-card-elevated border border-surface-100/80 dark:border-surface-800/50 backdrop-blur-xl;
+  }
 
-@utility card-hover {
-  @apply hover:shadow-card-hover hover:-translate-y-0.5 hover:border-surface-200 dark:hover:border-surface-700 transition-all duration-300 ease-out;
-}
-
-@utility card-elevated {
-  @apply bg-white dark:bg-surface-900/90 rounded-3xl shadow-card-elevated border border-surface-100/80 dark:border-surface-800/50 backdrop-blur-xl;
-}
-
-@utility btn {
   /* ── Buttons ────────────────────────────────────────── */
-  @apply inline-flex items-center justify-center gap-2 font-semibold rounded-xl transition-all duration-200 ease-out select-none focus-ring active:scale-[0.98] disabled:opacity-50 disabled:cursor-not-allowed disabled:active:scale-100;
-}
+  .btn,
+  .btn-primary,
+  .btn-accent,
+  .btn-secondary,
+  .btn-ghost,
+  .btn-danger,
+  .btn-success {
+    @apply inline-flex items-center justify-center gap-2 font-semibold rounded-xl transition-all duration-200 ease-out select-none active:scale-[0.98] disabled:opacity-50 disabled:cursor-not-allowed disabled:active:scale-100;
+  }
+  .btn-primary {
+    @apply bg-linear-to-br from-primary-500 to-primary-600 text-white hover:from-primary-400 hover:to-primary-600 shadow-xs hover:shadow-glow-primary focus-visible:ring-primary-500;
+  }
+  .btn-accent {
+    @apply bg-linear-to-br from-accent-500 to-accent-600 text-white hover:shadow-glow-accent shadow-xs focus-visible:ring-accent-500;
+  }
+  .btn-secondary {
+    @apply bg-surface-100 dark:bg-surface-800 text-surface-700 dark:text-surface-200 hover:bg-surface-200 dark:hover:bg-surface-700 border border-surface-200/60 dark:border-surface-700/60 focus-visible:ring-surface-400;
+  }
+  .btn-ghost {
+    @apply text-surface-600 dark:text-surface-400 hover:bg-surface-100 dark:hover:bg-surface-800/60 focus-visible:ring-surface-400;
+  }
+  .btn-danger {
+    @apply bg-linear-to-br from-danger-500 to-danger-600 text-white hover:shadow-glow-danger shadow-xs focus-visible:ring-danger-500;
+  }
+  .btn-success {
+    @apply bg-linear-to-br from-success-500 to-success-600 text-white hover:shadow-glow-success shadow-xs focus-visible:ring-success-500;
+  }
+  .btn-sm {
+    @apply text-sm px-3.5 py-1.5;
+  }
+  .btn-md {
+    @apply text-sm px-5 py-2.5;
+  }
+  .btn-lg {
+    @apply text-base px-6 py-3;
+  }
+  .btn-xl {
+    @apply text-base px-8 py-3.5;
+  }
 
-@utility btn-primary {
-  @apply btn bg-linear-to-br from-primary-500 to-primary-600 text-white hover:from-primary-400 hover:to-primary-600 shadow-xs hover:shadow-glow-primary focus-visible:ring-primary-500;
-}
-
-@utility btn-accent {
-  @apply btn bg-linear-to-br from-accent-500 to-accent-600 text-white hover:shadow-glow-accent shadow-xs focus-visible:ring-accent-500;
-}
-
-@utility btn-secondary {
-  @apply btn bg-surface-100 dark:bg-surface-800 text-surface-700 dark:text-surface-200 hover:bg-surface-200 dark:hover:bg-surface-700 border border-surface-200/60 dark:border-surface-700/60 focus-visible:ring-surface-400;
-}
-
-@utility btn-ghost {
-  @apply btn text-surface-600 dark:text-surface-400 hover:bg-surface-100 dark:hover:bg-surface-800/60 focus-visible:ring-surface-400;
-}
-
-@utility btn-danger {
-  @apply btn bg-linear-to-br from-danger-500 to-danger-600 text-white hover:shadow-glow-danger shadow-xs focus-visible:ring-danger-500;
-}
-
-@utility btn-success {
-  @apply btn bg-linear-to-br from-success-500 to-success-600 text-white hover:shadow-glow-success shadow-xs focus-visible:ring-success-500;
-}
-
-@utility btn-sm {
-  @apply text-sm px-3.5 py-1.5;
-}
-
-@utility btn-md {
-  @apply text-sm px-5 py-2.5;
-}
-
-@utility btn-lg {
-  @apply text-base px-6 py-3;
-}
-
-@utility btn-xl {
-  @apply text-base px-8 py-3.5;
-}
-
-@utility badge {
   /* ── Badges ─────────────────────────────────────────── */
-  @apply inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-xs font-semibold;
-}
+  .badge,
+  .badge-primary,
+  .badge-success,
+  .badge-danger,
+  .badge-warn,
+  .badge-info,
+  .badge-accent,
+  .badge-neutral {
+    @apply inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-xs font-semibold;
+  }
+  .badge-primary {
+    @apply bg-primary-100 dark:bg-primary-900/40 text-primary-700 dark:text-primary-300;
+  }
+  .badge-success {
+    @apply bg-success-100 dark:bg-success-700/30 text-success-700 dark:text-success-300;
+  }
+  .badge-danger {
+    @apply bg-danger-100 dark:bg-danger-700/30 text-danger-700 dark:text-danger-300;
+  }
+  .badge-warn {
+    @apply bg-warn-100 dark:bg-warn-700/30 text-warn-700 dark:text-warn-300;
+  }
+  .badge-info {
+    @apply bg-info-100 dark:bg-info-700/30 text-info-700 dark:text-info-300;
+  }
+  .badge-accent {
+    @apply bg-accent-100 dark:bg-accent-900/30 text-accent-700 dark:text-accent-300;
+  }
+  .badge-neutral {
+    @apply bg-surface-100 dark:bg-surface-800 text-surface-600 dark:text-surface-400;
+  }
 
-@utility badge-primary {
-  @apply badge bg-primary-100 dark:bg-primary-900/40 text-primary-700 dark:text-primary-300;
-}
-
-@utility badge-success {
-  @apply badge bg-success-100 dark:bg-success-700/30 text-success-700 dark:text-success-300;
-}
-
-@utility badge-danger {
-  @apply badge bg-danger-100 dark:bg-danger-700/30 text-danger-700 dark:text-danger-300;
-}
-
-@utility badge-warn {
-  @apply badge bg-warn-100 dark:bg-warn-700/30 text-warn-700 dark:text-warn-300;
-}
-
-@utility badge-info {
-  @apply badge bg-info-100 dark:bg-info-700/30 text-info-700 dark:text-info-300;
-}
-
-@utility badge-accent {
-  @apply badge bg-accent-100 dark:bg-accent-900/30 text-accent-700 dark:text-accent-300;
-}
-
-@utility badge-neutral {
-  @apply badge bg-surface-100 dark:bg-surface-800 text-surface-600 dark:text-surface-400;
-}
-
-@utility input {
   /* ── Inputs ─────────────────────────────────────────── */
-  @apply w-full px-4 py-2.5 bg-white dark:bg-surface-800/70 border border-surface-200 dark:border-surface-700 rounded-xl text-sm
+  .input {
+    @apply w-full px-4 py-2.5 bg-white dark:bg-surface-800/70 border border-surface-200 dark:border-surface-700 rounded-xl text-sm
       placeholder:text-surface-400 dark:placeholder:text-surface-500 text-surface-900 dark:text-surface-100
       focus:outline-hidden focus:ring-2 focus:ring-primary-500/30 focus:border-primary-500 dark:focus:border-primary-400
       transition-all duration-200;
-}
+  }
+  .input-error {
+    @apply border-danger-300 dark:border-danger-700 focus:ring-danger-500/30 focus:border-danger-500;
+  }
 
-@utility input-error {
-  @apply border-danger-300 dark:border-danger-700 focus:ring-danger-500/30 focus:border-danger-500;
-}
-
-@utility section-label {
   /* ── Section labels & eyebrows ───────────────────────── */
-  @apply text-eyebrow uppercase text-surface-500 dark:text-surface-400;
-}
+  .section-label {
+    @apply text-eyebrow uppercase text-surface-500 dark:text-surface-400;
+  }
+  .eyebrow-primary {
+    @apply text-eyebrow uppercase text-primary-600 dark:text-primary-400;
+  }
 
-@utility eyebrow-primary {
-  @apply text-eyebrow uppercase text-primary-600 dark:text-primary-400;
-}
-
-@utility stat-pill {
   /* ── Stat pill ──────────────────────────────────────── */
-  @apply inline-flex items-center gap-2 bg-white dark:bg-surface-900/70 border border-surface-100 dark:border-surface-800/70 rounded-full px-3.5 py-1.5 shadow-card;
-}
+  .stat-pill {
+    @apply inline-flex items-center gap-2 bg-white dark:bg-surface-900/70 border border-surface-100 dark:border-surface-800/70 rounded-full px-3.5 py-1.5 shadow-card;
+  }
 
-@utility kbd {
   /* ── Kbd key styling ────────────────────────────────── */
-  @apply inline-flex items-center justify-center min-w-[20px] h-5 px-1.5 text-[10px] font-mono font-semibold
+  .kbd {
+    @apply inline-flex items-center justify-center min-w-[20px] h-5 px-1.5 text-[10px] font-mono font-semibold
       bg-surface-100 dark:bg-surface-800 text-surface-600 dark:text-surface-400
       border border-surface-200 dark:border-surface-700 rounded-sm;
-}
+  }
 
-@utility divider-label {
   /* ── Divider with label ─────────────────────────────── */
-  @apply flex items-center gap-3 my-6 text-eyebrow uppercase text-surface-400 dark:text-surface-500;
-  &::before {
-    content: '';
-    @apply flex-1 h-px bg-surface-200 dark:bg-surface-800;
+  .divider-label {
+    @apply flex items-center gap-3 my-6 text-eyebrow uppercase text-surface-400 dark:text-surface-500;
   }
-  &::after {
+  .divider-label::before,
+  .divider-label::after {
     content: '';
-    @apply flex-1 h-px bg-surface-200 dark:bg-surface-800;
+    @apply flex-1 h-px bg-surface-200;
+  }
+  /* Written out: a dark: variant would land after the pseudo-element, which is
+     not a valid selector. */
+  .dark .divider-label::before,
+  .dark .divider-label::after {
+    @apply bg-surface-800;
   }
 }
 
-@utility glass {
+/* Custom utilities, as in Tailwind 3's `@layer utilities`: they come after the
+   generated utilities, so on the same element they win over one, as before
+   (`skeleton rounded-3xl` keeps the skeleton radius). */
+@layer utilities {
   /* Glass effect */
-  @apply bg-white/70 dark:bg-surface-900/70 backdrop-blur-xl border border-white/40 dark:border-surface-700/50;
-}
+  .glass {
+    @apply bg-white/70 dark:bg-surface-900/70 backdrop-blur-xl border border-white/40 dark:border-surface-700/50;
+  }
+  .glass-subtle {
+    @apply bg-white/50 dark:bg-surface-900/50 backdrop-blur-lg border border-white/30 dark:border-surface-700/40;
+  }
 
-@utility glass-subtle {
-  @apply bg-white/50 dark:bg-surface-900/50 backdrop-blur-lg border border-white/30 dark:border-surface-700/40;
-}
-
-@utility text-gradient-primary {
   /* Gradient text */
-  @apply bg-linear-to-r from-primary-600 via-primary-500 to-primary-400 bg-clip-text text-transparent;
-}
+  .text-gradient-primary {
+    @apply bg-linear-to-r from-primary-600 via-primary-500 to-primary-400 bg-clip-text text-transparent;
+  }
+  .text-gradient-accent {
+    @apply bg-linear-to-r from-accent-600 via-accent-500 to-accent-400 bg-clip-text text-transparent;
+  }
+  .text-gradient-rainbow {
+    @apply bg-linear-to-r from-primary-500 via-accent-500 to-success-500 bg-clip-text text-transparent;
+  }
 
-@utility text-gradient-accent {
-  @apply bg-linear-to-r from-accent-600 via-accent-500 to-accent-400 bg-clip-text text-transparent;
-}
-
-@utility text-gradient-rainbow {
-  @apply bg-linear-to-r from-primary-500 via-accent-500 to-success-500 bg-clip-text text-transparent;
-}
-
-@utility skeleton {
   /* Shimmer skeleton */
-  @apply bg-linear-to-r from-surface-100 via-surface-200 to-surface-100 dark:from-surface-800 dark:via-surface-700 dark:to-surface-800 animate-shimmer rounded-lg;
-  background-size: 200% 100%;
-}
+  .skeleton {
+    @apply bg-linear-to-r from-surface-100 via-surface-200 to-surface-100 dark:from-surface-800 dark:via-surface-700 dark:to-surface-800 animate-shimmer rounded-lg;
+    background-size: 200% 100%;
+  }
 
-@utility bg-mesh {
   /* Mesh gradient background */
-  @apply bg-gradient-mesh;
-}
+  .bg-mesh {
+    @apply bg-gradient-mesh;
+  }
 
-@utility bg-grid {
   /* Subtle grid pattern */
-  background-image:
-    linear-gradient(to right, rgb(148 163 184 / 0.08) 1px, transparent 1px),
-    linear-gradient(to bottom, rgb(148 163 184 / 0.08) 1px, transparent 1px);
-  background-size: 32px 32px;
-}
+  .bg-grid {
+    background-image:
+      linear-gradient(to right, rgb(148 163 184 / 0.08) 1px, transparent 1px),
+      linear-gradient(to bottom, rgb(148 163 184 / 0.08) 1px, transparent 1px);
+    background-size: 32px 32px;
+  }
 
-@utility bg-noise {
   /* Noise texture overlay for premium feel */
-  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2'/%3E%3CfeColorMatrix values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.04 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
-}
+  .bg-noise {
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2'/%3E%3CfeColorMatrix values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.04 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  }
 
-@utility no-select {
   /* No-select helper for gameplay UIs */
-  user-select: none;
-  -webkit-user-select: none;
-}
+  .no-select {
+    user-select: none;
+    -webkit-user-select: none;
+  }
 
-@utility font-editorial {
   /* ── Editorial / dashboard utilities ───────────────────── */
   /* Instrument Serif renders French diacritics & ligatures cleanly when liga is off */
-  font-family: 'Instrument Serif', ui-serif, Georgia, serif;
-  font-feature-settings: 'liga' 0;
-  letter-spacing: -0.005em;
-}
-
-@utility num {
-  /* Tabular numerics for stat readouts */
-  font-variant-numeric: tabular-nums;
-}
-
-@utility underline-wavy {
-  /* Wavy underline for inline corrections (used in Assistant) */
-  text-decoration: underline;
-  text-decoration-style: wavy;
-  text-decoration-color: rgba(244, 63, 94, 0.6);
-  text-underline-offset: 4px;
-  text-decoration-thickness: 1.5px;
-}
-
-@utility bg-grid-soft {
-  /* Soft grid background (compass / dashboard hero canvas) */
-  background-image:
-    linear-gradient(to right, rgb(148 163 184 / 0.1) 1px, transparent 1px),
-    linear-gradient(to bottom, rgb(148 163 184 / 0.1) 1px, transparent 1px);
-  background-size: 36px 36px;
-  .dark & {
-    background-image:
-      linear-gradient(to right, rgb(148 163 184 / 0.06) 1px, transparent 1px),
-      linear-gradient(to bottom, rgb(148 163 184 / 0.06) 1px, transparent 1px);
+  .font-editorial {
+    font-family: 'Instrument Serif', ui-serif, Georgia, serif;
+    font-feature-settings: 'liga' 0;
+    letter-spacing: -0.005em;
   }
-}
 
-@utility dark {
-  & .bg-grid-soft {
+  /* Tabular numerics for stat readouts */
+  .num {
+    font-variant-numeric: tabular-nums;
+  }
+
+  /* Wavy underline for inline corrections (used in Assistant) */
+  .underline-wavy {
+    text-decoration: underline;
+    text-decoration-style: wavy;
+    text-decoration-color: rgba(244, 63, 94, 0.6);
+    text-underline-offset: 4px;
+    text-decoration-thickness: 1.5px;
+  }
+
+  /* Soft grid background (compass / dashboard hero canvas) */
+  .bg-grid-soft {
+    background-image:
+      linear-gradient(to right, rgb(148 163 184 / 0.1) 1px, transparent 1px),
+      linear-gradient(to bottom, rgb(148 163 184 / 0.1) 1px, transparent 1px);
+    background-size: 36px 36px;
+  }
+  .dark .bg-grid-soft {
     background-image:
       linear-gradient(to right, rgb(148 163 184 / 0.06) 1px, transparent 1px),
       linear-gradient(to bottom, rgb(148 163 184 / 0.06) 1px, transparent 1px);
@@ -890,16 +916,28 @@
   ::-webkit-scrollbar-track {
     @apply bg-transparent;
   }
+  /* The dark rules for pseudo-elements are written out with the .dark
+     ancestor first: a dark: variant would land after the pseudo-element,
+     which is not a valid selector. */
   ::-webkit-scrollbar-thumb {
-    @apply bg-surface-300/60 dark:bg-surface-600/60 rounded-full;
+    @apply bg-surface-300/60 rounded-full;
+  }
+  .dark ::-webkit-scrollbar-thumb {
+    @apply bg-surface-600/60;
   }
   ::-webkit-scrollbar-thumb:hover {
-    @apply bg-surface-400 dark:bg-surface-500;
+    @apply bg-surface-400;
+  }
+  .dark ::-webkit-scrollbar-thumb:hover {
+    @apply bg-surface-500;
   }
 
   /* Selection color */
   ::selection {
-    @apply bg-primary-200 dark:bg-primary-800 text-primary-900 dark:text-primary-100;
+    @apply bg-primary-200 text-primary-900;
+  }
+  .dark ::selection {
+    @apply bg-primary-800 text-primary-100;
   }
 
   /* Headings inherit display font weights from size tokens */

@@ -7,6 +7,8 @@ first `h1` font, and counts elements still animating under
 
 ## Setup
 
+Requires Node >= 22.12 (needed by `@axe-core/playwright`).
+
 1. Run the backend seeded with demo content, per `docs/wiki/Getting-Started.md`
    and `docs/wiki/Content-Data-Pipeline.md`, on `http://127.0.0.1:8000`.
 2. Have a demo user that already has `mode` set (so no onboarding modal

@@ -93,6 +93,10 @@ async function newContext(browser, { tokens, route, theme, viewport, reducedMoti
 
 async function open(page, route) {
   await page.goto(`${BASE}/${route}`, { waitUntil: "networkidle" });
+  const finalPath = new URL(page.url()).pathname.replace(/\/+$/, "");
+  if (finalPath !== `/${route}`) {
+    throw new Error(`route /${route} landed on ${finalPath || "/"} (expected /${route}); is the demo user logged in and onboarded?`);
+  }
   await page.evaluate(() => document.fonts.ready);
   await page.waitForTimeout(SETTLE_MS);
 }
@@ -112,7 +116,8 @@ async function countAnimated(page) {
 }
 
 function diffRatio(fileA, fileB) {
-  if (!fs.existsSync(fileA) || !fs.existsSync(fileB)) return undefined;
+  if (!fs.existsSync(fileA)) throw new Error(`missing screenshot ${fileA}`);
+  if (!fs.existsSync(fileB)) throw new Error(`missing compare counterpart ${fileB}`);
   const a = PNG.sync.read(fs.readFileSync(fileA));
   const b = PNG.sync.read(fs.readFileSync(fileB));
   if (a.width !== b.width || a.height !== b.height) return 1;
@@ -122,6 +127,9 @@ function diffRatio(fileA, fileB) {
 
 async function main() {
   const { out, compare } = parseArgs(process.argv.slice(2));
+  if (compare && !fs.statSync(compare, { throwIfNoEntry: false })?.isDirectory()) {
+    throw new Error(`compare directory not found: ${compare}`);
+  }
   fs.mkdirSync(out, { recursive: true });
   const tokens = await login();
   const browser = await chromium.launch();
@@ -159,7 +167,7 @@ async function main() {
           const entry = { route, theme, viewport, screenshot, axeContrastViolations, horizontalOverflow, h1 };
           if (compare) {
             const ratio = diffRatio(path.join(out, screenshot), path.join(compare, screenshot));
-            if (ratio !== undefined) entry.diffRatio = ratio;
+            entry.diffRatio = ratio;
           }
           pages.push(entry);
           console.log(

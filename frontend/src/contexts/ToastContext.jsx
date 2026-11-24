@@ -1,5 +1,5 @@
 import { createContext, useContext, useState, useCallback, useRef } from "react";
-import Toast from "../components/Toast";
+import { CheckCircle2, AlertCircle, AlertTriangle, Info, X } from "lucide-react";
 
 const ToastContext = createContext(null);
 
@@ -7,10 +7,43 @@ const DEFAULT_DURATIONS = {
   success: 2800,
   info:    3000,
   warn:    4000,
+  warning: 4000,
   error:   5000, // errors need reading time
 };
 
+const TYPE_STYLES = {
+  success: { icon: CheckCircle2, color: "text-ok" },
+  error: { icon: AlertCircle, color: "text-err" },
+  warn: { icon: AlertTriangle, color: "text-warn" },
+  warning: { icon: AlertTriangle, color: "text-warn" },
+  info: { icon: Info, color: "text-accent" },
+};
+
 let toastId = 0;
+
+// Paper toast: bordered card with the one overlay shadow. Errors are
+// assertive (role="alert"); everything else is announced politely by the
+// status region that contains it.
+function ToastItem({ message, type, onDismiss }) {
+  const { icon: Icon, color } = TYPE_STYLES[type] || TYPE_STYLES.info;
+  return (
+    <div
+      role={type === "error" ? "alert" : undefined}
+      className="pointer-events-auto flex min-w-[280px] max-w-md items-start gap-3 rounded-2xl border border-line bg-card py-2 pl-4 pr-1 shadow-card-elevated"
+    >
+      <Icon aria-hidden="true" className={`mt-3 size-5 shrink-0 ${color}`} />
+      <p className="min-w-0 flex-1 py-3 text-small font-medium text-fg">{message}</p>
+      <button
+        type="button"
+        onClick={onDismiss}
+        aria-label="Dismiss notification"
+        className="inline-flex size-11 shrink-0 items-center justify-center rounded-full text-fg-3 transition-colors duration-150 ease-out hover:bg-canvas hover:text-fg focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-card"
+      >
+        <X aria-hidden="true" className="size-4" />
+      </button>
+    </div>
+  );
+}
 
 export function ToastProvider({ children }) {
   const [toasts, setToasts] = useState([]);
@@ -37,9 +70,13 @@ export function ToastProvider({ children }) {
     <ToastContext.Provider value={{ showToast }}>
       {children}
       {/* Bottom-right stack with proper gap and mobile bottom-safe padding */}
-      <div className="fixed bottom-4 right-4 z-100 flex flex-col gap-2 pointer-events-none max-w-[calc(100vw-2rem)]">
+      <div
+        role="status"
+        aria-live="polite"
+        className="fixed bottom-4 right-4 z-100 flex flex-col gap-2 pointer-events-none max-w-[calc(100vw-2rem)]"
+      >
         {toasts.map((toast) => (
-          <Toast
+          <ToastItem
             key={toast.id}
             message={toast.message}
             type={toast.type}

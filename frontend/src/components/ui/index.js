@@ -14,3 +14,6 @@ export { Textarea } from "./Textarea";
 export { Select } from "./Select";
 export { Checkbox } from "./Checkbox";
 export { Switch } from "./Switch";
+export { Dialog } from "./Dialog";
+export { Drawer } from "./Drawer";
+export { Tabs, TabsList, TabsTrigger, TabsContent } from "./Tabs";

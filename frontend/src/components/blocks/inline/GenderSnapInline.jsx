@@ -92,7 +92,7 @@ export default function GenderSnapInline() {
             ].map((opt) => {
               const isPicked = picked === opt.val;
               const isCorrect = picked && opt.val === word.gender;
-              let cls = "border-surface-200 dark:border-surface-700 hover:border-[color:var(--mode-accent)] bg-white dark:bg-surface-800 text-surface-900 dark:text-surface-50";
+              let cls = "border-surface-200 dark:border-surface-700 hover:border-(--mode-accent) bg-white dark:bg-surface-800 text-surface-900 dark:text-surface-50";
               if (picked) {
                 if (isCorrect) {
                   cls = "border-success-500 bg-success-50 dark:bg-success-900/30 text-success-700 dark:text-success-300";

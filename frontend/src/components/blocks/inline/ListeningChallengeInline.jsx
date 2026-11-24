@@ -107,7 +107,7 @@ export default function ListeningChallengeInline() {
               type="button"
               onClick={replay}
               disabled={!audioUrl}
-              className="inline-flex items-center gap-2 px-4 py-2 rounded-xl mode-grad-bg text-white text-[13px] font-bold shadow-sm active:scale-95 transition-all focus-ring disabled:opacity-40"
+              className="inline-flex items-center gap-2 px-4 py-2 rounded-xl mode-grad-bg text-white text-[13px] font-bold shadow-xs active:scale-95 transition-all focus-ring disabled:opacity-40"
             >
               🔊 Rejouer
             </button>
@@ -121,14 +121,14 @@ export default function ListeningChallengeInline() {
                 onChange={(e) => setInput(e.target.value)}
                 onKeyDown={(e) => e.key === "Enter" && submit()}
                 placeholder="Tape le mot…"
-                className="w-full rounded-xl border-2 border-surface-200 dark:border-surface-700 bg-white dark:bg-surface-800 px-3 py-2 text-[14px] text-center focus:border-[color:var(--mode-accent)] focus:ring-2 focus:ring-[color:var(--mode-accent)]/30 outline-none"
+                className="w-full rounded-xl border-2 border-surface-200 dark:border-surface-700 bg-white dark:bg-surface-800 px-3 py-2 text-[14px] text-center focus:border-(--mode-accent) focus:ring-2 focus:ring-(--mode-accent)/30 outline-hidden"
               />
               <div className="flex justify-center">
                 <button
                   type="button"
                   onClick={submit}
                   disabled={!input.trim()}
-                  className="px-4 py-1.5 rounded-lg text-[12px] font-bold mode-grad-bg text-white shadow-sm active:scale-95 transition-all disabled:opacity-40 focus-ring"
+                  className="px-4 py-1.5 rounded-lg text-[12px] font-bold mode-grad-bg text-white shadow-xs active:scale-95 transition-all disabled:opacity-40 focus-ring"
                 >
                   Valider
                 </button>

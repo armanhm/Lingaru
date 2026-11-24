@@ -28,9 +28,9 @@ export default function TopicDetail() {
   if (loading) {
     return (
       <div className="max-w-4xl mx-auto space-y-4">
-        <div className="skeleton h-5 w-24 rounded" />
+        <div className="skeleton h-5 w-24 rounded-sm" />
         <div className="skeleton h-12 w-2/3 rounded-lg" />
-        <div className="skeleton h-3 w-full rounded" />
+        <div className="skeleton h-3 w-full rounded-sm" />
         <div className="space-y-3 pt-4">
           {[...Array(4)].map((_, i) => <SkeletonCard key={i} height="h-20" />)}
         </div>
@@ -66,7 +66,7 @@ export default function TopicDetail() {
           </div>
           <div className="w-full bg-surface-100 dark:bg-surface-800 rounded-full h-2 overflow-hidden">
             <div
-              className="h-2 rounded-full bg-gradient-to-r from-primary-500 via-primary-400 to-accent-500 transition-all duration-700 ease-out"
+              className="h-2 rounded-full bg-linear-to-r from-primary-500 via-primary-400 to-accent-500 transition-all duration-700 ease-out"
               style={{ width: `${pct}%` }}
             />
           </div>
@@ -75,7 +75,7 @@ export default function TopicDetail() {
 
       <div className="flex items-baseline justify-between mb-4">
         <h2 className="text-h3 text-surface-900 dark:text-surface-100">Lessons</h2>
-        <span className="badge-neutral !text-[10px]">{lessons.length} total</span>
+        <span className="badge-neutral text-[10px]!">{lessons.length} total</span>
       </div>
 
       {lessons.length === 0 ? (
@@ -90,14 +90,14 @@ export default function TopicDetail() {
                 to={`/lesson/${lesson.id}`}
                 className={`group relative overflow-hidden rounded-2xl p-5 flex items-center gap-4 card-hover animate-fade-in-up focus-ring transition-all duration-300 ${
                   done
-                    ? "bg-gradient-to-r from-success-50 via-success-50/60 to-white dark:from-success-900/30 dark:via-success-900/15 dark:to-surface-900 border border-success-200 dark:border-success-800/50"
+                    ? "bg-linear-to-r from-success-50 via-success-50/60 to-white dark:from-success-900/30 dark:via-success-900/15 dark:to-surface-900 border border-success-200 dark:border-success-800/50"
                     : "card"
                 }`}
                 style={staggerDelay(index, 40)}
               >
                 <div className={`shrink-0 w-10 h-10 rounded-xl flex items-center justify-center text-base font-bold ${
                   done
-                    ? "bg-gradient-to-br from-success-500 to-success-600 text-white shadow-glow-success"
+                    ? "bg-linear-to-br from-success-500 to-success-600 text-white shadow-glow-success"
                     : "bg-surface-100 dark:bg-surface-800 text-surface-500 dark:text-surface-400"
                 }`}>
                   {done ? "✓" : index + 1}
@@ -113,9 +113,9 @@ export default function TopicDetail() {
                 </div>
 
                 <div className="flex items-center gap-2 shrink-0">
-                  <span className="badge-neutral !text-[10px] hidden sm:inline-flex">{TYPE_LABEL[lesson.type] || lesson.type}</span>
-                  {done && <span className="badge-success !text-[10px]">Done</span>}
-                  <svg className="w-4 h-4 text-surface-300 dark:text-surface-600 group-hover:text-primary-500 group-hover:translate-x-1 transition-all" fill="none" strokeWidth={2.5} viewBox="0 0 24 24" stroke="currentColor">
+                  <span className="badge-neutral text-[10px]! hidden sm:inline-flex">{TYPE_LABEL[lesson.type] || lesson.type}</span>
+                  {done && <span className="badge-success text-[10px]!">Done</span>}
+                  <svg className="w-4 h-4 text-surface-300 dark:text-surface-600 group-hover:text-primary-500 dark:group-hover:text-primary-500 group-hover:translate-x-1 transition-all" fill="none" strokeWidth={2.5} viewBox="0 0 24 24" stroke="currentColor">
                     <path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" />
                   </svg>
                 </div>

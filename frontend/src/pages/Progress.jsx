@@ -14,12 +14,12 @@ function BadgeCard({ name, description, icon, earned, earnedAt }) {
     <div
       className={`relative overflow-hidden rounded-2xl p-4 transition-all hover:scale-[1.03] hover:-translate-y-0.5 ${
         earned
-          ? "bg-gradient-to-br from-warn-50 via-accent-50 to-warn-100 dark:from-warn-900/30 dark:via-accent-900/20 dark:to-warn-900/30 border border-warn-300 dark:border-warn-700/50 shadow-sm"
+          ? "bg-linear-to-br from-warn-50 via-accent-50 to-warn-100 dark:from-warn-900/30 dark:via-accent-900/20 dark:to-warn-900/30 border border-warn-300 dark:border-warn-700/50 shadow-xs"
           : "bg-surface-50 dark:bg-surface-900/40 border border-surface-100 dark:border-surface-800 opacity-50 grayscale"
       }`}
     >
       {earned && (
-        <div className="absolute -top-8 -right-8 w-24 h-24 bg-gradient-to-br from-warn-400/30 to-accent-400/30 rounded-full blur-2xl" />
+        <div className="absolute -top-8 -right-8 w-24 h-24 bg-linear-to-br from-warn-400/30 to-accent-400/30 rounded-full blur-2xl" />
       )}
       <div className={`relative text-3xl mb-2 ${earned ? "animate-float" : ""}`}>
         {ICON_MAP[icon] || ICON_MAP.trophy}
@@ -75,7 +75,7 @@ export default function Progress() {
     return (
       <div className="max-w-5xl mx-auto space-y-6">
         <div className="space-y-2">
-          <div className="skeleton h-4 w-32 rounded" />
+          <div className="skeleton h-4 w-32 rounded-sm" />
           <div className="skeleton h-10 w-56 rounded-lg" />
         </div>
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
@@ -116,7 +116,7 @@ export default function Progress() {
       <section>
         <div className="flex items-baseline justify-between mb-4">
           <h2 className="text-h3 text-surface-900 dark:text-surface-100">Badges</h2>
-          <span className="badge-neutral !text-[10px]">{badges.earned.length} earned</span>
+          <span className="badge-neutral text-[10px]!">{badges.earned.length} earned</span>
         </div>
         {badges.earned.length === 0 && badges.available.length === 0 ? (
           <EmptyState icon="🏅" title="No badges yet" subtitle="Complete lessons and drills to earn your first badge." />
@@ -136,7 +136,7 @@ export default function Progress() {
       <section>
         <div className="flex items-baseline justify-between mb-4">
           <h2 className="text-h3 text-surface-900 dark:text-surface-100">Leaderboard</h2>
-          <span className="badge-neutral !text-[10px]">Top {leaderboard.length}</span>
+          <span className="badge-neutral text-[10px]!">Top {leaderboard.length}</span>
         </div>
         <div className="card overflow-hidden">
           <table className="w-full">
@@ -172,7 +172,7 @@ export default function Progress() {
       <section>
         <div className="flex items-baseline justify-between mb-4">
           <h2 className="text-h3 text-surface-900 dark:text-surface-100">Recent XP</h2>
-          <span className="badge-neutral !text-[10px]">{history.length} events</span>
+          <span className="badge-neutral text-[10px]!">{history.length} events</span>
         </div>
         {history.length === 0 ? (
           <EmptyState icon="📊" title="No activity yet" subtitle="Start a quiz, drill, or game to earn XP." />
@@ -185,7 +185,7 @@ export default function Progress() {
                 style={staggerDelay(i, 30)}
               >
                 <div className="flex items-center gap-3">
-                  <span className="w-9 h-9 rounded-xl bg-gradient-to-br from-success-100 to-success-200 dark:from-success-700/30 dark:to-success-800/30 flex items-center justify-center text-success-700 dark:text-success-300 text-xs font-extrabold">
+                  <span className="w-9 h-9 rounded-xl bg-linear-to-br from-success-100 to-success-200 dark:from-success-700/30 dark:to-success-800/30 flex items-center justify-center text-success-700 dark:text-success-300 text-xs font-extrabold">
                     +{txn.xp_amount}
                   </span>
                   <span className="text-sm font-medium text-surface-700 dark:text-surface-300 capitalize">

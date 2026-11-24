@@ -309,7 +309,7 @@ export default function QuizBlockV2({ block }) {
 
     return (
       <div className="not-prose rounded-2xl border border-surface-200 dark:border-surface-700 bg-surface-50/60 dark:bg-surface-900/60 overflow-hidden">
-        <div className={`px-5 py-4 bg-gradient-to-br ${toneClasses} text-white`}>
+        <div className={`px-5 py-4 bg-linear-to-br ${toneClasses} text-white`}>
           <div className="flex items-baseline justify-between gap-3">
             <p className="text-[10px] uppercase tracking-[0.14em] font-semibold opacity-90">
               Quiz terminé
@@ -439,7 +439,7 @@ export default function QuizBlockV2({ block }) {
             disabled={!isAnswered(q, answer)}
             className={`inline-flex items-center gap-1 px-3 py-1.5 rounded-lg text-[12px] font-bold transition-all ${
               isAnswered(q, answer)
-                ? "bg-gradient-to-br from-primary-600 to-purple-700 text-white shadow-sm hover:shadow-glow-primary active:scale-95 focus-ring"
+                ? "bg-linear-to-br from-primary-600 to-purple-700 text-white shadow-xs hover:shadow-glow-primary active:scale-95 focus-ring"
                 : "bg-surface-100 dark:bg-surface-800 text-surface-400 dark:text-surface-500 cursor-not-allowed"
             }`}
           >
@@ -448,7 +448,7 @@ export default function QuizBlockV2({ block }) {
         ) : (
           <button
             onClick={next}
-            className="inline-flex items-center gap-1 px-3 py-1.5 rounded-lg text-[12px] font-bold bg-gradient-to-br from-primary-600 to-purple-700 text-white shadow-sm hover:shadow-glow-primary active:scale-95 focus-ring"
+            className="inline-flex items-center gap-1 px-3 py-1.5 rounded-lg text-[12px] font-bold bg-linear-to-br from-primary-600 to-purple-700 text-white shadow-xs hover:shadow-glow-primary active:scale-95 focus-ring"
           >
             {idx + 1 >= total ? "Voir le score" : "Suivant"}
             <svg className="w-3 h-3" fill="none" stroke="currentColor" strokeWidth={2.5} viewBox="0 0 24 24">

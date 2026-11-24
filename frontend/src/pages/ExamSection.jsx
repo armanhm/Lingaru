@@ -69,7 +69,7 @@ export default function ExamSection() {
               onClick={() => setLevel(l)}
               className={`px-4 py-2 rounded-xl text-sm font-bold transition-all focus-ring ${
                 level === l
-                  ? "bg-white dark:bg-surface-800 text-primary-600 dark:text-primary-400 shadow-sm"
+                  ? "bg-white dark:bg-surface-800 text-primary-600 dark:text-primary-400 shadow-xs"
                   : "text-surface-500 dark:text-surface-400 hover:text-surface-800 dark:hover:text-surface-200"
               }`}
             >
@@ -105,7 +105,7 @@ export default function ExamSection() {
                 className="card card-hover p-4 flex items-center gap-3 animate-fade-in-up"
                 style={staggerDelay(i, 50)}
               >
-                <div className="shrink-0 w-10 h-10 rounded-xl bg-gradient-to-br from-primary-500 to-primary-700 text-white flex items-center justify-center text-sm font-bold shadow-sm">
+                <div className="shrink-0 w-10 h-10 rounded-xl bg-linear-to-br from-primary-500 to-primary-700 text-white flex items-center justify-center text-sm font-bold shadow-xs">
                   {i + 1}
                 </div>
                 <div className="flex-1 min-w-0">

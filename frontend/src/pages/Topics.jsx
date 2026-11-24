@@ -62,7 +62,7 @@ export default function Topics() {
     return (
       <div className="max-w-6xl mx-auto">
         <div className="space-y-2 mb-7">
-          <div className="skeleton h-4 w-28 rounded" />
+          <div className="skeleton h-4 w-28 rounded-sm" />
           <div className="skeleton h-10 w-48 rounded-lg" />
         </div>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
@@ -114,7 +114,7 @@ export default function Topics() {
               onClick={() => setActiveLevel(level.key)}
               className={`w-full flex items-center justify-between gap-3 px-4 py-2.5 rounded-xl text-left transition-all focus-ring ${
                 isActive
-                  ? "bg-primary-500 text-white shadow-sm"
+                  ? "bg-primary-500 text-white shadow-xs"
                   : "bg-surface-100 dark:bg-surface-800 text-surface-700 dark:text-surface-200 hover:bg-surface-200 dark:hover:bg-surface-700"
               }`}
             >
@@ -152,11 +152,11 @@ export default function Topics() {
               style={staggerDelay(i, 40)}
             >
               {/* Top accent band */}
-              <div className="h-1 bg-gradient-to-r from-primary-400 via-accent-400 to-success-400 opacity-60 group-hover:opacity-100 transition-opacity" />
+              <div className="h-1 bg-linear-to-r from-primary-400 via-accent-400 to-success-400 opacity-60 group-hover:opacity-100 transition-opacity" />
 
               <div className="p-5">
                 <div className="flex items-start justify-between mb-3">
-                  <div className="w-12 h-12 rounded-2xl bg-gradient-to-br from-surface-100 to-surface-200 dark:from-surface-800 dark:to-surface-700 flex items-center justify-center text-2xl group-hover:scale-110 group-hover:rotate-3 transition-all duration-300">
+                  <div className="w-12 h-12 rounded-2xl bg-linear-to-br from-surface-100 to-surface-200 dark:from-surface-800 dark:to-surface-700 flex items-center justify-center text-2xl group-hover:scale-110 group-hover:rotate-3 transition-all duration-300">
                     {topic.icon || "📘"}
                   </div>
                   <span className={LEVEL_BY_KEY[activeLevel]?.badge || "badge-neutral"}>

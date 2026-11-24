@@ -75,7 +75,7 @@ export default function OurNotes() {
     return (
       <div className="max-w-6xl mx-auto">
         <div className="space-y-2 mb-7">
-          <div className="skeleton h-4 w-28 rounded" />
+          <div className="skeleton h-4 w-28 rounded-sm" />
           <div className="skeleton h-10 w-48 rounded-lg" />
         </div>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
@@ -130,7 +130,7 @@ export default function OurNotes() {
                 className="group relative overflow-hidden card card-hover focus-ring p-0 animate-fade-in-up"
                 style={staggerDelay(i, 40)}
               >
-                <div className="h-1 bg-gradient-to-r from-primary-400 via-accent-400 to-success-400 opacity-60 group-hover:opacity-100 transition-opacity" />
+                <div className="h-1 bg-linear-to-r from-primary-400 via-accent-400 to-success-400 opacity-60 group-hover:opacity-100 transition-opacity" />
 
                 <div className="p-5">
                   <h2 className="text-h4 text-surface-900 dark:text-surface-100 group-hover:text-primary-600 dark:group-hover:text-primary-400 transition-colors">

@@ -46,14 +46,14 @@ function TranscriptPanel({ transcriptFr, transcriptEn }) {
   if (!transcriptFr) return null;
 
   return (
-    <div className="bg-white dark:bg-surface-800 rounded-xl shadow p-5">
+    <div className="bg-white dark:bg-surface-800 rounded-xl shadow-sm p-5">
       <div className="flex items-center justify-between mb-3">
         <h3 className="font-semibold text-surface-900 dark:text-surface-100">Transcript</h3>
         <div className="flex gap-1 bg-surface-100 dark:bg-surface-700 rounded-lg p-1">
           <button
             onClick={() => setLang("fr")}
             className={`px-3 py-1 rounded-md text-sm font-medium transition-colors ${
-              lang === "fr" ? "bg-white dark:bg-surface-600 shadow text-primary-700 dark:text-primary-400" : "text-surface-500 dark:text-surface-400 hover:text-surface-700 dark:hover:text-surface-300"
+              lang === "fr" ? "bg-white dark:bg-surface-600 shadow-sm text-primary-700 dark:text-primary-400" : "text-surface-500 dark:text-surface-400 hover:text-surface-700 dark:hover:text-surface-300"
             }`}
           >
             Français
@@ -62,7 +62,7 @@ function TranscriptPanel({ transcriptFr, transcriptEn }) {
             <button
               onClick={() => setLang("en")}
               className={`px-3 py-1 rounded-md text-sm font-medium transition-colors ${
-                lang === "en" ? "bg-white dark:bg-surface-600 shadow text-primary-700 dark:text-primary-400" : "text-surface-500 dark:text-surface-400 hover:text-surface-700 dark:hover:text-surface-300"
+                lang === "en" ? "bg-white dark:bg-surface-600 shadow-sm text-primary-700 dark:text-primary-400" : "text-surface-500 dark:text-surface-400 hover:text-surface-700 dark:hover:text-surface-300"
               }`}
             >
               English
@@ -81,7 +81,7 @@ function TranscriptPanel({ transcriptFr, transcriptEn }) {
 
 function VideoVocabularyCard({ word }) {
   return (
-    <div className="bg-white dark:bg-surface-800 rounded-lg shadow p-4 border-l-4 border-primary-400">
+    <div className="bg-white dark:bg-surface-800 rounded-lg shadow-sm p-4 border-l-4 border-primary-400">
       <div className="flex items-center justify-between mb-1">
         <span className="flex items-center gap-1">
           <span className="text-base font-semibold text-surface-900 dark:text-surface-100">{word.french}</span>
@@ -171,7 +171,7 @@ function StatusBanner({ status, errorMessage }) {
           <p>YouTube blocks transcript requests from datacenter IPs (Hetzner, AWS, etc.). It works fine on a residential / home connection.</p>
           <p className="mt-1.5 font-semibold">Workarounds</p>
           <ol className="list-decimal list-inside space-y-0.5 mt-1">
-            <li>Run video processing locally (laptop) and dump/load the resulting <code className="font-mono bg-danger-100 dark:bg-danger-900/40 px-1 rounded">VideoLesson</code> records to production.</li>
+            <li>Run video processing locally (laptop) and dump/load the resulting <code className="font-mono bg-danger-100 dark:bg-danger-900/40 px-1 rounded-sm">VideoLesson</code> records to production.</li>
             <li>Or proxy outbound YouTube calls through a residential proxy service.</li>
           </ol>
         </div>
@@ -207,7 +207,7 @@ function VideoUrlForm({ lessonId, onSubmitted }) {
   };
 
   return (
-    <div className="bg-white dark:bg-surface-800 rounded-xl shadow p-6 border-2 border-dashed border-surface-200 dark:border-surface-700">
+    <div className="bg-white dark:bg-surface-800 rounded-xl shadow-sm p-6 border-2 border-dashed border-surface-200 dark:border-surface-700">
       <div className="text-center mb-4">
         <span className="text-4xl">🎬</span>
         <h3 className="text-lg font-semibold text-surface-900 dark:text-surface-100 mt-2">Add a YouTube Video</h3>
@@ -221,7 +221,7 @@ function VideoUrlForm({ lessonId, onSubmitted }) {
           value={url}
           onChange={(e) => setUrl(e.target.value)}
           placeholder="https://www.youtube.com/watch?v=..."
-          className="flex-1 px-4 py-2.5 border border-surface-200 rounded-xl text-sm focus:border-primary-500 focus:outline-none dark:bg-surface-700 dark:border-surface-600 dark:text-surface-100"
+          className="flex-1 px-4 py-2.5 border border-surface-200 rounded-xl text-sm focus:border-primary-500 focus:outline-hidden dark:bg-surface-700 dark:border-surface-600 dark:text-surface-100"
           disabled={loading}
         />
         <button
@@ -322,7 +322,7 @@ export default function VideoSection({ video, lessonId, isStaff, lessonQuestionC
 
         {/* Practice CTA */}
         {isReady && videoQuestionCount > 0 && (
-          <div className="bg-gradient-to-r from-primary-50 to-primary-100 dark:from-primary-900/20 dark:to-primary-900/30 rounded-xl p-5 flex items-center justify-between">
+          <div className="bg-linear-to-r from-primary-50 to-primary-100 dark:from-primary-900/20 dark:to-primary-900/30 rounded-xl p-5 flex items-center justify-between">
             <div>
               <p className="font-semibold text-primary-900 dark:text-primary-200">Practice what you watched</p>
               <p className="text-sm text-primary-700 dark:text-primary-400 mt-0.5">

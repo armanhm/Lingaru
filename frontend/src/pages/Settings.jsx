@@ -90,11 +90,11 @@ const MODE_CARDS = [
 function SectionCard({ title, description, icon, tint = "from-primary-500 to-purple-600", children }) {
   return (
     <div className="card relative overflow-hidden mb-5 animate-fade-in-up">
-      <div className={`absolute inset-x-0 top-0 h-1 bg-gradient-to-r ${tint}`} />
+      <div className={`absolute inset-x-0 top-0 h-1 bg-linear-to-r ${tint}`} />
       <div className="px-6 pt-5 pb-4 border-b border-surface-100 dark:border-surface-700/50">
         <div className="flex items-center gap-3">
           {icon && (
-            <div className={`shrink-0 w-10 h-10 rounded-xl bg-gradient-to-br ${tint} text-white flex items-center justify-center text-lg shadow-glow-primary`}>
+            <div className={`shrink-0 w-10 h-10 rounded-xl bg-linear-to-br ${tint} text-white flex items-center justify-center text-lg shadow-glow-primary`}>
               {icon}
             </div>
           )}
@@ -128,7 +128,7 @@ function Toggle({ checked, onChange }) {
       onClick={() => onChange(!checked)}
       className={`relative inline-flex h-6 w-11 rounded-full transition-colors duration-200 focus-ring ${checked ? "bg-primary-600" : "bg-surface-300 dark:bg-surface-600"}`}
     >
-      <span className={`inline-block h-5 w-5 mt-0.5 rounded-full bg-white shadow transform transition-transform duration-200 ${checked ? "translate-x-5" : "translate-x-0.5"}`} />
+      <span className={`inline-block h-5 w-5 mt-0.5 rounded-full bg-white shadow-sm transform transition-transform duration-200 ${checked ? "translate-x-5" : "translate-x-0.5"}`} />
     </button>
   );
 }
@@ -156,7 +156,7 @@ function SelectInput({ value, onChange, options, className = "" }) {
     <select
       value={value}
       onChange={(e) => onChange(e.target.value)}
-      className={`px-3 py-2 border border-surface-200 dark:border-surface-600 rounded-lg text-sm bg-white dark:bg-surface-700 text-surface-800 dark:text-surface-100 focus:outline-none focus:border-primary-500 focus:ring-2 focus:ring-primary-500/20 transition-all ${className}`}
+      className={`px-3 py-2 border border-surface-200 dark:border-surface-600 rounded-lg text-sm bg-white dark:bg-surface-700 text-surface-800 dark:text-surface-100 focus:outline-hidden focus:border-primary-500 focus:ring-2 focus:ring-primary-500/20 transition-all ${className}`}
     >
       {options.map((o) => <option key={o.value} value={o.value}>{o.label}</option>)}
     </select>
@@ -299,7 +299,7 @@ function MemoryPanel() {
     <div className="space-y-8">
       {/* Panel header with brain mark for visual anchor */}
       <div className="flex items-start gap-3">
-        <div aria-hidden="true" className="hidden sm:flex shrink-0 w-10 h-10 items-center justify-center rounded-lg bg-gradient-to-br from-info-500 to-emerald-500 text-white text-lg">
+        <div aria-hidden="true" className="hidden sm:flex shrink-0 w-10 h-10 items-center justify-center rounded-lg bg-linear-to-br from-info-500 to-emerald-500 text-white text-lg">
           🧠
         </div>
         <div>
@@ -467,7 +467,7 @@ function MemoryPanel() {
             id="memory-show-inactive"
             checked={includeInactive}
             onChange={(e) => setIncludeInactive(e.target.checked)}
-            className="w-4 h-4 rounded border-surface-300 dark:border-surface-600 text-primary-600 focus:ring-2 focus:ring-primary-500 focus:ring-offset-0"
+            className="w-4 h-4 rounded-sm border-surface-300 dark:border-surface-600 text-primary-600 focus:ring-2 focus:ring-primary-500 focus:ring-offset-0"
           />
           <span className="text-sm text-surface-700 dark:text-surface-200">
             {t("settings.memory.showInactive")}
@@ -807,11 +807,11 @@ export default function Settings() {
                     onClick={() => { setActiveTab(tab.id); setMobileNavOpen(false); }}
                     className={`relative flex items-center gap-2 px-3 py-2 rounded-lg text-sm font-semibold transition-all text-left ${
                       isActive
-                        ? "text-white shadow-sm"
+                        ? "text-white shadow-xs"
                         : "text-surface-600 dark:text-surface-300 hover:bg-surface-100 dark:hover:bg-surface-800"
                     }`}
                   >
-                    {isActive && <span className={`absolute inset-0 rounded-lg bg-gradient-to-br ${tab.tint}`} />}
+                    {isActive && <span className={`absolute inset-0 rounded-lg bg-linear-to-br ${tab.tint}`} />}
                     <span aria-hidden="true" className="relative z-10 text-base">{tab.icon}</span>
                     <span className="relative z-10">{t(tab.labelKey)}</span>
                   </button>
@@ -836,17 +836,17 @@ export default function Settings() {
                 onClick={() => setActiveTab(tab.id)}
                 className={`group relative flex items-center gap-2.5 pl-4 pr-3 py-2.5 rounded-lg text-sm font-semibold transition-all text-left ${
                   isActive
-                    ? "text-white shadow-sm"
+                    ? "text-white shadow-xs"
                     : "text-surface-600 dark:text-surface-300 hover:bg-surface-100/70 dark:hover:bg-surface-800/70"
                 }`}
               >
                 {/* Active gradient pill */}
-                {isActive && <span className={`absolute inset-0 rounded-lg bg-gradient-to-br ${tab.tint}`} />}
+                {isActive && <span className={`absolute inset-0 rounded-lg bg-linear-to-br ${tab.tint}`} />}
                 {/* Hover accent bar (idle items only; sits in the gap reserved by pl-4) */}
                 {!isActive && (
                   <span
                     aria-hidden
-                    className={`absolute left-1 top-2 bottom-2 w-[3px] rounded-full bg-gradient-to-b ${tab.tint} opacity-0 group-hover:opacity-100 transition-opacity`}
+                    className={`absolute left-1 top-2 bottom-2 w-[3px] rounded-full bg-linear-to-b ${tab.tint} opacity-0 group-hover:opacity-100 transition-opacity`}
                   />
                 )}
                 <span className="relative z-10 text-base transition-transform group-hover:scale-110">{tab.icon}</span>
@@ -968,12 +968,12 @@ export default function Settings() {
                     }}
                     className={`mode-card group relative text-left rounded-2xl border-2 px-5 py-5 overflow-hidden transition-all duration-300 ease-out focus-ring will-change-transform ${
                       active
-                        ? "border-[color:var(--card-accent)] bg-white dark:bg-surface-900 shadow-[0_22px_48px_-18px_var(--card-glow)] ring-2 ring-[color:var(--card-accent)]/25"
-                        : "border-surface-200 dark:border-surface-700 bg-white dark:bg-surface-900 hover:-translate-y-1 hover:border-[color:var(--card-accent)]/70 hover:shadow-[0_22px_48px_-18px_var(--card-glow)] hover:ring-2 hover:ring-[color:var(--card-accent)]/20"
+                        ? "border-(--card-accent) bg-white dark:bg-surface-900 shadow-[0_22px_48px_-18px_var(--card-glow)] ring-2 ring-(--card-accent)/25"
+                        : "border-surface-200 dark:border-surface-700 bg-white dark:bg-surface-900 hover:-translate-y-1 hover:border-(--card-accent)/70 hover:shadow-[0_22px_48px_-18px_var(--card-glow)] hover:ring-2 hover:ring-(--card-accent)/20"
                     }`}
                   >
                     {/* Animated gradient accent bar */}
-                    <div className={`absolute inset-x-0 top-0 h-1.5 bg-gradient-to-r ${m.gradient} transition-opacity duration-300 ${active ? "opacity-100" : "opacity-50 group-hover:opacity-100"}`} />
+                    <div className={`absolute inset-x-0 top-0 h-1.5 bg-linear-to-r ${m.gradient} transition-opacity duration-300 ${active ? "opacity-100" : "opacity-50 group-hover:opacity-100"}`} />
 
                     {/* Soft tint wash on hover/active */}
                     <div
@@ -997,7 +997,7 @@ export default function Settings() {
                     {/* Centered identity block: puck + title + tagline */}
                     <div className="flex flex-col items-center text-center">
                       <span
-                        className={`relative inline-flex w-14 h-14 rounded-2xl bg-gradient-to-br ${m.gradient} text-white items-center justify-center text-2xl font-extrabold shadow-lg transition-transform duration-300 ease-out ${active ? "scale-105" : "group-hover:scale-110 group-hover:rotate-[-4deg]"}`}
+                        className={`relative inline-flex w-14 h-14 rounded-2xl bg-linear-to-br ${m.gradient} text-white items-center justify-center text-2xl font-extrabold shadow-lg transition-transform duration-300 ease-out ${active ? "scale-105" : "group-hover:scale-110 group-hover:rotate-[-4deg]"}`}
                       >
                         {m.initial}
                       </span>
@@ -1021,7 +1021,7 @@ export default function Settings() {
                     <div className="mt-4 flex items-center gap-2">
                       <span className="flex -space-x-1">
                         <span className="w-3.5 h-3.5 rounded-full ring-2 ring-white dark:ring-surface-900" style={{ backgroundColor: m.accent }} />
-                        <span className={`w-3.5 h-3.5 rounded-full ring-2 ring-white dark:ring-surface-900 bg-gradient-to-br ${m.gradient}`} />
+                        <span className={`w-3.5 h-3.5 rounded-full ring-2 ring-white dark:ring-surface-900 bg-linear-to-br ${m.gradient}`} />
                       </span>
                       <span className="text-[10px] font-mono uppercase tracking-wider text-surface-500 dark:text-surface-400">
                         {m.chip}
@@ -1232,12 +1232,12 @@ export default function Settings() {
               <div className="flex items-center gap-3 flex-wrap">
                 <span className="badge-success">✓ Linked</span>
                 <span className="text-sm text-surface-500 dark:text-surface-400">
-                  ID: <code className="bg-surface-100 dark:bg-surface-700 px-1.5 py-0.5 rounded text-xs font-mono">{user.telegram_id}</code>
+                  ID: <code className="bg-surface-100 dark:bg-surface-700 px-1.5 py-0.5 rounded-sm text-xs font-mono">{user.telegram_id}</code>
                 </span>
               </div>
             ) : (
               <p className="text-sm text-surface-600 dark:text-surface-400">
-                Not linked. Start the Lingaru bot on Telegram and send <code className="bg-surface-100 dark:bg-surface-700 px-1.5 py-0.5 rounded text-xs font-mono">/start</code> to connect your account.
+                Not linked. Start the Lingaru bot on Telegram and send <code className="bg-surface-100 dark:bg-surface-700 px-1.5 py-0.5 rounded-sm text-xs font-mono">/start</code> to connect your account.
               </p>
             )}
           </SectionCard>
@@ -1253,10 +1253,10 @@ export default function Settings() {
 
           {/* Danger zone */}
           <div className="card relative overflow-hidden mb-5 border-2 border-danger-200 dark:border-danger-900/50">
-            <div className="absolute inset-x-0 top-0 h-1 bg-gradient-to-r from-danger-500 to-accent-500" />
+            <div className="absolute inset-x-0 top-0 h-1 bg-linear-to-r from-danger-500 to-accent-500" />
             <div className="px-6 pt-5 pb-4 border-b border-danger-100 dark:border-danger-900/40">
               <div className="flex items-center gap-3">
-                <div className="shrink-0 w-10 h-10 rounded-xl bg-gradient-to-br from-danger-500 to-accent-600 text-white flex items-center justify-center text-lg shadow-glow-danger">
+                <div className="shrink-0 w-10 h-10 rounded-xl bg-linear-to-br from-danger-500 to-accent-600 text-white flex items-center justify-center text-lg shadow-glow-danger">
                   ⚠️
                 </div>
                 <div>
@@ -1329,7 +1329,7 @@ function ModeCelebration({ card }) {
   const { t } = useTranslation();
   if (!card) return null;
   return (
-    <div className="fixed inset-0 z-[120] pointer-events-none flex items-center justify-center overflow-hidden">
+    <div className="fixed inset-0 z-120 pointer-events-none flex items-center justify-center overflow-hidden">
       {/* Soft full-screen color wash */}
       <div
         className="absolute inset-0 animate-mode-wash"
@@ -1350,7 +1350,7 @@ function ModeCelebration({ card }) {
       {/* Center pop card */}
       <div className="relative flex flex-col items-center animate-mode-pop">
         <span
-          className={`w-24 h-24 rounded-3xl bg-gradient-to-br ${card.gradient} text-white flex items-center justify-center text-5xl font-extrabold shadow-2xl`}
+          className={`w-24 h-24 rounded-3xl bg-linear-to-br ${card.gradient} text-white flex items-center justify-center text-5xl font-extrabold shadow-2xl`}
           style={{ boxShadow: `0 24px 60px -12px ${card.glow}` }}
         >
           {card.initial}

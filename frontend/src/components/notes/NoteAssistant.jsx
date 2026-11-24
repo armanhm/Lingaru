@@ -94,7 +94,7 @@ export default function NoteAssistant({ noteId }) {
             prose-h3:text-base prose-h3:font-semibold
             prose-ul:my-1 prose-ol:my-1 prose-li:my-0.5
             prose-strong:font-semibold prose-em:italic
-            prose-code:bg-surface-100 prose-code:dark:bg-surface-700 prose-code:px-1 prose-code:rounded prose-code:text-xs">
+            prose-code:bg-surface-100 dark:prose-code:bg-surface-700 prose-code:px-1 prose-code:rounded-sm prose-code:text-xs">
             <ReactMarkdown remarkPlugins={[remarkGfm]}>{answer}</ReactMarkdown>
           </div>
         </div>

@@ -147,7 +147,7 @@ export default function ConjugationDrill() {
         />
 
         <div className="card relative overflow-hidden p-8 mb-5 animate-scale-in">
-          <div className={`absolute inset-x-0 top-0 h-1.5 bg-gradient-to-r ${
+          <div className={`absolute inset-x-0 top-0 h-1.5 bg-linear-to-r ${
             tone === "success" ? "from-success-500 to-info-500" :
             tone === "warn" ? "from-warn-500 to-accent-500" :
             "from-danger-500 to-accent-500"
@@ -225,7 +225,7 @@ export default function ConjugationDrill() {
         />
 
         <div className="card relative overflow-hidden p-6 animate-fade-in-up">
-          <div className="absolute inset-x-0 top-0 h-1 bg-gradient-to-r from-primary-500 to-purple-600" />
+          <div className="absolute inset-x-0 top-0 h-1 bg-linear-to-r from-primary-500 to-purple-600" />
 
           <div className="space-y-4 mb-6">
             <div>
@@ -283,7 +283,7 @@ export default function ConjugationDrill() {
       {/* Progress bar */}
       <div className="mb-5 h-2 bg-surface-100 dark:bg-surface-700 rounded-full overflow-hidden">
         <div
-          className="h-full bg-gradient-to-r from-primary-500 to-purple-600 transition-all duration-500 ease-out rounded-full"
+          className="h-full bg-linear-to-r from-primary-500 to-purple-600 transition-all duration-500 ease-out rounded-full"
           style={{ width: `${progress}%` }}
         />
       </div>
@@ -298,7 +298,7 @@ export default function ConjugationDrill() {
         }`}
         key={currentSubjectIndex}
       >
-        <div className="absolute inset-x-0 top-0 h-1 bg-gradient-to-r from-primary-500 via-purple-500 to-accent-500" />
+        <div className="absolute inset-x-0 top-0 h-1 bg-linear-to-r from-primary-500 via-purple-500 to-accent-500" />
 
         <p className="section-label mb-3">Conjugate</p>
         <p className="text-display font-extrabold text-surface-900 dark:text-surface-100 mb-2 tracking-tight">

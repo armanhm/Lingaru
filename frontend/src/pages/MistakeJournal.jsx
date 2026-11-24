@@ -125,7 +125,7 @@ export default function MistakeJournal() {
                 type="checkbox"
                 checked={selected.has(m.id)}
                 onChange={() => toggleSelect(m.id)}
-                className="mt-1 h-4 w-4 text-primary-600 rounded border-surface-300 dark:border-surface-600 focus:ring-primary-500"
+                className="mt-1 h-4 w-4 text-primary-600 rounded-sm border-surface-300 dark:border-surface-600 focus:ring-primary-500"
               />
               <div className="flex-1 min-w-0">
                 {m.question_prompt && (

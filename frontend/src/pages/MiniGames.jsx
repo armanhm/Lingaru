@@ -31,14 +31,14 @@ export default function MiniGames() {
           const cardInner = (
             <>
               {/* Gradient top band */}
-              <div className={`h-1.5 bg-gradient-to-r ${game.gradient}`} />
+              <div className={`h-1.5 bg-linear-to-r ${game.gradient}`} />
 
               <div className="p-5">
                 <div className="flex items-start justify-between mb-3">
-                  <div className={`w-14 h-14 bg-gradient-to-br ${game.gradient} rounded-2xl flex items-center justify-center text-3xl shadow-lg group-hover:scale-110 group-hover:rotate-3 transition-all duration-300`}>
+                  <div className={`w-14 h-14 bg-linear-to-br ${game.gradient} rounded-2xl flex items-center justify-center text-3xl shadow-lg group-hover:scale-110 group-hover:rotate-3 transition-all duration-300`}>
                     {game.emoji}
                   </div>
-                  <span className="badge-neutral !text-[10px]">{game.tag}</span>
+                  <span className="badge-neutral text-[10px]!">{game.tag}</span>
                 </div>
 
                 <h3 className="text-h4 text-surface-900 dark:text-surface-100 mb-1 group-hover:text-primary-600 dark:group-hover:text-primary-400 transition-colors">

@@ -125,12 +125,12 @@ export default function ConjugationInline() {
               onKeyDown={(e) => e.key === "Enter" && submit()}
               disabled={!!feedback}
               placeholder="…"
-              className={`px-3 py-1.5 rounded-lg border-2 text-[16px] font-semibold text-center w-40 outline-none transition-all ${
+              className={`px-3 py-1.5 rounded-lg border-2 text-[16px] font-semibold text-center w-40 outline-hidden transition-all ${
                 feedback?.is_correct
                   ? "border-success-500 bg-success-50 dark:bg-success-900/30 text-success-700 dark:text-success-300"
                   : feedback
                   ? "border-danger-500 bg-danger-50 dark:bg-danger-900/30 text-danger-700 dark:text-danger-300"
-                  : "border-[color:var(--mode-accent)] bg-white dark:bg-surface-800 focus:ring-2 focus:ring-[color:var(--mode-accent)]/30"
+                  : "border-(--mode-accent) bg-white dark:bg-surface-800 focus:ring-2 focus:ring-(--mode-accent)/30"
               }`}
             />
           </div>
@@ -140,7 +140,7 @@ export default function ConjugationInline() {
                 type="button"
                 onClick={submit}
                 disabled={!answer.trim() || submitting}
-                className="px-4 py-1.5 rounded-lg text-[12px] font-bold mode-grad-bg text-white shadow-sm active:scale-95 transition-all disabled:opacity-40 focus-ring"
+                className="px-4 py-1.5 rounded-lg text-[12px] font-bold mode-grad-bg text-white shadow-xs active:scale-95 transition-all disabled:opacity-40 focus-ring"
               >
                 {submitting ? "Vérification…" : "Valider"}
               </button>

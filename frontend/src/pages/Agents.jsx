@@ -11,10 +11,10 @@ function AgentCard({ agent, i }) {
       className="group relative rounded-2xl border border-surface-100 dark:border-surface-800 bg-white dark:bg-surface-900/60 p-5 pt-6 flex flex-col gap-3 h-full overflow-hidden hover:shadow-card-hover hover:-translate-y-1 transition-all duration-300 focus-ring animate-fade-in-up"
       style={staggerDelay(i, 60)}
     >
-      <div className={`absolute inset-x-0 top-0 h-1 bg-gradient-to-r ${agent.tint}`} />
+      <div className={`absolute inset-x-0 top-0 h-1 bg-linear-to-r ${agent.tint}`} />
 
       <div className="flex items-center gap-3">
-        <div className={`shrink-0 w-12 h-12 rounded-2xl bg-gradient-to-br ${agent.tint} text-white flex items-center justify-center text-2xl shadow-sm group-hover:scale-110 group-hover:rotate-3 transition-transform`}>
+        <div className={`shrink-0 w-12 h-12 rounded-2xl bg-linear-to-br ${agent.tint} text-white flex items-center justify-center text-2xl shadow-xs group-hover:scale-110 group-hover:rotate-3 transition-transform`}>
           {agent.emoji}
         </div>
         <div className="min-w-0 flex-1">

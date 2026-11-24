@@ -47,7 +47,7 @@ export default function GrammarHub() {
     return (
       <div className="max-w-5xl mx-auto space-y-6">
         <div className="space-y-2">
-          <div className="skeleton h-4 w-32 rounded" />
+          <div className="skeleton h-4 w-32 rounded-sm" />
           <div className="skeleton h-10 w-72 rounded-lg" />
         </div>
         <SkeletonCard height="h-32" />
@@ -95,10 +95,10 @@ export default function GrammarHub() {
           to={`/grammar/topics/${recommended.slug}`}
           className="group block relative overflow-hidden rounded-3xl card-elevated p-0 mb-8 card-hover focus-ring animate-fade-in-up"
         >
-          <div className="absolute inset-0 bg-gradient-to-br from-primary-500/10 via-accent-500/5 to-success-500/10 dark:from-primary-500/20 dark:via-accent-500/10 dark:to-success-500/20 pointer-events-none" />
+          <div className="absolute inset-0 bg-linear-to-br from-primary-500/10 via-accent-500/5 to-success-500/10 dark:from-primary-500/20 dark:via-accent-500/10 dark:to-success-500/20 pointer-events-none" />
           <div className="absolute -top-8 -right-8 w-48 h-48 bg-gradient-mesh opacity-30 rounded-full blur-3xl pointer-events-none" />
           <div className="relative flex items-center gap-5 p-5 sm:p-6">
-            <div className="shrink-0 w-16 h-16 rounded-2xl bg-gradient-to-br from-primary-500 to-purple-600 text-white flex items-center justify-center text-3xl shadow-glow-primary group-hover:scale-110 group-hover:rotate-3 transition-all duration-300">
+            <div className="shrink-0 w-16 h-16 rounded-2xl bg-linear-to-br from-primary-500 to-purple-600 text-white flex items-center justify-center text-3xl shadow-glow-primary group-hover:scale-110 group-hover:rotate-3 transition-all duration-300">
               {recommended.category_icon || "🧠"}
             </div>
             <div className="flex-1 min-w-0">
@@ -135,10 +135,10 @@ export default function GrammarHub() {
               className="group relative overflow-hidden card card-hover p-0 focus-ring animate-fade-in-up"
               style={staggerDelay(i, 60)}
             >
-              <div className={`h-1.5 bg-gradient-to-r ${CATEGORY_TINTS[c.slug] || "from-primary-500 to-purple-600"}`} />
+              <div className={`h-1.5 bg-linear-to-r ${CATEGORY_TINTS[c.slug] || "from-primary-500 to-purple-600"}`} />
               <div className="p-5">
                 <div className="flex items-start justify-between mb-3">
-                  <div className={`w-12 h-12 bg-gradient-to-br ${CATEGORY_TINTS[c.slug] || "from-primary-500 to-purple-600"} rounded-2xl flex items-center justify-center text-2xl shadow-sm group-hover:scale-110 group-hover:rotate-3 transition-all duration-300`}>
+                  <div className={`w-12 h-12 bg-linear-to-br ${CATEGORY_TINTS[c.slug] || "from-primary-500 to-purple-600"} rounded-2xl flex items-center justify-center text-2xl shadow-xs group-hover:scale-110 group-hover:rotate-3 transition-all duration-300`}>
                     {c.icon || "🧠"}
                   </div>
                   <MasteryRing pct={c.avg_mastery} size={48} />

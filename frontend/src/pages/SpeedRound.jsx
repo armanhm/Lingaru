@@ -255,7 +255,7 @@ export default function SpeedRound() {
                   <span className="text-xs text-surface-400">=</span>
                   <span className="text-xs text-surface-500 dark:text-surface-400 truncate">{r.shownTranslation}</span>
                 </div>
-                <span className={`shrink-0 text-xs font-medium px-1.5 py-0.5 rounded ${
+                <span className={`shrink-0 text-xs font-medium px-1.5 py-0.5 rounded-sm ${
                   r.isCorrect
                     ? "bg-success-100 dark:bg-success-900/30 text-success-600"
                     : "bg-danger-100 dark:bg-danger-900/30 text-danger-600"
@@ -305,7 +305,7 @@ export default function SpeedRound() {
 
       {/* Score + question counter */}
       <div className="flex justify-center">
-        <div className="flex items-center gap-4 bg-white dark:bg-surface-800 border border-surface-100 dark:border-surface-700 rounded-full px-4 py-1.5 shadow-sm text-xs">
+        <div className="flex items-center gap-4 bg-white dark:bg-surface-800 border border-surface-100 dark:border-surface-700 rounded-full px-4 py-1.5 shadow-xs text-xs">
           <span className="text-surface-400">Score</span>
           <span className="font-bold text-primary-600">{score}</span>
           <span className="text-surface-300 dark:text-surface-600">|</span>
@@ -316,7 +316,7 @@ export default function SpeedRound() {
 
       {/* Question card */}
       <div
-        className={`bg-white dark:bg-surface-800 rounded-2xl shadow-sm border-2 ${cardBorder} p-8 text-center space-y-5 transition-colors duration-300 animate-scale-in`}
+        className={`bg-white dark:bg-surface-800 rounded-2xl shadow-xs border-2 ${cardBorder} p-8 text-center space-y-5 transition-colors duration-300 animate-scale-in`}
         key={current}
       >
         {/* French word */}

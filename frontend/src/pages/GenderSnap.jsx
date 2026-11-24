@@ -279,7 +279,7 @@ export default function GenderSnap() {
           <span className="text-sm font-bold">La</span>
           <span className="text-xs text-pink-400">fém.</span>
         </div>
-        <div className="flex items-center gap-1.5 bg-white dark:bg-surface-800 border border-surface-100 dark:border-surface-700 rounded-full px-3 py-1 shadow-sm">
+        <div className="flex items-center gap-1.5 bg-white dark:bg-surface-800 border border-surface-100 dark:border-surface-700 rounded-full px-3 py-1 shadow-xs">
           <span className="text-xs text-surface-400">Score</span>
           <span className="text-sm font-bold text-primary-600">{score}/{round}</span>
         </div>

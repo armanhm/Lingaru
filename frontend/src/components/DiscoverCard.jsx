@@ -51,7 +51,7 @@ function DetailContent({ card }) {
   if (card.type === "word") {
     return (
       <div className="space-y-4">
-        <div className="bg-gradient-to-br from-info-50 to-primary-50 dark:from-info-900/20 dark:to-primary-900/20 rounded-xl p-5 border border-info-100 dark:border-info-800/40 space-y-2">
+        <div className="bg-linear-to-br from-info-50 to-primary-50 dark:from-info-900/20 dark:to-primary-900/20 rounded-xl p-5 border border-info-100 dark:border-info-800/40 space-y-2">
           <div className="flex items-center gap-3 flex-wrap">
             <span className="text-h1 font-extrabold text-surface-900 dark:text-surface-100 tracking-tight">{headword}</span>
             <AudioPlayButton text={headword} />
@@ -111,7 +111,7 @@ function DetailContent({ card }) {
       <div className="space-y-4">
         <p className="text-sm text-surface-700 dark:text-surface-300 leading-relaxed">{content.explanation || card.summary}</p>
         {content.formula && (
-          <div className="bg-gradient-to-r from-purple-50 to-primary-50 dark:from-purple-900/30 dark:to-primary-900/30 rounded-xl px-4 py-3 border border-purple-200 dark:border-purple-800/40">
+          <div className="bg-linear-to-r from-purple-50 to-primary-50 dark:from-purple-900/30 dark:to-primary-900/30 rounded-xl px-4 py-3 border border-purple-200 dark:border-purple-800/40">
             <p className="text-xs font-bold text-purple-500 dark:text-purple-400 uppercase tracking-wider mb-1">Formula</p>
             <p className="text-sm font-mono text-purple-800 dark:text-purple-200">{content.formula}</p>
           </div>
@@ -122,7 +122,7 @@ function DetailContent({ card }) {
             <div className="space-y-2">
               {content.examples.map((ex, i) => (
                 <div key={i} className="flex items-start gap-2.5 bg-surface-50 dark:bg-surface-700/40 rounded-lg px-3 py-2.5">
-                  <span className="shrink-0 w-6 h-6 mt-0.5 rounded-full bg-gradient-to-br from-primary-500 to-purple-600 text-white text-xs flex items-center justify-center font-bold shadow-sm">{i + 1}</span>
+                  <span className="shrink-0 w-6 h-6 mt-0.5 rounded-full bg-linear-to-br from-primary-500 to-purple-600 text-white text-xs flex items-center justify-center font-bold shadow-xs">{i + 1}</span>
                   <p className="text-sm text-surface-700 dark:text-surface-300">{ex}</p>
                 </div>
               ))}
@@ -143,7 +143,7 @@ function DetailContent({ card }) {
     return (
       <div className="space-y-4">
         {content.fact_fr && (
-          <div className="bg-gradient-to-br from-warn-50 to-accent-50 dark:from-warn-900/20 dark:to-accent-900/20 rounded-xl p-4 border border-warn-100 dark:border-warn-800/40">
+          <div className="bg-linear-to-br from-warn-50 to-accent-50 dark:from-warn-900/20 dark:to-accent-900/20 rounded-xl p-4 border border-warn-100 dark:border-warn-800/40">
             <div className="flex items-start gap-2">
               <p className="text-body font-medium text-surface-800 dark:text-surface-200 flex-1">{content.fact_fr}</p>
               <AudioPlayButton text={content.fact_fr} />
@@ -236,7 +236,7 @@ export function CompactCard({ card, onOpen }) {
         hover:shadow-card-hover hover:-translate-y-1 hover:scale-[1.01] transition-all duration-300 cursor-pointer active:scale-[0.99]`}
       onClick={onOpen}
     >
-      <div className={`absolute inset-x-0 top-0 h-1 bg-gradient-to-r ${style.gradient}`} />
+      <div className={`absolute inset-x-0 top-0 h-1 bg-linear-to-r ${style.gradient}`} />
       <div className="flex items-center justify-between">
         <span className={`text-xs font-bold px-2.5 py-1 rounded-full ${style.badge} flex items-center gap-1`}>
           {style.icon} {style.label}
@@ -250,7 +250,7 @@ export function CompactCard({ card, onOpen }) {
         <div className="flex items-center gap-2">
           <span className={`text-h4 font-extrabold ${style.accent}`}>{headword}</span>
           {content.part_of_speech && (
-            <span className="text-xs bg-surface-100 dark:bg-surface-700 text-surface-500 dark:text-surface-400 px-1.5 py-0.5 rounded font-medium">{content.part_of_speech}</span>
+            <span className="text-xs bg-surface-100 dark:bg-surface-700 text-surface-500 dark:text-surface-400 px-1.5 py-0.5 rounded-sm font-medium">{content.part_of_speech}</span>
           )}
         </div>
       )}
@@ -304,7 +304,7 @@ export function ExpandedCard({ card, onClose, onInteracted }) {
   return (
     <div
       ref={contentRef}
-      className="overflow-hidden transition-all duration-[350ms] ease-[cubic-bezier(0.4,0,0.2,1)]"
+      className="overflow-hidden transition-all duration-350 ease-in-out"
       style={{
         maxHeight: visible ? `${height + 100}px` : "0px",
         opacity: visible ? 1 : 0,
@@ -312,11 +312,11 @@ export function ExpandedCard({ card, onClose, onInteracted }) {
       }}
     >
       <div className={`relative mt-2 mb-2 rounded-2xl border-2 ${style.border} bg-white dark:bg-surface-800 shadow-card-elevated overflow-hidden`}>
-        <div className={`absolute inset-x-0 top-0 h-1.5 bg-gradient-to-r ${style.gradient}`} />
+        <div className={`absolute inset-x-0 top-0 h-1.5 bg-linear-to-r ${style.gradient}`} />
         {/* Header */}
         <div className={`${style.bg} px-6 pt-5 pb-4 flex items-center justify-between border-b ${style.border}`}>
           <div className="flex items-center gap-3">
-            <div className={`shrink-0 w-10 h-10 rounded-xl bg-gradient-to-br ${style.gradient} text-white flex items-center justify-center text-lg shadow-glow-primary`}>
+            <div className={`shrink-0 w-10 h-10 rounded-xl bg-linear-to-br ${style.gradient} text-white flex items-center justify-center text-lg shadow-glow-primary`}>
               {style.icon}
             </div>
             <div>

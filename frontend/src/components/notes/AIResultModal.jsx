@@ -42,12 +42,12 @@ export default function AIResultModal({
     "prose-h3:text-base prose-h3:font-semibold " +
     "prose-ul:my-1 prose-ol:my-1 prose-li:my-0.5 " +
     "prose-strong:font-semibold prose-em:italic " +
-    "prose-code:bg-surface-100 prose-code:dark:bg-surface-700 " +
-    "prose-code:px-1 prose-code:rounded prose-code:text-xs";
+    "prose-code:bg-surface-100 dark:prose-code:bg-surface-700 " +
+    "prose-code:px-1 prose-code:rounded-sm prose-code:text-xs";
 
   return (
     <div
-      className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 backdrop-blur-sm p-4"
+      className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 backdrop-blur-xs p-4"
       onMouseDown={(e) => {
         if (e.target === e.currentTarget) onDiscard();
       }}

@@ -28,7 +28,7 @@ function Card({ card, flipped, matched, onClick, preview }) {
       <button
         onClick={onClick}
         disabled={showFace}
-        className={`relative w-full aspect-[3/4] rounded-xl cursor-pointer
+        className={`relative w-full aspect-3/4 rounded-xl cursor-pointer
           ${matched ? "" : flipped ? "scale-[1.03]" : "hover:scale-[1.03] hover:shadow-lg"}
         `}
         style={{
@@ -39,7 +39,7 @@ function Card({ card, flipped, matched, onClick, preview }) {
       >
         {/* Back (hidden state) */}
         <div
-          className="absolute inset-0 rounded-xl bg-gradient-to-br from-primary-500 to-primary-600 flex items-center justify-center shadow-md"
+          className="absolute inset-0 rounded-xl bg-linear-to-br from-primary-500 to-primary-600 flex items-center justify-center shadow-md"
           style={{ backfaceVisibility: "hidden" }}
         >
           <span className="text-3xl text-white/80">?</span>
@@ -65,7 +65,7 @@ function Card({ card, flipped, matched, onClick, preview }) {
           }`}>
             {isFr ? "FR" : "EN"}
           </span>
-          <span className={`text-sm sm:text-base font-bold text-center leading-tight ${
+          <span className={`text-sm sm:text-base font-bold text-center leading-tight sm:leading-6 ${
             matched
               ? "text-success-700 dark:text-success-300"
               : "text-surface-900 dark:text-surface-100"
@@ -333,7 +333,7 @@ export default function MatchPairs() {
       {/* Stats pill */}
       {!isPreview && (
         <div className="flex justify-center">
-          <div className="flex items-center gap-4 bg-white dark:bg-surface-800 border border-surface-100 dark:border-surface-700 rounded-full px-4 py-1.5 shadow-sm text-xs">
+          <div className="flex items-center gap-4 bg-white dark:bg-surface-800 border border-surface-100 dark:border-surface-700 rounded-full px-4 py-1.5 shadow-xs text-xs">
             <span className="text-surface-400">Moves</span>
             <span className="font-bold text-primary-600">{moves}</span>
             <span className="text-surface-300 dark:text-surface-600">|</span>
@@ -360,13 +360,13 @@ export default function MatchPairs() {
       {/* Legend */}
       <div className="flex justify-center gap-4 text-xs text-surface-400 dark:text-surface-500">
         <span className="flex items-center gap-1">
-          <span className="w-3 h-3 rounded bg-info-200 dark:bg-info-800" /> French
+          <span className="w-3 h-3 rounded-sm bg-info-200 dark:bg-info-800" /> French
         </span>
         <span className="flex items-center gap-1">
-          <span className="w-3 h-3 rounded bg-purple-200 dark:bg-purple-800" /> English
+          <span className="w-3 h-3 rounded-sm bg-purple-200 dark:bg-purple-800" /> English
         </span>
         <span className="flex items-center gap-1">
-          <span className="w-3 h-3 rounded bg-success-200 dark:bg-success-800" /> Matched
+          <span className="w-3 h-3 rounded-sm bg-success-200 dark:bg-success-800" /> Matched
         </span>
       </div>
 

@@ -19,7 +19,7 @@ export default function ActionBlock({ block }) {
       </p>
       <Link
         to={route}
-        className="mode-grad-bg shrink-0 inline-flex items-center gap-1.5 px-3 py-2 rounded-lg text-[13px] font-bold text-white shadow-sm hover:shadow-glow-primary active:scale-95 transition-all focus-ring"
+        className="mode-grad-bg shrink-0 inline-flex items-center gap-1.5 px-3 py-2 rounded-lg text-[13px] font-bold text-white shadow-xs hover:shadow-glow-primary active:scale-95 transition-all focus-ring"
       >
         {emoji && <span>{emoji}</span>}
         <span>{label}</span>

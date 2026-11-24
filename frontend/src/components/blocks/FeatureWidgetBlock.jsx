@@ -54,7 +54,7 @@ export default function FeatureWidgetBlock({ block }) {
 // ── Shared shell ─────────────────────────────────────────────
 function WidgetCard({ title, emoji, ctaTo, ctaLabel, children }) {
   return (
-    <div className="rounded-2xl border border-surface-200 dark:border-surface-700 bg-white dark:bg-surface-900 overflow-hidden shadow-sm">
+    <div className="rounded-2xl border border-surface-200 dark:border-surface-700 bg-white dark:bg-surface-900 overflow-hidden shadow-xs">
       <div className="mode-grad-band h-1" />
       <div className="px-4 py-3 border-b border-surface-100 dark:border-surface-800 flex items-center justify-between gap-3">
         <p className="text-[10px] uppercase tracking-[0.14em] font-semibold text-surface-500 dark:text-surface-400">
@@ -63,7 +63,7 @@ function WidgetCard({ title, emoji, ctaTo, ctaLabel, children }) {
         {ctaTo && (
           <Link
             to={ctaTo}
-            className="text-[12px] font-bold mode-accent-text hover:underline focus-ring rounded px-1"
+            className="text-[12px] font-bold mode-accent-text hover:underline focus-ring rounded-sm px-1"
           >
             {ctaLabel || "Ouvrir →"}
           </Link>
@@ -124,7 +124,7 @@ function NewsWidget({ config, title }) {
           </p>
           <Link
             to="/news"
-            className="mt-1 inline-flex items-center gap-1 text-[12px] font-bold mode-accent-text hover:underline focus-ring rounded px-2 py-1"
+            className="mt-1 inline-flex items-center gap-1 text-[12px] font-bold mode-accent-text hover:underline focus-ring rounded-sm px-2 py-1"
           >
             Voir toutes les news →
           </Link>
@@ -165,7 +165,7 @@ function DictationWidget({ title }) {
       </p>
       <Link
         to="/practice/dictation"
-        className="mt-3 inline-flex items-center gap-1.5 px-3 py-2 rounded-lg text-[13px] font-bold mode-grad-bg text-white shadow-sm hover:shadow-glow-primary active:scale-95 transition-all focus-ring"
+        className="mt-3 inline-flex items-center gap-1.5 px-3 py-2 rounded-lg text-[13px] font-bold mode-grad-bg text-white shadow-xs hover:shadow-glow-primary active:scale-95 transition-all focus-ring"
       >
         ▶ Démarrer
       </Link>
@@ -183,7 +183,7 @@ function FlashcardWidget({ title }) {
       </p>
       <Link
         to="/practice/srs"
-        className="mt-3 inline-flex items-center gap-1.5 px-3 py-2 rounded-lg text-[13px] font-bold mode-grad-bg text-white shadow-sm hover:shadow-glow-primary active:scale-95 transition-all focus-ring"
+        className="mt-3 inline-flex items-center gap-1.5 px-3 py-2 rounded-lg text-[13px] font-bold mode-grad-bg text-white shadow-xs hover:shadow-glow-primary active:scale-95 transition-all focus-ring"
       >
         🃏 Réviser
       </Link>
@@ -200,7 +200,7 @@ function MiniGameWidget({ title }) {
       </p>
       <Link
         to="/mini-games"
-        className="mt-3 inline-flex items-center gap-1.5 px-3 py-2 rounded-lg text-[13px] font-bold mode-grad-bg text-white shadow-sm hover:shadow-glow-primary active:scale-95 transition-all focus-ring"
+        className="mt-3 inline-flex items-center gap-1.5 px-3 py-2 rounded-lg text-[13px] font-bold mode-grad-bg text-white shadow-xs hover:shadow-glow-primary active:scale-95 transition-all focus-ring"
       >
         🎮 Choisir un jeu
       </Link>

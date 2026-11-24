@@ -36,7 +36,7 @@ export default function PageHeader({
       <div className="flex items-start justify-between gap-4 flex-wrap">
         <div className="flex items-center gap-3 min-w-0">
           {icon && (
-            <div className="shrink-0 w-11 h-11 rounded-2xl bg-gradient-to-br from-primary-500 to-primary-700 text-white flex items-center justify-center text-xl shadow-glow-primary">
+            <div className="shrink-0 w-11 h-11 rounded-2xl bg-linear-to-br from-primary-500 to-primary-700 text-white flex items-center justify-center text-xl shadow-glow-primary">
               {icon}
             </div>
           )}

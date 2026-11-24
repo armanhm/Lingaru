@@ -246,7 +246,7 @@ export default function GrammarDrill() {
               </div>
               <div className="w-full bg-surface-100 dark:bg-surface-800 rounded-full h-2 overflow-hidden">
                 <div
-                  className="h-2 rounded-full bg-gradient-to-r from-primary-500 via-accent-500 to-success-500 transition-all duration-1000"
+                  className="h-2 rounded-full bg-linear-to-r from-primary-500 via-accent-500 to-success-500 transition-all duration-1000"
                   style={{ width: `${Math.round(summary.mastery_after)}%` }}
                 />
               </div>
@@ -279,7 +279,7 @@ export default function GrammarDrill() {
           Exit drill
         </Link>
         <div className="flex items-center gap-2">
-          <span className="badge-primary !text-[10px]">{data.topic?.cefr_level}</span>
+          <span className="badge-primary text-[10px]!">{data.topic?.cefr_level}</span>
           <span className="text-caption text-surface-500 dark:text-surface-400 font-medium">
             {idx + 1} / {total}
           </span>
@@ -288,7 +288,7 @@ export default function GrammarDrill() {
 
       {/* Progress */}
       <div className="w-full bg-surface-100 dark:bg-surface-800 rounded-full h-1.5 mb-6 overflow-hidden">
-        <div className="h-1.5 rounded-full bg-gradient-to-r from-primary-500 via-primary-400 to-accent-500 transition-all duration-500"
+        <div className="h-1.5 rounded-full bg-linear-to-r from-primary-500 via-primary-400 to-accent-500 transition-all duration-500"
              style={{ width: `${progress}%` }} />
       </div>
 

@@ -54,7 +54,7 @@ export default function OnboardingModal() {
   };
 
   return (
-    <div className="fixed inset-0 z-[100] flex items-center justify-center px-4 py-8 bg-black/60 dark:bg-black/70 backdrop-blur-sm">
+    <div className="fixed inset-0 z-100 flex items-center justify-center px-4 py-8 bg-black/60 dark:bg-black/70 backdrop-blur-xs">
       <div className="w-full max-w-2xl bg-white dark:bg-surface-900 rounded-3xl shadow-2xl border border-surface-100 dark:border-surface-700 overflow-hidden animate-fade-in-up">
         {/* Header */}
         <div className="px-7 py-6 border-b border-surface-100 dark:border-surface-800">
@@ -107,12 +107,12 @@ export default function OnboardingModal() {
                     onClick={() => setMode(m.key)}
                     className={`relative text-left rounded-2xl border-2 px-5 py-4 transition-all focus-ring ${
                       active
-                        ? "border-primary-400 dark:border-primary-600 bg-primary-50/60 dark:bg-primary-900/25 shadow-sm"
+                        ? "border-primary-400 dark:border-primary-600 bg-primary-50/60 dark:bg-primary-900/25 shadow-xs"
                         : "border-surface-200 dark:border-surface-700 bg-white dark:bg-surface-900 hover:border-primary-300 dark:hover:border-primary-700 hover:bg-primary-50/30 dark:hover:bg-primary-900/15"
                     }`}
                   >
                     <div className="flex items-start gap-4">
-                      <span className={`shrink-0 w-12 h-12 rounded-2xl bg-gradient-to-br ${m.tint} text-white flex items-center justify-center text-2xl shadow-sm`}>
+                      <span className={`shrink-0 w-12 h-12 rounded-2xl bg-linear-to-br ${m.tint} text-white flex items-center justify-center text-2xl shadow-xs`}>
                         {m.emoji}
                       </span>
                       <div className="flex-1 min-w-0">
@@ -182,7 +182,7 @@ export default function OnboardingModal() {
                 </div>
                 <button
                   onClick={() => setShowPlacementStub(true)}
-                  className="text-[12px] font-bold text-primary-600 dark:text-primary-400 hover:text-primary-700 dark:hover:text-primary-300 hover:underline focus-ring rounded px-1"
+                  className="text-[12px] font-bold text-primary-600 dark:text-primary-400 hover:text-primary-700 dark:hover:text-primary-300 hover:underline focus-ring rounded-sm px-1"
                 >
                   {t("onboarding.placementCta")} →
                 </button>
@@ -223,7 +223,7 @@ export default function OnboardingModal() {
           {step === 1 && (
             <button
               onClick={() => setStep(2)}
-              className="px-5 py-2 rounded-xl text-[13px] font-bold bg-gradient-to-br from-primary-600 to-purple-700 text-white shadow-sm hover:shadow-glow-primary active:scale-95 transition-all focus-ring"
+              className="px-5 py-2 rounded-xl text-[13px] font-bold bg-linear-to-br from-primary-600 to-purple-700 text-white shadow-xs hover:shadow-glow-primary active:scale-95 transition-all focus-ring"
             >
               {t("onboarding.next")} →
             </button>
@@ -233,7 +233,7 @@ export default function OnboardingModal() {
             <button
               onClick={() => setStep(3)}
               disabled={!mode}
-              className="px-5 py-2 rounded-xl text-[13px] font-bold bg-gradient-to-br from-primary-600 to-purple-700 text-white shadow-sm hover:shadow-glow-primary active:scale-95 transition-all disabled:opacity-50 disabled:cursor-not-allowed focus-ring"
+              className="px-5 py-2 rounded-xl text-[13px] font-bold bg-linear-to-br from-primary-600 to-purple-700 text-white shadow-xs hover:shadow-glow-primary active:scale-95 transition-all disabled:opacity-50 disabled:cursor-not-allowed focus-ring"
             >
               {t("onboarding.next")} →
             </button>
@@ -243,7 +243,7 @@ export default function OnboardingModal() {
             <button
               onClick={submit}
               disabled={!level || submitting}
-              className="px-5 py-2 rounded-xl text-[13px] font-bold bg-gradient-to-br from-primary-600 to-purple-700 text-white shadow-sm hover:shadow-glow-primary active:scale-95 transition-all disabled:opacity-50 disabled:cursor-not-allowed focus-ring"
+              className="px-5 py-2 rounded-xl text-[13px] font-bold bg-linear-to-br from-primary-600 to-purple-700 text-white shadow-xs hover:shadow-glow-primary active:scale-95 transition-all disabled:opacity-50 disabled:cursor-not-allowed focus-ring"
             >
               {submitting ? t("common.saving") : t("onboarding.save")}
             </button>
@@ -253,10 +253,10 @@ export default function OnboardingModal() {
 
       {/* Placement test stub, Phase 4 will replace with the real CEFR quiz. */}
       {showPlacementStub && (
-        <div className="fixed inset-0 z-[110] flex items-center justify-center px-4 bg-black/60 backdrop-blur-sm">
+        <div className="fixed inset-0 z-110 flex items-center justify-center px-4 bg-black/60 backdrop-blur-xs">
           <div className="w-full max-w-md bg-white dark:bg-surface-900 rounded-2xl shadow-2xl border border-surface-100 dark:border-surface-700 p-6 animate-fade-in-up">
             <div className="text-center">
-              <span className="inline-flex w-14 h-14 rounded-2xl bg-gradient-to-br from-primary-500 to-purple-600 text-white items-center justify-center text-2xl shadow-sm">
+              <span className="inline-flex w-14 h-14 rounded-2xl bg-linear-to-br from-primary-500 to-purple-600 text-white items-center justify-center text-2xl shadow-xs">
                 🧪
               </span>
               <h3 className="font-editorial text-[22px] mt-4 text-surface-900 dark:text-surface-50">
@@ -268,7 +268,7 @@ export default function OnboardingModal() {
             </div>
             <button
               onClick={() => setShowPlacementStub(false)}
-              className="mt-5 w-full px-4 py-2.5 rounded-xl text-[13px] font-bold bg-gradient-to-br from-primary-600 to-purple-700 text-white shadow-sm hover:shadow-glow-primary active:scale-95 transition-all focus-ring"
+              className="mt-5 w-full px-4 py-2.5 rounded-xl text-[13px] font-bold bg-linear-to-br from-primary-600 to-purple-700 text-white shadow-xs hover:shadow-glow-primary active:scale-95 transition-all focus-ring"
             >
               {t("common.close")}
             </button>

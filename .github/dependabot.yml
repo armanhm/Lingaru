@@ -28,14 +28,14 @@ updates:
         patterns: ["@sentry/*"]
       eslint:
         patterns: ["eslint*", "@eslint/*"]
+      # The compiler and its Vite plugin must stay on the same version.
+      tailwind:
+        patterns: ["tailwindcss", "@tailwindcss/*"]
     ignore:
       # eslint-plugin-react 7.x supports ESLint <= 9; revisit when it adds ESLint 10.
       - dependency-name: "eslint"
         update-types: ["version-update:semver-major"]
       - dependency-name: "@eslint/js"
-        update-types: ["version-update:semver-major"]
-      # Tailwind 4 is a breaking migration; it is done with the design-system work.
-      - dependency-name: "tailwindcss"
         update-types: ["version-update:semver-major"]
       # The Playwright version must match the visual-regression container image;
       # bump both together in one PR.

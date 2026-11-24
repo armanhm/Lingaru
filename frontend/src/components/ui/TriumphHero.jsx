@@ -43,7 +43,7 @@ export default function TriumphHero({
 
       {/* Radial glow behind the emoji */}
       <div className="absolute inset-x-0 top-6 flex justify-center pointer-events-none">
-        <div className={`w-40 h-40 rounded-full bg-gradient-to-br ${toneCfg.from} ${toneCfg.via} ${toneCfg.to} opacity-20 blur-3xl`} />
+        <div className={`w-40 h-40 rounded-full bg-linear-to-br ${toneCfg.from} ${toneCfg.via} ${toneCfg.to} opacity-20 blur-3xl`} />
       </div>
 
       {/* Emoji, pops in first */}
@@ -53,7 +53,7 @@ export default function TriumphHero({
 
       {/* Headline, fades in after emoji */}
       <h2
-        className={`relative text-h1 sm:text-display bg-gradient-to-r ${toneCfg.from} ${toneCfg.via} ${toneCfg.to} bg-clip-text text-transparent transition-all duration-500 ${
+        className={`relative text-h1 sm:text-display bg-linear-to-r ${toneCfg.from} ${toneCfg.via} ${toneCfg.to} bg-clip-text text-transparent transition-all duration-500 ${
           step >= 1 ? "opacity-100 translate-y-0" : "opacity-0 translate-y-2"
         }`}
       >

@@ -99,7 +99,7 @@ function TextInputQuestion({ question, onAnswer, disabled }) {
         disabled={disabled}
         placeholder="Type your answer..."
         autoFocus
-        className="w-full px-4 py-3 border-2 border-surface-200 rounded-xl text-lg focus:border-primary-500 focus:ring-0 focus:outline-none transition-colors disabled:opacity-75 disabled:cursor-not-allowed dark:bg-surface-700 dark:border-surface-600 dark:text-surface-100"
+        className="w-full px-4 py-3 border-2 border-surface-200 rounded-xl text-lg focus:border-primary-500 focus:ring-0 focus:outline-hidden transition-colors disabled:opacity-75 disabled:cursor-not-allowed dark:bg-surface-700 dark:border-surface-600 dark:text-surface-100"
       />
       <button
         type="submit"
@@ -123,7 +123,7 @@ function FeedbackBanner({ result, onContinue }) {
           : "bg-danger-50 dark:bg-danger-900/20 border-danger-300 dark:border-danger-800 animate-shake"
       }`}
     >
-      <div className={`absolute inset-x-0 top-0 h-1 bg-gradient-to-r ${result.is_correct ? "from-success-500 to-info-500" : "from-danger-500 to-accent-500"}`} />
+      <div className={`absolute inset-x-0 top-0 h-1 bg-linear-to-r ${result.is_correct ? "from-success-500 to-info-500" : "from-danger-500 to-accent-500"}`} />
       <div className="flex items-center gap-2.5 mb-2">
         <span className="text-2xl">{result.is_correct ? "✅" : "❌"}</span>
         <span
@@ -230,7 +230,7 @@ function ScoreSummary({ result, lessonId, answers }) {
           <div className="mt-5">
             <div className="w-full bg-surface-100 dark:bg-surface-800 rounded-full h-2 overflow-hidden">
               <div
-                className="h-2 rounded-full bg-gradient-to-r from-primary-500 via-accent-500 to-success-500 transition-all duration-1000"
+                className="h-2 rounded-full bg-linear-to-r from-primary-500 via-accent-500 to-success-500 transition-all duration-1000"
                 style={{ width: `${pct}%` }}
               />
             </div>

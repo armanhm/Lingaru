@@ -90,7 +90,7 @@ export default function FlashcardsInline() {
               <button
                 type="button"
                 onClick={() => setRevealed(true)}
-                className="px-4 py-2 rounded-lg text-[13px] font-bold mode-grad-bg text-white shadow-sm active:scale-95 transition-all focus-ring"
+                className="px-4 py-2 rounded-lg text-[13px] font-bold mode-grad-bg text-white shadow-xs active:scale-95 transition-all focus-ring"
               >
                 Révéler
               </button>

@@ -8,7 +8,7 @@ export default function ExpressionBlock({ block }) {
   if (!fr || !en) return null;
 
   return (
-    <div className="rounded-xl border border-accent-100 dark:border-accent-900/40 bg-gradient-to-br from-accent-50/60 to-white dark:from-accent-950/30 dark:to-surface-900/40 p-3.5">
+    <div className="rounded-xl border border-accent-100 dark:border-accent-900/40 bg-linear-to-br from-accent-50/60 to-white dark:from-accent-950/30 dark:to-surface-900/40 p-3.5">
       <div className="flex items-baseline gap-2 flex-wrap">
         <span className="font-sans font-bold text-[16px] leading-tight text-surface-900 dark:text-surface-50">
           {fr}

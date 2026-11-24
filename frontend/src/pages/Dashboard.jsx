@@ -245,7 +245,7 @@ function HybridHeader({ user, stats, animatedXP }) {
               : ""}
           </span>
         )}
-      <div className="flex items-center gap-2 px-3 py-2 rounded-full bg-white dark:bg-surface-900/60 border border-surface-200 dark:border-surface-800 shadow-sm">
+      <div className="flex items-center gap-2 px-3 py-2 rounded-full bg-white dark:bg-surface-900/60 border border-surface-200 dark:border-surface-800 shadow-xs">
         <span className="animate-flame inline-block origin-bottom">🔥</span>
         <span className="text-[13px] font-bold text-surface-900 dark:text-surface-50 num">{stats?.current_streak ?? 0}</span>
         <span className="text-[12px] text-surface-500 dark:text-surface-400">{t("dashboard.streakLabel")}</span>
@@ -268,7 +268,7 @@ function HybridHero({ srsDue }) {
 
   return (
     <div className="grid grid-cols-1 lg:grid-cols-12 gap-5">
-      <div className="lg:col-span-7 relative overflow-hidden rounded-3xl bg-gradient-to-br from-ink-900 via-ink-800 to-primary-900 dark:from-ink-900 dark:via-primary-950 dark:to-ink-900 text-white p-4 sm:p-5 flex flex-col animate-fade-in-up">
+      <div className="lg:col-span-7 relative overflow-hidden rounded-3xl bg-linear-to-br from-ink-900 via-ink-800 to-primary-900 dark:from-ink-900 dark:via-primary-950 dark:to-ink-900 text-white p-4 sm:p-5 flex flex-col animate-fade-in-up">
         <div className="absolute -top-12 -right-12 w-56 h-56 bg-primary-500/30 rounded-full blur-3xl pointer-events-none" />
         <div className="absolute -bottom-14 -left-8 w-56 h-56 bg-accent-500/20 rounded-full blur-3xl pointer-events-none" />
 
@@ -376,7 +376,7 @@ function QuoteCard({ quotes, quoteIndex, onShuffle, targetLanguage }) {
 
   return (
     <div className="relative overflow-hidden rounded-3xl bg-white dark:bg-surface-900/60 border border-surface-100 dark:border-surface-800 p-5 sm:p-6 h-full flex flex-col animate-fade-in-up">
-      <div className="absolute inset-x-0 top-0 h-1 bg-gradient-to-r from-primary-500 via-primary-400 to-accent-500" />
+      <div className="absolute inset-x-0 top-0 h-1 bg-linear-to-r from-primary-500 via-primary-400 to-accent-500" />
 
       <div className="relative flex items-center justify-between mb-2">
         <p className="text-[10px] uppercase tracking-[0.14em] font-semibold text-primary-600 dark:text-primary-400">{t("dashboard.quote.eyebrow")}</p>
@@ -410,7 +410,7 @@ function QuoteCard({ quotes, quoteIndex, onShuffle, targetLanguage }) {
           <>
             <button
               onClick={() => setShowTranslation((v) => !v)}
-              className="self-start text-[12px] font-semibold text-primary-600 dark:text-primary-400 hover:text-primary-700 dark:hover:text-primary-300 focus-ring rounded px-1 -mx-1 transition-colors mt-auto pt-1"
+              className="self-start text-[12px] font-semibold text-primary-600 dark:text-primary-400 hover:text-primary-700 dark:hover:text-primary-300 focus-ring rounded-sm px-1 -mx-1 transition-colors mt-auto pt-1"
             >
               {showTranslation ? t("dashboard.quote.hideTranslation") : t("dashboard.quote.showTranslation")}
             </button>
@@ -450,7 +450,7 @@ function ExamCountdown({ examDate, daysLeft }) {
         </p>
         <div className="flex-1 mb-1">
           <div className="h-1.5 bg-surface-100 dark:bg-surface-800 rounded-full overflow-hidden">
-            <div className="h-full bg-gradient-to-r from-primary-500 to-accent-500" style={{ width: `${pct * 100}%` }} />
+            <div className="h-full bg-linear-to-r from-primary-500 to-accent-500" style={{ width: `${pct * 100}%` }} />
           </div>
           <div className="flex justify-between text-[10px] font-mono num text-surface-400 dark:text-surface-500 mt-1">
             <span>{t("dashboard.exam.registration")}</span>
@@ -482,7 +482,7 @@ function WordCard({ word, loading, onShuffle, targetLanguage }) {
         <p className="text-[10px] uppercase tracking-[0.14em] font-semibold text-primary-600 dark:text-primary-400">{t("dashboard.word.eyebrow")}</p>
         <button
           onClick={onShuffle}
-          className="text-surface-300 dark:text-surface-600 hover:text-primary-500 transition-all focus-ring rounded p-1 disabled:opacity-50 hover:rotate-180 duration-500"
+          className="text-surface-300 dark:text-surface-600 hover:text-primary-500 transition-all focus-ring rounded-sm p-1 disabled:opacity-50 hover:rotate-180 duration-500"
           aria-label={t("dashboard.word.newWord")}
           disabled={loading}
         >
@@ -492,10 +492,10 @@ function WordCard({ word, loading, onShuffle, targetLanguage }) {
 
       {loading || !word ? (
         <div className="space-y-2 mt-2">
-          <div className="skeleton h-8 w-32 rounded" />
-          <div className="skeleton h-3 w-20 rounded" />
-          <div className="skeleton h-3 w-full rounded mt-3" />
-          <div className="skeleton h-3 w-3/4 rounded" />
+          <div className="skeleton h-8 w-32 rounded-sm" />
+          <div className="skeleton h-3 w-20 rounded-sm" />
+          <div className="skeleton h-3 w-full rounded-sm mt-3" />
+          <div className="skeleton h-3 w-3/4 rounded-sm" />
         </div>
       ) : (
         <>
@@ -516,7 +516,7 @@ function WordCard({ word, loading, onShuffle, targetLanguage }) {
           )}
           <Link
             to={`/dictionary?word=${encodeURIComponent(headword)}`}
-            className="inline-flex items-center gap-1 mt-3 text-[11px] font-semibold text-primary-600 dark:text-primary-400 hover:gap-2 transition-all focus-ring rounded"
+            className="inline-flex items-center gap-1 mt-3 text-[11px] font-semibold text-primary-600 dark:text-primary-400 hover:gap-2 transition-all focus-ring rounded-sm"
           >
             {t("dashboard.word.fullDefinition")}
             <svg className="w-3 h-3" fill="none" stroke="currentColor" strokeWidth={2.5} viewBox="0 0 24 24">
@@ -545,7 +545,7 @@ function QuickRail({ srsDue }) {
           <Link
             key={it.label}
             to={it.to}
-            className="rounded-2xl bg-white dark:bg-surface-900/60 border border-surface-100 dark:border-surface-800 p-3 hover:border-primary-200 dark:hover:border-primary-800 hover:shadow-sm transition-all focus-ring animate-fade-in-up"
+            className="rounded-2xl bg-white dark:bg-surface-900/60 border border-surface-100 dark:border-surface-800 p-3 hover:border-primary-200 dark:hover:border-primary-800 hover:shadow-xs transition-all focus-ring animate-fade-in-up"
           >
             <div className="flex items-center gap-2 text-primary-600 dark:text-primary-400">
               <span className="w-7 h-7 rounded-lg bg-primary-50 dark:bg-primary-900/30 flex items-center justify-center">
@@ -622,7 +622,7 @@ function RecentActivity({ trend }) {
     <div className="rounded-3xl bg-white dark:bg-surface-900/60 border border-surface-100 dark:border-surface-800 p-5 animate-fade-in-up">
       <div className="flex items-baseline justify-between mb-3">
         <p className="text-[10px] uppercase tracking-[0.14em] font-semibold text-surface-400 dark:text-surface-500">{t("dashboard.activity.eyebrow")}</p>
-        <Link to="/progress" className="text-[11px] text-surface-400 hover:text-primary-500 transition-colors focus-ring rounded px-1">
+        <Link to="/progress" className="text-[11px] text-surface-400 hover:text-primary-500 transition-colors focus-ring rounded-sm px-1">
           {t("dashboard.activity.viewAll")}
         </Link>
       </div>
@@ -768,9 +768,9 @@ export default function Dashboard() {
       <div className="min-h-full">
         <div className="max-w-7xl mx-auto space-y-5">
           <div className="space-y-2">
-            <div className="skeleton h-3 w-32 rounded" />
+            <div className="skeleton h-3 w-32 rounded-sm" />
             <div className="skeleton h-10 w-72 rounded-lg" />
-            <div className="skeleton h-3 w-96 rounded" />
+            <div className="skeleton h-3 w-96 rounded-sm" />
           </div>
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-5">
             <div className="lg:col-span-5 skeleton h-[420px] rounded-3xl" />

@@ -712,3 +712,18 @@
     letter-spacing: var(--tracking-tight);
   }
 }
+
+/* Reduced motion: unlayered on purpose, so it beats the animation and
+   transition utilities and component classes in @layer utilities. Animations
+   end at once instead of being removed, so animation-fill states still land
+   and animationend handlers still fire. */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}

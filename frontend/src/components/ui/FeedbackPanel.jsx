@@ -42,7 +42,7 @@ export const FeedbackPanel = /* @__PURE__ */ forwardRef(function FeedbackPanel(
     setAnnouncement(text);
     clearTimeout(timerRef.current);
     timerRef.current = setTimeout(() => setAnnouncement(""), CLEAR_AFTER_MS);
-  });
+  }, [title, children]);
 
   useEffect(() => () => clearTimeout(timerRef.current), []);
 

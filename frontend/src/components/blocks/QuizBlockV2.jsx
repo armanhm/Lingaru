@@ -241,9 +241,9 @@ function OptionButton({ letter, label, selected, disabled, onClick, tone, checkb
       <span
         className={`shrink-0 w-7 h-7 ${checkbox ? "rounded-md" : "rounded-lg"} text-[12px] font-bold flex items-center justify-center ${
           tone === "correct" || tone === "missed"
-            ? "bg-success-500 text-white"
+            ? "bg-success-600 text-white"
             : tone === "wrong"
-            ? "bg-danger-500 text-white"
+            ? "bg-danger-600 text-white"
             : selected
             ? "bg-primary-500 text-white"
             : "bg-surface-100 dark:bg-surface-800 text-surface-600 dark:text-surface-300"

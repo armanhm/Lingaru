@@ -89,7 +89,7 @@ Every scored practice activity writes one event through a single service functio
 ### 5.3 Choosing today's focus
 
 - Skill strength = recency-weighted average of event scores (exponential decay; a result from about two weeks ago counts half). Only the last ~30 days are considered.
-- Candidate skills: the four exam skills for `exam` mode; all six otherwise.
+- Candidate skills: for `exam` mode, the sections the learner's `exam_variant` counts (see 5.9: the four exam sections for TCF Canada and TEF; listening, reading, grammar and vocabulary for TCF Tout Public, plus writing and speaking if the learner opts in); all six otherwise.
 - Focus = lowest strength. Ties, or skills with too little data, go to the least-practised skill.
 - Avoid the same focus more than two days running unless it is far below the others, so other skills don't decay unnoticed.
 - **Cold start:** a learner with too few events in a skill gets a short placement check (a few items per candidate skill) before their first session; its results are ordinary events.
@@ -156,7 +156,7 @@ A session is a server-side plan (ordered blocks with item references), created o
 - **AI budget:** a per-user daily cap on AI-graded items (default 3, configurable). Speech-to-text and text-to-speech are outside the cap but covered by request throttling. When the cap is reached, the session swaps the AI-graded item for non-AI practice. When a provider fails, the answer is kept and graded later; the wrap-up shows "grading pending". Daily AI usage per user is recorded for the owner to inspect.
 - **Phase 1 overlaps:** `record_skill_event` lives inside the shared activity service planned in #91 (one call site per activity). Mini-games are embedded in sessions only after #107 (shared game hook and screen) so their rules aren't written a third time.
 - **"Today":** each user gets a timezone, detected from the browser on login (no onboarding step); "today" and the "two days running" rule use it.
-- **Exams (owner accepted the proposal):** support TCF and TEF. An `exam_variant` setting next to `exam_type` decides which sections count as candidate skills, e.g. TCF Tout Public (listening, reading, grammar/vocabulary compulsory; writing and speaking only if the learner opts in), TCF Canada and TEF (all four sections).
+- **Exams (owner accepted the proposal):** support TCF and TEF. An `exam_variant` setting next to `exam_type` decides which sections count as candidate skills, e.g. TCF Tout Public (listening, reading, grammar/vocabulary compulsory; writing and speaking only if the learner opts in), TCF Canada and TEF (all four sections). The exam bank holds items for the four sections only (CO, CE, EE, EO), so when an exam learner's focus is grammar or vocabulary the check item is the short skill quiz that general learners get.
 - **Languages (owner accepted the proposal):** daily sessions launch for French learners only. English learners keep every existing feature; the Today card is hidden for them until English content exists.
 
 ## 6. Left to the builder

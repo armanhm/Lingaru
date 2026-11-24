@@ -140,7 +140,7 @@ Invariants:
 | Python lint | `ruff check .`, `ruff format --check .` | blocking |
 | Django system check | `python manage.py check` | blocking |
 | Migration drift | `python manage.py makemigrations --check --dry-run` | blocking |
-| Tests | `pytest --cov=apps --cov=services` (collects `testpaths = apps`) | blocking |
+| Tests | `pytest --cov=apps --cov=services` (collects `testpaths = apps services tests`, on a Postgres 16 service) | blocking |
 | JS lint | `npm run lint` | blocking |
 | JS build | `npm run build` | blocking |
 | Image scan | Trivy on built backend image, CRITICAL/HIGH, fixable only | advisory |
@@ -205,7 +205,7 @@ Invariants:
 | D-6 | No compose-level log rotation, resource limits, or healthchecks for app containers. |
 | D-7 | Images are built on the production host; nothing is published to a registry. |
 | D-8 | `VITE_SENTRY_*` is not supplied to the nginx image build, so frontend Sentry is off in production. `SENTRY_RELEASE` is not stamped by the deploy. |
-| D-9 | `testpaths = apps` excludes `services/*/tests` from CI. Tests run on SQLite, not Postgres. |
+| D-9 | Resolved: `testpaths` covers `apps`, `services` and `tests`, and CI runs them on a Postgres 16 service. A bare local `pytest` still uses SQLite. |
 | D-10 | No `LOGGING` setting; production emits only WARNING+ app logs to stderr. |
 | D-11 | `config/celery.py` and `config/wsgi.py` default `DJANGO_SETTINGS_MODULE` to `config.settings.dev`; production relies on compose setting it. |
 | D-12 | Django 5.1 is past its upstream support window; the pinned range (`<5.2`) blocks upgrades. |

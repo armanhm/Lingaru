@@ -24,7 +24,14 @@ jobs:
   deploy:
     name: SSH deploy
     runs-on: ubuntu-24.04
-    if: ${{ github.event.workflow_run.conclusion == 'success' || github.event_name == 'workflow_dispatch' }}
+    # Deploy after a green CI run that was started by a push to main in
+    # this repository (not a manual, scheduled or pull-request CI run),
+    # or when this workflow is started by hand.
+    if: >-
+      ${{ github.event_name == 'workflow_dispatch' ||
+          (github.event.workflow_run.conclusion == 'success' &&
+           github.event.workflow_run.event == 'push' &&
+           github.event.workflow_run.head_repository.full_name == github.repository) }}
 
     # Deploy sequence (each step is one ssh round trip, in order):
     #   1. prev     record the SHA currently live

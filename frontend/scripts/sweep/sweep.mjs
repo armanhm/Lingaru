@@ -209,7 +209,8 @@ async function captureProbes(browser, tokens) {
         document.getElementById(id).innerHTML = html;
         return document.fonts.ready.then(() => undefined);
       }, { id: PROBE_HOST_ID, html });
-      // Park the pointer away from the probe host (top left) before each base reading.
+      // Park the pointer in the bottom-right corner, away from the probe host
+      // at the top left, before each base reading.
       await page.mouse.move(width - 1, height - 1);
       const pseudo = probe.pseudo ? { pseudo: probe.pseudo } : {};
       entries.push({ id: probe.id, theme, hover: false, ...pseudo, ...(await measure(probe)) });

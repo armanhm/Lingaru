@@ -85,7 +85,8 @@ the v4 upgrade renamed). The Tailwind 4 dev server keeps generating classes it
 has seen earlier in the session, so restart it after removing or renaming
 classes before you trust a probe run.
 
-With `--compare`, every reading must equal the one in `<compare>/probes.json`:
+With `--compare`, `<compare>/probes.json` must exist (add it to an older
+baseline with `--probes-only`), and every reading must equal the one there:
 colours are normalised to sRGB (oklab, oklch and `color()` are converted;
 channels within 1, alpha within 0.01), invisible shadow layers are dropped,
 and lengths match within 0.5px (`rounded-full` radii count as equal). The

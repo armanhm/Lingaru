@@ -208,14 +208,16 @@ The `security-scan` job builds `backend/Dockerfile` as `lingaru-backend:scan` an
 
 ### Dependabot
 
-`.github/dependabot.yml`:
+`.github/dependabot.yml` puts every ecosystem into one multi-ecosystem group named `weekly`, so all version updates arrive as a single pull request per week (Dependabot's weekly check runs on Monday).
 
-| Ecosystem | Directory | Schedule | Groups |
-|---|---|---|---|
-| pip | `/backend` | weekly, Monday, max 5 PRs | `django` (Django, django-*, djangorestframework*), `llm` (google-genai, groq, sentry-sdk*), `backend-minor-and-patch` (every other minor or patch update, in one PR) |
-| npm | `/frontend` | weekly, Monday, max 5 PRs | `react`, `sentry` (`@sentry/*`), `eslint`, `tailwind`, `frontend-minor-and-patch` (every other minor or patch update, in one PR) |
-| github-actions | `/` | monthly | `actions` (all action updates in one PR) |
-| docker | `/backend` | monthly | none |
+| Ecosystem | Directory | Ignored |
+|---|---|---|
+| pip | `/backend` | nothing |
+| npm | `/frontend` | ESLint and `@eslint/js` majors; `@playwright/test` entirely (its version is tied to the visual-regression container image) |
+| github-actions | `/` | nothing |
+| docker | `/backend` | Python image major and minor versions |
+
+The combined PR includes major versions. If one update in it breaks CI, take that package out with a comment on the PR (`@dependabot ignore <dependency> major version`) or add an `ignore` rule, and Dependabot rebuilds the PR without it. Security updates are not on this schedule: they can open their own PR at any time.
 
 ### Lint config
 

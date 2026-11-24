@@ -45,7 +45,7 @@ This spec describes the design system as it exists in code. Section 2.2 records 
 | T-5 | Motion tokens; all animation honours reduced motion; no decorative infinite animation in working areas | **Partly delivered** | Motion is 150 ms (controls) and 200 ms (bars, colour), `ease-out`; the global reduced-motion rule and `motion-reduce:` utilities are in place; the library has no bounce, shake or confetti. The old keyframes (`pulse-glow`, `flame`, `spin-slow`, ...) still exist for page code, so decorative loops remain on some pages until the redesign. |
 | T-6 | WCAG AA contrast in both themes and all modes | **Delivered** (for tokens) | `tokens.json` lists 23 `contrastPairs` and 12 `rampContrastPairs`; `scripts/tokens/contrast.test.mjs` fails the unit tests when one drops below its minimum (4.5:1 text, 3:1 input borders). The sweep counts axe `color-contrast` violations per page. Page-level hard-coded colours are checked only by the sweep (§8). |
 | T-7 | Primitive library | **Partly delivered** | Delivered: `Button`, `IconButton`, `Input`, `Textarea`, `Select`, `Checkbox`, `Switch`, `Field`, `Card`, `Dialog`, `Drawer`, `Tabs`, toast (`ToastContext`), `Badge`, `Skeleton*`, `EmptyState`, `ProgressBar`, `SegmentedProgress`, `FeedbackPanel`, `PageHeader`. Not built: `Link`, `Stepper`, `Popover`/`Menu`, `Tooltip`, `ErrorState`, `ProgressRing`, `Kbd`, `Eyebrow` (the `.kbd` and `.eyebrow-primary` CSS classes cover the last two), and toast action/undo. |
-| T-8 | Dialog and Drawer trap focus, close on Escape and backdrop, restore focus, `aria-modal`, lock scroll | **Delivered** (components) | Both are built on Radix Dialog with focus restore for controlled use (`overlay.js`) and are tested. Migration is not finished: only `Assistant.jsx` uses them; other overlays (`OnboardingModal`, `AIResultModal`, `MyNotesEdit`, `Settings`, `AgentRun`) are still hand-built. The shell's phone menu is a hand-built modal dialog (§8). |
+| T-8 | Dialog and Drawer trap focus, close on Escape and backdrop, restore focus, `aria-modal`, lock scroll | **Delivered** (components) | Both are built on Radix Dialog with focus restore for controlled use (`overlay.js`) and are tested. Migration has not started: no page uses them yet, and six overlays are still hand-built (`OnboardingModal`, `AIResultModal`, `MyNotesEdit`, `Settings`, `AgentRun`, and a local `Drawer` defined inside `Assistant.jsx`). The shell's phone menu is a hand-built modal dialog (§8). |
 | T-9 | One icon set; emoji only for content | **Partly delivered** | `lucide-react` is the icon set; the shell and the `ui/` components use it with `aria-hidden`. The shell has no emoji in its chrome. Pages still use emoji and inline SVG icons. |
 | T-10 | Shared patterns (page header, game shell, chat bubble, editor split, settings section) | **Open** | Only `PageHeader` and `TriumphHero` exist. The rest waits for the page redesign. |
 | T-11 | Layouts tolerate strings about 30 % longer | **Open** | No explicit work or check. The sweep's horizontal-overflow count catches the worst cases only at 390 px width in English. |
@@ -176,7 +176,7 @@ The order of `index.css` matters (Tailwind 4 layer set-up, preflight, tokens, `@
 
 ### 3.9 Dev gallery
 
-`/dev/ui` is registered in `App.jsx` only when `import.meta.env.DEV` is true, as a lazy chunk, so production builds drop it. It shows each component in light and dark columns, including overlays and toasts.
+`/dev/ui` is registered in `App.jsx` only when `import.meta.env.DEV` is true, as a lazy chunk, so production builds drop it. It shows each component in light and dark columns. Dialogs, drawers and toasts portal to the body, so they follow the page theme, not a column.
 
 ## 4. Rules and accessibility guarantees
 
@@ -238,7 +238,7 @@ None.
 |---|---|
 | `tailwindcss` 4 and `@tailwindcss/vite` | Utilities and the CSS-first theme |
 | `@tailwindcss/typography` | `prose` for Markdown (loaded with `@plugin`) |
-| `@radix-ui/react-dialog`, `-switch`, `-tabs`, `-slot` | Behaviour for `Dialog`, `Drawer`, `Switch`, `Tabs`, `Button asChild`. (`@radix-ui/react-toast` is installed but the toast is hand-built.) |
+| `@radix-ui/react-dialog`, `-switch`, `-tabs`, `-slot` | Behaviour for `Dialog`, `Drawer`, `Switch`, `Tabs`, `Button asChild`. The toast is hand-built in `ToastContext`. |
 | `lucide-react` | Icons |
 | Google Fonts | Inter, Instrument Serif, JetBrains Mono (see T-14) |
 | `ThemeContext`, `ModeContext` | Runtime theme and `data-mode` |
@@ -250,6 +250,5 @@ None.
 - **Spinners under reduced motion:** loading spinners (`animate-spin motion-reduce:animate-none`) stop and show a static arc rather than an alternative indicator.
 - **One JS chunk:** the app ships a single JavaScript bundle. `Dialog`, `Drawer`, `Tabs` and `Switch` pull in Radix, adding about 15 kB gzip the first time a page imports them. Route-level code splitting (issue #81) should come first, so that cost lands only on pages that use them.
 - **Shell phone menu:** for the same reason the phone menu is a hand-built modal dialog (focus trap, Escape, scroll lock, `inert` background) instead of `Drawer`.
-- **Overlays not migrated:** see T-8.
+- **Overlays not migrated:** no page uses the new `Dialog`/`Drawer` yet; see T-8 for the six hand-built overlays.
 - **Fonts:** see T-14.
-- **Unused dependency:** `@radix-ui/react-toast` is installed but not imported.

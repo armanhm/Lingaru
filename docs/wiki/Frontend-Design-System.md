@@ -198,6 +198,6 @@ Not applicable. Tokens are static files; theme and mode come from the saved `the
 - Fonts are still loaded from Google Fonts, not self-hosted (T-14).
 - Spinners freeze as a static arc under reduced motion.
 - The app ships one JS chunk; Radix-based components add about 15 kB gzip on first use. Route code-splitting (#81) should come first, which is also why the shell's phone menu is hand-built.
-- Only `Assistant.jsx` uses `Dialog`/`Drawer`; other overlays are still hand-built.
+- No page uses `Dialog`/`Drawer` yet. Six overlays are still hand-built: `OnboardingModal`, `AIResultModal`, `MyNotesEdit`, `Settings`, `AgentRun` and a local `Drawer` in `Assistant.jsx`.
 - Not built yet: `Popover`/`Menu`, `Tooltip`, `ErrorState`, `Stepper`, toast actions (see the T-item table in the spec).
 - Visual regression covers `/login` and `/register`; the gallery is not snapshotted.

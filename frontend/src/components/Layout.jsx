@@ -1,4 +1,4 @@
-import { useState, useRef, useEffect, useMemo } from "react";
+import { useState, useRef, useEffect, useMemo, useCallback } from "react";
 import { Link, Outlet, useNavigate, useLocation } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import {
@@ -9,12 +9,11 @@ import {
 import { useAuth } from "../contexts/AuthContext";
 import { useTheme } from "../contexts/ThemeContext";
 import { filterNavForMode } from "../lib/modeConfig";
+import { navIcon } from "../lib/navIcon";
 import { Badge, IconButton, cx } from "./ui";
+import { SCRIM } from "./ui/overlay";
 import { LearningLanguageFlag } from "./ui/LearningLanguageFlag";
 import OnboardingModal from "./OnboardingModal";
-
-// Line icons for the nav: 20 px, 1.75 stroke, decorative (the label names the link).
-const navIcon = (Icon) => <Icon aria-hidden="true" size={20} strokeWidth={1.75} className="shrink-0" />;
 
 const NAV_SECTIONS = [
   {
@@ -62,6 +61,7 @@ function UserMenu({ user, collapsed, onLogout }) {
   const { t } = useTranslation();
   const [open, setOpen] = useState(false);
   const ref = useRef(null);
+  const triggerRef = useRef(null);
 
   useEffect(() => {
     function handler(e) {
@@ -81,9 +81,17 @@ function UserMenu({ user, collapsed, onLogout }) {
     <div
       ref={ref}
       className="border-t border-line p-3 relative"
-      onKeyDown={(e) => { if (e.key === "Escape") setOpen(false); }}
+      onKeyDown={(e) => {
+        // One Escape closes only the innermost open thing: here, the dropdown.
+        if (e.key === "Escape" && open) {
+          e.stopPropagation();
+          setOpen(false);
+          triggerRef.current?.focus();
+        }
+      }}
     >
       <button
+        ref={triggerRef}
         type="button"
         onClick={() => setOpen((o) => !o)}
         aria-expanded={open}
@@ -130,7 +138,7 @@ function UserMenu({ user, collapsed, onLogout }) {
               type="button"
               role="switch"
               aria-checked={dark}
-              aria-label={t("layout.toggleTheme")}
+              aria-label={t("settings.appearance.darkMode")}
               onClick={toggle}
               className={cx(
                 "relative inline-flex h-7 w-12 shrink-0 items-center rounded-full border",
@@ -142,7 +150,7 @@ function UserMenu({ user, collapsed, onLogout }) {
             >
               <span
                 aria-hidden="true"
-                className={cx("block size-5 rounded-full", dark ? "translate-x-6 bg-on-accent" : "translate-x-1 bg-fg-3")}
+                className={cx("block size-5 rounded-full", dark ? "translate-x-[23px] bg-on-accent" : "translate-x-[3px] bg-fg-3")}
               />
             </button>
           </div>
@@ -171,56 +179,72 @@ function UserMenu({ user, collapsed, onLogout }) {
 }
 
 // ── MobilePanel ──────────────────────────────────────────────────────────────
-// Slide-in phone menu. It is a modal dialog: focus moves into it, Tab stays
-// inside, Escape or the backdrop closes it, and focus returns to the opener.
-function MobilePanel({ label, closeLabel, onClose, children }) {
+// Phone menu. It is a modal dialog: Layout makes the rest of the app `inert`
+// while it is open; here focus moves in, Tab stays inside, Escape or the
+// backdrop closes it, body scroll is locked, and focus returns to the opener
+// (or via `focusFallback` when `restoreFocusRef` says the opener is gone).
+function MobilePanel({ label, closeLabel, onClose, restoreFocusRef, focusFallback, children }) {
   const panelRef = useRef(null);
   const onCloseRef = useRef(onClose);
   useEffect(() => { onCloseRef.current = onClose; });
 
   useEffect(() => {
     const opener = document.activeElement;
-    panelRef.current?.focus();
-    return () => {
-      if (opener instanceof HTMLElement && opener.isConnected) opener.focus();
-    };
-  }, []);
+    const panel = panelRef.current;
+    panel?.focus();
+    const previousOverflow = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
 
-  const onKeyDown = (e) => {
-    if (e.key === "Escape") {
-      e.stopPropagation();
-      onCloseRef.current();
-      return;
+    function onKeyDown(e) {
+      if (e.key === "Escape") {
+        e.preventDefault();
+        onCloseRef.current();
+        return;
+      }
+      if (e.key !== "Tab" || !panel) return;
+      const focusable = Array.from(panel.querySelectorAll("a[href], button:not([disabled])"));
+      if (focusable.length === 0) {
+        e.preventDefault();
+        panel.focus();
+        return;
+      }
+      const first = focusable[0];
+      const last = focusable[focusable.length - 1];
+      const active = document.activeElement;
+      const inList = focusable.includes(active);
+      if (e.shiftKey && (!inList || active === first)) {
+        e.preventDefault();
+        last.focus();
+      } else if (!e.shiftKey && (!inList || active === last)) {
+        e.preventDefault();
+        first.focus();
+      }
     }
-    if (e.key !== "Tab") return;
-    const focusable = panelRef.current?.querySelectorAll("a[href], button:not([disabled])");
-    if (!focusable?.length) return;
-    const first = focusable[0];
-    const last = focusable[focusable.length - 1];
-    const inside = panelRef.current.contains(document.activeElement) && document.activeElement !== panelRef.current;
-    if (e.shiftKey && (!inside || document.activeElement === first)) {
-      e.preventDefault();
-      last.focus();
-    } else if (!e.shiftKey && (!inside || document.activeElement === last)) {
-      e.preventDefault();
-      first.focus();
-    }
-  };
+    document.addEventListener("keydown", onKeyDown);
+
+    return () => {
+      document.removeEventListener("keydown", onKeyDown);
+      document.body.style.overflow = previousOverflow;
+      const restore = restoreFocusRef.current;
+      restoreFocusRef.current = true;
+      if (!restore) focusFallback();
+      else if (opener instanceof HTMLElement && opener.isConnected) opener.focus();
+    };
+  }, [restoreFocusRef, focusFallback]);
 
   return (
     <div className="md:hidden fixed inset-0 z-50">
-      <div aria-hidden="true" className="absolute inset-0 bg-[rgb(20_18_15/0.55)]" onClick={onClose} />
+      <div aria-hidden="true" className={cx("absolute inset-0", SCRIM)} onClick={onClose} />
       <div
         ref={panelRef}
         role="dialog"
         aria-modal="true"
         aria-label={label}
         tabIndex={-1}
-        onKeyDown={onKeyDown}
         className="absolute inset-y-0 left-0 w-72 max-w-[85vw] bg-canvas border-r border-line p-3 flex flex-col focus:outline-hidden"
       >
         <div className="flex items-center justify-between pb-2">
-          <span className="text-h3 text-fg px-1">Lingaru</span>
+          <span className="text-h3 text-fg px-3">Lingaru</span>
           <IconButton size="sm" label={closeLabel} icon={X} onClick={onClose} />
         </div>
         <div className="min-h-0 flex-1">{children}</div>
@@ -249,6 +273,7 @@ export default function Layout() {
   const navigate = useNavigate();
   const location = useLocation();
   const mainRef = useRef(null);
+  const restoreFocusRef = useRef(true);
   const [collapsed, setCollapsed] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
   const [collapsedSections, setCollapsedSections] = useState(loadCollapsedSections);
@@ -291,6 +316,23 @@ export default function Layout() {
     setMobileOpen(false);
   }, [location.pathname]);
 
+  // The phone menu only exists below the md breakpoint (48rem, as in the CSS):
+  // close it when the viewport reaches desktop width, and do not hand focus
+  // back to the menu button, which is hidden there.
+  useEffect(() => {
+    if (typeof window.matchMedia !== "function") return undefined;
+    const query = window.matchMedia("(min-width: 48rem)");
+    const onChange = (e) => {
+      if (!e.matches) return;
+      restoreFocusRef.current = false;
+      setMobileOpen(false);
+    };
+    query.addEventListener("change", onChange);
+    return () => query.removeEventListener("change", onChange);
+  }, []);
+
+  const focusMain = useCallback(() => mainRef.current?.focus(), []);
+
   const skipToContent = (e) => {
     e.preventDefault();
     mainRef.current?.focus();
@@ -308,12 +350,12 @@ export default function Layout() {
       <div className="flex flex-col h-full">
         {onNav ? (
           // The drawer supplies the wordmark as its title.
-          <div className="flex items-center gap-2 pb-3 border-b border-line">
+          <div className="flex items-center gap-2 px-3 pb-3 border-b border-line">
             {user && <LearningLanguageFlag language={user.target_language} />}
             {modeChip}
           </div>
         ) : (
-          <div className={cx("flex items-center gap-2 px-3 py-3 border-b border-line", compact && "justify-center px-2")}>
+          <div className={cx("flex items-center gap-2 py-3 border-b border-line", compact ? "justify-center px-2" : "px-6")}>
             {!compact && (
               <div className="flex flex-col items-start gap-1 min-w-0">
                 <div className="flex items-center">
@@ -422,7 +464,8 @@ export default function Layout() {
   };
 
   return (
-    <div className="flex h-screen bg-canvas overflow-hidden">
+    <>
+    <div inert={mobileOpen} className="flex h-screen bg-canvas overflow-hidden">
       <a
         href="#main-content"
         onClick={skipToContent}
@@ -440,17 +483,6 @@ export default function Layout() {
       <aside className={cx("hidden md:flex flex-col bg-canvas border-r border-line shrink-0", collapsed ? "w-16" : "w-60")}>
         {renderSidebar({ onNav: null })}
       </aside>
-
-      {/* Phone menu */}
-      {mobileOpen && (
-        <MobilePanel
-          label={t("layout.mainNav")}
-          closeLabel={t("common.close")}
-          onClose={() => setMobileOpen(false)}
-        >
-          {renderSidebar({ onNav: () => setMobileOpen(false) })}
-        </MobilePanel>
-      )}
 
       <div className="flex-1 flex flex-col overflow-hidden">
         <header className="md:hidden flex items-center gap-2 px-3 py-2 bg-canvas border-b border-line shrink-0">
@@ -478,10 +510,25 @@ export default function Layout() {
         )}
       </div>
 
-      {/* First-time onboarding: shows when the user is logged in but has
-         no mode set yet. Existing users were backfilled to "general" by
-         a data migration so they don't see this on next login. */}
-      {user && !user.mode && <OnboardingModal />}
     </div>
+
+    {/* Phone menu: a sibling of the app content, so that content can be inert. */}
+    {mobileOpen && (
+      <MobilePanel
+        label={t("layout.menu")}
+        closeLabel={t("common.close")}
+        onClose={() => setMobileOpen(false)}
+        restoreFocusRef={restoreFocusRef}
+        focusFallback={focusMain}
+      >
+        {renderSidebar({ onNav: () => setMobileOpen(false) })}
+      </MobilePanel>
+    )}
+
+    {/* First-time onboarding: shows when the user is logged in but has
+       no mode set yet. Existing users were backfilled to "general" by
+       a data migration so they don't see this on next login. */}
+    {user && !user.mode && <OnboardingModal />}
+    </>
   );
 }

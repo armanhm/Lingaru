@@ -2,8 +2,8 @@ import { useRef } from "react";
 
 // Shared class names for Dialog and Drawer: the only components allowed the
 // one soft overlay shadow.
-export const OVERLAY =
-  "fixed inset-0 z-50 bg-[rgb(20_18_15/0.55)]";
+export const SCRIM = "bg-[rgb(20_18_15/0.55)]";
+export const OVERLAY = `fixed inset-0 z-50 ${SCRIM}`;
 export const PANEL =
   "fixed z-50 bg-card border border-line shadow-card-elevated flex flex-col " +
   "focus-visible:outline-hidden";

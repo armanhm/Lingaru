@@ -1,5 +1,5 @@
-import { createElement } from "react";
 import { House } from "lucide-react";
+import { navIcon } from "./navIcon";
 
 /**
  * Per-mode configuration: which nav items are visible, where the user
@@ -111,12 +111,7 @@ export function filterNavForMode(sections, mode, targetLanguage) {
   // Dashboard briefly flashes Dashboard then redirects to Assistant which
   // looks like a glitch.
   if (mode === "agentic") {
-    const homeIcon = createElement(House, {
-      "aria-hidden": "true",
-      size: 20,
-      strokeWidth: 1.75,
-      className: "shrink-0",
-    });
+    const homeIcon = navIcon(House);
     filtered = filtered.map((section) => {
       const items = section.items
         .filter((it) => it.to !== "/" && it.to !== "/dashboard")

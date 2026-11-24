@@ -110,7 +110,7 @@ Frontend build-time variables (`frontend/.env.example`): `VITE_API_URL` (default
 
 ### Deploy workflow
 
-`.github/workflows/deploy.yml`, "Deploy to Hetzner". It triggers when the `CI` workflow completes successfully on `main` (`workflow_run`), or manually (`workflow_dispatch`). `concurrency: deploy-prod` serialises deploys without cancelling a running one.
+`.github/workflows/deploy.yml`, "Deploy to Hetzner". It triggers when a `CI` run that was started by a push to `main` completes successfully (`workflow_run`; manual, scheduled and pull-request CI runs do not deploy), or manually (`workflow_dispatch`). `concurrency: deploy-prod` serialises deploys without cancelling a running one.
 
 | # | Step | What it does |
 |---|---|---|

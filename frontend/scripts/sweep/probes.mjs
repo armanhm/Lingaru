@@ -111,6 +111,14 @@ export const PROBES = [
     expectedDrift: "not-generated-in-tailwind-3",
     html: `<input class="input input-error" value="Bonjour">`,
   },
+  // A text input without a light background class: Tailwind 3 left the
+  // browser's white field, Tailwind 4's preflight makes it transparent.
+  // Quiz.jsx:102 (Tailwind 3 source: `focus:outline-none`).
+  {
+    id: "quiz-answer-input",
+    html: `<input type="text" class="w-full px-4 py-3 border-2 border-surface-200 rounded-xl text-lg focus:border-primary-500 focus:ring-0 focus:outline-hidden transition-colors disabled:opacity-75 disabled:cursor-not-allowed dark:bg-surface-700 dark:border-surface-600 dark:text-surface-100" value="la maison">`,
+    tw3Html: `<input type="text" class="w-full px-4 py-3 border-2 border-surface-200 rounded-xl text-lg focus:border-primary-500 focus:ring-0 focus:outline-none transition-colors disabled:opacity-75 disabled:cursor-not-allowed dark:bg-surface-700 dark:border-surface-600 dark:text-surface-100" value="la maison">`,
+  },
 
   // Other component classes. Layout.jsx:325; SRSReview.jsx:305; GrammarDrill.jsx:343.
   { id: "section-label", html: `<span class="section-label flex-1 text-left">Section</span>` },

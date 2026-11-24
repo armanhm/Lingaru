@@ -556,6 +556,17 @@
   textarea::placeholder {
     color: var(--color-gray-400);
   }
+  /* Tailwind 4's preflight also makes form fields transparent and sets
+     opacity: 1 on them; Tailwind 3 left both to the browser (a white field,
+     a faded disabled select). revert-layer hands them back to it. */
+  input:not([type="button"], [type="reset"], [type="submit"]),
+  select,
+  textarea {
+    background-color: revert-layer;
+  }
+  select:disabled {
+    opacity: revert-layer;
+  }
 }
 
 /* Tailwind 3 space-y semantics: every child after the first gets the spacing

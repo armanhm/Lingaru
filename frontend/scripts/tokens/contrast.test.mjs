@@ -15,6 +15,10 @@ test('contrastRatio of identical colours is 1', () => {
   assert.equal(contrastRatio('#FFFFFF', '#FFFFFF'), 1);
 });
 
+test('has the full set of contrast pairs', () => {
+  assert.ok(tokens.contrastPairs.length >= 14);
+});
+
 for (const mode of ['light', 'dark']) {
   for (const { fg, bg, min } of tokens.contrastPairs) {
     test(`${mode}: ${fg} on ${bg} >= ${min}`, () => {

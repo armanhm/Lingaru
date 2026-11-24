@@ -26,18 +26,45 @@ test('maps semantic utilities to custom properties', () => {
   assert.ok(css.includes('--color-canvas: var(--pp-canvas)'));
 });
 
-test('emits type tokens with companions', () => {
-  assert.ok(css.includes('--text-h1: 2.125rem'));
-  assert.ok(css.includes('--text-h1--line-height: 1.1'));
-  assert.ok(css.includes('--text-display-xl: 2.5rem'));
+test('emits serif headings as @utility blocks, not theme variables', () => {
+  const block = css.slice(css.indexOf('@utility text-h1 {'));
+  const body = block.slice(0, block.indexOf('}'));
+  assert.ok(body.includes('font-family: var(--font-editorial)'));
+  assert.ok(body.includes('font-size: 2.125rem'));
+  assert.ok(body.includes('font-weight: 400 !important'));
+  assert.ok(css.includes('@utility text-display-xl {'));
+  assert.ok(!css.includes('--text-h1:'));
+});
+
+test('keeps UI type as theme variables with companions', () => {
+  assert.ok(css.includes('--text-body: 1rem'));
+  assert.ok(css.includes('--text-h4--font-weight: 600'));
+});
+
+test('--font-display is the Inter stack', () => {
+  assert.ok(css.includes("--font-display: 'Inter'"));
 });
 
 test('emits no em-dashes', () => {
   assert.ok(!css.includes('—'));
 });
 
-test('artifact tokens carry semantic light/dark pairs', () => {
+test('artifact tokens follow the design-system page format', () => {
   const art = buildArtifactTokens(tokens);
-  assert.equal(art.name, 'Lingaru Paper');
-  assert.deepEqual(art.color.canvas, { light: '#F6F3EC', dark: '#1A1916' });
+  assert.equal(art.version, 1);
+  assert.deepEqual(art.color.themes.map((t) => t.id), ['light', 'dark']);
+  const canvas = art.color.tokens.find((t) => t.name === 'canvas');
+  assert.deepEqual(canvas.value, { light: '#F6F3EC', dark: '#1A1916' });
+  const names = [
+    ...art.color.tokens,
+    ...art.spacing.tokens,
+    ...art.radius.tokens,
+  ].map((t) => t.name);
+  assert.equal(new Set(names).size, names.length);
+  for (const n of names) assert.match(n, /^[A-Za-z0-9][A-Za-z0-9_.-]{0,63}$/);
+  for (const t of art.color.tokens) {
+    assert.ok(t.usage && t.usage.length > 0, `${t.name} needs usage`);
+    if (typeof t.value === 'string') assert.match(t.value, /^#[0-9A-Fa-f]{6}$/);
+  }
+  assert.equal(art.type.groups[0].styles[0].fontSize, '40px');
 });

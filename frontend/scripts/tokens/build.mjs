@@ -29,6 +29,7 @@ export function buildCss(tokens) {
     out.push(`  --font-${name}: ${value};`);
   }
   for (const [name, t] of Object.entries(tokens.type)) {
+    if (t.family) continue; // emitted as @utility below
     out.push(`  --text-${name}: ${rem(t.size)};`);
     out.push(`  --text-${name}--line-height: ${t.lineHeight};`);
     if (t.letterSpacing) out.push(`  --text-${name}--letter-spacing: ${t.letterSpacing};`);
@@ -42,6 +43,19 @@ export function buildCss(tokens) {
     }
     out.push('}', '');
   }
+  for (const [name, t] of Object.entries(tokens.type)) {
+    if (!t.family) continue;
+    out.push(
+      `@utility text-${name} {`,
+      `  font-family: var(--font-${t.family});`,
+      `  font-size: ${rem(t.size)};`,
+      `  line-height: ${t.lineHeight};`,
+      `  font-weight: ${t.weight} !important;`,
+      '  letter-spacing: normal;',
+      '}',
+      '',
+    );
+  }
   out.push('@theme inline {');
   for (const name of Object.keys(tokens.semantic)) {
     out.push(`  --color-${name}: var(--pp-${name});`);
@@ -50,16 +64,66 @@ export function buildCss(tokens) {
   return out.join('\n');
 }
 
+const style = (name, t) => ({
+  name,
+  fontSize: `${t.size}px`,
+  lineHeight: t.lineHeight,
+  fontWeight: t.weight ?? 400,
+  ...(t.letterSpacing ? { letterSpacing: t.letterSpacing } : {}),
+});
+
 export function buildArtifactTokens(tokens) {
+  const colour = Object.entries(tokens.semantic).map(([name, v]) => ({
+    name,
+    value: { light: v.light, dark: v.dark },
+    usage: v.usage,
+  }));
+  for (const [ramp, steps] of Object.entries(tokens.ramps)) {
+    for (const [step, hex] of Object.entries(steps)) {
+      colour.push({ name: `${ramp}-${step}`, value: hex, usage: `${ramp} ramp.` });
+    }
+  }
+  const pick = (names) => names.map((n) => style(n, tokens.type[n]));
   return {
     name: 'Lingaru Paper',
-    color: tokens.semantic,
-    ramp: tokens.ramps,
-    font: tokens.fonts,
-    type: tokens.type,
-    radius: tokens.radius,
-    space: tokens.space,
-    motion: tokens.motion,
+    version: 1,
+    color: {
+      themes: [
+        { id: 'light', name: 'Light' },
+        { id: 'dark', name: 'Dark' },
+      ],
+      tokens: colour,
+    },
+    type: {
+      fonts: [],
+      families: {
+        serif: '"Instrument Serif", ui-serif, Georgia, serif',
+        sans: '"Inter", ui-sans-serif, system-ui, sans-serif',
+        mono: '"JetBrains Mono", ui-monospace, monospace',
+      },
+      groups: [
+        { name: 'Headings', family: 'serif', styles: pick(['display', 'h1', 'h2', 'h3']) },
+        {
+          name: 'Text',
+          family: 'sans',
+          styles: pick(['h4', 'body-lg', 'body', 'small', 'caption', 'eyebrow']),
+        },
+      ],
+    },
+    spacing: {
+      tokens: tokens.space.map((s, i) => ({
+        name: `space-${i + 1}`,
+        value: `${s.value}px`,
+        usage: s.usage,
+      })),
+    },
+    radius: {
+      tokens: Object.entries(tokens.radius).map(([k, r]) => ({
+        name: `radius-${k}`,
+        value: r.value,
+        usage: r.usage,
+      })),
+    },
   };
 }
 

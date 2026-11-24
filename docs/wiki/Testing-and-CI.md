@@ -8,23 +8,24 @@
 
 ```mermaid
 flowchart LR
-  PR[Push / PR to main or dev] --> CI[ci.yml]
-  CI --> BL[Backend lint: Ruff]
-  CI --> BT[Backend: check, makemigrations --check, pytest + coverage]
-  CI --> FL[Frontend: tokens --check, ESLint, node:test, Vitest]
-  CI --> FB[Frontend: vite build, check:build]
-  CI --> TV[Trivy image scan, advisory]
-  PR -->|PR only| LH[lighthouse.yml]
-  PR -->|PR only| VR[visual-regression.yml]
-  CI -->|success on main| DEP[deploy.yml]
+  PR[Push to main or dev / any PR] --> CI[ci.yml]
+  CI --> CH[changes: which areas changed]
+  CH -->|backend or data files| BL[Backend lint: Ruff]
+  CH -->|backend or data files| BT[Backend: check, makemigrations --check, pytest + coverage]
+  CH -->|frontend files| FE[Frontend: tokens --check, ESLint, node:test, Vitest, vite build, check:build]
+  CH -->|Dockerfile or requirements| TV[Trivy image scan, advisory]
+  CH -->|nginx files or the frontend lockfile| WI[Web image builds]
+  PR -->|PR to main or dev, frontend files| LH[lighthouse.yml]
+  PR -->|PR to main or dev, frontend files| VR[visual-regression.yml]
+  CI -->|green run started by a push to main| DEP[deploy.yml]
 ```
 
 ## Key concepts
 
 | Term | Meaning |
 |---|---|
-| `config.settings.test` | Test settings: in-memory SQLite, MD5 password hasher, locmem cache, `DEBUG=True` |
-| `testpaths = apps` | Default pytest collection root (see [Gotchas](#gotchas)) |
+| `config.settings.test` | Test settings: in-memory SQLite locally, PostgreSQL when the `DB_HOST` environment variable is set (CI), MD5 password hasher, locmem cache, `DEBUG=True` |
+| `testpaths = apps services tests` | Default pytest collection roots |
 | Baselines | Committed Playwright screenshots in `frontend/e2e/__screenshots__/` |
 | Sweep | A local-only Playwright script (`npm run sweep`) that screenshots the whole app and measures contrast, overflow and computed styles; not part of CI |
 | Generated tokens | `src/design/tokens.css` and `design/paper.tokens.json`, generated from `src/design/tokens.json` and committed |
@@ -40,7 +41,7 @@ flowchart LR
 |---|---|
 | `DJANGO_SETTINGS_MODULE` | `config.settings.test` |
 | `python_files` | `tests.py test_*.py *_tests.py` |
-| `testpaths` | `apps` |
+| `testpaths` | `apps services tests` |
 | `addopts` | `-v --tb=short -p no:locust -p no:relaxed` |
 
 Layout: each app has `apps/<app>/tests/` (or `tests.py` for `dictionary`). Service-layer tests live in `services/{llm,memory,rag,stt,tts}/tests/`.
@@ -63,7 +64,7 @@ cd backend
 python -m venv .venv && source .venv/bin/activate
 pip install -r requirements.txt
 
-pytest                                # apps/ only (testpaths)
+pytest                                # apps/, services/ and tests/ (testpaths)
 pytest services                       # service-layer tests (explicit path)
 pytest apps services --cov=apps --cov=services --cov-report=term
 pytest apps/assistant -k blocks       # one area
@@ -148,14 +149,37 @@ Celery: `config.settings.test` does not enable eager mode. Code paths that call 
 
 | Workflow | Trigger | Jobs | Blocking |
 |---|---|---|---|
-| `ci.yml` (CI) | push and PR to `main`, `dev`; `concurrency` cancels superseded runs | `backend-lint`: Ruff check and format check (Python 3.12) | yes |
+| `ci.yml` (CI) | push to `main`, `dev`; every PR (any base branch, so stacked PRs are checked); manual; weekly schedule (Monday); `concurrency` cancels superseded runs of the same kind | `changes`: lists the changed files through the GitHub API and decides which jobs below run (see "Skipping unaffected jobs") | yes |
+| | | `backend-lint`: Ruff check and format check (Python 3.12) | yes |
 | | | `backend`: `pip install -r requirements.txt`, `manage.py check`, `makemigrations --check --dry-run`, `pytest --cov=apps --cov=services`, PR coverage comment (`MishaKav/pytest-coverage-comment`) | yes |
-| | | `frontend-lint`: `npm ci`, `npm run tokens -- --check`, `npm run lint`, `npm run test:unit`, `npm test` (Node 20) | yes |
-| | | `frontend`: `npm ci`, `npm run build`, `npm run check:build` (Node 20) | yes |
-| | | `security-scan`: build backend image, Trivy scan for CRITICAL/HIGH with known fixes, table output | no (`exit-code: 0`) |
-| `lighthouse.yml` | PR to `main`, `dev`; manual | build, `lhci autorun` on `/login`, `/register` (desktop preset); scores written to the step summary | no (`\|\| true`) |
-| `visual-regression.yml` | PR to `main`, `dev`; manual | install Chromium, build, `npm run test:visual`; uploads `playwright-report/` on failure (14 days) | yes, for the PR check |
+| | | `frontend`: one job, one `npm ci`: `npm run tokens -- --check`, `npm run lint`, `npm run test:unit`, `npm test`, `npm run build`, `npm run check:build` (Node version from `frontend/.nvmrc`) | yes |
+| | | `security-scan`: build backend image, import its native modules, Trivy scan for CRITICAL/HIGH with known fixes, table output; on PRs only when the image's inputs change | no for findings (`exit-code: 0`); a failed build or import fails the job |
+| | | `web-image`: `docker build -f nginx/Dockerfile .` (the production web image, not pushed); on PRs only when `nginx/**`, the frontend lockfile, `frontend/.nvmrc` or `.dockerignore` change | yes |
+| `lighthouse.yml` | PR to `main`, `dev` that touches `frontend/`; manual; superseded runs are cancelled | build, `lhci autorun` on `/login`, `/register` (desktop preset); scores written to the step summary | no (`\|\| true`) |
+| `visual-regression.yml` | PR to `main`, `dev` that touches `frontend/`; manual; superseded runs are cancelled | install Chromium, build, `npm run test:visual`; uploads `playwright-report/` on failure (14 days) | yes, for the PR check |
 | `deploy.yml` | `CI` completed on `main`; manual | SSH deploy, see [Deployment and Operations](Deployment-and-Operations.md) | n/a |
+
+Every job in `ci.yml`, `lighthouse.yml` and `visual-regression.yml` has a `timeout-minutes` limit (the deploy job has none), and those workflows run with a read-only token unless a job asks for more (only the backend job, for its PR coverage comment).
+
+#### Skipping unaffected jobs
+
+On pull requests, the `changes` job classifies the changed files and each other job runs only when its area changed. Pushes to `main` and `dev`, manual runs and the weekly scheduled run always run every job: the deploy workflow treats a green CI run on `main` as "this commit passed every check", and an earlier push may have failed or been cancelled.
+
+| Changed path | Jobs that run |
+|---|---|
+| `backend/**`, `data/**` | `backend-lint`, `backend` |
+| `backend/Dockerfile`, `backend/requirements*.txt` | `backend-lint`, `backend`, `security-scan` |
+| `.dockerignore` | `backend-lint`, `backend`, `security-scan`, `web-image` |
+| `frontend/**` | `frontend` |
+| `frontend/package.json`, `frontend/package-lock.json`, `frontend/.nvmrc` | `frontend`, `web-image` |
+| `nginx/**` | `web-image` |
+| `.github/workflows/ci.yml` | all |
+| `docs/**`, `scripts/**`, other `.github/**` files, `*.md`, `LICENSE`, `.gitignore` | none |
+| anything else (for example `docker-compose.yml`) | `backend-lint`, `backend`, `frontend` |
+
+If the file list cannot be read (API error) or the pull request changes 3000 or more files, every job runs.
+
+The Node version for CI lives in `frontend/.nvmrc` (22). The two Dockerfiles that build the frontend name `node:22-alpine` themselves; change all three together.
 
 CI env for the backend job: `DJANGO_SETTINGS_MODULE=config.settings.test`, a dummy `DJANGO_SECRET_KEY`, `DEBUG=True`.
 
@@ -180,7 +204,7 @@ Screenshots are platform-sensitive. If you regenerate baselines on macOS they ma
 
 ### Trivy
 
-The `security-scan` job builds `backend/Dockerfile` as `lingaru-backend:scan` and scans the image (OS packages and Python deps), filtered to `CRITICAL,HIGH` with `ignore-unfixed: true`. Findings appear in the job log only; the SARIF upload is disabled.
+The `security-scan` job builds `backend/Dockerfile` as `lingaru-backend:scan` and scans the image (OS packages and Python deps), filtered to `CRITICAL,HIGH` with `ignore-unfixed: true`. Findings appear in the job log only; the SARIF upload is disabled. On pull requests the job runs only when `backend/Dockerfile`, `backend/requirements*.txt`, `.dockerignore` or `ci.yml` changes. It always runs on pushes to `main`, on manual runs and on the weekly scheduled run, because the base image tag floats, requirement ranges can resolve to newer versions, and the advisory database changes daily. Since the image has no compiler, the build is also the check that every dependency still installs from a wheel, and a step imports the modules with native parts (`psycopg2`, Pillow, `cryptography`, `pydantic_core`) so a missing runtime library fails in CI.
 
 ### Dependabot
 
@@ -188,9 +212,9 @@ The `security-scan` job builds `backend/Dockerfile` as `lingaru-backend:scan` an
 
 | Ecosystem | Directory | Schedule | Groups |
 |---|---|---|---|
-| pip | `/backend` | weekly, Monday, max 5 PRs | `django` (Django, django-*, djangorestframework*), `llm` (google-genai, groq, sentry-sdk*) |
-| npm | `/frontend` | weekly, Monday, max 5 PRs | `react`, `sentry` (`@sentry/*`), `eslint` |
-| github-actions | `/` | monthly | none |
+| pip | `/backend` | weekly, Monday, max 5 PRs | `django` (Django, django-*, djangorestframework*), `llm` (google-genai, groq, sentry-sdk*), `backend-minor-and-patch` (every other minor or patch update, in one PR) |
+| npm | `/frontend` | weekly, Monday, max 5 PRs | `react`, `sentry` (`@sentry/*`), `eslint`, `tailwind`, `frontend-minor-and-patch` (every other minor or patch update, in one PR) |
+| github-actions | `/` | monthly | `actions` (all action updates in one PR) |
 | docker | `/backend` | monthly | none |
 
 ### Lint config
@@ -211,21 +235,18 @@ The `security-scan` job builds `backend/Dockerfile` as `lingaru-backend:scan` an
 
 ## Gotchas
 
-- `testpaths = apps` means a bare `pytest` (which is how CI invokes it) collects `apps/` only. The `services/*/tests` suites are not run in CI even though `--cov=services` is passed. Run `pytest apps services` to include them.
-- Tests use SQLite while production uses PostgreSQL 16. Postgres-specific behaviour (JSON lookups, constraints, ordering) is not exercised in CI.
+- A bare local `pytest` uses in-memory SQLite, while CI and production use PostgreSQL 16. Postgres-specific behaviour (JSON lookups, constraints, ordering) is exercised in CI only; set `DB_HOST` (and the other `DB_*` variables) to run locally against Postgres.
 - CI installs frontend dependencies with plain `npm ci`; the nginx image build uses `npm ci --no-audit --no-fund`.
 - `npm run test:unit` and `npm test` are separate runners with separate file patterns: `node:test` files end in `.test.js` or `.test.mjs`, Vitest files in `.test.jsx`. A test in the wrong place is silently not run.
 - The sweep needs `SWEEP_USER` and `SWEEP_PASSWORD` and a running seeded backend; it fails immediately without them.
 
 ## Known gaps
 
-- Service-layer tests (`services/`) are outside `testpaths` and therefore not executed by CI.
-- No Postgres service in CI; tests run on SQLite.
 - Trivy and Lighthouse are advisory and never fail a build.
 - No dependency audit step (`pip-audit` / `npm audit`) in CI.
 - Visual regression covers only two public pages; the sweep covers the rest but runs by hand, not in CI.
 - Vitest covers the `components/ui/` library, the toast context, the shell and one Settings test; most pages have no component tests.
 - No end-to-end tests against a running backend.
 - Dependabot's docker ecosystem watches `/backend` only; `nginx/Dockerfile` and compose images get no update PRs.
-- GitHub Actions are pinned by tag rather than commit SHA, and the Trivy action tracks a branch.
+- GitHub Actions are pinned by tag rather than commit SHA, except the Trivy action, which is pinned to the commit of a release.
 - The README describes CI steps (filesystem Trivy scan, Playwright e2e in CI) that differ from the workflows above.

@@ -43,11 +43,11 @@ flowchart LR
 | `celery` | `backend/Dockerfile` | `celery -A config worker -l info` | none | none | none |
 | `celery-beat` | `backend/Dockerfile` | `celery -A config beat -l info` | none | none | none |
 | `bot` | `backend/Dockerfile` | `python manage.py run_bot` (long polling, `drop_pending_updates=True`) | none | none | `unless-stopped` |
-| `nginx` | `nginx/Dockerfile` (multi-stage: `node:20-alpine` builds the frontend, then `nginx:alpine`) | default | `${LINGARU_HTTP_PORT:-80}:80` | `static_files:ro`, `media_files:ro` | none |
+| `nginx` | `nginx/Dockerfile` (multi-stage: `node:22-alpine` builds the frontend, then `nginx:alpine`) | default | `${LINGARU_HTTP_PORT:-80}:80` | `static_files:ro`, `media_files:ro` | none |
 
 All backend containers set `DJANGO_SETTINGS_MODULE=config.settings.prod`. Postgres and Redis have compose healthchecks (`pg_isready`, `redis-cli ping`), and the app services wait on `service_healthy`.
 
-The backend image is `python:3.12-slim` with `gcc` and `libpq-dev`, `pip install -r backend/requirements.txt`, the code at `/app` and `data/` at `/data`.
+The backend image is `python:3.12-slim` with `pip install -r backend/requirements.txt` (no compiler: every dependency installs from a wheel, and `psycopg2-binary` bundles libpq), the code at `/app` and `data/` at `/data`.
 
 ### Dev override
 
@@ -110,7 +110,7 @@ Frontend build-time variables (`frontend/.env.example`): `VITE_API_URL` (default
 
 ### Deploy workflow
 
-`.github/workflows/deploy.yml`, "Deploy to Hetzner". It triggers when the `CI` workflow completes successfully on `main` (`workflow_run`), or manually (`workflow_dispatch`). `concurrency: deploy-prod` serialises deploys without cancelling a running one.
+`.github/workflows/deploy.yml`, "Deploy to Hetzner". It triggers when a `CI` run that was started by a push to `main` completes successfully (`workflow_run`; manual, scheduled and pull-request CI runs do not deploy), or manually (`workflow_dispatch`). `concurrency: deploy-prod` serialises deploys without cancelling a running one.
 
 | # | Step | What it does |
 |---|---|---|
@@ -257,5 +257,4 @@ JSON and CSV seed files live in `data/`, mounted at `/data` in the image.
 - `VITE_SENTRY_DSN` is not passed to the nginx image build (`.env*` files are excluded by `.dockerignore`), so frontend Sentry is inactive in production builds.
 - `SENTRY_RELEASE` is not set by the deploy workflow.
 - `frontend/Dockerfile` is unused (compose builds the frontend in `nginx/Dockerfile`).
-- The frontend build stage uses Node 20, which is past end of life.
 - No uptime monitoring or alerting is defined in the repo.

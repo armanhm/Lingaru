@@ -16,6 +16,14 @@ on:
         type: boolean
         default: false
 
+# A newer push to the same PR makes the older comparison pointless.
+concurrency:
+  group: visual-${{ github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+
 # Visual regression is intentionally PR-only. Failures are usually
 # intentional UI changes that need a baseline update; we don't want
 # them blocking deploys to main.
@@ -29,6 +37,7 @@ jobs:
   playwright:
     name: Playwright snapshots
     runs-on: ubuntu-24.04
+    timeout-minutes: 15
     container:
       image: mcr.microsoft.com/playwright:v1.65.1-noble
     env:

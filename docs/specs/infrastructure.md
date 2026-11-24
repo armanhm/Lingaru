@@ -73,7 +73,7 @@ flowchart TB
 | celery | same image | `celery -A config worker -l info` | | no | postgres, redis (healthy) | none |
 | celery-beat | same image | `celery -A config beat -l info` | | no | postgres, redis (healthy) | none |
 | bot | same image | `python manage.py run_bot` (Telegram long polling) | | no | postgres, redis (healthy) | `unless-stopped` |
-| nginx | `nginx:alpine` (+ `node:20-alpine` build stage) | default | 80 | `${LINGARU_HTTP_PORT:-80}` | django | none |
+| nginx | `nginx:alpine` (+ `node:22-alpine` build stage) | default | 80 | `${LINGARU_HTTP_PORT:-80}` | django | none |
 
 Dev override (`docker-compose.dev.yml`) publishes postgres `5433:5432`, redis `6379:6379`, django `8000:8000` (runserver), nginx `80:80`, and bind-mounts `./backend:/app`.
 
@@ -140,7 +140,7 @@ Invariants:
 | Python lint | `ruff check .`, `ruff format --check .` | blocking |
 | Django system check | `python manage.py check` | blocking |
 | Migration drift | `python manage.py makemigrations --check --dry-run` | blocking |
-| Tests | `pytest --cov=apps --cov=services` (collects `testpaths = apps`) | blocking |
+| Tests | `pytest --cov=apps --cov=services` (collects `testpaths = apps services tests`, on a Postgres 16 service) | blocking |
 | JS lint | `npm run lint` | blocking |
 | JS build | `npm run build` | blocking |
 | Image scan | Trivy on built backend image, CRITICAL/HIGH, fixable only | advisory |
@@ -186,7 +186,7 @@ Invariants:
 
 | Kind | Dependency |
 |---|---|
-| Runtime images | `python:3.12-slim`, `postgres:16-alpine`, `redis:7-alpine`, `nginx:alpine`, `node:20-alpine` (build) |
+| Runtime images | `python:3.12-slim`, `postgres:16-alpine`, `redis:7-alpine`, `nginx:alpine`, `node:22-alpine` (build) |
 | Python | Django 5.1.x, DRF 3.15, SimpleJWT 5.3, django-cors-headers, psycopg2-binary, redis, celery 5.4, gunicorn 22, python-decouple, python-telegram-bot 21, google-genai, groq, gTTS, PyPDF2, youtube-transcript-api, Pillow 10.4.0, feedparser, sentry-sdk (see `backend/requirements.txt`) |
 | Frontend | React 18, react-router 6, axios, react-markdown 10, i18next, @sentry/react 10, Vite 5, Tailwind 3 |
 | External services | Gemini API, Groq API, Google TTS (gTTS), Telegram Bot API, Sentry, RSS feeds (`apps/discover/sources.py`) |
@@ -205,11 +205,11 @@ Invariants:
 | D-6 | No compose-level log rotation, resource limits, or healthchecks for app containers. |
 | D-7 | Images are built on the production host; nothing is published to a registry. |
 | D-8 | `VITE_SENTRY_*` is not supplied to the nginx image build, so frontend Sentry is off in production. `SENTRY_RELEASE` is not stamped by the deploy. |
-| D-9 | `testpaths = apps` excludes `services/*/tests` from CI. Tests run on SQLite, not Postgres. |
+| D-9 | Resolved: `testpaths` covers `apps`, `services` and `tests`, and CI runs them on a Postgres 16 service. A bare local `pytest` still uses SQLite. |
 | D-10 | No `LOGGING` setting; production emits only WARNING+ app logs to stderr. |
 | D-11 | `config/celery.py` and `config/wsgi.py` default `DJANGO_SETTINGS_MODULE` to `config.settings.dev`; production relies on compose setting it. |
 | D-12 | Django 5.1 is past its upstream support window; the pinned range (`<5.2`) blocks upgrades. |
-| D-13 | Dependabot's docker ecosystem covers `/backend` only; Node 20 (build stage) is past end of life. |
+| D-13 | Dependabot's docker ecosystem covers `/backend` only. (The Node build stage moved from 20 to 22 in November 2026.) |
 | D-14 | `frontend/Dockerfile` is unused. |
 | D-15 | `backend/celerybeat-schedule` (local Beat state) is not listed in `.gitignore`. |
 | Q-1 | Where is TLS terminated, and what forwarded headers does that layer pass to nginx? |

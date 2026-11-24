@@ -3,17 +3,103 @@ name: CI
 on:
   push:
     branches: [main, dev]
+  # Every pull request, whatever its base branch, so stacked PRs are
+  # checked too. The `changes` job keeps this cheap: a job only runs
+  # when files it covers changed.
   pull_request:
-    branches: [main, dev]
+  workflow_dispatch:
+  # Weekly full run on main: the image scan sees newly published
+  # advisories even when no image input changed.
+  schedule:
+    - cron: "17 5 * * 1"
 
+# The event name is part of the group so a scheduled or manual run on
+# main never cancels the push run that the deploy is waiting for.
 concurrency:
-  group: ci-${{ github.ref }}
+  group: ci-${{ github.event_name }}-${{ github.ref }}
   cancel-in-progress: true
 
+permissions:
+  contents: read
+
 jobs:
+  # Decides which jobs need to run. Only pull requests skip jobs: a
+  # push to main or dev always runs everything, because the deploy
+  # workflow trusts a green CI run on main to mean "this commit passed
+  # every check" (a previous push may have failed or been cancelled).
+  changes:
+    name: Detect changed areas
+    runs-on: ubuntu-24.04
+    timeout-minutes: 5
+    permissions:
+      contents: read
+      pull-requests: read
+    outputs:
+      backend: ${{ steps.classify.outputs.backend }}
+      frontend: ${{ steps.classify.outputs.frontend }}
+      image: ${{ steps.classify.outputs.image }}
+      webimage: ${{ steps.classify.outputs.webimage }}
+    steps:
+      - name: Classify changed files
+        id: classify
+        env:
+          GH_TOKEN: ${{ github.token }}
+          REPO: ${{ github.repository }}
+          EVENT: ${{ github.event_name }}
+          PR_NUMBER: ${{ github.event.pull_request.number }}
+          CHANGED_FILES: ${{ github.event.pull_request.changed_files }}
+        run: |
+          set -u
+          run_all() {
+            echo "Running every job: $1"
+            { echo "backend=true"; echo "frontend=true"; echo "image=true"; echo "webimage=true"; } >> "$GITHUB_OUTPUT"
+            exit 0
+          }
+
+          [ "$EVENT" = pull_request ] || run_all "not a pull request ($EVENT)"
+          # The files API lists at most 3000 files.
+          [ "${CHANGED_FILES:-0}" -lt 3000 ] || run_all "3000 or more changed files"
+          files=$(gh api --paginate "repos/$REPO/pulls/$PR_NUMBER/files?per_page=100" \
+            --jq '.[] | .filename, (.previous_filename // empty)') \
+            || run_all "could not list the pull request's files"
+
+          backend=false; frontend=false; image=false; webimage=false
+          while IFS= read -r f; do
+            [ -n "$f" ] || continue
+            case "$f" in
+              .github/workflows/ci.yml)
+                backend=true; frontend=true; image=true; webimage=true ;;
+              .dockerignore)
+                backend=true; image=true; webimage=true ;;
+              backend/Dockerfile|backend/requirements*.txt)
+                backend=true; image=true ;;
+              backend/*|data/*)
+                backend=true ;;
+              frontend/package.json|frontend/package-lock.json|frontend/.nvmrc)
+                frontend=true; webimage=true ;;
+              frontend/*)
+                frontend=true ;;
+              nginx/*)
+                webimage=true ;;
+              docs/*|scripts/*|.github/*|*.md|LICENSE|.gitignore)
+                ;;
+              *)
+                # Unknown path: be safe and run both test suites.
+                backend=true; frontend=true ;;
+            esac
+          done <<EOF
+          $files
+          EOF
+
+          echo "backend=$backend frontend=$frontend image=$image webimage=$webimage"
+          { echo "backend=$backend"; echo "frontend=$frontend"; echo "image=$image"; echo "webimage=$webimage"; } >> "$GITHUB_OUTPUT"
+
   backend-lint:
     name: Backend lint (Ruff)
+    needs: changes
+    if: needs.changes.outputs.backend == 'true'
     runs-on: ubuntu-24.04
+    timeout-minutes: 5
     defaults:
       run:
         working-directory: backend
@@ -32,7 +118,10 @@ jobs:
 
   backend:
     name: Backend (Django)
+    needs: changes
+    if: needs.changes.outputs.backend == 'true'
     runs-on: ubuntu-24.04
+    timeout-minutes: 15
     permissions:
       contents: read
       pull-requests: write
@@ -105,50 +194,43 @@ jobs:
           hide-badge: false
           hide-report: false
 
-  frontend-lint:
-    name: Frontend lint (ESLint)
+  # One job for everything frontend: a single runner and a single
+  # `npm ci` instead of two. The cheap checks come first so a lint
+  # error fails fast.
+  frontend:
+    name: Frontend (lint, test, build)
+    needs: changes
+    if: needs.changes.outputs.frontend == 'true'
     runs-on: ubuntu-24.04
+    timeout-minutes: 10
     defaults:
       run:
         working-directory: frontend
+
     steps:
       - uses: actions/checkout@v7
+
       - name: Set up Node
         uses: actions/setup-node@v7
         with:
-          node-version: "20"
+          node-version-file: frontend/.nvmrc
           cache: npm
           cache-dependency-path: frontend/package-lock.json
+
       - name: Install dependencies
         run: npm ci
+
       - name: Design tokens up to date
         run: npm run tokens -- --check
+
       - name: ESLint
         run: npm run lint
+
       - name: Unit tests (node:test)
         run: npm run test:unit
+
       - name: Component tests (Vitest)
         run: npm test
-
-  frontend:
-    name: Frontend (Vite)
-    runs-on: ubuntu-24.04
-    defaults:
-      run:
-        working-directory: frontend
-
-    steps:
-      - uses: actions/checkout@v7
-
-      - name: Set up Node
-        uses: actions/setup-node@v7
-        with:
-          node-version: "20"
-          cache: npm
-          cache-dependency-path: frontend/package-lock.json
-
-      - name: Install dependencies
-        run: npm ci
 
       - name: Build
         run: npm run build
@@ -156,9 +238,30 @@ jobs:
       - name: Check the dev gallery is not in the build
         run: npm run check:build
 
+  # The production web image (nginx plus the built frontend) is built on
+  # the server at deploy time. Build it here whenever its own inputs
+  # change, so a broken Dockerfile or lockfile fails in CI first.
+  web-image:
+    name: Web image builds
+    needs: changes
+    if: needs.changes.outputs.webimage == 'true'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v7
+      - name: Build the nginx + frontend image
+        run: docker build -t lingaru-web:ci -f nginx/Dockerfile .
+
+  # On pull requests this runs only when the backend image's inputs
+  # change (Dockerfile, requirements, .dockerignore): building the image
+  # is the slowest step in CI. Pushes to main and the weekly scheduled
+  # run always scan, so new advisories still show up.
   security-scan:
     name: Security scan (Trivy)
+    needs: changes
+    if: needs.changes.outputs.image == 'true'
     runs-on: ubuntu-24.04
+    timeout-minutes: 15
     permissions:
       contents: read
     steps:
@@ -170,11 +273,17 @@ jobs:
       - name: Build backend image
         run: docker build -t lingaru-backend:scan -f backend/Dockerfile .
 
+      # The image has no compiler and no system libpq. Import the modules
+      # with native parts so a missing runtime library fails here, not
+      # on the server.
+      - name: Native modules import in the image
+        run: docker run --rm lingaru-backend:scan python -c "import psycopg2, PIL.Image, cryptography.hazmat.bindings._rust, pydantic_core"
+
       # Findings print directly into the job log as a table. Code scanning
-      # (Security tab integration) is intentionally disabled — re-enable
+      # (Security tab integration) is intentionally disabled; re-enable
       # it later by switching back to format: sarif + a SARIF upload step.
       - name: Run Trivy vulnerability scanner
-        uses: aquasecurity/trivy-action@master
+        uses: aquasecurity/trivy-action@ed142fd0673e97e23eac54620cfb913e5ce36c25 # v0.36.0
         with:
           image-ref: lingaru-backend:scan
           format: table

@@ -32,7 +32,13 @@
 
   "layout": {
     "learningLanguageAria": "Currently learning {{language}}",
-    "learningLanguageTooltip": "Learning {{language}}. Change in Settings."
+    "learningLanguageTooltip": "Learning {{language}}. Change in Settings.",
+    "mainNav": "Main",
+    "skipToContent": "Skip to content",
+    "collapseSidebar": "Collapse sidebar",
+    "expandSidebar": "Expand sidebar",
+    "openMenu": "Open menu",
+    "menu": "Menu"
   },
 
   "nav": {

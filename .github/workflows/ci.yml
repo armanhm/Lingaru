@@ -127,6 +127,8 @@ jobs:
         run: npm run lint
       - name: Unit tests (node:test)
         run: npm run test:unit
+      - name: Component tests (Vitest)
+        run: npm test
 
   frontend:
     name: Frontend (Vite)

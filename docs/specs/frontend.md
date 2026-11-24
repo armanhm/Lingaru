@@ -49,7 +49,7 @@ Status: Current-state (reverse-engineered from code, 2026-11-11) · Owner: @arma
 |---|---|
 | FR-20 | The theme (light/dark) is applied before first paint from the saved preference or `prefers-color-scheme`, and persisted on toggle. |
 | FR-21 | The UI language follows `user.ui_language` once logged in, and the browser or localStorage detection before that. `<html lang>` always matches the active UI language. |
-| FR-22 | `user.mode` is mirrored to `<html data-mode>`, and the favicon switches to `/favicon-<mode>.png`. |
+| FR-22 | `user.mode` is mirrored to `<html data-mode>`, and the app uses one favicon (`/favicon.svg`) for every mode. |
 | FR-23 | Changing the target language in Settings PATCHes `target_language` and `ui_language` together, then reloads the page. |
 | FR-24 | Mini-game lengths and timers are read from `user.preferences.<game>_*`, with per-page defaults. |
 

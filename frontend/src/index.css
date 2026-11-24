@@ -43,10 +43,6 @@
   --animate-spin-slow: spin-slow 22s linear infinite;
   --animate-flame: flame 1.6s ease-in-out infinite;
   --animate-pulse-soft: pulse-soft 2.4s ease-in-out infinite;
-  --animate-mode-pop: mode-pop 1.9s cubic-bezier(0.36, 1.2, 0.5, 1) forwards;
-  --animate-mode-ripple-1: mode-ripple-1 1.5s ease-out forwards;
-  --animate-mode-ripple-2: mode-ripple-2 1.7s ease-out forwards;
-  --animate-mode-wash: mode-wash 1.9s ease-out forwards;
 
   /* Tailwind 3 line-heights for the default sizes: fixed lengths, not ratios,
      so an element that overrides only the font size keeps its line box. */
@@ -322,63 +318,6 @@
     }
     50% {
       opacity: 1;
-    }
-  }
-  @keyframes mode-pop {
-    0% {
-      opacity: 0;
-      transform: scale(0.55) translateY(12px);
-    }
-    55% {
-      opacity: 1;
-      transform: scale(1.08) translateY(0);
-    }
-    70% {
-      transform: scale(0.97);
-    }
-    85% {
-      opacity: 1;
-      transform: scale(1);
-    }
-    100% {
-      opacity: 0;
-      transform: scale(1) translateY(-6px);
-    }
-  }
-  @keyframes mode-ripple-1 {
-    0% {
-      opacity: 0.65;
-      transform: scale(0.6);
-    }
-    100% {
-      opacity: 0;
-      transform: scale(4.2);
-    }
-  }
-  @keyframes mode-ripple-2 {
-    0%,
-    30% {
-      opacity: 0;
-      transform: scale(0.6);
-    }
-    40% {
-      opacity: 0.55;
-      transform: scale(0.7);
-    }
-    100% {
-      opacity: 0;
-      transform: scale(3.6);
-    }
-  }
-  @keyframes mode-wash {
-    0% {
-      opacity: 0;
-    }
-    30% {
-      opacity: 1;
-    }
-    100% {
-      opacity: 0;
     }
   }
 }

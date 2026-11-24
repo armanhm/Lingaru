@@ -12,6 +12,7 @@ import {
   deleteMemoryNote,
 } from "../api/memory";
 import { PageHeader } from "../components/ui";
+import ModePicker from "../components/settings/ModePicker";
 
 const UI_LANGUAGE_OPTIONS = [
   { value: "en", label: "English",   flag: "🇬🇧" },
@@ -58,33 +59,6 @@ const TABS = [
   { id: "security",   labelKey: "settings.tabs.security",   icon: "🔒", tint: "from-danger-500 to-accent-600" },
   { id: "memory",     labelKey: "settings.tabs.memory",     icon: "🧠", tint: "from-info-500 to-emerald-500" },
   { id: "mode",       labelKey: "settings.tabs.mode",       icon: "🧭", tint: "from-rose-500 to-purple-600" },
-];
-
-const MODE_CARDS = [
-  {
-    key: "general",
-    initial: "G",
-    accent: "#6366f1",                                 // matches html[data-mode=general] --mode-grad-from
-    glow: "rgba(99, 102, 241, 0.35)",
-    gradient: "from-indigo-500 via-violet-500 to-purple-600",
-    chip: "Indigo · Violet",
-  },
-  {
-    key: "exam",
-    initial: "E",
-    accent: "#dc2626",                                 // red-600
-    glow: "rgba(225, 29, 72, 0.4)",
-    gradient: "from-rose-600 via-red-600 to-red-700",
-    chip: "Rouge · Examen",
-  },
-  {
-    key: "agentic",
-    initial: "A",
-    accent: "#ca8a04",                                 // yellow-600
-    glow: "rgba(217, 119, 6, 0.45)",
-    gradient: "from-amber-500 via-yellow-500 to-amber-700",
-    chip: "Ambre · Doré",
-  },
 ];
 
 function SectionCard({ title, description, icon, tint = "from-primary-500 to-purple-600", children }) {
@@ -576,7 +550,6 @@ export default function Settings() {
   const [mode, setMode] = useState("general");
   const [proficiency, setProficiency] = useState("B1");
   const [modeSaving, setModeSaving] = useState(false);
-  const [modeCelebration, setModeCelebration] = useState(null); // { card } when firing
 
   // UI language (en / fr). Stored on the user, applied via LanguageProvider.
   const [uiLanguage, setUiLanguage] = useState(i18n.language?.split("-")[0] || "en");
@@ -637,9 +610,7 @@ export default function Settings() {
     try {
       await client.patch("/users/me/", { mode, proficiency_level: proficiency });
       await refreshUser();
-      const card = MODE_CARDS.find((m) => m.key === mode);
-      setModeCelebration({ card });
-      window.setTimeout(() => setModeCelebration(null), 1900);
+      showToast(t(`modes.${mode}.title`), "success");
     } catch {
       showToast(t("settings.mode.errorToast"), "error");
     } finally {
@@ -945,7 +916,7 @@ export default function Settings() {
         </SectionCard>
       )}
 
-      {/* Dedicated Mode tab. Cards repaint the whole app via html[data-mode]. */}
+      {/* Dedicated Mode tab. */}
       {activeTab === "mode" && (
         <>
           <SectionCard
@@ -954,83 +925,7 @@ export default function Settings() {
             icon="🧭"
             tint="from-rose-500 to-purple-600"
           >
-            <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
-              {MODE_CARDS.map((m) => {
-                const active = mode === m.key;
-                return (
-                  <button
-                    key={m.key}
-                    type="button"
-                    onClick={() => setMode(m.key)}
-                    style={{
-                      "--card-accent": m.accent,
-                      "--card-glow": m.glow,
-                    }}
-                    className={`mode-card group relative text-left rounded-2xl border-2 px-5 py-5 overflow-hidden transition-all duration-300 ease-out focus-ring will-change-transform ${
-                      active
-                        ? "border-(--card-accent) bg-white dark:bg-surface-900 shadow-[0_22px_48px_-18px_var(--card-glow)] ring-2 ring-(--card-accent)/25"
-                        : "border-surface-200 dark:border-surface-700 bg-white dark:bg-surface-900 hover:-translate-y-1 hover:border-(--card-accent)/70 hover:shadow-[0_22px_48px_-18px_var(--card-glow)] hover:ring-2 hover:ring-(--card-accent)/20"
-                    }`}
-                  >
-                    {/* Animated gradient accent bar */}
-                    <div className={`absolute inset-x-0 top-0 h-1.5 bg-linear-to-r ${m.gradient} transition-opacity duration-300 ${active ? "opacity-100" : "opacity-50 group-hover:opacity-100"}`} />
-
-                    {/* Soft tint wash on hover/active */}
-                    <div
-                      aria-hidden
-                      className={`pointer-events-none absolute -right-10 -bottom-10 w-44 h-44 rounded-full blur-3xl transition-opacity duration-500 ${active ? "opacity-30" : "opacity-0 group-hover:opacity-25"}`}
-                      style={{ background: `radial-gradient(circle, ${m.accent} 0%, transparent 70%)` }}
-                    />
-
-                    {/* Active checkmark */}
-                    {active && (
-                      <span
-                        className="absolute top-3.5 right-3.5 w-7 h-7 rounded-full text-white flex items-center justify-center shadow-md animate-fade-in-up"
-                        style={{ backgroundColor: m.accent }}
-                      >
-                        <svg className="w-4 h-4" fill="none" stroke="currentColor" strokeWidth={3} viewBox="0 0 24 24">
-                          <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
-                        </svg>
-                      </span>
-                    )}
-
-                    {/* Centered identity block: puck + title + tagline */}
-                    <div className="flex flex-col items-center text-center">
-                      <span
-                        className={`relative inline-flex w-14 h-14 rounded-2xl bg-linear-to-br ${m.gradient} text-white items-center justify-center text-2xl font-extrabold shadow-lg transition-transform duration-300 ease-out ${active ? "scale-105" : "group-hover:scale-110 group-hover:rotate-[-4deg]"}`}
-                      >
-                        {m.initial}
-                      </span>
-
-                      <h3 className="mt-3.5 text-[16px] font-extrabold text-surface-900 dark:text-surface-50 leading-tight">
-                        {t(`modes.${m.key}.title`)}
-                      </h3>
-                      <p
-                        className="text-[12px] font-semibold uppercase tracking-wider mt-0.5"
-                        style={{ color: m.accent }}
-                      >
-                        {t(`modes.${m.key}.tagline`)}
-                      </p>
-                    </div>
-
-                    <p className="text-[13px] text-surface-600 dark:text-surface-300 leading-snug mt-3 max-w-[34ch]">
-                      {t(`modes.${m.key}.description`)}
-                    </p>
-
-                    {/* Palette chip */}
-                    <div className="mt-4 flex items-center gap-2">
-                      <span className="flex -space-x-1">
-                        <span className="w-3.5 h-3.5 rounded-full ring-2 ring-white dark:ring-surface-900" style={{ backgroundColor: m.accent }} />
-                        <span className={`w-3.5 h-3.5 rounded-full ring-2 ring-white dark:ring-surface-900 bg-linear-to-br ${m.gradient}`} />
-                      </span>
-                      <span className="text-[10px] font-mono uppercase tracking-wider text-surface-500 dark:text-surface-400">
-                        {m.chip}
-                      </span>
-                    </div>
-                  </button>
-                );
-              })}
-            </div>
+            <ModePicker mode={mode} onSelect={setMode} />
           </SectionCard>
 
           <SectionCard
@@ -1281,8 +1176,6 @@ export default function Settings() {
         </div>
       </div>
 
-      {modeCelebration && <ModeCelebration card={modeCelebration.card} />}
-
       {pendingLanguage && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 p-4">
           <div className="bg-white dark:bg-surface-900 rounded-xl p-6 max-w-md w-full shadow-xl">
@@ -1316,54 +1209,6 @@ export default function Settings() {
           </div>
         </div>
       )}
-    </div>
-  );
-}
-
-/**
- * Full-viewport one-shot celebration: emoji puck pops in, label slides up,
- * dual radial rings ripple outward in the new mode's accent color, all
- * fading out at ~1.9s. Pointer-events disabled so it never blocks the UI.
- */
-function ModeCelebration({ card }) {
-  const { t } = useTranslation();
-  if (!card) return null;
-  return (
-    <div className="fixed inset-0 z-120 pointer-events-none flex items-center justify-center overflow-hidden">
-      {/* Soft full-screen color wash */}
-      <div
-        className="absolute inset-0 animate-mode-wash"
-        style={{ background: `radial-gradient(circle at 50% 45%, ${card.glow} 0%, transparent 55%)` }}
-      />
-
-      {/* Outer ripple ring */}
-      <span
-        className="absolute w-32 h-32 rounded-full border-[3px] animate-mode-ripple-1"
-        style={{ borderColor: card.accent }}
-      />
-      {/* Inner ripple ring (delayed) */}
-      <span
-        className="absolute w-32 h-32 rounded-full border-[3px] animate-mode-ripple-2"
-        style={{ borderColor: card.accent }}
-      />
-
-      {/* Center pop card */}
-      <div className="relative flex flex-col items-center animate-mode-pop">
-        <span
-          className={`w-24 h-24 rounded-3xl bg-linear-to-br ${card.gradient} text-white flex items-center justify-center text-5xl font-extrabold shadow-2xl`}
-          style={{ boxShadow: `0 24px 60px -12px ${card.glow}` }}
-        >
-          {card.initial}
-        </span>
-        <div className="mt-4 px-5 py-2.5 rounded-full bg-white dark:bg-surface-900 border border-surface-200 dark:border-surface-700 shadow-lg">
-          <p className="text-[11px] font-mono uppercase tracking-[0.18em] font-bold" style={{ color: card.accent }}>
-            {t("settings.mode.celebrationLabel")}
-          </p>
-          <p className="text-[15px] font-extrabold text-surface-900 dark:text-surface-50 mt-0.5">
-            {t(`modes.${card.key}.title`)}
-          </p>
-        </div>
-      </div>
     </div>
   );
 }

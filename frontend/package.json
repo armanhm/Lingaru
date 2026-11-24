@@ -8,7 +8,8 @@
     "build": "vite build",
     "preview": "vite preview",
     "lint": "eslint .",
-    "test:unit": "node --test src/lib/*.test.js",
+    "tokens": "node scripts/tokens/build.mjs",
+    "test:unit": "node --test src/lib/*.test.js scripts/tokens/*.test.mjs",
     "test:visual": "playwright test",
     "test:visual:update": "playwright test --update-snapshots",
     "sweep": "node scripts/sweep/sweep.mjs"

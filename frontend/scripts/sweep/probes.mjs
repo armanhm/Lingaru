@@ -117,6 +117,28 @@ export const PROBES = [
   { id: "stat-pill", html: `<div class="stat-pill shrink-0">12 cards</div>` },
   { id: "kbd", html: `<kbd class="kbd">Enter</kbd>` },
 
+  // A component's state rule beside a plain utility for the same property: in
+  // Tailwind 3 the state rule (two classes) won. Settings.jsx:1272 (always
+  // disabled); TopicDetail.jsx:91 (a finished lesson, hovered); Layout.jsx:349
+  // (the active nav item, focused). Tailwind 3 source: `bg-gradient-to-r`,
+  // `shadow-sm`.
+  {
+    id: "disabled-danger-button",
+    html: `<button type="button" disabled class="btn-danger btn-md opacity-40 cursor-not-allowed">Delete account</button>`,
+  },
+  {
+    id: "lesson-done-hover",
+    hover: true,
+    html: `<a href="#lesson" class="group relative overflow-hidden rounded-2xl p-5 flex items-center gap-4 card-hover animate-fade-in-up focus-ring transition-all duration-300 bg-linear-to-r from-success-50 via-success-50/60 to-white dark:from-success-900/30 dark:via-success-900/15 dark:to-surface-900 border border-success-200 dark:border-success-800/50">Lesson</a>`,
+    tw3Html: `<a href="#lesson" class="group relative overflow-hidden rounded-2xl p-5 flex items-center gap-4 card-hover animate-fade-in-up focus-ring transition-all duration-300 bg-gradient-to-r from-success-50 via-success-50/60 to-white dark:from-success-900/30 dark:via-success-900/15 dark:to-surface-900 border border-success-200 dark:border-success-800/50">Lesson</a>`,
+  },
+  {
+    id: "nav-item-active-focus",
+    focus: true,
+    html: `<a href="#nav" class="flex items-center gap-3 px-3 py-2 rounded-xl text-sm font-medium transition-all duration-200 focus-ring bg-linear-to-r from-primary-50 to-primary-100/50 dark:from-primary-900/40 dark:to-primary-900/20 text-primary-700 dark:text-primary-300 shadow-xs ring-1 ring-primary-200/50 dark:ring-primary-800/50">Dashboard</a>`,
+    tw3Html: `<a href="#nav" class="flex items-center gap-3 px-3 py-2 rounded-xl text-sm font-medium transition-all duration-200 focus-ring bg-gradient-to-r from-primary-50 to-primary-100/50 dark:from-primary-900/40 dark:to-primary-900/20 text-primary-700 dark:text-primary-300 shadow-sm ring-1 ring-primary-200/50 dark:ring-primary-800/50">Dashboard</a>`,
+  },
+
   // dark: utilities beside plain hover:/focus: utilities.
   // LessonDetail.jsx:161.
   {

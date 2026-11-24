@@ -70,13 +70,15 @@ scan, so a probe can only measure CSS the app itself produces.
 
 For each theme the script opens an authenticated page (`PROBE_ROUTE`), turns
 off animations and transitions, and injects each snippet into a 600px wide
-host on top of the page. It records, for the first element of the snippet:
-`color`, `background-color`, `border-top-color`, `border-top-width`, the four
-corner radii, `box-shadow`, `font-size`, `line-height`, `font-weight`, the
-four paddings and margins, and the rendered `width`/`height`; for a container,
-also the vertical `gaps` between its children. A probe with `hover` or `focus`
-adds a reading in that state; a probe with `pseudo` (`::selection`,
-`::before`, ...) records that pseudo-element's colours instead.
+host on top of the page. It records, for the first element of the snippet
+(or the element its `measure` selector picks inside it): `color`,
+`background-color`, `border-top-color`, `border-top-width`, the four corner
+radii, `box-shadow`, `font-size`, `line-height`, `font-weight`, the four
+paddings and margins, `opacity`, and the rendered `width`/`height`; for a
+container, also the vertical `gaps` between its children. A probe with `hover`
+or `focus` adds a reading with the first element hovered or focused; a probe
+with `pseudo` (`::selection`, `::before`, ...) records that pseudo-element's
+colours instead.
 
 Output: `<out>/probes.json` = `{ tailwind, probes: [{ id, theme, hover, focus?,
 pseudo?, styles, gaps? }] }`, where `tailwind` is the major version detected on

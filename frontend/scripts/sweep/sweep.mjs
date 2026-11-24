@@ -22,7 +22,7 @@ const PROBE_STYLES = [
   "border-top-left-radius", "border-top-right-radius", "border-bottom-right-radius", "border-bottom-left-radius",
   "box-shadow", "font-size", "line-height", "font-weight",
   "padding-top", "padding-right", "padding-bottom", "padding-left",
-  "margin-top", "margin-right", "margin-bottom", "margin-left",
+  "margin-top", "margin-right", "margin-bottom", "margin-left", "opacity",
 ];
 const PSEUDO_STYLES = ["color", "background-color"];
 

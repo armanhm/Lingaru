@@ -1,4 +1,9 @@
-@import 'tailwindcss';
+/* Tailwind's own entry point (tailwindcss/index.css), spelled out so that the
+   utilities layer can hold the component classes before the generated
+   utilities (see "Tailwind 3 had no native cascade layers" below). */
+@layer theme, base, components, utilities;
+@import 'tailwindcss/theme.css' layer(theme);
+@import 'tailwindcss/preflight.css' layer(base);
 
 /* The sweep scripts quote class names but are not app source: scanning them
    would generate CSS that only the sweep probes use. */
@@ -572,12 +577,23 @@
   }
 }
 
-/* Component classes, as in Tailwind 3's `@layer components`: a utility on the
-   same element overrides them, and among themselves the later rule wins.
-   Plain classes cannot be @apply'd by name, so the focus ring, button base and
-   badge base are listed once for every class that included them (Tailwind 3
-   inlined them with `@apply focus-ring`, `@apply btn` and `@apply badge`). */
-@layer components {
+/* Tailwind 3 had no native cascade layers: its component classes, its
+   generated utilities and the custom utilities followed each other in one
+   cascade, where specificity decides first and order second. They sit in
+   that order in this one layer, so the Tailwind 3 results hold:
+   - a plain utility overrides a component class (same weight, later);
+   - a component's state or dark: rule (two classes) still beats a plain
+     utility, e.g. `.btn-danger:disabled` over `opacity-40`, or the
+     `.focus-ring:focus-visible` ring over an active item's `ring-1`;
+   - among component classes the later rule wins (`card card-elevated`);
+   - the custom utilities come after the generated ones and win over them
+     (`skeleton rounded-3xl` keeps the skeleton radius).
+   Plain classes cannot be @apply'd by name, so the focus ring, button base
+   and badge base are listed once for every class that included them
+   (Tailwind 3 inlined them with `@apply focus-ring`, `@apply btn` and
+   `@apply badge`). */
+@layer utilities {
+  /* ── Component classes (Tailwind 3 `@layer components`) ── */
   /* ── Focus ring, applied to all interactive elements ─── */
   .focus-ring,
   .btn,
@@ -770,12 +786,11 @@
   .dark .divider-label::after {
     @apply bg-surface-800;
   }
-}
 
-/* Custom utilities, as in Tailwind 3's `@layer utilities`: they come after the
-   generated utilities, so on the same element they win over one, as before
-   (`skeleton rounded-3xl` keeps the skeleton radius). */
-@layer utilities {
+  /* ── Generated utilities ── */
+  @tailwind utilities;
+
+  /* ── Custom utilities (Tailwind 3 `@layer utilities`) ── */
   /* Glass effect */
   .glass {
     @apply bg-white/70 dark:bg-surface-900/70 backdrop-blur-xl border border-white/40 dark:border-surface-700/50;

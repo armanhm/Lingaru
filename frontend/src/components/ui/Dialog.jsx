@@ -1,6 +1,7 @@
 import { forwardRef } from "react";
 import * as RadixDialog from "@radix-ui/react-dialog";
 import { X } from "lucide-react";
+import { useTranslation } from "react-i18next";
 import { cx } from "./cx";
 import { OVERLAY, PANEL, useFocusRestore, ignoreToastInteraction } from "./overlay";
 
@@ -12,12 +13,14 @@ export const CLOSE_BUTTON =
 
 /**
  * Centered modal. Radix handles focus trap, Escape, overlay click, focus
- * restore and scroll lock. `title` is the accessible name.
+ * restore and scroll lock. `title` is the accessible name; `closeLabel`
+ * overrides the translated name of the close button.
  */
 export const Dialog = /* @__PURE__ */ forwardRef(function Dialog(
-  { open, onOpenChange, title, description, children, footer, className },
+  { open, onOpenChange, title, description, children, footer, className, closeLabel },
   ref,
 ) {
+  const { t } = useTranslation();
   const focus = useFocusRestore();
   return (
     <RadixDialog.Root open={open} onOpenChange={onOpenChange}>
@@ -27,7 +30,6 @@ export const Dialog = /* @__PURE__ */ forwardRef(function Dialog(
           ref={ref}
           {...focus}
           onInteractOutside={ignoreToastInteraction}
-          
           {...(description ? {} : { "aria-describedby": undefined })}
           className={cx(
             PANEL,
@@ -43,7 +45,7 @@ export const Dialog = /* @__PURE__ */ forwardRef(function Dialog(
           ) : null}
           <div className="mt-4 min-h-0 flex-1 overflow-y-auto text-body text-fg">{children}</div>
           {footer && <div className="mt-6 flex flex-wrap justify-end gap-3">{footer}</div>}
-          <RadixDialog.Close className={CLOSE_BUTTON} aria-label="Close">
+          <RadixDialog.Close className={CLOSE_BUTTON} aria-label={closeLabel ?? t("common.close")}>
             <X aria-hidden="true" className="size-5" />
           </RadixDialog.Close>
         </RadixDialog.Content>

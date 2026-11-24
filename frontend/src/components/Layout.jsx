@@ -150,7 +150,7 @@ function UserMenu({ user, collapsed, onLogout }) {
             >
               <span
                 aria-hidden="true"
-                className={cx("block size-5 rounded-full", dark ? "translate-x-[23px] bg-on-accent" : "translate-x-[3px] bg-fg-3")}
+                className={cx("block size-5 rounded-full transition-transform duration-150 motion-reduce:transition-none", dark ? "translate-x-[23px] bg-on-accent" : "translate-x-[3px] bg-fg-3")}
               />
             </button>
           </div>

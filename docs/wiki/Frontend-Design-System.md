@@ -79,12 +79,12 @@ Two helpers are imported from their own files: `ComingSoonBadge` and `LearningLa
 | `Button` | `variant` (`primary`, `secondary`, `quiet`, `danger`), `size` (`sm`, `md`, `lg`), `loading`, `iconLeft`, `iconRight`, `asChild` | `type` defaults to `"button"`. `asChild` renders its child (for example a router `Link`) with the button classes; icons and the spinner are not supported there. |
 | `IconButton` | `label` (required), `icon`, `variant` (`quiet`, `secondary`, `primary`, `danger`), `size` | `icon` is an element or a component such as a lucide icon. |
 | `Input`, `Textarea`, `Select` | native props; `Textarea` has `size="lg"`; `Select` takes `wrapperClassName` | 44 px tall, 16 px text. |
-| `Checkbox`, `Switch` | native props; `Switch` has `checked`, `onCheckedChange`, `label` | Inside a `Field`, leave out `Switch`'s `label`. |
+| `Checkbox`, `Switch` | native props; `label` (both); `Switch` has `checked`, `onCheckedChange` | The Checkbox wrapper is a `<label>`, so a tap anywhere in its 44 px box toggles it. Inside a `Field`, leave out `label`. |
 | `Field` | `label`, `hint`, `error`, `id` | One child. Adds `id`, `aria-describedby` and `aria-invalid` to it. |
 | `Card` | `padding` (`none`, `md`, `lg`), `as`, `interactive` | `interactive` needs `as="button"` or `as="a"`. |
 | `Badge` | `tone` (`neutral`, `accent`, `ok`, `err`, `warn`) | |
-| `Dialog` | `open`, `onOpenChange`, `title`, `description`, `footer` | `title` is required for accessibility. |
-| `Drawer` | `open`, `onOpenChange`, `title`, `description`, `side` (`bottom`, `right`) | |
+| `Dialog` | `open`, `onOpenChange`, `title`, `description`, `footer`, `closeLabel` (default: translated `common.close`) | `title` is required for accessibility. |
+| `Drawer` | `open`, `onOpenChange`, `title`, `description`, `side` (`bottom`, `right`), `closeLabel` | |
 | `Tabs`, `TabsList`, `TabsTrigger`, `TabsContent` | Radix tabs props (`defaultValue`, `value`, ...) | |
 | `ProgressBar` | `value` (0 to 1), `label` | |
 | `SegmentedProgress` | `segments` (`[{ weight, value }]`), `label` | |

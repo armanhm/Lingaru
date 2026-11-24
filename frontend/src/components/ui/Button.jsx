@@ -13,7 +13,7 @@ const BASE =
 const VARIANTS = {
   primary: "bg-accent text-on-accent border-transparent hover:bg-accent-strong",
   secondary: "bg-card text-fg border-line-strong hover:bg-canvas",
-  quiet: "bg-transparent text-fg-2 border-transparent hover:bg-canvas hover:text-fg",
+  quiet: "bg-transparent text-fg-2 border-transparent hover:bg-line-soft hover:text-fg",
   danger: "bg-err-bg text-err border-err hover:bg-card",
 };
 

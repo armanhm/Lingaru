@@ -36,6 +36,7 @@ export function FormSection() {
         <Field label="Remind me daily"><Checkbox defaultChecked /></Field>
         <Field label="Remind me daily" error="Required."><Checkbox /></Field>
         <Field label="Disabled"><Checkbox disabled /></Field>
+        <Checkbox label="With its own label (tap anywhere in the row)" />
         <Switch checked={on} onCheckedChange={setOn} label="Daily reminder" />
         <Switch checked={false} onCheckedChange={() => {}} label="Disabled" disabled />
       </Group>

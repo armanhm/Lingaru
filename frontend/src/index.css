@@ -440,9 +440,11 @@
   .card-hover {
     @apply hover:border-surface-300 dark:hover:border-surface-600 transition-colors duration-200 ease-out motion-reduce:transition-none;
   }
-  /* Raised hero cards: the same paper, plus the one soft shadow. */
+  /* Hero cards. Under Paper this equals .card: depth comes from the border,
+     and the one soft shadow is kept for overlays (dialogs, drawers, toasts).
+     It stays after .card so the later component class still wins. */
   .card-elevated {
-    @apply bg-card rounded-2xl border border-line shadow-card-elevated;
+    @apply bg-card rounded-2xl border border-line;
   }
 
   /* ── Buttons ────────────────────────────────────────── */

@@ -1,46 +1,26 @@
 version: 2
 
+# One combined pull request per week for every ecosystem below.
+# Dependabot checks on Monday and puts all version updates (backend,
+# frontend, GitHub Actions, Docker base image) into a single PR.
+# Security updates are separate from this schedule and can still
+# arrive at any time.
+multi-ecosystem-groups:
+  weekly:
+    schedule:
+      interval: weekly
+    labels: [dependencies]
+
 updates:
   - package-ecosystem: pip
     directory: /backend
-    schedule:
-      interval: weekly
-      day: monday
-    open-pull-requests-limit: 5
-    labels: [dependencies, backend]
-    groups:
-      django:
-        patterns: ["Django*", "django-*", "djangorestframework*"]
-      llm:
-        patterns: ["google-genai", "groq", "sentry-sdk*"]
-      # Everything else: one PR for all minor and patch updates, so a week
-      # of updates costs one CI run instead of one per package. Majors
-      # still arrive as their own PRs.
-      backend-minor-and-patch:
-        patterns: ["*"]
-        update-types: ["minor", "patch"]
+    patterns: ["*"]
+    multi-ecosystem-group: weekly
 
   - package-ecosystem: npm
     directory: /frontend
-    schedule:
-      interval: weekly
-      day: monday
-    open-pull-requests-limit: 5
-    labels: [dependencies, frontend]
-    groups:
-      react:
-        patterns: ["react", "react-dom", "react-router*", "@types/react*"]
-      sentry:
-        patterns: ["@sentry/*"]
-      eslint:
-        patterns: ["eslint*", "@eslint/*"]
-      # The compiler and its Vite plugin must stay on the same version.
-      tailwind:
-        patterns: ["tailwindcss", "@tailwindcss/*"]
-      # Everything else: one PR for all minor and patch updates (see above).
-      frontend-minor-and-patch:
-        patterns: ["*"]
-        update-types: ["minor", "patch"]
+    patterns: ["*"]
+    multi-ecosystem-group: weekly
     ignore:
       # eslint-plugin-react 7.x supports ESLint <= 9; revisit when it adds ESLint 10.
       - dependency-name: "eslint"
@@ -53,18 +33,13 @@ updates:
 
   - package-ecosystem: github-actions
     directory: /
-    schedule:
-      interval: monthly
-    labels: [dependencies, ci]
-    groups:
-      actions:
-        patterns: ["*"]
+    patterns: ["*"]
+    multi-ecosystem-group: weekly
 
   - package-ecosystem: docker
     directory: /backend
-    schedule:
-      interval: monthly
-    labels: [dependencies, docker]
+    patterns: ["*"]
+    multi-ecosystem-group: weekly
     ignore:
       # Python runtime upgrades are planned changes (CI tests run on 3.12);
       # keep receiving patch-level image updates only.

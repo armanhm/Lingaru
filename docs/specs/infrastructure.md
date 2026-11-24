@@ -31,7 +31,7 @@ The runtime topology, container contract, environment contract, CI and deploy co
 | FR-12 | `scripts/backup_db.sh` produces a gzipped plain-SQL dump of the `lingaru` database and prunes dumps older than `RETENTION_DAYS` (default 14). It is scheduled by user cron, outside the repo. |
 | FR-13 | `scripts/restore_db.sh <file>` restores such a dump into the running `postgres` container after interactive confirmation. |
 | FR-14 | Sentry is initialised in the backend only when `SENTRY_DSN` is non-empty, with `send_default_pii=False`. |
-| FR-15 | Dependabot opens update PRs for pip, npm, GitHub Actions and the backend Dockerfile base image. |
+| FR-15 | Dependabot opens one combined update PR per week for pip, npm, GitHub Actions and the backend Dockerfile base image. |
 
 ## 3. Data model (persistent state)
 

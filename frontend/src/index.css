@@ -1,5 +1,9 @@
 @import 'tailwindcss';
 
+/* The sweep scripts quote class names but are not app source: scanning them
+   would generate CSS that only the sweep probes use. */
+@source not '../scripts';
+
 @plugin '@tailwindcss/typography';
 
 @custom-variant dark (&:where(.dark, .dark *));

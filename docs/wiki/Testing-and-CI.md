@@ -8,14 +8,14 @@
 
 ```mermaid
 flowchart LR
-  PR[Push / PR to main or dev] --> CI[ci.yml]
-  CI --> BL[Backend lint: Ruff]
-  CI --> BT[Backend: check, makemigrations --check, pytest + coverage]
-  CI --> FL[Frontend: tokens --check, ESLint, node:test, Vitest]
-  CI --> FB[Frontend: vite build, check:build]
-  CI --> TV[Trivy image scan, advisory]
-  PR -->|PR only| LH[lighthouse.yml]
-  PR -->|PR only| VR[visual-regression.yml]
+  PR[Push to main or dev / any PR] --> CI[ci.yml]
+  CI --> CH[changes: which areas changed]
+  CH -->|backend or data files| BL[Backend lint: Ruff]
+  CH -->|backend or data files| BT[Backend: check, makemigrations --check, pytest + coverage]
+  CH -->|frontend files| FE[Frontend: tokens --check, ESLint, node:test, Vitest, vite build, check:build]
+  CH -->|Dockerfile or requirements| TV[Trivy image scan, advisory]
+  PR -->|PR to main or dev, frontend files| LH[lighthouse.yml]
+  PR -->|PR to main or dev, frontend files| VR[visual-regression.yml]
   CI -->|success on main| DEP[deploy.yml]
 ```
 
@@ -148,14 +148,33 @@ Celery: `config.settings.test` does not enable eager mode. Code paths that call 
 
 | Workflow | Trigger | Jobs | Blocking |
 |---|---|---|---|
-| `ci.yml` (CI) | push and PR to `main`, `dev`; `concurrency` cancels superseded runs | `backend-lint`: Ruff check and format check (Python 3.12) | yes |
+| `ci.yml` (CI) | push to `main`, `dev`; every PR (any base branch, so stacked PRs are checked); manual; `concurrency` cancels superseded runs | `changes`: lists the changed files through the GitHub API and decides which jobs below run (see "Skipping unaffected jobs") | yes |
+| | | `backend-lint`: Ruff check and format check (Python 3.12) | yes |
 | | | `backend`: `pip install -r requirements.txt`, `manage.py check`, `makemigrations --check --dry-run`, `pytest --cov=apps --cov=services`, PR coverage comment (`MishaKav/pytest-coverage-comment`) | yes |
-| | | `frontend-lint`: `npm ci`, `npm run tokens -- --check`, `npm run lint`, `npm run test:unit`, `npm test` (Node 20) | yes |
-| | | `frontend`: `npm ci`, `npm run build`, `npm run check:build` (Node 20) | yes |
-| | | `security-scan`: build backend image, Trivy scan for CRITICAL/HIGH with known fixes, table output | no (`exit-code: 0`) |
-| `lighthouse.yml` | PR to `main`, `dev`; manual | build, `lhci autorun` on `/login`, `/register` (desktop preset); scores written to the step summary | no (`\|\| true`) |
-| `visual-regression.yml` | PR to `main`, `dev`; manual | install Chromium, build, `npm run test:visual`; uploads `playwright-report/` on failure (14 days) | yes, for the PR check |
+| | | `frontend`: one job, one `npm ci`: `npm run tokens -- --check`, `npm run lint`, `npm run test:unit`, `npm test`, `npm run build`, `npm run check:build` (Node version from `frontend/.nvmrc`) | yes |
+| | | `security-scan`: build backend image, Trivy scan for CRITICAL/HIGH with known fixes, table output; runs only when the image's inputs change | no (`exit-code: 0`) |
+| `lighthouse.yml` | PR to `main`, `dev` that touches `frontend/`; manual; superseded runs are cancelled | build, `lhci autorun` on `/login`, `/register` (desktop preset); scores written to the step summary | no (`\|\| true`) |
+| `visual-regression.yml` | PR to `main`, `dev` that touches `frontend/`; manual; superseded runs are cancelled | install Chromium, build, `npm run test:visual`; uploads `playwright-report/` on failure (14 days) | yes, for the PR check |
 | `deploy.yml` | `CI` completed on `main`; manual | SSH deploy, see [Deployment and Operations](Deployment-and-Operations.md) | n/a |
+
+Every job has a `timeout-minutes` limit, and the workflows run with a read-only token unless a job asks for more (only the backend job, for its PR coverage comment).
+
+#### Skipping unaffected jobs
+
+The `changes` job classifies the changed files, and each other job runs only when its area changed. A skipped job counts as passed, so the deploy workflow still runs after a docs-only change on `main`.
+
+| Changed path | Jobs that run |
+|---|---|
+| `backend/**`, `data/**` | `backend-lint`, `backend` |
+| `backend/Dockerfile`, `backend/requirements*.txt`, `.dockerignore` | `backend-lint`, `backend`, `security-scan` |
+| `frontend/**` | `frontend` |
+| `.github/workflows/ci.yml` | all |
+| `docs/**`, `nginx/**`, `scripts/**`, other `.github/**` files, `*.md`, `LICENSE`, `.gitignore` | none |
+| anything else (for example `docker-compose.yml`) | `backend-lint`, `backend`, `frontend` |
+
+If the file list cannot be read (API error, a first push with no previous commit, 300 or more files in one push) or the run is manual, every job runs.
+
+The Node version for CI lives in `frontend/.nvmrc` (22). The two Dockerfiles that build the frontend name `node:22-alpine` themselves; change all three together.
 
 CI env for the backend job: `DJANGO_SETTINGS_MODULE=config.settings.test`, a dummy `DJANGO_SECRET_KEY`, `DEBUG=True`.
 
@@ -180,7 +199,7 @@ Screenshots are platform-sensitive. If you regenerate baselines on macOS they ma
 
 ### Trivy
 
-The `security-scan` job builds `backend/Dockerfile` as `lingaru-backend:scan` and scans the image (OS packages and Python deps), filtered to `CRITICAL,HIGH` with `ignore-unfixed: true`. Findings appear in the job log only; the SARIF upload is disabled.
+The `security-scan` job builds `backend/Dockerfile` as `lingaru-backend:scan` and scans the image (OS packages and Python deps), filtered to `CRITICAL,HIGH` with `ignore-unfixed: true`. Findings appear in the job log only; the SARIF upload is disabled. The job runs when `backend/Dockerfile`, `backend/requirements*.txt`, `.dockerignore` or `ci.yml` changes, or on a manual run of the workflow, because those are the only inputs that change the result of a build. Since the image has no compiler, this build is also the check that every dependency still installs from a wheel.
 
 ### Dependabot
 
@@ -188,9 +207,9 @@ The `security-scan` job builds `backend/Dockerfile` as `lingaru-backend:scan` an
 
 | Ecosystem | Directory | Schedule | Groups |
 |---|---|---|---|
-| pip | `/backend` | weekly, Monday, max 5 PRs | `django` (Django, django-*, djangorestframework*), `llm` (google-genai, groq, sentry-sdk*) |
-| npm | `/frontend` | weekly, Monday, max 5 PRs | `react`, `sentry` (`@sentry/*`), `eslint` |
-| github-actions | `/` | monthly | none |
+| pip | `/backend` | weekly, Monday, max 5 PRs | `django` (Django, django-*, djangorestframework*), `llm` (google-genai, groq, sentry-sdk*), `backend-minor-and-patch` (every other minor or patch update, in one PR) |
+| npm | `/frontend` | weekly, Monday, max 5 PRs | `react`, `sentry` (`@sentry/*`), `eslint`, `tailwind`, `frontend-minor-and-patch` (every other minor or patch update, in one PR) |
+| github-actions | `/` | monthly | `actions` (all action updates in one PR) |
 | docker | `/backend` | monthly | none |
 
 ### Lint config
@@ -227,5 +246,5 @@ The `security-scan` job builds `backend/Dockerfile` as `lingaru-backend:scan` an
 - Vitest covers the `components/ui/` library, the toast context, the shell and one Settings test; most pages have no component tests.
 - No end-to-end tests against a running backend.
 - Dependabot's docker ecosystem watches `/backend` only; `nginx/Dockerfile` and compose images get no update PRs.
-- GitHub Actions are pinned by tag rather than commit SHA, and the Trivy action tracks a branch.
+- GitHub Actions are pinned by tag rather than commit SHA, except the Trivy action, which is pinned to a release commit.
 - The README describes CI steps (filesystem Trivy scan, Playwright e2e in CI) that differ from the workflows above.

@@ -3,17 +3,105 @@ name: CI
 on:
   push:
     branches: [main, dev]
+  # Every pull request, whatever its base branch, so stacked PRs are
+  # checked too. The `changes` job keeps this cheap: a job only runs
+  # when files it covers changed.
   pull_request:
-    branches: [main, dev]
+  workflow_dispatch:
 
 concurrency:
   group: ci-${{ github.ref }}
   cancel-in-progress: true
 
+permissions:
+  contents: read
+
 jobs:
+  # Decides which jobs need to run. Jobs that are skipped count as
+  # passed, so the deploy workflow (which waits for CI on main) still
+  # proceeds after a docs-only change.
+  changes:
+    name: Detect changed areas
+    runs-on: ubuntu-24.04
+    timeout-minutes: 5
+    permissions:
+      contents: read
+      pull-requests: read
+    outputs:
+      backend: ${{ steps.classify.outputs.backend }}
+      frontend: ${{ steps.classify.outputs.frontend }}
+      image: ${{ steps.classify.outputs.image }}
+    steps:
+      - name: Classify changed files
+        id: classify
+        env:
+          GH_TOKEN: ${{ github.token }}
+          REPO: ${{ github.repository }}
+          EVENT: ${{ github.event_name }}
+          PR_NUMBER: ${{ github.event.pull_request.number }}
+          BEFORE: ${{ github.event.before }}
+          AFTER: ${{ github.sha }}
+        run: |
+          set -u
+          run_all() {
+            echo "Running every job: $1"
+            { echo "backend=true"; echo "frontend=true"; echo "image=true"; } >> "$GITHUB_OUTPUT"
+            exit 0
+          }
+
+          case "$EVENT" in
+            pull_request)
+              files=$(gh api --paginate "repos/$REPO/pulls/$PR_NUMBER/files?per_page=100" \
+                --jq '.[] | .filename, (.previous_filename // empty)') \
+                || run_all "could not list the pull request's files"
+              ;;
+            push)
+              case "$BEFORE" in
+                ""|0000000000000000000000000000000000000000) run_all "no previous commit to compare with" ;;
+              esac
+              # The compare API returns at most 300 files; treat a full
+              # page as "unknown" and run everything.
+              files=$(gh api "repos/$REPO/compare/$BEFORE...$AFTER" \
+                --jq 'if (.files | length) >= 300 then "TOO_MANY" else (.files[] | .filename, (.previous_filename // empty)) end') \
+                || run_all "could not compare $BEFORE...$AFTER"
+              [ "$files" = "TOO_MANY" ] && run_all "more than 300 changed files"
+              ;;
+            *)
+              run_all "manual run"
+              ;;
+          esac
+
+          backend=false; frontend=false; image=false
+          while IFS= read -r f; do
+            [ -n "$f" ] || continue
+            case "$f" in
+              .github/workflows/ci.yml)
+                backend=true; frontend=true; image=true ;;
+              backend/Dockerfile|backend/requirements*.txt|.dockerignore)
+                backend=true; image=true ;;
+              backend/*|data/*)
+                backend=true ;;
+              frontend/*)
+                frontend=true ;;
+              docs/*|nginx/*|scripts/*|.github/*|*.md|LICENSE|.gitignore)
+                ;;
+              *)
+                # Unknown path: be safe and run both test suites.
+                backend=true; frontend=true ;;
+            esac
+          done <<EOF
+          $files
+          EOF
+
+          echo "backend=$backend frontend=$frontend image=$image"
+          { echo "backend=$backend"; echo "frontend=$frontend"; echo "image=$image"; } >> "$GITHUB_OUTPUT"
+
   backend-lint:
     name: Backend lint (Ruff)
+    needs: changes
+    if: needs.changes.outputs.backend == 'true'
     runs-on: ubuntu-24.04
+    timeout-minutes: 5
     defaults:
       run:
         working-directory: backend
@@ -32,7 +120,10 @@ jobs:
 
   backend:
     name: Backend (Django)
+    needs: changes
+    if: needs.changes.outputs.backend == 'true'
     runs-on: ubuntu-24.04
+    timeout-minutes: 15
     permissions:
       contents: read
       pull-requests: write
@@ -105,50 +196,43 @@ jobs:
           hide-badge: false
           hide-report: false
 
-  frontend-lint:
-    name: Frontend lint (ESLint)
+  # One job for everything frontend: a single runner and a single
+  # `npm ci` instead of two. The cheap checks come first so a lint
+  # error fails fast.
+  frontend:
+    name: Frontend (lint, test, build)
+    needs: changes
+    if: needs.changes.outputs.frontend == 'true'
     runs-on: ubuntu-24.04
+    timeout-minutes: 10
     defaults:
       run:
         working-directory: frontend
+
     steps:
       - uses: actions/checkout@v7
+
       - name: Set up Node
         uses: actions/setup-node@v7
         with:
-          node-version: "20"
+          node-version-file: frontend/.nvmrc
           cache: npm
           cache-dependency-path: frontend/package-lock.json
+
       - name: Install dependencies
         run: npm ci
+
       - name: Design tokens up to date
         run: npm run tokens -- --check
+
       - name: ESLint
         run: npm run lint
+
       - name: Unit tests (node:test)
         run: npm run test:unit
+
       - name: Component tests (Vitest)
         run: npm test
-
-  frontend:
-    name: Frontend (Vite)
-    runs-on: ubuntu-24.04
-    defaults:
-      run:
-        working-directory: frontend
-
-    steps:
-      - uses: actions/checkout@v7
-
-      - name: Set up Node
-        uses: actions/setup-node@v7
-        with:
-          node-version: "20"
-          cache: npm
-          cache-dependency-path: frontend/package-lock.json
-
-      - name: Install dependencies
-        run: npm ci
 
       - name: Build
         run: npm run build
@@ -156,9 +240,15 @@ jobs:
       - name: Check the dev gallery is not in the build
         run: npm run check:build
 
+  # Runs only when the backend image's inputs change (Dockerfile,
+  # requirements, .dockerignore) or on a manual run: building the image
+  # is the slowest step in CI and the scan result only changes with them.
   security-scan:
     name: Security scan (Trivy)
+    needs: changes
+    if: needs.changes.outputs.image == 'true'
     runs-on: ubuntu-24.04
+    timeout-minutes: 15
     permissions:
       contents: read
     steps:
@@ -171,10 +261,10 @@ jobs:
         run: docker build -t lingaru-backend:scan -f backend/Dockerfile .
 
       # Findings print directly into the job log as a table. Code scanning
-      # (Security tab integration) is intentionally disabled — re-enable
+      # (Security tab integration) is intentionally disabled; re-enable
       # it later by switching back to format: sarif + a SARIF upload step.
       - name: Run Trivy vulnerability scanner
-        uses: aquasecurity/trivy-action@master
+        uses: aquasecurity/trivy-action@a9c7b0f06e461e9d4b4d1711f154ee024b8d7ab8 # v0.36.0
         with:
           image-ref: lingaru-backend:scan
           format: table

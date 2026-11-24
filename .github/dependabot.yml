@@ -13,6 +13,12 @@ updates:
         patterns: ["Django*", "django-*", "djangorestframework*"]
       llm:
         patterns: ["google-genai", "groq", "sentry-sdk*"]
+      # Everything else: one PR for all minor and patch updates, so a week
+      # of updates costs one CI run instead of one per package. Majors
+      # still arrive as their own PRs.
+      backend-minor-and-patch:
+        patterns: ["*"]
+        update-types: ["minor", "patch"]
 
   - package-ecosystem: npm
     directory: /frontend
@@ -31,6 +37,10 @@ updates:
       # The compiler and its Vite plugin must stay on the same version.
       tailwind:
         patterns: ["tailwindcss", "@tailwindcss/*"]
+      # Everything else: one PR for all minor and patch updates (see above).
+      frontend-minor-and-patch:
+        patterns: ["*"]
+        update-types: ["minor", "patch"]
     ignore:
       # eslint-plugin-react 7.x supports ESLint <= 9; revisit when it adds ESLint 10.
       - dependency-name: "eslint"
@@ -46,6 +56,9 @@ updates:
     schedule:
       interval: monthly
     labels: [dependencies, ci]
+    groups:
+      actions:
+        patterns: ["*"]
 
   - package-ecosystem: docker
     directory: /backend

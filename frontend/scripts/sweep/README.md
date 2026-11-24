@@ -39,6 +39,11 @@ SWEEP_BASE_URL=http://localhost:5173 SWEEP_USER=demo SWEEP_PASSWORD=... \
 and leaves screenshots and `report.json` in `<out>` alone, so it can add
 probes to an existing baseline.
 
+`--record-probes` (with `--compare`) still records `<out>/probes.json` but
+does not compare it: use it for a change that alters the look on purpose,
+where screenshots, contrast and overflow are still compared against the
+baseline but computed styles cannot equal it.
+
 The script logs in through `POST /api/users/login/`, stores the tokens in
 `localStorage`, pins `lingaru-ui-language=en` (and PATCHes `ui_language` to
 `en` on the user once per run), and sets `localStorage.theme` per pass.

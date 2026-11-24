@@ -153,6 +153,9 @@ jobs:
       - name: Build
         run: npm run build
 
+      - name: Check the dev gallery is not in the build
+        run: npm run check:build
+
   security-scan:
     name: Security scan (Trivy)
     runs-on: ubuntu-24.04

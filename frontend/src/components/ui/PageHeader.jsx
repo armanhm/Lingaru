@@ -34,7 +34,7 @@ export default function PageHeader({
       <div className="flex items-start justify-between gap-4 flex-wrap">
         <div className="flex items-center gap-3 min-w-0">
           {icon && (
-            <div className="shrink-0 w-11 h-11 rounded-xl bg-accent-50 dark:bg-accent-900/40 flex items-center justify-center text-xl">
+            <div className="shrink-0 w-11 h-11 rounded-xl bg-card border border-line flex items-center justify-center text-xl">
               {icon}
             </div>
           )}

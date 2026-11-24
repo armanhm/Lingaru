@@ -1,3 +1,4 @@
+import { lazy, Suspense } from "react";
 import { Routes, Route } from "react-router-dom";
 import { AuthProvider } from "./contexts/AuthContext";
 import { ToastProvider } from "./contexts/ToastContext";
@@ -52,6 +53,10 @@ import GrammarTopic from "./pages/GrammarTopic";
 import GrammarDrill from "./pages/GrammarDrill";
 import NotFound from "./pages/NotFound";
 
+// Dev-only component gallery: the import.meta.env.DEV guard is replaced by
+// `false` in production builds, so the lazy chunk is never emitted.
+const UiGallery = import.meta.env.DEV ? lazy(() => import("./pages/dev/UiGallery")) : null;
+
 export default function App() {
   return (
     <ThemeProvider>
@@ -62,6 +67,16 @@ export default function App() {
       <Routes>
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
+        {UiGallery && (
+          <Route
+            path="/dev/ui"
+            element={
+              <Suspense fallback={null}>
+                <UiGallery />
+              </Suspense>
+            }
+          />
+        )}
         <Route
           path="/"
           element={

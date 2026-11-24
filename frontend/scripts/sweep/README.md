@@ -97,5 +97,6 @@ excuses a listed difference only against a baseline from another Tailwind
 major version (`default-palette`: colours only; `not-generated-in-tailwind-3`:
 a class the app never used, so Tailwind 3 emitted nothing for it).
 
-Unit tests for the comparison: `node --test scripts/sweep/*.test.mjs`.
+Unit tests for the comparison run with `npm run test:unit` (or alone:
+`node --test scripts/sweep/*.test.mjs`).
 

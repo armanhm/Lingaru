@@ -10,7 +10,7 @@
     "lint": "eslint .",
     "tokens": "node scripts/tokens/build.mjs",
     "test": "vitest run",
-    "test:unit": "node --test src/lib/*.test.js scripts/tokens/*.test.mjs",
+    "test:unit": "node --test src/lib/*.test.js scripts/tokens/*.test.mjs scripts/sweep/*.test.mjs",
     "test:visual": "playwright test",
     "test:visual:update": "playwright test --update-snapshots",
     "sweep": "node scripts/sweep/sweep.mjs"
